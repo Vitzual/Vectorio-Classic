@@ -11,9 +11,11 @@ public class Building : MonoBehaviour
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
-    private bool GridSnap = false;
+    private bool IsActive = false;
 
     // Object placements
+    [SerializeField]
+    private GameObject GridObj;
     [SerializeField]
     private GameObject TurretObj;
     [SerializeField]
@@ -30,18 +32,14 @@ public class Building : MonoBehaviour
     private void Start()
     {
         Selected = GetComponent<SpriteRenderer>();
+        GridObj = Instantiate(GridObj);
     }
 
     private void Update()
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (GridSnap == false) {
-            transform.position = MousePos;
-        } else {
-            transform.position = new Vector2(4 * Mathf.Round(MousePos.x/4), 4 * Mathf.Round(MousePos.y/4));
-        }
+        transform.position = new Vector2(4 * Mathf.Round(MousePos.x/4), 4 * Mathf.Round(MousePos.y/4));
 
         // Make color flash
         Color tmp = this.GetComponent<SpriteRenderer>().color;
@@ -92,13 +90,15 @@ public class Building : MonoBehaviour
             SelectedObj = EnemyObj;
             transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
-        else if (Input.GetKeyDown(KeyCode.G) && GridSnap == false)
+        else if (Input.GetKeyDown(KeyCode.G) && IsActive == false)
         {
-            GridSnap = true;
+            IsActive = true;
+            GridObj.gameObject.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.G) && GridSnap == true)
+        else if (Input.GetKeyDown(KeyCode.G) && IsActive == true)
         {
-            GridSnap = false;
+            IsActive = false;
+            GridObj.gameObject.SetActive(false);
         }
 
     }

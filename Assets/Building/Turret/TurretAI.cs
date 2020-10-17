@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Profiling;
+﻿using UnityEngine;
 
 public class TurretAI : MonoBehaviour
 {
-    // Turret AI variables
+    // Turret AI variables 
     [SerializeField]
     private Transform FirePoint;
-    private Rigidbody2D turret;
+    [SerializeField]
+    private Rigidbody2D TurretGun;
     private Vector2 TargetPosition;
 
     // Default weapon variables
-    protected float thrust = 1.0f;
-    protected float fireRate = 0.5f;
-    protected float nextFire = -1f;
-    protected float bulletForce = 20f;
-    protected int offset = 0;
+    protected float FireRate = 0.5f;
+    protected float NextFire = -1f;
+    protected float BulletForce = 50f;
+    protected float TotalRange = 1f;
+    protected int Offset = 0;
 
     // Base weapon objects
     public GameObject BulletPrefab;
@@ -23,7 +22,6 @@ public class TurretAI : MonoBehaviour
     // On start, grab RB2D component
     void Start()
     {
-        turret = this.GetComponent<Rigidbody2D>();
         Physics2D.IgnoreCollision(BulletPrefab.transform.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
     }
 
@@ -37,14 +35,22 @@ public class TurretAI : MonoBehaviour
         {
             // Rotate turret towards target
             TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
-            Vector2 lookDirection = TargetPosition - turret.position;
+            Vector2 lookDirection = (TargetPosition - TurretGun.position);
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            turret.rotation = angle;
+
+            // Smooth rotation when targetting enemies
+            if (TurretGun.rotation >= angle && !((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5))
+            {
+                TurretGun.rotation -= 1;
+            } else if (TurretGun.rotation <= angle && !((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5))
+            {
+                TurretGun.rotation += 1;
+            }
 
             // Shoot bullet
-            if (nextFire > 0)
+            if (NextFire > 0)
             {
-                nextFire -= Time.deltaTime;
+                NextFire -= Time.deltaTime;
                 return;
             }
 
@@ -53,16 +59,16 @@ public class TurretAI : MonoBehaviour
         }
 
         // Update cooldown
-        nextFire = fireRate;
+        NextFire = FireRate;
     }
 
     // Creates bullet object
     void Shoot()
     {
         GameObject bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
-        bullet.transform.Rotate(0, 0, offset);
+        bullet.transform.Rotate(0, 0, Offset);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(BulletSpread(FirePoint.up, Random.Range(-0.1f, 0.1f)) * bulletForce, ForceMode2D.Impulse);
+        rb.AddForce(BulletSpread(FirePoint.up, Random.Range(-0.1f, 0.1f)) * BulletForce, ForceMode2D.Impulse);
         Destroy(bullet, 1f);
     }
 

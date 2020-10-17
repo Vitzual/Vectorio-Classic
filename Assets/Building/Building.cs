@@ -83,21 +83,18 @@ public class Building : MonoBehaviour
             Adjustment = 1f;
             Selected.sprite = Bomber;
             SelectedObj = BomberObj;
-            transform.localScale = new Vector3(0.2f, 0.2f, 0.12f);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Adjustment = 1f;
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
-            transform.localScale = new Vector3(0.19f, 0.19f, 0.19f);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
             SelectedObj = EnemyObj;
-            transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
         }
         else if (Input.GetKeyDown(KeyCode.G) && GridSnap == false)
         {
@@ -112,7 +109,7 @@ public class Building : MonoBehaviour
 
     public void AdjustAlphaValue()
     {
-        if (AdjustLimiter == 40)
+        if (AdjustLimiter == 20)
         {
             if (AdjustSwitch == false)
             {

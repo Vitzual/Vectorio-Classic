@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    private Vector2 TargetPosition;
-    private Vector2 Movement;
     public ParticleSystem hitEffect;
     public float MoveSpeed = 3f;
-    // Start is called before the first frame update
-    
+    private Vector2 TargetPosition;
+    private Vector2 Movement;
+    private Rigidbody2D rocket;
+
+    void Start()
+    {
+        rocket = this.GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
     void OnCollisionEnter2D(Collision2D collision)
@@ -21,10 +25,8 @@ public class Rocket : MonoBehaviour
             other.GetComponent<Rigidbody2D>().AddForce(other.transform.position * -3f);
         }
 
-
         Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
-
     }
 
     void Update()

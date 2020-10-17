@@ -8,9 +8,9 @@ public class EntityClass : MonoBehaviour
     protected int damage;
 
     // Give damage to entity, check health
-    protected void DamageEntity()
+    protected void DamageEntity(int a)
     {
-        health -= damage;
+        health -= a;
         if (IsAlive() == false)
         {
             KillEntity();

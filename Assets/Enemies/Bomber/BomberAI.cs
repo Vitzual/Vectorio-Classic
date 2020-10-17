@@ -2,7 +2,7 @@
 
 public class BomberAI : EntityClass
 {
-
+    
     [SerializeField]
     private ParticleSystem Effect;
     private Rigidbody2D Bomber;

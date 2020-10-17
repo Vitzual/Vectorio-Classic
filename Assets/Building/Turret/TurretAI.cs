@@ -39,23 +39,26 @@ public class TurretAI : MonoBehaviour
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
 
             // Smooth rotation when targetting enemies
-            if (TurretGun.rotation >= angle && !((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5))
+            if (TurretGun.rotation >= angle && !((TurretGun.rotation - angle) <= 0.3 && (TurretGun.rotation - angle) >= -0.3))
             {
-                TurretGun.rotation -= 1;
-            } else if (TurretGun.rotation <= angle && !((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5))
+                TurretGun.rotation -= 0.3f;
+            } else if (TurretGun.rotation <= angle && !((TurretGun.rotation - angle) <= 0.3 && (TurretGun.rotation - angle) >= -0.3))
             {
-                TurretGun.rotation += 1;
+                TurretGun.rotation += 0.3f;
             }
-
-            // Shoot bullet
-            if (NextFire > 0)
+            
+            if ((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5)
             {
-                NextFire -= Time.deltaTime;
-                return;
-            }
+                // Shoot bullet
+                if (NextFire > 0)
+                {
+                    NextFire -= Time.deltaTime;
+                    return;
+                }
 
-            // Call shoot function
-            Shoot();
+                // Call shoot function
+                Shoot();
+            }
         }
 
         // Update cooldown

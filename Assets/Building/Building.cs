@@ -40,7 +40,7 @@ public class Building : MonoBehaviour
         if (GridSnap == false) {
             transform.position = MousePos;
         } else {
-            transform.position = new Vector2(Mathf.Round(MousePos.x), Mathf.Round(MousePos.y));
+            transform.position = new Vector2(4 * Mathf.Round(MousePos.x/4), 4 * Mathf.Round(MousePos.y/4));
         }
 
         // Make color flash
@@ -78,23 +78,19 @@ public class Building : MonoBehaviour
         }
 
         // Change selected object
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Adjustment = 1f;
-            Selected.sprite = Bomber;
-            SelectedObj = BomberObj;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Adjustment = 1f;
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
+            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
             SelectedObj = EnemyObj;
+            transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         else if (Input.GetKeyDown(KeyCode.G) && GridSnap == false)
         {

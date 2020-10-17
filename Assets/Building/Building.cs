@@ -32,7 +32,7 @@ public class Building : MonoBehaviour
     private void Start()
     {
         Selected = GetComponent<SpriteRenderer>();
-        GridObj = Instantiate(GridObj);
+        GridObj = Instantiate(GridObj, transform.position, Quaternion.identity);
     }
 
     private void Update()

@@ -39,7 +39,7 @@ public class Building : MonoBehaviour
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(4 * Mathf.Round(MousePos.x/4), 4 * Mathf.Round(MousePos.y/4));
+        transform.position = new Vector2(5*Mathf.Round(MousePos.x/5), 5*Mathf.Round(MousePos.y/5));
 
         // Make color flash
         Color tmp = this.GetComponent<SpriteRenderer>().color;
@@ -81,14 +81,12 @@ public class Building : MonoBehaviour
             Adjustment = 1f;
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
             SelectedObj = EnemyObj;
-            transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         else if (Input.GetKeyDown(KeyCode.G) && IsActive == false)
         {

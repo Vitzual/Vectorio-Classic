@@ -5,7 +5,7 @@ public class GridGen : MonoBehaviour
 {
     private int Rows = 100;
     private int Cols = 100;
-    private float GridSize = 4;
+    private float GridSize = 5;
     public GameObject GridTile;
 
 
@@ -37,6 +37,6 @@ public class GridGen : MonoBehaviour
 
         float GridW = Cols * GridSize;
         float GridH = Rows * GridSize;
-        transform.position = new Vector2((-GridW / 2 + GridSize / 2)+2, (GridH / 2 - GridSize / 2)+2);
+        transform.position = new Vector2((-GridW / 2 + GridSize / 2) + 2.5f, (GridH / 2 - GridSize / 2) + 2.5f);
     }
 }

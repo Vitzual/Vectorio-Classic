@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor.UI;
 
-public class TriangleAI : EntityClass
+public class TriangleAI : EnemyClass
 {
     [SerializeField]
     private ParticleSystem Effect;

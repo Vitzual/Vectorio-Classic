@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EntityClass : MonoBehaviour
+public class EnemyClass : MonoBehaviour
 {
 
     protected ParticleSystem DeathEffect;

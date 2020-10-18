@@ -41,4 +41,23 @@ public class DefensePool : MonoBehaviour
         }
         return result;
     }
+
+    // Find the nearest enemy, and return the distance
+    public static float FindClosestPosition(Vector3 pos)
+    {
+        DefensePool result = null;
+        float dist = float.PositiveInfinity;
+        var e = DefensePool.Pool.GetEnumerator();
+        while (e.MoveNext())
+        {
+            float d = (e.Current.transform.position - pos).sqrMagnitude;
+            if (d < dist)
+            {
+                result = e.Current;
+                dist = d;
+            }
+        }
+        return dist;
+    }
+
 }

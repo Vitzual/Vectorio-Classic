@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.UI;
 
 public class TriangleAI : EntityClass
 {
@@ -7,11 +8,15 @@ public class TriangleAI : EntityClass
     private ParticleSystem Effect;
     [SerializeField]
     private ParticleSystem ChargeEffect;
-    private bool InRange = false;
     private Rigidbody2D Triangle;
+
+    // Behavioural variables
     private Vector2 Movement;
     private Vector2 TargetPosition;
-    public float MoveSpeed = 5f;
+    private bool InRange = false;
+    private float MoveSpeed = 10f;
+    private int ProcRange = 500;
+    private int ChargeTime = 3;
 
     // Constructor method
     public TriangleAI()
@@ -32,6 +37,7 @@ public class TriangleAI : EntityClass
     {
         // Find closest enemy 
         var target = DefensePool.FindClosestDefense(transform.position);
+        float distance = DefensePool.FindClosestPosition(transform.position);
 
         // Rotate towards current target
         TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
@@ -44,14 +50,13 @@ public class TriangleAI : EntityClass
         lookDirection.Normalize();
         Movement = lookDirection;
 
-        //if (lookDirection.magnitude <= 20 && InRange == false)
-        //{
-        //    InRange = true;
-        //    MoveSpeed = 0f;
-        //    ChargeEffect = Instantiate(ChargeEffect, transform.position, transform.rotation);
-        //    WaitSeconds(5);
-        //    MoveSpeed = 20f;
-        //}
+        if (distance <= ProcRange && InRange == false)
+        {
+            InRange = true;
+            MoveSpeed = 0;
+            //ParticleSystem Charge = Instantiate(ChargeEffect, Triangle.position, Quaternion.Euler(-90f, 0, 0f), Triangle.transform);
+            StartCoroutine(SetChargeup(ChargeTime));
+        }
 
     }
 
@@ -68,8 +73,9 @@ public class TriangleAI : EntityClass
     }
 
     // Wait x amount of time
-    IEnumerator WaitSeconds(int a)
+    IEnumerator SetChargeup(int a)
     {
         yield return new WaitForSeconds(a);
+        MoveSpeed = 100f;
     }
 }

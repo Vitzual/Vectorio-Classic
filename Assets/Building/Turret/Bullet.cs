@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(a);
         if (this != null)
         {
-            Instantiate(hitEffect, this.gameObject.transform.position, Quaternion.identity);
+            Instantiate(HitEffect, this.gameObject.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }

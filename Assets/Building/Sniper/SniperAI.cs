@@ -12,8 +12,8 @@ public class SniperAI : MonoBehaviour
     // Default weapon variables
     protected float FireRate = 3f;
     protected float NextFire = -3f;
-    protected float BulletForce = 200f;
-    protected float TotalRange = 2.5f;
+    protected float BulletForce = 180f;
+    protected int Range = 5000;
     protected int Offset = 0;
 
     // Base weapon objects
@@ -29,7 +29,7 @@ public class SniperAI : MonoBehaviour
     void Update()
     {
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position);
+        var target = EnemyPool.FindClosestEnemy(transform.position, Range);
 
         // If a target exists, shoot at it
         if (target != null)

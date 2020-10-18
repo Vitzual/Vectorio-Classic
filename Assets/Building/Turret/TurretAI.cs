@@ -76,11 +76,8 @@ public class TurretAI : MonoBehaviour
         bullet.transform.Rotate(0, 0, Offset);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(BulletSpread(FirePoint.up, Random.Range(-0.1f, 0.1f)) * BulletForce, ForceMode2D.Impulse);
-<<<<<<< Updated upstream
-=======
         Destroy(bullet, 1f);
         Instantiate(DecayEffect, bullet.transform.position, Quaternion.identity);
->>>>>>> Stashed changes
     }
 
     // Calculate bullet spread

@@ -7,16 +7,30 @@ public class TurretDefense : MonoBehaviour
     protected float fireRate;
     protected float bulletForce;
     protected float bulletSpread;
+    protected float bulletAmount;
     protected int range;
 
     // Global variables
     protected float nextFire = 0;
+    protected float timePassed = 0;
 
     // Creates bullet object
     protected void Shoot(GameObject prefab, Transform pos)
     {
-        GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
-        bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce, ForceMode2D.Impulse);
+        if (nextFire > 0)
+        {
+            nextFire -= Time.deltaTime;
+            return;
+        }
+        else
+        {
+            for(int i=0; i<bulletAmount; i+=1)
+            {
+                GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
+                bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce, ForceMode2D.Impulse);
+            }
+            nextFire = fireRate;
+        }
     }
 
     // Calculate bullet spread

@@ -13,6 +13,7 @@ public class SniperAI : TurretDefense
         fireRate = 3f;
         bulletForce = 180f;
         bulletSpread = 0f;
+        bulletAmount = 1;
         range = 5000;
     }
 
@@ -40,21 +41,12 @@ public class SniperAI : TurretDefense
                 Gun.rotation += 0.3f;
             }
 
+            // If turret is pointing at target, fire at it
             if ((Gun.rotation - angle) <= 5 && (Gun.rotation - angle) >= -5)
             {
-                // Shoot bullet
-                if (nextFire > 0)
-                {
-                    nextFire -= Time.deltaTime;
-                    return;
-                }
-
                 // Call shoot function
                 Shoot(Bullet, Point);
             }
         }
-
-        // Update cooldown
-        nextFire = fireRate;
     }
 }

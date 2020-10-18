@@ -13,6 +13,7 @@ public class TurretAI : TurretDefense
         fireRate = 0.5f;
         bulletForce = 100f;
         bulletSpread = 0.1f;
+        bulletAmount = 3;
         range = 1000;
     }
 
@@ -34,7 +35,8 @@ public class TurretAI : TurretDefense
             if (Gun.rotation >= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
                 Gun.rotation -= 0.3f;
-            } else if (Gun.rotation <= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
+            } 
+            else if (Gun.rotation <= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
                 Gun.rotation += 0.3f;
             }
@@ -42,19 +44,9 @@ public class TurretAI : TurretDefense
             // If turret is pointing at target, fire at it
             if ((Gun.rotation - angle) <= 1 && (Gun.rotation - angle) >= -1)
             {
-                // Shoot bullet
-                if (nextFire > 0)
-                {
-                    nextFire -= Time.deltaTime;
-                    return;
-                }
-
                 // Call shoot function
                 Shoot(Bullet, Point);
             }
         }
-
-        // Update cooldown
-        nextFire = fireRate;
     }
 }

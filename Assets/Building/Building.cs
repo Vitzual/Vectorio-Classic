@@ -55,7 +55,7 @@ public class Building : MonoBehaviour
         {
 
             Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-            RaycastHit2D rayHit = Physics2D.Raycast(mouseRay, Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider == null)
@@ -69,7 +69,7 @@ public class Building : MonoBehaviour
         {
 
             Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-            RaycastHit2D rayHit = Physics2D.Raycast(mouseRay, Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null)

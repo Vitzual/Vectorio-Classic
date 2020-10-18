@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 
-public class SniperBullet : MonoBehaviour
+public class SniperBullet : BulletClass
 {
-    public ParticleSystem hitEffect;
 
-    // hit.collider.gameObject.GetComponent<SpaceThing>().Damage(10,0);
+    public ParticleSystem Effect;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Start()
     {
-        if (other.tag != "Defense" && other.tag != "Bullet")
-        {
-            if (other.name == "Triangle(Clone)")
-            {
-                other.GetComponent<TriangleAI>().TakeDamage(5);
-            }
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-        }
+        HitEffect = Effect;
+        damage = 5;
+        StartCoroutine(SetLifetime(1));
     }
 
+    public override void collide()
+    {
+        Instantiate(HitEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
 }

@@ -13,6 +13,7 @@ public class SniperAI : MonoBehaviour
     protected float FireRate = 3f;
     protected float NextFire = -3f;
     protected float BulletForce = 180f;
+    protected int Lifetime = 1;
     protected int Range = 5000;
     protected int Offset = 0;
 
@@ -74,8 +75,6 @@ public class SniperAI : MonoBehaviour
         bullet.transform.Rotate(0, 0, Offset);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(BulletSpread(FirePoint.up, Random.Range(0f, 0f)) * BulletForce, ForceMode2D.Impulse);
-        Destroy(bullet,2.5f);
-        Instantiate(DecayEffect, bullet.transform.position, Quaternion.identity);
     }
 
     // Calculate bullet spread

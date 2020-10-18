@@ -5,6 +5,7 @@ public class Building : MonoBehaviour
 
     // Placement sprites
     public Sprite Turret;
+    public Sprite Sniper;
     public Sprite Enemy;
     public Sprite Bomber;
     private SpriteRenderer Selected;
@@ -16,6 +17,8 @@ public class Building : MonoBehaviour
     // Object placements
     [SerializeField]
     private GameObject GridObj;
+    [SerializeField]
+    private GameObject SniperObj;
     [SerializeField]
     private GameObject TurretObj;
     [SerializeField]
@@ -87,6 +90,12 @@ public class Building : MonoBehaviour
             Adjustment = 1f;
             Selected.sprite = Enemy;
             SelectedObj = EnemyObj;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Adjustment = 1f;
+            Selected.sprite = Sniper;
+            SelectedObj = SniperObj;
         }
         else if (Input.GetKeyDown(KeyCode.G) && IsActive == false)
         {

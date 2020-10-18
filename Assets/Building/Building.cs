@@ -51,7 +51,7 @@ public class Building : MonoBehaviour
         AdjustAlphaValue();
 
         // If user left clicks, place object
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
 
             Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
@@ -65,7 +65,7 @@ public class Building : MonoBehaviour
         }
 
         // If user right clicks, place object
-        else if (Input.GetButtonDown("Fire2"))
+        else if (Input.GetButton("Fire2"))
         {
 
             Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);

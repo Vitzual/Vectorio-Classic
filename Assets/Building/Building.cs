@@ -13,6 +13,7 @@ public class Building : MonoBehaviour
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
     private bool IsActive = false;
+    private bool QuickPlace = true;
 
     // Object placements
     [SerializeField]
@@ -50,31 +51,64 @@ public class Building : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
-        // If user left clicks, place object
-        if (Input.GetButton("Fire1"))
-        {
-
-            Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-            // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider == null)
+        
+        if (QuickPlace == true) {
+            // If user left clicks, place object
+            if (Input.GetButton("Fire1"))
             {
-                Instantiate(SelectedObj, transform.position, Quaternion.identity);
+
+                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider == null)
+                {
+                    Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                }
             }
-        }
 
-        // If user right clicks, place object
-        else if (Input.GetButton("Fire2"))
-        {
-
-            Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-            // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider != null)
+            // If user right clicks, place object
+            else if (Input.GetButton("Fire2"))
             {
-                Destroy(rayHit.collider.gameObject);
+
+                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider != null)
+                {
+                    Destroy(rayHit.collider.gameObject);
+                }
+            }
+        } 
+        else if (QuickPlace == false)
+        {
+            // If user left clicks, place object
+            if (Input.GetButtonDown("Fire1"))
+            {
+
+                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider == null)
+                {
+                    Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                }
+            }
+
+            // If user right clicks, place object
+            else if (Input.GetButtonDown("Fire2"))
+            {
+
+                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider != null)
+                {
+                    Destroy(rayHit.collider.gameObject);
+                }
             }
         }
 
@@ -107,6 +141,14 @@ public class Building : MonoBehaviour
             IsActive = false;
             GridObj.gameObject.SetActive(false);
         }
+        else if (Input.GetKeyDown(KeyCode.Q) && QuickPlace == true)
+        {
+            QuickPlace = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && QuickPlace == false)
+        {
+            QuickPlace = true;
+        }
 
     }
 
@@ -137,5 +179,4 @@ public class Building : MonoBehaviour
             AdjustLimiter += 1;
         }
     }
-
 }

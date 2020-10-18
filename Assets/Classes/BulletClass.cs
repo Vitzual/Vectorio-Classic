@@ -14,7 +14,7 @@ public abstract class BulletClass : MonoBehaviour
         {
             if (other.name == "Triangle(Clone)")
             {
-                other.GetComponent<TriangleAI>().TakeDamage(damage);
+                other.GetComponent<EnemyClass>().DamageEntity(damage);
             }
             collide();
         }

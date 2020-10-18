@@ -1,38 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor.UI;
 
 public class TriangleAI : EnemyClass
 {
+    // Model components
     [SerializeField]
     private ParticleSystem Effect;
     [SerializeField]
     private ParticleSystem ChargeEffect;
     private Rigidbody2D Triangle;
 
-    // Behavioural variables
+    // Movement variables
     private Vector2 Movement;
-    private Vector2 TargetPosition;
+
+    // Triangle specific variables
     private bool InRange = false;
-    private float MoveSpeed = 10f;
     private int ProcRange = 500;
     private int ChargeTime = 3;
-
-    // Constructor method
-    public TriangleAI()
-    {
-        health = 5;
-        damage = 1;
-        DeathEffect = Effect;
-    }
 
     // On start, get rigidbody and assign death effect
     void Start()
     {
         Triangle = this.GetComponent<Rigidbody2D>();
-        DeathEffect = Effect;
+        health = 5;
+        damage = 1;
+        moveSpeed = 20f;
     }
 
+    // Targetting system
     void Update()
     {
         // Find closest enemy 
@@ -40,7 +35,7 @@ public class TriangleAI : EnemyClass
         float distance = DefensePool.FindClosestPosition(transform.position);
 
         // Rotate towards current target
-        TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
+        Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
         // Move towards defense
         Vector2 lookDirection = TargetPosition - Triangle.position;
@@ -50,32 +45,33 @@ public class TriangleAI : EnemyClass
         lookDirection.Normalize();
         Movement = lookDirection;
 
+        // If close, charge up and launch at defense
         if (distance <= ProcRange && InRange == false)
         {
             InRange = true;
-            MoveSpeed = 0;
-            //ParticleSystem Charge = Instantiate(ChargeEffect, Triangle.position, Quaternion.Euler(-90f, 0, 0f), Triangle.transform);
+            moveSpeed = 0;
             StartCoroutine(SetChargeup(ChargeTime));
         }
 
     }
 
-    // If hit by bullet, take damage
-    public void TakeDamage(int a)
-    {
-        DamageEntity(a);
-    }
-
     // Move entity towards target every frame
     private void FixedUpdate()
     {
-        Triangle.AddForce(Movement * MoveSpeed);
+        Triangle.AddForce(Movement * moveSpeed);
+    }
+
+    // Kill entity
+    public override void KillEntity()
+    {
+        Instantiate(Effect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     // Wait x amount of time
     IEnumerator SetChargeup(int a)
     {
         yield return new WaitForSeconds(a);
-        MoveSpeed = 100f;
+        moveSpeed = 100f;
     }
 }

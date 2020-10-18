@@ -1,39 +1,24 @@
 ﻿using UnityEngine;
 
-public class EnemyClass : MonoBehaviour
+public abstract class EnemyClass : MonoBehaviour
 {
 
-    protected ParticleSystem DeathEffect;
+    // Enemy stats
     protected int health;
     protected int damage;
+    protected float moveSpeed;
 
-    // Give damage to entity, check health
-    protected void DamageEntity(int a)
+    // Abstract methods
+    public abstract void KillEntity();
+
+    // Apply damage to entity
+    public void DamageEntity(int dmgRecieved)
     {
-        health -= a;
-        if (IsAlive() == false)
+        health -= dmgRecieved;
+        if (health <= 0)
         {
             KillEntity();
         }
-    }
-
-    // Check if entity still has health
-    protected bool IsAlive()
-    {
-        if (health <= 0)
-        {
-            return false;
-        } else
-        {
-            return true;
-        }
-    }
-
-    // Kill entity
-    protected void KillEntity()
-    {
-        Instantiate(DeathEffect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 
 }

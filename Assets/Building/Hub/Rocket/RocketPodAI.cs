@@ -15,6 +15,7 @@ public class RocketPodAI : EntityClass
     protected float fireRate = 0.5f;
     protected float nextFire = -1f;
     protected float bulletForce = 20f;
+    protected int range = 20;
     protected int offset = 0;
 
     // Base weapon objects
@@ -30,7 +31,7 @@ public class RocketPodAI : EntityClass
     void Update()
     {
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position);
+        var target = EnemyPool.FindClosestEnemy(transform.position, range);
 
         // If a target exists, shoot at it
         if (target != null)

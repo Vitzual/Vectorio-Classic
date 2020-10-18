@@ -9,6 +9,7 @@ public class Rocket : MonoBehaviour
     private Vector2 TargetPosition;
     private Vector2 Movement;
     private Rigidbody2D rocket;
+    protected int range = 20;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class Rocket : MonoBehaviour
     {
        
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position);
+         var target = EnemyPool.FindClosestEnemy(transform.position, range);
 
         // Rotate towards current target
         TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);

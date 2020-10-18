@@ -14,6 +14,8 @@ public class TurretAI : MonoBehaviour
     protected float NextFire = -1f;
     protected float BulletForce = 50f;
     protected float TotalRange = 1f;
+    protected int Lifetime = 1;
+    protected int Range = 1500;
     protected int Offset = 0;
 
     // Base weapon objects
@@ -28,7 +30,7 @@ public class TurretAI : MonoBehaviour
     void Update()
     {
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position);
+        var target = EnemyPool.FindClosestEnemy(transform.position, Range);
 
         // If a target exists, shoot at it
         if (target != null)
@@ -69,10 +71,10 @@ public class TurretAI : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+        StartCoroutine(bullet.GetComponent<Bullet>().SetLifetime(Lifetime));
         bullet.transform.Rotate(0, 0, Offset);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(BulletSpread(FirePoint.up, Random.Range(-0.1f, 0.1f)) * BulletForce, ForceMode2D.Impulse);
-        Destroy(bullet, 1f);
     }
 
     // Calculate bullet spread

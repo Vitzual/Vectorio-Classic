@@ -39,8 +39,6 @@ public class TriangleAI : EntityClass
         // Move towards defense
         Vector2 lookDirection = TargetPosition - Triangle.position;
 
-        Debug.Log(lookDirection.magnitude);
-
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         Triangle.rotation = angle;
         lookDirection.Normalize();

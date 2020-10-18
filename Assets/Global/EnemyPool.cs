@@ -25,7 +25,7 @@ public class EnemyPool : MonoBehaviour
 
     // Find the nearest enemy, and return the object
     // Updates ever 0.5s and caches (very cpu efficient)
-    public static EnemyPool FindClosestEnemy(Vector3 pos)
+    public static EnemyPool FindClosestEnemy(Vector3 pos, float maxDistance)
     {
         EnemyPool result = null;
         float dist = float.PositiveInfinity;
@@ -39,6 +39,11 @@ public class EnemyPool : MonoBehaviour
                 dist = d;
             }
         }
-        return result;
+
+        if (dist <= maxDistance)
+        {
+            return result;
+        }
+        return null;
     }
 }

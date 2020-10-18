@@ -13,7 +13,6 @@ public class GridGen : MonoBehaviour
     void Start()
     {
         GenerateGrid();
-        this.gameObject.SetActive(false);
     }
 
     private void GenerateGrid()

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    public ParticleSystem hitEffect;
+    public ParticleSystem HitEffect;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
             {
                 other.GetComponent<TriangleAI>().TakeDamage(1);
             }
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Instantiate(HitEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

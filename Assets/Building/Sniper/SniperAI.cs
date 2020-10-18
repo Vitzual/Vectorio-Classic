@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
 
-public class TurretAI : MonoBehaviour
+public class SniperAI : MonoBehaviour
 {
     // Turret AI variables 
     [SerializeField]
     private Transform FirePoint;
     [SerializeField]
-    private Rigidbody2D TurretGun;
+    private Rigidbody2D SniperGun;
     private Vector2 TargetPosition;
 
     // Default weapon variables
-    protected float FireRate = 0.5f;
-    protected float NextFire = -1f;
-    protected float BulletForce = 50f;
-    protected float TotalRange = 1f;
-    protected int Lifetime = 1;
-    protected int Range = 1500;
+    protected float FireRate = 3f;
+    protected float NextFire = -3f;
+    protected float BulletForce = 200f;
+    protected float TotalRange = 2.5f;
     protected int Offset = 0;
 
     // Base weapon objects
@@ -31,26 +29,27 @@ public class TurretAI : MonoBehaviour
     void Update()
     {
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position, Range);
+        var target = EnemyPool.FindClosestEnemy(transform.position);
 
         // If a target exists, shoot at it
         if (target != null)
         {
             // Rotate turret towards target
             TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
-            Vector2 lookDirection = (TargetPosition - TurretGun.position);
+            Vector2 lookDirection = (TargetPosition - SniperGun.position);
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
 
             // Smooth rotation when targetting enemies
-            if (TurretGun.rotation >= angle && !((TurretGun.rotation - angle) <= 0.3 && (TurretGun.rotation - angle) >= -0.3))
+            if (SniperGun.rotation >= angle && !((SniperGun.rotation - angle) <= 0.3 && (SniperGun.rotation - angle) >= -0.3))
             {
-                TurretGun.rotation -= 0.3f;
-            } else if (TurretGun.rotation <= angle && !((TurretGun.rotation - angle) <= 0.3 && (TurretGun.rotation - angle) >= -0.3))
-            {
-                TurretGun.rotation += 0.3f;
+                SniperGun.rotation -= 0.3f;
             }
-            
-            if ((TurretGun.rotation - angle) <= 5 && (TurretGun.rotation - angle) >= -5)
+            else if (SniperGun.rotation <= angle && !((SniperGun.rotation - angle) <= 0.3 && (SniperGun.rotation - angle) >= -0.3))
+            {
+                SniperGun.rotation += 0.3f;
+            }
+
+            if ((SniperGun.rotation - angle) <= 5 && (SniperGun.rotation - angle) >= -5)
             {
                 // Shoot bullet
                 if (NextFire > 0)
@@ -72,15 +71,11 @@ public class TurretAI : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
-        StartCoroutine(bullet.GetComponent<Bullet>().SetLifetime(Lifetime));
         bullet.transform.Rotate(0, 0, Offset);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(BulletSpread(FirePoint.up, Random.Range(-0.1f, 0.1f)) * BulletForce, ForceMode2D.Impulse);
-<<<<<<< Updated upstream
-=======
-        Destroy(bullet, 1f);
+        rb.AddForce(BulletSpread(FirePoint.up, Random.Range(0f, 0f)) * BulletForce, ForceMode2D.Impulse);
+        Destroy(bullet,2.5f);
         Instantiate(DecayEffect, bullet.transform.position, Quaternion.identity);
->>>>>>> Stashed changes
     }
 
     // Calculate bullet spread

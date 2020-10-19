@@ -8,18 +8,11 @@ public class TriangleScene : EnemyClass
     private ParticleSystem Effect;
     [SerializeField]
     private ParticleSystem ChargeEffect;
-    [SerializeField]
-    private GameObject Spawn;
     private Vector3 SpawnPosition;
     private Rigidbody2D Triangle;
 
     // Movement variables
     private Vector2 Movement;
-
-    // Triangle specific variables
-    private bool InRange = false;
-    private int ProcRange = 500;
-    private int ChargeTime = 3;
 
     // On start, get rigidbody and assign death effect
     void Start()
@@ -66,7 +59,8 @@ public class TriangleScene : EnemyClass
     public override void KillEntity()
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
-        Instantiate(Spawn, SpawnPosition, Quaternion.identity);
+        var clone = Instantiate(this, SpawnPosition, Quaternion.identity);
+        clone.name = "Triangle";
         Destroy(gameObject);
     }
 

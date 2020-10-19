@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Building : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class Building : MonoBehaviour
     private void Start()
     {
         Selected = GetComponent<SpriteRenderer>();
-        GridObj = Instantiate(GridObj, transform.position, Quaternion.identity);
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class Building : MonoBehaviour
         
         if (QuickPlace == true) {
             // If user left clicks, place object
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButton("Fire1") && SelectedObj != null)
             {
 
                 Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
@@ -68,7 +68,7 @@ public class Building : MonoBehaviour
             }
 
             // If user right clicks, place object
-            else if (Input.GetButton("Fire2"))
+            else if (Input.GetButton("Fire2") && SelectedObj != null)
             {
 
                 Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
@@ -137,23 +137,14 @@ public class Building : MonoBehaviour
             Selected.sprite = Bolt;
             SelectedObj = BoltObj;
         }
-        else if (Input.GetKeyDown(KeyCode.G) && IsActive == false)
+        //else if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    IsActive = !IsActive;
+        //    GridObj.gameObject.SetActive(IsActive);
+        //}
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
-            IsActive = true;
-            GridObj.gameObject.SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.G) && IsActive == true)
-        {
-            IsActive = false;
-            GridObj.gameObject.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q) && QuickPlace == true)
-        {
-            QuickPlace = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.Q) && QuickPlace == false)
-        {
-            QuickPlace = true;
+            QuickPlace = !QuickPlace;
         }
 
     }

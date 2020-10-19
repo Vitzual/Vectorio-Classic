@@ -14,6 +14,7 @@ public class BoltAI : TurretClass
         bulletForce = 100f;
         bulletSpread = 0f;
         bulletAmount = 1;
+        rotationSpeed = 0.5f;
         range = 10000;
         health = 10;
     }
@@ -35,11 +36,11 @@ public class BoltAI : TurretClass
             // Smooth rotation when targetting enemies
             if (Gun.rotation >= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
-                Gun.rotation -= 0.3f;
+                Gun.rotation -= rotationSpeed;
             } 
             else if (Gun.rotation <= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
-                Gun.rotation += 0.3f;
+                Gun.rotation += rotationSpeed;
             }
             
             // If turret is pointing at target, fire at it

@@ -15,6 +15,7 @@ public class BoltAI : TurretClass
         bulletSpread = 0f;
         bulletAmount = 1;
         range = 10000;
+        health = 10;
     }
 
     // Targetting system

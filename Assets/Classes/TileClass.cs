@@ -17,6 +17,7 @@ public abstract class TileClass : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             int enemyDamage = collision.gameObject.GetComponent<EnemyClass>().getDamage();
+            collision.gameObject.GetComponent<EnemyClass>().KillEntity();
             DamageTile(enemyDamage);
         }
     }

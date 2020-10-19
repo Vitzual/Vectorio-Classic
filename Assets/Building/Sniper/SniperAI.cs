@@ -15,6 +15,7 @@ public class SniperAI : TurretClass
         bulletSpread = 0f;
         bulletAmount = 1;
         range = 5000;
+        health = 3;
     }
 
     // Targetting system

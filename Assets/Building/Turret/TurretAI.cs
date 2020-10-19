@@ -15,6 +15,7 @@ public class TurretAI : TurretClass
         bulletSpread = 0.1f;
         bulletAmount = 3;
         range = 1000;
+        health = 5;
     }
 
     // Targetting system

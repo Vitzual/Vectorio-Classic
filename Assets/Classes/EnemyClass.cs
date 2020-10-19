@@ -21,4 +21,10 @@ public abstract class EnemyClass : MonoBehaviour
         }
     }
 
+    // Return damage
+    public int getDamage()
+    {
+        return damage;
+    }
+
 }

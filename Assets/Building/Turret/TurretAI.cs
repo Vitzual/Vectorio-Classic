@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TurretAI : TurretDefense
+public class TurretAI : TurretClass
 {
     // Turret AI variables 
     public Transform Point;
@@ -48,5 +48,12 @@ public class TurretAI : TurretDefense
                 Shoot(Bullet, Point);
             }
         }
+    }
+
+    // Kill defense
+    public override void DestroyTile()
+    {
+        Instantiate(Effect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

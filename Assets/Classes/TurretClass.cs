@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TurretDefense : MonoBehaviour
+public abstract class TurretClass : TileClass
 {
 
     // Weapon variables
@@ -13,6 +13,8 @@ public class TurretDefense : MonoBehaviour
     // Global variables
     protected float nextFire = 0;
     protected float timePassed = 0;
+
+    
 
     // Creates bullet object
     protected void Shoot(GameObject prefab, Transform pos)

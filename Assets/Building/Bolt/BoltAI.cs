@@ -22,12 +22,17 @@ public class BoltAI : TurretClass
     // Targetting system
     void Update()
     {
-        // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(Point.position, range);
+        if (!hasTarget) {
+            // Find closest enemy 
+            target = EnemyPool.FindClosestEnemy(Point.position, range); 
+        }
 
         // If a target exists, shoot at it
         if (target != null)
         {
+            // Flag hasTarget
+            hasTarget = true;
+
             // Rotate turret towards target
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
             Vector2 lookDirection = (TargetPosition - Gun.position);
@@ -46,9 +51,15 @@ public class BoltAI : TurretClass
             // If turret is pointing at target, fire at it
             if ((Gun.rotation - angle) <= 1 && (Gun.rotation - angle) >= -1)
             {
+                // Unflag hasTarget
+                hasTarget = false;
+                
                 // Call shoot function
                 Shoot(Bullet, Point);
             }
+        } else {
+            // Unflag hasTarget when target is null
+            hasTarget = false;
         }
     }
 

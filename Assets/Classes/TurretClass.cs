@@ -14,6 +14,8 @@ public abstract class TurretClass : TileClass
     // Global variables
     protected float nextFire = 0;
     protected float timePassed = 0;
+    protected bool hasTarget = false;
+    protected EnemyPool target = null;
 
     
 

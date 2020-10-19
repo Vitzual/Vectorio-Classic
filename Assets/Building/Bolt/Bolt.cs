@@ -1,14 +1,16 @@
-﻿using UnityEngine;
+﻿using UnityEditor.UI;
+using UnityEngine;
 
 public class Bolt : BulletClass
 {
 
     public ParticleSystem Effect;
+    private int totalHits = 3;
 
     public void Start()
     {
         HitEffect = Effect;
-        damage = 1;
+        damage = 5;
         StartCoroutine(SetLifetime(1));
     }
 

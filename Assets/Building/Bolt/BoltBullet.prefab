@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544994017379734926}
-  - component: {fileID: 2265546855456456335}
+  - component: {fileID: -3976941315501836604}
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 8371128599779309114}
   - component: {fileID: 3760844040989154300}
   - component: {fileID: 2937699046400398723}
-  m_Layer: 9
-  m_Name: Bullet
+  m_Layer: 10
+  m_Name: BoltBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3293027712645128820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2265546855456456335
+--- !u!114 &-3976941315501836604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3293027712645128820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c360b84188a9ee4b947049ac59c5612, type: 3}
+  m_Script: {fileID: 11500000, guid: 40d2b532423b8f948b71d71facb3bfbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337, type: 3}
+  Effect: {fileID: 8342469565711734033, guid: 8df0088151fd1e34c8c3aa4e1a503edd, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66,7 +66,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab7f01b36b77cf04598435a759b33092, type: 2}
+  - {fileID: 2100000, guid: 1c5d9446c5adf3343a2aa7392a9192d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,7 +117,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab7f01b36b77cf04598435a759b33092, type: 2}
+  - {fileID: 2100000, guid: 1c5d9446c5adf3343a2aa7392a9192d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,7 +138,7 @@ TrailRenderer:
   m_SortingLayerID: 972303193
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Time: 0.69
+  m_Time: 1.87
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -155,7 +155,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.68622375
       - serializedVersion: 3
-        time: 0.13661724
+        time: 0.36418682
         value: 0
         inSlope: 0
         outSlope: 0

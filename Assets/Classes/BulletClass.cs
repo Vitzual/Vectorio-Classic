@@ -16,7 +16,10 @@ public abstract class BulletClass : MonoBehaviour
             {
                 other.GetComponent<EnemyClass>().DamageEntity(damage);
             }
-            collide();
+            if (this.name != "BoltBullet(Clone)")
+            {
+                collide();
+            }
         }
     }
 

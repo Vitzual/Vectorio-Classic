@@ -10,11 +10,11 @@ public class BoltAI : TurretDefense
     // On start, assign weapon variables
     void Start()
     {
-        fireRate = 0.5f;
+        fireRate = 2f;
         bulletForce = 100f;
-        bulletSpread = 0.1f;
-        bulletAmount = 3;
-        range = 1000;
+        bulletSpread = 0f;
+        bulletAmount = 1;
+        range = 10000;
     }
 
     // Targetting system

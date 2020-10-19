@@ -26,6 +26,7 @@ public class TurretDefense : MonoBehaviour
         {
             for(int i=0; i<bulletAmount; i+=1)
             {
+                pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce, ForceMode2D.Impulse);
             }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UIElements;
 
 public class TriangleScene : EnemyClass
 {

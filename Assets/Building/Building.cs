@@ -119,19 +119,19 @@ public class Building : MonoBehaviour
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
             SelectedObj = EnemyObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Adjustment = 1f;
             Selected.sprite = Sniper;
             SelectedObj = SniperObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Adjustment = 1f;
             Selected.sprite = Bolt;
@@ -176,4 +176,34 @@ public class Building : MonoBehaviour
             AdjustLimiter += 1;
         }
     }
+
+    public void SetTurret()
+    {
+        Selected.sprite = Turret;
+        SelectedObj = TurretObj;
+    }
+
+    public void SetSniper()
+    {
+        Selected.sprite = Sniper;
+        SelectedObj = SniperObj;
+    }
+
+    public void SetBolt()
+    {
+        Selected.sprite = Bolt;
+        SelectedObj = BoltObj;
+    }
+
+    public void SetTriangle()
+    {
+        Selected.sprite = Enemy;
+        SelectedObj = EnemyObj;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
 }

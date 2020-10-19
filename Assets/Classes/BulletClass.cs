@@ -12,11 +12,11 @@ public abstract class BulletClass : MonoBehaviour
     {
         if (other.tag != "Defense" && other.tag != "Bullet")
         {
-            if (other.name == "Triangle(Clone)")
+            if (other.name.Contains("Triangle"))
             {
                 other.GetComponent<EnemyClass>().DamageEntity(damage);
             }
-            if (this.name != "BoltBullet(Clone)")
+            if (!this.name.Contains("BoltBullet"))
             {
                 collide();
             }

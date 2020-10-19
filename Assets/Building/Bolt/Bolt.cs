@@ -1,11 +1,9 @@
-﻿using UnityEditor.UI;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bolt : BulletClass
 {
 
     public ParticleSystem Effect;
-    private int totalHits = 3;
 
     public void Start()
     {

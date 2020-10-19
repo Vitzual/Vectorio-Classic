@@ -14,6 +14,7 @@ public class TurretAI : TurretClass
         bulletForce = 100f;
         bulletSpread = 0.1f;
         bulletAmount = 1;
+        rotationSpeed = 0.8f;
         range = 1000;
         health = 5;
     }
@@ -35,11 +36,11 @@ public class TurretAI : TurretClass
             // Smooth rotation when targetting enemies
             if (Gun.rotation >= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
-                Gun.rotation -= 0.3f;
+                Gun.rotation -= rotationSpeed;
             } 
             else if (Gun.rotation <= angle && !((Gun.rotation - angle) <= 0.3 && (Gun.rotation - angle) >= -0.3))
             {
-                Gun.rotation += 0.3f;
+                Gun.rotation += rotationSpeed;
             }
             
             // If turret is pointing at target, fire at it

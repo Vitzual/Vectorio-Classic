@@ -8,6 +8,7 @@ public abstract class TurretClass : TileClass
     protected float bulletForce;
     protected float bulletSpread;
     protected float bulletAmount;
+    protected float rotationSpeed;
     protected int range;
 
     // Global variables

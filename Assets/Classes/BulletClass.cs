@@ -23,7 +23,7 @@ public abstract class BulletClass : MonoBehaviour
         }
     }
 
-    public IEnumerator SetLifetime(int a)
+    public IEnumerator SetLifetime(float a)
     {
         yield return new WaitForSeconds(a);
         if (this != null)

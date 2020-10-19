@@ -121,7 +121,7 @@ public class Building : MonoBehaviour
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
@@ -139,7 +139,7 @@ public class Building : MonoBehaviour
             Selected.sprite = Bolt;
             SelectedObj = BoltObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             Adjustment = 1f;
             Selected.sprite = Shotgun;
@@ -159,7 +159,7 @@ public class Building : MonoBehaviour
 
     public void AdjustAlphaValue()
     {
-        if (AdjustLimiter == 20)
+        if (AdjustLimiter == 10)
         {
             if (AdjustSwitch == false)
             {

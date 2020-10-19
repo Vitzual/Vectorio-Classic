@@ -13,7 +13,7 @@ public class TurretAI : TurretClass
         fireRate = 0.5f;
         bulletForce = 100f;
         bulletSpread = 0.1f;
-        bulletAmount = 3;
+        bulletAmount = 1;
         range = 1000;
         health = 5;
     }

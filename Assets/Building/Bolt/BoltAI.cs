@@ -21,7 +21,7 @@ public class BoltAI : TurretDefense
     void Update()
     {
         // Find closest enemy 
-        var target = EnemyPool.FindClosestEnemy(transform.position, range);
+        var target = EnemyPool.FindClosestEnemy(Point.position, range);
 
         // If a target exists, shoot at it
         if (target != null)

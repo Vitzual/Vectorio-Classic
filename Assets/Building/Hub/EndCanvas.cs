@@ -15,7 +15,7 @@ public class EndCanvas : MonoBehaviour
     {
         if(screen.alpha < 1)
         {
-            screen.alpha += 0.001f;
+            screen.alpha += 0.01f;
         }
     }
 

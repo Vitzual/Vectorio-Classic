@@ -10,7 +10,7 @@ public class HubAI : TileClass
     void Start()
     {
         main = Camera.main;
-        health = 1;
+        health = 10;
         level = 1;
     }
 

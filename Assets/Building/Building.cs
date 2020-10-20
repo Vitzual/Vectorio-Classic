@@ -77,7 +77,7 @@ public class Building : MonoBehaviour
                 RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                 // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider != null)
+                if (rayHit.collider != null && rayHit.collider.name != "Hub")
                 {
                     Destroy(rayHit.collider.gameObject);
                 }
@@ -107,7 +107,7 @@ public class Building : MonoBehaviour
                 RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                 // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider != null)
+                if (rayHit.collider != null && rayHit.collider.name != "Hub")
                 {
                     Destroy(rayHit.collider.gameObject);
                 }

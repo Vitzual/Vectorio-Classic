@@ -10,7 +10,7 @@ public abstract class BulletClass : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Defense" && other.tag != "Bullet")
+        if (other.tag != "Defense" && other.tag != "Bullet" && other.tag != "Hub")
         {
             if (other.name.Contains("Triangle"))
             {

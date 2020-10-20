@@ -41,16 +41,28 @@ public abstract class TurretClass : TileClass
             enemyAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
             enemyAngle = AlignRotation(enemyAngle);
             gunRotation = AlignRotation(Gun.rotation);
-            
+
             // Smooth rotation when targetting enemies
             if (((gunRotation >= enemyAngle && !(gunRotation >= 270 && enemyAngle <= 90)) || (gunRotation <= 90 && enemyAngle >= 270))
             && !((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
             {
-                Gun.rotation -= rotationSpeed;
+                if (Gun.rotation - rotationSpeed < enemyAngle) 
+                {
+                    Gun.rotation = enemyAngle;
+                } else 
+                {
+                    Gun.rotation -= rotationSpeed;
+                }
             }
             else if (!((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
             {
-                Gun.rotation += rotationSpeed;
+                if (Gun.rotation + rotationSpeed > enemyAngle) 
+                {
+                    Gun.rotation = enemyAngle;
+                } else 
+                {
+                    Gun.rotation += rotationSpeed;
+                }
             }
         }
     }

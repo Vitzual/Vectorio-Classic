@@ -9,6 +9,7 @@ public class Building : MonoBehaviour
     public Sprite Enemy;
     public Sprite Bolt;
     public Sprite Shotgun;
+    public Sprite SMG;
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
@@ -29,6 +30,8 @@ public class Building : MonoBehaviour
     private GameObject BoltObj;
     [SerializeField]
     private GameObject ShotgunObj;
+    [SerializeField]
+    private GameObject SMGObj;
     private GameObject SelectedObj;
 
     // Internal placement variables
@@ -121,7 +124,7 @@ public class Building : MonoBehaviour
             Selected.sprite = Turret;
             SelectedObj = TurretObj;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             Adjustment = 1f;
             Selected.sprite = Enemy;
@@ -144,6 +147,12 @@ public class Building : MonoBehaviour
             Adjustment = 1f;
             Selected.sprite = Shotgun;
             SelectedObj = ShotgunObj;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Adjustment = 1f;
+            Selected.sprite = SMG;
+            SelectedObj = SMGObj;
         }
         //else if (Input.GetKeyDown(KeyCode.G))
         //{

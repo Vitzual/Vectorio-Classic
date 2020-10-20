@@ -14,7 +14,6 @@ public class Building : MonoBehaviour
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
-    private bool IsActive = false;
     private bool QuickPlace = true;
 
     // Object placements
@@ -154,14 +153,15 @@ public class Building : MonoBehaviour
             Selected.sprite = SMG;
             SelectedObj = SMGObj;
         }
-        //else if (Input.GetKeyDown(KeyCode.G))
-        //{
-        //    IsActive = !IsActive;
-        //    GridObj.gameObject.SetActive(IsActive);
-        //}
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             QuickPlace = !QuickPlace;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Adjustment = 1f;
+            Selected.sprite = null;
+            SelectedObj = null;
         }
 
     }

@@ -3,7 +3,7 @@
 public class CameraMovement : MonoBehaviour
 {
     // Declare variables
-    protected float moveSpeed = 20f;
+    protected float moveSpeed = 30f;
     protected new Rigidbody2D camera;
 
     protected Vector2 movement;
@@ -31,7 +31,6 @@ public class CameraMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Move player
         camera.MovePosition(camera.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }

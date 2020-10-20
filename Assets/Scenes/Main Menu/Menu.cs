@@ -9,6 +9,11 @@ public class Menu : MonoBehaviour
     private GameObject MainMenuHolder;
     private GameObject ChangelogHolder;
 
+    public void Start()
+    {
+        Application.targetFrameRate = 300;
+    }
+
     public void Quit()
     {
         Application.Quit();

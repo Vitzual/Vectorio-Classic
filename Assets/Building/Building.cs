@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
@@ -55,63 +57,66 @@ public class Building : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
-        
-        if (QuickPlace == true) {
-            // If user left clicks, place object
-            if (Input.GetButton("Fire1") && SelectedObj != null)
-            {
-
-                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider == null)
-                {
-                    Instantiate(SelectedObj, transform.position, Quaternion.identity);
-                }
-            }
-
-            // If user right clicks, place object
-            else if (Input.GetButton("Fire2") && SelectedObj != null)
-            {
-
-                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider != null && rayHit.collider.name != "Hub")
-                {
-                    Destroy(rayHit.collider.gameObject);
-                }
-            }
-        } 
-        else if (QuickPlace == false)
+        if (Input.mousePosition.y > 170f)
         {
-            // If user left clicks, place object
-            if (Input.GetButtonDown("Fire1"))
+            if (QuickPlace == true)
             {
-
-                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider == null)
+                // If user left clicks, place object
+                if (Input.GetButton("Fire1") && SelectedObj != null)
                 {
-                    Instantiate(SelectedObj, transform.position, Quaternion.identity);
+
+                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                    // Raycast tile to see if there is already a tile placed
+                    if (rayHit.collider == null)
+                    {
+                        Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                    }
+                }
+
+                // If user right clicks, place object
+                else if (Input.GetButton("Fire2") && SelectedObj != null)
+                {
+
+                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                    // Raycast tile to see if there is already a tile placed
+                    if (rayHit.collider != null && rayHit.collider.name != "Hub")
+                    {
+                        Destroy(rayHit.collider.gameObject);
+                    }
                 }
             }
-
-            // If user right clicks, place object
-            else if (Input.GetButtonDown("Fire2"))
+            else if (QuickPlace == false)
             {
-
-                Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider != null && rayHit.collider.name != "Hub")
+                // If user left clicks, place object
+                if (Input.GetButtonDown("Fire1"))
                 {
-                    Destroy(rayHit.collider.gameObject);
+
+                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                    // Raycast tile to see if there is already a tile placed
+                    if (rayHit.collider == null)
+                    {
+                        Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                    }
+                }
+
+                // If user right clicks, place object
+                else if (Input.GetButtonDown("Fire2"))
+                {
+
+                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
+                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                    // Raycast tile to see if there is already a tile placed
+                    if (rayHit.collider != null && rayHit.collider.name != "Hub")
+                    {
+                        Destroy(rayHit.collider.gameObject);
+                    }
                 }
             }
         }
@@ -159,7 +164,6 @@ public class Building : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Adjustment = 1f;
             Selected.sprite = null;
             SelectedObj = null;
         }
@@ -198,6 +202,18 @@ public class Building : MonoBehaviour
     {
         Selected.sprite = Turret;
         SelectedObj = TurretObj;
+    }
+
+    public void SetShotgun()
+    {
+        Selected.sprite = Shotgun;
+        SelectedObj = ShotgunObj;
+    }
+
+    public void SetSMG()
+    {
+        Selected.sprite = SMG;
+        SelectedObj = SMGObj;
     }
 
     public void SetSniper()

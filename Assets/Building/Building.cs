@@ -78,14 +78,12 @@ public class Building : MonoBehaviour
                 {
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
                     CurrentCache = 0;
-                    if (LastHit != rayHit.collider && rayHit.collider != null)
+                    if (rayHit.collider != null)
                     {
-                        LastHit = rayHit.collider;
                         ShowTileInfo(rayHit.collider);
                     } 
-                    else if (LastHit != rayHit.collider)
+                    else
                     {
-                        LastHit = null;
                         DisableActiveStats();
                     }
                 }

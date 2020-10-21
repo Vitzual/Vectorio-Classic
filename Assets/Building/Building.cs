@@ -35,6 +35,9 @@ public class Building : MonoBehaviour
     private GameObject SMGObj;
     private GameObject SelectedObj;
 
+    // UI Elements
+    public Canvas Overlay;
+
     // Internal placement variables
     [SerializeField]
     private LayerMask TileLayer;
@@ -124,39 +127,27 @@ public class Building : MonoBehaviour
         // Change selected object
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Adjustment = 1f;
-            Selected.sprite = Turret;
-            SelectedObj = TurretObj;
+            SetTurret();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            Adjustment = 1f;
-            Selected.sprite = Enemy;
-            SelectedObj = EnemyObj;
+            SetTriangle();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Adjustment = 1f;
-            Selected.sprite = Sniper;
-            SelectedObj = SniperObj;
+            SetShotgun();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Adjustment = 1f;
-            Selected.sprite = Bolt;
-            SelectedObj = BoltObj;
+            SetSniper();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Adjustment = 1f;
-            Selected.sprite = Shotgun;
-            SelectedObj = ShotgunObj;
+            SetSMG();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            Adjustment = 1f;
-            Selected.sprite = SMG;
-            SelectedObj = SMGObj;
+            SetBolt();
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -164,6 +155,7 @@ public class Building : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
+            DisableActiveInfo();
             Selected.sprite = null;
             SelectedObj = null;
         }
@@ -200,38 +192,64 @@ public class Building : MonoBehaviour
 
     public void SetTurret()
     {
+        DisableActiveInfo();
+        Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
         Selected.sprite = Turret;
         SelectedObj = TurretObj;
     }
 
     public void SetShotgun()
     {
+        DisableActiveInfo();
+        Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
         Selected.sprite = Shotgun;
         SelectedObj = ShotgunObj;
     }
 
-    public void SetSMG()
-    {
-        Selected.sprite = SMG;
-        SelectedObj = SMGObj;
-    }
-
     public void SetSniper()
     {
+        DisableActiveInfo();
+        Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
         Selected.sprite = Sniper;
         SelectedObj = SniperObj;
     }
 
+    public void SetSMG()
+    {
+        DisableActiveInfo();
+        Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
+        Selected.sprite = SMG;
+        SelectedObj = SMGObj;
+    }
+
     public void SetBolt()
     {
+        DisableActiveInfo();
+        Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
         Selected.sprite = Bolt;
         SelectedObj = BoltObj;
     }
 
     public void SetTriangle()
     {
+        DisableActiveInfo();
+        Adjustment = 1f;
         Selected.sprite = Enemy;
         SelectedObj = EnemyObj;
+    }
+
+    public void DisableActiveInfo()
+    {
+        Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Quit()

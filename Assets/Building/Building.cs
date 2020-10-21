@@ -12,6 +12,7 @@ public class Building : MonoBehaviour
     public Sprite Bolt;
     public Sprite Shotgun;
     public Sprite SMG;
+    public Sprite Wall;
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
@@ -32,8 +33,11 @@ public class Building : MonoBehaviour
     [SerializeField]
     private GameObject ShotgunObj;
     [SerializeField]
+    private GameObject WallObj;
+    [SerializeField]
     private GameObject SMGObj;
     private GameObject SelectedObj;
+    private GameObject LastObj;
 
     // UI Elements
     public Canvas Overlay;
@@ -68,13 +72,16 @@ public class Building : MonoBehaviour
                 if (Input.GetButton("Fire1") && SelectedObj != null)
                 {
 
-                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                     // Raycast tile to see if there is already a tile placed
                     if (rayHit.collider == null)
                     {
-                        Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                        if (SelectedObj == WallObj)
+                        {
+                            CalculateWallPlacement();
+                        }
                     }
                 }
 
@@ -82,7 +89,6 @@ public class Building : MonoBehaviour
                 else if (Input.GetButton("Fire2") && SelectedObj != null)
                 {
 
-                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                     // Raycast tile to see if there is already a tile placed
@@ -98,13 +104,16 @@ public class Building : MonoBehaviour
                 if (Input.GetButtonDown("Fire1"))
                 {
 
-                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                     // Raycast tile to see if there is already a tile placed
                     if (rayHit.collider == null)
                     {
-                        Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                        if (SelectedObj == WallObj)
+                        {
+                            CalculateWallPlacement();
+                        }
                     }
                 }
 
@@ -112,7 +121,6 @@ public class Building : MonoBehaviour
                 else if (Input.GetButtonDown("Fire2"))
                 {
 
-                    Vector2 mouseRay = Camera.main.ScreenToWorldPoint(transform.position);
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                     // Raycast tile to see if there is already a tile placed
@@ -129,7 +137,7 @@ public class Building : MonoBehaviour
         {
             SetTurret();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             SetTriangle();
         }
@@ -149,6 +157,10 @@ public class Building : MonoBehaviour
         {
             SetBolt();
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            SetWall();
+        }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             QuickPlace = !QuickPlace;
@@ -161,6 +173,58 @@ public class Building : MonoBehaviour
         }
 
     }
+
+    void CalculateWallPlacement()
+    {
+        RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x+5f,MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x-5f,MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y+5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y-5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        if (a.collider != null && a.collider.name == "Wall(Clone)")
+        {
+            a.collider.GetComponent<WallAI>().UpdateSprite(1);
+            LastObj.GetComponent<WallAI>().UpdateSprite(3);
+        }
+        if (b.collider != null && b.collider.name == "Wall(Clone)")
+        {
+            b.collider.GetComponent<WallAI>().UpdateSprite(3);
+            LastObj.GetComponent<WallAI>().UpdateSprite(1);
+        }
+        if (c.collider != null && c.collider.name == "Wall(Clone)")
+        {
+            c.collider.GetComponent<WallAI>().UpdateSprite(2);
+            LastObj.GetComponent<WallAI>().UpdateSprite(4);
+        }
+        if (d.collider != null && d.collider.name == "Wall(Clone)")
+        {
+            d.collider.GetComponent<WallAI>().UpdateSprite(4);
+            LastObj.GetComponent<WallAI>().UpdateSprite(2);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void AdjustAlphaValue()
     {
@@ -235,6 +299,15 @@ public class Building : MonoBehaviour
         SelectedObj = BoltObj;
     }
 
+    public void SetWall()
+    {
+        DisableActiveInfo();
+        Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 1;
+        Adjustment = 1f;
+        Selected.sprite = Wall;
+        SelectedObj = WallObj;
+    }
+
     public void SetTriangle()
     {
         DisableActiveInfo();
@@ -250,6 +323,7 @@ public class Building : MonoBehaviour
         Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Quit()

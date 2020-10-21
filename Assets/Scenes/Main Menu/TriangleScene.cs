@@ -63,11 +63,4 @@ public class TriangleScene : EnemyClass
         clone.name = "Triangle";
         Destroy(gameObject);
     }
-
-    // Wait x amount of time
-    IEnumerator SetChargeup(int a)
-    {
-        yield return new WaitForSeconds(a);
-        moveSpeed = 100f;
-    }
 }

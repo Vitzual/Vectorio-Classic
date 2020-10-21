@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Linq.Expressions;
+using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Building : MonoBehaviour
@@ -41,6 +43,7 @@ public class Building : MonoBehaviour
 
     // UI Elements
     public Canvas Overlay;
+    private bool MenuOpen;
 
     // Internal placement variables
     [SerializeField]
@@ -50,6 +53,7 @@ public class Building : MonoBehaviour
     private void Start()
     {
         Selected = GetComponent<SpriteRenderer>();
+        MenuOpen = false;
     }
 
     private void Update()
@@ -165,13 +169,26 @@ public class Building : MonoBehaviour
         {
             QuickPlace = !QuickPlace;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
             DisableActiveInfo();
             Selected.sprite = null;
             SelectedObj = null;
         }
-
+        else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
+        {
+            MenuOpen = true;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 1;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MenuOpen = false;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 0;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = false;
+            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = false;
+        }
     }
 
     void CalculateWallPlacement()
@@ -201,30 +218,6 @@ public class Building : MonoBehaviour
             LastObj.GetComponent<WallAI>().UpdateSprite(2);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void AdjustAlphaValue()
     {
@@ -328,7 +321,7 @@ public class Building : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Menu");
     }
 
 }

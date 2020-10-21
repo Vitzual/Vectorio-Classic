@@ -19,7 +19,7 @@ public class TriangleScene : EnemyClass
     {
         Triangle = this.GetComponent<Rigidbody2D>();
         SpawnPosition = transform.position;
-        health = 3;
+        health = 6;
         damage = 0;
         moveSpeed = 20f;
     }

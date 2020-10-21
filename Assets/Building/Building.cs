@@ -252,8 +252,13 @@ public class Building : MonoBehaviour
             Transform b = Overlay.transform.Find("BoltBlaster Stats");
             b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<BoltAI>().GetPercentage();
         }
+        else if (a.name == "Hub")
+        {
+            Overlay.transform.Find("Hub Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("Hub Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<HubAI>().GetPercentage();
+        }
     }
-
 
     void CalculateWallPlacement()
     {
@@ -403,6 +408,7 @@ public class Building : MonoBehaviour
         Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Hub Stats").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Quit()

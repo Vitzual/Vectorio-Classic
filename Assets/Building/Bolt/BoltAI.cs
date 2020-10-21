@@ -12,6 +12,7 @@ public class BoltAI : TurretClass
         rotationSpeed = 0.5f;
         range = 10000;
         health = 10;
+        maxhp = 10;
     }
 
     // Targetting system

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
+﻿using UnityEngine;
 
 public class WallAI : TileClass
 {
@@ -14,6 +11,7 @@ public class WallAI : TileClass
     void Start()
     {
         health = 20;
+        maxhp = 20;
         level = 1;
     }
 

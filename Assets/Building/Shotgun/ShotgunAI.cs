@@ -12,6 +12,7 @@ public class ShotgunAI : TurretClass
         rotationSpeed = .5f;
         range = 500;
         health = 8;
+        maxhp = 8;
     }
 
     // Targetting system

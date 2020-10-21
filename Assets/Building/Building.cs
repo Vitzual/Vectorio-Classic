@@ -1,8 +1,7 @@
-﻿using System.Linq.Expressions;
-using UnityEngine;
-using UnityEngine.Assertions.Must;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Michsky.UI.ModernUIPack;
 
 public class Building : MonoBehaviour
 {
@@ -40,10 +39,13 @@ public class Building : MonoBehaviour
     private GameObject SMGObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
+    private Collider2D LastHit;
 
     // UI Elements
     public Canvas Overlay;
     private bool MenuOpen;
+    readonly int CacheAmount = 10;
+    int CurrentCache = 1;
 
     // Internal placement variables
     [SerializeField]
@@ -70,10 +72,30 @@ public class Building : MonoBehaviour
 
         if (Input.mousePosition.y > 170f)
         {
-            if (QuickPlace == true)
+            if (SelectedObj == null)
             {
+                if (CurrentCache >= CacheAmount)
+                {
+                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+                    CurrentCache = 0;
+                    if (LastHit != rayHit.collider && rayHit.collider != null)
+                    {
+                        LastHit = rayHit.collider;
+                        ShowTileInfo(rayHit.collider);
+                    } 
+                    else if (LastHit != rayHit.collider)
+                    {
+                        LastHit = null;
+                        DisableActiveStats();
+                    }
+                }
+                CurrentCache += 1;
+            }
+            else if (QuickPlace == true)
+            {
+                DisableActiveStats();
                 // If user left clicks, place object
-                if (Input.GetButton("Fire1") && SelectedObj != null)
+                if (Input.GetButton("Fire1"))
                 {
 
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -90,7 +112,7 @@ public class Building : MonoBehaviour
                 }
 
                 // If user right clicks, place object
-                else if (Input.GetButton("Fire2") && SelectedObj != null)
+                else if (Input.GetButton("Fire2"))
                 {
 
                     RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -104,6 +126,7 @@ public class Building : MonoBehaviour
             }
             else if (QuickPlace == false)
             {
+                DisableActiveStats();
                 // If user left clicks, place object
                 if (Input.GetButtonDown("Fire1"))
                 {
@@ -172,6 +195,7 @@ public class Building : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
             DisableActiveInfo();
+            DisableActiveStats();
             Selected.sprite = null;
             SelectedObj = null;
         }
@@ -190,6 +214,48 @@ public class Building : MonoBehaviour
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = false;
         }
     }
+
+    void ShowTileInfo(Collider2D a)
+    {
+        DisableActiveStats();
+        if (a.name == "Turret(Clone)")
+        {
+            Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("Turret Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TurretAI>().GetPercentage();
+        }
+        else if (a.name == "Wall(Clone)")
+        {
+            Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("Wall Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<WallAI>().GetPercentage();
+        }
+        else if (a.name == "Shotgun(Clone)")
+        {
+            Overlay.transform.Find("Shotgun Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("Shotgun Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<ShotgunAI>().GetPercentage();
+        }
+        else if (a.name == "Sniper(Clone)")
+        {
+            Overlay.transform.Find("Sniper Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("Sniper Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<SniperAI>().GetPercentage();
+        }
+        else if (a.name == "SMG(Clone)")
+        {
+            Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("SMG Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<SMGAI>().GetPercentage();
+        }
+        else if (a.name == "BoltBlaster(Clone)")
+        {
+            Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 1;
+            Transform b = Overlay.transform.Find("BoltBlaster Stats");
+            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<BoltAI>().GetPercentage();
+        }
+    }
+
 
     void CalculateWallPlacement()
     {
@@ -329,6 +395,16 @@ public class Building : MonoBehaviour
         Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = true;
+    }
+
+    public void DisableActiveStats()
+    {
+        Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Shotgun Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Sniper Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Quit()

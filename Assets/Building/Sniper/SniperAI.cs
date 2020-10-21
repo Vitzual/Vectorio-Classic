@@ -12,6 +12,7 @@ public class SniperAI : TurretClass
         rotationSpeed = 0.3f;
         range = 5000;
         health = 3;
+        maxhp = 3;
     }
 
     // Targetting system

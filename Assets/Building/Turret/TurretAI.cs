@@ -12,6 +12,7 @@ public class TurretAI : TurretClass
         rotationSpeed = 0.8f;
         range = 1000;
         health = 5;
+        maxhp = 5;
     }
 
     // Targetting system

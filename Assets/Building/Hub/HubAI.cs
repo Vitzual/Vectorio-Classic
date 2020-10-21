@@ -11,6 +11,7 @@ public class HubAI : TileClass
     {
         main = Camera.main;
         health = 30;
+        maxhp = 30;
         level = 1;
     }
 

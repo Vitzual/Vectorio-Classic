@@ -12,6 +12,7 @@ public class SMGAI : TurretClass
         rotationSpeed = 1.5f;
         range = 650;
         health = 10;
+        maxhp = 10;
     }
 
     // Targetting system

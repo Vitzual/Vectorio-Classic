@@ -251,6 +251,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = Turret;
         SelectedObj = TurretObj;
@@ -260,6 +261,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = Shotgun;
         SelectedObj = ShotgunObj;
@@ -269,6 +271,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = Sniper;
         SelectedObj = SniperObj;
@@ -278,6 +281,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = SMG;
         SelectedObj = SMGObj;
@@ -287,6 +291,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = Bolt;
         SelectedObj = BoltObj;
@@ -296,6 +301,7 @@ public class Building : MonoBehaviour
     {
         DisableActiveInfo();
         Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 1;
+        Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
         Selected.sprite = Wall;
         SelectedObj = WallObj;
@@ -317,6 +323,12 @@ public class Building : MonoBehaviour
         Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = true;
     }
 
     public void Quit()

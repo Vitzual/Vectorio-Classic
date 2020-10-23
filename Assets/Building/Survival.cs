@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
+using TMPro;
 
 public class Survival : MonoBehaviour
 {
 
     // Player stats
-    protected int gold = 0;
+    public int gold = 100;
     protected int essence = 0;
     protected int iridium = 0;
 
@@ -16,7 +18,6 @@ public class Survival : MonoBehaviour
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
-    private bool QuickPlace = true;
 
     // Object placements
     [SerializeField]
@@ -31,24 +32,38 @@ public class Survival : MonoBehaviour
     private GameObject WallObj;
     [SerializeField]
     private GameObject SMGObj;
+    [SerializeField]
+    private GameObject CollectorObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
 
     // UI Elements
     public Canvas Overlay;
     private bool MenuOpen;
+    private bool BuildingOpen;
     readonly int CacheAmount = 10;
+    public TextMeshProUGUI GoldAmount;
     int CurrentCache = 1;
 
     // Internal placement variables
     [SerializeField]
     private LayerMask TileLayer;
     private Vector2 MousePos;
+    delegate void HotbarItem();
+    List<HotbarItem> hotbar = new List<HotbarItem>();
 
     private void Start()
     {
         Selected = GetComponent<SpriteRenderer>();
         MenuOpen = false;
+        BuildingOpen = false;
+
+        // Temporary
+        hotbar.Add(SetTurret);
+        hotbar.Add(SetCollector);
+        hotbar.Add(SetWall);
+
+        InvokeRepeating("UpdateGui", 0f, 1f);
     }
 
     private void Update()
@@ -77,112 +92,86 @@ public class Survival : MonoBehaviour
                     } 
                     else
                     {
-                        DisableActiveStats();
+                        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
                     }
                 }
                 CurrentCache += 1;
             }
-            else if (QuickPlace == true)
+            // If user left clicks, place object
+            else if (Input.GetButton("Fire1") && !BuildingOpen)
             {
-                DisableActiveStats();
-                // If user left clicks, place object
-                if (Input.GetButton("Fire1"))
+                Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider == null)
                 {
-
-                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                    // Raycast tile to see if there is already a tile placed
-                    if (rayHit.collider == null)
+                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                    LastObj.name = SelectedObj.name;
+                    if (SelectedObj == WallObj)
                     {
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
-                        if (SelectedObj == WallObj)
-                        {
-                            CalculateWallPlacement();
-                        }
-                    }
-                }
-
-                // If user right clicks, place object
-                else if (Input.GetButton("Fire2"))
-                {
-
-                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                    // Raycast tile to see if there is already a tile placed
-                    if (rayHit.collider != null && rayHit.collider.name != "Hub")
-                    {
-                        Destroy(rayHit.collider.gameObject);
+                        CalculateWallPlacement();
                     }
                 }
             }
-            else if (QuickPlace == false)
+            // If user right clicks, place object
+            else if (Input.GetButton("Fire2") && !BuildingOpen)
             {
-                DisableActiveStats();
-                // If user left clicks, place object
-                if (Input.GetButtonDown("Fire1"))
+                Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+                // Raycast tile to see if there is already a tile placed
+                if (rayHit.collider != null && rayHit.collider.name != "Hub")
                 {
-
-                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                    // Raycast tile to see if there is already a tile placed
-                    if (rayHit.collider == null)
-                    {
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
-                        if (SelectedObj == WallObj)
-                        {
-                            CalculateWallPlacement();
-                        }
-                    }
-                }
-
-                // If user right clicks, place object
-                else if (Input.GetButtonDown("Fire2"))
-                {
-
-                    RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                    // Raycast tile to see if there is already a tile placed
-                    if (rayHit.collider != null && rayHit.collider.name != "Hub")
-                    {
-                        Destroy(rayHit.collider.gameObject);
-                    }
+                    Destroy(rayHit.collider.gameObject);
                 }
             }
         }
-
-        // Change selected object
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetTurret();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            SelectHotbar(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetShotgun();
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            SelectHotbar(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetSniper();
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            SelectHotbar(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetSMG();
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            SelectHotbar(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SetBolt();
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            SelectHotbar(4);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            SetWall();
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) {
+            SelectHotbar(5);
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) {
+            SelectHotbar(6);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) {
+            SelectHotbar(7);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) {
+            SelectHotbar(8);
+        }
+        if (Input.GetKeyDown(KeyCode.E) && BuildingOpen == false)
         {
-            QuickPlace = !QuickPlace;
+            BuildingOpen = true;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 1;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = true;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && BuildingOpen == true)
+        {
+            BuildingOpen = false;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 0;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = false;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
             DisableActiveInfo();
-            DisableActiveStats();
+            Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 0;
             Selected.sprite = null;
             SelectedObj = null;
         }
@@ -204,49 +193,20 @@ public class Survival : MonoBehaviour
 
     void ShowTileInfo(Collider2D a)
     {
-        DisableActiveStats();
-        if (a.name == "Turret(Clone)")
-        {
-            Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("Turret Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TurretAI>().GetPercentage();
-        }
-        else if (a.name == "Wall(Clone)")
-        {
-            Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("Wall Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<WallAI>().GetPercentage();
-        }
-        else if (a.name == "Shotgun(Clone)")
-        {
-            Overlay.transform.Find("Shotgun Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("Shotgun Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<ShotgunAI>().GetPercentage();
-        }
-        else if (a.name == "Sniper(Clone)")
-        {
-            Overlay.transform.Find("Sniper Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("Sniper Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<SniperAI>().GetPercentage();
-        }
-        else if (a.name == "SMG(Clone)")
-        {
-            Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("SMG Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<SMGAI>().GetPercentage();
-        }
-        else if (a.name == "BoltBlaster(Clone)")
-        {
-            Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("BoltBlaster Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<BoltAI>().GetPercentage();
-        }
-        else if (a.name == "Hub")
-        {
-            Overlay.transform.Find("Hub Stats").GetComponent<CanvasGroup>().alpha = 1;
-            Transform b = Overlay.transform.Find("Hub Stats");
-            b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<HubAI>().GetPercentage();
-        }
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 1;
+        Transform b = Overlay.transform.Find("Hovering Stats");
+        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
+    }
+
+    void ShowSelectedInfo(GameObject a)
+    {
+        Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 1;
+        Transform b = Overlay.transform.Find("Selected Info");
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "Cost:      " + a.GetComponent<TileClass>().GetCost();
+        b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
 
     void CalculateWallPlacement()
@@ -255,26 +215,36 @@ public class Survival : MonoBehaviour
         RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x-5f,MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y+5f), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y-5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name == "Wall(Clone)")
+        if (a.collider != null && a.collider.name == "Wall")
         {
             a.collider.GetComponent<WallAI>().UpdateSprite(1);
             LastObj.GetComponent<WallAI>().UpdateSprite(3);
         }
-        if (b.collider != null && b.collider.name == "Wall(Clone)")
+        if (b.collider != null && b.collider.name == "Wall")
         {
             b.collider.GetComponent<WallAI>().UpdateSprite(3);
             LastObj.GetComponent<WallAI>().UpdateSprite(1);
         }
-        if (c.collider != null && c.collider.name == "Wall(Clone)")
+        if (c.collider != null && c.collider.name == "Wall")
         {
             c.collider.GetComponent<WallAI>().UpdateSprite(2);
             LastObj.GetComponent<WallAI>().UpdateSprite(4);
         }
-        if (d.collider != null && d.collider.name == "Wall(Clone)")
+        if (d.collider != null && d.collider.name == "Wall")
         {
             d.collider.GetComponent<WallAI>().UpdateSprite(4);
             LastObj.GetComponent<WallAI>().UpdateSprite(2);
         }
+    }
+
+    private void UpdateGui()
+    {
+        GoldAmount.text = ""+gold;
+    }
+
+    public void AddGold(int a)
+    {
+        gold += a;
     }
 
     public void AdjustAlphaValue()
@@ -305,91 +275,124 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SelectHotbar(int index)
+    {
+        try
+        {
+            hotbar[index]();
+        } catch { return; }
+        if (index == 0)
+        {
+            Overlay.transform.Find("One").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 1)
+        {
+            Overlay.transform.Find("Two").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 2)
+        {
+            Overlay.transform.Find("Three").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 3)
+        {
+            Overlay.transform.Find("Four").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 4)
+        {
+            Overlay.transform.Find("Five").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 5)
+        {
+            Overlay.transform.Find("Six").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 6)
+        {
+            Overlay.transform.Find("Seven").GetComponent<Button>().interactable = false;
+        }
+        else if (index == 7)
+        {
+            Overlay.transform.Find("Eight").GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            Overlay.transform.Find("Nine").GetComponent<Button>().interactable = false;
+        }
+    }
+
     public void SetTurret()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/Turret");
         SelectedObj = TurretObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void SetShotgun()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/Shotgun");
         SelectedObj = ShotgunObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void SetSniper()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/Sniper");
         SelectedObj = SniperObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void SetSMG()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/SMG");
         SelectedObj = SMGObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void SetBolt()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/Bolt");
         SelectedObj = BoltObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void SetWall()
     {
         DisableActiveInfo();
-        Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 1;
-        Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = false;
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/WallSolo");
         SelectedObj = WallObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
+    }
+
+    public void SetCollector()
+    {
+        DisableActiveInfo();
+        Adjustment = 1f;
+        SelectedObj = CollectorObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
     }
 
     public void DisableActiveInfo()
     {
-        Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = true;
-    }
-
-    public void DisableActiveStats()
-    {
-        Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Shotgun Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Sniper Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Hub Stats").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("One").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Two").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Three").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Four").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Five").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Six").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Seven").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Eight").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Nine").GetComponent<Button>().interactable = true;
     }
 
     public void Quit()

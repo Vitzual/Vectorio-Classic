@@ -18,16 +18,22 @@ public abstract class TurretClass : TileClass
     protected float nextFire = 0;
     protected float timePassed = 0;
     protected bool hasTarget = false;
-    protected EnemyPool target = null;
+    protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
+    protected int targetingTimeout = 0;
 
     
     protected void RotateTowardNearestEnemy() {
         if (!hasTarget) {
-            // Find closest enemy 
-            target = EnemyPool.FindClosestEnemy(Point.position, range); 
+            if (targetingTimeout <= 0)
+            {
+                // Find closest enemy
+                target = EnemyPool.FindClosestEnemy(Point.position, range);
+                targetingTimeout = 3;
+            }
         }
+        if (targetingTimeout > 0) targetingTimeout -= 1;
 
         // If a target exists, shoot at it
         if (target != null)
@@ -36,7 +42,7 @@ public abstract class TurretClass : TileClass
             hasTarget = true;
 
             // Rotate turret towards target
-            Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
+            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
             Vector2 lookDirection = (TargetPosition - Gun.position);
             enemyAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
             enemyAngle = AlignRotation(enemyAngle);

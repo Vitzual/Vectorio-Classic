@@ -9,25 +9,25 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     // Get the global HashSet of every enemy using this script
-    public readonly static HashSet<EnemyPool> Pool = new HashSet<EnemyPool>();
+    public readonly static HashSet<GameObject> Pool = new HashSet<GameObject>();
 
     // On enable, add enemy to the HashSet
     private void OnEnable()
     {
-        EnemyPool.Pool.Add(this);
+        EnemyPool.Pool.Add(gameObject);
     }
 
     // On disable, remove enemy from the HashSet
     private void OnDisable()
     {
-        EnemyPool.Pool.Remove(this);
+        EnemyPool.Pool.Remove(gameObject);
     }
 
     // Find the nearest enemy, and return the object
     // Updates ever 0.5s and caches (very cpu efficient)
-    public static EnemyPool FindClosestEnemy(Vector3 pos, float maxDistance)
+    public static GameObject FindClosestEnemy(Vector3 pos, float maxDistance)
     {
-        EnemyPool result = null;
+        GameObject result = null;
         float dist = float.PositiveInfinity;
         var e = EnemyPool.Pool.GetEnumerator();
         while (e.MoveNext())

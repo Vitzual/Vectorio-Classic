@@ -25,17 +25,19 @@ public class TriangleAI : EnemyClass
         health = 5;
         damage = 1;
         moveSpeed = 20f;
-        range = 100;
+        range = 1000;
     }
 
     // Targetting system
     void Update()
     {
         // Find closest enemy 
-        var target = DefensePool.FindClosestDefense(transform.position);
-        float distance = DefensePool.FindClosestPosition(transform.position);
+        if (target == null) {
+            target = FindNearestDefence();
+        }
         if (target != null)
         {
+            float distance = (target.transform.position - this.transform.position).sqrMagnitude;
             // Rotate towards current target
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 

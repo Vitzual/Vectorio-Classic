@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class TurretClass : TileClass
 {
@@ -13,6 +14,7 @@ public abstract class TurretClass : TileClass
     public Transform Point;
     public Rigidbody2D Gun;
     public GameObject Bullet;
+    public HashSet<GameObject> nearbyEnemies = new HashSet<GameObject>();
 
     // Global variables
     protected float nextFire = 0;
@@ -21,19 +23,33 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
-    protected int targetingTimeout = 0;
+    protected static int enemyLayer = 9;
 
-    
-    protected void RotateTowardNearestEnemy() {
-        if (!hasTarget) {
-            if (targetingTimeout <= 0)
-            {
-                // Find closest enemy
-                target = EnemyPool.FindClosestEnemy(Point.position, range);
-                targetingTimeout = 3;
+    protected GameObject FindNearestEnemy()
+    {
+        var colliders = Physics2D.OverlapCircleAll(
+            this.gameObject.transform.position, 
+            range, 
+            1 << LayerMask.NameToLayer("Enemy"));
+        GameObject result = null;
+        float closest = float.PositiveInfinity;
+
+        foreach (Collider2D collider in colliders)
+        {
+            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+            if (distance < closest) {
+                result = collider.gameObject;
+                closest = distance;
             }
         }
-        if (targetingTimeout > 0) targetingTimeout -= 1;
+        return result;
+    }
+
+    protected void RotateTowardNearestEnemy() 
+    {
+        if (!hasTarget) {
+            target = FindNearestEnemy();
+        }
 
         // If a target exists, shoot at it
         if (target != null)

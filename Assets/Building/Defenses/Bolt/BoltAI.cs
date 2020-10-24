@@ -10,7 +10,7 @@ public class BoltAI : TurretClass
         bulletSpread = 0f;
         bulletAmount = 1;
         rotationSpeed = 0.5f;
-        range = 10000;
+        range = 100;
         health = 10;
         maxhp = 10;
     }

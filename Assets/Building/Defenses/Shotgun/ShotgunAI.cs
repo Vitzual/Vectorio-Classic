@@ -10,7 +10,7 @@ public class ShotgunAI : TurretClass
         bulletSpread = .45f;
         bulletAmount = 8;
         rotationSpeed = .5f;
-        range = 500;
+        range = 25;
         health = 8;
         maxhp = 8;
     }

@@ -10,7 +10,7 @@ public class SniperAI : TurretClass
         bulletSpread = 0f;
         bulletAmount = 1;
         rotationSpeed = 0.3f;
-        range = 5000;
+        range = 50;
         health = 3;
         maxhp = 3;
     }

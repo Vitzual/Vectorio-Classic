@@ -10,7 +10,7 @@ public class MiniTurretAI : TurretClass
         bulletSpread = 0.1f;
         bulletAmount = 1;
         rotationSpeed = .95f;
-        range = 500;
+        range = 60;
         health = 5;
     }
 

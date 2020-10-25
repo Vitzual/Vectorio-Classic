@@ -9,7 +9,7 @@ public class Bullet : BulletClass
     {
         HitEffect = Effect;
         damage = 1;
-        StartCoroutine(SetLifetime(1));
+        StartCoroutine(SetLifetime(.5f));
     }
 
     public override void collide()

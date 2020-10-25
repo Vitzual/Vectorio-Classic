@@ -10,7 +10,7 @@ public class TurretAI : TurretClass
         bulletSpread = 0.1f;
         bulletAmount = 1;
         rotationSpeed = 0.8f;
-        range = 1000;
+        range = 50;
         health = 5;
         maxhp = 5;
     }

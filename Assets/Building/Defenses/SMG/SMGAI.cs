@@ -10,7 +10,7 @@ public class SMGAI : TurretClass
         bulletSpread = 0.2f;
         bulletAmount = 1;
         rotationSpeed = 1.5f;
-        range = 650;
+        range = 35;
         health = 10;
         maxhp = 10;
     }

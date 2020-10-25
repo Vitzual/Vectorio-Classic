@@ -7,6 +7,10 @@ public abstract class EnemyClass : MonoBehaviour
     protected int health;
     protected int damage;
     protected float moveSpeed;
+    protected int range;
+
+    // Enemy vars
+    protected GameObject target;
 
     // Abstract methods
     public abstract void KillEntity();
@@ -25,6 +29,26 @@ public abstract class EnemyClass : MonoBehaviour
     public int getDamage()
     {
         return damage;
+    }
+
+    protected GameObject FindNearestDefence()
+    {
+        var colliders = Physics2D.OverlapCircleAll(
+            this.gameObject.transform.position, 
+            range, 
+            1 << LayerMask.NameToLayer("Building"));
+        GameObject result = null;
+        float closest = float.PositiveInfinity;
+
+        foreach (Collider2D collider in colliders)
+        {
+            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+            if (distance < closest) {
+                result = collider.gameObject;
+                closest = distance;
+            }
+        }
+        return result;
     }
 
 }

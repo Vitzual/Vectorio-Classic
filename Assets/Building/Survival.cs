@@ -36,6 +36,7 @@ public class Survival : MonoBehaviour
     private GameObject CollectorObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
+    private float rotation = 0f;
 
     // UI Elements
     public Canvas Overlay;
@@ -106,7 +107,7 @@ public class Survival : MonoBehaviour
                 // Raycast tile to see if there is already a tile placed
                 if (rayHit.collider == null)
                 {
-                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.identity);
+                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
                     LastObj.name = SelectedObj.name;
                     if (SelectedObj == WallObj)
                     {
@@ -154,6 +155,15 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha9)) {
             SelectHotbar(8);
         }
+        else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
+        {
+            rotation = rotation -= 90f;
+            if (rotation == -360f)
+            {
+                rotation = 0;
+            }
+            Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
+        }
         if (Input.GetKeyDown(KeyCode.E) && BuildingOpen == false)
         {
             BuildingOpen = true;
@@ -174,6 +184,7 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 0;
             Selected.sprite = null;
             SelectedObj = null;
+            rotation = 0;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
         {

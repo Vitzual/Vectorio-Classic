@@ -2,27 +2,25 @@
 
 public class CollectorAI : TileClass
 {
-    public Transform rotator;
+    public GameObject gold;
+    private GameObject lastSpawn;
+    public Transform spawnPos;
     protected Survival player;
 
     private void Start()
     {
         player = GameObject.Find("Survival").GetComponent<Survival>();
-        InvokeRepeating("GiveMoney", 0f, 2f);
+        InvokeRepeating("SpawnMoney", 0f, 2f);
         health = 10;
         maxhp = 10;
         level = 1;
         cost = 25;
     }
 
-    void Update()
+    private void SpawnMoney()
     {
-        rotator.Rotate(0, 0, 50 * Time.deltaTime);
-    }
-
-    private void GiveMoney()
-    {
-        player.AddGold(1 * level);
+        lastSpawn = Instantiate(gold, spawnPos.position, Quaternion.identity);
+        lastSpawn.GetComponent<Rigidbody2D>().AddForce(-transform.up * 7f, ForceMode2D.Impulse);
     }
 
     public override void DestroyTile()

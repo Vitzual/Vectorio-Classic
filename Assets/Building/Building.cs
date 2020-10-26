@@ -84,14 +84,14 @@ public class Building : MonoBehaviour
                     } 
                     else
                     {
-                        DisableActiveStats();
+                        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
                     }
                 }
                 CurrentCache += 1;
             }
             else if (QuickPlace == true)
             {
-                DisableActiveStats();
+                Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
                 // If user left clicks, place object
                 if (Input.GetButton("Fire1"))
                 {
@@ -124,7 +124,7 @@ public class Building : MonoBehaviour
             }
             else if (QuickPlace == false)
             {
-                DisableActiveStats();
+                Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
                 // If user left clicks, place object
                 if (Input.GetButtonDown("Fire1"))
                 {
@@ -193,7 +193,7 @@ public class Building : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
             DisableActiveInfo();
-            DisableActiveStats();
+            Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             Selected.sprite = null;
             SelectedObj = null;
         }
@@ -215,7 +215,7 @@ public class Building : MonoBehaviour
 
     void ShowTileInfo(Collider2D a)
     {
-        DisableActiveStats();
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         if (a.name == "Turret(Clone)")
         {
             Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 1;
@@ -321,6 +321,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = Turret;
         SelectedObj = TurretObj;
@@ -331,6 +332,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = Shotgun;
         SelectedObj = ShotgunObj;
@@ -341,6 +343,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = Sniper;
         SelectedObj = SniperObj;
@@ -351,6 +354,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = SMG;
         SelectedObj = SMGObj;
@@ -361,6 +365,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = Bolt;
         SelectedObj = BoltObj;
@@ -371,6 +376,7 @@ public class Building : MonoBehaviour
         DisableActiveInfo();
         Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 1;
         Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = false;
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
         Adjustment = 1f;
         Selected.sprite = Wall;
         SelectedObj = WallObj;
@@ -386,29 +392,13 @@ public class Building : MonoBehaviour
 
     public void DisableActiveInfo()
     {
-        Overlay.transform.Find("Turret Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Shotgun Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Sniper Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("SMG Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Pulser Info").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Wall Info").GetComponent<CanvasGroup>().alpha = 0;
+        Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 0;
         Overlay.transform.Find("TurretButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("ShotgunButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("SniperButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("SMGButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("PulserButton").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("WallButton").GetComponent<Button>().interactable = true;
-    }
-
-    public void DisableActiveStats()
-    {
-        Overlay.transform.Find("Turret Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Shotgun Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Sniper Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("SMG Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Pulser Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Wall Stats").GetComponent<CanvasGroup>().alpha = 0;
-        Overlay.transform.Find("Hub Stats").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Quit()

@@ -34,6 +34,8 @@ public class Survival : MonoBehaviour
     private GameObject SMGObj;
     [SerializeField]
     private GameObject CollectorObj;
+    [SerializeField]
+    private GameObject ConveyorObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
@@ -62,6 +64,7 @@ public class Survival : MonoBehaviour
         // Temporary
         hotbar.Add(SetTurret);
         hotbar.Add(SetCollector);
+        hotbar.Add(SetConveyor);
         hotbar.Add(SetWall);
 
         InvokeRepeating("UpdateGui", 0f, 1f);
@@ -389,6 +392,15 @@ public class Survival : MonoBehaviour
         DisableActiveInfo();
         Adjustment = 1f;
         SelectedObj = CollectorObj;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        ShowSelectedInfo(SelectedObj);
+    }
+
+    public void SetConveyor()
+    {
+        DisableActiveInfo();
+        Adjustment = 1f;
+        SelectedObj = ConveyorObj;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
         ShowSelectedInfo(SelectedObj);
     }

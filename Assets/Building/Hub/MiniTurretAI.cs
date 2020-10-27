@@ -7,12 +7,12 @@ public class MiniTurretAI : TurretClass
     // On start, assign weapon variables
     void Start()
     {
-        fireRate = 0.05f;
+        fireRate = 0.5f;
         bulletForce = 150f;
         bulletSpread = 0.1f;
         bulletAmount = 1;
-        rotationSpeed = .95f;
-        range = 60;
+        rotationSpeed = .5f;
+        range = 15;
         health = 5;
     }
 

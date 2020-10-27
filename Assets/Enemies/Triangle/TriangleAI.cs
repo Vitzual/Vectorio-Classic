@@ -26,6 +26,7 @@ public class TriangleAI : EnemyClass
         damage = 1;
         moveSpeed = 20f;
         range = 1000;
+        worth = 3;
     }
 
     // Targetting system

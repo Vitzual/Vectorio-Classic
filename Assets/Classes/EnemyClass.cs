@@ -8,6 +8,7 @@ public abstract class EnemyClass : MonoBehaviour
     protected int damage;
     protected float moveSpeed;
     protected int range;
+    protected int worth;
 
     // Enemy vars
     protected GameObject target;
@@ -21,6 +22,7 @@ public abstract class EnemyClass : MonoBehaviour
         health -= dmgRecieved;
         if (health <= 0)
         {
+            GameObject.Find("Survival").GetComponent<Survival>().AddGold(worth);
             KillEntity();
         }
     }

@@ -34,8 +34,6 @@ public class Survival : MonoBehaviour
     private GameObject SMGObj;
     [SerializeField]
     private GameObject CollectorObj;
-    [SerializeField]
-    private GameObject ConveyorObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
@@ -53,6 +51,7 @@ public class Survival : MonoBehaviour
     private LayerMask TileLayer;
     private Vector2 MousePos;
     delegate void HotbarItem();
+    protected float distance = 10;
     List<HotbarItem> hotbar = new List<HotbarItem>();
 
     private void Start()
@@ -113,8 +112,20 @@ public class Survival : MonoBehaviour
                     {
                         gold -= cost;
                         UpdateGui();
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                        if (SelectedObj == WallObj)
+                        {
+                            LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                        }
+                        else
+                        {
+                            LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                        }
                         LastObj.name = SelectedObj.name;
+                        float dist = Vector2.Distance(LastObj.transform.position, GameObject.Find("Hub").GetComponent<Transform>().position);
+                        if(dist > distance)
+                        {
+                            distance = dist;
+                        }
                     }
                     if (SelectedObj == WallObj)
                     {
@@ -131,7 +142,8 @@ public class Survival : MonoBehaviour
                 // Raycast tile to see if there is already a tile placed
                 if (rayHit.collider != null && rayHit.collider.name != "Hub")
                 {
-                    gold += rayHit.collider.GetComponent<TileClass>().GetCost();
+                    int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
+                    gold += cost - cost / 5;
                     UpdateGui();
                     Destroy(rayHit.collider.gameObject);
                 }
@@ -216,7 +228,7 @@ public class Survival : MonoBehaviour
         Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Hovering Stats");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-        //b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
         b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
 
@@ -224,7 +236,7 @@ public class Survival : MonoBehaviour
     {
         Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Selected Info");
-        //b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
         b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "Cost:      " + a.GetComponent<TileClass>().GetCost();
         b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
@@ -386,12 +398,6 @@ public class Survival : MonoBehaviour
         SwitchObj();
     }
 
-    public void SetConveyor()
-    {
-        SelectedObj = ConveyorObj;
-        SwitchObj();
-    }
-
     public void SwitchObj()
     {
         DisableActiveInfo();
@@ -417,6 +423,11 @@ public class Survival : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public float getDistance()
+    {
+        return distance;
     }
 
 }

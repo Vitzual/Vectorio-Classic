@@ -2,9 +2,6 @@
 
 public class TurretAI : TurretClass
 {
-    protected int level = 1;
-    protected int cost = 10;
-
     // On start, assign weapon variables
     void Start()
     {
@@ -16,14 +13,31 @@ public class TurretAI : TurretClass
         range = 50;
         health = 5;
         maxhp = 5;
-        cost = 8;
     }
 
-    public TurretAI()
+    ///// IMPORTANT! ///////////////////////////////////////////////////
+    // Because Unity is seriously stupid af, you have to set the cost //
+    // of the object here and not in the parent class. You also have  //
+    // to change the name of the variable or else Unity dies          //
+    ////////////////////////////////////////////////////////////////////
+
+    // Cost & level variables
+    private int TurretCost = 10;
+    private int TurretLevel = 1;
+
+    // How much the object costs
+    public override int GetCost()
     {
-        cost = 10;
-        level = 1;
+        return TurretCost;
     }
+
+    // Default level of the object
+    public override int GetLevel()
+    {
+        return TurretLevel;
+    }
+
+    //////////////////////////////////////////////////////////////////
 
     // Targetting system
     void Update()
@@ -53,15 +67,5 @@ public class TurretAI : TurretClass
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
-    }
-
-    public override int GetCost()
-    {
-        return cost;
-    }
-
-    public override int GetLevel()
-    {
-        return level;
     }
 }

@@ -3,9 +3,6 @@
 public class WallAI : TileClass
 {
 
-    public int cost = 5;
-    public int level = 1;
-
     // Wall auto place variables
     int top = 0;
     int right = 0;
@@ -17,8 +14,31 @@ public class WallAI : TileClass
     {
         health = 20;
         maxhp = 20;
-        cost = 4;
     }
+
+    ///// IMPORTANT! ///////////////////////////////////////////////////
+    // Because Unity is seriously stupid af, you have to set the cost //
+    // of the object here and not in the parent class. You also have  //
+    // to change the name of the variable or else Unity dies          //
+    ////////////////////////////////////////////////////////////////////
+
+    // Cost & level variables
+    private int WallCost = 5;
+    private int WallLevel = 1;
+
+    // How much the object costs
+    public override int GetCost()
+    {
+        return WallCost;
+    }
+
+    // Default level of the object
+    public override int GetLevel()
+    {
+        return WallLevel;
+    }
+
+    //////////////////////////////////////////////////////////////////
 
     public override void DestroyTile()
     {
@@ -147,15 +167,5 @@ public class WallAI : TileClass
         {
             SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallQuad");
         }
-    }
-
-    public override int GetCost()
-    {
-        return cost;
-    }
-
-    public override int GetLevel()
-    {
-        return level;
     }
 }

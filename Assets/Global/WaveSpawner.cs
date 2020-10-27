@@ -12,9 +12,9 @@ public class WaveSpawner : MonoBehaviour
     {
         public Transform[] enemies;
         public int[] amount;
+        public float[] rate;
         public int minRotation;
         public int maxRotation;
-        public float[] rate;
     }
 
     public Wave[] waves;

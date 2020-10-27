@@ -2,6 +2,8 @@
 
 public class MiniTurretAI : TurretClass
 {
+    protected int level = 1;
+
     // On start, assign weapon variables
     void Start()
     {
@@ -42,5 +44,12 @@ public class MiniTurretAI : TurretClass
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    public override int GetCost() { return 0; }
+
+    public override int GetLevel()
+    {
+        return level;
     }
 }

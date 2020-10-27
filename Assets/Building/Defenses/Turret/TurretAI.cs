@@ -2,6 +2,9 @@
 
 public class TurretAI : TurretClass
 {
+    protected int level = 1;
+    protected int cost = 10;
+
     // On start, assign weapon variables
     void Start()
     {
@@ -13,6 +16,13 @@ public class TurretAI : TurretClass
         range = 50;
         health = 5;
         maxhp = 5;
+        cost = 8;
+    }
+
+    public TurretAI()
+    {
+        cost = 10;
+        level = 1;
     }
 
     // Targetting system
@@ -43,5 +53,15 @@ public class TurretAI : TurretClass
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    public override int GetCost()
+    {
+        return cost;
+    }
+
+    public override int GetLevel()
+    {
+        return level;
     }
 }

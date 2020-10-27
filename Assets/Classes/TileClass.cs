@@ -7,8 +7,6 @@ public abstract class TileClass : MonoBehaviour
     protected ParticleSystem Effect;
     protected float maxhp = 1;
     public float health = 1;
-    public int level = 1;
-    public int cost = 1;
 
     // Abstract methods
     public abstract void DestroyTile();
@@ -39,14 +37,6 @@ public abstract class TileClass : MonoBehaviour
         return (health / maxhp) * 100;
     }
 
-    public int GetLevel()
-    {
-        return level;
-    }
-
-    public int GetCost()
-    {
-        return cost;
-    }
-
+    public abstract int GetCost();
+    public abstract int GetLevel();
 }

@@ -2,6 +2,11 @@
 
 public class WallAI : TileClass
 {
+
+    public int cost = 5;
+    public int level = 1;
+
+    // Wall auto place variables
     int top = 0;
     int right = 0;
     int bottom = 0;
@@ -12,7 +17,7 @@ public class WallAI : TileClass
     {
         health = 20;
         maxhp = 20;
-        level = 1;
+        cost = 4;
     }
 
     public override void DestroyTile()
@@ -142,5 +147,15 @@ public class WallAI : TileClass
         {
             SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallQuad");
         }
+    }
+
+    public override int GetCost()
+    {
+        return cost;
+    }
+
+    public override int GetLevel()
+    {
+        return level;
     }
 }

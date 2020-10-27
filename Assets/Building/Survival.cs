@@ -63,8 +63,6 @@ public class Survival : MonoBehaviour
 
         // Temporary
         hotbar.Add(SetTurret);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetConveyor);
         hotbar.Add(SetWall);
 
         InvokeRepeating("UpdateGui", 0f, 1f);
@@ -110,8 +108,14 @@ public class Survival : MonoBehaviour
                 // Raycast tile to see if there is already a tile placed
                 if (rayHit.collider == null)
                 {
-                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
-                    LastObj.name = SelectedObj.name;
+                    int cost = SelectedObj.GetComponent<TileClass>().GetCost();
+                    if (cost <= gold)
+                    {
+                        gold -= cost;
+                        UpdateGui();
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                        LastObj.name = SelectedObj.name;
+                    }
                     if (SelectedObj == WallObj)
                     {
                         CalculateWallPlacement();
@@ -127,6 +131,8 @@ public class Survival : MonoBehaviour
                 // Raycast tile to see if there is already a tile placed
                 if (rayHit.collider != null && rayHit.collider.name != "Hub")
                 {
+                    gold += rayHit.collider.GetComponent<TileClass>().GetCost();
+                    UpdateGui();
                     Destroy(rayHit.collider.gameObject);
                 }
             }
@@ -210,7 +216,7 @@ public class Survival : MonoBehaviour
         Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Hovering Stats");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        //b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
         b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
 
@@ -218,7 +224,7 @@ public class Survival : MonoBehaviour
     {
         Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Selected Info");
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
+        //b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
         b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "Cost:      " + a.GetComponent<TileClass>().GetCost();
         b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
@@ -259,6 +265,11 @@ public class Survival : MonoBehaviour
     public void AddGold(int a)
     {
         gold += a;
+    }
+
+    public void RemoveGold(int a)
+    {
+        gold -= a;
     }
 
     public void AdjustAlphaValue()
@@ -335,74 +346,59 @@ public class Survival : MonoBehaviour
 
     public void SetTurret()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = TurretObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetShotgun()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = ShotgunObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetSniper()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = SniperObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetSMG()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = SMGObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetBolt()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = BoltObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetWall()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = WallObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetCollector()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = CollectorObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
+        SwitchObj();
     }
 
     public void SetConveyor()
     {
-        DisableActiveInfo();
-        Adjustment = 1f;
         SelectedObj = ConveyorObj;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        SwitchObj();
+    }
+
+    public void SwitchObj()
+    {
+        DisableActiveInfo();
         ShowSelectedInfo(SelectedObj);
+        Adjustment = 1f;
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void DisableActiveInfo()

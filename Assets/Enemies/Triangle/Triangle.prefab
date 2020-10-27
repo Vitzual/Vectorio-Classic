@@ -212,10 +212,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee92f32230fc3041966251ebd96c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 2
+  damage: 1
+  range: 1000
+  moveSpeed: 10
+  worth: 3
+  explosiveRadius: 10
+  explosiveDamage: 10
+  spawnOnDeath:
+  - {fileID: 6065519297016329530}
+  amountToSpawn: 03000000
   Effect: {fileID: 7050970385817730975, guid: 488f4063d72db284cb7dc12462e1bce7, type: 3}
   ChargeEffect: {fileID: 6280382550920895699, guid: 06bcafd9a6a907e4ca31147c3f4f3dda,
     type: 3}
-  MoveSpeed: 10
 --- !u!114 &3310720871437840357
 MonoBehaviour:
   m_ObjectHideFlags: 0

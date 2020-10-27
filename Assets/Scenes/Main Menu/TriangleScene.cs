@@ -5,8 +5,6 @@ public class TriangleScene : EnemyClass
 {
     // Model components
     [SerializeField]
-    private ParticleSystem Effect;
-    [SerializeField]
     private ParticleSystem ChargeEffect;
     private Vector3 SpawnPosition;
     private Rigidbody2D Triangle;
@@ -18,10 +16,6 @@ public class TriangleScene : EnemyClass
     void Start()
     {
         Triangle = this.GetComponent<Rigidbody2D>();
-        SpawnPosition = transform.position;
-        health = 6;
-        damage = 0;
-        moveSpeed = 20f;
     }
 
     // Targetting system
@@ -53,14 +47,5 @@ public class TriangleScene : EnemyClass
     private void FixedUpdate()
     {
         Triangle.AddForce(Movement * moveSpeed);
-    }
-
-    // Kill entity
-    public override void KillEntity()
-    {
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        var clone = Instantiate(this, SpawnPosition, Quaternion.identity);
-        clone.name = "Triangle";
-        Destroy(gameObject);
     }
 }

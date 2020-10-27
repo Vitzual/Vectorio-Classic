@@ -79,7 +79,6 @@ public class WaveSpawner : MonoBehaviour
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(waves[a].minRotation, waves[a].maxRotation)));
         transform.position += transform.right * b;
-        Debug.Log(transform.position);
         Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = new Vector3(0, 0, 0);

@@ -5,8 +5,6 @@ public class TriangleAI : EnemyClass
 {
     // Model components
     [SerializeField]
-    private ParticleSystem Effect;
-    [SerializeField]
     private ParticleSystem ChargeEffect;
     private Rigidbody2D Triangle;
 
@@ -22,11 +20,6 @@ public class TriangleAI : EnemyClass
     void Start()
     {
         Triangle = this.GetComponent<Rigidbody2D>();
-        health = 5;
-        damage = 1;
-        moveSpeed = 20f;
-        range = 1000;
-        worth = 3;
     }
 
     // Targetting system
@@ -68,13 +61,6 @@ public class TriangleAI : EnemyClass
     private void FixedUpdate()
     {
         Triangle.AddForce(Movement * moveSpeed);
-    }
-
-    // Kill entity
-    public override void KillEntity()
-    {
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 
     // Wait x amount of time

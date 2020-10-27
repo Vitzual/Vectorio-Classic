@@ -1,20 +1,71 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class EnemyClass : MonoBehaviour
 {
 
     // Enemy stats
-    protected int health;
-    protected int damage;
-    protected float moveSpeed;
-    protected int range;
-    protected int worth;
+    public int health;
+    public int damage;
+    public int range;
+    public float moveSpeed;
+    public int worth;
+    public int explosiveRadius;
+    public int explosiveDamage;
+    public GameObject[] spawnOnDeath;
+    public int[] amountToSpawn;
+    public ParticleSystem Effect;
 
     // Enemy vars
     protected GameObject target;
 
-    // Abstract methods
-    public abstract void KillEntity();
+    // Kill entity
+    public void KillEntity()
+    {
+        // If menu scene, re instantiate the object
+        if (SceneManager.GetActiveScene().name == "Menu") {
+            var clone = Instantiate(this, transform.position, Quaternion.identity);
+            clone.name = "Triangle";
+        }
+
+        // If has explosive damage, apply it to surrounding tiles
+        if (explosiveRadius > 0 && explosiveDamage > 0)
+        {
+            var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Defense"));
+            for (int i=0; i < colliders.Length; i++)
+            {
+                colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
+            }
+        }
+
+        // If spawns on death, itterate through and spawn enemies
+        if (spawnOnDeath.Length > 0)
+        {
+            if (amountToSpawn.Length != spawnOnDeath.Length)
+            {
+                Debug.LogError("Custom error #001\n- Mismatched array size!");
+                return;
+            }
+            for (int a=0; a < spawnOnDeath.Length; a++)
+            {
+                for (int b=0; b < amountToSpawn[a]; b++)
+                {
+                    if (spawnOnDeath[a] == gameObject)
+                    {
+                        Debug.LogError("Custom error #002\n- Enemies cannot spawn themselves on death");
+                    } 
+                    else
+                    {
+                        Instantiate(spawnOnDeath[a], transform.position, Quaternion.identity);
+                    }
+                }
+            }
+        }
+
+        // Instantiate death effect and destroy self
+        Instantiate(Effect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
     // Apply damage to entity
     public void DamageEntity(int dmgRecieved)

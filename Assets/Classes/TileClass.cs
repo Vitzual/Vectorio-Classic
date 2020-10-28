@@ -7,8 +7,8 @@ public abstract class TileClass : MonoBehaviour
     protected ParticleSystem Effect;
     public float maxhp = 1;
     public float health = 1;
-    public int cost;
-    public int level;
+    public int cost = 0;
+    public int level = 1;
 
     // Abstract methods
     public abstract void DestroyTile();

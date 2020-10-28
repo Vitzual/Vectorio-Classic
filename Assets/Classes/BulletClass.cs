@@ -10,12 +10,9 @@ public abstract class BulletClass : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Defense" && other.tag != "Bullet" && other.tag != "Hub")
+        if (other.tag == "Enemy")
         {
-            if (other.name.Contains("Triangle"))
-            {
-                other.GetComponent<EnemyClass>().DamageEntity(damage);
-            }
+            other.GetComponent<EnemyClass>().DamageEntity(damage);
             if (!this.name.Contains("BoltBullet"))
             {
                 collide();

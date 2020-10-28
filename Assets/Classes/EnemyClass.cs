@@ -31,7 +31,7 @@ public abstract class EnemyClass : MonoBehaviour
         // If has explosive damage, apply it to surrounding tiles
         if (explosiveRadius > 0 && explosiveDamage > 0)
         {
-            var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Defense"));
+            var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Building"));
             for (int i=0; i < colliders.Length; i++)
             {
                 colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3591490237912463258}
   - component: {fileID: 6359143096947261801}
   m_Layer: 9
-  m_Name: Triangle
+  m_Name: Bomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 504701f0aa93c6e4488f9cd1bb42ed63, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2855608660790091968}
   - component: {fileID: 5299776235774293228}
   m_Layer: 9
-  m_Name: TriangleBorder
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e0e00db5f7398d44becf75151a8f82c, type: 2}
+  - {fileID: 2100000, guid: 0916a315857992b489d2d737bf9d90c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,13 +171,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6065519297016329532}
-  - component: {fileID: -5564202135197978480}
   - component: {fileID: 3310720871437840357}
+  - component: {fileID: 3902326111899914685}
   - component: {fileID: 6065519297016329531}
   - component: {fileID: 9218725160157042262}
   - component: {fileID: 5409734555225548137}
   m_Layer: 9
-  m_Name: Triangle
+  m_Name: Bomber
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,7 +191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6065519297016329530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3591490237912463258}
@@ -200,31 +200,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5564202135197978480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bee92f32230fc3041966251ebd96c7de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 2
-  damage: 1
-  range: 1000
-  moveSpeed: 10
-  worth: 3
-  explosiveRadius: 10
-  explosiveDamage: 10
-  spawnOnDeath:
-  - {fileID: 6065519297016329530}
-  amountToSpawn: 03000000
-  Effect: {fileID: 7050970385817730975, guid: 488f4063d72db284cb7dc12462e1bce7, type: 3}
-  ChargeEffect: {fileID: 6280382550920895699, guid: 06bcafd9a6a907e4ca31147c3f4f3dda,
-    type: 3}
 --- !u!114 &3310720871437840357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +212,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24cdc9316a1367d4aa0e88c7ab96ac4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3902326111899914685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9536d9c8dd570aa4ca29a9ca0fe11eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  damage: 0
+  range: 1000
+  moveSpeed: 15
+  worth: 1
+  explosiveRadius: 2
+  explosiveDamage: 1
+  spawnOnDeath: []
+  amountToSpawn: 
+  Effect: {fileID: 7050970385817730975, guid: c2ade926340faa94caa197fcaeed1161, type: 3}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -388,7 +385,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e0e00db5f7398d44becf75151a8f82c, type: 2}
+  - {fileID: 2100000, guid: 0916a315857992b489d2d737bf9d90c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -439,7 +436,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9660845, g: 1, b: 0, a: 1}
+      key0: {r: 0, g: 0.27932334, b: 1, a: 1}
       key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

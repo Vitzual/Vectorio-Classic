@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7015101587557265586}
   - component: {fileID: -1399018605490003274}
-  - component: {fileID: -886167980663301215}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -44,24 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b5b4143c796fe4695cf465c8e8334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  survival: {fileID: 0}
+  overlay: {fileID: 0}
   waves:
   - enemies:
     - {fileID: 0}
     amount: 
-    rate: 
---- !u!58 &-886167980663301215
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4281189382426257539}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 20
+    rate: []
+    minRotation: 0
+    maxRotation: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
-  m_Name: SMG
+  m_Name: Sprayer
   m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,9 +51,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 10
+  health: 10
+  fireRate: 0.05
+  bulletForce: 125
+  bulletSpread: 0.2
+  bulletAmount: 1
+  rotationSpeed: 1.5
+  range: 35
   Point: {fileID: 3069989843565101140}
   Gun: {fileID: 7486538099146903394}
   Bullet: {fileID: 3293027712645128820, guid: c571360961b51b5418ca4b9e14906205, type: 3}
+  level: 1
+  cost: 10
 --- !u!114 &3961812326880450799
 MonoBehaviour:
   m_ObjectHideFlags: 0

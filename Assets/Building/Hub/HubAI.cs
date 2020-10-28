@@ -3,7 +3,6 @@
 public class HubAI : TileClass
 {
     protected Camera main;
-    protected int level;
     protected bool gameOver;
     [SerializeField] protected Canvas EndScreen;
 
@@ -37,12 +36,5 @@ public class HubAI : TileClass
             Instantiate(EndScreen, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-    }
-
-    public override int GetCost() { return 0; }
-
-    public override int GetLevel()
-    {
-        return level;
     }
 }

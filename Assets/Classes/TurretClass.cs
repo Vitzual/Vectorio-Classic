@@ -5,12 +5,12 @@ public abstract class TurretClass : TileClass
 {
 
     // Weapon variables
-    protected float fireRate;
-    protected float bulletForce;
-    protected float bulletSpread;
-    protected float bulletAmount;
-    protected float rotationSpeed;
-    protected int range;
+    public float fireRate;
+    public float bulletForce;
+    public float bulletSpread;
+    public float bulletAmount;
+    public float rotationSpeed;
+    public int range;
     public Transform Point;
     public Rigidbody2D Gun;
     public GameObject Bullet;
@@ -23,7 +23,6 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
-    protected static int enemyLayer = 9;
 
     protected GameObject FindNearestEnemy()
     {

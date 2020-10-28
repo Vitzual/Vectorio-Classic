@@ -10,36 +10,6 @@ public class WallAI : TileClass
     int left = 0;
     int total = 0;
 
-    void Start()
-    {
-        health = 20;
-        maxhp = 20;
-    }
-
-    ///// IMPORTANT! ///////////////////////////////////////////////////
-    // Because Unity is seriously stupid af, you have to set the cost //
-    // of the object here and not in the parent class. You also have  //
-    // to change the name of the variable or else Unity dies          //
-    ////////////////////////////////////////////////////////////////////
-
-    // Cost & level variables
-    private int WallCost = 5;
-    private int WallLevel = 1;
-
-    // How much the object costs
-    public override int GetCost()
-    {
-        return WallCost;
-    }
-
-    // Default level of the object
-    public override int GetLevel()
-    {
-        return WallLevel;
-    }
-
-    //////////////////////////////////////////////////////////////////
-
     public override void DestroyTile()
     {
         Instantiate(Effect, transform.position, Quaternion.identity);

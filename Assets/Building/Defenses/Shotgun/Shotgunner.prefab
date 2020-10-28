@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
-  m_Name: Shotgun
+  m_Name: Shotgunner
   m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,9 +155,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: e3b2acaaa67928d4c9abfcc15f543e95, type: 3}
+  maxhp: 8
+  health: 8
+  fireRate: 0.5
+  bulletForce: 50
+  bulletSpread: 0.45
+  bulletAmount: 8
+  rotationSpeed: 0.5
+  range: 25
   Point: {fileID: 3069989843565101140}
   Gun: {fileID: 1336093179921713143}
   Bullet: {fileID: 3293027712645128820, guid: 5806be12216f0d64988527f58da24088, type: 3}
+  level: 1
+  cost: 10
 --- !u!114 &3961812326880450799
 MonoBehaviour:
   m_ObjectHideFlags: 0

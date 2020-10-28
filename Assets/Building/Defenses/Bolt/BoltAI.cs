@@ -2,22 +2,6 @@
 
 public class BoltAI : TurretClass
 {
-    public int level = 1;
-    public int cost = 10;
-
-    // On start, assign weapon variables
-    void Start()
-    {
-        fireRate = 2f;
-        bulletForce = 100f;
-        bulletSpread = 0f;
-        bulletAmount = 1;
-        rotationSpeed = 0.5f;
-        range = 100;
-        health = 10;
-        maxhp = 10;
-    }
-
     // Targetting system
     void Update()
     {
@@ -46,15 +30,5 @@ public class BoltAI : TurretClass
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
-    }
-
-    public override int GetCost()
-    {
-        return cost;
-    }
-
-    public override int GetLevel()
-    {
-        return level;
     }
 }

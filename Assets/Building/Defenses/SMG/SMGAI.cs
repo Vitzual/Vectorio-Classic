@@ -2,22 +2,6 @@
 
 public class SMGAI : TurretClass
 {
-    public int level = 1;
-    public int cost = 10;
-
-    // On start, assign weapon variables
-    void Start()
-    {
-        fireRate = .05f;
-        bulletForce = 125f;
-        bulletSpread = 0.2f;
-        bulletAmount = 1;
-        rotationSpeed = 1.5f;
-        range = 35;
-        health = 10;
-        maxhp = 10;
-    }
-
     // Targetting system
     void Update()
     {
@@ -46,15 +30,5 @@ public class SMGAI : TurretClass
     {
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
-    }
-
-    public override int GetCost()
-    {
-        return cost;
-    }
-
-    public override int GetLevel()
-    {
-        return level;
     }
 }

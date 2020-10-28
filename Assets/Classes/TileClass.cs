@@ -5,8 +5,10 @@ public abstract class TileClass : MonoBehaviour
 
     [SerializeField]
     protected ParticleSystem Effect;
-    protected float maxhp = 1;
+    public float maxhp = 1;
     public float health = 1;
+    public int cost;
+    public int level;
 
     // Abstract methods
     public abstract void DestroyTile();
@@ -37,6 +39,12 @@ public abstract class TileClass : MonoBehaviour
         return (health / maxhp) * 100;
     }
 
-    public abstract int GetCost();
-    public abstract int GetLevel();
+    public int GetCost()
+    {
+        return cost;
+    }
+    public int GetLevel()
+    {
+        return level;
+    }
 }

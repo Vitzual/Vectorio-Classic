@@ -53,6 +53,7 @@ public class Survival : MonoBehaviour
     delegate void HotbarItem();
     protected float distance = 10;
     List<HotbarItem> hotbar = new List<HotbarItem>();
+    List<GameObject> unlocked = new List<GameObject>();
 
     private void Start()
     {
@@ -63,6 +64,8 @@ public class Survival : MonoBehaviour
         // Temporary
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
+        unlocked.Add(TurretObj);
+        unlocked.Add(WallObj);
 
         InvokeRepeating("UpdateGui", 0f, 1f);
     }
@@ -358,44 +361,65 @@ public class Survival : MonoBehaviour
 
     public void SetTurret()
     {
-        SelectedObj = TurretObj;
-        SwitchObj();
+        if (checkIfUnlocked(TurretObj))
+        {
+            SelectedObj = TurretObj;
+            SwitchObj();
+        }
     }
 
     public void SetShotgun()
     {
-        SelectedObj = ShotgunObj;
+        if (checkIfUnlocked(ShotgunObj))
+        {
+            SelectedObj = ShotgunObj;
         SwitchObj();
+        }
     }
 
     public void SetSniper()
     {
-        SelectedObj = SniperObj;
-        SwitchObj();
+        if (checkIfUnlocked(SniperObj))
+        {
+            SelectedObj = SniperObj;
+            SwitchObj();
+        }
     }
 
     public void SetSMG()
     {
-        SelectedObj = SMGObj;
-        SwitchObj();
+        if (checkIfUnlocked(SMGObj))
+        {
+            SelectedObj = SMGObj;
+            SwitchObj();
+        }
     }
 
     public void SetBolt()
     {
-        SelectedObj = BoltObj;
-        SwitchObj();
+        if (checkIfUnlocked(BoltObj))
+        {
+            SelectedObj = BoltObj;
+            SwitchObj();
+        }
     }
 
     public void SetWall()
     {
-        SelectedObj = WallObj;
-        SwitchObj();
+        if (checkIfUnlocked(WallObj))
+        {
+            SelectedObj = WallObj;
+            SwitchObj();
+        }
     }
 
     public void SetCollector()
     {
-        SelectedObj = CollectorObj;
-        SwitchObj();
+        if (checkIfUnlocked(CollectorObj))
+        {
+            SelectedObj = CollectorObj;
+            SwitchObj();
+        }
     }
 
     public void SwitchObj()
@@ -405,6 +429,18 @@ public class Survival : MonoBehaviour
         Adjustment = 1f;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
         Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+    }
+
+    public bool checkIfUnlocked(GameObject a)
+    {
+        for (int i = 0; i < unlocked.Count; i++)
+        {
+            if (a.name == unlocked[i].name)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void DisableActiveInfo()
@@ -428,6 +464,11 @@ public class Survival : MonoBehaviour
     public float getDistance()
     {
         return distance;
+    }
+
+    public void addUnlocked(GameObject a)
+    {
+        unlocked.Add(a);
     }
 
 }

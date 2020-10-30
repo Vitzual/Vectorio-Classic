@@ -7,7 +7,6 @@ public class Bullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        damage = 1;
         StartCoroutine(SetLifetime(.5f));
     }
 

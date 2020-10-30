@@ -8,7 +8,6 @@ public class SniperBullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        damage = 5;
         StartCoroutine(SetLifetime(1));
     }
 

@@ -8,7 +8,6 @@ public class SMGBullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        damage = 1;
         StartCoroutine(SetLifetime(Random.Range(0.2f, 0.4f)));
     }
 

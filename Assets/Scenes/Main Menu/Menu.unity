@@ -331,7 +331,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &18140115
 Transform:
@@ -888,7 +890,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &140566890
 Transform:
@@ -2118,6 +2122,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 33425487013965559, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33425487013965559, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33425487013965559, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 330691203103028830, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
       propertyPath: m_Sprite
@@ -2174,6 +2193,36 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 859.69196
       objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295031188813451163, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: _effectGradient.key1.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1500349421889541661, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -2198,11 +2247,12 @@ PrefabInstance:
         type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 415450771}
+      objectReference: {fileID: 7476496453188886937, guid: 5cb3331a40beefc41a445848b7ee47dc,
+        type: 3}
     - target: {fileID: 1736105016307489671, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
+      value: StartGame
       objectReference: {fileID: 0}
     - target: {fileID: 1736105016307489671, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
@@ -2213,6 +2263,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063326027927501290, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063326027927501290, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063326027927501290, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063326027927501290, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 2064882331662598855, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
@@ -2319,6 +2389,26 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2840955343073496002, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840955343073496002, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840955343073496002, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840955343073496002, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3574023880523336930, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -2368,6 +2458,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Volume
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071666786823933680, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartCreative
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335996678319477487, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335996678319477487, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335996678319477487, guid: f2fcdcd0c10631343a2b8339aba54853,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6973851807451990868, guid: f2fcdcd0c10631343a2b8339aba54853,
         type: 3}
@@ -2779,7 +2889,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &756868111
 Transform:
@@ -3000,7 +3112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &876457365
 Transform:
@@ -3567,7 +3681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1105065416
 Transform:
@@ -3788,7 +3904,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1127978436
 Transform:
@@ -4141,7 +4259,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1244320012
 Transform:
@@ -4367,7 +4487,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1271197596
 Transform:
@@ -4822,7 +4944,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1363666609
 Transform:
@@ -5389,7 +5513,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1632517646
 Transform:
@@ -5793,7 +5919,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1722521446
 Transform:
@@ -6114,7 +6242,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &1938907416
 Transform:
@@ -6784,7 +6914,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &2128320910
 Transform:
@@ -6921,7 +7053,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  maxhp: 1
   health: 1
+  cost: 0
   level: 1
 --- !u!4 &2133856047
 Transform:

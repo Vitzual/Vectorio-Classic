@@ -2,7 +2,6 @@
 
 public class Bullet : BulletClass
 {
-
     public ParticleSystem Effect;
 
     public void Start()
@@ -13,8 +12,8 @@ public class Bullet : BulletClass
     }
 
     public override void collide()
-    {
-        Instantiate(HitEffect, transform.position, Quaternion.identity);
+    { 
+        Instantiate(HitEffect, transform.position, Quaternion.Euler(0, 0, transform.localEulerAngles.z + 180f));
         Destroy(gameObject);
     }
 

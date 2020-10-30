@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class TurretClass : TileClass
 {
-
+    
     // Weapon variables
     public float fireRate;
     public float bulletForce;

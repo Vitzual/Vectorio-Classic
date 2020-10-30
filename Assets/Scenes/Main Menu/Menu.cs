@@ -19,9 +19,14 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartGame()
+    public void StartCreative()
     {
         SceneManager.LoadScene("Creative");
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Survival");
     }
 
     public void OpenChangelog()

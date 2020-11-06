@@ -61,7 +61,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
+                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, 0), Quaternion.identity);
                         temp.name = GoldOre.name;

@@ -3,6 +3,10 @@
 public class WallAI : TileClass
 {
 
+    // Tile layer
+    [SerializeField]
+    private LayerMask TileLayer;
+
     // Wall auto place variables
     int top = 0;
     int right = 0;
@@ -10,8 +14,61 @@ public class WallAI : TileClass
     int left = 0;
     int total = 0;
 
+    public void Start()
+    {
+        RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        if (a.collider != null && a.collider.name == "Wall")
+        {
+            Debug.Log("Wall is on my right");
+            a.collider.GetComponent<WallAI>().UpdateSprite(1);
+            UpdateSprite(3);
+        }
+        if (b.collider != null && b.collider.name == "Wall")
+        {
+            Debug.Log("Wall is on my left");
+            b.collider.GetComponent<WallAI>().UpdateSprite(3);
+            UpdateSprite(1);
+        }
+        if (c.collider != null && c.collider.name == "Wall")
+        {
+            Debug.Log("Wall is on my head");
+            c.collider.GetComponent<WallAI>().UpdateSprite(2);
+            UpdateSprite(4);
+        }
+        if (d.collider != null && d.collider.name == "Wall")
+        {
+            Debug.Log("Wall is on my foot");
+            d.collider.GetComponent<WallAI>().UpdateSprite(4);
+            UpdateSprite(2);
+        }
+    }
+
     public override void DestroyTile()
     {
+        RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        if (a.collider != null && a.collider.name == "Wall")
+        {
+            a.collider.GetComponent<WallAI>().UpdateSprite(-1);
+        }
+        if (b.collider != null && b.collider.name == "Wall")
+        {
+            b.collider.GetComponent<WallAI>().UpdateSprite(-3);
+        }
+        if (c.collider != null && c.collider.name == "Wall")
+        {
+            c.collider.GetComponent<WallAI>().UpdateSprite(-2);
+        }
+        if (d.collider != null && d.collider.name == "Wall")
+        {
+            d.collider.GetComponent<WallAI>().UpdateSprite(-4);
+        }
+
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

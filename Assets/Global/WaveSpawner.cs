@@ -62,7 +62,10 @@ public class WaveSpawner : MonoBehaviour
             checkEnemies = 1f;
             if (GameObject.FindGameObjectWithTag("Enemy") == null)
             {
-                unlockDefense(lastWave.unlock, lastWave.button, lastWave.unlockDescription);
+                if(lastWave.unlock != null && lastWave.button != null)
+                {
+                    unlockDefense(lastWave.unlock, lastWave.button, lastWave.unlockDescription);
+                }
                 return false;
             }
         }
@@ -77,7 +80,7 @@ public class WaveSpawner : MonoBehaviour
         {
             for (int b = 0; b < _wave.amount[a]; b++)
             {
-                SpawnEnemy(_wave.enemies[a], a, survival.GetComponent<Survival>().getDistance() + Random.Range(25f, 35f));
+                SpawnEnemy(_wave.enemies[a], currentWave, survival.GetComponent<Survival>().getDistance() + Random.Range(25f, 35f));
                 yield return new WaitForSeconds(1f/_wave.rate[a]);
             }
         }

@@ -14,6 +14,7 @@ public class Building : MonoBehaviour
     public Sprite Shotgun;
     public Sprite SMG;
     public Sprite Wall;
+    public Sprite Collector;
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
@@ -21,25 +22,17 @@ public class Building : MonoBehaviour
     private bool QuickPlace = true;
 
     // Object placements
-    [SerializeField]
-    private GameObject GridObj;
-    [SerializeField]
-    private GameObject SniperObj;
-    [SerializeField]
-    private GameObject TurretObj;
-    [SerializeField]
-    private GameObject EnemyObj;
-    [SerializeField]
-    private GameObject BoltObj;
-    [SerializeField]
-    private GameObject ShotgunObj;
-    [SerializeField]
-    private GameObject WallObj;
-    [SerializeField]
-    private GameObject SMGObj;
+    [SerializeField] private GameObject GridObj;
+    [SerializeField] private GameObject SniperObj;
+    [SerializeField] private GameObject TurretObj;
+    [SerializeField] private GameObject EnemyObj;
+    [SerializeField] private GameObject BoltObj;
+    [SerializeField] private GameObject ShotgunObj;
+    [SerializeField] private GameObject WallObj;
+    [SerializeField] private GameObject SMGObj;
+    [SerializeField] private GameObject CollectorObj;
     private GameObject SelectedObj;
     private GameObject LastObj;
-    private Collider2D LastHit;
 
     // UI Elements
     public Canvas Overlay;

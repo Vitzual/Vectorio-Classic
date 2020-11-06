@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class BulletClass : MonoBehaviour
 {
     public ParticleSystem EnemyEffect;
-    protected static ParticleSystem HitEffect;
+    protected ParticleSystem HitEffect;
     public int damage;
 
     public abstract void collide();
@@ -16,7 +16,7 @@ public abstract class BulletClass : MonoBehaviour
             other.GetComponent<EnemyClass>().DamageEntity(damage);
             if (!this.name.Contains("BoltBullet"))
             {
-                HitEffect = EnemyEffect;
+                HitEffect = this.EnemyEffect;
                 collide();
             }
         }

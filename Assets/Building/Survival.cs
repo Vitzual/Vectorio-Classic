@@ -20,20 +20,15 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
-    [SerializeField]
-    private GameObject SniperObj;
-    [SerializeField]
-    private GameObject TurretObj;
-    [SerializeField]
-    private GameObject BoltObj;
-    [SerializeField]
-    private GameObject ShotgunObj;
-    [SerializeField]
-    private GameObject WallObj;
-    [SerializeField]
-    private GameObject SMGObj;
-    [SerializeField]
-    private GameObject CollectorObj;
+    [SerializeField] private GameObject SniperObj;
+    [SerializeField] private GameObject TurretObj;
+    [SerializeField] private GameObject BoltObj;
+    [SerializeField] private GameObject ShotgunObj;
+    [SerializeField] private GameObject WallObj;
+    [SerializeField] private GameObject SMGObj;
+    [SerializeField] private GameObject CollectorObj;
+
+    // Object variables
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
@@ -64,8 +59,10 @@ public class Survival : MonoBehaviour
         // Temporary
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
+        hotbar.Add(SetCollector);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
+        unlocked.Add(CollectorObj);
 
         InvokeRepeating("UpdateGui", 0f, 1f);
     }
@@ -108,7 +105,7 @@ public class Survival : MonoBehaviour
                 RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
                 // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider == null)
+                if (rayHit.collider == null && SelectedObj != CollectorObj)
                 {
                     int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                     if (cost <= gold)
@@ -130,9 +127,12 @@ public class Survival : MonoBehaviour
                             distance = dist;
                         }
                     }
-                    if (SelectedObj == WallObj)
-                    {
-                        CalculateWallPlacement();
+                } 
+                else
+                {
+                    if (rayHit.collider.name.ToLower() == "goldtile") {
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                        LastObj.name = SelectedObj.name;
                     }
                 }
             }
@@ -242,34 +242,6 @@ public class Survival : MonoBehaviour
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
         b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "Cost:      " + a.GetComponent<TileClass>().GetCost();
         b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-    }
-
-    void CalculateWallPlacement()
-    {
-        RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x+5f,MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x-5f,MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y+5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x,MousePos.y-5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name == "Wall")
-        {
-            a.collider.GetComponent<WallAI>().UpdateSprite(1);
-            LastObj.GetComponent<WallAI>().UpdateSprite(3);
-        }
-        if (b.collider != null && b.collider.name == "Wall")
-        {
-            b.collider.GetComponent<WallAI>().UpdateSprite(3);
-            LastObj.GetComponent<WallAI>().UpdateSprite(1);
-        }
-        if (c.collider != null && c.collider.name == "Wall")
-        {
-            c.collider.GetComponent<WallAI>().UpdateSprite(2);
-            LastObj.GetComponent<WallAI>().UpdateSprite(4);
-        }
-        if (d.collider != null && d.collider.name == "Wall")
-        {
-            d.collider.GetComponent<WallAI>().UpdateSprite(4);
-            LastObj.GetComponent<WallAI>().UpdateSprite(2);
-        }
     }
 
     private void UpdateGui()

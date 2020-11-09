@@ -63,7 +63,7 @@ public class OnSpawn : MonoBehaviour
 
             if ((x >= 15 + GoldVeinSize || x <= -15 - GoldVeinSize) && (y >= 15 + GoldVeinSize || y <= -15 - GoldVeinSize))
             {
-                var temp = Instantiate(GoldOre, new Vector3(x, y, 0), Quaternion.identity);
+                var temp = Instantiate(GoldOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = GoldOre.name;
 
                 for (int c = 0; c < GoldVeinNoise; c++)
@@ -79,7 +79,7 @@ public class OnSpawn : MonoBehaviour
 
                     if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
-                        temp = Instantiate(GoldOre, new Vector3(x + a, y + b, 0), Quaternion.identity);
+                        temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
                     }
                 }
@@ -105,7 +105,7 @@ public class OnSpawn : MonoBehaviour
 
             if ((x >= 35 + EssenceVeinSize || x <= -35 - EssenceVeinSize) && (y >= 35 + EssenceVeinSize || y <= -35 - EssenceVeinSize))
             {
-                var temp = Instantiate(EssenceOre, new Vector3(x, y, 0), Quaternion.identity);
+                var temp = Instantiate(EssenceOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = EssenceOre.name;
 
                 for (int c = 0; c < EssenceVeinNoise; c++)
@@ -121,7 +121,7 @@ public class OnSpawn : MonoBehaviour
 
                     if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
-                        temp = Instantiate(EssenceOre, new Vector3(x + a, y + b, 0), Quaternion.identity);
+                        temp = Instantiate(EssenceOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = EssenceOre.name;
                     }
                 }
@@ -147,7 +147,7 @@ public class OnSpawn : MonoBehaviour
 
             if ((x >= 55 + IridiumVeinSize || x <= -55 - IridiumVeinSize) && (y >= 55 + IridiumVeinSize || y <= -55 - IridiumVeinSize))
             {
-                var temp = Instantiate(IridiumOre, new Vector3(x, y, 0), Quaternion.identity);
+                var temp = Instantiate(IridiumOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = IridiumOre.name;
 
                 for (int c = 0; c < IridiumVeinNoise; c++)
@@ -163,7 +163,7 @@ public class OnSpawn : MonoBehaviour
 
                     if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
-                        temp = Instantiate(IridiumOre, new Vector3(x + a, y + b, 0), Quaternion.identity);
+                        temp = Instantiate(IridiumOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = IridiumOre.name;
                     }
                 }

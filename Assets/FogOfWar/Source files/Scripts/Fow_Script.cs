@@ -73,9 +73,13 @@ public class Fow_Script : MonoBehaviour {
             foreach (FowUnit unit in fowUnits) {
                 for (int i = 0; i < fogPlaneVertices.Length; i++) {
                     Vector3 v = fogPlane.transform.TransformPoint(fogPlaneVertices[i]);
-                    float dist = Vector3.SqrMagnitude(v - new Vector3(unit.transform.position.x, unit.transform.position.y, unit.transform.position.z));
-                    float alpha = Mathf.Min(fogPlaneColors[i].a, (dist - unit.edgeSharpness * 50) / Mathf.CeilToInt(unit.radius * unit.radius));
-                    fogPlaneColors[i].a = alpha; // set transparency based on distance
+                    Vector3 pos = unit.transform.position;
+                    float distX = Mathf.Abs(v.x - pos.x);
+                    float distY = Mathf.Abs(v.y - pos.y);
+                    if (distX < unit.radius && distY < unit.radius)
+                    {
+                        fogPlaneColors[i].a = 0;
+                    }
                 }
             }
             fogPlaneMesh.colors = fogPlaneColors;

@@ -9,7 +9,7 @@ public class Survival : MonoBehaviour
 {
 
     // Player stats
-    public int gold = 100;
+    public int gold = 0;
     protected int essence = 0;
     protected int iridium = 0;
 
@@ -26,9 +26,14 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject ShotgunObj;
     [SerializeField] private GameObject WallObj;
     [SerializeField] private GameObject SMGObj;
+    [SerializeField] private GameObject MineObj;
+    [SerializeField] private GameObject ConveyorObj;
     [SerializeField] private GameObject CollectorObj;
+    [SerializeField] private GameObject WireObj;
+    [SerializeField] private GameObject ProjectorObj;
 
     // Object variables
+    public GameObject Spawner;
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
@@ -57,12 +62,15 @@ public class Survival : MonoBehaviour
         // Temporary
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
+        hotbar.Add(SetMine);
         hotbar.Add(SetCollector);
+        hotbar.Add(SetProjector);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
+        unlocked.Add(MineObj);
         unlocked.Add(CollectorObj);
-
-        InvokeRepeating("UpdateGui", 0f, 1f);
+        unlocked.Add(ProjectorObj);
+        unlocked.Add(WireObj);
     }
 
     private void Update()
@@ -77,77 +85,92 @@ public class Survival : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
-        if (Input.mousePosition.y > 170f)
+        // if (SelectedObj == null)
+        // {
+        //     if (CurrentCache >= CacheAmount)
+        //     {
+        //         RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+        //         CurrentCache = 0;
+        //         if (rayHit.collider != null)
+        //         {
+        //             ShowTileInfo(rayHit.collider);
+        //        } 
+        //         else
+        //         {
+        //             Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+        //         }
+        //     }
+        //    CurrentCache += 1;
+        // }
+        // If user left clicks, place object
+
+        if (Input.GetButton("Fire1") && !BuildingOpen)
         {
-            //if (SelectedObj == null)
-            //{
-            //    if (CurrentCache >= CacheAmount)
-            //    {
-            //        RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-            //        CurrentCache = 0;
-            //        if (rayHit.collider != null)
-            //        {
-            //            ShowTileInfo(rayHit.collider);
-            //       } 
-            //        else
-            //        {
-            //            Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-            //        }
-            //    }
-            //   CurrentCache += 1;
-            //}
-            // If user left clicks, place object
-            if (Input.GetButton("Fire1") && !BuildingOpen && transform.position.x <= distance && transform.position.y <= distance)
-            {
-                //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider == null && SelectedObj != CollectorObj)
-                {
-                    int cost = SelectedObj.GetComponent<TileClass>().GetCost();
-                    if (cost <= gold)
-                    {
-                        gold -= cost;
-                        UpdateGui();
-                        if (SelectedObj == WallObj)
-                        {
-                            LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                        }
-                        else
-                        {
-                            LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
-                        }
-                        LastObj.name = SelectedObj.name;
-                        float dist = Vector2.Distance(LastObj.transform.position, GameObject.Find("Hub").GetComponent<Transform>().position);
-                        if(dist > distance)
-                        {
-                            distance = dist;
-                        }
-                    }
-                } 
-                else
-                {
-                    if (rayHit.collider.name.ToLower() == "goldtile") {
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                        LastObj.name = SelectedObj.name;
-                    }
-                }
-            }
-            // If user right clicks, place object
-            else if (Input.GetButton("Fire2") && !BuildingOpen)
+            // Raycast tile to see if there is already a tile placed
+            if (rayHit.collider == null)
             {
-                //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-                // Raycast tile to see if there is already a tile placed
-                if (rayHit.collider != null && rayHit.collider.name != "Hub")
+                int cost = SelectedObj.GetComponent<TileClass>().GetCost();
+                if (cost <= gold)
                 {
-                    int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
-                    gold += cost - cost / 5;
+                    gold -= cost;
                     UpdateGui();
-                    Destroy(rayHit.collider.gameObject);
+                    if (SelectedObj == WallObj || SelectedObj == WireObj)
+                    {
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                    }
+                    else
+                    {
+                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                    }
+                    LastObj.name = SelectedObj.name;
+                    Spawner.GetComponent<WaveSpawner>().increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
+
+                    if (SelectedObj != WallObj)
+                    {
+                        // Check for wires and adjust accordingly 
+                        RaycastHit2D a = Physics2D.Raycast(new Vector2(LastObj.transform.position.x + 5f, LastObj.transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                        RaycastHit2D b = Physics2D.Raycast(new Vector2(LastObj.transform.position.x - 5f, LastObj.transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                        RaycastHit2D c = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+                        RaycastHit2D d = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+
+                        if (a.collider != null && a.collider.name == "Wire")
+                        {
+                            a.collider.GetComponent<WireAI>().UpdateSprite(1);
+                        }
+                        if (b.collider != null && b.collider.name == "Wire")
+                        {
+                            b.collider.GetComponent<WireAI>().UpdateSprite(3);
+                        }
+                        if (c.collider != null && c.collider.name == "Wire")
+                        {
+                            c.collider.GetComponent<WireAI>().UpdateSprite(2);
+                        }
+                        if (d.collider != null && d.collider.name == "Wire")
+                        {
+                            d.collider.GetComponent<WireAI>().UpdateSprite(4);
+                        }
+                    }
                 }
+            } 
+        }
+
+        // If user right clicks, place object
+        else if (Input.GetButton("Fire2") && !BuildingOpen)
+        {
+            //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+            // Raycast tile to see if there is already a tile placed
+            if (rayHit.collider != null && rayHit.collider.name != "Hub")
+            {
+                Spawner.GetComponent<WaveSpawner>().decreaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
+                int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
+                gold += cost - cost / 5;
+                UpdateGui();
+                Destroy(rayHit.collider.gameObject);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -176,6 +199,9 @@ public class Survival : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9)) {
             SelectHotbar(8);
+        }
+        else if (Input.GetKeyDown(KeyCode.F)) {
+            SetWire();
         }
         else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
         {
@@ -240,7 +266,7 @@ public class Survival : MonoBehaviour
     //    b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     //}
 
-    private void UpdateGui()
+    public void UpdateGui()
     {
         GoldAmount.text = ""+gold;
     }
@@ -390,6 +416,42 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SetMine()
+    {
+        if (checkIfUnlocked(MineObj))
+        {
+            SelectedObj = MineObj;
+            SwitchObj();
+        }
+    }
+
+    public void SetProjector()
+    {
+        if (checkIfUnlocked(ProjectorObj))
+        {
+            SelectedObj = ProjectorObj;
+            SwitchObj();
+        }
+    }
+
+    public void SetWire()
+    {
+        if (checkIfUnlocked(WireObj))
+        {
+            SelectedObj = WireObj;
+            SwitchObj();
+        }
+    }
+
+    public void SetConveyor()
+    {
+        if (checkIfUnlocked(ConveyorObj))
+        {
+            SelectedObj = ConveyorObj;
+            SwitchObj();
+        }
+    }
+
     public void SwitchObj()
     {
         DisableActiveInfo();
@@ -426,11 +488,6 @@ public class Survival : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
-    }
-
-    public float getDistance()
-    {
-        return distance;
     }
 
     public void addUnlocked(GameObject a)

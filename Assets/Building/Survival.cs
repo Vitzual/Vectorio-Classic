@@ -136,22 +136,31 @@ public class Survival : MonoBehaviour
                         RaycastHit2D c = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                         RaycastHit2D d = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
 
+                        bool wireLocated = false;
                         if (a.collider != null && a.collider.name == "Wire")
                         {
                             a.collider.GetComponent<WireAI>().UpdateSprite(1);
+                            wireLocated = true;
                         }
                         if (b.collider != null && b.collider.name == "Wire")
                         {
                             b.collider.GetComponent<WireAI>().UpdateSprite(3);
+                            wireLocated = true;
                         }
                         if (c.collider != null && c.collider.name == "Wire")
                         {
                             c.collider.GetComponent<WireAI>().UpdateSprite(2);
+                            wireLocated = true;
                         }
                         if (d.collider != null && d.collider.name == "Wire")
                         {
                             d.collider.GetComponent<WireAI>().UpdateSprite(4);
+                            wireLocated = true;
                         }
+                        //if (wireLocated == true)
+                        //{
+                        //    Instantiate(WireObj, LastObj.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                        //}
                     }
                 }
             } 

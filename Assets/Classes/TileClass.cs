@@ -7,6 +7,7 @@ public abstract class TileClass : MonoBehaviour
     protected ParticleSystem Effect;
     public float maxhp = 1;
     public float health = 1;
+    public int heat = 1;
     public int cost = 0;
     public int level = 1;
 
@@ -46,5 +47,9 @@ public abstract class TileClass : MonoBehaviour
     public int GetLevel()
     {
         return level;
+    }
+    public int GetHeat()
+    {
+        return heat;
     }
 }

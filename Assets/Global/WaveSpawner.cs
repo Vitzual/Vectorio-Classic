@@ -1,122 +1,68 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using Michsky.UI.ModernUIPack;
 using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum SpawnState {ACTIVE, WAITING, INACTIVE}
+
     public GameObject survival;
-    public Canvas overlay;
-    public GameObject unlockOverlay;
-    public TextMeshProUGUI backup;
+    public TextMeshProUGUI heatUI;
+    private int htrack;
+    private int heat;
+
+    private void Start()
+    {
+        htrack = 1;
+        heat = 0;
+        InvokeRepeating("SpawnEnemies", 0f, 1f);
+    }
 
     [System.Serializable]
-    public class Wave
+    public class Enemies
     {
-        public Transform[] enemies;
-        public int[] amount;
-        public float[] rate;
-        public int minRotation;
-        public int maxRotation;
-        public GameObject unlock;
-        public ButtonManagerBasicIcon button;
-        public string unlockDescription;
+        public Transform enemyObject;
+        public float chance;
+        public float minHeat;
+        public float maxHeat;
     }
 
-    public Wave[] waves;
-    private Wave lastWave;
-    private int currentWave = 0;
-    private float checkEnemies = 1f;
-    private SpawnState state = SpawnState.INACTIVE;
+    public Enemies[] enemy;
 
-    private void Update()
+    private void SpawnEnemies()
     {
-        if (state == SpawnState.WAITING)
+        for (int a=0; a<enemy.Length; a++)
         {
-            if (!enemiesAlive())
+            if (heat >= enemy[a].minHeat && heat <= enemy[a].maxHeat)
             {
-                state = SpawnState.INACTIVE;
-                Debug.Log("Finished wave " + currentWave);
-                overlay.transform.Find("Wave").GetComponent<CanvasGroup>().interactable = true;
-                currentWave += 1;
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        if (state == SpawnState.ACTIVE)
-        {
-            StartCoroutine(SpawnWave(waves[currentWave]));
-            state = SpawnState.WAITING;
-        }
-    }
-
-    public bool enemiesAlive()
-    {
-        checkEnemies -= Time.deltaTime;
-        if (checkEnemies <= 0f) {
-            checkEnemies = 1f;
-            if (GameObject.FindGameObjectWithTag("Enemy") == null)
-            {
-                if(lastWave.unlock != null && lastWave.button != null)
+                var proc = Random.Range(0, 100);
+                if (proc <= enemy[a].chance)
                 {
-                    unlockDefense(lastWave.unlock, lastWave.button, lastWave.unlockDescription);
+                    SpawnEnemy(enemy[a].enemyObject);
                 }
-                return false;
             }
         }
-        return true;
     }
 
-    IEnumerator SpawnWave(Wave _wave)
+    void SpawnEnemy(Transform _enemy)
     {
-        overlay.transform.Find("Wave").GetComponent<CanvasGroup>().interactable = false;
-
-        for (int a = 0; a < _wave.enemies.Length; a++)
-        {
-            for (int b = 0; b < _wave.amount[a]; b++)
-            {
-                SpawnEnemy(_wave.enemies[a], currentWave, survival.GetComponent<Survival>().getDistance() + Random.Range(25f, 35f));
-                yield return new WaitForSeconds(1f/_wave.rate[a]);
-            }
-        }
-
-        lastWave = _wave;
-        yield break;
-    }
-
-    void SpawnEnemy(Transform _enemy, int a, float b)
-    {
-        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(waves[a].minRotation, waves[a].maxRotation)));
-        transform.position += transform.right * b;
+        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
+        transform.position += transform.right * 350;
         Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = new Vector3(0, 0, 0);
     }
 
-    public void setWavesActive()
+    public void increaseHeat(int a)
     {
-        state = SpawnState.ACTIVE;
+        htrack += a;
+        heat = htrack / 100;
+        heatUI.text = heat.ToString();
     }
 
-    public void unlockDefense(GameObject a, ButtonManagerBasicIcon b, string c)
+    public void decreaseHeat(int a)
     {
-        survival.GetComponent<Survival>().addUnlocked(a);
-        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-        ModalWindowManager uol = unlockOverlay.GetComponent<ModalWindowManager>();
-        uol.icon = Resources.Load<Sprite>("Sprites/" + a.name);
-        uol.titleText = a.name;
-        uol.descriptionText = c;
-        backup.text = c;
-        uol.OpenWindow();
-    }
-
-    public void closeOverlay()
-    {
-        unlockOverlay.GetComponent<ModalWindowManager>().CloseWindow();
+        htrack -= a;
+        heat = htrack / 100;
+        heatUI.text = heat.ToString();
     }
 }

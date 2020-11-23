@@ -84,6 +84,18 @@ public abstract class EnemyClass : MonoBehaviour
         return damage;
     }
 
+    // Return moveSpeed
+    public float getSpeed()
+    {
+        return moveSpeed;
+    }
+
+    // Set the move speed
+    public void setSpeed(float a)
+    {
+        moveSpeed = a;
+    }
+
     protected GameObject FindNearestDefence()
     {
         var colliders = Physics2D.OverlapCircleAll(

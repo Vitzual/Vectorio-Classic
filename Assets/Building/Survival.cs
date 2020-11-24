@@ -20,6 +20,7 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
+    [SerializeField] private GameObject HubObj;
     [SerializeField] private GameObject SniperObj;
     [SerializeField] private GameObject TurretObj;
     [SerializeField] private GameObject BoltObj;
@@ -42,6 +43,7 @@ public class Survival : MonoBehaviour
     public Canvas Overlay;
     private bool MenuOpen;
     private bool BuildingOpen;
+    private bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
 
     // Internal placement variables
@@ -59,18 +61,18 @@ public class Survival : MonoBehaviour
         MenuOpen = false;
         BuildingOpen = false;
 
-        // Temporary
+        // Hotbar / Building 
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
         hotbar.Add(SetMine);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetProjector);
+        //hotbar.Add(SetCollector);
+        //hotbar.Add(SetProjector);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
         unlocked.Add(MineObj);
-        unlocked.Add(CollectorObj);
-        unlocked.Add(ProjectorObj);
         unlocked.Add(WireObj);
+        //unlocked.Add(CollectorObj);
+        //unlocked.Add(ProjectorObj);
     }
 
     private void Update()
@@ -85,25 +87,7 @@ public class Survival : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
-        // if (SelectedObj == null)
-        // {
-        //     if (CurrentCache >= CacheAmount)
-        //     {
-        //         RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-        //         CurrentCache = 0;
-        //         if (rayHit.collider != null)
-        //         {
-        //             ShowTileInfo(rayHit.collider);
-        //        } 
-        //         else
-        //         {
-        //             Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-        //         }
-        //     }
-        //    CurrentCache += 1;
-        // }
         // If user left clicks, place object
-
         if (Input.GetButton("Fire1") && !BuildingOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
@@ -136,26 +120,21 @@ public class Survival : MonoBehaviour
                         RaycastHit2D c = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                         RaycastHit2D d = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                        bool wireLocated = false;
                         if (a.collider != null && a.collider.name == "Wire")
                         {
                             a.collider.GetComponent<WireAI>().UpdateSprite(1);
-                            wireLocated = true;
                         }
                         if (b.collider != null && b.collider.name == "Wire")
                         {
                             b.collider.GetComponent<WireAI>().UpdateSprite(3);
-                            wireLocated = true;
                         }
                         if (c.collider != null && c.collider.name == "Wire")
                         {
                             c.collider.GetComponent<WireAI>().UpdateSprite(2);
-                            wireLocated = true;
                         }
                         if (d.collider != null && d.collider.name == "Wire")
                         {
                             d.collider.GetComponent<WireAI>().UpdateSprite(4);
-                            wireLocated = true;
                         }
                         //if (wireLocated == true)
                         //{
@@ -164,6 +143,11 @@ public class Survival : MonoBehaviour
                     }
                 }
             } 
+            else
+            {
+                ShowTileInfo(rayHit.collider);
+                ShowingInfo = true;
+            }
         }
 
         // If user right clicks, place object
@@ -237,9 +221,17 @@ public class Survival : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
+            Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
             Selected.sprite = null;
             SelectedObj = null;
             rotation = 0;
+            ResetTileInfo();
+            ShowingInfo = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && ShowingInfo == true)
+        {
+            ResetTileInfo();
+            ShowingInfo = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
         {
@@ -257,23 +249,30 @@ public class Survival : MonoBehaviour
         }
     }
 
-    //void ShowTileInfo(Collider2D a)
-    //{
-    //    Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 1;
-    //    Transform b = Overlay.transform.Find("Hovering Stats");
-    //    b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-    //    b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
-    //    b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-    //}
+    void ShowTileInfo(Collider2D a)
+    {
+        Transform b = Overlay.transform.Find("Prompt");
+        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
+        b.transform.Find("Tier").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetTier();
+    }
 
-    //void ShowSelectedInfo(GameObject a)
-    //{
-    //    Overlay.transform.Find("Selected Info").GetComponent<CanvasGroup>().alpha = 1;
-    //    Transform b = Overlay.transform.Find("Selected Info");
-    //    b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (Level " + a.GetComponent<TileClass>().GetLevel() + ")";
-    //    b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "Cost:      " + a.GetComponent<TileClass>().GetCost();
-    //    b.transform.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-    //}
+    void ResetTileInfo()
+    {
+        Transform b = Overlay.transform.Find("Prompt");
+        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = HubObj.GetComponent<TileClass>().GetPercentage();
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "Headquarters";
+        b.transform.Find("Tier").GetComponent<TextMeshProUGUI>().text = HubObj.GetComponent<TileClass>().GetTier();
+    }
+
+    void ShowSelectedInfo(GameObject a)
+    {
+        Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
+        Transform b = Overlay.transform.Find("Selected");
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " ("+ a.GetComponent<TileClass>().GetTier() + ")";
+        b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetCost().ToString();
+        b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
+    }
 
     public void UpdateGui()
     {
@@ -466,7 +465,7 @@ public class Survival : MonoBehaviour
         DisableActiveInfo();
         Adjustment = 1f;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
+        ShowSelectedInfo(SelectedObj);
     }
 
     public bool checkIfUnlocked(GameObject a)

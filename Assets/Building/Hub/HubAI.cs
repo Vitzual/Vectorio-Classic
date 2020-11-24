@@ -4,11 +4,15 @@ public class HubAI : TileClass
 {
     protected Camera main;
     protected bool gameOver;
+    private GameObject SRVSC;
     [SerializeField] protected Canvas EndScreen;
 
     // On start, assign weapon variables
     void Start()
     {
+        SRVSC = GameObject.Find("Survival");
+        InvokeRepeating("SendGold", 0f, 1f);
+
         main = Camera.main;
         health = 30;
         maxhp = 30;
@@ -36,5 +40,12 @@ public class HubAI : TileClass
             Instantiate(EndScreen, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+    }
+
+    // Send gold
+    private void SendGold()
+    {
+        SRVSC.GetComponent<Survival>().AddGold(1);
+        SRVSC.GetComponent<Survival>().UpdateGui();
     }
 }

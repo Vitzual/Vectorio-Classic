@@ -35,6 +35,7 @@ public class Survival : MonoBehaviour
 
     // Object variables
     public GameObject Spawner;
+    public GameObject SelectedOverlay;
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
@@ -147,6 +148,8 @@ public class Survival : MonoBehaviour
             {
                 ShowTileInfo(rayHit.collider);
                 ShowingInfo = true;
+                SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                SelectedOverlay.SetActive(true);
             }
         }
 
@@ -227,11 +230,13 @@ public class Survival : MonoBehaviour
             rotation = 0;
             ResetTileInfo();
             ShowingInfo = false;
+            SelectedOverlay.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && ShowingInfo == true)
         {
             ResetTileInfo();
             ShowingInfo = false;
+            SelectedOverlay.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
         {

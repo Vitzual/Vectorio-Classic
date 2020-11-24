@@ -146,10 +146,13 @@ public class Survival : MonoBehaviour
             } 
             else
             {
-                ShowTileInfo(rayHit.collider);
-                ShowingInfo = true;
-                SelectedOverlay.transform.position = rayHit.collider.transform.position;
-                SelectedOverlay.SetActive(true);
+                if(rayHit.collider.name != "Hub")
+                {
+                    ShowTileInfo(rayHit.collider);
+                    ShowingInfo = true;
+                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                    SelectedOverlay.SetActive(true);
+                }
             }
         }
 
@@ -162,6 +165,9 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
+                ResetTileInfo();
+                ShowingInfo = false;
+                SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
                 int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
                 gold += cost - cost / 5;

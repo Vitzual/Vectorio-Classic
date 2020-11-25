@@ -386,7 +386,7 @@ public class Survival : MonoBehaviour
 
     public void UpdateGui()
     {
-        GoldAmount.text = ""+gold;
+        GoldAmount.text = gold.ToString();
     }
 
     public void AddGold(int a)

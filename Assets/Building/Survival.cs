@@ -46,6 +46,9 @@ public class Survival : MonoBehaviour
     private bool BuildingOpen;
     private bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
+    public ModalWindowManager UOL;
+    public ProgressBar[] UpgradeProgressBars;
+    public TextMeshProUGUI UpgradeProgressName;
 
     // Internal placement variables
     [SerializeField]
@@ -56,24 +59,41 @@ public class Survival : MonoBehaviour
     List<HotbarItem> hotbar = new List<HotbarItem>();
     List<GameObject> unlocked = new List<GameObject>();
 
+    // Unlock list
+    private int UnlockLvl = 0;
+    private bool UnlocksLeft = true;
+    [System.Serializable]
+    public class Unlockables
+    {
+        public GameObject Unlock;
+        public ButtonManagerBasicIcon InventoryButton;
+        public Transform[] Enemy;
+        public int[] AmountNeeded;
+        public int[] AmountTracked;
+    }
+    public Unlockables[] UnlockTier;
+
     private void Start()
     {
+        // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
         MenuOpen = false;
         BuildingOpen = false;
 
-        // Hotbar / Building 
+        // Default starting unlocks / hotbar
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
         hotbar.Add(SetMine);
-        //hotbar.Add(SetCollector);
-        //hotbar.Add(SetProjector);
+        hotbar.Add(SetWire);
+        hotbar.Add(SetCollector);
+        hotbar.Add(SetCollector);
+        hotbar.Add(SetCollector);
+        hotbar.Add(SetCollector);
+        hotbar.Add(SetCollector);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
         unlocked.Add(MineObj);
         unlocked.Add(WireObj);
-        //unlocked.Add(CollectorObj);
-        //unlocked.Add(ProjectorObj);
     }
 
     private void Update()
@@ -137,10 +157,6 @@ public class Survival : MonoBehaviour
                         {
                             d.collider.GetComponent<WireAI>().UpdateSprite(4);
                         }
-                        //if (wireLocated == true)
-                        //{
-                        //    Instantiate(WireObj, LastObj.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                        //}
                     }
                 }
             } 
@@ -156,7 +172,7 @@ public class Survival : MonoBehaviour
             }
         }
 
-        // If user right clicks, place object
+        // If user right clicks, remove object
         else if (Input.GetButton("Fire2") && !BuildingOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
@@ -260,6 +276,77 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void UpdateUnlock(Transform a)
+    {
+        if (UnlocksLeft)
+        {
+            // Itterate through list and update GUI accordingly
+            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
+            {
+                if (UnlockTier[UnlockLvl].Enemy[i].name == a.name)
+                {
+                    // Increment amount tracked and update GUI
+                    UnlockTier[UnlockLvl].AmountTracked[i] += 1;
+                    UpdateUnlockGui(i, ((double)UnlockTier[UnlockLvl].AmountTracked[i] / (double)UnlockTier[UnlockLvl].AmountNeeded[i])*100);
+                }
+            }
+
+            // Check if requirements have been met
+            bool RequirementsMetCheck = true;
+            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
+            {
+                if (UnlockTier[UnlockLvl].AmountTracked[i] < UnlockTier[UnlockLvl].AmountNeeded[i])
+                {
+                    RequirementsMetCheck = false;
+                }
+            }
+
+            // If requirements met, unlock and start next unlock
+            if (RequirementsMetCheck == true)
+            {
+                GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
+                unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
+                StartNextUnlock();
+            }
+        }
+    }
+
+    public void UpdateUnlockGui(int a, double b)
+    {
+        UpgradeProgressBars[a].currentPercent = (float)b;
+    }
+
+    public void StartNextUnlock()
+    {
+        UnlockLvl += 1;
+        Transform c = Overlay.transform.Find("Upgrade");
+        try
+        {
+            int z = UnlockTier[UnlockLvl].Enemy.Length;
+        }
+        catch
+        {
+            UnlocksLeft = false;
+            c.gameObject.SetActive(false);
+        }
+        finally
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                UpgradeProgressBars[i].currentPercent = 0;
+                try
+                {
+                    UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Enemy[i].name);
+                }
+                catch
+                {
+                    UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + "Undiscovered");
+                }
+            }
+            UpgradeProgressName.text = UnlockTier[UnlockLvl].Unlock.transform.name;
+        }
+    }
+
     void ShowTileInfo(Collider2D a)
     {
         Transform b = Overlay.transform.Find("Prompt");
@@ -285,9 +372,21 @@ public class Survival : MonoBehaviour
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
 
+    public void unlockDefense(GameObject a, ButtonManagerBasicIcon b, string c)
+    {
+        Debug.Log(UOL.titleText);
+        Debug.Log(UOL.descriptionText);
+        addUnlocked(a);
+        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.name);
+        UOL.icon = Resources.Load<Sprite>("Sprites/" + a.name);
+        UOL.titleText = a.name;
+        UOL.descriptionText = c;
+        UOL.OpenWindow();
+    }
+
     public void UpdateGui()
     {
-        GoldAmount.text = ""+gold;
+        GoldAmount.text = gold.ToString();
     }
 
     public void AddGold(int a)

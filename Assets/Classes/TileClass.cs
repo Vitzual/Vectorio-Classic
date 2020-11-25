@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 public abstract class TileClass : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public abstract class TileClass : MonoBehaviour
     public int heat = 1;
     public int cost = 0;
     public int level = 1;
+    [TextArea] public string description = "No description provided.";
 
     // Abstract methods
     public abstract void DestroyTile();
@@ -33,6 +35,11 @@ public abstract class TileClass : MonoBehaviour
         {
             DestroyTile();
         }
+    }
+
+    public string GetDescription()
+    {
+        return description;
     }
 
     public float GetPercentage()

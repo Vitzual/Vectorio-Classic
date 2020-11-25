@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hashCode: 1690636664
   material: {fileID: 21131478253023500}
-  materialHashCode: -1582972173
+  materialHashCode: 1253901528
   m_Version: 1.1.0
   m_SourceFontFileGUID: 122834da39c9ff3428f57bd1a15782c4
   m_SourceFontFile_EditorRef: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
     m_LineHeight: 89.875
     m_AscentLine: 70.5625
     m_CapLine: 47.125
-    m_MeanLine: 0
+    m_MeanLine: 36.5
     m_Baseline: 0
     m_DescentLine: -19.3125
     m_SuperscriptOffset: 70.5625
@@ -1809,6 +1809,7 @@ MonoBehaviour:
   m_AtlasTextures:
   - {fileID: 28406566937143958}
   m_AtlasTextureIndex: 0
+  m_IsMultiAtlasTexturesEnabled: 0
   m_UsedGlyphRects: []
   m_FreeGlyphRects: []
   m_fontInfo:
@@ -2841,14 +2842,15 @@ Material:
     - _BumpFace: 0
     - _BumpOutline: 0
     - _ColorMask: 15
+    - _CullMode: 0
     - _Diffuse: 0.5
     - _FaceDilate: 0
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
-    - _GlowInner: 0.05
+    - _GlowInner: 0
     - _GlowOffset: 0
-    - _GlowOuter: 0.05
-    - _GlowPower: 0.75
+    - _GlowOuter: 0.121
+    - _GlowPower: 0.805
     - _GradientScale: 6
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
@@ -2856,7 +2858,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.148
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
@@ -2865,6 +2867,7 @@ Material:
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
+    - _Sharpness: 0
     - _SpecularPower: 2
     - _Stencil: 0
     - _StencilComp: 8
@@ -2885,7 +2888,7 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
+    - _GlowColor: {r: 0, g: 0, b: 0, a: 1}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
@@ -2912,6 +2915,7 @@ Texture2D:
   m_MipCount: 1
   m_IsReadable: 0
   m_IgnoreMasterTextureLimit: 0
+  m_IsPreProcessed: 0
   m_StreamingMipmaps: 0
   m_StreamingMipmapsPriority: 0
   m_AlphaIsTransparency: 0

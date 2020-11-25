@@ -7,7 +7,7 @@ public class Void : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        StartCoroutine(SetLifetime(Random.Range(0.3f, 1f)));
+        StartCoroutine(SetLifetime(Random.Range(4f, 6f)));
     }
 
     public override void collide()

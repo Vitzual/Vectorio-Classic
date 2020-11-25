@@ -6,7 +6,7 @@ public class WaveSpawner : MonoBehaviour
 {
 
     public GameObject survival;
-    public TextMeshProUGUI heatUI;
+    public ProgressBar heatUI;
     private int htrack;
     private int heat;
 
@@ -56,13 +56,13 @@ public class WaveSpawner : MonoBehaviour
     {
         htrack += a;
         heat = htrack / 100;
-        heatUI.text = heat.ToString();
+        heatUI.currentPercent = heat;
     }
 
     public void decreaseHeat(int a)
     {
         htrack -= a;
         heat = htrack / 100;
-        heatUI.text = heat.ToString();
+        heatUI.currentPercent = heat;
     }
 }

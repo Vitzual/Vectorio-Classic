@@ -48,6 +48,25 @@ public abstract class TileClass : MonoBehaviour
     {
         return level;
     }
+    public string GetTier()
+    {
+        if (level == 1)
+        {
+            return "Tier I";
+        } 
+        else if (level == 2)
+        {
+            return "Tier II";
+        } 
+        else if (level == 3)
+        {
+            return "Tier III";
+        } 
+        else
+        {
+            return "Tier IV";
+        }
+    }
     public int GetHeat()
     {
         return heat;

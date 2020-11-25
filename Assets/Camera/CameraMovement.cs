@@ -32,5 +32,10 @@ public class CameraMovement : MonoBehaviour
     private void FixedUpdate()
     {
         camera.MovePosition(camera.position + movement * moveSpeed * Time.fixedDeltaTime);
+
+        if (camera.position.x > 245) camera.position = new Vector2(245, camera.position.y);
+        if (camera.position.x < -245) camera.position = new Vector2(-245, camera.position.y);
+        if (camera.position.y > 245) camera.position = new Vector2(camera.position.x, 245);
+        if (camera.position.y < -245) camera.position = new Vector2(camera.position.x, -245);
     }
 }

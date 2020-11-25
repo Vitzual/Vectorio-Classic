@@ -1,9 +1,24 @@
 ﻿using UnityEngine;
 
-public class CollectorAI : TileClass
+public class CollectorAI: TileClass
 {
+    // Declare local object variables
+    public int amount;
+    private GameObject SRVSC;
 
-    private bool powered = false;
+    // On start, invoke repeating SendGold() method
+    private void Start()
+    {
+        SRVSC = GameObject.Find("Survival");
+        InvokeRepeating("SendGold", 0f, 1f);
+    }
+
+    // Send gold
+    private void SendGold()
+    {
+        SRVSC.GetComponent<Survival>().AddGold(amount);
+        SRVSC.GetComponent<Survival>().UpdateGui();
+    }
 
     // Kill defense
     public override void DestroyTile()
@@ -11,5 +26,4 @@ public class CollectorAI : TileClass
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
-
 }

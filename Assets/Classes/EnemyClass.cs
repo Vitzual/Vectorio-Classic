@@ -24,48 +24,50 @@ public abstract class EnemyClass : MonoBehaviour
     {
         // If menu scene, re instantiate the object
         if (SceneManager.GetActiveScene().name == "Menu") {
-            var clone = Instantiate(this, transform.position, Quaternion.identity);
-            clone.name = "Triangle";
+            Instantiate(Effect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
-
-        // If has explosive damage, apply it to surrounding tiles
-        if (explosiveRadius > 0 && explosiveDamage > 0)
+        else
         {
-            var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Building"));
-            for (int i=0; i < colliders.Length; i++)
+            // If has explosive damage, apply it to surrounding tiles
+            if (explosiveRadius > 0 && explosiveDamage > 0)
             {
-                colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
-            }
-        }
-
-        // If spawns on death, itterate through and spawn enemies
-        if (spawnOnDeath.Length > 0)
-        {
-            if (amountToSpawn.Length != spawnOnDeath.Length)
-            {
-                Debug.LogError("Custom error #001\n- Mismatched array size!");
-                return;
-            }
-            for (int a=0; a < spawnOnDeath.Length; a++)
-            {
-                for (int b=0; b < amountToSpawn[a]; b++)
+                var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Building"));
+                for (int i = 0; i < colliders.Length; i++)
                 {
-                    if (spawnOnDeath[a] == gameObject)
+                    colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
+                }
+            }
+
+            // If spawns on death, itterate through and spawn enemies
+            if (spawnOnDeath.Length > 0)
+            {
+                if (amountToSpawn.Length != spawnOnDeath.Length)
+                {
+                    Debug.LogError("Custom error #001\n- Mismatched array size!");
+                    return;
+                }
+                for (int a = 0; a < spawnOnDeath.Length; a++)
+                {
+                    for (int b = 0; b < amountToSpawn[a]; b++)
                     {
-                        Debug.LogError("Custom error #002\n- Enemies cannot spawn themselves on death");
-                    } 
-                    else
-                    {
-                        Instantiate(spawnOnDeath[a], transform.position, Quaternion.identity);
+                        if (spawnOnDeath[a] == gameObject)
+                        {
+                            Debug.LogError("Custom error #002\n- Enemies cannot spawn themselves on death");
+                        }
+                        else
+                        {
+                            Instantiate(spawnOnDeath[a], transform.position, Quaternion.identity);
+                        }
                     }
                 }
             }
-        }
 
-        // Instantiate death effect and destroy self
-        GameObject.Find("Survival").GetComponent<Survival>().UpdateUnlock(gameObject.transform);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+            // Instantiate death effect and destroy self
+            GameObject.Find("Survival").GetComponent<Survival>().UpdateUnlock(gameObject.transform);
+            Instantiate(Effect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 
     // Apply damage to entity
@@ -74,8 +76,7 @@ public abstract class EnemyClass : MonoBehaviour
         health -= dmgRecieved;
         if (health <= 0)
         {
-            GameObject.Find("Survival").GetComponent<Survival>().AddGold(worth);
-            KillEntity();
+             KillEntity();
         }
     }
 

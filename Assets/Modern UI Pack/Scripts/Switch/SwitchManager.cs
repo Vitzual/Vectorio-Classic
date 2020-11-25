@@ -107,7 +107,7 @@ namespace Michsky.UI.ModernUIPack
 
             if (invokeAtStart == true && isOn == true)
                 OnEvents.Invoke();
-            if (invokeAtStart == true && isOn == false)
+            else if (invokeAtStart == true && isOn == false)
                 OffEvents.Invoke();
         }
 

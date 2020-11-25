@@ -73,7 +73,7 @@ namespace Michsky.UI.ModernUIPack
         {
             public string itemName = "Dropdown Item";
             public Sprite itemIcon;
-            public UnityEvent OnItemSelection;
+            public UnityEvent OnItemSelection = new UnityEvent();
         }
 
         void Start()
@@ -96,7 +96,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (enableScrollbar == true)
                 itemList.padding.right = 25;
-
             else
                 itemList.padding.right = 8;
 
@@ -118,6 +117,7 @@ namespace Michsky.UI.ModernUIPack
                 GameObject.Destroy(child.gameObject);
 
             index = 0;
+
             for (int i = 0; i < dropdownItems.Count; ++i)
             {
                 GameObject go = Instantiate(itemObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
@@ -153,9 +153,19 @@ namespace Michsky.UI.ModernUIPack
                     dropdownItems[i].OnItemSelection.Invoke();
             }
 
-            selectedText.text = dropdownItems[selectedItemIndex].itemName;
-            selectedImage.sprite = dropdownItems[selectedItemIndex].itemIcon;
-            currentListParent = transform.parent;
+            try
+            {
+                selectedText.text = dropdownItems[selectedItemIndex].itemName;
+                selectedImage.sprite = dropdownItems[selectedItemIndex].itemIcon;
+                currentListParent = transform.parent;
+            }
+
+            catch
+            {
+                selectedText.text = dropdownTag;
+                currentListParent = transform.parent;
+                Debug.Log("Dropdown - There is no dropdown items in the list.", this);
+            }
         }
 
         public void ChangeDropdownInfo(int itemIndex)
@@ -248,7 +258,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (enableTrigger == true && isOn == false)
                 triggerObject.SetActive(false);
-
             else if (enableTrigger == true && isOn == true)
                 triggerObject.SetActive(true);
 
@@ -261,13 +270,10 @@ namespace Michsky.UI.ModernUIPack
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (outOnPointerExit == true)
+            if (outOnPointerExit == true && isOn == true)
             {
-                if (isOn == true)
-                {
-                    Animate();
-                    isOn = false;
-                }
+                Animate();
+                isOn = false;
 
                 if (isListItem == true)
                     gameObject.transform.SetParent(currentListParent, true);
@@ -313,6 +319,14 @@ namespace Michsky.UI.ModernUIPack
             item.itemIcon = icon;
             dropdownItems.Add(item);
             SetupDropdown();
+        }
+
+        public void CreateNewItemFast(string title, Sprite icon)
+        {
+            Item item = new Item();
+            item.itemName = title;
+            item.itemIcon = icon;
+            dropdownItems.Add(item);
         }
 
         public void AddNewItem()

@@ -97,8 +97,8 @@ namespace Michsky.UI.ModernUIPack
                 EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Animated Icon/Hamburger Menu", true, 0)]
-        static void AIHTE()
+        [MenuItem("GameObject/Modern UI Pack/Animated Icon/Hamburger Menu", false, 0)]
+        static void AIHM()
         {
             CreateObject("Animated Icon/Hamburger Menu");
         }
@@ -1087,12 +1087,6 @@ namespace Michsky.UI.ModernUIPack
             CreateObject("Horizontal Selector/Horizontal Selector");
         }
 
-        // [MenuItem("GameObject/Modern UI Pack/Hamburger Menu/Standard", false, 0)]
-        static void HMST()
-        {
-            CreateObject("Hamburger Menu/Hamburger Menu");
-        }
-
         [MenuItem("GameObject/Modern UI Pack/Input Field/Multi-Line", false, 0)]
         static void IFFML()
         {
@@ -1141,28 +1135,16 @@ namespace Michsky.UI.ModernUIPack
             CreateObject("List View/List View");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 1/Standard", false, 0)]
+        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 1", false, 0)]
         static void MWSS()
         {
-            CreateObject("Modal Window/Style 1/MW - Standard");
+            CreateObject("Modal Window/Style 1");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 1/With Tabs", false, 0)]
-        static void MWSWT()
-        {
-            CreateObject("Modal Window/Style 1/MW - With Tabs");
-        }
-
-        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 2/Standard", false, 0)]
+        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 2", false, 0)]
         static void MWSSS()
         {
-            CreateObject("Modal Window/Style 2/MW - Standard");
-        }
-
-        [MenuItem("GameObject/Modern UI Pack/Modal Window/Style 2/With Tabs", false, 0)]
-        static void MWSSWT()
-        {
-            CreateObject("Modal Window/Style 2/MW - With Tabs");
+            CreateObject("Modal Window/Style 2");
         }
 
         [MenuItem("GameObject/Modern UI Pack/Movable Window/Standard", false, 0)]
@@ -1261,7 +1243,7 @@ namespace Michsky.UI.ModernUIPack
             CreateObject("Progress Bar (Loop)/PB Loop - Radial Run");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Progress Bar (Loop)/PB Loop - Radial Trapez", false, 0)]
+        [MenuItem("GameObject/Modern UI Pack/Progress Bar (Loop)/Radial Trapez", false, 0)]
         static void PBLRT()
         {
             CreateObject("Progress Bar (Loop)/PB Loop - Radial Trapez");
@@ -1345,22 +1327,10 @@ namespace Michsky.UI.ModernUIPack
             CreateObject("Slider/Range/Slider - Range");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Slider/Range/Range (Label)", false, 0)]
-        static void SLRAL()
-        {
-            CreateObject("Slider/Range/Slider - Range (Label)");
-        }
-
         [MenuItem("GameObject/Modern UI Pack/Switch/Standard", false, 0)]
         static void SWS()
         {
             CreateObject("Switch/Switch - Standard");
-        }
-
-        [MenuItem("GameObject/Modern UI Pack/Switch/Material", false, 0)]
-        static void SWM()
-        {
-            CreateObject("Switch/Switch - Material");
         }
 
         [MenuItem("GameObject/Modern UI Pack/Toggle/Standard", false, 0)]

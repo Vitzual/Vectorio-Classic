@@ -48,7 +48,6 @@ namespace Michsky.UI.ModernUIPack
                         saveValue = PlayerPrefs.GetFloat(sliderTag + "SliderValue");
 
                     mainSlider.value = saveValue;
-
                     mainSlider.onValueChanged.AddListener(delegate
                     {
                         saveValue = mainSlider.value;

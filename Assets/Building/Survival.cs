@@ -3,11 +3,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
+using BayatGames.SaveGameFree;
 using TMPro;
 
 public class Survival : MonoBehaviour
 {
-
     // Player stats
     public int gold = 0;
     protected int essence = 0;
@@ -33,7 +33,10 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject WireObj;
     [SerializeField] private GameObject ProjectorObj;
 
+
+
     // Object variables
+    public Transform[] ObjectsToSave;
     public GameObject Spawner;
     public GameObject SelectedOverlay;
     private GameObject SelectedObj;
@@ -45,14 +48,15 @@ public class Survival : MonoBehaviour
     private bool MenuOpen;
     private bool BuildingOpen;
     private bool ShowingInfo;
+    public TextMeshProUGUI backup;
     public TextMeshProUGUI GoldAmount;
     public ModalWindowManager UOL;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
 
     // Internal placement variables
-    [SerializeField]
-    private LayerMask TileLayer;
+    [SerializeField] private LayerMask TileLayer;
+    [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
     delegate void HotbarItem();
     protected float distance = 10;
@@ -84,11 +88,11 @@ public class Survival : MonoBehaviour
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
         hotbar.Add(SetMine);
-        hotbar.Add(SetWire);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetCollector);
+        hotbar.Add(SetShotgun);
+        hotbar.Add(SetSniper);
+        hotbar.Add(SetProjector);
+        hotbar.Add(SetSMG);
+        hotbar.Add(SetBolt);
         hotbar.Add(SetCollector);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
@@ -108,6 +112,8 @@ public class Survival : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
+        Debug.Log(transform.position);
+
         // If user left clicks, place object
         if (Input.GetButton("Fire1") && !BuildingOpen)
         {
@@ -115,7 +121,7 @@ public class Survival : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider == null)
+            if (rayHit.collider == null && transform.position.x <= 245 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
             {
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                 if (cost <= gold)
@@ -218,9 +224,9 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha9)) {
             SelectHotbar(8);
         }
-        else if (Input.GetKeyDown(KeyCode.F)) {
-            SetWire();
-        }
+        //else if (Input.GetKeyDown(KeyCode.F)) {
+        //    SetWire();
+        //}
         else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
         {
             rotation = rotation -= 90f;
@@ -305,6 +311,12 @@ public class Survival : MonoBehaviour
             if (RequirementsMetCheck == true)
             {
                 GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
+                if (UnlockLvl == 0) { Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+                else if (UnlockLvl == 1) { Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+                else if (UnlockLvl == 2) { Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+                else if (UnlockLvl == 3) { Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+                else if (UnlockLvl == 4) { Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+                else if (UnlockLvl == 5) { Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
                 unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
                 StartNextUnlock();
             }
@@ -374,13 +386,12 @@ public class Survival : MonoBehaviour
 
     public void unlockDefense(GameObject a, ButtonManagerBasicIcon b, string c)
     {
-        Debug.Log(UOL.titleText);
-        Debug.Log(UOL.descriptionText);
         addUnlocked(a);
-        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-        UOL.icon = Resources.Load<Sprite>("Sprites/" + a.name);
-        UOL.titleText = a.name;
+        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.transform.name);
+        UOL.icon = Resources.Load<Sprite>("Sprites/" + a.transform.name);
+        UOL.titleText = a.transform.name.ToUpper();
         UOL.descriptionText = c;
+        backup.text = c;
         UOL.OpenWindow();
     }
 
@@ -485,7 +496,7 @@ public class Survival : MonoBehaviour
         if (checkIfUnlocked(ShotgunObj))
         {
             SelectedObj = ShotgunObj;
-        SwitchObj();
+            SwitchObj();
         }
     }
 
@@ -587,6 +598,7 @@ public class Survival : MonoBehaviour
                 return true;
             }
         }
+        DisableActiveInfo();
         return false;
     }
 
@@ -606,6 +618,12 @@ public class Survival : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void Save()
+    {
+        Transform[] allObjects = FindObjectsOfType<Transform>();
+        SaveGame.Save<Transform[]>("save.txt", allObjects);
     }
 
     public void addUnlocked(GameObject a)

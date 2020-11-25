@@ -38,7 +38,7 @@ namespace Michsky.UI.ModernUIPack
         public class Item
         {
             public string itemTitle = "Item Title";
-            public UnityEvent onValueChanged;
+            public UnityEvent onValueChanged = new UnityEvent();
         }
 
         void Start()
@@ -77,7 +77,6 @@ namespace Michsky.UI.ModernUIPack
                 {
                     if (PlayerPrefs.HasKey(selectorTag + "HSelectorValue") == true)
                         defaultIndex = PlayerPrefs.GetInt(selectorTag + "HSelectorValue");
-
                     else
                         PlayerPrefs.SetInt(selectorTag + "HSelectorValue", defaultIndex);
                 }
@@ -89,9 +88,7 @@ namespace Michsky.UI.ModernUIPack
                 if (enableIndicators == true)
                 {
                     foreach (Transform child in indicatorParent)
-                    {
                         GameObject.Destroy(child.gameObject);
-                    }
 
                     for (int i = 0; i < itemList.Count; ++i)
                     {
@@ -119,9 +116,7 @@ namespace Michsky.UI.ModernUIPack
                 }
 
                 else
-                {
                     Destroy(indicatorParent.gameObject);
-                }
             }
         }
 
@@ -135,7 +130,6 @@ namespace Michsky.UI.ModernUIPack
 
                     if (index == 0)
                         index = itemList.Count - 1;
-
                     else
                         index--;
 
@@ -149,7 +143,6 @@ namespace Michsky.UI.ModernUIPack
                     catch { }
 
                     selectorEvent.Invoke(index);
-
                     selectorAnimator.Play(null);
                     selectorAnimator.StopPlayback();
 
@@ -169,7 +162,6 @@ namespace Michsky.UI.ModernUIPack
 
                 if (index == 0)
                     index = itemList.Count - 1;
-
                 else
                     index--;
 
@@ -183,7 +175,6 @@ namespace Michsky.UI.ModernUIPack
                 catch { }
 
                 selectorEvent.Invoke(index);
-
                 selectorAnimator.Play(null);
                 selectorAnimator.StopPlayback();
 
@@ -235,7 +226,6 @@ namespace Michsky.UI.ModernUIPack
 
                     if ((index + 1) >= itemList.Count)
                         index = 0;
-
                     else
                         index++;
 
@@ -249,7 +239,6 @@ namespace Michsky.UI.ModernUIPack
                     catch { }
 
                     selectorEvent.Invoke(index);
-
                     selectorAnimator.Play(null);
                     selectorAnimator.StopPlayback();
 
@@ -269,7 +258,6 @@ namespace Michsky.UI.ModernUIPack
 
                 if ((index + 1) >= itemList.Count)
                     index = 0;
-
                 else
                     index++;
 
@@ -283,7 +271,6 @@ namespace Michsky.UI.ModernUIPack
                 catch { }
 
                 selectorEvent.Invoke(index);
-
                 selectorAnimator.Play(null);
                 selectorAnimator.StopPlayback();
 
@@ -304,11 +291,8 @@ namespace Michsky.UI.ModernUIPack
                 for (int i = 0; i < itemList.Count; ++i)
                 {
                     GameObject go = indicatorParent.GetChild(i).gameObject;
-
-                    Transform onObj;
-                    onObj = go.transform.Find("On");
-                    Transform offObj;
-                    offObj = go.transform.Find("Off");
+                    Transform onObj = go.transform.Find("On"); ;
+                    Transform offObj = go.transform.Find("Off");
 
                     if (i == index)
                     {
@@ -346,20 +330,15 @@ namespace Michsky.UI.ModernUIPack
             if (enableIndicators == true)
             {
                 foreach (Transform child in indicatorParent)
-                {
                     GameObject.Destroy(child.gameObject);
-                }
 
                 for (int i = 0; i < itemList.Count; ++i)
                 {
                     GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                     go.transform.SetParent(indicatorParent, false);
                     go.name = itemList[i].itemTitle;
-
-                    Transform onObj;
-                    onObj = go.transform.Find("On");
-                    Transform offObj;
-                    offObj = go.transform.Find("Off");
+                    Transform onObj = go.transform.Find("On");
+                    Transform offObj = go.transform.Find("Off");
 
                     if (i == index)
                     {

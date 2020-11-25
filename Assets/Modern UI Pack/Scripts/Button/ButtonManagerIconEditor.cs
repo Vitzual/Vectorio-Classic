@@ -83,6 +83,15 @@ namespace Michsky.UI.ModernUIPack
             var soundSource = serializedObject.FindProperty("soundSource");
             var hoverSound = serializedObject.FindProperty("hoverSound");
             var clickSound = serializedObject.FindProperty("clickSound");
+            var rippleParent = serializedObject.FindProperty("rippleParent");
+            var useRipple = serializedObject.FindProperty("useRipple");
+            var renderOnTop = serializedObject.FindProperty("renderOnTop");
+            var centered = serializedObject.FindProperty("centered");
+            var rippleShape = serializedObject.FindProperty("rippleShape");
+            var speed = serializedObject.FindProperty("speed");
+            var maxSize = serializedObject.FindProperty("maxSize");
+            var startColor = serializedObject.FindProperty("startColor");
+            var transitionColor = serializedObject.FindProperty("transitionColor");
 
             // Draw content depending on tab index
             switch (currentTab)
@@ -163,6 +172,16 @@ namespace Michsky.UI.ModernUIPack
                         GUILayout.EndHorizontal();
                     }
 
+                    if (useRipple.boolValue == true)
+                    {
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Ripple Parent"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(rippleParent, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                    }
+
                     GUILayout.Space(4);
                     break;
 
@@ -210,8 +229,65 @@ namespace Michsky.UI.ModernUIPack
                         }
                     }
 
+                    GUILayout.BeginVertical(EditorStyles.helpBox);
+                    GUILayout.Space(-2);
+                    GUILayout.BeginHorizontal();
+
+                    useRipple.boolValue = GUILayout.Toggle(useRipple.boolValue, new GUIContent("Use Ripple"), customSkin.FindStyle("Toggle"));
+                    useRipple.boolValue = GUILayout.Toggle(useRipple.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
                     GUILayout.Space(4);
-                    break;            
+
+                    if (useRipple.boolValue == true)
+                    {
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        renderOnTop.boolValue = GUILayout.Toggle(renderOnTop.boolValue, new GUIContent("Render On Top"), customSkin.FindStyle("Toggle"));
+                        renderOnTop.boolValue = GUILayout.Toggle(renderOnTop.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        centered.boolValue = GUILayout.Toggle(centered.boolValue, new GUIContent("Centered"), customSkin.FindStyle("Toggle"));
+                        centered.boolValue = GUILayout.Toggle(centered.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Shape"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(rippleShape, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Speed"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(speed, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Max Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(maxSize, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Start Color"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(startColor, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Transition Color"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(transitionColor, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                    }
+
+                    GUILayout.EndVertical();
+                    GUILayout.Space(4);
+                    break;
             }
 
             // Apply the changes

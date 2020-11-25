@@ -174,7 +174,7 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
-                    enableSwitchSounds.boolValue = GUILayout.Toggle(enableSwitchSounds.boolValue, new GUIContent("Enable Dropdown Sounds"), customSkin.FindStyle("Toggle"));
+                    enableSwitchSounds.boolValue = GUILayout.Toggle(enableSwitchSounds.boolValue, new GUIContent("Enable Switch Sounds"), customSkin.FindStyle("Toggle"));
                     enableSwitchSounds.boolValue = GUILayout.Toggle(enableSwitchSounds.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
 
                     GUILayout.EndHorizontal();

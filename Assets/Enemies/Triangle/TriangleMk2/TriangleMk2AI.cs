@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class TriangleMk2AI : EnemyClass
 {
     // Model components
@@ -44,7 +44,7 @@ public class TriangleMk2AI : EnemyClass
             Movement = lookDirection;
 
             // If close, charge up and launch at defense
-            if (distance <= ProcRange && InRange == false)
+            if (distance <= ProcRange && InRange == false && SceneManager.GetActiveScene().name != "Menu")
             {
                 InRange = true;
                 moveSpeed = 0;

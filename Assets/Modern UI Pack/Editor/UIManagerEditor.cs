@@ -12,8 +12,7 @@ namespace Michsky.UI.ModernUIPack
     public class UIManagerEditor : Editor
     {
         // Variables
-        Texture2D muipLogo;
-
+        Texture2D uimLogo;
         protected static bool showAnimatedIcon = false;
         protected static bool showButton = false;
         protected static bool showContext = false;
@@ -32,9 +31,9 @@ namespace Michsky.UI.ModernUIPack
         void OnEnable()
         {
             if (EditorGUIUtility.isProSkin == true)
-                muipLogo = Resources.Load<Texture2D>("Editor\\MUIP Editor Dark");
+                uimLogo = Resources.Load<Texture2D>("Editor\\UIM Editor Dark");
             else
-                muipLogo = Resources.Load<Texture2D>("Editor\\MUIP Editor Light");
+                uimLogo = Resources.Load<Texture2D>("Editor\\UIM Editor Light");
         }
 
         public override void OnInspectorGUI()
@@ -52,14 +51,19 @@ namespace Michsky.UI.ModernUIPack
             foldoutStyle.font = customSkin.font;
             foldoutStyle.fontStyle = FontStyle.Normal;
             foldoutStyle.fontSize = 15;
-            foldoutStyle.margin = new RectOffset(12, 55, 6, 6);
+            foldoutStyle.margin = new RectOffset(11, 55, 6, 6);
             Vector2 contentOffset = foldoutStyle.contentOffset;
-            contentOffset.y = -1;
             contentOffset.x = 5;
+            contentOffset.y = -1;
             foldoutStyle.contentOffset = contentOffset;
 
-            // Top header
-            GUILayout.Label(muipLogo, GUILayout.Width(250), GUILayout.Height(40));
+            // Logo
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label(uimLogo, GUILayout.Width(250), GUILayout.Height(40));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.Space(6);
 
             GUILayout.BeginVertical(EditorStyles.helpBox);
 
@@ -79,7 +83,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Button
             var buttonTheme = serializedObject.FindProperty("buttonThemeType");
@@ -907,9 +911,6 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
-
-            GUILayout.Space(12);
-            GUILayout.Label("Loved the package and wanna support us even more?", customSkin.FindStyle("Text"));
 
             if (GUILayout.Button("Write a review", customSkin.button))
                 Review();

@@ -32,8 +32,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject CollectorObj;
     [SerializeField] private GameObject WireObj;
     [SerializeField] private GameObject ProjectorObj;
-
-
+    [SerializeField] private GameObject VoidripperObj;
 
     // Object variables
     public Transform[] ObjectsToSave;
@@ -48,7 +47,6 @@ public class Survival : MonoBehaviour
     private bool MenuOpen;
     private bool BuildingOpen;
     private bool ShowingInfo;
-    public TextMeshProUGUI backup;
     public TextMeshProUGUI GoldAmount;
     public ModalWindowManager UOL;
     public ProgressBar[] UpgradeProgressBars;
@@ -90,10 +88,10 @@ public class Survival : MonoBehaviour
         hotbar.Add(SetMine);
         hotbar.Add(SetShotgun);
         hotbar.Add(SetSniper);
-        hotbar.Add(SetProjector);
+        hotbar.Add(SetCollector);
         hotbar.Add(SetSMG);
         hotbar.Add(SetBolt);
-        hotbar.Add(SetCollector);
+        hotbar.Add(SetVoidripper);
         unlocked.Add(TurretObj);
         unlocked.Add(WallObj);
         unlocked.Add(MineObj);
@@ -111,8 +109,6 @@ public class Survival : MonoBehaviour
         tmp.a = Adjustment;
         this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
-
-        Debug.Log(transform.position);
 
         // If user left clicks, place object
         if (Input.GetButton("Fire1") && !BuildingOpen)
@@ -224,9 +220,6 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha9)) {
             SelectHotbar(8);
         }
-        //else if (Input.GetKeyDown(KeyCode.F)) {
-        //    SetWire();
-        //}
         else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
         {
             rotation = rotation -= 90f;
@@ -272,6 +265,9 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 1;
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = true;
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = true;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 1;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -279,6 +275,9 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 0;
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = false;
             Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = false;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 0;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = false;
+            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = false;
         }
     }
 
@@ -311,12 +310,44 @@ public class Survival : MonoBehaviour
             if (RequirementsMetCheck == true)
             {
                 GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
-                if (UnlockLvl == 0) { Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
-                else if (UnlockLvl == 1) { Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
-                else if (UnlockLvl == 2) { Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
-                else if (UnlockLvl == 3) { Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
-                else if (UnlockLvl == 4) { Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
-                else if (UnlockLvl == 5) { Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>().buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name); }
+
+                if (UnlockLvl == 0)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+                else if (UnlockLvl == 1)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+                else if (UnlockLvl == 2)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+                else if (UnlockLvl == 3)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+                else if (UnlockLvl == 4)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+                else if (UnlockLvl == 5)
+                {
+                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>();
+                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
+                    bm.UpdateUI();
+                }
+
                 unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
                 StartNextUnlock();
             }
@@ -391,7 +422,7 @@ public class Survival : MonoBehaviour
         UOL.icon = Resources.Load<Sprite>("Sprites/" + a.transform.name);
         UOL.titleText = a.transform.name.ToUpper();
         UOL.descriptionText = c;
-        backup.text = c;
+        UOL.UpdateUI();
         UOL.OpenWindow();
     }
 
@@ -581,6 +612,15 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SetVoidripper()
+    {
+        if (checkIfUnlocked(VoidripperObj))
+        {
+            SelectedObj = VoidripperObj;
+            SwitchObj();
+        }
+    }
+
     public void SwitchObj()
     {
         DisableActiveInfo();
@@ -622,8 +662,10 @@ public class Survival : MonoBehaviour
 
     public void Save()
     {
+        Debug.Log("Saving...");
         Transform[] allObjects = FindObjectsOfType<Transform>();
         SaveGame.Save<Transform[]>("save.txt", allObjects);
+        Debug.Log("Saved!");
     }
 
     public void addUnlocked(GameObject a)

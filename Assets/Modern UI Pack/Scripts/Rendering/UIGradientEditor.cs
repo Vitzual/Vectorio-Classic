@@ -61,6 +61,8 @@ namespace UnityEngine.UI
                 var _effectGradient = serializedObject.FindProperty("_effectGradient");
                 var _gradientType = serializedObject.FindProperty("_gradientType");
                 var _offset = serializedObject.FindProperty("_offset");
+                var _zoom = serializedObject.FindProperty("_zoom");
+                var _modifyVertices = serializedObject.FindProperty("_modifyVertices");
 
                 // Draw content depending on tab index
                 switch (currentTab)
@@ -87,7 +89,18 @@ namespace UnityEngine.UI
                         EditorGUILayout.PropertyField(_offset, new GUIContent(""));
 
                         GUILayout.EndHorizontal();
-                        EditorGUILayout.HelpBox("Remember that the colors are applied per-vertex, so if you have multiple points on your gradient where the color changes and there aren't enough vertices, you won't see all of the colors.", MessageType.Info);
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        EditorGUILayout.LabelField(new GUIContent("Zoom"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                        EditorGUILayout.PropertyField(_zoom, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        _modifyVertices.boolValue = GUILayout.Toggle(_modifyVertices.boolValue, new GUIContent("Complex Gradient"), customSkin.FindStyle("Toggle"));
+                        _modifyVertices.boolValue = GUILayout.Toggle(_modifyVertices.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                        GUILayout.EndHorizontal();
                         GUILayout.Space(4);
                         break;              
                 }

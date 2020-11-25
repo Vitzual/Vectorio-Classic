@@ -73,6 +73,7 @@ namespace Michsky.UI.ModernUIPack
             // Property variables
             var currentPercent = serializedObject.FindProperty("currentPercent");
             var speed = serializedObject.FindProperty("speed");
+            var maxValue = serializedObject.FindProperty("maxValue");
 
             var loadingBar = serializedObject.FindProperty("loadingBar");
             var textPercent = serializedObject.FindProperty("textPercent");
@@ -80,6 +81,7 @@ namespace Michsky.UI.ModernUIPack
             var isOn = serializedObject.FindProperty("isOn");
             var restart = serializedObject.FindProperty("restart");
             var invert = serializedObject.FindProperty("invert");
+            var isPercent = serializedObject.FindProperty("isPercent");
 
             // Draw content depending on tab index
             switch (currentTab)
@@ -91,7 +93,7 @@ namespace Michsky.UI.ModernUIPack
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Current Percent"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                    EditorGUILayout.PropertyField(currentPercent, new GUIContent(""));
+                    pbTarget.currentPercent = EditorGUILayout.Slider(pbTarget.currentPercent, 0, pbTarget.maxValue);
 
                     GUILayout.EndHorizontal();
 
@@ -115,6 +117,12 @@ namespace Michsky.UI.ModernUIPack
 
                     EditorGUILayout.LabelField(new GUIContent("Speed"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(speed, new GUIContent(""));
+
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    EditorGUILayout.LabelField(new GUIContent("Max Value"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                    EditorGUILayout.PropertyField(maxValue, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
                     GUILayout.Space(4);
@@ -160,6 +168,12 @@ namespace Michsky.UI.ModernUIPack
 
                     invert.boolValue = GUILayout.Toggle(invert.boolValue, new GUIContent("Invert"), customSkin.FindStyle("Toggle"));
                     invert.boolValue = GUILayout.Toggle(invert.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    isPercent.boolValue = GUILayout.Toggle(isPercent.boolValue, new GUIContent("Is Percent"), customSkin.FindStyle("Toggle"));
+                    isPercent.boolValue = GUILayout.Toggle(isPercent.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
 
                     GUILayout.EndHorizontal();
                     GUILayout.Space(4);

@@ -30,6 +30,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject EnhancerObj;   // ID = 5
     [SerializeField] private GameObject SMGObj;        // ID = 6
     [SerializeField] private GameObject BoltObj;       // ID = 7
+    [SerializeField] private GameObject ChillerObj;    // ID = 8
 
     // Object variables
     public GameObject Spawner;
@@ -714,6 +715,16 @@ public class Survival : MonoBehaviour
             SwitchObj();
         }
     }
+
+    public void SetChiller()
+    {
+        if (checkIfUnlocked(ChillerObj))
+        {
+            SelectedObj = ChillerObj;
+            SwitchObj();
+        }
+    }
+
     public void SwitchObj()
     {
         DisableActiveInfo();

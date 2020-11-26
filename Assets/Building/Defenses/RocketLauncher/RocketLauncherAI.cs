@@ -2,25 +2,22 @@
 
 public class RocketLauncherAI : TurretClass
 {
+    // Rocket launcher thing
+    public Transform Point1;
+    public Transform Point2;
+    public Transform Point3;
+
     // Targetting system
     void Update()
     {
-        RotateTowardNearestEnemy();
-
-        // If a target exists, shoot at it
         if (target != null)
         {            
-            // If turret is pointing at target, fire at it
-            if ((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1)
-            {
-                // Unflag hasTarget
-                hasTarget = false;
-                
-                // Call shoot function
-                Shoot(Bullet, Point);
-            }
+            hasTarget = false;
+            Shoot(Bullet, Point);
+            Shoot(Bullet, Point1);
+            Shoot(Bullet, Point2);
+            Shoot(Bullet, Point3);
         } else {
-            // Unflag hasTarget when target is null
             hasTarget = false;
         }
     }

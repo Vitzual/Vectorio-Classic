@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544994017379734926}
-  - component: {fileID: 955843775117654305}
+  - component: {fileID: 2265546855456456335}
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 8371128599779309114}
   - component: {fileID: 3760844040989154300}
   - component: {fileID: 2937699046400398723}
   m_Layer: 10
-  m_Name: Rocket
+  m_Name: Chilled
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &955843775117654305
+--- !u!114 &2265546855456456335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,13 +44,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3293027712645128820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e908e011c191a4cae87cbf1f16fb63, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c360b84188a9ee4b947049ac59c5612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyEffect: {fileID: 0}
-  damage: 1
-  Effect: {fileID: 0}
-  explosionRadius: 10
+  EnemyEffect: {fileID: 918402723469912044, guid: f92aeede3103a7347a80840331e0aae1,
+    type: 3}
+  damage: 4
+  Effect: {fileID: 918402723469912044, guid: f92aeede3103a7347a80840331e0aae1, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 425d3e90eb1a73d4fb1381f545b3221b, type: 2}
+  - {fileID: 2100000, guid: 6b3ea3031b83a8d4b921e399a90544f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,7 +120,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 425d3e90eb1a73d4fb1381f545b3221b, type: 2}
+  - {fileID: 2100000, guid: 6b3ea3031b83a8d4b921e399a90544f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,13 +144,13 @@ TrailRenderer:
   m_Time: 0.69
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.6462574
         inSlope: -3.2000008
         outSlope: -3.2000008
         tangentMode: 0
@@ -158,13 +158,13 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.68622375
       - serializedVersion: 3
-        time: 0.13661724
+        time: 0.21445869
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.7967209
+        outSlope: -0.7967209
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.866994
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

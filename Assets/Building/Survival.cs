@@ -102,7 +102,7 @@ public class Survival : MonoBehaviour
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(5*Mathf.Round(MousePos.x/5), 5*Mathf.Round(MousePos.y/5));
+        transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
 
         // Make color flash
         Color tmp = this.GetComponent<SpriteRenderer>().color;
@@ -161,10 +161,10 @@ public class Survival : MonoBehaviour
                         }
                     }
                 }
-            } 
+            }
             else
             {
-                if(rayHit.collider.name != "Hub")
+                if (rayHit.collider.name != "Hub")
                 {
                     ShowTileInfo(rayHit.collider);
                     ShowingInfo = true;
@@ -217,32 +217,46 @@ public class Survival : MonoBehaviour
                 Destroy(rayHit.collider.gameObject);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
             SelectHotbar(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             SelectHotbar(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
             SelectHotbar(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
             SelectHotbar(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
             SelectHotbar(4);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha6)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
             SelectHotbar(5);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha7)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
             SelectHotbar(6);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha8)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
             SelectHotbar(7);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha9)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
             SelectHotbar(8);
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            SetWire();
+            Overlay.transform.Find("Wire").GetComponent<CanvasGroup>().interactable = false;
         }
         else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
         {
@@ -274,6 +288,7 @@ public class Survival : MonoBehaviour
             SelectedObj = null;
             rotation = 0;
             ResetTileInfo();
+            DisableActiveInfo();
             ShowingInfo = false;
             SelectedOverlay.SetActive(false);
         }
@@ -681,6 +696,7 @@ public class Survival : MonoBehaviour
         Overlay.transform.Find("Seven").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("Eight").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("Nine").GetComponent<Button>().interactable = true;
+        Overlay.transform.Find("Wire").GetComponent<CanvasGroup>().interactable = true;
     }
 
     public void Quit()

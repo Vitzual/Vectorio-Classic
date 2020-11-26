@@ -119,7 +119,11 @@ public class WallAI : TileClass
         UpdateVertices(a);
         total = CheckTotal();
         SpriteRenderer SROBJ = gameObject.GetComponent<SpriteRenderer>();
-        if (total == 1)
+        if (total == 0)
+        {
+            SROBJ.sprite = Resources.Load<Sprite>("Sprites/Wall");
+        }
+        else if (total == 1)
         {
             SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallDuo");
             if (bottom == 1)

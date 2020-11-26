@@ -8,9 +8,6 @@ public class TriangleMk2AI : EnemyClass
     private ParticleSystem ChargeEffect;
     private Rigidbody2D Triangle;
 
-    // Movement variables
-    private Vector2 Movement;
-
     // Triangle specific variables
     private bool InRange = false;
     private int ProcRange = 500;

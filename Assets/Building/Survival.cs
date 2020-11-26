@@ -10,8 +10,10 @@ public class Survival : MonoBehaviour
 {
     // Player stats
     public int gold = 0;
-    protected int essence = 0;
-    protected int iridium = 0;
+    public int essence = 0;
+    public int iridium = 0;
+    public int PowerConsumption = 0;
+    public int AvailablePower = 100;
 
     // Placement sprites
     private SpriteRenderer Selected;
@@ -49,6 +51,7 @@ public class Survival : MonoBehaviour
     private bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public ModalWindowManager UOL;
+    public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
 
@@ -117,10 +120,11 @@ public class Survival : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider == null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
+            if (rayHit.collider == null && SelectedObj != null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
             {
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
-                if (cost <= gold)
+                int power = SelectedObj.GetComponent<TileClass>().getConsumption();
+                if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
                     gold -= cost;
                     UpdateGui();
@@ -133,6 +137,7 @@ public class Survival : MonoBehaviour
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
                     }
                     LastObj.name = SelectedObj.name;
+                    increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.GetComponent<WaveSpawner>().increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
 
                     if (SelectedObj != WallObj)
@@ -162,7 +167,7 @@ public class Survival : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (rayHit.collider != null)
             {
                 if (rayHit.collider.name != "Hub")
                 {
@@ -211,6 +216,7 @@ public class Survival : MonoBehaviour
                 ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
+                decreasePowerConsumption(rayHit.collider.gameObject.GetComponent<TileClass>().getConsumption());
                 int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
                 gold += cost - cost / 5;
                 UpdateGui();
@@ -335,7 +341,7 @@ public class Survival : MonoBehaviour
                 {
                     // Increment amount tracked and update GUI
                     UnlockTier[UnlockLvl].AmountTracked[i] += 1;
-                    UpdateUnlockGui(i, ((double)UnlockTier[UnlockLvl].AmountTracked[i] / (double)UnlockTier[UnlockLvl].AmountNeeded[i])*100);
+                    UpdateUnlockGui(i, ((double)UnlockTier[UnlockLvl].AmountTracked[i] / (double)UnlockTier[UnlockLvl].AmountNeeded[i]) * 100);
                 }
             }
 
@@ -453,7 +459,7 @@ public class Survival : MonoBehaviour
     {
         Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Selected");
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " ("+ a.GetComponent<TileClass>().GetTier() + ")";
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (" + a.GetComponent<TileClass>().GetTier() + ")";
         b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetCost().ToString();
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
@@ -472,6 +478,44 @@ public class Survival : MonoBehaviour
     public void UpdateGui()
     {
         GoldAmount.text = gold.ToString();
+    }
+
+    public void increaseAvailablePower(int a)
+    {
+        AvailablePower += a;
+        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+    }
+
+    public void decreaseAvailablePower(int a)
+    {
+        AvailablePower -= a;
+        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+    }
+
+    public int getAvailablePower()
+    {
+        return AvailablePower;
+    }
+
+    public void increasePowerConsumption(int a)
+    {
+        PowerConsumption += a;
+        Debug.Log(PowerConsumption);
+        Debug.Log(AvailablePower);
+        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+    }
+
+    public void decreasePowerConsumption(int a)
+    {
+        PowerConsumption -= a;
+        Debug.Log(PowerConsumption);
+        Debug.Log(PowerConsumption / AvailablePower);
+        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+    }
+
+    public int getPowerConsumption()
+    {
+        return PowerConsumption;
     }
 
     public void AddGold(int a)

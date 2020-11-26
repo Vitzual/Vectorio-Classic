@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
-using BayatGames.SaveGameFree;
 using TMPro;
 
 public class Survival : MonoBehaviour
@@ -22,22 +21,17 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
-    [SerializeField] private GameObject HubObj;
-    [SerializeField] private GameObject SniperObj;
-    [SerializeField] private GameObject TurretObj;
-    [SerializeField] private GameObject BoltObj;
-    [SerializeField] private GameObject ShotgunObj;
-    [SerializeField] private GameObject WallObj;
-    [SerializeField] private GameObject SMGObj;
-    [SerializeField] private GameObject MineObj;
-    [SerializeField] private GameObject ConveyorObj;
-    [SerializeField] private GameObject CollectorObj;
-    [SerializeField] private GameObject WireObj;
-    [SerializeField] private GameObject ProjectorObj;
-    [SerializeField] private GameObject VoidripperObj;
+    [SerializeField] private GameObject HubObj;        // No ID
+    [SerializeField] private GameObject TurretObj;     // ID = 0
+    [SerializeField] private GameObject WallObj;       // ID = 1
+    [SerializeField] private GameObject CollectorObj;  // ID = 2
+    [SerializeField] private GameObject ShotgunObj;    // ID = 3
+    [SerializeField] private GameObject SniperObj;     // ID = 4
+    [SerializeField] private GameObject EnhancerObj;   // ID = 5
+    [SerializeField] private GameObject SMGObj;        // ID = 6
+    [SerializeField] private GameObject BoltObj;       // ID = 7
 
     // Object variables
-    public Transform[] ObjectsToSave;
     public GameObject Spawner;
     public GameObject SelectedOverlay;
     private GameObject SelectedObj;
@@ -65,8 +59,8 @@ public class Survival : MonoBehaviour
     List<GameObject> unlocked = new List<GameObject>();
 
     // Unlock list
-    private int UnlockLvl = 0;
-    private bool UnlocksLeft = true;
+    public int UnlockLvl = 0;
+    public bool UnlocksLeft = true;
     [System.Serializable]
     public class Unlockables
     {
@@ -88,17 +82,39 @@ public class Survival : MonoBehaviour
         // Default starting unlocks / hotbar
         hotbar.Add(SetTurret);
         hotbar.Add(SetWall);
-        hotbar.Add(SetMine);
+        hotbar.Add(SetCollector);
         hotbar.Add(SetShotgun);
         hotbar.Add(SetSniper);
-        hotbar.Add(SetCollector);
+        hotbar.Add(SetEnhancer);
         hotbar.Add(SetSMG);
         hotbar.Add(SetBolt);
-        hotbar.Add(SetVoidripper);
         unlocked.Add(TurretObj);
+        unlocked.Add(CollectorObj);
         unlocked.Add(WallObj);
-        unlocked.Add(MineObj);
-        unlocked.Add(WireObj);
+
+        // Check for save data on start, and if there is, set values for everything.
+        try
+        {
+            SaveData data = SaveSystem.LoadGame();
+            PowerConsumption = data.PowerUsage;
+            AvailablePower = data.PowerAvailable;
+            gold = data.Gold;
+            essence = data.Essence;
+            iridium = data.Iridium;
+            UnlockLvl = data.UnlockLevel - 1;
+            Spawner.GetComponent<WaveSpawner>().increaseHeat(data.HeatUsage);
+            Debug.Log("Save data was found and loaded");
+
+            UpdateGui();
+            StartNextUnlock();
+            UpdateUnlockableGui();
+            PlaceSavedBuildings(data.Locations);
+            PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        }
+        catch
+        {
+            Debug.Log("No save data was found, or the save data found was corrupt.");
+        }
     }
 
     private void Update()
@@ -128,7 +144,7 @@ public class Survival : MonoBehaviour
                 {
                     gold -= cost;
                     UpdateGui();
-                    if (SelectedObj == WallObj || SelectedObj == WireObj)
+                    if (SelectedObj == WallObj)
                     {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     }
@@ -259,11 +275,6 @@ public class Survival : MonoBehaviour
         {
             SelectHotbar(8);
         }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            SetWire();
-            Overlay.transform.Find("Wire").GetComponent<CanvasGroup>().interactable = false;
-        }
         else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
         {
             rotation = rotation -= 90f;
@@ -327,6 +338,38 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = false;
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        }
+    }
+
+    public void PlaceSavedBuildings(int[,] a)
+    {
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            GameObject building = GetBuildingWithID(a[i, 0]);
+            GameObject obj = Instantiate(building, new Vector3(a[i,2], a[i,3],0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            obj.name = building.name;
+            obj.GetComponent<TileClass>().SetLevel(a[i, 1]);
+        }
+    }
+
+    public GameObject GetBuildingWithID(int a)
+    {
+        for (int i = 0; i < unlocked.Count; i++)
+        {
+            if (unlocked[i].GetComponent<TileClass>().getID() == a)
+            {
+                return unlocked[i];
+            }
+        }
+        return TurretObj;
+    }
+
+    public void UpdateUnlockableGui()
+    {
+        for (int i=0; i<UnlockLvl; i++)
+        {
+            addUnlocked(UnlockTier[i].Unlock);
+            UnlockTier[i].InventoryButton.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.transform.name);
         }
     }
 
@@ -663,51 +706,14 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public void SetMine()
+    public void SetEnhancer()
     {
-        if (checkIfUnlocked(MineObj))
+        if (checkIfUnlocked(EnhancerObj))
         {
-            SelectedObj = MineObj;
+            SelectedObj = EnhancerObj;
             SwitchObj();
         }
     }
-
-    public void SetProjector()
-    {
-        if (checkIfUnlocked(ProjectorObj))
-        {
-            SelectedObj = ProjectorObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetWire()
-    {
-        if (checkIfUnlocked(WireObj))
-        {
-            SelectedObj = WireObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetConveyor()
-    {
-        if (checkIfUnlocked(ConveyorObj))
-        {
-            SelectedObj = ConveyorObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetVoidripper()
-    {
-        if (checkIfUnlocked(VoidripperObj))
-        {
-            SelectedObj = VoidripperObj;
-            SwitchObj();
-        }
-    }
-
     public void SwitchObj()
     {
         DisableActiveInfo();
@@ -750,10 +756,36 @@ public class Survival : MonoBehaviour
 
     public void Save()
     {
-        Debug.Log("Saving...");
+        Debug.Log("Attempting to save data");
+        SaveSystem.SaveGame(this, Spawner.GetComponent<WaveSpawner>());
+        Debug.Log("Data was saved successfully");
+    }
+
+    public int[,] GetLocationData()
+    {
         Transform[] allObjects = FindObjectsOfType<Transform>();
-        SaveGame.Save<Transform[]>("save.txt", allObjects);
-        Debug.Log("Saved!");
+
+        int length = 0;
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+            if (allObjects[i].tag == "Defense") length += 1;
+        }
+
+        int[,] data = new int[length, 4];
+        length = 0;
+        for (int i=0; i<allObjects.Length; i++)
+        {
+            if (allObjects[i].tag == "Defense")
+            {
+                data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
+                data[length, 1] = allObjects[i].GetComponent<TileClass>().GetLevel();
+                data[length, 2] = (int)allObjects[i].position.x;
+                data[length, 3] = (int)allObjects[i].position.y;
+                length += 1;
+            }
+        }
+
+        return data;
     }
 
     public void addUnlocked(GameObject a)

@@ -7,8 +7,8 @@ public class WaveSpawner : MonoBehaviour
 
     public GameObject survival;
     public ProgressBar heatUI;
-    private int htrack;
-    private int heat;
+    public int htrack;
+    public int heat;
 
     private void Start()
     {

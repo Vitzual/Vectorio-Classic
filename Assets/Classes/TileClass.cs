@@ -11,6 +11,7 @@ public abstract class TileClass : MonoBehaviour
     public int cost = 1;
     public int level = 1;
     public int power = 1;
+    public int ID = 0;
     [TextArea] public string description = "No description provided.";
 
     // Abstract methods
@@ -25,6 +26,11 @@ public abstract class TileClass : MonoBehaviour
             GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
             DestroyTile();
         }
+    }
+
+    public int getID()
+    {
+        return ID;
     }
 
     public void setConsumption(int a)
@@ -50,6 +56,10 @@ public abstract class TileClass : MonoBehaviour
     public int GetCost()
     {
         return cost;
+    }
+    public void SetLevel(int a)
+    {
+        level = a;
     }
     public int GetLevel()
     {

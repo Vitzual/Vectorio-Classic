@@ -9,43 +9,15 @@ public abstract class EnemyClass : MonoBehaviour
     public int damage;
     public int range;
     public float moveSpeed;
-    public int attackSpeed;
     public int worth;
     public int explosiveRadius;
     public int explosiveDamage;
     public GameObject[] spawnOnDeath;
     public int[] amountToSpawn;
     public ParticleSystem Effect;
-    public Rigidbody2D body;
 
     // Enemy vars
     protected GameObject target;
-    protected int attackTimeout;
-    protected Vector2 Movement;
-
-    // Attack Tile
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        OnCollisionStay2D(collision);
-    }
-
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
-        {
-            if (attackTimeout <= 0)
-            {
-                collision.gameObject.GetComponent<TileClass>().DamageTile(damage);
-                attackTimeout = attackSpeed;
-            }
-        }
-    }
-
-    // Called by Update() of child classes
-    public void BaseUpdate()
-    {
-        if (attackTimeout > 0) attackTimeout -= 1;
-    }
 
     // Kill entity
     public void KillEntity()

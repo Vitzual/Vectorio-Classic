@@ -16,6 +16,17 @@ public abstract class TileClass : MonoBehaviour
     // Abstract methods
     public abstract void DestroyTile();
 
+    // On collision event
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            int enemyDamage = collision.gameObject.GetComponent<EnemyClass>().getDamage();
+            collision.gameObject.GetComponent<EnemyClass>().KillEntity();
+            DamageTile(enemyDamage);
+        }
+    }
+
     // Apply damage to entity
     public void DamageTile(int dmgRecieved)
     {

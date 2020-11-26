@@ -3,21 +3,18 @@ using System.Collections;
 
 public class ShurikenAI : EnemyClass
 {
-    // Model components
-    private Rigidbody2D Bomber;
-
-    // Movement variables
-    private Vector2 Movement;
 
     // On start, get rigidbody and assign death effect
     void Start()
     {
-        Bomber = this.GetComponent<Rigidbody2D>();
+        body = this.GetComponent<Rigidbody2D>();
     }
 
     // Targetting system
     void Update()
     {
+        BaseUpdate();
+
         // Find closest enemy 
         if (target == null) {
             target = FindNearestDefence();
@@ -29,10 +26,10 @@ public class ShurikenAI : EnemyClass
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
             // Move towards defense
-            Vector2 lookDirection = TargetPosition - Bomber.position;
+            Vector2 lookDirection = TargetPosition - body.position;
 
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            Bomber.rotation = angle;
+            body.rotation = angle;
             lookDirection.Normalize();
             Movement = lookDirection;
             Movement = lookDirection;
@@ -46,7 +43,7 @@ public class ShurikenAI : EnemyClass
     // Move entity towards target every frame
     private void FixedUpdate()
     {
-        Bomber.AddForce(Movement * moveSpeed);
+        body.AddForce(Movement * moveSpeed);
         transform.Rotate(Vector3.forward * Time.deltaTime * 200f);
     }
 }

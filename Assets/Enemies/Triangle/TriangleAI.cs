@@ -7,10 +7,6 @@ public class TriangleAI : EnemyClass
     // Model components
     [SerializeField]
     private ParticleSystem ChargeEffect;
-    private Rigidbody2D Triangle;
-
-    // Movement variables
-    private Vector2 Movement;
 
     // Triangle specific variables
     private bool InRange = false;
@@ -20,12 +16,14 @@ public class TriangleAI : EnemyClass
     // On start, get rigidbody and assign death effect
     void Start()
     {
-        Triangle = this.GetComponent<Rigidbody2D>();
+        body = this.GetComponent<Rigidbody2D>();
     }
 
     // Targetting system
     void Update()
     {
+        BaseUpdate();
+
         // Find closest enemy 
         if (target == null) {
             target = FindNearestDefence();
@@ -37,10 +35,10 @@ public class TriangleAI : EnemyClass
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
             // Move towards defense
-            Vector2 lookDirection = TargetPosition - Triangle.position;
+            Vector2 lookDirection = TargetPosition - body.position;
 
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            Triangle.rotation = angle;
+            body.rotation = angle;
             lookDirection.Normalize();
             Movement = lookDirection;
 
@@ -61,7 +59,7 @@ public class TriangleAI : EnemyClass
     // Move entity towards target every frame
     private void FixedUpdate()
     {
-        Triangle.AddForce(Movement * moveSpeed);
+        body.AddForce(Movement * moveSpeed);
     }
 
     // Wait x amount of time

@@ -292,6 +292,8 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 1;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = true;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = true;
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -302,6 +304,8 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 0;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = false;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = false;
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
     }
 

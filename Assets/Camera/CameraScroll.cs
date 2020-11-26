@@ -24,7 +24,7 @@ public class CameraScroll : MonoBehaviour
         scrollData = Input.GetAxis("Mouse ScrollWheel");
 
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 5f, 150f);
+        targetZoom = Mathf.Clamp(targetZoom, 5f, 100f);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
         if (targetZoom >= 100f && gridActive == true)

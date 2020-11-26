@@ -117,7 +117,7 @@ public class Survival : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider == null && transform.position.x <= 245 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
+            if (rayHit.collider == null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
             {
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                 if (cost <= gold)
@@ -183,6 +183,30 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
+                if (rayHit.collider.name == "Wall")
+                {
+                    RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                    RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                    RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+                    RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+                    if (a.collider != null && a.collider.name == "Wall")
+                    {
+                        a.collider.GetComponent<WallAI>().UpdateSprite(-1);
+                    }
+                    if (b.collider != null && b.collider.name == "Wall")
+                    {
+                        b.collider.GetComponent<WallAI>().UpdateSprite(-3);
+                    }
+                    if (c.collider != null && c.collider.name == "Wall")
+                    {
+                        c.collider.GetComponent<WallAI>().UpdateSprite(-2);
+                    }
+                    if (d.collider != null && d.collider.name == "Wall")
+                    {
+                        d.collider.GetComponent<WallAI>().UpdateSprite(-4);
+                    }
+                }
+
                 ResetTileInfo();
                 ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
@@ -268,6 +292,8 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 1;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = true;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = true;
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -278,6 +304,8 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 0;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = false;
             Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = false;
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
     }
 

@@ -21,17 +21,27 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
-    [SerializeField] private GameObject HubObj;        // No ID
-    [SerializeField] private GameObject TurretObj;     // ID = 0
-    [SerializeField] private GameObject WallObj;       // ID = 1
-    [SerializeField] private GameObject CollectorObj;  // ID = 2
-    [SerializeField] private GameObject ShotgunObj;    // ID = 3
-    [SerializeField] private GameObject SniperObj;     // ID = 4
-    [SerializeField] private GameObject EnhancerObj;   // ID = 5
-    [SerializeField] private GameObject SMGObj;        // ID = 6
-    [SerializeField] private GameObject BoltObj;       // ID = 7
-    [SerializeField] private GameObject ChillerObj;    // ID = 8
-    [SerializeField] private GameObject RocketObj;     // ID = 9
+    [SerializeField] private GameObject HubObj;           // No ID
+    [SerializeField] private GameObject TurretObj;        // ID = 0
+    [SerializeField] private GameObject WallObj;          // ID = 1
+    [SerializeField] private GameObject CollectorObj;     // ID = 2
+    [SerializeField] private GameObject ShotgunObj;       // ID = 3
+    [SerializeField] private GameObject SniperObj;        // ID = 4
+    [SerializeField] private GameObject EnhancerObj;      // ID = 5
+    [SerializeField] private GameObject SMGObj;           // ID = 6
+    [SerializeField] private GameObject BoltObj;          // ID = 7
+    [SerializeField] private GameObject ChillerObj;       // ID = 8
+    [SerializeField] private GameObject RocketObj;        // ID = 9
+    [SerializeField] private GameObject EssenceObj;        // ID = 10
+
+    // Mark 2's add 200 to ID, Mark 3's add 300 to ID
+    [SerializeField] private GameObject TurretMK2Obj;     // ID = 200
+    [SerializeField] private GameObject TurretMK3Obj;     // ID = 300
+    [SerializeField] private GameObject WallMK2Obj;       // ID = 201
+    [SerializeField] private GameObject CollectorMK2Obj;  // ID = 202
+    [SerializeField] private GameObject ShotgunMK2Obj;    // ID = 203
+    [SerializeField] private GameObject EnhancerMK2Obj;   // ID = 205
+
 
     // Object variables
     public GameObject Spawner;
@@ -45,12 +55,18 @@ public class Survival : MonoBehaviour
     public Canvas Overlay;
     private bool MenuOpen;
     private bool BuildingOpen;
+    private bool ResearchOpen;
     private bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public ModalWindowManager UOL;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
+
+    // Research stuff
+    public WindowManager ResearchUI;
+    public TextMeshProUGUI ResearchTitle;
+    public TextMeshProUGUI ResearchDescription;
 
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;
@@ -80,6 +96,7 @@ public class Survival : MonoBehaviour
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
         MenuOpen = false;
+        ResearchOpen = false;
         BuildingOpen = false;
 
         // Default starting unlocks / hotbar
@@ -135,7 +152,7 @@ public class Survival : MonoBehaviour
         AdjustAlphaValue();
 
         // If user left clicks, place object
-        if (Input.GetButton("Fire1") && !BuildingOpen)
+        if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen)
         {
             bool ValidTile = true;
             if (SelectedObj == RocketObj)
@@ -279,6 +296,13 @@ public class Survival : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E) && BuildingOpen == false)
         {
+            if (ResearchOpen)
+            {
+                ResearchOpen = false;
+                ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
+                ResearchUI.GetComponent<CanvasGroup>().interactable = false;
+                ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            }
             BuildingOpen = true;
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 1;
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = true;
@@ -290,6 +314,13 @@ public class Survival : MonoBehaviour
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 0;
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = false;
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        else if ((Input.GetKeyDown(KeyCode.Escape) && ResearchOpen == true))
+        {
+            ResearchOpen = false;
+            ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
+            ResearchUI.GetComponent<CanvasGroup>().interactable = false;
+            ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
@@ -334,6 +365,34 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void OpenResearchMenu()
+    {
+        //if (checkIfUnlocked(EssenceObj))
+        //{
+        if (BuildingOpen)
+        {
+            BuildingOpen = false;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 0;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = false;
+            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        if (ResearchOpen)
+        {
+            ResearchOpen = false;
+            ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
+            ResearchUI.GetComponent<CanvasGroup>().interactable = false;
+            ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        else
+        {
+            ResearchOpen = true;
+            ResearchUI.GetComponent<CanvasGroup>().alpha = 1;
+            ResearchUI.GetComponent<CanvasGroup>().interactable = true;
+            ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+        //}
+    }
+
     public void PlaceSavedBuildings(int[,] a)
     {
         for (int i = 0; i < a.GetLength(0); i++)
@@ -341,7 +400,6 @@ public class Survival : MonoBehaviour
             GameObject building = GetBuildingWithID(a[i, 0]);
             GameObject obj = Instantiate(building, new Vector3(a[i,2], a[i,3],0), Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.name = building.name;
-            obj.GetComponent<TileClass>().SetLevel(a[i, 1]);
         }
     }
 
@@ -480,7 +538,6 @@ public class Survival : MonoBehaviour
         Transform b = Overlay.transform.Find("Prompt");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-        b.transform.Find("Tier").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetTier();
     }
 
     void ResetTileInfo()
@@ -488,14 +545,13 @@ public class Survival : MonoBehaviour
         Transform b = Overlay.transform.Find("Prompt");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = HubObj.GetComponent<TileClass>().GetPercentage();
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "Headquarters";
-        b.transform.Find("Tier").GetComponent<TextMeshProUGUI>().text = HubObj.GetComponent<TileClass>().GetTier();
     }
 
     void ShowSelectedInfo(GameObject a)
     {
         Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Selected");
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name + " (" + a.GetComponent<TileClass>().GetTier() + ")";
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
         b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetCost().ToString();
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
@@ -558,6 +614,16 @@ public class Survival : MonoBehaviour
     public void RemoveGold(int a)
     {
         gold -= a;
+    }
+
+    public void AddEssence(int a)
+    {
+        essence += a;
+    }
+
+    public void RemoveEssence(int a)
+    {
+        essence -= a;
     }
 
     public void AdjustAlphaValue()
@@ -636,7 +702,18 @@ public class Survival : MonoBehaviour
     {
         if (checkIfUnlocked(TurretObj))
         {
-            SelectedObj = TurretObj;
+            if (TurretObj.GetComponent<TileClass>().GetLevel() == 1)
+            {
+                SelectedObj = TurretObj;
+            } 
+            else if (TurretObj.GetComponent<TileClass>().GetLevel() == 2)
+            {
+                SelectedObj = TurretMK2Obj;
+            } 
+            else
+            {
+                SelectedObj = TurretMK3Obj;
+            }
             SwitchObj();
         }
     }
@@ -645,7 +722,14 @@ public class Survival : MonoBehaviour
     {
         if (checkIfUnlocked(ShotgunObj))
         {
-            SelectedObj = ShotgunObj;
+            if (TurretObj.GetComponent<TileClass>().GetLevel() == 1)
+            {
+                SelectedObj = ShotgunObj;
+            }
+            else
+            {
+                SelectedObj = ShotgunMK2Obj;
+            }
             SwitchObj();
         }
     }
@@ -679,29 +763,41 @@ public class Survival : MonoBehaviour
 
     public void SetWall()
     {
-        if (checkIfUnlocked(WallObj))
+        if (TurretObj.GetComponent<TileClass>().GetLevel() == 1)
         {
             SelectedObj = WallObj;
-            SwitchObj();
         }
+        else
+        {
+            SelectedObj = WallMK2Obj;
+        }
+        SwitchObj();
     }
 
     public void SetCollector()
     {
-        if (checkIfUnlocked(CollectorObj))
+        if (TurretObj.GetComponent<TileClass>().GetLevel() == 1)
         {
             SelectedObj = CollectorObj;
-            SwitchObj();
         }
+        else
+        {
+            SelectedObj = CollectorMK2Obj;
+        }
+        SwitchObj();
     }
 
     public void SetEnhancer()
     {
-        if (checkIfUnlocked(EnhancerObj))
+        if (TurretObj.GetComponent<TileClass>().GetLevel() == 1)
         {
             SelectedObj = EnhancerObj;
-            SwitchObj();
         }
+        else
+        {
+            SelectedObj = EnhancerMK2Obj;
+        }
+        SwitchObj();
     }
 
     public void SetChiller()
@@ -721,6 +817,15 @@ public class Survival : MonoBehaviour
             SwitchObj();
             largerUnit = true;
             transform.localScale = new Vector3(2, 2, 1);
+        }
+    }
+
+    public void SetEssence()
+    {
+        if (checkIfUnlocked(EssenceObj))
+        {
+            SelectedObj = EssenceObj;
+            SwitchObj();
         }
     }
 

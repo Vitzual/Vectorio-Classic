@@ -61,6 +61,10 @@ public abstract class TileClass : MonoBehaviour
     {
         level = a;
     }
+    public void IncreaseLevel(int a)
+    {
+        level += a;
+    }
     public int GetLevel()
     {
         return level;

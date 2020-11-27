@@ -3,6 +3,7 @@
 public class CollectorAI: TileClass
 {
     // Declare local object variables
+    [SerializeField] private LayerMask ResourceLayer;
     public int amount;
     public bool enhanced;
     private GameObject SRVSC;
@@ -10,12 +11,19 @@ public class CollectorAI: TileClass
     // On start, invoke repeating SendGold() method
     private void Start()
     {
+        RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
+        if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
+
         var colliders = Physics2D.OverlapBoxAll(this.gameObject.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Defense"));
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].name.Contains("Enhancer"))
+            if (colliders[i].name == "Enhancer")
             {
-                increaseAmount(4);
+                doubleAmount();
+            }
+            else if (colliders[i].name == "Enhancer MK2")
+            {
+                doubleAmount();
             }
         }
 
@@ -34,6 +42,12 @@ public class CollectorAI: TileClass
     public void increaseAmount(int a)
     {
         amount += a;
+    }
+
+    // Increase gold
+    public void doubleAmount()
+    {
+        amount = amount * 2;
     }
 
     // Decrease gold

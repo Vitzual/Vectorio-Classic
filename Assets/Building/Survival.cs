@@ -141,7 +141,6 @@ public class Survival : MonoBehaviour
         try
         {
             SaveData data = SaveSystem.LoadGame();
-            PowerConsumption = data.PowerUsage;
             AvailablePower = data.PowerAvailable;
             gold = data.Gold;
             essence = data.Essence;
@@ -150,16 +149,15 @@ public class Survival : MonoBehaviour
             ResearchLevel = data.RLevel;
             Researched = data.ResearchedTiers;
             seed = data.WorldSeed;
-            Spawner.GetComponent<WaveSpawner>().increaseHeat(data.HeatUsage);
             Debug.Log("Save data was found and loaded");
 
             UpdateGui();
             StartNextUnlock();
             UpdateUnlockableGui();
             UpdateResearchGUI();
-            PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
             PlaceSavedBuildings(data.Locations);
+            PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
         }
         catch
         {
@@ -223,7 +221,7 @@ public class Survival : MonoBehaviour
                     }
                     LastObj.name = SelectedObj.name;
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
-                    Spawner.GetComponent<WaveSpawner>().increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
+                    Spawner.GetComponent<WaveSpawner>().increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
                 }
             }
             else if (rayHit.collider != null)
@@ -274,7 +272,7 @@ public class Survival : MonoBehaviour
                 ResetTileInfo();
                 ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
-                Spawner.GetComponent<WaveSpawner>().decreaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
+                Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());
                 decreasePowerConsumption(rayHit.collider.gameObject.GetComponent<TileClass>().getConsumption());
                 int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
                 gold += cost - cost / 5;
@@ -617,6 +615,9 @@ public class Survival : MonoBehaviour
             GameObject building = GetBuildingWithID(a[i, 0]);
             GameObject obj = Instantiate(building, new Vector3(a[i,2], a[i,3],0), Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.name = building.name;
+
+            increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
+            Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
         }
     }
 

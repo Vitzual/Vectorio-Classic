@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8371128599779309114}
   - component: {fileID: 3760844040989154300}
   - component: {fileID: 2937699046400398723}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Rocket
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e908e011c191a4cae87cbf1f16fb63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyEffect: {fileID: 0}
-  damage: 1
-  Effect: {fileID: 0}
+  EnemyEffect: {fileID: 918402723469912044, guid: 17a602cb45ef54f42b927552d300dcbe,
+    type: 3}
+  damage: 50
+  Effect: {fileID: 918402723469912044, guid: 17a602cb45ef54f42b927552d300dcbe, type: 3}
   explosionRadius: 10
 --- !u!212 &5990330869137716508
 SpriteRenderer:
@@ -69,7 +70,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 425d3e90eb1a73d4fb1381f545b3221b, type: 2}
+  - {fileID: 2100000, guid: 721e55663983b4947ac0ebc3740c819d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,7 +121,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 425d3e90eb1a73d4fb1381f545b3221b, type: 2}
+  - {fileID: 2100000, guid: 721e55663983b4947ac0ebc3740c819d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

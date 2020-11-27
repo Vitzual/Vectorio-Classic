@@ -2,13 +2,43 @@
 
 public class Rocket : BulletClass
 {
+    // Global variables
+    protected GameObject target = null;
+    protected Rigidbody2D body;
     public ParticleSystem Effect;
     public int explosionRadius;
+    protected Vector2 Movement;
 
     public void Start()
     {
+        body = this.GetComponent<Rigidbody2D>();
         HitEffect = Effect;
-        StartCoroutine(SetLifetime(.5f));
+        StartCoroutine(SetLifetime(6f));
+        target = FindNearestEnemy();
+    }
+
+    public void Update()
+    {
+        if (target != null)
+        {
+            // Rotate towards current target
+            float distance = (target.transform.position - this.transform.position).sqrMagnitude;
+            Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
+
+            // Move towards defense
+            Vector2 lookDirection = TargetPosition - body.position;
+
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            body.rotation = angle;
+            lookDirection.Normalize();
+            Movement = lookDirection;
+        }
+    }
+
+    // Move entity towards target every frame
+    private void FixedUpdate()
+    {
+        body.AddForce(Movement * 50f);
     }
 
     public override void collide()
@@ -31,6 +61,20 @@ public class Rocket : BulletClass
             }
             collide();
         }
+    }
+
+    protected static float AlignRotation(float r)
+    {
+        float temp = r;
+        while (temp < 0f)
+        {
+            temp += 360f;
+        }
+        while (temp > 360f)
+        {
+            temp -= 360f;
+        }
+        return temp;
     }
 
 }

@@ -45,25 +45,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543d9cbdce8268c4784eb2bf1bc7f35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 100
-  SniperObj: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f,
-    type: 3}
+  gold: 100000
+  essence: 0
+  iridium: 0
+  PowerConsumption: 0
+  AvailablePower: 512
+  HubObj: {fileID: 0}
   TurretObj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058,
     type: 3}
-  BoltObj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
+  WallObj: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7, type: 3}
+  CollectorObj: {fileID: 892923713960991008, guid: 5f5d88a9394ba5446b895a5be9d7b379,
+    type: 3}
   ShotgunObj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93,
     type: 3}
-  WallObj: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7, type: 3}
+  SniperObj: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f,
+    type: 3}
+  EnhancerObj: {fileID: 1711705259399207453, guid: fe3f6df815283f446b6238148eafc397,
+    type: 3}
   SMGObj: {fileID: 420473218063467210, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
-  CollectorObj: {fileID: 5139909941497502260, guid: eb6f93248d3655740a31b70defc9ced8,
+  BoltObj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
+  ChillerObj: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b,
     type: 3}
-  ConveyorObj: {fileID: 4054534441623369824, guid: 274fc520c36a37441a50936a5aa1c080,
-    type: 3}
-  Overlay: {fileID: 7959246497618957891, guid: 96d88c2b41e6a7543945f1c5451cfdd4, type: 3}
+  Spawner: {fileID: 0}
+  SelectedOverlay: {fileID: 0}
+  Overlay: {fileID: 0}
   GoldAmount: {fileID: 0}
+  UOL: {fileID: 0}
+  PowerUsageBar: {fileID: 0}
+  UpgradeProgressBars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  UpgradeProgressName: {fileID: 0}
   TileLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  UILayer:
+    serializedVersion: 2
+    m_Bits: 32
+  UnlockLvl: 0
+  UnlocksLeft: 1
+  UnlockTier:
+  - Unlock: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+    AmountNeeded: 32000000
+    AmountTracked: 00000000
+  - Unlock: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f, type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+    AmountNeeded: 64000000
+    AmountTracked: 00000000
+  - Unlock: {fileID: 1711705259399207453, guid: fe3f6df815283f446b6238148eafc397,
+      type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+    - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
+    AmountNeeded: fa00000064000000
+    AmountTracked: 0000000000000000
+  - Unlock: {fileID: 420473218063467210, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+    - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
+    - {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
+    AmountNeeded: 90010000fa000000f4010000
+    AmountTracked: 000000000000000000000000
+  - Unlock: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36,
+      type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
+    - {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
+    - {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc, type: 3}
+    - {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
+    AmountNeeded: f4010000f4010000fa0000000a000000
+    AmountTracked: 00000000000000000000000000000000
+  - Unlock: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b, type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634, type: 3}
+    AmountNeeded: 0a000000
+    AmountTracked: 00000000
 --- !u!50 &581920495478843619
 Rigidbody2D:
   serializedVersion: 4

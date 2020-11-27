@@ -31,6 +31,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject SMGObj;        // ID = 6
     [SerializeField] private GameObject BoltObj;       // ID = 7
     [SerializeField] private GameObject ChillerObj;    // ID = 8
+    [SerializeField] private GameObject RocketObj;     // ID = 9
 
     // Object variables
     public GameObject Spawner;
@@ -38,6 +39,7 @@ public class Survival : MonoBehaviour
     private GameObject SelectedObj;
     private GameObject LastObj;
     private float rotation = 0f;
+    public bool largerUnit = false;
 
     // UI Elements
     public Canvas Overlay;
@@ -82,16 +84,18 @@ public class Survival : MonoBehaviour
 
         // Default starting unlocks / hotbar
         hotbar.Add(SetTurret);
-        hotbar.Add(SetWall);
+        hotbar.Add(SetRocket);
         hotbar.Add(SetCollector);
         hotbar.Add(SetShotgun);
         hotbar.Add(SetSniper);
         hotbar.Add(SetEnhancer);
         hotbar.Add(SetSMG);
         hotbar.Add(SetBolt);
+        hotbar.Add(SetChiller);
         unlocked.Add(TurretObj);
         unlocked.Add(CollectorObj);
         unlocked.Add(WallObj);
+        unlocked.Add(RocketObj);
 
         // Check for save data on start, and if there is, set values for everything.
         try
@@ -122,7 +126,8 @@ public class Survival : MonoBehaviour
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
+        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
+        else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
 
         // Make color flash
         Color tmp = this.GetComponent<SpriteRenderer>().color;
@@ -133,11 +138,25 @@ public class Survival : MonoBehaviour
         // If user left clicks, place object
         if (Input.GetButton("Fire1") && !BuildingOpen)
         {
-            //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            bool ValidTile = true;
+            if (SelectedObj == RocketObj)
+            {
+                // Check for wires and adjust accordingly 
+                RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+                RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+                RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+
+                if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) ValidTile = false;
+            }
+
+            //if (ValidTile) Debug.Log("Valid placement");
+            //else Debug.Log("Invalid placement");
 
             // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider == null && SelectedObj != null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
             {
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                 int power = SelectedObj.GetComponent<TileClass>().getConsumption();
@@ -156,32 +175,6 @@ public class Survival : MonoBehaviour
                     LastObj.name = SelectedObj.name;
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.GetComponent<WaveSpawner>().increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
-
-                    if (SelectedObj != WallObj)
-                    {
-                        // Check for wires and adjust accordingly 
-                        RaycastHit2D a = Physics2D.Raycast(new Vector2(LastObj.transform.position.x + 5f, LastObj.transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                        RaycastHit2D b = Physics2D.Raycast(new Vector2(LastObj.transform.position.x - 5f, LastObj.transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                        RaycastHit2D c = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                        RaycastHit2D d = Physics2D.Raycast(new Vector2(LastObj.transform.position.x, LastObj.transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-
-                        if (a.collider != null && a.collider.name == "Wire")
-                        {
-                            a.collider.GetComponent<WireAI>().UpdateSprite(1);
-                        }
-                        if (b.collider != null && b.collider.name == "Wire")
-                        {
-                            b.collider.GetComponent<WireAI>().UpdateSprite(3);
-                        }
-                        if (c.collider != null && c.collider.name == "Wire")
-                        {
-                            c.collider.GetComponent<WireAI>().UpdateSprite(2);
-                        }
-                        if (d.collider != null && d.collider.name == "Wire")
-                        {
-                            d.collider.GetComponent<WireAI>().UpdateSprite(4);
-                        }
-                    }
                 }
             }
             else if (rayHit.collider != null)
@@ -544,16 +537,12 @@ public class Survival : MonoBehaviour
     public void increasePowerConsumption(int a)
     {
         PowerConsumption += a;
-        Debug.Log(PowerConsumption);
-        Debug.Log(AvailablePower);
         PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
     }
 
     public void decreasePowerConsumption(int a)
     {
         PowerConsumption -= a;
-        Debug.Log(PowerConsumption);
-        Debug.Log(PowerConsumption / AvailablePower);
         PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
     }
 
@@ -725,8 +714,24 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SetRocket()
+    {
+        if (checkIfUnlocked(RocketObj))
+        {
+            SelectedObj = RocketObj;
+            SwitchObj();
+            largerUnit = true;
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+    }
+
     public void SwitchObj()
     {
+        if (largerUnit)
+        {
+            largerUnit = false;
+            transform.localScale = new Vector3(1, 1, 1);
+        }
         DisableActiveInfo();
         Adjustment = 1f;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public class Projector : TileClass
+public class Enhancer : TileClass
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;
     public Transform rotator;
+    public int IncreaseAmount;
 
     private void Start()
     {
@@ -13,7 +14,7 @@ public class Projector : TileClass
         {
             if (colliders[i].name.Contains("Collector"))
             {
-                colliders[i].GetComponent<CollectorAI>().increaseAmount(4);
+                colliders[i].GetComponent<CollectorAI>().increaseAmount(IncreaseAmount);
             }
         }
     }
@@ -32,7 +33,7 @@ public class Projector : TileClass
         {
             if (colliders[i].name.Contains("Collector"))
             {
-                colliders[i].GetComponent<CollectorAI>().decreaseAmount(4);
+                colliders[i].GetComponent<CollectorAI>().decreaseAmount(IncreaseAmount);
             }
         }
 

@@ -2,6 +2,9 @@
 
 public class TurretAI : TurretClass
 {
+    public bool SwitchBarrel = false;
+    public Transform Point2;
+
     // Targetting system
     void Update()
     {
@@ -15,9 +18,20 @@ public class TurretAI : TurretClass
             {
                 // Unflag hasTarget
                 hasTarget = false;
-                
-                // Call shoot function
-                Shoot(Bullet, Point);
+                if (transform.name == "Turret MK2" || transform.name == "Turret MK3")
+                { 
+                    if (!SwitchBarrel) 
+                    { 
+                        SwitchBarrel = true; 
+                        Shoot(Bullet, Point2); 
+                    }
+                    else 
+                    { 
+                        SwitchBarrel = false; 
+                        Shoot(Bullet, Point); 
+                    }
+                } 
+                else Shoot(Bullet, Point);
             }
         } else {
             // Unflag hasTarget when target is null

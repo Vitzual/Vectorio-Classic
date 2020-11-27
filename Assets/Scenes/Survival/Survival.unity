@@ -638,6 +638,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &510699003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5585993850207069627, guid: 724381b0ac9e7624f9a52351344a6c3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5426396832597933359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54a7257a6436d41b873f1053130384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &518753341 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1009268179025251287, guid: 724381b0ac9e7624f9a52351344a6c3f,
@@ -2474,7 +2486,7 @@ PrefabInstance:
     - target: {fileID: 7015101587557265586, guid: 72ac2db1dfa3ba34b9f297ecc839fa88,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7015101587557265586, guid: 72ac2db1dfa3ba34b9f297ecc839fa88,
         type: 3}
@@ -2582,6 +2594,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4f5265620f10a748a88759a975e86b0, type: 3}
+--- !u!114 &1328786125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3686730845749397855, guid: 724381b0ac9e7624f9a52351344a6c3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5426396832597933359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54a7257a6436d41b873f1053130384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1367778748 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8392892120157960630, guid: a596be5aa09890e42a0f67000b78ad01,
@@ -3002,7 +3026,7 @@ PrefabInstance:
     - target: {fileID: 273868198970679530, guid: 7385a4036432b8e4d9dbeed3ecbfb886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 273868198970679530, guid: 7385a4036432b8e4d9dbeed3ecbfb886,
         type: 3}
@@ -3031,6 +3055,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7385a4036432b8e4d9dbeed3ecbfb886, type: 3}
+--- !u!114 &1524628748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3615349855073535300, guid: 724381b0ac9e7624f9a52351344a6c3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5426396832597933359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a54a7257a6436d41b873f1053130384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1613245226 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4560939573816171724, guid: 724381b0ac9e7624f9a52351344a6c3f,
@@ -3326,7 +3362,7 @@ PrefabInstance:
     - target: {fileID: 12862463750396448, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 12862463750396448, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
@@ -3357,6 +3393,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
@@ -3469,6 +3510,523 @@ PrefabInstance:
       propertyPath: ResearchUI
       value: 
       objectReference: {fileID: 6981072013701688159}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchDescriptionBox
+      value: 
+      objectReference: {fileID: 1782259928}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTitleBox
+      value: 
+      objectReference: {fileID: 2129193341}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchImage
+      value: 
+      objectReference: {fileID: 167309381}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[0].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[0].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[0].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[0].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[0].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: EnhancerMK2Obj
+      value: 
+      objectReference: {fileID: 1711705259399207453, guid: 427dcde8a61230445bcc6314bb624d08,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ShotgunMK2Obj
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: 68a88437782ea9a4ca6a097fd119e36e,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: CollectorMK2Obj
+      value: 
+      objectReference: {fileID: 892923713960991008, guid: 3f4e3ab79688f6643af5926a90e697d0,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: WallMK2Obj
+      value: 
+      objectReference: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: TurretMK3Obj
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: 6b22e190dc5fe884096767ada8c7780b,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: TurretMK2Obj
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: c7799416384efab4187972e604b1f5e5,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchObject
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: c7799416384efab4187972e604b1f5e5,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].EssenceRequired
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchTitle
+      value: TURRET UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchDescription
+      value: Turret MK2's double up the fire power by using two barrels to fire twice
+        as many bullets per second.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchButton
+      value: 
+      objectReference: {fileID: 3058470767161244035}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchObject
+      value: 
+      objectReference: {fileID: 892923713960991008, guid: 3f4e3ab79688f6643af5926a90e697d0,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].EssenceRequired
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchTitle
+      value: GOLD UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchDescription
+      value: Collector MK2's increase gold output by 800% and optimize heat generation
+        by 15%. Requires a lot of power to run however.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchButton
+      value: 
+      objectReference: {fileID: 1865613693318984796}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchObject
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: 68a88437782ea9a4ca6a097fd119e36e,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].EssenceRequired
+      value: 3500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchTitle
+      value: SHOTGUN UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchDescription
+      value: Because firing 8 bullets wasn't enough, this upgrade increases the amount
+        of bullets fired to 12, and increases the range.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchButton
+      value: 
+      objectReference: {fileID: 6226582442398440169}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchObject
+      value: 
+      objectReference: {fileID: 1711705259399207453, guid: 427dcde8a61230445bcc6314bb624d08,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].EssenceRequired
+      value: 6500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchTitle
+      value: ENHANCER UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchDescription
+      value: Improve your enhancers to increase efficiency of the surrounding tiles
+        by 4x. Creates A LOT of heat.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchButton
+      value: 
+      objectReference: {fileID: 8070419599777271188}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchObject
+      value: 
+      objectReference: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].EssenceRequired
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchTitle
+      value: WALL UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchDescription
+      value: Increases your walls durability to withstand stronger enemies like carriers
+        and saws. Not suitable for dropships however.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchButton
+      value: 
+      objectReference: {fileID: 1300916252698726213}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchObject
+      value: 
+      objectReference: {fileID: 420473218063467210, guid: 6b22e190dc5fe884096767ada8c7780b,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].EssenceRequired
+      value: 8500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchTitle
+      value: TURRET UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchDescription
+      value: We noticed MK2's weren't strong enough, so we quadrupled the fire rate,
+        range, and rotation speed. Sometimes overheats.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchButton
+      value: 
+      objectReference: {fileID: 2827053299165196938}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].EssenceRequired
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].ResearchTitle
+      value: POWER UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 15% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].ResearchButton
+      value: 
+      objectReference: {fileID: 6552900537964638658}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[8].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[8].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[8].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[8].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[8].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[9].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[9].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[9].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[9].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[9].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[10].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[10].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[10].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[10].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[10].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[11].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[11].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[11].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[11].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[11].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[12].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[12].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[12].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[12].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[12].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchNeeded
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchNeeded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[13].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[13].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[13].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[13].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[13].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchNeeded
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[14].ResearchObject
+      value: 
+      objectReference: {fileID: 346805649}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[14].EssenceRequired
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[14].ResearchTitle
+      value: HUB UPGRADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[14].ResearchDescription
+      value: 'Increases your Hub''s power output by 500w. Note that once you upgrade,
+        it will also increase your heat output by 5% permanently. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[14].ResearchButton
+      value: 
+      objectReference: {fileID: 9189556150463798641}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchNeeded
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchNeeded
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchNeeded
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[7].ResearchNeeded
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: essence
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[1].ResearchInvButton
+      value: 
+      objectReference: {fileID: 1328786125}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[2].ResearchInvButton
+      value: 
+      objectReference: {fileID: 1524628748}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[3].ResearchInvButton
+      value: 
+      objectReference: {fileID: 456920446}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[4].ResearchInvButton
+      value: 
+      objectReference: {fileID: 1801320314}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[5].ResearchInvButton
+      value: 
+      objectReference: {fileID: 510699003}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: ResearchTier.Array.data[6].ResearchInvButton
+      value: 
+      objectReference: {fileID: 1328786125}
     - target: {fileID: 7221066091301988531, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
       propertyPath: m_Name
@@ -4031,10 +4589,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 14
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 14
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 3316990854237829721}
@@ -4090,16 +4670,16 @@ RectTransform:
   m_GameObject: {fileID: 6682959434389325985}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 2767395122642892880}
   - {fileID: 4000677259976188690}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80.00001, y: -80}
+  m_AnchoredPosition: {x: 79.999985, y: -80.00001}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &224328435950096845
@@ -4180,6 +4760,7 @@ GameObject:
   - component: {fileID: 5793135464927702103}
   - component: {fileID: 6952205446342475455}
   - component: {fileID: 7801309542643631749}
+  - component: {fileID: 342285545606860736}
   m_Layer: 5
   m_Name: B2
   m_TagString: Untagged
@@ -4187,6 +4768,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &342285545606860736
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342285545606860735}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &361100529344936681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4259,6 +4852,7 @@ Transform:
   - {fileID: 4120833340678959774}
   - {fileID: 2773514908092037642}
   - {fileID: 2159168685563467137}
+  - {fileID: 406754936238218392}
   - {fileID: 2788913427216190772}
   - {fileID: 3037250842367621799}
   - {fileID: 7193226669566339881}
@@ -4272,7 +4866,6 @@ Transform:
   - {fileID: 9201839875115465602}
   - {fileID: 5612328483082257097}
   - {fileID: 6703426187626924717}
-  - {fileID: 406754936238218392}
   m_Father: {fileID: 8812126617036776337}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4285,16 +4878,16 @@ RectTransform:
   m_GameObject: {fileID: 750378778269003588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 3953733297058013750}
   - {fileID: 1180351682499797416}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 28
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: 80}
+  m_AnchoredPosition: {x: -159.99998, y: 79.999985}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &411568545876695138
@@ -4319,6 +4912,7 @@ GameObject:
   - component: {fileID: 1500736569020469205}
   - component: {fileID: 8872187658756274640}
   - component: {fileID: 5272396497721204805}
+  - component: {fileID: 416715633841955614}
   m_Layer: 5
   m_Name: B4
   m_TagString: Untagged
@@ -4326,6 +4920,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &416715633841955614
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416715633841955613}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &418157089739281801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4496,6 +5102,7 @@ GameObject:
   - component: {fileID: 6783558719644015189}
   - component: {fileID: 5346993009496472896}
   - component: {fileID: 705994397089216139}
+  - component: {fileID: 640366579505006760}
   m_Layer: 5
   m_Name: B7
   m_TagString: Untagged
@@ -4503,6 +5110,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &640366579505006760
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640366579505006759}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &697565750329372416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4620,13 +5239,26 @@ GameObject:
   - component: {fileID: 4257596659040112953}
   - component: {fileID: 6489815645738912301}
   - component: {fileID: 103862856821375045}
+  - component: {fileID: 750378778269003589}
   m_Layer: 5
-  m_Name: A3 (1)
+  m_Name: A2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &750378778269003589
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750378778269003588}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &765428274141873157
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4679,6 +5311,7 @@ GameObject:
   - component: {fileID: 8618144582603600237}
   - component: {fileID: 8098470130763897401}
   - component: {fileID: 7297758354635414190}
+  - component: {fileID: 884187246736816060}
   m_Layer: 5
   m_Name: B1
   m_TagString: Untagged
@@ -4686,6 +5319,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &884187246736816060
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884187246736816059}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &888427601130963704
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4853,10 +5498,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 8
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 3676701852421580664}
@@ -4952,10 +5619,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 445997634656167788}
@@ -5063,10 +5752,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 12
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 12
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 5880669336779632787}
@@ -5200,10 +5911,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 11
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 11
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 86957084379971340}
@@ -5393,6 +6126,7 @@ GameObject:
   - component: {fileID: 1234674323416744571}
   - component: {fileID: 7448756059782911595}
   - component: {fileID: 2811264296605928006}
+  - component: {fileID: 1727325713737837877}
   m_Layer: 5
   m_Name: B5
   m_TagString: Untagged
@@ -5400,6 +6134,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &1727325713737837877
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727325713737837876}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &1785974561553831450
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5514,12 +6260,12 @@ RectTransform:
   m_GameObject: {fileID: 416715633841955613}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 5841747075093345808}
   - {fileID: 8690340194123781945}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5541,10 +6287,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 901298752506979983}
@@ -5776,6 +6544,7 @@ GameObject:
   - component: {fileID: 2536170383616137421}
   - component: {fileID: 6623633702002172907}
   - component: {fileID: 8007792958453077921}
+  - component: {fileID: 2095475787858142096}
   m_Layer: 5
   m_Name: C3
   m_TagString: Untagged
@@ -5783,6 +6552,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &2095475787858142096
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095475787858142095}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &2126967043100975342
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5811,7 +6592,7 @@ RectTransform:
   m_GameObject: {fileID: 884187246736816059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 1613900478841746184}
   - {fileID: 7723225727096327674}
@@ -5820,7 +6601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -240, y: -0}
+  m_AnchoredPosition: {x: -240, y: 0}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2165347169226726100
@@ -5832,16 +6613,16 @@ RectTransform:
   m_GameObject: {fileID: 2095475787858142095}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 3082745449065088252}
   - {fileID: 2126967043100975342}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: -80}
+  m_AnchoredPosition: {x: -79.999985, y: -80.00001}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2198200608971548353
@@ -5887,6 +6668,7 @@ GameObject:
   - component: {fileID: 6608879718479814616}
   - component: {fileID: 5476206665161713736}
   - component: {fileID: 3865111838919202610}
+  - component: {fileID: 2213092900441721357}
   m_Layer: 5
   m_Name: A3
   m_TagString: Untagged
@@ -5894,6 +6676,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &2213092900441721357
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213092900441721356}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &2299534079740737147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5947,10 +6741,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 9
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 9
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 625832454134998690}
@@ -6154,16 +6970,16 @@ RectTransform:
   m_GameObject: {fileID: 342285545606860735}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 3553583038170784783}
   - {fileID: 8779552023486287899}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: 0.000015259}
+  m_AnchoredPosition: {x: -159.99998, y: 0.000011444092}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2811264296605928006
@@ -6228,10 +7044,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 6905699939325707046}
@@ -6276,10 +7114,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 3871501861926305691}
@@ -6322,16 +7182,16 @@ RectTransform:
   m_GameObject: {fileID: 5401234108041539942}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 5698836031402537716}
   - {fileID: 4551787977198800647}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: -80}
+  m_AnchoredPosition: {x: -159.99998, y: -80.00001}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3058470767161244035
@@ -6349,10 +7209,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 1898774972827900665}
@@ -6694,16 +7576,16 @@ RectTransform:
   m_GameObject: {fileID: 4680894072616600518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 7261565125340457654}
   - {fileID: 6987988141768468942}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: 80}
+  m_AnchoredPosition: {x: 160.00003, y: 79.999985}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3514793735359333138
@@ -7149,10 +8031,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 2c758fe04310db244a60ecd938b406ca, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 13
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 13
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 303854303071600891}
@@ -7582,6 +8486,7 @@ GameObject:
   - component: {fileID: 7921849022187115883}
   - component: {fileID: 207061008647536022}
   - component: {fileID: 8281652301272552548}
+  - component: {fileID: 4680894072616600519}
   m_Layer: 5
   m_Name: A6
   m_TagString: Untagged
@@ -7589,6 +8494,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &4680894072616600519
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4680894072616600518}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4685768297290245513
 GameObject:
   m_ObjectHideFlags: 0
@@ -7835,16 +8752,16 @@ RectTransform:
   m_GameObject: {fileID: 1727325713737837876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 7230913323171053840}
   - {fileID: 1683592116705824806}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: -0.000030517576}
+  m_AnchoredPosition: {x: 79.999985, y: -0.000019073486}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5089973614356270300
@@ -8181,6 +9098,7 @@ GameObject:
   - component: {fileID: 5282878097931290008}
   - component: {fileID: 4957481492741275949}
   - component: {fileID: 7084503483853661769}
+  - component: {fileID: 5397536750698100361}
   m_Layer: 5
   m_Name: C6
   m_TagString: Untagged
@@ -8188,6 +9106,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &5397536750698100361
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397536750698100360}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5401234108041539942
 GameObject:
   m_ObjectHideFlags: 0
@@ -8202,6 +9132,7 @@ GameObject:
   - component: {fileID: 3143699613985907243}
   - component: {fileID: 8938004430789353898}
   - component: {fileID: 4613108041608478847}
+  - component: {fileID: 5401234108041539943}
   m_Layer: 5
   m_Name: C2
   m_TagString: Untagged
@@ -8209,6 +9140,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &5401234108041539943
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5401234108041539942}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &5426396832597933359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8569,7 +9512,7 @@ PrefabInstance:
     - target: {fileID: 1441802164853597475, guid: 724381b0ac9e7624f9a52351344a6c3f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1441802164853597475, guid: 724381b0ac9e7624f9a52351344a6c3f,
         type: 3}
@@ -9459,16 +10402,16 @@ RectTransform:
   m_GameObject: {fileID: 5397536750698100360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 5834864736261768724}
   - {fileID: 5670972014852356177}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: -80}
+  m_AnchoredPosition: {x: 160.00003, y: -80.00001}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5627129324406182058
@@ -9606,6 +10549,7 @@ GameObject:
   - component: {fileID: 8410858843332785712}
   - component: {fileID: 6983974645824628691}
   - component: {fileID: 5045730261754305994}
+  - component: {fileID: 5798748198618943962}
   m_Layer: 5
   m_Name: B6
   m_TagString: Untagged
@@ -9613,6 +10557,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &5798748198618943962
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798748198618943961}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &5826110760133044016
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9732,16 +10688,16 @@ RectTransform:
   m_GameObject: {fileID: 6665479289621330762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 8684238905711971650}
   - {fileID: 1788922112062464769}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: 0}
+  m_AnchoredPosition: {x: -79.999985, y: 0}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &5957179720028752348
@@ -10023,10 +10979,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 63023380145961913}
@@ -10197,16 +11175,16 @@ RectTransform:
   m_GameObject: {fileID: 7806478342709976162}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 141116858567186298}
   - {fileID: 4184530378936933261}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 80}
+  m_AnchoredPosition: {x: 79.999985, y: 79.999985}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6552900537964638658
@@ -10224,10 +11202,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 8219077937287918734}
@@ -10362,6 +11362,7 @@ GameObject:
   - component: {fileID: 6879277070577775666}
   - component: {fileID: 4557204076403347023}
   - component: {fileID: 3857143907667771432}
+  - component: {fileID: 6665479289621330763}
   m_Layer: 5
   m_Name: B3
   m_TagString: Untagged
@@ -10369,6 +11370,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &6665479289621330763
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665479289621330762}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6682959434389325985
 GameObject:
   m_ObjectHideFlags: 0
@@ -10383,6 +11396,7 @@ GameObject:
   - component: {fileID: 7649403817230470223}
   - component: {fileID: 4432394488945609778}
   - component: {fileID: 1578806940265485814}
+  - component: {fileID: 6682959434389325986}
   m_Layer: 5
   m_Name: C5
   m_TagString: Untagged
@@ -10390,6 +11404,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &6682959434389325986
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6682959434389325985}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &6694519360689526863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10428,12 +11454,12 @@ RectTransform:
   m_GameObject: {fileID: 640366579505006759}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 3350136111311466717}
   - {fileID: 4393685744585800923}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10870,16 +11896,16 @@ RectTransform:
   m_GameObject: {fileID: 2213092900441721356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 3792726421785393352}
   - {fileID: 2410562174885874614}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: 80}
+  m_AnchoredPosition: {x: -79.999985, y: 79.999985}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &7230913323171053840
@@ -11450,6 +12476,7 @@ GameObject:
   - component: {fileID: 7550045331333167800}
   - component: {fileID: 6694519360689526863}
   - component: {fileID: 1635803838777955588}
+  - component: {fileID: 7806478342709976163}
   m_Layer: 5
   m_Name: A5
   m_TagString: Untagged
@@ -11457,6 +12484,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &7806478342709976163
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7806478342709976162}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &7852649118217029040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11756,10 +12795,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 3efe5224d90678a40bd237c54b9be22e, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 3152969852164189481}
@@ -12753,10 +13814,32 @@ MonoBehaviour:
   buttonIcon: {fileID: 21300000, guid: 6e3b55dae774c4940be8c8ee6e50e7e1, type: 3}
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: Research
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1790766743}
+        m_MethodName: ResearchHover
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   normalIcon: {fileID: 3467919353724934552}
@@ -12783,16 +13866,16 @@ RectTransform:
   m_GameObject: {fileID: 5798748198618943961}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5754385, y: 0.5754385, z: 0.5754385}
+  m_LocalScale: {x: 0.57543856, y: 0.57543856, z: 0}
   m_Children:
   - {fileID: 5488409223507021602}
   - {fileID: 2757960533609286682}
   m_Father: {fileID: 396879015032604235}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: -0.000030517576}
+  m_AnchoredPosition: {x: 160.00003, y: -0.000019073486}
   m_SizeDelta: {x: 123.22168, y: 123.22168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9210461464794527260

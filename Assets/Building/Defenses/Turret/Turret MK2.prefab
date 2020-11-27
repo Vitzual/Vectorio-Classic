@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
-  m_Name: Turret
+  m_Name: Turret MK2
   m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,17 +134,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337, type: 3}
-  maxhp: 5
-  health: 5
-  heat: 2
-  cost: 150
+  maxhp: 10
+  health: 10
+  heat: 4
+  cost: 650
   level: 1
-  power: 5
-  ID: 0
+  power: 8
+  ID: 200
   description: 'Weak early game turret that targets
 
     and fires at nearby enemies.'
-  fireRate: 0.7
+  fireRate: 0.2
   bulletForce: 100
   bulletSpread: 0.1
   bulletAmount: 1
@@ -154,7 +154,7 @@ MonoBehaviour:
   Gun: {fileID: 5865514787985018872}
   Bullet: {fileID: 3293027712645128820, guid: c48cecef139047b4fbc9277c8ee729c6, type: 3}
   SwitchBarrel: 0
-  Point2: {fileID: 3069989843565101140}
+  Point2: {fileID: 2950084637759095388}
 --- !u!114 &3961812326880450799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +354,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3069989843565101140}
+  - {fileID: 2950084637759095388}
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -396,7 +397,7 @@ SpriteRenderer:
   m_SortingLayerID: 585715533
   m_SortingLayer: 3
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 0ea635348db37fd4bbf1176d3019100e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54200af3b507f7a439bb37ec9052effd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -428,6 +429,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!1 &4424375936110670424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2950084637759095388}
+  m_Layer: 8
+  m_Name: FirePoint 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2950084637759095388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424375936110670424}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.75, y: 2.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8908416096621829035}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7012168399382546169
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9215428734190905872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.08, z: 0}
+  m_LocalPosition: {x: -0.75, y: 2.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8908416096621829035}

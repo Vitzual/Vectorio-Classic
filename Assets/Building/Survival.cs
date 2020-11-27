@@ -84,7 +84,7 @@ public class Survival : MonoBehaviour
 
         // Default starting unlocks / hotbar
         hotbar.Add(SetTurret);
-        hotbar.Add(SetRocket);
+        hotbar.Add(SetWall);
         hotbar.Add(SetCollector);
         hotbar.Add(SetShotgun);
         hotbar.Add(SetSniper);
@@ -95,7 +95,6 @@ public class Survival : MonoBehaviour
         unlocked.Add(TurretObj);
         unlocked.Add(CollectorObj);
         unlocked.Add(WallObj);
-        unlocked.Add(RocketObj);
 
         // Check for save data on start, and if there is, set values for everything.
         try

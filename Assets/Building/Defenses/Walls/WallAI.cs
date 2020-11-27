@@ -69,6 +69,7 @@ public class WallAI : TileClass
             d.collider.GetComponent<WallAI>().UpdateSprite(-4);
         }
 
+        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

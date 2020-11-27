@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CollectorAI: TileClass
+public class EssenceAI: TileClass
 {
     // Declare local object variables
     public int amount;
@@ -20,13 +20,13 @@ public class CollectorAI: TileClass
         }
 
         SRVSC = GameObject.Find("Survival");
-        InvokeRepeating("SendGold", 0f, 1f);
+        InvokeRepeating("SendEssence", 0f, 2f);
     }
 
     // Send gold
-    private void SendGold()
+    private void SendEssence()
     {
-        SRVSC.GetComponent<Survival>().AddGold(amount);
+        SRVSC.GetComponent<Survival>().AddEssence(amount);
         SRVSC.GetComponent<Survival>().UpdateGui();
     }
 

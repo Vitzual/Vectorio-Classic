@@ -37,6 +37,7 @@ public class Enhancer : TileClass
             }
         }
 
+        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

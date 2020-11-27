@@ -14,6 +14,7 @@ public class SaveData
     public int Iridium;
     public int HeatUsage;
     public int UnlockLevel;
+    public int WorldSeed;
     public bool UnlocksLeft;
     public int RLevel;
     public bool[] ResearchedTiers;
@@ -21,6 +22,7 @@ public class SaveData
     public SaveData (Survival data, WaveSpawner heat) 
     {
         //Buildings = data.GetSaveData();
+        WorldSeed = data.seed;
         Locations = data.GetLocationData();
         PowerUsage = data.PowerConsumption;
         PowerAvailable = data.AvailablePower;

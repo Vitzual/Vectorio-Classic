@@ -30,18 +30,10 @@ public class OnSpawn : MonoBehaviour
     public int IridiumVeinSize;
     public int IridiumVeinNoise;
 
-    // Start is called before the first frame update
-    void Start()
+    public void GenerateWorldData(int a)
     {
-        // Specify the seed - random by default
-        if (WorldSeed == 0)
-        {
-            // Generates random seed between 1000000 and 9999999 (all inclusive)
-            WorldSeed = Random.Range(1000000, 10000000);
-        }
-
         // Sets the seed - This method is deprecated but works so who cares amiright?
-        Random.seed = WorldSeed;
+        Random.seed = a;
 
         GenGold();
         GenEssence();

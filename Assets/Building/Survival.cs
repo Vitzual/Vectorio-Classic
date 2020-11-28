@@ -633,12 +633,50 @@ public class Survival : MonoBehaviour
         return TurretObj;
     }
 
+    // dont touch this
     public void UpdateUnlockableGui()
     {
         for (int i=0; i<UnlockLvl; i++)
         {
+            if (i == 0)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+            else if (i == 1)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+            else if (i == 2)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+            else if (i == 3)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+            else if (i == 4)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+            else if (i == 5)
+            {
+                ButtonManagerBasicIcon bm = Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>();
+                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
+                bm.UpdateUI();
+            }
+
             addUnlocked(UnlockTier[i].Unlock);
-            UnlockTier[i].InventoryButton.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.transform.name);
+            UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.UpdateUI();
         }
     }

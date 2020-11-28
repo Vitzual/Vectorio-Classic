@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1f;
         Application.targetFrameRate = 300;
     }
 

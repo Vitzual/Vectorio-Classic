@@ -14,6 +14,15 @@ public class Survival : MonoBehaviour
     public int PowerConsumption = 0;
     public int AvailablePower = 100;
 
+    // Per second variables
+    private float GPS = 0; // Gold per second
+    private int PGA = 0; // Previous gold amount
+    private float EPS = 0; // Essence per second
+    private int PEA = 0; // Previous essence amount
+    public TextMeshProUGUI GoldPerSecond;
+    public TextMeshProUGUI EssencePerSecond;
+
+
     // Placement sprites
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
@@ -118,7 +127,7 @@ public class Survival : MonoBehaviour
         ResearchOpen = false;
         BuildingOpen = false;
         Researched = new bool[ResearchTier.Length];
-        for (int i=0; i< ResearchTier.Length; i++)
+        for (int i = 0; i < ResearchTier.Length; i++)
         {
             Researched[i] = false;
         }
@@ -141,17 +150,16 @@ public class Survival : MonoBehaviour
         try
         {
             SaveData data = SaveSystem.LoadGame();
-            AvailablePower = data.PowerAvailable;
             gold = data.Gold;
             essence = data.Essence;
             iridium = data.Iridium;
+            UpdateGui();
             UnlockLvl = data.UnlockLevel - 1;
             ResearchLevel = data.RLevel;
             Researched = data.ResearchedTiers;
             seed = data.WorldSeed;
             Debug.Log("Save data was found and loaded");
 
-            UpdateGui();
             StartNextUnlock();
             UpdateUnlockableGui();
             UpdateResearchGUI();
@@ -165,6 +173,10 @@ public class Survival : MonoBehaviour
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
         }
+
+        PGA = gold;
+        PEA = essence;
+        InvokeRepeating("CalculateRPS", 0f, 2f);
     }
 
     private void Update()
@@ -202,8 +214,8 @@ public class Survival : MonoBehaviour
             {
                 if (SelectedObj == EssenceObj)
                 {
-                    RaycastHit2D resourceCheck = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, ResourceLayer);
-                    if (resourceCheck.collider != null && resourceCheck.collider.name != "Essencetile") return;
+                    RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
+                    if (resourceCheck.collider == null || resourceCheck.collider.name != "Essencetile") return;
                 }
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                 int power = SelectedObj.GetComponent<TileClass>().getConsumption();
@@ -266,6 +278,18 @@ public class Survival : MonoBehaviour
                     if (d.collider != null && d.collider.name == "Wall")
                     {
                         d.collider.GetComponent<WallAI>().UpdateSprite(-4);
+                    }
+                }
+
+                if (rayHit.collider.name.Contains("Enhancer"))
+                {
+                    var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
+                    for (int i = 0; i < colliders.Length; i++)
+                    {
+                        if (colliders[i].name.Contains("Collector"))
+                        {
+                            colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
+                        }
                     }
                 }
 
@@ -396,6 +420,16 @@ public class Survival : MonoBehaviour
         }
     }
 
+    private void CalculateRPS()
+    {
+        GPS = (float)(gold - PGA)/2;
+        EPS = (float)(essence - PEA)/2;
+        GoldPerSecond.text = GPS + "/s";
+        EssencePerSecond.text = EPS + "/s";
+        PGA = gold;
+        PEA = essence;
+    }
+
     public void OpenResearchMenu()
     {
         if (checkIfUnlocked(EssenceObj))
@@ -428,12 +462,14 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < ResearchTier.Length; i++)
         {
+            Debug.Log(Researched[i]);
             if (ResearchTier[i].ResearchNeeded <= ResearchLevel)
             {
                 if (ResearchTier[i].ResearchObject.name == "Hub")
                 {
                     ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
                     if (Researched[i]) ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
+                    if (Researched[0]) AvailablePower += 2500;
                 }
                 else
                 {
@@ -444,7 +480,7 @@ public class Survival : MonoBehaviour
             }
         }
 
-        for (int i=0; i<ResearchTier.Length; i++)
+        for (int i = 0; i < ResearchTier.Length; i++)
         {
             if (Researched[i])
             {
@@ -485,7 +521,7 @@ public class Survival : MonoBehaviour
                     ResearchTier[i].ResearchButton.UpdateUI();
                 }
             }
-        } 
+        }
     }
 
     public void Research(int a)
@@ -499,9 +535,9 @@ public class Survival : MonoBehaviour
                 ResearchLevel += 1;
                 if (ResearchTier[a].ResearchObject.name == "Hub")
                 {
+                    Researched[a] = true;
                     AvailablePower += 2500;
                     PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-                    GameObject.Find("Spawner").GetComponent<WaveSpawner>().increaseHeat(1000);
 
                     for (int i = 0; i < ResearchTier.Length; i++)
                     {
@@ -510,7 +546,7 @@ public class Survival : MonoBehaviour
                             if (ResearchTier[i].ResearchObject.name == "Hub")
                             {
                                 ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                            } 
+                            }
                             else
                             {
                                 ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + ResearchTier[i].ResearchObject.name);
@@ -540,7 +576,7 @@ public class Survival : MonoBehaviour
                     else if (a == 5)
                     {
                         UpdateResearch(a, WallMK2Obj, "Two");
-                    } 
+                    }
                     else if (a == 6)
                     {
                         UpdateResearch(a, TurretMK3Obj, "One");
@@ -548,7 +584,7 @@ public class Survival : MonoBehaviour
                 }
                 ResearchTier[a].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
             }
-        } 
+        }
     }
 
     public void UpdateResearch(int a, GameObject b, string c)
@@ -564,7 +600,7 @@ public class Survival : MonoBehaviour
             bm.UpdateUI();
         }
 
-        for (int i=0; i<ResearchTier.Length; i++)
+        for (int i = 0; i < ResearchTier.Length; i++)
         {
             if (ResearchTier[i].ResearchNeeded == ResearchLevel)
             {
@@ -589,7 +625,7 @@ public class Survival : MonoBehaviour
             ResearchTitleBox.text = "Tier Unavailable";
             ResearchDescriptionBox.text = "Coming in update 0.5";
             ResearchCostBox.text = "????";
-        } 
+        }
         else
         {
             ResearchImage.sprite = ResearchTier[a].ResearchButton.buttonIcon;
@@ -613,11 +649,13 @@ public class Survival : MonoBehaviour
         for (int i = 0; i < a.GetLength(0); i++)
         {
             GameObject building = GetBuildingWithID(a[i, 0]);
-            GameObject obj = Instantiate(building, new Vector3(a[i,2], a[i,3],0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            GameObject obj = Instantiate(building, new Vector3(a[i, 2], a[i, 3], 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.name = building.name;
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
+
+            Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
     }
 
@@ -630,13 +668,13 @@ public class Survival : MonoBehaviour
                 return unlocked[i];
             }
         }
-        return TurretObj;
+        return null;
     }
 
     // dont touch this
     public void UpdateUnlockableGui()
     {
-        for (int i=0; i<UnlockLvl; i++)
+        for (int i = 0; i < UnlockLvl; i++)
         {
             if (i == 0)
             {
@@ -920,7 +958,8 @@ public class Survival : MonoBehaviour
         try
         {
             hotbar[index]();
-        } catch { return; }
+        }
+        catch { return; }
         if (index == 0)
         {
             Overlay.transform.Find("One").GetComponent<Button>().interactable = false;
@@ -966,11 +1005,11 @@ public class Survival : MonoBehaviour
             if (Researched[6])
             {
                 SelectedObj = TurretMK3Obj;
-            } 
+            }
             else if (Researched[1])
             {
                 SelectedObj = TurretMK2Obj;
-            } 
+            }
             else
             {
                 SelectedObj = TurretObj;
@@ -1110,7 +1149,6 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < unlocked.Count; i++)
         {
-            Debug.Log(unlocked[i].name);
             if (a.name == unlocked[i].name)
             {
                 return true;
@@ -1158,12 +1196,13 @@ public class Survival : MonoBehaviour
 
         int[,] data = new int[length, 4];
         length = 0;
-        for (int i=0; i<allObjects.Length; i++)
+        for (int i = 0; i < allObjects.Length; i++)
         {
             if (allObjects[i].tag == "Defense")
             {
                 try
                 {
+                    Debug.Log(allObjects[i].name);
                     data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
                     data[length, 1] = allObjects[i].GetComponent<TileClass>().GetLevel();
                     data[length, 2] = (int)allObjects[i].position.x;
@@ -1183,7 +1222,7 @@ public class Survival : MonoBehaviour
     public void addUnlocked(GameObject a)
     {
         unlocked.Add(a);
-        if (a == TurretObj)
+        if (a == EssenceObj)
         {
             ResearchUIButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
             ResearchUIButton.UpdateUI();

@@ -8,7 +8,6 @@ public class SelectedScript : MonoBehaviour
     private void Start()
     {
         scaleChange = new Vector3(0.001f, 0.001f, 0);
-        Debug.Log(transform.localScale);
     }
 
     private void Update()

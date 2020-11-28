@@ -3,7 +3,6 @@
 public class CollectorAI: TileClass
 {
     // Declare local object variables
-    [SerializeField] private LayerMask ResourceLayer;
     public int amount;
     public bool enhanced;
     private GameObject SRVSC;
@@ -11,21 +10,8 @@ public class CollectorAI: TileClass
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
+        RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Resource"));
         if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
-
-        var colliders = Physics2D.OverlapBoxAll(this.gameObject.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Defense"));
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].name == "Enhancer")
-            {
-                doubleAmount();
-            }
-            else if (colliders[i].name == "Enhancer MK2")
-            {
-                doubleAmount();
-            }
-        }
 
         SRVSC = GameObject.Find("Survival");
         InvokeRepeating("SendGold", 0f, 1f);
@@ -34,14 +20,9 @@ public class CollectorAI: TileClass
     // Send gold
     private void SendGold()
     {
-        SRVSC.GetComponent<Survival>().AddGold(amount);
+        if (enhanced) SRVSC.GetComponent<Survival>().AddGold(amount*4);
+        else SRVSC.GetComponent<Survival>().AddGold(amount);
         SRVSC.GetComponent<Survival>().UpdateGui();
-    }
-
-    // Increase gold
-    public void increaseAmount(int a)
-    {
-        amount += a;
     }
 
     // Increase gold
@@ -50,10 +31,16 @@ public class CollectorAI: TileClass
         amount = amount * 2;
     }
 
-    // Decrease gold
-    public void decreaseAmount(int a)
+    // Enhance collector
+    public void enhanceCollector()
     {
-        amount -= a;
+        enhanced = true;
+    }
+
+    // Deenhance collector
+    public void deenhanceCollector()
+    {
+        enhanced = false;
     }
 
     // Kill defense

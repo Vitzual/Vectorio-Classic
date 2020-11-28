@@ -7,13 +7,11 @@ public class WaveSpawner : MonoBehaviour
 
     public GameObject survival;
     public ProgressBar heatUI;
-    public int htrack;
-    public int heat;
+    public int htrack = 0;
+    public int heat = 0;
 
     private void Start()
     {
-        htrack = 1;
-        heat = 0;
         InvokeRepeating("SpawnEnemies", 0f, 1f);
     }
 
@@ -56,14 +54,14 @@ public class WaveSpawner : MonoBehaviour
     public void increaseHeat(int a)
     {
         htrack += a;
-        heat = htrack / 100;
+        heat = htrack / 120;
         heatUI.currentPercent = heat;
     }
 
     public void decreaseHeat(int a)
     {
         htrack -= a;
-        heat = htrack / 100;
+        heat = htrack / 120;
         if (heat < 0) heat = 0;
         heatUI.currentPercent = heat;
     }

@@ -22,7 +22,6 @@ public class Survival : MonoBehaviour
     public TextMeshProUGUI GoldPerSecond;
     public TextMeshProUGUI EssencePerSecond;
 
-
     // Placement sprites
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
@@ -193,7 +192,7 @@ public class Survival : MonoBehaviour
         AdjustAlphaValue();
 
         // If user left clicks, place object
-        if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen)
+        if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen && Input.mousePosition.y >= 200)
         {
             bool ValidTile = true;
             if (SelectedObj == RocketObj)
@@ -420,6 +419,11 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void setGameSpeed(int a)
+    {
+        Time.timeScale = a;
+    }
+
     private void CalculateRPS()
     {
         GPS = (float)(gold - PGA)/2;
@@ -469,7 +473,7 @@ public class Survival : MonoBehaviour
                 {
                     ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
                     if (Researched[i]) ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-                    if (Researched[0]) AvailablePower += 2500;
+                    if (Researched[0]) AvailablePower += 5000;
                 }
                 else
                 {
@@ -536,7 +540,7 @@ public class Survival : MonoBehaviour
                 if (ResearchTier[a].ResearchObject.name == "Hub")
                 {
                     Researched[a] = true;
-                    AvailablePower += 2500;
+                    AvailablePower += 5000;
                     PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
 
                     for (int i = 0; i < ResearchTier.Length; i++)

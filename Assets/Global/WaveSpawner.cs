@@ -54,14 +54,14 @@ public class WaveSpawner : MonoBehaviour
     public void increaseHeat(int a)
     {
         htrack += a;
-        heat = htrack / 120;
+        heat = htrack / 150;
         heatUI.currentPercent = heat;
     }
 
     public void decreaseHeat(int a)
     {
         htrack -= a;
-        heat = htrack / 120;
+        heat = htrack / 150;
         if (heat < 0) heat = 0;
         heatUI.currentPercent = heat;
     }

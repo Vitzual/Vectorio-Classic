@@ -8,7 +8,7 @@ public class ShotgunBullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        StartCoroutine(SetLifetime(Random.Range(0.01f, 0.6f)));
+        StartCoroutine(SetLifetime(Random.Range(0.4f, 0.8f)));
     }
 
     public override void collide()

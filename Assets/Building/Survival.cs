@@ -496,27 +496,27 @@ public class Survival : MonoBehaviour
                 }
                 else if (i == 1)
                 {
-                    UpdateResearch(i, TurretMK2Obj, "One");
+                    UpdateResearch(i, TurretMK2Obj);
                 }
                 else if (i == 2)
                 {
-                    UpdateResearch(i, CollectorMK2Obj, "Three");
+                    UpdateResearch(i, CollectorMK2Obj);
                 }
                 else if (i == 3)
                 {
-                    UpdateResearch(i, ShotgunMK2Obj, "Four");
+                    UpdateResearch(i, ShotgunMK2Obj);
                 }
                 else if (i == 4)
                 {
-                    UpdateResearch(i, EnhancerMK2Obj, "Six");
+                    UpdateResearch(i, EnhancerMK2Obj);
                 }
                 else if (i == 5)
                 {
-                    UpdateResearch(i, WallMK2Obj, "Two");
+                    UpdateResearch(i, WallMK2Obj);
                 }
                 else if (i == 6)
                 {
-                    UpdateResearch(i, TurretMK3Obj, "One");
+                    UpdateResearch(i, TurretMK3Obj);
                 }
                 else
                 {
@@ -563,27 +563,27 @@ public class Survival : MonoBehaviour
                 {
                     if (a == 1)
                     {
-                        UpdateResearch(a, TurretMK2Obj, "One");
+                        UpdateResearch(a, TurretMK2Obj);
                     }
                     else if (a == 2)
                     {
-                        UpdateResearch(a, CollectorMK2Obj, "Three");
+                        UpdateResearch(a, CollectorMK2Obj);
                     }
                     else if (a == 3)
                     {
-                        UpdateResearch(a, ShotgunMK2Obj, "Four");
+                        UpdateResearch(a, ShotgunMK2Obj);
                     }
                     else if (a == 4)
                     {
-                        UpdateResearch(a, EnhancerMK2Obj, "Six");
+                        UpdateResearch(a, EnhancerMK2Obj);
                     }
                     else if (a == 5)
                     {
-                        UpdateResearch(a, WallMK2Obj, "Two");
+                        UpdateResearch(a, WallMK2Obj);
                     }
                     else if (a == 6)
                     {
-                        UpdateResearch(a, TurretMK3Obj, "One");
+                        UpdateResearch(a, TurretMK3Obj);
                     }
                 }
                 ResearchTier[a].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
@@ -591,18 +591,12 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public void UpdateResearch(int a, GameObject b, string c)
+    public void UpdateResearch(int a, GameObject b)
     {
         unlocked.Add(b);
         Researched[a] = true;
         ResearchTier[a].ResearchInvButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + b.name);
         ResearchTier[a].ResearchInvButton.UpdateUI();
-        if (c != "None")
-        {
-            ButtonManagerBasicIcon bm = Overlay.transform.Find(c).GetComponent<ButtonManagerBasicIcon>();
-            bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + b.name);
-            bm.UpdateUI();
-        }
 
         for (int i = 0; i < ResearchTier.Length; i++)
         {
@@ -1004,20 +998,54 @@ public class Survival : MonoBehaviour
 
     public void SetTurret()
     {
-        if (checkIfUnlocked(TurretObj))
+        SelectedObj = TurretObj;
+        SwitchObj();
+    }
+
+    public void SetTurretMK2()
+    {
+        if (checkIfUnlocked(TurretMK2Obj))
         {
-            if (Researched[6])
-            {
-                SelectedObj = TurretMK3Obj;
-            }
-            else if (Researched[1])
-            {
-                SelectedObj = TurretMK2Obj;
-            }
-            else
-            {
-                SelectedObj = TurretObj;
-            }
+            SelectedObj = TurretMK2Obj;
+            SwitchObj();
+        }
+    }
+
+    public void SetTurretMK3()
+    {
+        if (checkIfUnlocked(TurretMK3Obj))
+        {
+            SelectedObj = TurretMK3Obj;
+            SwitchObj();
+        }
+    }
+
+    public void SetCollector()
+    {
+        SelectedObj = CollectorObj;
+        SwitchObj();
+    }
+
+    public void SetCollectorMK2()
+    {
+        if (checkIfUnlocked(CollectorMK2Obj))
+        {
+            SelectedObj = CollectorMK2Obj;
+            SwitchObj();
+        }
+    }
+
+    public void SetWall()
+    {
+        SelectedObj = WallObj;
+        SwitchObj();
+    }
+
+    public void SetWallMK2()
+    {
+        if (checkIfUnlocked(WallMK2Obj))
+        {
+            SelectedObj = WallMK2Obj;
             SwitchObj();
         }
     }
@@ -1026,14 +1054,16 @@ public class Survival : MonoBehaviour
     {
         if (checkIfUnlocked(ShotgunObj))
         {
-            if (Researched[3])
-            {
-                SelectedObj = ShotgunMK2Obj;
-            }
-            else
-            {
-                SelectedObj = ShotgunObj;
-            }
+            SelectedObj = ShotgunObj;
+            SwitchObj();
+        }
+    }
+
+    public void SetShotgunMK2()
+    {
+        if (checkIfUnlocked(ShotgunMK2Obj))
+        {
+            SelectedObj = ShotgunMK2Obj;
             SwitchObj();
         }
     }
@@ -1065,44 +1095,20 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public void SetWall()
-    {
-        if (Researched[5])
-        {
-            SelectedObj = WallMK2Obj;
-        }
-        else
-        {
-            SelectedObj = WallObj;
-        }
-        SwitchObj();
-    }
-
-    public void SetCollector()
-    {
-        if (Researched[2])
-        {
-            SelectedObj = CollectorMK2Obj;
-        }
-        else
-        {
-            SelectedObj = CollectorObj;
-        }
-        SwitchObj();
-    }
-
     public void SetEnhancer()
     {
         if (checkIfUnlocked(EnhancerObj))
         {
-            if (Researched[4])
-            {
-                SelectedObj = EnhancerMK2Obj;
-            }
-            else
-            {
-                SelectedObj = EnhancerObj;
-            }
+            SelectedObj = EnhancerObj;
+            SwitchObj();
+        }
+    }
+
+    public void SetEnhancerMK2()
+    {
+        if (checkIfUnlocked(EnhancerMK2Obj))
+        {
+            SelectedObj = EnhancerMK2Obj;
             SwitchObj();
         }
     }

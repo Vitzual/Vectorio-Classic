@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Menu : MonoBehaviour
 {
 
     public GameObject MainMenu;
     public GameObject Changelog;
-    private GameObject MainMenuHolder;
-    private GameObject ChangelogHolder;
+    public GameObject SaveButtons;
+    public GameObject MenuButtons;
 
     public void Start()
     {
@@ -20,29 +22,36 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartCreative()
+    public void PlayButton()
     {
-        SceneManager.LoadScene("Creative");
+        MenuButtons.GetComponent<CanvasGroup>().alpha = 0;
+        MenuButtons.GetComponent<CanvasGroup>().interactable = false;
+        MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        SaveButtons.GetComponent<CanvasGroup>().alpha = 1f;
+        SaveButtons.GetComponent<CanvasGroup>().interactable = true;
+        SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
-    public void StartGame()
+    public void BackButton()
     {
+        MenuButtons.GetComponent<CanvasGroup>().alpha = 1f;
+        MenuButtons.GetComponent<CanvasGroup>().interactable = true;
+        MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        SaveButtons.GetComponent<CanvasGroup>().alpha = 0;
+        SaveButtons.GetComponent<CanvasGroup>().interactable = false;
+        SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    public void StartGame(int a)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/location.save";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, "/save"+a+".vectorio");
+        stream.Close();
+
         SceneManager.LoadScene("Survival");
-    }
-
-    public void OpenChangelog()
-    {
-        MainMenuHolder = GameObject.Find("Main Menu");
-        Destroy(MainMenuHolder);
-        ChangelogHolder = Instantiate(Changelog, transform.position, Quaternion.identity);
-        ChangelogHolder.name = "Changelog Menu";
-    }
-
-    public void OpenMainMenu()
-    {
-        ChangelogHolder = GameObject.Find("Changelog Menu");
-        Destroy(ChangelogHolder);
-        MainMenuHolder = Instantiate(MainMenu, transform.position, Quaternion.identity);
-        MainMenuHolder.name = "Main Menu";
     }
 }

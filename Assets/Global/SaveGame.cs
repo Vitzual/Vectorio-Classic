@@ -4,10 +4,28 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+
+    private static string SaveLocation;
+
     public static void SaveGame (Survival data_1, WaveSpawner data_2)
     {
+        string SavePath = Application.persistentDataPath + "/location.save";
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/save.vectorio";
+
+        if (File.Exists(SavePath))
+        {
+            FileStream a = new FileStream(SavePath, FileMode.Open);
+            SaveLocation = formatter.Deserialize(a) as string;
+            Debug.Log("Found save location: "+SaveLocation);
+            a.Close();
+        }
+        else
+        {
+            Debug.Log("Save location could not be found, defaulting to save 1");
+            SaveLocation = "/save1.vectorio";
+        }
+
+        string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SaveData data = new SaveData(data_1, data_2);
@@ -20,10 +38,26 @@ public static class SaveSystem
 
     public static SaveData LoadGame()
     {
-        string path = Application.persistentDataPath + "/save.vectorio";
+
+        string SavePath = Application.persistentDataPath + "/location.save";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        if (File.Exists(SavePath))
+        {
+            FileStream a = new FileStream(SavePath, FileMode.Open);
+            SaveLocation = formatter.Deserialize(a) as string;
+            Debug.Log("Found save location: " + SaveLocation);
+            a.Close();
+        }
+        else
+        {
+            Debug.Log("Save location could not be found, defaulting to save 1");
+            SaveLocation = "/save1.vectorio";
+        }
+
+        string path = Application.persistentDataPath + SaveLocation;
         if (File.Exists(path))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
             SaveData data = formatter.Deserialize(stream) as SaveData;

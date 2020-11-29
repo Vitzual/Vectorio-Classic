@@ -18,6 +18,7 @@ public class SaveData
     public bool UnlocksLeft;
     public int RLevel;
     public bool[] ResearchedTiers;
+    public int[] UnlockProgress;
 
     public SaveData (Survival data, WaveSpawner heat) 
     {
@@ -34,5 +35,6 @@ public class SaveData
         UnlocksLeft = data.UnlocksLeft;
         RLevel = data.ResearchLevel;
         ResearchedTiers = data.Researched;
+        UnlockProgress = data.GetAmountTracked();
     }
 }

@@ -164,6 +164,16 @@ public class Survival : MonoBehaviour
             UpdateResearchGUI();
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
             PlaceSavedBuildings(data.Locations);
+            
+            try
+            {
+                if (data.UnlockProgress[0] >= 0)
+                {
+                    UnlockTier[UnlockLvl].AmountTracked = data.UnlockProgress;
+                }
+            }
+            catch { Debug.Log("Save file does not contain tracking progress"); }
+
             PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
         }
         catch
@@ -793,6 +803,11 @@ public class Survival : MonoBehaviour
     public void UpdateUnlockGui(int a, double b)
     {
         UpgradeProgressBars[a].currentPercent = (float)b;
+    }
+
+    public int[] GetAmountTracked()
+    {
+        return UnlockTier[UnlockLvl].AmountTracked;
     }
 
     public void StartNextUnlock()

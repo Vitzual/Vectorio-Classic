@@ -5,7 +5,6 @@ using TMPro;
 public class WaveSpawner : MonoBehaviour
 {
 
-    public GameObject survival;
     public ProgressBar heatUI;
     public int htrack = 0;
     public int heat = 0;
@@ -44,7 +43,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * 300;
+        transform.position += transform.right * 350;
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));

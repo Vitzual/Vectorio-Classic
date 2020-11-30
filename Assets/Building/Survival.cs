@@ -58,6 +58,7 @@ public class Survival : MonoBehaviour
     public GameObject Spawner;
     public GameObject SelectedOverlay;
     private GameObject SelectedObj;
+    private GameObject HoveredObj;
     private GameObject LastObj;
     private float rotation = 0f;
     public bool largerUnit = false;
@@ -75,6 +76,7 @@ public class Survival : MonoBehaviour
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
     public ButtonManagerBasic SaveButton;
+    public ButtonManagerBasicIcon[] hotbarButtons;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -82,7 +84,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
     protected float distance = 10;
-    GameObject[] hotbar = new GameObject[9];
+    private GameObject[] hotbar = new GameObject[9];
     List<GameObject> unlocked = new List<GameObject>();
 
     // Unlock list
@@ -321,6 +323,46 @@ public class Survival : MonoBehaviour
                 gold += cost - cost / 5;
                 UpdateGui();
                 Destroy(rayHit.collider.gameObject);
+            }
+        }
+
+        if (BuildingOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetHotbarSlot(0, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetHotbarSlot(1, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetHotbarSlot(2, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetHotbarSlot(3, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                SetHotbarSlot(4, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                SetHotbarSlot(5, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                SetHotbarSlot(6, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                SetHotbarSlot(7, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                SetHotbarSlot(8, HoveredObj);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -992,6 +1034,7 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
+        UpdateHotbar();
     }
 
     public void SelectHotbar(int index)
@@ -1045,14 +1088,44 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public void SelectObject(GameObject gameObject)
+    // Changes the object that the player has selected (pass null to deselect)
+    public void SelectObject(GameObject obj)
     {
-        SelectedObj = gameObject;
+        SelectedObj = obj;
+        if (obj != null && !checkIfUnlocked(obj)) return;
         SwitchObj();
         if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
         {
             largerUnit = true;
             transform.localScale = new Vector3(2, 2, 1);
+        }
+    }
+
+    // Changes the stored object for hotbar changing
+    public void SetHoverObject(GameObject obj)
+    {
+        if (!checkIfUnlocked(obj)) return;
+        HoveredObj = obj;
+    }
+
+    // Changes the object stored in a hotbar slot
+    public void SetHotbarSlot(int slot, GameObject obj)
+    {
+        if (!checkIfUnlocked(obj)) return;
+        if (slot < 0 || slot > hotbar.Length) return;
+        hotbar[slot] = obj;
+        UpdateHotbar();
+    }
+
+    public void UpdateHotbar()
+    {
+        for (int i = 0; i < hotbar.Length; i++)
+        {
+            if (hotbar[i] != null)
+                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + hotbar[i].name);
+            else
+                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Undiscovered");
+            hotbarButtons[i].UpdateUI();
         }
     }
 

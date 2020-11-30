@@ -41,6 +41,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject ChillerObj;       // ID = 8
     [SerializeField] private GameObject RocketObj;        // ID = 9
     [SerializeField] private GameObject EssenceObj;       // ID = 10
+    [SerializeField] private GameObject TurbineObj;       // ID = 11
 
     // Mark 2's add 200 to ID, Mark 3's add 300 to ID
     [SerializeField] private GameObject TurretMK2Obj;     // ID = 200
@@ -48,6 +49,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject WallMK2Obj;       // ID = 201
     [SerializeField] private GameObject CollectorMK2Obj;  // ID = 202
     [SerializeField] private GameObject ShotgunMK2Obj;    // ID = 203
+    [SerializeField] private GameObject SniperMK2Obj;     // ID = 204
+    [SerializeField] private GameObject SniperMK3Obj;     // ID = 304
     [SerializeField] private GameObject EnhancerMK2Obj;   // ID = 205
 
     // Object variables
@@ -157,14 +160,29 @@ public class Survival : MonoBehaviour
             ResearchLevel = data.RLevel;
             Researched = data.ResearchedTiers;
             seed = data.WorldSeed;
+
             Debug.Log("Save data was found and loaded");
 
             StartNextUnlock();
+
+            Debug.Log("Unlock set");
+
             UpdateUnlockableGui();
+
+            Debug.Log("Updated unlockable GUI");
+
             UpdateResearchGUI();
+
+            Debug.Log("Found and loaded research GUI");
+
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+
+            Debug.Log("Generated world data");
+
             PlaceSavedBuildings(data.Locations);
-            
+
+            Debug.Log("Placed buildings");
+
             try
             {
                 if (data.UnlockProgress[0] >= 0)
@@ -476,7 +494,6 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < ResearchTier.Length; i++)
         {
-            Debug.Log(Researched[i]);
             if (ResearchTier[i].ResearchNeeded <= ResearchLevel)
             {
                 if (ResearchTier[i].ResearchObject.name == "Hub")
@@ -807,13 +824,23 @@ public class Survival : MonoBehaviour
 
     public int[] GetAmountTracked()
     {
-        return UnlockTier[UnlockLvl].AmountTracked;
+        try
+        {
+            return UnlockTier[UnlockLvl].AmountTracked;
+        }
+        catch
+        {
+            int[] result = new int[1];
+            result[0] = 0;
+            return result;
+        }
     }
 
     public void StartNextUnlock()
     {
         UnlockLvl += 1;
         Transform c = Overlay.transform.Find("Upgrade");
+
         try
         {
             int z = UnlockTier[UnlockLvl].Enemy.Length;
@@ -825,19 +852,22 @@ public class Survival : MonoBehaviour
         }
         finally
         {
-            for (int i = 0; i <= 4; i++)
+            if(UnlocksLeft)
             {
-                UpgradeProgressBars[i].currentPercent = 0;
-                try
+                for (int i = 0; i <= 4; i++)
                 {
-                    UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Enemy[i].name);
+                    UpgradeProgressBars[i].currentPercent = 0;
+                    try
+                    {
+                        UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Enemy[i].name);
+                    }
+                    catch
+                    {
+                        UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + "Undiscovered");
+                    }
                 }
-                catch
-                {
-                    UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + "Undiscovered");
-                }
+                UpgradeProgressName.text = UnlockTier[UnlockLvl].Unlock.transform.name;
             }
-            UpgradeProgressName.text = UnlockTier[UnlockLvl].Unlock.transform.name;
         }
     }
 

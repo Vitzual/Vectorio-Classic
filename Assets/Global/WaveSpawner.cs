@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
-using TMPro;
+using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -8,6 +8,7 @@ public class WaveSpawner : MonoBehaviour
     public ProgressBar heatUI;
     public int htrack = 0;
     public int heat = 0;
+    List<GameObject> discovered = new List<GameObject>();
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * 350;
+        transform.position += transform.right * 370;
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
@@ -55,6 +56,12 @@ public class WaveSpawner : MonoBehaviour
         htrack += a;
         heat = htrack / 150;
         heatUI.currentPercent = heat;
+
+        //bool foundEnemy = false;
+        //for(int i=0; i<discovered.Count; i++)
+        //{
+        //    if (discovered[i] == )
+        //}
     }
 
     public void decreaseHeat(int a)

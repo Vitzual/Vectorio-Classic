@@ -33,6 +33,18 @@ public class Menu : MonoBehaviour
         SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
+    public void ResetButton(int a)
+    {
+        string SavePath = Application.persistentDataPath + "/save" + a + ".vectorio";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+
+        }
+    }
+
     public void BackButton()
     {
         MenuButtons.GetComponent<CanvasGroup>().alpha = 1f;

@@ -74,6 +74,7 @@ public class Survival : MonoBehaviour
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
+    public ButtonManagerBasic SaveButton;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -223,7 +224,7 @@ public class Survival : MonoBehaviour
         if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen && Input.mousePosition.y >= 200)
         {
             bool ValidTile = true;
-            if (SelectedObj == RocketObj)
+            if (SelectedObj == RocketObj || SelectedObj == TurbineObj)
             {
                 // Check for wires and adjust accordingly 
                 RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -423,25 +424,23 @@ public class Survival : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
         {
+            SaveButton.GetComponent<CanvasGroup>().interactable = true;
+            SaveButton.buttonText = "SAVE";
+            SaveButton.UpdateUI();
+
             MenuOpen = true;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 1;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = true;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = true;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 1;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = true;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = true;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().alpha = 1;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().interactable = true;
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             MenuOpen = false;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().alpha = 0;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().blocksRaycasts = false;
-            Overlay.transform.Find("Return").GetComponent<CanvasGroup>().interactable = false;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().alpha = 0;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().blocksRaycasts = false;
-            Overlay.transform.Find("Return (1)").GetComponent<CanvasGroup>().interactable = false;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().alpha = 0;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().blocksRaycasts = false;
+            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().interactable = false;
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
@@ -1178,6 +1177,17 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SetTurbine()
+    {
+        if (checkIfUnlocked(TurbineObj))
+        {
+            SelectedObj = TurbineObj;
+            SwitchObj();
+            largerUnit = true;
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+    }
+
     public void SetEssence()
     {
         if (checkIfUnlocked(EssenceObj))
@@ -1224,7 +1234,6 @@ public class Survival : MonoBehaviour
         Overlay.transform.Find("Seven").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("Eight").GetComponent<Button>().interactable = true;
         Overlay.transform.Find("Nine").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Wire").GetComponent<CanvasGroup>().interactable = true;
     }
 
     public void Quit()
@@ -1237,6 +1246,10 @@ public class Survival : MonoBehaviour
         Debug.Log("Attempting to save data");
         SaveSystem.SaveGame(this, Spawner.GetComponent<WaveSpawner>());
         Debug.Log("Data was saved successfully");
+
+        SaveButton.buttonText = "SAVED";
+        SaveButton.GetComponent<CanvasGroup>().interactable = false;
+        SaveButton.UpdateUI();
     }
 
     public int[,] GetLocationData()

@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543d9cbdce8268c4784eb2bf1bc7f35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 100000
+  gold: 1000
   essence: 0
   iridium: 0
   PowerConsumption: 0
-  AvailablePower: 512
+  AvailablePower: 10000
+  GoldPerSecond: {fileID: 0}
+  EssencePerSecond: {fileID: 0}
   HubObj: {fileID: 0}
   TurretObj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058,
     type: 3}
@@ -66,10 +68,33 @@ MonoBehaviour:
   BoltObj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
   ChillerObj: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b,
     type: 3}
+  RocketObj: {fileID: 420473218063467210, guid: 6b7d04abb0d603a4cb51ef740d0afa9a,
+    type: 3}
+  EssenceObj: {fileID: 892923713960991008, guid: c2eebc8be4acd174696c700b44eadce2,
+    type: 3}
+  TurbineObj: {fileID: 1711705259399207453, guid: 981b14a184b67e24ab424c98bd63904a,
+    type: 3}
+  TurretMK2Obj: {fileID: 420473218063467210, guid: c7799416384efab4187972e604b1f5e5,
+    type: 3}
+  TurretMK3Obj: {fileID: 420473218063467210, guid: 6b22e190dc5fe884096767ada8c7780b,
+    type: 3}
+  WallMK2Obj: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7,
+    type: 3}
+  CollectorMK2Obj: {fileID: 892923713960991008, guid: 3f4e3ab79688f6643af5926a90e697d0,
+    type: 3}
+  ShotgunMK2Obj: {fileID: 420473218063467210, guid: 68a88437782ea9a4ca6a097fd119e36e,
+    type: 3}
+  SniperMK2Obj: {fileID: 0}
+  SniperMK3Obj: {fileID: 0}
+  EnhancerMK2Obj: {fileID: 1711705259399207453, guid: 427dcde8a61230445bcc6314bb624d08,
+    type: 3}
+  seed: 0
   Spawner: {fileID: 0}
   SelectedOverlay: {fileID: 0}
+  largerUnit: 0
   Overlay: {fileID: 0}
   GoldAmount: {fileID: 0}
+  EssenceAmount: {fileID: 0}
   UOL: {fileID: 0}
   PowerUsageBar: {fileID: 0}
   UpgradeProgressBars:
@@ -80,6 +105,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   UpgradeProgressName: {fileID: 0}
+  ResourceLayer:
+    serializedVersion: 2
+    m_Bits: 8192
   TileLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -115,24 +143,120 @@ MonoBehaviour:
     - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
     - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
     - {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
-    AmountNeeded: 90010000fa000000f4010000
+    AmountNeeded: 2c010000c80000002c010000
+    AmountTracked: 000000000000000000000000
+  - Unlock: {fileID: 892923713960991008, guid: c2eebc8be4acd174696c700b44eadce2, type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
+    - {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
+    - {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
+    AmountNeeded: 2c0100002c01000019000000
     AmountTracked: 000000000000000000000000
   - Unlock: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36,
       type: 3}
     InventoryButton: {fileID: 0}
     Enemy:
+    - {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
     - {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
     - {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
     - {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc, type: 3}
     - {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
-    AmountNeeded: f4010000f4010000fa0000000a000000
-    AmountTracked: 00000000000000000000000000000000
+    AmountNeeded: 900100005e010000900100009001000028000000
+    AmountTracked: 0000000000000000000000000000000000000000
   - Unlock: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b, type: 3}
     InventoryButton: {fileID: 0}
     Enemy:
-    - {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634, type: 3}
-    AmountNeeded: 0a000000
-    AmountTracked: 00000000
+    - {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7, type: 3}
+    - {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2, type: 3}
+    AmountNeeded: c8000000c8000000
+    AmountTracked: 0000000000000000
+  - Unlock: {fileID: 1711705259399207453, guid: 981b14a184b67e24ab424c98bd63904a,
+      type: 3}
+    InventoryButton: {fileID: 0}
+    Enemy:
+    - {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc, type: 3}
+    - {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7, type: 3}
+    - {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2, type: 3}
+    AmountNeeded: 2c0100002c0100002c010000
+    AmountTracked: 000000000000000000000000
+  ResearchUI: {fileID: 0}
+  ResearchUIButton: {fileID: 0}
+  ResearchDescriptionBox: {fileID: 0}
+  ResearchTitleBox: {fileID: 0}
+  ResearchCostBox: {fileID: 0}
+  ResearchImage: {fileID: 0}
+  ResearchLevel: 0
+  ResearchTier:
+  - ResearchObject: {fileID: 0}
+    EssenceRequired: 1000
+    ResearchNeeded: 0
+    ResearchTitle: HUB UPGRADE
+    ResearchDescription: Increases your Hub's power output by 5000w.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 420473218063467210, guid: c7799416384efab4187972e604b1f5e5,
+      type: 3}
+    EssenceRequired: 2500
+    ResearchNeeded: 2
+    ResearchTitle: TURRET UPGRADE
+    ResearchDescription: Turret MK2's double up the fire power by using two barrels
+      to fire twice as many bullets per second.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 892923713960991008, guid: 3f4e3ab79688f6643af5926a90e697d0,
+      type: 3}
+    EssenceRequired: 1500
+    ResearchNeeded: 1
+    ResearchTitle: GOLD UPGRADE
+    ResearchDescription: Collector MK2's increase gold output by 800% and optimize
+      heat generation by 15%. However, requires a lot of power to run.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 420473218063467210, guid: 68a88437782ea9a4ca6a097fd119e36e,
+      type: 3}
+    EssenceRequired: 3500
+    ResearchNeeded: 2
+    ResearchTitle: GUNNER UPGRADE
+    ResearchDescription: Because firing 8 bullets wasn't enough, this upgrade increases
+      the amount of bullets fired to 12, and increases the range.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 1711705259399207453, guid: 427dcde8a61230445bcc6314bb624d08,
+      type: 3}
+    EssenceRequired: 6500
+    ResearchNeeded: 5
+    ResearchTitle: ENHANCER UPGRADE
+    ResearchDescription: Increases the enhancers range to 5x5. The trade off is it
+      generates three times as much heat as normal enhancers do.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7,
+      type: 3}
+    EssenceRequired: 5000
+    ResearchNeeded: 4
+    ResearchTitle: WALL UPGRADE
+    ResearchDescription: Increases your walls durability to withstand stronger enemies
+      like carriers and saws. Not suitable for dropships however.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 420473218063467210, guid: 6b22e190dc5fe884096767ada8c7780b,
+      type: 3}
+    EssenceRequired: 8500
+    ResearchNeeded: 5
+    ResearchTitle: TURRET UPGRADE
+    ResearchDescription: We noticed MK2's weren't strong enough, so we quadrupled
+      the fire rate, range, and rotation speed. Also added spikes.
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  - ResearchObject: {fileID: 0}
+    EssenceRequired: 10000
+    ResearchNeeded: 7
+    ResearchTitle: POWER UPGRADE
+    ResearchDescription: 'Increases your Hub''s power output by 5000w. '
+    ResearchButton: {fileID: 0}
+    ResearchInvButton: {fileID: 0}
+  Researched: 
 --- !u!50 &581920495478843619
 Rigidbody2D:
   serializedVersion: 4

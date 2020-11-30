@@ -16,9 +16,9 @@ public class Survival : MonoBehaviour
 
     // Per second variables
     private float GPS = 0; // Gold per second
-    private int PGA = 0; // Previous gold amount
+    private int PGA = 0;   // Previous gold amount
     private float EPS = 0; // Essence per second
-    private int PEA = 0; // Previous essence amount
+    private int PEA = 0;   // Previous essence amount
     public TextMeshProUGUI GoldPerSecond;
     public TextMeshProUGUI EssencePerSecond;
 

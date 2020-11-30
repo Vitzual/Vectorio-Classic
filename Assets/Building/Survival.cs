@@ -215,7 +215,7 @@ public class Survival : MonoBehaviour
         if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen && Input.mousePosition.y >= 200)
         {
             bool ValidTile = true;
-            if (SelectedObj == RocketObj || SelectedObj == TurbineObj)
+            if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
             {
                 // Check for wires and adjust accordingly 
                 RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -1000,7 +1000,7 @@ public class Survival : MonoBehaviour
         {
             SelectedObj = hotbar[index];
             SwitchObj();
-            if (SelectedObj.Equals(RocketObj))
+            if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
             {
                 largerUnit = true;
                 transform.localScale = new Vector3(2, 2, 1);
@@ -1049,169 +1049,12 @@ public class Survival : MonoBehaviour
     {
         SelectedObj = gameObject;
         SwitchObj();
-        if (SelectedObj.Equals(RocketObj))
+        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
         {
             largerUnit = true;
             transform.localScale = new Vector3(2, 2, 1);
         }
     }
-    /*
-    public void SetTurret()
-    {
-        SelectedObj = TurretObj;
-        SwitchObj();
-    }
-
-    public void SetTurretMK2()
-    {
-        if (checkIfUnlocked(TurretMK2Obj))
-        {
-            SelectedObj = TurretMK2Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetTurretMK3()
-    {
-        if (checkIfUnlocked(TurretMK3Obj))
-        {
-            SelectedObj = TurretMK3Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetCollector()
-    {
-        SelectedObj = CollectorObj;
-        SwitchObj();
-    }
-
-    public void SetCollectorMK2()
-    {
-        if (checkIfUnlocked(CollectorMK2Obj))
-        {
-            SelectedObj = CollectorMK2Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetWall()
-    {
-        SelectedObj = WallObj;
-        SwitchObj();
-    }
-
-    public void SetWallMK2()
-    {
-        if (checkIfUnlocked(WallMK2Obj))
-        {
-            SelectedObj = WallMK2Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetShotgun()
-    {
-        if (checkIfUnlocked(ShotgunObj))
-        {
-            SelectedObj = ShotgunObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetShotgunMK2()
-    {
-        if (checkIfUnlocked(ShotgunMK2Obj))
-        {
-            SelectedObj = ShotgunMK2Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetSniper()
-    {
-        if (checkIfUnlocked(SniperObj))
-        {
-            SelectedObj = SniperObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetSMG()
-    {
-        if (checkIfUnlocked(SMGObj))
-        {
-            SelectedObj = SMGObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetBolt()
-    {
-        if (checkIfUnlocked(BoltObj))
-        {
-            SelectedObj = BoltObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetEnhancer()
-    {
-        if (checkIfUnlocked(EnhancerObj))
-        {
-            SelectedObj = EnhancerObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetEnhancerMK2()
-    {
-        if (checkIfUnlocked(EnhancerMK2Obj))
-        {
-            SelectedObj = EnhancerMK2Obj;
-            SwitchObj();
-        }
-    }
-
-    public void SetChiller()
-    {
-        if (checkIfUnlocked(ChillerObj))
-        {
-            SelectedObj = ChillerObj;
-            SwitchObj();
-        }
-    }
-
-    public void SetRocket()
-    {
-        if (checkIfUnlocked(RocketObj))
-        {
-            SelectedObj = RocketObj;
-            SwitchObj();
-            largerUnit = true;
-            transform.localScale = new Vector3(2, 2, 1);
-        }
-    }
-
-    public void SetTurbine()
-    {
-        if (checkIfUnlocked(TurbineObj))
-        {
-            SelectedObj = TurbineObj;
-            SwitchObj();
-            largerUnit = true;
-            transform.localScale = new Vector3(2, 2, 1);
-        }
-    }
-
-    public void SetEssence()
-    {
-        if (checkIfUnlocked(EssenceObj))
-        {
-            SelectedObj = EssenceObj;
-            SwitchObj();
-        }
-    }*/
 
     public void SwitchObj()
     {
@@ -1311,6 +1154,18 @@ public class Survival : MonoBehaviour
             ResearchUIButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
             ResearchUIButton.UpdateUI();
         }
+    }
+
+    public bool checkIfBuildingUnlocked(GameObject a)
+    {
+        for (int i = 0; i < unlocked.Count; i++)
+        {
+            if (a.name == unlocked[i].name)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

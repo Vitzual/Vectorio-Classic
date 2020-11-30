@@ -16,17 +16,14 @@ public abstract class TileClass : MonoBehaviour
     [TextArea] public string description = "No description provided.";
 
     // Catalog variable 1
-    public Sprite CatalogSprite1 = Resources.Load<Sprite>("sprites/Lock");
     public string CatalogTitle1 = "Undeclared title";
     [TextArea] public string CatalogDesc1 = "Undeclared description";
 
     // Catalog variable 2
-    public Sprite CatalogSprite2 = Resources.Load<Sprite>("sprites/Lock");
     public string CatalogTitle2 = "Undeclared title";
     [TextArea] public string CatalogDesc2 = "Undeclared description";
 
     // Catalog variable 3
-    public Sprite CatalogSprite3 = Resources.Load<Sprite>("sprites/Lock");
     public string CatalogTitle3 = "Undeclared title";
     [TextArea] public string CatalogDesc3 = "Undeclared description";
 

@@ -71,4 +71,16 @@ public class WaveSpawner : MonoBehaviour
         if (heat < 0) heat = 0;
         heatUI.currentPercent = heat;
     }
+
+    public bool checkIfEnemyDiscovered(GameObject a)
+    {
+        for (int i=0; i<enemy.Length; i++)
+        {
+            if (enemy[i].enemyObject == a)
+            {
+                if (enemy[i].minHeat <= heat) return true;
+            }
+        }
+        return false;
+    }
 }

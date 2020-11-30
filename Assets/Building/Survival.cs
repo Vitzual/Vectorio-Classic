@@ -80,9 +80,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private LayerMask TileLayer;
     [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
-    delegate void HotbarItem();
     protected float distance = 10;
-    List<HotbarItem> hotbar = new List<HotbarItem>();
+    GameObject[] hotbar = new GameObject[9];
     List<GameObject> unlocked = new List<GameObject>();
 
     // Unlock list
@@ -135,15 +134,7 @@ public class Survival : MonoBehaviour
         }
 
         // Default starting unlocks / hotbar
-        hotbar.Add(SetTurret);
-        hotbar.Add(SetWall);
-        hotbar.Add(SetCollector);
-        hotbar.Add(SetShotgun);
-        hotbar.Add(SetSniper);
-        hotbar.Add(SetEnhancer);
-        hotbar.Add(SetSMG);
-        hotbar.Add(SetEssence);
-        hotbar.Add(SetBolt);
+        PopulateHotbar();
         unlocked.Add(TurretObj);
         unlocked.Add(CollectorObj);
         unlocked.Add(WallObj);
@@ -376,6 +367,7 @@ public class Survival : MonoBehaviour
             }
             Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
         }
+
         if (Input.GetKeyDown(KeyCode.E) && BuildingOpen == false)
         {
             if (ResearchOpen)
@@ -996,11 +988,24 @@ public class Survival : MonoBehaviour
         }
     }
 
+    private void PopulateHotbar()
+    {
+        hotbar[0] = TurretObj;
+        hotbar[1] = WallObj;
+        hotbar[2] = CollectorObj;
+    }
+
     public void SelectHotbar(int index)
     {
         try
         {
-            hotbar[index]();
+            SelectedObj = hotbar[index];
+            SwitchObj();
+            if (SelectedObj.Equals(RocketObj))
+            {
+                largerUnit = true;
+                transform.localScale = new Vector3(2, 2, 1);
+            }
         }
         catch { return; }
         if (index == 0)
@@ -1041,6 +1046,17 @@ public class Survival : MonoBehaviour
         }
     }
 
+    public void SelectObject(GameObject gameObject)
+    {
+        SelectedObj = gameObject;
+        SwitchObj();
+        if (SelectedObj.Equals(RocketObj))
+        {
+            largerUnit = true;
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+    }
+    /*
     public void SetTurret()
     {
         SelectedObj = TurretObj;
@@ -1185,7 +1201,7 @@ public class Survival : MonoBehaviour
             SelectedObj = EssenceObj;
             SwitchObj();
         }
-    }
+    }*/
 
     public void SwitchObj()
     {

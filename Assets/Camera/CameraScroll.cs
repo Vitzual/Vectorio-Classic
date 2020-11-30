@@ -4,9 +4,9 @@ public class CameraScroll : MonoBehaviour
 {
     private Camera cam;
     private float targetZoom;
-    private float zoomFactor = 10f;
+    private float zoomFactor = 30f;
     [SerializeField]
-    private float zoomSpeed = 20;
+    private float zoomSpeed = 40;
     private bool gridActive = true;
     public GameObject grid;
 

@@ -712,10 +712,19 @@ MonoBehaviour:
   normalText: {fileID: 5689570975882648254}
   highlightedText: {fileID: 918515198148456377}
   soundSource: {fileID: 0}
+  rippleParent: {fileID: 0}
   useCustomContent: 0
   enableButtonSounds: 0
   useHoverSound: 1
   useClickSound: 1
+  useRipple: 1
+  rippleShape: {fileID: 0}
+  speed: 1
+  maxSize: 4
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  transitionColor: {r: 1, g: 1, b: 1, a: 1}
+  renderOnTop: 0
+  centered: 0
 --- !u!114 &696112859543314899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1722,7 +1731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9077030158882440883

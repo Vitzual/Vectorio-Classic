@@ -25,9 +25,17 @@ public class Enhancer : TileClass
         var colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].name.Contains("Collector"))
+            if (colliders[i].name == "Collector")
             {
                 colliders[i].GetComponent<CollectorAI>().enhanceCollector();
+            }
+            else if (colliders[i].name == "Essence Drill")
+            {
+                colliders[i].GetComponent<EssenceAI>().enhanceCollector();
+            }
+            else if (colliders[i].name == "Iridium Mine")
+            {
+                colliders[i].GetComponent<IridiumAI>().enhanceCollector();
             }
         }
     }

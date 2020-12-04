@@ -22,7 +22,6 @@ public class CollectorAI: TileClass
     {
         if (enhanced) SRVSC.GetComponent<Survival>().AddGold(amount*4);
         else SRVSC.GetComponent<Survival>().AddGold(amount);
-        SRVSC.GetComponent<Survival>().UpdateGui();
     }
 
     // Increase gold

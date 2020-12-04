@@ -10,36 +10,33 @@ public class EssenceAI: TileClass
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        var colliders = Physics2D.OverlapBoxAll(this.gameObject.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Defense"));
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].name.Contains("Enhancer"))
-            {
-                increaseAmount(4);
-            }
-        }
-
         SRVSC = GameObject.Find("Survival");
-        InvokeRepeating("SendEssence", 0f, 2f);
+        InvokeRepeating("SendEssence", 0f, 1f);
     }
 
     // Send gold
     private void SendEssence()
     {
-        SRVSC.GetComponent<Survival>().AddEssence(amount);
-        SRVSC.GetComponent<Survival>().UpdateGui();
+        if (enhanced) SRVSC.GetComponent<Survival>().AddEssence(amount * 4);
+        else SRVSC.GetComponent<Survival>().AddEssence(amount);
     }
 
     // Increase gold
-    public void increaseAmount(int a)
+    public void doubleAmount()
     {
-        amount += a;
+        amount = amount * 2;
     }
 
-    // Decrease gold
-    public void decreaseAmount(int a)
+    // Enhance collector
+    public void enhanceCollector()
     {
-        amount -= a;
+        enhanced = true;
+    }
+
+    // Deenhance collector
+    public void deenhanceCollector()
+    {
+        enhanced = false;
     }
 
     // Kill defense

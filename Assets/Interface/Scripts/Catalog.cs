@@ -27,6 +27,10 @@ public class Catalog : MonoBehaviour
             BuildingCatalog.transform.Find("Description 1").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[buildingIndex].GetComponent<TileClass>().CatalogDesc1;
             BuildingCatalog.transform.Find("Description 2").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[buildingIndex].GetComponent<TileClass>().CatalogDesc2;
             BuildingCatalog.transform.Find("Description 3").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[buildingIndex].GetComponent<TileClass>().CatalogDesc3;
+        } 
+        else
+        {
+            buildingIndex -= a;
         }
     }
 

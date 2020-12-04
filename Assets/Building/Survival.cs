@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿
+///////////////////////////////////////////
+// This class is currently being redone. //
+///////////////////////////////////////////
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -21,6 +26,7 @@ public class Survival : MonoBehaviour
     private int PEA = 0;   // Previous essence amount
     public TextMeshProUGUI GoldPerSecond;
     public TextMeshProUGUI EssencePerSecond;
+    public TextMeshProUGUI IridiumPerSecond;
 
     // Placement sprites
     private SpriteRenderer Selected;
@@ -43,16 +49,6 @@ public class Survival : MonoBehaviour
     [SerializeField] private GameObject EssenceObj;       // ID = 10
     [SerializeField] private GameObject TurbineObj;       // ID = 11
 
-    // Mark 2's add 200 to ID, Mark 3's add 300 to ID
-    [SerializeField] private GameObject TurretMK2Obj;     // ID = 200
-    [SerializeField] private GameObject TurretMK3Obj;     // ID = 300
-    [SerializeField] private GameObject WallMK2Obj;       // ID = 201
-    [SerializeField] private GameObject CollectorMK2Obj;  // ID = 202
-    [SerializeField] private GameObject ShotgunMK2Obj;    // ID = 203
-    [SerializeField] private GameObject SniperMK2Obj;     // ID = 204
-    [SerializeField] private GameObject SniperMK3Obj;     // ID = 304
-    [SerializeField] private GameObject EnhancerMK2Obj;   // ID = 205
-
     // Object variables
     public int seed;
     public GameObject Spawner;
@@ -71,6 +67,7 @@ public class Survival : MonoBehaviour
     private bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
+    public TextMeshProUGUI IridiumAmount;
     public ModalWindowManager UOL;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
@@ -145,11 +142,18 @@ public class Survival : MonoBehaviour
         // Check for save data on start, and if there is, set values for everything.
         try
         {
+            // Load save data to file
             SaveData data = SaveSystem.LoadGame();
+
+            // Set resource amounts
             gold = data.Gold;
             essence = data.Essence;
             iridium = data.Iridium;
-            UpdateGui();
+            GoldAmount.text = gold.ToString();
+            EssenceAmount.text = essence.ToString();
+            IridiumAmount.text = iridium.ToString();
+
+            // Update unlock level and research
             UnlockLvl = data.UnlockLevel - 1;
             ResearchLevel = data.RLevel;
             Researched = data.ResearchedTiers;
@@ -164,10 +168,6 @@ public class Survival : MonoBehaviour
             UpdateUnlockableGui();
 
             Debug.Log("Updated unlockable GUI");
-
-            UpdateResearchGUI();
-
-            Debug.Log("Found and loaded research GUI");
 
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
 
@@ -242,8 +242,7 @@ public class Survival : MonoBehaviour
                 int power = SelectedObj.GetComponent<TileClass>().getConsumption();
                 if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
-                    gold -= cost;
-                    UpdateGui();
+                    RemoveGold(cost);
                     if (SelectedObj == WallObj)
                     {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -320,8 +319,7 @@ public class Survival : MonoBehaviour
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());
                 decreasePowerConsumption(rayHit.collider.gameObject.GetComponent<TileClass>().getConsumption());
                 int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
-                gold += cost - cost / 5;
-                UpdateGui();
+                AddGold(cost - cost / 5);
                 Destroy(rayHit.collider.gameObject);
             }
         }
@@ -495,6 +493,8 @@ public class Survival : MonoBehaviour
         PEA = essence;
     }
 
+    // This will be moved to a new script in 0.5
+    /*
     public void OpenResearchMenu()
     {
         if (checkIfUnlocked(EssenceObj))
@@ -701,6 +701,7 @@ public class Survival : MonoBehaviour
             }
         }
     }
+    */
 
     public void PlaceSavedBuildings(int[,] a)
     {
@@ -940,11 +941,6 @@ public class Survival : MonoBehaviour
         UOL.OpenWindow();
     }
 
-    public void UpdateGui()
-    {
-        GoldAmount.text = gold.ToString();
-    }
-
     public void increaseAvailablePower(int a)
     {
         AvailablePower += a;
@@ -982,11 +978,13 @@ public class Survival : MonoBehaviour
     public void AddGold(int a)
     {
         gold += a;
+        GoldAmount.text = gold.ToString();
     }
 
     public void RemoveGold(int a)
     {
         gold -= a;
+        GoldAmount.text = gold.ToString();
     }
 
     public void AddEssence(int a)
@@ -999,6 +997,18 @@ public class Survival : MonoBehaviour
     {
         essence -= a;
         EssenceAmount.text = essence.ToString();
+    }
+
+    public void AddIridium(int a)
+    {
+        iridium += a;
+        IridiumAmount.text = iridium.ToString();
+    }
+
+    public void RemoveIridium(int a)
+    {
+        iridium -= a;
+        IridiumAmount.text = iridium.ToString();
     }
 
     public void AdjustAlphaValue()

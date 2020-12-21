@@ -313,8 +313,6 @@ public class Survival : MonoBehaviour
                         }
                     }
                 }
-
-                ResetTileInfo();
                 ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());
@@ -444,14 +442,12 @@ public class Survival : MonoBehaviour
             Selected.sprite = null;
             SelectedObj = null;
             rotation = 0;
-            ResetTileInfo();
             DisableActiveInfo();
             ShowingInfo = false;
             SelectedOverlay.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && ShowingInfo == true)
         {
-            ResetTileInfo();
             ShowingInfo = false;
             SelectedOverlay.SetActive(false);
         }
@@ -837,13 +833,6 @@ public class Survival : MonoBehaviour
         Transform b = Overlay.transform.Find("Prompt");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-    }
-
-    void ResetTileInfo()
-    {
-        Transform b = Overlay.transform.Find("Prompt");
-        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = HubObj.GetComponent<TileClass>().GetPercentage();
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "Headquarters";
     }
 
     void ShowSelectedInfo(GameObject a)

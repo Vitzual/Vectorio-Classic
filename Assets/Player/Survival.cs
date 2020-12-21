@@ -218,7 +218,7 @@ public class Survival : MonoBehaviour
         if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen && Input.mousePosition.y >= 200)
         {
             bool ValidTile = true;
-            if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
+            if (SelectedObj != null && (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine"))
             {
                 // Check for wires and adjust accordingly 
                 RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);

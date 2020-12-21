@@ -60,6 +60,7 @@ public class Survival : MonoBehaviour
     public bool largerUnit = false;
 
     // UI Elements
+    public GameObject HotbarUI;
     public Canvas Overlay;
     private bool MenuOpen;
     private bool BuildingOpen;
@@ -735,43 +736,6 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < UnlockLvl; i++)
         {
-            if (i == 0)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-            else if (i == 1)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-            else if (i == 2)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-            else if (i == 3)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-            else if (i == 4)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-            else if (i == 5)
-            {
-                ButtonManagerBasicIcon bm = Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>();
-                bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-                bm.UpdateUI();
-            }
-
             addUnlocked(UnlockTier[i].Unlock);
             UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.UpdateUI();
@@ -807,43 +771,6 @@ public class Survival : MonoBehaviour
             if (RequirementsMetCheck == true)
             {
                 GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
-
-                if (UnlockLvl == 0)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Four").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
-                else if (UnlockLvl == 1)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Five").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
-                else if (UnlockLvl == 2)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Six").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
-                else if (UnlockLvl == 3)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Seven").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
-                else if (UnlockLvl == 4)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Eight").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
-                else if (UnlockLvl == 5)
-                {
-                    ButtonManagerBasicIcon bm = Overlay.transform.Find("Nine").GetComponent<ButtonManagerBasicIcon>();
-                    bm.buttonIcon = Resources.Load<Sprite>("Sprites/" + newUnlock.name);
-                    bm.UpdateUI();
-                }
 
                 unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
                 StartNextUnlock();
@@ -1062,39 +989,39 @@ public class Survival : MonoBehaviour
         catch { return; }
         if (index == 0)
         {
-            Overlay.transform.Find("One").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("One").GetComponent<Button>().interactable = false;
         }
         else if (index == 1)
         {
-            Overlay.transform.Find("Two").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = false;
         }
         else if (index == 2)
         {
-            Overlay.transform.Find("Three").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = false;
         }
         else if (index == 3)
         {
-            Overlay.transform.Find("Four").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = false;
         }
         else if (index == 4)
         {
-            Overlay.transform.Find("Five").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = false;
         }
         else if (index == 5)
         {
-            Overlay.transform.Find("Six").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = false;
         }
         else if (index == 6)
         {
-            Overlay.transform.Find("Seven").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = false;
         }
         else if (index == 7)
         {
-            Overlay.transform.Find("Eight").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = false;
         }
         else
         {
-            Overlay.transform.Find("Nine").GetComponent<Button>().interactable = false;
+            HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = false;
         }
     }
 
@@ -1167,15 +1094,15 @@ public class Survival : MonoBehaviour
 
     public void DisableActiveInfo()
     {
-        Overlay.transform.Find("One").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Two").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Three").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Four").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Five").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Six").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Seven").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Eight").GetComponent<Button>().interactable = true;
-        Overlay.transform.Find("Nine").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("One").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = true;
+        HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = true;
     }
 
     public void Quit()

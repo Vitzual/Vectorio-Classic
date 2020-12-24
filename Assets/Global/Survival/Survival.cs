@@ -19,15 +19,6 @@ public class Survival : MonoBehaviour
     public int PowerConsumption = 0;
     public int AvailablePower = 100;
 
-    // Per second variables
-    private float GPS = 0; // Gold per second
-    private int PGA = 0;   // Previous gold amount
-    private float EPS = 0; // Essence per second
-    private int PEA = 0;   // Previous essence amount
-    public TextMeshProUGUI GoldPerSecond;
-    public TextMeshProUGUI EssencePerSecond;
-    public TextMeshProUGUI IridiumPerSecond;
-
     // Placement sprites
     private SpriteRenderer Selected;
     private float Adjustment = 1f;
@@ -99,28 +90,6 @@ public class Survival : MonoBehaviour
     }
     public Unlockables[] UnlockTier;
 
-    // Research stuff
-    public WindowManager ResearchUI;
-    public ButtonManagerBasicIcon ResearchUIButton;
-    public TextMeshProUGUI ResearchDescriptionBox;
-    public TextMeshProUGUI ResearchTitleBox;
-    public TextMeshProUGUI ResearchCostBox;
-    public Image ResearchImage;
-    public int ResearchLevel;
-    [System.Serializable]
-    public class Researchables
-    {
-        public GameObject ResearchObject;
-        public int EssenceRequired;
-        public int ResearchNeeded;
-        public string ResearchTitle;
-        [TextArea] public string ResearchDescription;
-        public ButtonManagerBasicIcon ResearchButton;
-        public ButtonManagerBasicIcon ResearchInvButton;
-    }
-    public Researchables[] ResearchTier;
-    public bool[] Researched;
-
     private void Start()
     {
         // Assign default variables
@@ -128,11 +97,6 @@ public class Survival : MonoBehaviour
         MenuOpen = false;
         ResearchOpen = false;
         BuildingOpen = false;
-        Researched = new bool[ResearchTier.Length];
-        for (int i = 0; i < ResearchTier.Length; i++)
-        {
-            Researched[i] = false;
-        }
 
         // Default starting unlocks / hotbar
         PopulateHotbar();
@@ -156,27 +120,12 @@ public class Survival : MonoBehaviour
 
             // Update unlock level and research
             UnlockLvl = data.UnlockLevel - 1;
-            ResearchLevel = data.RLevel;
-            Researched = data.ResearchedTiers;
             seed = data.WorldSeed;
 
-            Debug.Log("Save data was found and loaded");
-
             StartNextUnlock();
-
-            Debug.Log("Unlock set");
-
             UpdateUnlockableGui();
-
-            Debug.Log("Updated unlockable GUI");
-
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
-
-            Debug.Log("Generated world data");
-
             PlaceSavedBuildings(data.Locations);
-
-            Debug.Log("Placed buildings");
 
             try
             {
@@ -195,10 +144,6 @@ public class Survival : MonoBehaviour
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
         }
-
-        PGA = gold;
-        PEA = essence;
-        InvokeRepeating("CalculateRPS", 0f, 2f);
     }
 
     private void Update()
@@ -413,9 +358,7 @@ public class Survival : MonoBehaviour
             if (ResearchOpen)
             {
                 ResearchOpen = false;
-                ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
-                ResearchUI.GetComponent<CanvasGroup>().interactable = false;
-                ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                // CLOSE RESEARCH MENU HERE
             }
             BuildingOpen = true;
             Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 1;
@@ -432,9 +375,7 @@ public class Survival : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.Escape) && ResearchOpen == true))
         {
             ResearchOpen = false;
-            ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
-            ResearchUI.GetComponent<CanvasGroup>().interactable = false;
-            ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            // CLOSE RESEARCH MENU HERE
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
@@ -479,226 +420,6 @@ public class Survival : MonoBehaviour
     {
         Time.timeScale = a;
     }
-
-    private void CalculateRPS()
-    {
-        GPS = (float)(gold - PGA)/2;
-        EPS = (float)(essence - PEA)/2;
-        GoldPerSecond.text = GPS + "/s";
-        EssencePerSecond.text = EPS + "/s";
-        PGA = gold;
-        PEA = essence;
-    }
-
-    // This will be moved to a new script in 0.5
-    /*
-    public void OpenResearchMenu()
-    {
-        if (checkIfUnlocked(EssenceObj))
-        {
-            if (BuildingOpen)
-            {
-                BuildingOpen = false;
-                Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 0;
-                Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = false;
-                Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
-            }
-            if (ResearchOpen)
-            {
-                ResearchOpen = false;
-                ResearchUI.GetComponent<CanvasGroup>().alpha = 0;
-                ResearchUI.GetComponent<CanvasGroup>().interactable = false;
-                ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            }
-            else
-            {
-                ResearchOpen = true;
-                ResearchUI.GetComponent<CanvasGroup>().alpha = 1;
-                ResearchUI.GetComponent<CanvasGroup>().interactable = true;
-                ResearchUI.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            }
-        }
-    }
-
-    public void UpdateResearchGUI()
-    {
-        for (int i = 0; i < ResearchTier.Length; i++)
-        {
-            if (ResearchTier[i].ResearchNeeded <= ResearchLevel)
-            {
-                if (ResearchTier[i].ResearchObject.name == "Hub")
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                    if (Researched[i]) ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-                    if (Researched[0]) AvailablePower += 5000;
-                }
-                else
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + ResearchTier[i].ResearchObject.name);
-                    if (Researched[i]) ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-                }
-                ResearchTier[i].ResearchButton.UpdateUI();
-            }
-        }
-
-        for (int i = 0; i < ResearchTier.Length; i++)
-        {
-            if (Researched[i])
-            {
-                if (i == 0)
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                    ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-                    ResearchTier[i].ResearchButton.UpdateUI();
-                }
-                else if (i == 1)
-                {
-                    UpdateResearch(i, TurretMK2Obj);
-                }
-                else if (i == 2)
-                {
-                    UpdateResearch(i, CollectorMK2Obj);
-                }
-                else if (i == 3)
-                {
-                    UpdateResearch(i, ShotgunMK2Obj);
-                }
-                else if (i == 4)
-                {
-                    UpdateResearch(i, EnhancerMK2Obj);
-                }
-                else if (i == 5)
-                {
-                    UpdateResearch(i, WallMK2Obj);
-                }
-                else if (i == 6)
-                {
-                    UpdateResearch(i, TurretMK3Obj);
-                }
-                else
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                    ResearchTier[i].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-                    ResearchTier[i].ResearchButton.UpdateUI();
-                }
-            }
-        }
-    }
-
-    public void Research(int a)
-    {
-        if (ResearchLevel >= ResearchTier[a].ResearchNeeded)
-        {
-            if (essence >= ResearchTier[a].EssenceRequired)
-            {
-                essence -= ResearchTier[a].EssenceRequired;
-                EssenceAmount.text = essence.ToString();
-                ResearchLevel += 1;
-                if (ResearchTier[a].ResearchObject.name == "Hub")
-                {
-                    Researched[a] = true;
-                    AvailablePower += 5000;
-                    PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-
-                    for (int i = 0; i < ResearchTier.Length; i++)
-                    {
-                        if (ResearchTier[i].ResearchNeeded == ResearchLevel)
-                        {
-                            if (ResearchTier[i].ResearchObject.name == "Hub")
-                            {
-                                ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                            }
-                            else
-                            {
-                                ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + ResearchTier[i].ResearchObject.name);
-                            }
-                            ResearchTier[i].ResearchButton.UpdateUI();
-                        }
-                    }
-                }
-                else
-                {
-                    if (a == 1)
-                    {
-                        UpdateResearch(a, TurretMK2Obj);
-                    }
-                    else if (a == 2)
-                    {
-                        UpdateResearch(a, CollectorMK2Obj);
-                    }
-                    else if (a == 3)
-                    {
-                        UpdateResearch(a, ShotgunMK2Obj);
-                    }
-                    else if (a == 4)
-                    {
-                        UpdateResearch(a, EnhancerMK2Obj);
-                    }
-                    else if (a == 5)
-                    {
-                        UpdateResearch(a, WallMK2Obj);
-                    }
-                    else if (a == 6)
-                    {
-                        UpdateResearch(a, TurretMK3Obj);
-                    }
-                }
-                ResearchTier[a].ResearchButton.GetComponent<CanvasGroup>().interactable = false;
-            }
-        }
-    }
-
-    public void UpdateResearch(int a, GameObject b)
-    {
-        unlocked.Add(b);
-        Researched[a] = true;
-        ResearchTier[a].ResearchInvButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + b.name);
-        ResearchTier[a].ResearchInvButton.UpdateUI();
-
-        for (int i = 0; i < ResearchTier.Length; i++)
-        {
-            if (ResearchTier[i].ResearchNeeded == ResearchLevel)
-            {
-                if (ResearchTier[i].ResearchObject.name == "Hub")
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Hub Upgrade");
-                }
-                else
-                {
-                    ResearchTier[i].ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + ResearchTier[i].ResearchObject.name);
-                }
-                ResearchTier[i].ResearchButton.UpdateUI();
-            }
-        }
-    }
-
-    public void ResearchHover(int a)
-    {
-        if (a > 7)
-        {
-            ResearchImage.sprite = Resources.Load<Sprite>("Sprites/Lock");
-            ResearchTitleBox.text = "Tier Unavailable";
-            ResearchDescriptionBox.text = "Coming in update 0.5";
-            ResearchCostBox.text = "????";
-        }
-        else
-        {
-            ResearchImage.sprite = ResearchTier[a].ResearchButton.buttonIcon;
-            if (ResearchLevel >= ResearchTier[a].ResearchNeeded)
-            {
-                ResearchTitleBox.text = ResearchTier[a].ResearchTitle;
-                ResearchDescriptionBox.text = ResearchTier[a].ResearchDescription;
-                ResearchCostBox.text = ResearchTier[a].EssenceRequired.ToString();
-            }
-            else
-            {
-                ResearchTitleBox.text = "Tier Locked";
-                ResearchDescriptionBox.text = "You need to research " + ResearchTier[a].ResearchNeeded + " tiers to unlock this tier.";
-                ResearchCostBox.text = "????";
-            }
-        }
-    }
-    */
 
     public void PlaceSavedBuildings(int[,] a)
     {
@@ -1150,8 +871,7 @@ public class Survival : MonoBehaviour
         unlocked.Add(a);
         if (a == EssenceObj)
         {
-            ResearchUIButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
-            ResearchUIButton.UpdateUI();
+            
         }
     }
 

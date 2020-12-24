@@ -871,7 +871,7 @@ public class Survival : MonoBehaviour
         unlocked.Add(a);
         if (a == EssenceObj)
         {
-            
+            // SHOW RESEARCH GUI BUTTON
         }
     }
 

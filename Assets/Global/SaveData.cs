@@ -33,8 +33,6 @@ public class SaveData
         HeatUsage = heat.htrack;
         UnlockLevel = data.UnlockLvl;
         UnlocksLeft = data.UnlocksLeft;
-        RLevel = data.ResearchLevel;
-        ResearchedTiers = data.Researched;
         UnlockProgress = data.GetAmountTracked();
     }
 }

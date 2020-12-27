@@ -26,27 +26,27 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
-    [SerializeField] private GameObject HubObj;           // No ID
-    [SerializeField] private GameObject TurretObj;        // ID = 0
-    [SerializeField] private GameObject WallObj;          // ID = 1
-    [SerializeField] private GameObject CollectorObj;     // ID = 2
-    [SerializeField] private GameObject ShotgunObj;       // ID = 3
-    [SerializeField] private GameObject SniperObj;        // ID = 4
-    [SerializeField] private GameObject EnhancerObj;      // ID = 5
-    [SerializeField] private GameObject SMGObj;           // ID = 6
-    [SerializeField] private GameObject BoltObj;          // ID = 7
-    [SerializeField] private GameObject ChillerObj;       // ID = 8
-    [SerializeField] private GameObject RocketObj;        // ID = 9
-    [SerializeField] private GameObject EssenceObj;       // ID = 10
-    [SerializeField] private GameObject TurbineObj;       // ID = 11
+    [SerializeField] private Transform HubObj;           // No ID
+    [SerializeField] private Transform TurretObj;        // ID = 0
+    [SerializeField] private Transform WallObj;          // ID = 1
+    [SerializeField] private Transform CollectorObj;     // ID = 2
+    [SerializeField] private Transform ShotgunObj;       // ID = 3
+    [SerializeField] private Transform SniperObj;        // ID = 4
+    [SerializeField] private Transform EnhancerObj;      // ID = 5
+    [SerializeField] private Transform SMGObj;           // ID = 6
+    [SerializeField] private Transform BoltObj;          // ID = 7
+    [SerializeField] private Transform ChillerObj;       // ID = 8
+    [SerializeField] private Transform RocketObj;        // ID = 9
+    [SerializeField] private Transform EssenceObj;       // ID = 10
+    [SerializeField] private Transform TurbineObj;       // ID = 11
 
     // Object variables
     public int seed;
     public GameObject Spawner;
     public GameObject SelectedOverlay;
-    private GameObject SelectedObj;
-    private GameObject HoveredObj;
-    private GameObject LastObj;
+    private Transform SelectedObj;
+    private Transform HoveredObj;
+    private Transform LastObj;
     private float rotation = 0f;
     public bool largerUnit = false;
 
@@ -73,8 +73,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
     protected float distance = 10;
-    private GameObject[] hotbar = new GameObject[9];
-    List<GameObject> unlocked = new List<GameObject>();
+    private Transform[] hotbar = new Transform[9];
+    List<Transform> unlocked = new List<Transform>();
 
     // Unlock list
     public int UnlockLvl = 0;
@@ -82,7 +82,7 @@ public class Survival : MonoBehaviour
     [System.Serializable]
     public class Unlockables
     {
-        public GameObject Unlock;
+        public Transform Unlock;
         public ButtonManagerBasicIcon InventoryButton;
         public Transform[] Enemy;
         public int[] AmountNeeded;
@@ -425,8 +425,8 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < a.GetLength(0); i++)
         {
-            GameObject building = GetBuildingWithID(a[i, 0]);
-            GameObject obj = Instantiate(building, new Vector3(a[i, 2], a[i, 3], 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Transform building = GetBuildingWithID(a[i, 0]);
+            Transform obj = Instantiate(building, new Vector3(a[i, 2], a[i, 3], 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.name = building.name;
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
@@ -436,7 +436,7 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public GameObject GetBuildingWithID(int a)
+    public Transform GetBuildingWithID(int a)
     {
         for (int i = 0; i < unlocked.Count; i++)
         {
@@ -487,7 +487,7 @@ public class Survival : MonoBehaviour
             // If requirements met, unlock and start next unlock
             if (RequirementsMetCheck == true)
             {
-                GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
+                Transform newUnlock = UnlockTier[UnlockLvl].Unlock;
 
                 unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
                 StartNextUnlock();
@@ -556,7 +556,7 @@ public class Survival : MonoBehaviour
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
     }
 
-    void ShowSelectedInfo(GameObject a)
+    void ShowSelectedInfo(Transform a)
     {
         Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
         Transform b = Overlay.transform.Find("Selected");
@@ -567,7 +567,7 @@ public class Survival : MonoBehaviour
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
     }
 
-    public void unlockDefense(GameObject a, ButtonManagerBasicIcon b, string c)
+    public void unlockDefense(Transform a, ButtonManagerBasicIcon b, string c)
     {
         addUnlocked(a);
         b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.transform.name);
@@ -736,7 +736,7 @@ public class Survival : MonoBehaviour
     }
 
     // Changes the object that the player has selected (pass null to deselect)
-    public void SelectObject(GameObject obj)
+    public void SelectObject(Transform obj)
     {
         SelectedObj = obj;
         if (obj != null && !checkIfUnlocked(obj)) return;
@@ -749,14 +749,14 @@ public class Survival : MonoBehaviour
     }
 
     // Changes the stored object for hotbar changing
-    public void SetHoverObject(GameObject obj)
+    public void SetHoverObject(Transform obj)
     {
         if (!checkIfUnlocked(obj)) return;
         HoveredObj = obj;
     }
 
     // Changes the object stored in a hotbar slot
-    public void SetHotbarSlot(int slot, GameObject obj)
+    public void SetHotbarSlot(int slot, Transform obj)
     {
         if (!checkIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
@@ -789,7 +789,7 @@ public class Survival : MonoBehaviour
         ShowSelectedInfo(SelectedObj);
     }
 
-    public bool checkIfUnlocked(GameObject a)
+    public bool checkIfUnlocked(Transform a)
     {
         for (int i = 0; i < unlocked.Count; i++)
         {
@@ -866,7 +866,7 @@ public class Survival : MonoBehaviour
         return data;
     }
 
-    public void addUnlocked(GameObject a)
+    public void addUnlocked(Transform a)
     {
         unlocked.Add(a);
         if (a == EssenceObj)

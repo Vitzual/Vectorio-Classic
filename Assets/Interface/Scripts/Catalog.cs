@@ -15,7 +15,7 @@ public class Catalog : MonoBehaviour
     {
         buildingIndex += a;
         if (buildingIndex < 0 || buildingIndex > DiscoveredBuildings.Length) { buildingIndex -= a; return; }
-        if(GameObject.Find("Survival").GetComponent<Survival>().checkIfBuildingUnlocked(DiscoveredBuildings[buildingIndex]))
+        if(GameObject.Find("Survival").GetComponent<Technology>().checkIfBuildingUnlocked(DiscoveredBuildings[buildingIndex]))
         {
             BuildingCatalog.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[buildingIndex].name;
             BuildingCatalog.transform.Find("Image 1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Pictures/" + DiscoveredBuildings[buildingIndex].name + " 1");
@@ -38,7 +38,7 @@ public class Catalog : MonoBehaviour
     {
         enemyIndex += a;
         if (enemyIndex < 0 || enemyIndex > DiscoveredBuildings.Length) { enemyIndex -= a; return; }
-        if (GameObject.Find("Survival").GetComponent<Survival>().checkIfBuildingUnlocked(DiscoveredBuildings[enemyIndex]))
+        if (GameObject.Find("Survival").GetComponent<Technology>().checkIfBuildingUnlocked(DiscoveredBuildings[enemyIndex]))
         {
             BuildingCatalog.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[enemyIndex].name;
             BuildingCatalog.transform.Find("Image 1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Pictures/" + DiscoveredBuildings[enemyIndex].name + " 1");

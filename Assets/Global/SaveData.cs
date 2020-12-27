@@ -20,7 +20,7 @@ public class SaveData
     public bool[] ResearchedTiers;
     public int[] UnlockProgress;
 
-    public SaveData (Survival data, WaveSpawner heat) 
+    public SaveData (Survival data, Technology unlock, WaveSpawner heat) 
     {
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
@@ -31,8 +31,8 @@ public class SaveData
         Essence = data.essence;
         Iridium = data.iridium;
         HeatUsage = heat.htrack;
-        UnlockLevel = data.UnlockLvl;
-        UnlocksLeft = data.UnlocksLeft;
-        UnlockProgress = data.GetAmountTracked();
+        UnlockLevel = unlock.UnlockLvl;
+        UnlocksLeft = unlock.UnlocksLeft;
+        UnlockProgress = unlock.GetAmountTracked();
     }
 }

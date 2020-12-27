@@ -7,7 +7,7 @@ public static class SaveSystem
 
     private static string SaveLocation;
 
-    public static void SaveGame (Survival data_1, WaveSpawner data_2)
+    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3)
     {
         string SavePath = Application.persistentDataPath + "/location.save";
         BinaryFormatter formatter = new BinaryFormatter();
@@ -28,7 +28,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveData data = new SaveData(data_1, data_2);
+        SaveData data = new SaveData(data_1, data_2, data_3);
 
         formatter.Serialize(stream, data);
         stream.Close();

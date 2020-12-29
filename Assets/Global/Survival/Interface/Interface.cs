@@ -9,7 +9,7 @@ public class Interface : MonoBehaviour
     private Survival main;
 
     // Interace Elements
-    public GameObject HotbarUI;
+    public Transform[] HotbarUI;
     public Canvas Overlay;
     public bool MenuOpen;
     public bool BuildingOpen;
@@ -57,9 +57,10 @@ public class Interface : MonoBehaviour
 
     public void ShowTileInfo(Collider2D a)
     {
-        Transform b = Overlay.transform.Find("Prompt");
+        // TODO: Fix this bullshit
+        /*Transform b = Overlay.transform.Find("Prompt");
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;*/
     }
 
     public void ShowSelectedInfo(Transform a)
@@ -75,42 +76,7 @@ public class Interface : MonoBehaviour
 
     public void SetSelectedHotbar(int index)
     {
-        if (index == 0)
-        {
-            HotbarUI.transform.Find("One").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 1)
-        {
-            HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 2)
-        {
-            HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 3)
-        {
-            HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 4)
-        {
-            HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 5)
-        {
-            HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 6)
-        {
-            HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 7)
-        {
-            HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = false;
-        }
-        else
-        {
-            HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = false;
-        }
+        HotbarUI[index].GetComponent<Button>().interactable = false;
     }
 
     public void UpdateHotbar()
@@ -127,14 +93,7 @@ public class Interface : MonoBehaviour
 
     public void DisableActiveInfo()
     {
-        HotbarUI.transform.Find("One").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = true;
+        for (int i = 0; i < 9; i++)
+            HotbarUI[i].GetComponent<Button>().interactable = true;
     }
 }

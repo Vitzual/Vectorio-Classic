@@ -7,7 +7,6 @@ public class Menu : MonoBehaviour
 {
 
     public GameObject MainMenu;
-    public GameObject Changelog;
     public GameObject SaveButtons;
     public GameObject MenuButtons;
 

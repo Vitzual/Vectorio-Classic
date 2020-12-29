@@ -45,7 +45,7 @@ public class Research : MonoBehaviour
 
         if (research.EssenceRequired < SurvivalCS.essence) return false; // Return false if the player does not have the required essence
 
-        SurvivalCS.essence -= research.EssenceRequired; // Subtract the cost from SurvivalCS
+        SurvivalCS.RemoveEssence(research.EssenceRequired); // Subtract the cost from SurvivalCS
         research.IsResearched = true; // Set research to researched
 
         Researchables[i] = research; // Store temp variable

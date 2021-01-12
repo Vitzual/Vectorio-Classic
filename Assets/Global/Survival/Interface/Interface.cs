@@ -36,6 +36,7 @@ public class Interface : MonoBehaviour
         // Assign Survival script
         main = gameObject.GetComponent<Survival>();
 
+        // Set default booleans
         MenuOpen = false;
         ResearchOpen = false;
         BuildingOpen = false;
@@ -63,9 +64,14 @@ public class Interface : MonoBehaviour
     public void ShowTileInfo(Collider2D a)
     {
         // TODO: Fix this bullshit
-        /*Transform b = Overlay.transform.Find("Prompt");
-        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;*/
+        Transform b = Overlay.transform.Find("Prompt");
+        TileClass c = a.GetComponent<TileClass>();
+        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.GetPercentage();
+        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
+        b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
+        b.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = (c.GetCost() - c.GetCost()/5).ToString();
+        b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.getConsumption().ToString();
+        b.transform.Find("Heat Amount").GetComponent<TextMeshProUGUI>().text = c.GetHeat().ToString();
     }
 
     public void ShowSelectedInfo(Transform a)

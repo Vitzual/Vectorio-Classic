@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿//////////////////////// IMPORTANT ///////////////////////////
+// This script is an absolute mess and we've given up     
+// all hope at actually making it even somewhat readable.   
+// If you're having troubles finding something contact one  
+// of us on Discord. All other scripts are organized and    
+// layed out in a much more organized fashion. This was the 
+// first script we wrote and at the time knew NOTHING about 
+// Unity or C# so it became a flaming pile of garbage.      
+
+// Import required libraries
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Survival : MonoBehaviour
@@ -49,6 +59,7 @@ public class Survival : MonoBehaviour
     public int seed;
     public GameObject Spawner;
     public GameObject SelectedOverlay;
+    public CanvasGroup PromptOverlay;
     private Transform SelectedObj;
     private Transform HoveredObj;
     private Transform LastObj;
@@ -122,6 +133,7 @@ public class Survival : MonoBehaviour
         }
         catch
         {
+            // If no data found, generate new world
             Debug.Log("No save data was found, or the save data found was corrupt.");
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
@@ -186,12 +198,13 @@ public class Survival : MonoBehaviour
             }
             else if (rayHit.collider != null)
             {
-                if (rayHit.collider.name != "Hub")
+                if (rayHit.collider.name != "Hub" && SelectedObj == null)
                 {
                     UI.ShowTileInfo(rayHit.collider);
                     UI.ShowingInfo = true;
-                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
                     SelectedOverlay.SetActive(true);
+                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                    PromptOverlay.alpha = 1;
                 }
             }
         }
@@ -365,9 +378,10 @@ public class Survival : MonoBehaviour
             UI.ShowingInfo = false;
             SelectedOverlay.SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo == true)
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo == true && SelectedObj == null)
         {
             UI.ShowingInfo = false;
+            PromptOverlay.alpha = 0;
             SelectedOverlay.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false)
@@ -568,6 +582,12 @@ public class Survival : MonoBehaviour
     {
         try
         {
+            // Disable selected overlay
+            UI.ShowingInfo = false;
+            PromptOverlay.alpha = 0;
+            SelectedOverlay.SetActive(false);
+
+            // Set hotbar transform
             SelectedObj = hotbar[index];
             SwitchObj();
             if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")

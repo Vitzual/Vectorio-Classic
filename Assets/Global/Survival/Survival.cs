@@ -5,7 +5,7 @@
 // of us on Discord. All other scripts are organized and    
 // layed out in a much more organized fashion. This was the 
 // first script we wrote and at the time knew NOTHING about 
-// Unity or C# so it became a flaming pile of garbage.      
+// Unity or C# so it became a flaming pile of garbage.
 
 // Import required libraries
 using UnityEngine;

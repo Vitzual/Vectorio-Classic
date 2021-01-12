@@ -18,6 +18,11 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
     public TextMeshProUGUI IridiumAmount;
+    public TextMeshProUGUI PowerUsage;
+    public TextMeshProUGUI AvailablePower;
+    public TextMeshProUGUI GPS;
+    public TextMeshProUGUI EPS;
+    public TextMeshProUGUI IPS;
     public ModalWindowManager UOL;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
@@ -84,9 +89,14 @@ public class Interface : MonoBehaviour
         for (int i = 0; i < main.hotbar.Length; i++)
         {
             if (main.hotbar[i] != null)
+            {
+                Debug.Log(main.hotbar[i].name);
                 hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + main.hotbar[i].name);
+            }
             else
+            {
                 hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Undiscovered");
+            }
             hotbarButtons[i].UpdateUI();
         }
     }

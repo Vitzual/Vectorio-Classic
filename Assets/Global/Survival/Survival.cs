@@ -14,7 +14,15 @@ public class Survival : MonoBehaviour
     public int essence = 0;
     public int iridium = 0;
     public int PowerConsumption = 0;
-    public int AvailablePower = 100;
+    public int AvailablePower = 1000;
+
+    // Player PS stats
+    public int GPS = 0;
+    public int EPS = 0;
+    public int IPS = 0;
+    public int GPSP = 0;
+    public int EPSP = 0;
+    public int IPSP = 0;
 
     // Placement sprites
     private SpriteRenderer Selected;
@@ -90,10 +98,12 @@ public class Survival : MonoBehaviour
             tech.SetUnlock(data.UnlockLevel - 1);
             seed = data.WorldSeed;
 
+            // Force tech tree update
             tech.ForceUpdateCheck();
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
             PlaceSavedBuildings(data.Locations);
 
+            // If old save file, set tracking progress to 0
             try
             {
                 if (data.UnlockProgress[0] >= 0)
@@ -103,7 +113,12 @@ public class Survival : MonoBehaviour
             }
             catch { Debug.Log("Save file does not contain tracking progress"); }
 
+            // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+            UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+
+            // Start repeating PS function
+            InvokeRepeating("UpdatePerSecond", 0f, 1f);
         }
         catch
         {
@@ -375,6 +390,20 @@ public class Survival : MonoBehaviour
         }
     }
 
+    // Update per second variables
+    public void UpdatePerSecond()
+    {
+        GPS = gold - GPSP;
+        EPS = essence - EPSP;
+        IPS = iridium - IPSP;
+        UI.GPS.text = GPS.ToString() + " / SEC";
+        UI.EPS.text = EPS.ToString() + " / SEC";
+        UI.IPS.text = IPS.ToString() + " / SEC";
+        GPSP = gold;
+        EPSP = essence;
+        IPSP = iridium;
+    }
+
     // Set the games playback speed
     public void setGameSpeed(int a)
     {
@@ -421,6 +450,7 @@ public class Survival : MonoBehaviour
     {
         AvailablePower += a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
     }
 
     // Decreases available power by x amount
@@ -428,6 +458,7 @@ public class Survival : MonoBehaviour
     {
         AvailablePower -= a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
     }
 
     // Returns power consumption
@@ -441,6 +472,7 @@ public class Survival : MonoBehaviour
     {
         PowerConsumption += a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.PowerUsage.text = PowerConsumption.ToString();
     }
 
     // Decrease power consumption by x amount
@@ -448,6 +480,7 @@ public class Survival : MonoBehaviour
     {
         PowerConsumption -= a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.PowerUsage.text = PowerConsumption.ToString();
     }
 
     // Add x gold to player

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using System.Collections.Generic;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
 
     public ProgressBar heatUI;
+    public TextMeshProUGUI heatAmount;
     public int htrack = 0;
     public int heat = 0;
     List<GameObject> discovered = new List<GameObject>();
@@ -55,21 +57,17 @@ public class WaveSpawner : MonoBehaviour
     {
         htrack += a;
         heat = htrack / 150;
-        heatUI.currentPercent = heat;
-
-        //bool foundEnemy = false;
-        //for(int i=0; i<discovered.Count; i++)
-        //{
-        //    if (discovered[i] == )
-        //}
+        heatUI.currentPercent = ((float)htrack / 10000f * 100f);
+        heatAmount.text = htrack.ToString();
     }
 
     public void decreaseHeat(int a)
     {
         htrack -= a;
         heat = htrack / 150;
-        if (heat < 0) heat = 0;
-        heatUI.currentPercent = heat;
+        Debug.Log((htrack / 10000) * 100);
+        heatUI.currentPercent = (htrack / 10000) * 100;
+        heatAmount.text = htrack.ToString();
     }
 
     public bool checkIfEnemyDiscovered(GameObject a)

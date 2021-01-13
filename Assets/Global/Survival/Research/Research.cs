@@ -29,7 +29,6 @@ public class Research : MonoBehaviour
         public string Title; // The title to be displayed in the research menu
         [TextArea] public string Description; // The description to be displayed in the research menu
         public ButtonManagerBasicIcon ResearchButton; // The button associated with this research
-        public ButtonManagerBasicIcon ResearchInvButton;
         public bool IsResearched; // If this researchable is researched
     }
 

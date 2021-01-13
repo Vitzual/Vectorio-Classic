@@ -59,6 +59,7 @@ public class Survival : MonoBehaviour
     public int seed;
     public GameObject Spawner;
     public GameObject SelectedOverlay;
+    public GameObject SelectedRadius;
     public CanvasGroup PromptOverlay;
     private Transform SelectedObj;
     private Transform HoveredObj;
@@ -127,9 +128,6 @@ public class Survival : MonoBehaviour
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-            // Start repeating PS function
-            InvokeRepeating("UpdatePerSecond", 0f, 1f);
         }
         catch
         {
@@ -138,6 +136,9 @@ public class Survival : MonoBehaviour
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
         }
+
+        // Start repeating PS function
+        InvokeRepeating("UpdatePerSecond", 0f, 1f);
     }
 
     private void Update()
@@ -376,7 +377,7 @@ public class Survival : MonoBehaviour
             rotation = 0;
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
-            SelectedOverlay.SetActive(false);
+            SelectedRadius.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo == true && SelectedObj == null)
         {
@@ -632,15 +633,30 @@ public class Survival : MonoBehaviour
     // Switch the selected object
     public void SwitchObj()
     {
+        // If unit is larger then 1x1, change selected obj accordingly
         if (largerUnit)
         {
             largerUnit = false;
             transform.localScale = new Vector3(1, 1, 1);
         }
+
+        // Disable any active info not relative to selected object
         UI.DisableActiveInfo();
         Adjustment = 1f;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
         UI.ShowSelectedInfo(SelectedObj);
+
+        // Set radius dimensions if selected object is defense
+        if (SelectedObj.tag == "Defense")
+        {
+            float range = SelectedObj.GetComponent<TurretClass>().range * 2;
+            SelectedRadius.transform.localScale = new Vector3(range, 1, range);
+            SelectedRadius.SetActive(true);
+        }
+        else
+        {
+            SelectedRadius.SetActive(false);
+        }
     }
 
     // Loads the menu scene

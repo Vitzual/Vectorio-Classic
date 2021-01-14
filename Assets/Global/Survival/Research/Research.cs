@@ -7,6 +7,13 @@ using TMPro;
 public class Research : MonoBehaviour
 {
 
+    // Research variables
+    public static int bonus_damage = 0;
+    public static float bonus_range = 0;
+    public static int bonus_burning = 5;
+    public static int bonus_freezing = 10;
+    public static int bonus_poisoning = 7;
+
     // Research UI stuff
     public WindowManager ResearchUI;
     public ButtonManagerBasicIcon ResearchUIButton;
@@ -23,7 +30,6 @@ public class Research : MonoBehaviour
     [System.Serializable]
     public class Researchable
     {
-        public GameObject ResearchObject;
         public int EssenceRequired; // The cost of the research
         public int[] RequiredResearch; // Array of indexs of the required research nodes
         public string Title; // The title to be displayed in the research menu
@@ -58,5 +64,5 @@ public class Research : MonoBehaviour
         ResearchUIButton.UpdateUI();
     }
 
-    
+
 }

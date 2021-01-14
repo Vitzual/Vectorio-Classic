@@ -13,10 +13,11 @@ public abstract class BulletClass : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<EnemyClass>().DamageEntity(damage);
+            other.GetComponent<EnemyClass>().DamageEntity(damage + Research.bonus_damage);
             if (!this.name.Contains("BoltBullet"))
             {
                 HitEffect = this.EnemyEffect;
+
                 collide();
             }
         }

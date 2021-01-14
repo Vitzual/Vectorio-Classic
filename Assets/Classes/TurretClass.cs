@@ -28,7 +28,7 @@ public abstract class TurretClass : TileClass
     {
         var colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position, 
-            range, 
+            range + Research.bonus_range, 
             1 << LayerMask.NameToLayer("Enemy"));
         GameObject result = null;
         float closest = float.PositiveInfinity;

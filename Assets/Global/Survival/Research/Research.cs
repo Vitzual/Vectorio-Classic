@@ -9,10 +9,11 @@ public class Research : MonoBehaviour
 
     // Research variables
     public static int bonus_damage = 0;
+    public static int bonus_gold = 0;
     public static float bonus_range = 0;
-    public static int bonus_burning = 5;
-    public static int bonus_freezing = 10;
-    public static int bonus_poisoning = 7;
+    public static int bonus_burning = 0;
+    public static int bonus_freezing = 0;
+    public static int bonus_poisoning = 0;
 
     // Research UI stuff
     public WindowManager ResearchUI;

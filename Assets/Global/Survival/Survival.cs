@@ -685,14 +685,14 @@ public class Survival : MonoBehaviour
         int length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense") length += 1;
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production") length += 1;
         }
 
         int[,] data = new int[length, 4];
         length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense")
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production")
             {
                 try
                 {

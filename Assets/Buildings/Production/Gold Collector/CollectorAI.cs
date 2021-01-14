@@ -20,8 +20,8 @@ public class CollectorAI: TileClass
     // Send gold
     private void SendGold()
     {
-        if (enhanced) SRVSC.AddGold(amount*4);
-        else SRVSC.AddGold(amount);
+        if (enhanced) SRVSC.AddGold(amount*4 + Research.bonus_gold);
+        else SRVSC.AddGold(amount + Research.bonus_gold);
     }
 
     // Increase gold

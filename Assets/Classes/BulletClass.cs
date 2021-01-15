@@ -5,6 +5,7 @@ public abstract class BulletClass : MonoBehaviour
 {
     public ParticleSystem EnemyEffect;
     protected ParticleSystem HitEffect;
+    private bool pierced = false;
     public int damage;
 
     public abstract void collide();
@@ -18,7 +19,9 @@ public abstract class BulletClass : MonoBehaviour
             {
                 HitEffect = this.EnemyEffect;
 
-                collide();
+                // Check if piercing has been unlocked
+                if (!pierced && Research.bonus_pierce) pierced = true;
+                else collide();
             }
         }
     }

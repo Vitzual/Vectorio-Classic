@@ -63,6 +63,13 @@ public abstract class EnemyClass : MonoBehaviour
             {
                 collision.gameObject.GetComponent<TileClass>().DamageTile(damage);
                 attackTimeout = attackSpeed;
+
+                // If bonus shield is unlocked, apply damage to entity
+                if (Research.bonus_shield > 0)
+                {
+                    health -= Research.bonus_shield;
+                    if (health <= 0) KillEntity();
+                }
             }
         }
     }

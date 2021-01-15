@@ -104,7 +104,7 @@ public abstract class TurretClass : TileClass
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
             }
-            nextFire = fireRate;
+            nextFire = fireRate - Research.bonus_firerate;
         }
     }
 

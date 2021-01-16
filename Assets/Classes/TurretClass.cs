@@ -12,8 +12,6 @@ public abstract class TurretClass : TileClass
     public float rotationSpeed;
     public int range;
     public Transform Point;
-    private AudioSource SoundData;
-    public AudioClip ShootSound;
     public Rigidbody2D Gun;
     public GameObject Bullet;
     public HashSet<GameObject> nearbyEnemies = new HashSet<GameObject>();
@@ -25,11 +23,6 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
-
-    private void Start()
-    {
-        SoundData = GetComponent<AudioSource>();
-    }
 
     protected GameObject FindNearestEnemy()
     {
@@ -110,10 +103,6 @@ public abstract class TurretClass : TileClass
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
-
-                // Play audio source
-                try { SoundData.PlayOneShot(ShootSound, 0.7f); }
-                catch { Debug.Log("No audio source"); }
             }
             nextFire = fireRate - Research.bonus_firerate;
         }

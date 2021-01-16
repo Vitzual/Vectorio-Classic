@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3961812326880450799}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: -8432246489844810076}
   m_Layer: 8
   m_Name: Turret
   m_TagString: Defense
@@ -142,15 +143,12 @@ MonoBehaviour:
   power: 20
   ID: 0
   description: Weak early game turret that targets and fires at nearby enemies.
-  CatalogSprite1: {fileID: 0}
   CatalogTitle1: FIRST DEFENSE
   CatalogDesc1: The turret is the first defensive building that you unlock. Best
     used to defend your hub or small gold farms.
-  CatalogSprite2: {fileID: 0}
   CatalogTitle2: GROUPING
   CatalogDesc2: If you find you're low on gold, grouping multiple turrets together
     can help take on stronger enemies.
-  CatalogSprite3: {fileID: 0}
   CatalogTitle3: LOW POWER
   CatalogDesc3: The turret uses little to no power, so it can act as a good alternative
     to other defenses that are power intensive.
@@ -161,6 +159,7 @@ MonoBehaviour:
   rotationSpeed: 0.8
   range: 50
   Point: {fileID: 3069989843565101140}
+  ShootSound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
   Gun: {fileID: 5865514787985018872}
   Bullet: {fileID: 3293027712645128820, guid: c48cecef139047b4fbc9277c8ee729c6, type: 3}
   SwitchBarrel: 0
@@ -253,6 +252,102 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!82 &-8432246489844810076
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3315152472104292069
 GameObject:
   m_ObjectHideFlags: 0

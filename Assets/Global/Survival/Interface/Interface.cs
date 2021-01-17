@@ -9,6 +9,7 @@ public class Interface : MonoBehaviour
     private Survival main;
 
     // Interace Elements
+    public GameObject ResearchOverlay;
     public Transform[] HotbarUI;
     public Canvas Overlay;
     public bool MenuOpen;
@@ -28,6 +29,7 @@ public class Interface : MonoBehaviour
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
     public ButtonManagerBasic SaveButton;
+    public ButtonManagerBasicIcon ResearchButton;
     public ButtonManagerBasicIcon[] hotbarButtons;
 
     // Start is called before the first frame update
@@ -107,9 +109,28 @@ public class Interface : MonoBehaviour
         }
     }
 
+    // Disables active information
     public void DisableActiveInfo()
     {
         for (int i = 0; i < 9; i++)
             HotbarUI[i].GetComponent<Button>().interactable = true;
+    }
+
+    // Opens research overlay and pauses game
+    public void OpenResearchOverlay()
+    {
+        if (!Research.research_unlocked) return;
+        ResearchOpen = true;
+        SetOverlayStatus("Research", true);
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+    }
+
+    // Closes research overlay and unpauses game
+    public void CloseResearchOverlay()
+    {
+        if (!Research.research_unlocked) return;
+        ResearchOpen = false;
+        SetOverlayStatus("Research", false);
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 }

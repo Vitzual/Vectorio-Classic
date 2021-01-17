@@ -35,7 +35,7 @@ public abstract class TileClass : MonoBehaviour
     public void DamageTile(int dmgRecieved)
     {
         health -= dmgRecieved;
-        if (health <= 0)
+        if (health + Research.bonus_health <= 0)
         {
             GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
             DestroyTile();

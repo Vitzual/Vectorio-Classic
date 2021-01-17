@@ -19,6 +19,9 @@ public class Survival : MonoBehaviour
     // Interface script
     private Interface UI;
 
+    // Research object
+    public Research rsrch;
+
     // Player stats
     public int gold = 0;
     public int essence = 0;
@@ -339,6 +342,8 @@ public class Survival : MonoBehaviour
         {
             SelectHotbar(8);
         }
+
+        // Rotates object if no menus open
         else if (Input.GetKeyDown(KeyCode.R) && UI.BuildingOpen == false && UI.MenuOpen == false && SelectedObj != null)
         {
             rotation = rotation -= 90f;
@@ -349,26 +354,43 @@ public class Survival : MonoBehaviour
             Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
         }
 
+        // Opens the building menu if E is pressed.
         if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false)
         {
             if (UI.ResearchOpen)
             {
-                UI.ResearchOpen = false;
-                // CLOSE RESEARCH MENU HERE
+                UI.CloseResearchOverlay();
             }
             UI.BuildingOpen = true;
             UI.SetOverlayStatus("Survival Menu", true);
         }
+
+        // If T pressed, open research menu
+        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false)
+        {
+            UI.OpenResearchOverlay();
+        }
+
+        // If T pressed and research menu open, close it
+        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
+        {
+            UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and building menu open, close it
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.BuildingOpen == true)
         {
             UI.BuildingOpen = false;
             UI.SetOverlayStatus("Survival Menu", false);
         }
+
+        // If escape pressed and research open, close it.
         else if ((Input.GetKeyDown(KeyCode.Escape) && UI.ResearchOpen == true))
         {
-            UI.ResearchOpen = false;
-            // CLOSE RESEARCH MENU HERE
+            UI.CloseResearchOverlay();
         }
+
+        // If escape pressed and selected object isn't null, unselect it
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
             UI.Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
@@ -379,12 +401,8 @@ public class Survival : MonoBehaviour
             UI.ShowingInfo = false;
             SelectedRadius.SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo == true && SelectedObj == null)
-        {
-            UI.ShowingInfo = false;
-            PromptOverlay.alpha = 0;
-            SelectedOverlay.SetActive(false);
-        }
+
+        // If escape pressed and menu not open, open it
         else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false)
         {
             UI.SaveButton.GetComponent<CanvasGroup>().interactable = true;
@@ -396,6 +414,8 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
+
+        // If escape pressed and menu open, close it
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             UI.MenuOpen = false;
@@ -669,7 +689,7 @@ public class Survival : MonoBehaviour
     public void Save()
     {
         Debug.Log("Attempting to save data");
-        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>());
+        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch);
         Debug.Log("Data was saved successfully");
 
         UI.SaveButton.buttonText = "SAVED";

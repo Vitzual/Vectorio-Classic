@@ -10,6 +10,7 @@ public class Technology : MonoBehaviour
 
     // Interface script
     private Interface UI;
+    private Research research;
 
     // Unlock variables 
     public int UnlockLvl = 0;
@@ -35,6 +36,9 @@ public class Technology : MonoBehaviour
 
         // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
+
+        // Assign Research script
+        research = gameObject.GetComponent<Research>();
     }
 
     // Set unlock level
@@ -188,7 +192,8 @@ public class Technology : MonoBehaviour
         unlocked.Add(a);
         if (a == main.GetEssenceObj())
         {
-            // SHOW RESEARCH GUI BUTTON
+            UI.ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
+            Research.research_unlocked = true;
         }
     }
 
@@ -204,4 +209,6 @@ public class Technology : MonoBehaviour
         }
         return false;
     }
+
+
 }

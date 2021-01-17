@@ -65,8 +65,7 @@ public class WaveSpawner : MonoBehaviour
     {
         htrack -= a;
         heat = htrack / 150;
-        Debug.Log((htrack / 10000) * 100);
-        heatUI.currentPercent = (htrack / 10000) * 100;
+        heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
     }
 

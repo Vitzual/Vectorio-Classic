@@ -6,10 +6,10 @@ using Michsky.UI.ModernUIPack;
 public class Technology : MonoBehaviour
 {
     // Survival script
-    private Survival main;
+    public Survival main;
 
     // Interface script
-    private Interface UI;
+    public Interface UI;
 
     // Unlock variables 
     public int UnlockLvl = 0;
@@ -63,6 +63,7 @@ public class Technology : MonoBehaviour
         for (int i = 0; i < UnlockLvl; i++)
         {
             addUnlocked(UnlockTier[i].Unlock);
+            Debug.Log(UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.UpdateUI();
         }
@@ -171,10 +172,8 @@ public class Technology : MonoBehaviour
 
     public bool checkIfUnlocked(Transform a)
     {
-        Debug.Log("Unlocked count: "+ unlocked.Count);
         for (int i = 0; i < unlocked.Count; i++)
         {
-            Debug.Log(unlocked[i].name);
             if (a.name == unlocked[i].name)
             {
                 return true;

@@ -14,10 +14,10 @@ using UnityEngine.SceneManagement;
 public class Survival : MonoBehaviour
 {
     // Technology script
-    private Technology tech;
+    public Technology tech;
 
     // Interface script
-    private Interface UI;
+    public Interface UI;
 
     // Research object
     public Research rsrch;
@@ -65,7 +65,7 @@ public class Survival : MonoBehaviour
     public GameObject SelectedRadius;
     public CanvasGroup PromptOverlay;
     private Transform SelectedObj;
-    private Transform HoveredObj;
+    public Transform HoveredObj;
     private Transform LastObj;
     private float rotation = 0f;
     public bool largerUnit = false;
@@ -80,12 +80,6 @@ public class Survival : MonoBehaviour
 
     private void Start()
     {
-        // Assign technology script
-        tech = gameObject.GetComponent<Technology>();
-
-        // Assign interface script
-        UI = gameObject.GetComponent<Interface>();
-
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
 
@@ -97,8 +91,6 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(WallObj);
 
         // Check for save data on start, and if there is, set values for everything.
-        try
-        {
             // Load save data to file
             SaveData data = SaveSystem.LoadGame();
 
@@ -132,14 +124,9 @@ public class Survival : MonoBehaviour
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-        }
-        catch
-        {
-            // If no data found, generate new world
-            Debug.Log("No save data was found, or the save data found was corrupt.");
-            seed = Random.Range(1000000, 10000000);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
-        }
+
+            // Get research save data
+            rsrch.SetResearchData(data.ResearchedTiers);
 
         // Start repeating PS function
         InvokeRepeating("UpdatePerSecond", 0f, 1f);
@@ -625,10 +612,8 @@ public class Survival : MonoBehaviour
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
     {
-        Debug.Log("Selected " + obj.name);
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
-        Debug.Log("Switching object");
         SwitchObj();
         if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
         {
@@ -644,9 +629,13 @@ public class Survival : MonoBehaviour
         HoveredObj = obj;
     }
 
+    // THIS IS THE CULPRIT 
+    //
     // Changes the object stored in a hotbar slot
     public void SetHotbarSlot(int slot, Transform obj)
     {
+        Debug.Log("3 > " + obj.name);
+
         if (!tech.checkIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
         hotbar[slot] = obj;
@@ -670,9 +659,9 @@ public class Survival : MonoBehaviour
         UI.ShowSelectedInfo(SelectedObj);
 
         // Set radius dimensions if selected object is defense
-        if (SelectedObj.tag == "Defense")
+        if (SelectedObj.tag == "Defense" && SelectedObj.name != "Wall")
         {
-            float range = SelectedObj.GetComponent<TurretClass>().range * 2;
+            float range = SelectedObj.GetComponent<TurretClass>().range * 2 + Research.bonus_range;
             SelectedRadius.transform.localScale = new Vector3(range, 1, range);
             SelectedRadius.SetActive(true);
         }

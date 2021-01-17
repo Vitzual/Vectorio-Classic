@@ -96,7 +96,6 @@ public class Interface : MonoBehaviour
         {
             if (main.hotbar[i] != null)
             {
-                Debug.Log(main.hotbar[i].name);
                 hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + main.hotbar[i].name);
             }
             else

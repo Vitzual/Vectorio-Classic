@@ -6,7 +6,7 @@ using TMPro;
 public class Interface : MonoBehaviour
 {
     // Survival script
-    private Survival main;
+    public Survival main;
 
     // Interace Elements
     public GameObject ResearchOverlay;
@@ -35,9 +35,6 @@ public class Interface : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // Assign Survival script
-        main = gameObject.GetComponent<Survival>();
-
         // Set default booleans
         MenuOpen = false;
         ResearchOpen = false;
@@ -92,6 +89,7 @@ public class Interface : MonoBehaviour
         HotbarUI[index].GetComponent<Button>().interactable = false;
     }
 
+    // why, why is u not wokr
     public void UpdateHotbar()
     {
         for (int i = 0; i < main.hotbar.Length; i++)
@@ -121,7 +119,7 @@ public class Interface : MonoBehaviour
     {
         if (!Research.research_unlocked) return;
         ResearchOpen = true;
-        SetOverlayStatus("Research", true);
+        SetOverlayStatus("Research UI", true);
         Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 
@@ -130,7 +128,7 @@ public class Interface : MonoBehaviour
     {
         if (!Research.research_unlocked) return;
         ResearchOpen = false;
-        SetOverlayStatus("Research", false);
+        SetOverlayStatus("Research UI", false);
         Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 }

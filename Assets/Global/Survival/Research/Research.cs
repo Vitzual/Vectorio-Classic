@@ -66,6 +66,9 @@ public class Research : MonoBehaviour
         // If not yet researched, update with info
         else
         {
+            // Set thing true
+            ResearchButton.SetActive(true);
+
             // Set research information
             ResearchTitle.text = research.Title;
             ResearchDescription.text = research.Description;
@@ -105,7 +108,7 @@ public class Research : MonoBehaviour
         foreach (int j in research.RequiredResearch) // Returns false if one or more required research is not researched
             if (!Researchables[j].IsResearched) return;
 
-        if (research.EssenceRequired < SurvivalCS.essence) return; // Return false if the player does not have the required essence
+        if (research.EssenceRequired > SurvivalCS.essence) return; // Return false if the player does not have the required essence
 
         SurvivalCS.RemoveEssence(research.EssenceRequired); // Subtract the cost from SurvivalCS
 
@@ -114,6 +117,8 @@ public class Research : MonoBehaviour
         research.IsResearched = true; // Set research to researched
 
         research.ResearchButtonIcon.color = Color.yellow; // Set button to yellow
+
+        ResearchButton.SetActive(false); // Set false for guy button
 
         Researchables[SelectedResearch] = research; // Store temp variable
     }

@@ -91,6 +91,7 @@ public class Survival : MonoBehaviour
 
         // Default starting unlocks / hotbar
         PopulateHotbar();
+
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
@@ -624,8 +625,10 @@ public class Survival : MonoBehaviour
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
     {
+        Debug.Log("Selected " + obj.name);
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
+        Debug.Log("Switching object");
         SwitchObj();
         if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
         {

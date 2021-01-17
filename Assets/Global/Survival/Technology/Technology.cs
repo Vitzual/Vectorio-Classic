@@ -10,7 +10,6 @@ public class Technology : MonoBehaviour
 
     // Interface script
     private Interface UI;
-    private Research research;
 
     // Unlock variables 
     public int UnlockLvl = 0;
@@ -36,9 +35,6 @@ public class Technology : MonoBehaviour
 
         // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
-
-        // Assign Research script
-        research = gameObject.GetComponent<Research>();
     }
 
     // Set unlock level
@@ -175,8 +171,10 @@ public class Technology : MonoBehaviour
 
     public bool checkIfUnlocked(Transform a)
     {
+        Debug.Log("Unlocked count: "+ unlocked.Count);
         for (int i = 0; i < unlocked.Count; i++)
         {
+            Debug.Log(unlocked[i].name);
             if (a.name == unlocked[i].name)
             {
                 return true;

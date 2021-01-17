@@ -86,12 +86,12 @@ public class Research : MonoBehaviour
     public void ApplyResearch(string type)
     {
         // Still have to add hub & auto repair tool thing
-        if (type.ToLower() == "hub") SurvivalCS.increaseAvailablePower(2500); // Increase hub power by 2500
+        if (type.ToLower() == "hub") SurvivalCS.increaseAvailablePower(5000); // Increase hub power by 5000
         else if (type.ToLower() == "damage") bonus_damage += 2; // Increases damage of all defenses by 2
         else if (type.ToLower() == "health") bonus_health += 5; // Increases health of all buildings by 5
         else if (type.ToLower() == "gold") bonus_gold += 1; // Increases output of all resources by 1
-        else if (type.ToLower() == "burning") bonus_burning += 3; // Adds 3 seconds of burning (5% proc chance)
-        else if (type.ToLower() == "freezing") bonus_freezing += 5; // Adds 5 seconds of freezing (5% proc chance)
+        else if (type.ToLower() == "burning") bonus_burning += 5; // Adds 3 seconds of burning (5% proc chance)
+        else if (type.ToLower() == "freezing") bonus_freezing += 10; // Adds 10 seconds of freezing (5% proc chance)
         else if (type.ToLower() == "poisoning") bonus_poisoning += 3; // Adds 3 seconds of poisoning (5% proc chance)
         else if (type.ToLower() == "shield") bonus_shield += 1; // Adds defensive shield to all buildings
         else if (type.ToLower() == "pierce") bonus_pierce = true; // Add piercing shots to bullets

@@ -22,14 +22,14 @@ public class Survival : MonoBehaviour
     // Research object
     public Research rsrch;
 
-    // Player stats
+    // Resource stats
     public int gold = 0;
     public int essence = 0;
     public int iridium = 0;
     public int PowerConsumption = 0;
     public int AvailablePower = 1000;
 
-    // Player PS stats
+    // Resource per second variables
     public int GPS = 0;
     public int EPS = 0;
     public int IPS = 0;
@@ -37,8 +37,10 @@ public class Survival : MonoBehaviour
     public int EPSP = 0;
     public int IPSP = 0;
 
-    // Placement sprites
+    // Sprite of the selected object
     private SpriteRenderer Selected;
+
+    // Flashing effect variables
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
@@ -58,17 +60,44 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
 
-    // Object variables
+    // The seed the word is set to
     public int seed;
+
+    // The game object used to spawn enemies
     public GameObject Spawner;
+
+    // The square that appears around buildings when clicked
     public GameObject SelectedOverlay;
-    public GameObject SelectedRadius;
+
+    // The stats of the building clicked 
     public CanvasGroup PromptOverlay;
+
+    // The radius of the selected building
+    public GameObject SelectedRadius;
+
+    // The building you currently have selected
     private Transform SelectedObj;
+
+    // The hotbar building you last hovered over
     public Transform HoveredObj;
+
+    // Stores information about previously selected object
     private Transform LastObj;
+
+    // The rotation of the selected object
     private float rotation = 0f;
+
+    // If the object selected is 2x2 instead of 1x1
     public bool largerUnit = false;
+
+    // The area of control size
+    public static float AOC_Size = 150;
+
+    // The AOC border game object;
+    public Transform AOC_Object;
+
+    // The AOC objects for border
+    public static Transform[] AOC_Borders = new Transform[4];
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -83,55 +112,58 @@ public class Survival : MonoBehaviour
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
 
+        // Set AOC borders
+        for (int i = 0; i < AOC_Borders.Length; i++)
+            AOC_Borders[i] = AOC_Object.Find("Plane " + (i + 1)).GetComponent<Transform>();
+
         // Default starting unlocks / hotbar
         PopulateHotbar();
-
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
 
-        // Check for save data on start, and if there is, set values for everything.
-            // Load save data to file
-            SaveData data = SaveSystem.LoadGame();
+        // Load save data to file
+        SaveData data = SaveSystem.LoadGame();
 
-            // Set resource amounts
-            gold = data.Gold;
-            essence = data.Essence;
-            iridium = data.Iridium;
-            UI.GoldAmount.text = gold.ToString();
-            UI.EssenceAmount.text = essence.ToString();
-            UI.IridiumAmount.text = iridium.ToString();
+        // Set resource amounts
+        gold = data.Gold;
+        essence = data.Essence;
+        iridium = data.Iridium;
+        UI.GoldAmount.text = gold.ToString();
+        UI.EssenceAmount.text = essence.ToString();
+        UI.IridiumAmount.text = iridium.ToString();
 
-            // Update unlock level and research
-            tech.SetUnlock(data.UnlockLevel - 1);
-            seed = data.WorldSeed;
+        // Update unlock level and research
+        tech.SetUnlock(data.UnlockLevel - 1);
+        seed = data.WorldSeed;
 
-            // Force tech tree update
-            tech.ForceUpdateCheck();
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
-            PlaceSavedBuildings(data.Locations);
+        // Force tech tree update
+        tech.ForceUpdateCheck();
+        GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+        PlaceSavedBuildings(data.Locations);
 
-            // If old save file, set tracking progress to 0
-            try
+        // If old save file, set tracking progress to 0
+        try
+        {
+            if (data.UnlockProgress[0] >= 0)
             {
-                if (data.UnlockProgress[0] >= 0)
-                {
-                    tech.SetProgress(data.UnlockProgress);
-                }
+                tech.SetProgress(data.UnlockProgress);
             }
-            catch { Debug.Log("Save file does not contain tracking progress"); }
+        }
+        catch { Debug.Log("Save file does not contain tracking progress"); }
 
-            // Set power usage
-            UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-            UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+        // Set power usage
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
-            // Get research save data
-            rsrch.SetResearchData(data.ResearchedTiers);
+        // Get research save data
+        rsrch.SetResearchData(data.ResearchedTiers);
 
         // Start repeating PS function
         InvokeRepeating("UpdatePerSecond", 0f, 1f);
     }
 
+    // Gets called once every frame
     private void Update()
     {
         // Get mouse position and round to middle grid coordinate
@@ -140,30 +172,20 @@ public class Survival : MonoBehaviour
         else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
 
         // Make color flash
-        Color tmp = this.GetComponent<SpriteRenderer>().color;
-        tmp.a = Adjustment;
-        this.GetComponent<SpriteRenderer>().color = tmp;
         AdjustAlphaValue();
 
-        // If user left clicks, place object
+        // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && Input.mousePosition.y >= 200)
         {
-            bool ValidTile = true;
-            if (SelectedObj != null && (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine"))
-            {
-                // Check for wires and adjust accordingly 
-                RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) ValidTile = false;
-            }
+            // Check if valid placement
+            bool ValidTile = CheckPlacement(SelectedObj);
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
-            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
+            // Check if placement is within AOC
+            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
             {
                 if (SelectedObj == EssenceObj)
                 {
@@ -212,26 +234,7 @@ public class Survival : MonoBehaviour
             {
                 if (rayHit.collider.name == "Wall")
                 {
-                    RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    if (a.collider != null && a.collider.name == "Wall")
-                    {
-                        a.collider.GetComponent<WallAI>().UpdateSprite(-1);
-                    }
-                    if (b.collider != null && b.collider.name == "Wall")
-                    {
-                        b.collider.GetComponent<WallAI>().UpdateSprite(-3);
-                    }
-                    if (c.collider != null && c.collider.name == "Wall")
-                    {
-                        c.collider.GetComponent<WallAI>().UpdateSprite(-2);
-                    }
-                    if (d.collider != null && d.collider.name == "Wall")
-                    {
-                        d.collider.GetComponent<WallAI>().UpdateSprite(-4);
-                    }
+                    UpdateWallRemoved();
                 }
 
                 if (rayHit.collider.name.Contains("Enhancer"))
@@ -255,84 +258,10 @@ public class Survival : MonoBehaviour
             }
         }
 
-        if (UI.BuildingOpen)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SetHotbarSlot(0, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SetHotbarSlot(1, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SetHotbarSlot(2, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SetHotbarSlot(3, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                SetHotbarSlot(4, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                SetHotbarSlot(5, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                SetHotbarSlot(6, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                SetHotbarSlot(7, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                SetHotbarSlot(8, HoveredObj);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SelectHotbar(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SelectHotbar(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SelectHotbar(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SelectHotbar(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SelectHotbar(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            SelectHotbar(5);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            SelectHotbar(6);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            SelectHotbar(7);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            SelectHotbar(8);
-        }
+        CheckNumberInput();
 
         // Rotates object if no menus open
-        else if (Input.GetKeyDown(KeyCode.R) && UI.BuildingOpen == false && UI.MenuOpen == false && SelectedObj != null)
+        if (Input.GetKeyDown(KeyCode.R) && UI.BuildingOpen == false && UI.MenuOpen == false && SelectedObj != null)
         {
             rotation = rotation -= 90f;
             if (rotation == -360f)
@@ -427,8 +356,143 @@ public class Survival : MonoBehaviour
         IPSP = iridium;
     }
 
+    // Checks if for numeric input
+    public void CheckNumberInput()
+    {
+        if (UI.BuildingOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetHotbarSlot(0, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetHotbarSlot(1, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetHotbarSlot(2, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetHotbarSlot(3, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                SetHotbarSlot(4, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                SetHotbarSlot(5, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                SetHotbarSlot(6, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                SetHotbarSlot(7, HoveredObj);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                SetHotbarSlot(8, HoveredObj);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectHotbar(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectHotbar(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectHotbar(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SelectHotbar(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SelectHotbar(4);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            SelectHotbar(5);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            SelectHotbar(6);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            SelectHotbar(7);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            SelectHotbar(8);
+        }
+    }
+
+    // Checks if a unit can be placed
+    public bool CheckPlacement(Transform obj)
+    {
+        if (obj != null && (obj.name == "Rocket Pod" || obj.name == "Turbine"))
+        {
+            // Check for wires and adjust accordingly 
+            RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+
+            if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) return false;
+            else return true;
+        }
+        return true;
+    }
+
+    // If object removed is a wall, update surrounding walls
+    public void UpdateWallRemoved()
+    {
+        RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        if (a.collider != null && a.collider.name == "Wall")
+        {
+            a.collider.GetComponent<WallAI>().UpdateSprite(-1);
+        }
+        if (b.collider != null && b.collider.name == "Wall")
+        {
+            b.collider.GetComponent<WallAI>().UpdateSprite(-3);
+        }
+        if (c.collider != null && c.collider.name == "Wall")
+        {
+            c.collider.GetComponent<WallAI>().UpdateSprite(-2);
+        }
+        if (d.collider != null && d.collider.name == "Wall")
+        {
+            d.collider.GetComponent<WallAI>().UpdateSprite(-4);
+        }
+    }
+
+    // Increase the AOC size
+    public static void IncreaseAOC(int a)
+    {
+        // Set new AOC_Size
+        AOC_Size += a;
+
+        // Increase border sizes
+        AOC_Borders[0].position = new Vector2(AOC_Borders[0].position.x - AOC_Size, 0);
+        AOC_Borders[1].position = new Vector2(0, AOC_Borders[1].position.y + AOC_Size);
+        AOC_Borders[2].position = new Vector2(AOC_Borders[2].position.x + AOC_Size, 0);
+        AOC_Borders[3].position = new Vector2(0, AOC_Borders[3].position.y - AOC_Size);
+    }
+
     // Set the games playback speed
-    public void setGameSpeed(int a)
+    public void SetGameSpeed(int a)
     {
         Time.timeScale = a;
     }
@@ -551,6 +615,10 @@ public class Survival : MonoBehaviour
     // Adjust the selected overlay transparency by 0.1f
     public void AdjustAlphaValue()
     {
+        Color tmp = this.GetComponent<SpriteRenderer>().color;
+        tmp.a = Adjustment;
+        this.GetComponent<SpriteRenderer>().color = tmp;
+
         if (AdjustLimiter == 5)
         {
             if (AdjustSwitch == false)

@@ -4,7 +4,7 @@ public class CameraScroll : MonoBehaviour
 {
     private Camera cam;
     private float targetZoom;
-    private float zoomFactor = 30f;
+    private float zoomFactor = 40f;
     [SerializeField]
     private float zoomSpeed = 40;
     private bool gridActive = true;
@@ -24,7 +24,7 @@ public class CameraScroll : MonoBehaviour
         scrollData = Input.GetAxis("Mouse ScrollWheel");
 
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 5f, 100f);
+        targetZoom = Mathf.Clamp(targetZoom, 5f, 150f);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
         if (targetZoom >= 100f && gridActive == true)

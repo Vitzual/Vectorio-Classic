@@ -96,9 +96,6 @@ public class Survival : MonoBehaviour
     // The AOC border game object;
     public Transform AOC_Object;
 
-    // The AOC objects for border
-    public static Transform[] AOC_Borders = new Transform[4];
-
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
     [SerializeField] private LayerMask TileLayer;
@@ -112,10 +109,6 @@ public class Survival : MonoBehaviour
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
 
-        // Set AOC borders
-        for (int i = 0; i < AOC_Borders.Length; i++)
-            AOC_Borders[i] = AOC_Object.Find("Plane " + (i + 1)).GetComponent<Transform>();
-
         // Default starting unlocks / hotbar
         PopulateHotbar();
         tech.unlocked.Add(TurretObj);
@@ -125,39 +118,49 @@ public class Survival : MonoBehaviour
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
 
-        // Set resource amounts
-        gold = data.Gold;
-        essence = data.Essence;
-        iridium = data.Iridium;
-        UI.GoldAmount.text = gold.ToString();
-        UI.EssenceAmount.text = essence.ToString();
-        UI.IridiumAmount.text = iridium.ToString();
-
-        // Update unlock level and research
-        tech.SetUnlock(data.UnlockLevel - 1);
-        seed = data.WorldSeed;
-
-        // Force tech tree update
-        tech.ForceUpdateCheck();
-        GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
-        PlaceSavedBuildings(data.Locations);
-
-        // If old save file, set tracking progress to 0
+        // Attempt to load save data 
         try
         {
-            if (data.UnlockProgress[0] >= 0)
+            // Set resource amounts
+            gold = data.Gold;
+            essence = data.Essence;
+            iridium = data.Iridium;
+            UI.GoldAmount.text = gold.ToString();
+            UI.EssenceAmount.text = essence.ToString();
+            UI.IridiumAmount.text = iridium.ToString();
+
+            // Update unlock level and research
+            tech.SetUnlock(data.UnlockLevel - 1);
+            seed = data.WorldSeed;
+
+            // Force tech tree update
+            tech.ForceUpdateCheck();
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+            PlaceSavedBuildings(data.Locations);
+
+            // If old save file, set tracking progress to 0
+            try
             {
-                tech.SetProgress(data.UnlockProgress);
+                if (data.UnlockProgress[0] >= 0)
+                {
+                    tech.SetProgress(data.UnlockProgress);
+                }
             }
+            catch { Debug.Log("Save file does not contain tracking progress"); }
+
+            // Set power usage
+            UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+            UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+
+            // Get research save data
+            rsrch.SetResearchData(data.ResearchedTiers);
         }
-        catch { Debug.Log("Save file does not contain tracking progress"); }
-
-        // Set power usage
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-        // Get research save data
-        rsrch.SetResearchData(data.ResearchedTiers);
+        catch
+        {
+            Debug.Log("No save data was found, or the save data found was corrupt.");
+            seed = Random.Range(1000000, 10000000);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+        }
 
         // Start repeating PS function
         InvokeRepeating("UpdatePerSecond", 0f, 1f);
@@ -485,10 +488,6 @@ public class Survival : MonoBehaviour
         AOC_Size += a;
 
         // Increase border sizes
-        AOC_Borders[0].position = new Vector2(AOC_Borders[0].position.x - AOC_Size, 0);
-        AOC_Borders[1].position = new Vector2(0, AOC_Borders[1].position.y + AOC_Size);
-        AOC_Borders[2].position = new Vector2(AOC_Borders[2].position.x + AOC_Size, 0);
-        AOC_Borders[3].position = new Vector2(0, AOC_Borders[3].position.y - AOC_Size);
     }
 
     // Set the games playback speed

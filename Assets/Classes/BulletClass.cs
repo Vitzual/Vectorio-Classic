@@ -14,6 +14,10 @@ public abstract class BulletClass : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
+            // Check to see if other enemy is spawner
+            if (other.name == "Hive")
+                other.GetComponent<SpawnerAI>().SpawnEnemy();
+
             other.GetComponent<EnemyClass>().DamageEntity(damage + Research.bonus_damage);
             if (!this.name.Contains("BoltBullet"))
             {

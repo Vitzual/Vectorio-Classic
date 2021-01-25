@@ -8,7 +8,6 @@ public class WaveSpawner : MonoBehaviour
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
     public int htrack = 0;
-    public int heat = 0;
 
     private void Start()
     {
@@ -18,10 +17,12 @@ public class WaveSpawner : MonoBehaviour
     [System.Serializable]
     public class Enemies
     {
+        public string name;
         public Transform enemyObject;
         public float chance;
         public float minHeat;
         public float maxHeat;
+        public int amount;
     }
 
     public Enemies[] enemy;
@@ -30,12 +31,15 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int a=0; a<enemy.Length; a++)
         {
-            if (heat >= enemy[a].minHeat && heat <= enemy[a].maxHeat)
+            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat)
             {
-                var proc = Random.Range(0, 100);
-                if (proc <= enemy[a].chance)
+                for(int b=0; b<enemy[a].amount; a++)
                 {
-                    SpawnEnemy(enemy[a].enemyObject);
+                    var proc = Random.Range(0, 100);
+                    if (proc <= enemy[a].chance)
+                    {
+                        SpawnEnemy(enemy[a].enemyObject);
+                    }
                 }
             }
         }
@@ -54,7 +58,6 @@ public class WaveSpawner : MonoBehaviour
     public void increaseHeat(int a)
     {
         htrack += a;
-        heat = htrack / 150;
         heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
     }
@@ -62,20 +65,7 @@ public class WaveSpawner : MonoBehaviour
     public void decreaseHeat(int a)
     {
         htrack -= a;
-        heat = htrack / 150;
         heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
-    }
-
-    public bool checkIfEnemyDiscovered(GameObject a)
-    {
-        for (int i=0; i<enemy.Length; i++)
-        {
-            if (enemy[i].enemyObject == a)
-            {
-                if (enemy[i].minHeat <= heat) return true;
-            }
-        }
-        return false;
     }
 }

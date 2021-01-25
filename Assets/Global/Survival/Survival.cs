@@ -59,6 +59,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform RocketObj;        // ID = 9
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
+    [SerializeField] private Transform TeslaObj;         // ID = 12
 
     // The seed the word is set to
     public int seed;

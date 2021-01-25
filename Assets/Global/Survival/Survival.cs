@@ -91,8 +91,11 @@ public class Survival : MonoBehaviour
     // If the object selected is 2x2 instead of 1x1
     public bool largerUnit = false;
 
+    // Holds the AOC level
+    public int AOC_Level = 1;
+
     // The area of control size
-    public static float AOC_Size = 150;
+    public float AOC_Size = 150;
 
     // The AOC border game object;
     public Transform AOC_Object;
@@ -483,12 +486,27 @@ public class Survival : MonoBehaviour
     }
 
     // Increase the AOC size
-    public static void IncreaseAOC(int a)
+    public void IncreaseAOC(int a)
     {
-        // Set new AOC_Size
-        AOC_Size += a;
+        AOC_Level += a;
 
-        // Increase border sizes
+        if (AOC_Level == 2)
+        {
+            // Set new AOC_Size
+            AOC_Size = 455;
+
+            // Increase border sizes
+            AOC_Object.localScale = new Vector2(3, 3);
+
+        }
+        else if (AOC_Level == 3)
+        {
+            // Set new AOC_Size
+            AOC_Size = 745;
+
+            // Increase border sizes
+            AOC_Object.gameObject.SetActive(false);
+        }
     }
 
     // Set the games playback speed

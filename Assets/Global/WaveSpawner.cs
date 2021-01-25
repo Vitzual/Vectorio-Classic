@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
-using System.Collections.Generic;
 using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-
+    public Survival survival;
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
     public int htrack = 0;
     public int heat = 0;
-    List<GameObject> discovered = new List<GameObject>();
 
     private void Start()
     {
@@ -46,7 +44,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * (Survival.AOC_Size + 100);
+        transform.position += transform.right * (survival.AOC_Size + 100);
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));

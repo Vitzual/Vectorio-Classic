@@ -36,7 +36,7 @@ public class OnSpawn : MonoBehaviour
     public int SpawnerRegionSize;
     public int SpawnerSpawnAmount;
 
-    public void GenerateWorldData(int a)
+    public void GenerateWorldData(int a, bool save)
     {
         // Sets the seed - This method is deprecated but works so who cares amiright?
         Random.seed = a;
@@ -44,7 +44,7 @@ public class OnSpawn : MonoBehaviour
         GenGold();
         GenEssence();
         GenIridium();
-        GenHives();
+        if (!save) GenHives();
     }
 
     // Gold Generation

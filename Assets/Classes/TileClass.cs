@@ -15,18 +15,6 @@ public abstract class TileClass : MonoBehaviour
     public int ID = 0;
     [TextArea] public string description = "No description provided.";
 
-    // Catalog variable 1
-    public string CatalogTitle1 = "Undeclared title";
-    [TextArea] public string CatalogDesc1 = "Undeclared description";
-
-    // Catalog variable 2
-    public string CatalogTitle2 = "Undeclared title";
-    [TextArea] public string CatalogDesc2 = "Undeclared description";
-
-    // Catalog variable 3
-    public string CatalogTitle3 = "Undeclared title";
-    [TextArea] public string CatalogDesc3 = "Undeclared description";
-
 
     // Abstract methods
     public abstract void DestroyTile();

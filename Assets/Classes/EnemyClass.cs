@@ -33,21 +33,6 @@ public abstract class EnemyClass : MonoBehaviour
     protected int attackTimeout;
     protected Vector2 Movement;
 
-    // Catalog variable 1
-    public Sprite CatalogSprite1;
-    public string CatalogTitle1 = "Undeclared title";
-    [TextArea] public string CatalogDesc1 = "Undeclared description";
-
-    // Catalog variable 2
-    public Sprite CatalogSprite2;
-    public string CatalogTitle2 = "Undeclared title";
-    [TextArea] public string CatalogDesc2 = "Undeclared description";
-
-    // Catalog variable 3
-    public Sprite CatalogSprite3;
-    public string CatalogTitle3 = "Undeclared title";
-    [TextArea] public string CatalogDesc3 = "Undeclared description";
-
     // Attack Tile
     public void OnCollisionEnter2D(Collision2D collision)
     {

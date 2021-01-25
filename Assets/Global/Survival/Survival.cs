@@ -135,7 +135,7 @@ public class Survival : MonoBehaviour
 
             // Force tech tree update
             tech.ForceUpdateCheck();
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
             PlaceSavedBuildings(data.Locations);
 
             // If old save file, set tracking progress to 0
@@ -159,7 +159,7 @@ public class Survival : MonoBehaviour
         {
             Debug.Log("No save data was found, or the save data found was corrupt.");
             seed = Random.Range(1000000, 10000000);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
         }
 
         // Start repeating PS function

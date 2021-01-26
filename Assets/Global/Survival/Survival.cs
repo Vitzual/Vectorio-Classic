@@ -542,7 +542,32 @@ public class Survival : MonoBehaviour
         for (int i = 0; i < a.GetLength(0); i++)
         {
             Transform building = GetBuildingWithID(a[i, 0]);
-            Transform obj = Instantiate(building, new Vector3(a[i, 2], a[i, 3], 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+
+            float x = a[i, 2];
+            float y = a[i, 3];
+            Vector2 position;
+
+            if (building.name == "Rocket Pod" || building.name == "Turbine")
+            {
+                // Check the x coordinate
+                if (x >= 0)
+                    x += 0.5f;
+                else
+                    x -= 0.5f;
+
+                // Check the y coordinate
+                if (y >= 0)
+                    y += 0.5f;
+                else
+                    y -= 0.5f;
+
+                position = new Vector2(x, y);
+            }
+            else
+                position = new Vector2(x, y);
+
+            Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+
             obj.name = building.name;
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());

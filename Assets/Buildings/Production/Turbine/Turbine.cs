@@ -6,7 +6,7 @@ public class Turbine : TileClass
 
     public void Start()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(50);
+        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(100);
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class Turbine : TileClass
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(-50);
+        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(-100);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

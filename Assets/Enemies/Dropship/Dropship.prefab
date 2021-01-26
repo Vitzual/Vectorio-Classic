@@ -639,7 +639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30167347b3fa1c4e86ab2ec4d1ae815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2000
+  is_burning: 0
+  is_frozen: 0
+  is_poisoned: 0
+  health: 1000
   damage: 500
   range: 1000
   moveSpeed: 3
@@ -647,6 +650,7 @@ MonoBehaviour:
   worth: 100000
   explosiveRadius: 10
   explosiveDamage: 100
+  effectImmunity: 0
   spawnOnDeath:
   - {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
   amountToSpawn: 03000000

@@ -31,7 +31,7 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int a=0; a<enemy.Length; a++)
         {
-            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat)
+            if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat) || (htrack >= enemy[a].minHeat && enemy[a].maxHeat == 10000))
             {
                 for(int b=0; b<enemy[a].amount; b++)
                 {

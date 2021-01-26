@@ -33,7 +33,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat)
             {
-                for(int b=0; b<enemy[a].amount; a++)
+                for(int b=0; b<enemy[a].amount; b++)
                 {
                     var proc = Random.Range(0, 100);
                     if (proc <= enemy[a].chance)

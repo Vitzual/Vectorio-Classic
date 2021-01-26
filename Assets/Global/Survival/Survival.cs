@@ -706,11 +706,6 @@ public class Survival : MonoBehaviour
             // Set hotbar transform
             SelectedObj = hotbar[index];
             SwitchObj();
-            if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
-            {
-                largerUnit = true;
-                transform.localScale = new Vector3(2, 2, 1);
-            }
         }
         catch { return; }
         UI.SetSelectedHotbar(index);
@@ -722,11 +717,6 @@ public class Survival : MonoBehaviour
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
         SwitchObj();
-        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
-        {
-            largerUnit = true;
-            transform.localScale = new Vector3(2, 2, 1);
-        }
     }
 
     // Changes the stored object for hotbar changing
@@ -753,10 +743,16 @@ public class Survival : MonoBehaviour
     public void SwitchObj()
     {
         // If unit is larger then 1x1, change selected obj accordingly
-        if (largerUnit)
+        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
+        {
+            largerUnit = true;
+            if (SelectedObj.name == "Rocket Pod") 
+                transform.localScale = new Vector2(2, 2);
+        }
+        else
         {
             largerUnit = false;
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector2(1, 1);
         }
 
         // Disable any active info not relative to selected object

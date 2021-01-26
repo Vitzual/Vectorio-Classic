@@ -278,6 +278,12 @@ public class Survival : MonoBehaviour
                         }
                     }
                 }
+
+                if (rayHit.collider.name == "Turbine")
+                {
+                    decreaseAvailablePower(100);
+                }
+
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());

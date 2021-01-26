@@ -18,7 +18,7 @@ public class Turbine : TileClass
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(-100);
+        GameObject.Find("Survival").GetComponent<Survival>().decreaseAvailablePower(100);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

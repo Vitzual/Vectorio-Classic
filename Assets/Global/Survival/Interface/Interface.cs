@@ -15,6 +15,7 @@ public class Interface : MonoBehaviour
     public bool MenuOpen;
     public bool BuildingOpen;
     public bool ResearchOpen;
+    public bool SettingsOpen;
     public bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;

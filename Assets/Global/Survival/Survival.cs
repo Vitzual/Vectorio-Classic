@@ -333,7 +333,7 @@ public class Survival : MonoBehaviour
         }
 
         // If escape pressed and menu not open, open it
-        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false)
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false)
         {
             UI.SaveButton.GetComponent<CanvasGroup>().interactable = true;
             UI.SaveButton.buttonText = "SAVE";
@@ -343,6 +343,14 @@ public class Survival : MonoBehaviour
             UI.SetOverlayStatus("Paused", true);
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        }
+
+        // If escape pressed and settings open, close it and open menu
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.SettingsOpen == true)
+        {
+            UI.SettingsOpen = false;
+            UI.SetOverlayStatus("Settings", false);
+            UI.SetOverlayStatus("Paused", true);
         }
 
         // If escape pressed and menu open, close it

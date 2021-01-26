@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5317031946170716347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5317031946170716349}
+  - component: {fileID: 5317031946170716346}
+  m_Layer: 0
+  m_Name: Research
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5317031946170716349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317031946170716347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 619.1592, y: 307.22614, z: -279.4733}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5317031946170716346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317031946170716347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0937c3fbe8d5f94f816a694984e9713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResearchTitle: {fileID: 0}
+  ResearchDescription: {fileID: 0}
+  ResearchCost: {fileID: 0}
+  ResearchButton: {fileID: 0}
+  SelectedResearch: 0
+  SurvivalCS: {fileID: 0}
+  Researchables:
+  - Research: Hub
+    Title: HUB UPGRADE I
+    Description: Increases the power supply of the HUB by 2500w and increases the
+      AOC (area of control) by 20 tiles all direction.
+    EssenceRequired: 1000
+    RequiredResearch: 
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Range
+    Title: RANGE UPGRADE I
+    Description: 'Increases the range of all defensive buildings by 1 tile. '
+    EssenceRequired: 2500
+    RequiredResearch: 00000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Health
+    Title: HEALTH UPGRADE I
+    Description: 'Increases the health of all buildings by 5hp. '
+    EssenceRequired: 1500
+    RequiredResearch: 00000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Gold
+    Title: RESOURCE UPGRADE I
+    Description: Increases the resource yield of all gold collectors by 1. Gets doubled
+      on gold tiles or when near an enhancer.
+    EssenceRequired: 5000
+    RequiredResearch: 00000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Burning
+    Title: SCORCHING BULLETS
+    Description: Bullets get a 5% chance to light an enemy on fire, damaging them
+      every second for 5 seconds.
+    EssenceRequired: 5000
+    RequiredResearch: 01000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Freezing
+    Title: FROSTED BULLETS
+    Description: 'Bullets get a 5% chance to freeze an enemy, slowing down their
+      movement for 10 seconds. '
+    EssenceRequired: 10000
+    RequiredResearch: 01000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Poisoning
+    Title: CONTAMINATED BULLETS
+    Description: Bullets get a 5% chance to poison an enemy, doubling the damage
+      they recieve for 3 seconds.
+    EssenceRequired: 7500
+    RequiredResearch: 01000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Repair
+    Title: AUTO REPAIRING
+    Description: Turrets will automatically repair themselves after taking damage
+      by 1hp every second.
+    EssenceRequired: 20000
+    RequiredResearch: 02000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Shield
+    Title: DEFENSIVE SHIELD I
+    Description: Adds 1 shield layer to every defense, which inflicts massive damage
+      to an enemy when it gets hit.
+    EssenceRequired: 5000
+    RequiredResearch: 02000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Shield
+    Title: DEFENSIVE SHIELD II
+    Description: Adds another shield layer to every defense, letting it deal massive
+      damage to 2 enemies before breaking.
+    EssenceRequired: 10000
+    RequiredResearch: 08000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Shield
+    Title: DEFENSIVE SHIELD III
+    Description: Adds another shield layer to every defense, letting it deal massive
+      damage to 3 enemies before breaking.
+    EssenceRequired: 25000
+    RequiredResearch: 09000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Damage
+    Title: DAMAGE BOOST
+    Description: Increase the damage of all bullets fired by 15%
+    EssenceRequired: 50000
+    RequiredResearch: 040000000500000006000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Gold
+    Title: RESOURCE UPGRADE II
+    Description: Increases the resource yield of all gold collectors by 1. Gets doubled
+      on gold tiles or when near an enhancer.
+    EssenceRequired: 100000
+    RequiredResearch: 0700000008000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Firerate
+    Title: BULLET BARRAGE
+    Description: Increases the firerate of all defenses by 25%
+    EssenceRequired: 250000
+    RequiredResearch: 0b000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Range
+    Title: RANGE UPGRADE II
+    Description: 'Increases the range of all defensive buildings by 1 tile. '
+    EssenceRequired: 100000
+    RequiredResearch: 0b000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Gold
+    Title: RESOURCE UPGRADE III
+    Description: Increases the resource yield of all gold collectors by 2. Gets doubled
+      on gold tiles or when near an enhancer.
+    EssenceRequired: 250000
+    RequiredResearch: 0c000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Piercing
+    Title: ENERGIZED BULLETS
+    Description: Allows bullets to hit 2 enemies before being destroyed.
+    EssenceRequired: 500000
+    RequiredResearch: 0c000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0
+  - Research: Hub
+    Title: HUB UPGRADE II
+    Description: Increases the power supply of the HUB by 5000w and increases the
+      AOC (area of control) by 20 tiles all direction.
+    EssenceRequired: 1000000
+    RequiredResearch: 0e0000000f000000
+    ResearchButtonIcon: {fileID: 0}
+    IsResearched: 0

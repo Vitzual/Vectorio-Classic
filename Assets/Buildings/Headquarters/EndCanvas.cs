@@ -4,12 +4,7 @@ using UnityEngine;
 public class EndCanvas : MonoBehaviour
 {
 
-    protected CanvasGroup screen;
-
-    private void Start()
-    {
-        screen = GetComponent<CanvasGroup>();
-    }
+    public CanvasGroup screen;
 
     void Update()
     {
@@ -19,9 +14,14 @@ public class EndCanvas : MonoBehaviour
         }
     }
 
+    public void SetAlpha(float alpha)
+    {
+        screen.alpha = alpha;
+    }
+
     public void RestartGame()
     {
-        SceneManager.LoadScene("Creative");
+        SceneManager.LoadScene("Survival");
     }
 
     public void ReturnToMenu()

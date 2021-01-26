@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class BulletClass : MonoBehaviour
 {
-    public ParticleSystem EnemyEffect;
     protected ParticleSystem HitEffect;
+    private bool pierced = false;
     public int damage;
 
     public abstract void collide();
@@ -13,11 +13,22 @@ public abstract class BulletClass : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<EnemyClass>().DamageEntity(damage);
+            // Check to see if other enemy is spawner
+            if (other.name == "Hive")
+                other.GetComponent<SpawnerAI>().SpawnEnemy();
+
+            other.GetComponent<EnemyClass>().DamageEntity(damage + Research.bonus_damage);
             if (!this.name.Contains("BoltBullet"))
             {
-                HitEffect = this.EnemyEffect;
-                collide();
+                // Set the particle effect when hitting enemy
+                if (other.name.Contains("Dark"))
+                    HitEffect = Resources.Load<ParticleSystem>("Particles/DarkParticle");
+                else
+                    HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
+
+                // Check if piercing has been unlocked
+                if (!pierced && Research.bonus_pierce) pierced = true;
+                else collide();
             }
         }
     }

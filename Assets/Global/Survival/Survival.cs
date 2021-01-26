@@ -1,71 +1,110 @@
-﻿
-///////////////////////////////////////////
-// This class is currently being redone. //
-///////////////////////////////////////////
+﻿//////////////////////// IMPORTANT ///////////////////////////
+// This script is an absolute mess and we've given up     
+// all hope at actually making it even somewhat readable.   
+// If you're having troubles finding something contact one  
+// of us on Discord. All other scripts are organized and    
+// layed out in a much more organized fashion. This was the 
+// first script we wrote and at the time knew NOTHING about 
+// Unity or C# so it became a flaming pile of garbage.
 
+// Import required libraries
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using Michsky.UI.ModernUIPack;
-using TMPro;
 
 public class Survival : MonoBehaviour
 {
-    // Player stats
+    // Technology script
+    public Technology tech;
+
+    // Interface script
+    public Interface UI;
+
+    // Research object
+    public Research rsrch;
+
+    // Enemy layer
+    public LayerMask EnemyLayer;
+
+    // Resource stats
     public int gold = 0;
     public int essence = 0;
     public int iridium = 0;
     public int PowerConsumption = 0;
-    public int AvailablePower = 100;
+    public int AvailablePower = 1000;
 
-    // Placement sprites
+    // Resource per second variables
+    public int GPS = 0;
+    public int EPS = 0;
+    public int IPS = 0;
+    public int GPSP = 0;
+    public int EPSP = 0;
+    public int IPSP = 0;
+
+    // Sprite of the selected object
     private SpriteRenderer Selected;
+
+    // Flashing effect variables
     private float Adjustment = 1f;
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
 
     // Object placements
-    [SerializeField] private GameObject HubObj;           // No ID
-    [SerializeField] private GameObject TurretObj;        // ID = 0
-    [SerializeField] private GameObject WallObj;          // ID = 1
-    [SerializeField] private GameObject CollectorObj;     // ID = 2
-    [SerializeField] private GameObject ShotgunObj;       // ID = 3
-    [SerializeField] private GameObject SniperObj;        // ID = 4
-    [SerializeField] private GameObject EnhancerObj;      // ID = 5
-    [SerializeField] private GameObject SMGObj;           // ID = 6
-    [SerializeField] private GameObject BoltObj;          // ID = 7
-    [SerializeField] private GameObject ChillerObj;       // ID = 8
-    [SerializeField] private GameObject RocketObj;        // ID = 9
-    [SerializeField] private GameObject EssenceObj;       // ID = 10
-    [SerializeField] private GameObject TurbineObj;       // ID = 11
+    [SerializeField] private Transform HubObj;           // No ID
+    [SerializeField] private Transform TurretObj;        // ID = 0
+    [SerializeField] private Transform WallObj;          // ID = 1
+    [SerializeField] private Transform CollectorObj;     // ID = 2
+    [SerializeField] private Transform ShotgunObj;       // ID = 3
+    [SerializeField] private Transform SniperObj;        // ID = 4
+    [SerializeField] private Transform EnhancerObj;      // ID = 5
+    [SerializeField] private Transform SMGObj;           // ID = 6
+    [SerializeField] private Transform BoltObj;          // ID = 7
+    [SerializeField] private Transform ChillerObj;       // ID = 8
+    [SerializeField] private Transform RocketObj;        // ID = 9
+    [SerializeField] private Transform EssenceObj;       // ID = 10
+    [SerializeField] private Transform TurbineObj;       // ID = 11
+    [SerializeField] private Transform TeslaObj;         // ID = 12
 
-    // Object variables
+    // Enemy list
+    public Transform[] enemies;
+
+    // The seed the word is set to
     public int seed;
+
+    // The game object used to spawn enemies
     public GameObject Spawner;
+
+    // The square that appears around buildings when clicked
     public GameObject SelectedOverlay;
-    private GameObject SelectedObj;
-    private GameObject HoveredObj;
-    private GameObject LastObj;
+
+    // The stats of the building clicked 
+    public CanvasGroup PromptOverlay;
+
+    // The radius of the selected building
+    public GameObject SelectedRadius;
+
+    // The building you currently have selected
+    private Transform SelectedObj;
+
+    // The hotbar building you last hovered over
+    public Transform HoveredObj;
+
+    // Stores information about previously selected object
+    private Transform LastObj;
+
+    // The rotation of the selected object
     private float rotation = 0f;
+
+    // If the object selected is 2x2 instead of 1x1
     public bool largerUnit = false;
 
-    // UI Elements
-    public GameObject HotbarUI;
-    public Canvas Overlay;
-    private bool MenuOpen;
-    private bool BuildingOpen;
-    private bool ResearchOpen;
-    private bool ShowingInfo;
-    public TextMeshProUGUI GoldAmount;
-    public TextMeshProUGUI EssenceAmount;
-    public TextMeshProUGUI IridiumAmount;
-    public ModalWindowManager UOL;
-    public ProgressBar PowerUsageBar;
-    public ProgressBar[] UpgradeProgressBars;
-    public TextMeshProUGUI UpgradeProgressName;
-    public ButtonManagerBasic SaveButton;
-    public ButtonManagerBasicIcon[] hotbarButtons;
+    // Holds the AOC level
+    public int AOC_Level = 1;
+
+    // The area of control size
+    public float AOC_Size = 150;
+
+    // The AOC border game object;
+    public Transform AOC_Object;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -73,111 +112,99 @@ public class Survival : MonoBehaviour
     [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
     protected float distance = 10;
-    private GameObject[] hotbar = new GameObject[9];
-    List<GameObject> unlocked = new List<GameObject>();
-
-    // Unlock list
-    public int UnlockLvl = 0;
-    public bool UnlocksLeft = true;
-    [System.Serializable]
-    public class Unlockables
-    {
-        public GameObject Unlock;
-        public ButtonManagerBasicIcon InventoryButton;
-        public Transform[] Enemy;
-        public int[] AmountNeeded;
-        public int[] AmountTracked;
-    }
-    public Unlockables[] UnlockTier;
+    public Transform[] hotbar = new Transform[9];
 
     private void Start()
     {
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
-        MenuOpen = false;
-        ResearchOpen = false;
-        BuildingOpen = false;
 
         // Default starting unlocks / hotbar
         PopulateHotbar();
-        unlocked.Add(TurretObj);
-        unlocked.Add(CollectorObj);
-        unlocked.Add(WallObj);
+        tech.unlocked.Add(TurretObj);
+        tech.unlocked.Add(CollectorObj);
+        tech.unlocked.Add(WallObj);
 
-        // Check for save data on start, and if there is, set values for everything.
+        // Load save data to file
+        SaveData data = SaveSystem.LoadGame();
+
+        // Attempt to load save data 
         try
         {
-            // Load save data to file
-            SaveData data = SaveSystem.LoadGame();
-
             // Set resource amounts
             gold = data.Gold;
             essence = data.Essence;
             iridium = data.Iridium;
-            GoldAmount.text = gold.ToString();
-            EssenceAmount.text = essence.ToString();
-            IridiumAmount.text = iridium.ToString();
+            UI.GoldAmount.text = gold.ToString();
+            UI.EssenceAmount.text = essence.ToString();
+            UI.IridiumAmount.text = iridium.ToString();
 
             // Update unlock level and research
-            UnlockLvl = data.UnlockLevel - 1;
+            tech.SetUnlock(data.UnlockLevel - 1);
             seed = data.WorldSeed;
 
-            StartNextUnlock();
-            UpdateUnlockableGui();
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+            // Force tech tree update
+            tech.ForceUpdateCheck();
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
             PlaceSavedBuildings(data.Locations);
 
+            // Set power usage
+            UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+            UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+
+            // Get research save data
+            rsrch.SetResearchData(data.ResearchedTiers);
+
+            // Place saved enemies 
             try
             {
-                if (data.UnlockProgress[0] >= 0)
-                {
-                    UnlockTier[UnlockLvl].AmountTracked = data.UnlockProgress;
-                }
+                PlaceSavedEnemies(data.Enemies);
             }
-            catch { Debug.Log("Save file does not contain tracking progress"); }
-
-            PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+            catch
+            {
+                Debug.Log("Save file doesn't contain enemy tracking");
+            }
         }
         catch
         {
             Debug.Log("No save data was found, or the save data found was corrupt.");
             seed = Random.Range(1000000, 10000000);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
         }
+
+        // Start repeating PS function
+        InvokeRepeating("UpdatePerSecond", 0f, 1f);
     }
 
+    // Gets called once every frame
     private void Update()
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
-        else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
 
-        // Make color flash
-        Color tmp = this.GetComponent<SpriteRenderer>().color;
-        tmp.a = Adjustment;
-        this.GetComponent<SpriteRenderer>().color = tmp;
-        AdjustAlphaValue();
-
-        // If user left clicks, place object
-        if (Input.GetButton("Fire1") && !BuildingOpen && !ResearchOpen && Input.mousePosition.y >= 200)
+        // Check if object selected
+        if (SelectedObj != null)
         {
-            bool ValidTile = true;
-            if (SelectedObj != null && (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine"))
-            {
-                // Check for wires and adjust accordingly 
-                RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+            // Check unit size and make flash
+            CheckSize();
+            AdjustAlphaValue();
+        }
 
-                if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) ValidTile = false;
-            }
+        // Check if user left clicks
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && Input.mousePosition.y >= 200)
+        {
+
+            // Check if valid placement
+            bool ValidTile = CheckPlacement(SelectedObj);
+
+            // Raycast tile to see if there is an enemy occupying the tile
+            RaycastHit2D enemyHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, EnemyLayer);
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
-            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= 250 && transform.position.x >= -245 && transform.position.y <= 245 && transform.position.y >= -245)
+            // Check if placement is within AOC
+            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
             {
                 if (SelectedObj == EssenceObj)
                 {
@@ -189,6 +216,7 @@ public class Survival : MonoBehaviour
                 if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
                     RemoveGold(cost);
+                    Debug.Log(SelectedObj);
                     if (SelectedObj == WallObj)
                     {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -204,18 +232,19 @@ public class Survival : MonoBehaviour
             }
             else if (rayHit.collider != null)
             {
-                if (rayHit.collider.name != "Hub")
+                if (rayHit.collider.name != "Hub" && SelectedObj == null)
                 {
-                    ShowTileInfo(rayHit.collider);
-                    ShowingInfo = true;
-                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                    UI.ShowTileInfo(rayHit.collider);
+                    UI.ShowingInfo = true;
                     SelectedOverlay.SetActive(true);
+                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                    PromptOverlay.alpha = 1;
                 }
             }
         }
 
         // If user right clicks, remove object
-        else if (Input.GetButton("Fire2") && !BuildingOpen)
+        else if (Input.GetButton("Fire2") && !UI.BuildingOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -225,26 +254,7 @@ public class Survival : MonoBehaviour
             {
                 if (rayHit.collider.name == "Wall")
                 {
-                    RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    if (a.collider != null && a.collider.name == "Wall")
-                    {
-                        a.collider.GetComponent<WallAI>().UpdateSprite(-1);
-                    }
-                    if (b.collider != null && b.collider.name == "Wall")
-                    {
-                        b.collider.GetComponent<WallAI>().UpdateSprite(-3);
-                    }
-                    if (c.collider != null && c.collider.name == "Wall")
-                    {
-                        c.collider.GetComponent<WallAI>().UpdateSprite(-2);
-                    }
-                    if (d.collider != null && d.collider.name == "Wall")
-                    {
-                        d.collider.GetComponent<WallAI>().UpdateSprite(-4);
-                    }
+                    UpdateWallRemoved();
                 }
 
                 if (rayHit.collider.name.Contains("Enhancer"))
@@ -258,7 +268,13 @@ public class Survival : MonoBehaviour
                         }
                     }
                 }
-                ShowingInfo = false;
+
+                if (rayHit.collider.name == "Turbine")
+                {
+                    decreaseAvailablePower(100);
+                }
+
+                UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());
                 decreasePowerConsumption(rayHit.collider.gameObject.GetComponent<TileClass>().getConsumption());
@@ -268,7 +284,133 @@ public class Survival : MonoBehaviour
             }
         }
 
-        if (BuildingOpen)
+        // Check if hotbar selected
+        CheckNumberInput();
+
+        // Rotates object if no menus open
+        if (Input.GetKeyDown(KeyCode.R) && UI.BuildingOpen == false && UI.MenuOpen == false && SelectedObj != null)
+        {
+            rotation = rotation -= 90f;
+            if (rotation == -360f)
+            {
+                rotation = 0;
+            }
+            Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
+        }
+
+        // Opens the building menu if E is pressed.
+        if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false)
+        {
+            if (UI.ResearchOpen)
+            {
+                UI.CloseResearchOverlay();
+                SetHoverObject(null);
+            }
+            UI.BuildingOpen = true;
+            UI.SetOverlayStatus("Survival Menu", true);
+        }
+
+        // If T pressed, open research menu
+        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false)
+        {
+            UI.OpenResearchOverlay();
+        }
+
+        // If T pressed and research menu open, close it
+        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
+        {
+            UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and building menu open, close it
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.BuildingOpen == true)
+        {
+            UI.BuildingOpen = false;
+            UI.SetOverlayStatus("Survival Menu", false);
+        }
+
+        // If escape pressed and research open, close it.
+        else if ((Input.GetKeyDown(KeyCode.Escape) && UI.ResearchOpen == true))
+        {
+            UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and selected object isn't null, unselect it
+        else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
+        {
+            UI.Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
+            Selected.sprite = null;
+            SelectedObj = null;
+            rotation = 0;
+            UI.DisableActiveInfo();
+            UI.ShowingInfo = false;
+            SelectedRadius.SetActive(false);
+        }
+
+        // If a placed building is selected, un select it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo)
+        {
+            UI.ShowingInfo = false;
+            PromptOverlay.alpha = 0;
+            SelectedOverlay.SetActive(false);
+        }
+
+        // If escape pressed and menu not open, open it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false)
+        {
+            UI.SaveButton.GetComponent<CanvasGroup>().interactable = true;
+            UI.SaveButton.buttonText = "SAVE";
+            UI.SaveButton.UpdateUI();
+
+            UI.MenuOpen = true;
+            UI.SetOverlayStatus("Paused", true);
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        }
+
+        // If escape pressed and settings open, close it and open menu
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.SettingsOpen == true)
+        {
+            UI.SettingsOpen = false;
+            UI.SetOverlayStatus("Settings", false);
+            UI.SetOverlayStatus("Paused", true);
+        }
+
+        // If escape pressed and menu open, close it
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI.MenuOpen = false;
+            UI.SetOverlayStatus("Paused", false);
+
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        }
+    }
+
+    // Checks unit size
+    private void CheckSize()
+    {
+        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
+        else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
+    }
+
+    // Update per second variables
+    public void UpdatePerSecond()
+    {
+        GPS = gold - GPSP;
+        EPS = essence - EPSP;
+        IPS = iridium - IPSP;
+        UI.GPS.text = GPS.ToString() + " / SEC";
+        UI.EPS.text = EPS.ToString() + " / SEC";
+        UI.IPS.text = IPS.ToString() + " / SEC";
+        GPSP = gold;
+        EPSP = essence;
+        IPSP = iridium;
+    }
+
+    // Checks if for numeric input
+    public void CheckNumberInput()
+    {
+        if (UI.BuildingOpen)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -343,90 +485,112 @@ public class Survival : MonoBehaviour
         {
             SelectHotbar(8);
         }
-        else if (Input.GetKeyDown(KeyCode.R) && BuildingOpen == false && MenuOpen == false && SelectedObj != null)
-        {
-            rotation = rotation -= 90f;
-            if (rotation == -360f)
-            {
-                rotation = 0;
-            }
-            Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
-        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.E) && BuildingOpen == false)
+    // Checks if a unit can be placed
+    public bool CheckPlacement(Transform obj)
+    {
+        if (obj != null && (obj.name == "Rocket Pod" || obj.name == "Turbine"))
         {
-            if (ResearchOpen)
-            {
-                ResearchOpen = false;
-                // CLOSE RESEARCH MENU HERE
-            }
-            BuildingOpen = true;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 1;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = true;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = true;
-        }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && BuildingOpen == true)
-        {
-            BuildingOpen = false;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().alpha = 0;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().interactable = false;
-            Overlay.transform.Find("Survival Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else if ((Input.GetKeyDown(KeyCode.Escape) && ResearchOpen == true))
-        {
-            ResearchOpen = false;
-            // CLOSE RESEARCH MENU HERE
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
-        {
-            Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
-            Selected.sprite = null;
-            SelectedObj = null;
-            rotation = 0;
-            DisableActiveInfo();
-            ShowingInfo = false;
-            SelectedOverlay.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && ShowingInfo == true)
-        {
-            ShowingInfo = false;
-            SelectedOverlay.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && MenuOpen == false)
-        {
-            SaveButton.GetComponent<CanvasGroup>().interactable = true;
-            SaveButton.buttonText = "SAVE";
-            SaveButton.UpdateUI();
+            // Check for wires and adjust accordingly 
+            RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
 
-            MenuOpen = true;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().alpha = 1;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().blocksRaycasts = true;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().interactable = true;
-
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+            if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) return false;
+            else return true;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            MenuOpen = false;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().alpha = 0;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().blocksRaycasts = false;
-            Overlay.transform.Find("Paused").GetComponent<CanvasGroup>().interactable = false;
+        return true;
+    }
 
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+    // If object removed is a wall, update surrounding walls
+    public void UpdateWallRemoved()
+    {
+        RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+        if (a.collider != null && a.collider.name == "Wall")
+        {
+            a.collider.GetComponent<WallAI>().UpdateSprite(-1);
+        }
+        if (b.collider != null && b.collider.name == "Wall")
+        {
+            b.collider.GetComponent<WallAI>().UpdateSprite(-3);
+        }
+        if (c.collider != null && c.collider.name == "Wall")
+        {
+            c.collider.GetComponent<WallAI>().UpdateSprite(-2);
+        }
+        if (d.collider != null && d.collider.name == "Wall")
+        {
+            d.collider.GetComponent<WallAI>().UpdateSprite(-4);
         }
     }
 
-    public void setGameSpeed(int a)
+    // Increase the AOC size
+    public void IncreaseAOC(int a)
+    {
+        AOC_Level += a;
+
+        if (AOC_Level == 2)
+        {
+            // Set new AOC_Size
+            AOC_Size = 455;
+
+            // Increase border sizes
+            AOC_Object.localScale = new Vector2(3, 3);
+
+        }
+        else if (AOC_Level == 3)
+        {
+            // Set new AOC_Size
+            AOC_Size = 745;
+
+            // Increase border sizes
+            AOC_Object.gameObject.SetActive(false);
+        }
+    }
+
+    // Set the games playback speed
+    public void SetGameSpeed(int a)
     {
         Time.timeScale = a;
     }
 
+    // Place building loaded from a save file
     public void PlaceSavedBuildings(int[,] a)
     {
         for (int i = 0; i < a.GetLength(0); i++)
         {
-            GameObject building = GetBuildingWithID(a[i, 0]);
-            GameObject obj = Instantiate(building, new Vector3(a[i, 2], a[i, 3], 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            Transform building = GetBuildingWithID(a[i, 0]);
+
+            float x = a[i, 2];
+            float y = a[i, 3];
+            Vector2 position;
+
+            if (building.name == "Rocket Pod" || building.name == "Turbine")
+            {
+                // Check the x coordinate
+                if (x >= 0)
+                    x += 0.5f;
+                else
+                    x -= 0.5f;
+
+                // Check the y coordinate
+                if (y >= 0)
+                    y += 0.5f;
+                else
+                    y -= 0.5f;
+
+                position = new Vector2(x, y);
+            }
+            else
+                position = new Vector2(x, y);
+
+            Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+
             obj.name = building.name;
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
@@ -436,220 +600,112 @@ public class Survival : MonoBehaviour
         }
     }
 
-    public GameObject GetBuildingWithID(int a)
+    // Returns a buildings ID if unlocked
+    public Transform GetBuildingWithID(int a)
     {
-        for (int i = 0; i < unlocked.Count; i++)
+        for (int i = 0; i < tech.unlocked.Count; i++)
         {
-            if (unlocked[i].GetComponent<TileClass>().getID() == a)
+            if (tech.unlocked[i].GetComponent<TileClass>().getID() == a)
             {
-                return unlocked[i];
+                return tech.unlocked[i];
             }
         }
         return null;
     }
 
-    // dont touch this
-    public void UpdateUnlockableGui()
-    {
-        for (int i = 0; i < UnlockLvl; i++)
-        {
-            addUnlocked(UnlockTier[i].Unlock);
-            UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-            UnlockTier[i].InventoryButton.UpdateUI();
-        }
-    }
-
-    public void UpdateUnlock(Transform a)
-    {
-        if (UnlocksLeft)
-        {
-            // Itterate through list and update GUI accordingly
-            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
-            {
-                if (UnlockTier[UnlockLvl].Enemy[i].name == a.name)
-                {
-                    // Increment amount tracked and update GUI
-                    UnlockTier[UnlockLvl].AmountTracked[i] += 1;
-                    UpdateUnlockGui(i, ((double)UnlockTier[UnlockLvl].AmountTracked[i] / (double)UnlockTier[UnlockLvl].AmountNeeded[i]) * 100);
-                }
-            }
-
-            // Check if requirements have been met
-            bool RequirementsMetCheck = true;
-            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
-            {
-                if (UnlockTier[UnlockLvl].AmountTracked[i] < UnlockTier[UnlockLvl].AmountNeeded[i])
-                {
-                    RequirementsMetCheck = false;
-                }
-            }
-
-            // If requirements met, unlock and start next unlock
-            if (RequirementsMetCheck == true)
-            {
-                GameObject newUnlock = UnlockTier[UnlockLvl].Unlock;
-
-                unlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
-                StartNextUnlock();
-            }
-        }
-    }
-
-    public void UpdateUnlockGui(int a, double b)
-    {
-        UpgradeProgressBars[a].currentPercent = (float)b;
-    }
-
-    public int[] GetAmountTracked()
-    {
-        try
-        {
-            return UnlockTier[UnlockLvl].AmountTracked;
-        }
-        catch
-        {
-            int[] result = new int[1];
-            result[0] = 0;
-            return result;
-        }
-    }
-
-    public void StartNextUnlock()
-    {
-        UnlockLvl += 1;
-        Transform c = Overlay.transform.Find("Upgrade");
-
-        try
-        {
-            int z = UnlockTier[UnlockLvl].Enemy.Length;
-        }
-        catch
-        {
-            UnlocksLeft = false;
-            c.gameObject.SetActive(false);
-        }
-        finally
-        {
-            if(UnlocksLeft)
-            {
-                for (int i = 0; i <= 4; i++)
-                {
-                    UpgradeProgressBars[i].currentPercent = 0;
-                    try
-                    {
-                        UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Enemy[i].name);
-                    }
-                    catch
-                    {
-                        UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + "Undiscovered");
-                    }
-                }
-                UpgradeProgressName.text = UnlockTier[UnlockLvl].Unlock.transform.name;
-            }
-        }
-    }
-
-    void ShowTileInfo(Collider2D a)
-    {
-        Transform b = Overlay.transform.Find("Prompt");
-        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = a.GetComponent<TileClass>().GetPercentage();
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-    }
-
-    void ShowSelectedInfo(GameObject a)
-    {
-        Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
-        Transform b = Overlay.transform.Find("Selected");
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-        b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetCost().ToString();
-        b.transform.Find("Heat").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetHeat().ToString();
-        b.transform.Find("Power").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().getConsumption().ToString();
-        b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-    }
-
-    public void unlockDefense(GameObject a, ButtonManagerBasicIcon b, string c)
-    {
-        addUnlocked(a);
-        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.transform.name);
-        UOL.icon = Resources.Load<Sprite>("Sprites/" + a.transform.name);
-        UOL.titleText = a.transform.name.ToUpper();
-        UOL.descriptionText = c;
-        UOL.UpdateUI();
-        UOL.OpenWindow();
-    }
-
-    public void increaseAvailablePower(int a)
-    {
-        AvailablePower += a;
-        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-    }
-
-    public void decreaseAvailablePower(int a)
-    {
-        AvailablePower -= a;
-        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-    }
-
+    // Returns available power 
     public int getAvailablePower()
     {
         return AvailablePower;
     }
 
-    public void increasePowerConsumption(int a)
+    // Increases available power by x amount
+    public void increaseAvailablePower(int a)
     {
-        PowerConsumption += a;
-        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        AvailablePower += a;
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
     }
 
-    public void decreasePowerConsumption(int a)
+    // Decreases available power by x amount
+    public void decreaseAvailablePower(int a)
     {
-        PowerConsumption -= a;
-        PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        AvailablePower -= a;
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
     }
 
+    // Returns power consumption
     public int getPowerConsumption()
     {
         return PowerConsumption;
     }
 
+    // Increase power consumption by x amount
+    public void increasePowerConsumption(int a)
+    {
+        PowerConsumption += a;
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.PowerUsage.text = PowerConsumption.ToString();
+    }
+
+    // Decrease power consumption by x amount
+    public void decreasePowerConsumption(int a)
+    {
+        PowerConsumption -= a;
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.PowerUsage.text = PowerConsumption.ToString();
+    }
+
+    // Add x gold to player
     public void AddGold(int a)
     {
         gold += a;
-        GoldAmount.text = gold.ToString();
+        UI.GoldAmount.text = gold.ToString();
     }
 
+    // Remove x gold from player
     public void RemoveGold(int a)
     {
         gold -= a;
-        GoldAmount.text = gold.ToString();
+        UI.GoldAmount.text = gold.ToString();
     }
 
+    // Add x essence to player
     public void AddEssence(int a)
     {
         essence += a;
-        EssenceAmount.text = essence.ToString();
+        UI.EssenceAmount.text = essence.ToString();
     }
 
+    // Remove x essence from player
     public void RemoveEssence(int a)
     {
         essence -= a;
-        EssenceAmount.text = essence.ToString();
+        UI.EssenceAmount.text = essence.ToString();
     }
 
+    // Add x iridium to player
     public void AddIridium(int a)
     {
         iridium += a;
-        IridiumAmount.text = iridium.ToString();
+        UI.IridiumAmount.text = iridium.ToString();
     }
 
+    // Remove x essence from player
     public void RemoveIridium(int a)
     {
         iridium -= a;
-        IridiumAmount.text = iridium.ToString();
+        UI.IridiumAmount.text = iridium.ToString();
     }
 
+    // Adjust the selected overlay transparency by 0.1f
     public void AdjustAlphaValue()
     {
+        Color tmp = this.GetComponent<SpriteRenderer>().color;
+        tmp.a = Adjustment;
+        this.GetComponent<SpriteRenderer>().color = tmp;
+
         if (AdjustLimiter == 5)
         {
             if (AdjustSwitch == false)
@@ -676,161 +732,120 @@ public class Survival : MonoBehaviour
         }
     }
 
+    // Set default hotbar variables
     private void PopulateHotbar()
     {
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
-        UpdateHotbar();
+        UI.UpdateHotbar();
     }
 
+    // Select object on hotbar
     public void SelectHotbar(int index)
     {
         try
         {
+            // Disable selected overlay
+            UI.ShowingInfo = false;
+            PromptOverlay.alpha = 0;
+            SelectedOverlay.SetActive(false);
+
+            // Set hotbar transform
             SelectedObj = hotbar[index];
             SwitchObj();
-            if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
-            {
-                largerUnit = true;
-                transform.localScale = new Vector3(2, 2, 1);
-            }
         }
         catch { return; }
-        if (index == 0)
-        {
-            HotbarUI.transform.Find("One").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 1)
-        {
-            HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 2)
-        {
-            HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 3)
-        {
-            HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 4)
-        {
-            HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 5)
-        {
-            HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 6)
-        {
-            HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = false;
-        }
-        else if (index == 7)
-        {
-            HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = false;
-        }
-        else
-        {
-            HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = false;
-        }
+        UI.SetSelectedHotbar(index);
     }
 
     // Changes the object that the player has selected (pass null to deselect)
-    public void SelectObject(GameObject obj)
+    public void SelectObject(Transform obj)
     {
+        // Disable selected overlay
+        UI.ShowingInfo = false;
+        PromptOverlay.alpha = 0;
+        SelectedOverlay.SetActive(false);
+
         SelectedObj = obj;
-        if (obj != null && !checkIfUnlocked(obj)) return;
+        if (obj != null && !tech.checkIfUnlocked(obj)) return;
         SwitchObj();
-        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
-        {
-            largerUnit = true;
-            transform.localScale = new Vector3(2, 2, 1);
-        }
     }
 
     // Changes the stored object for hotbar changing
-    public void SetHoverObject(GameObject obj)
+    public void SetHoverObject(Transform obj)
     {
-        if (!checkIfUnlocked(obj)) return;
+        if (!tech.checkIfUnlocked(obj)) return;
         HoveredObj = obj;
     }
 
+    // THIS IS THE CULPRIT 
+    //
     // Changes the object stored in a hotbar slot
-    public void SetHotbarSlot(int slot, GameObject obj)
+    public void SetHotbarSlot(int slot, Transform obj)
     {
-        if (!checkIfUnlocked(obj)) return;
+        Debug.Log("3 > " + obj.name);
+
+        if (!tech.checkIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
         hotbar[slot] = obj;
-        UpdateHotbar();
+        UI.UpdateHotbar();
     }
 
-    public void UpdateHotbar()
-    {
-        for (int i = 0; i < hotbar.Length; i++)
-        {
-            if (hotbar[i] != null)
-                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + hotbar[i].name);
-            else
-                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Undiscovered");
-            hotbarButtons[i].UpdateUI();
-        }
-    }
-
+    // Switch the selected object
     public void SwitchObj()
     {
-        if (largerUnit)
+        // If unit is larger then 1x1, change selected obj accordingly
+        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
+        {
+            largerUnit = true;
+            if (SelectedObj.name == "Rocket Pod") 
+                transform.localScale = new Vector2(2, 2);
+        }
+        else
         {
             largerUnit = false;
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector2(1, 1);
         }
-        DisableActiveInfo();
+
+        // Disable any active info not relative to selected object
+        UI.DisableActiveInfo();
         Adjustment = 1f;
         Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-        ShowSelectedInfo(SelectedObj);
-    }
+        UI.ShowSelectedInfo(SelectedObj);
 
-    public bool checkIfUnlocked(GameObject a)
-    {
-        for (int i = 0; i < unlocked.Count; i++)
+        // Set radius dimensions if selected object is defense
+        if (SelectedObj.tag == "Defense" && SelectedObj.name != "Wall")
         {
-            if (a.name == unlocked[i].name)
-            {
-                return true;
-            }
+            float range = SelectedObj.GetComponent<TurretClass>().range * 2 + Research.bonus_range;
+            SelectedRadius.transform.localScale = new Vector3(range, 1, range);
+            SelectedRadius.SetActive(true);
         }
-        DisableActiveInfo();
-        return false;
+        else
+        {
+            SelectedRadius.SetActive(false);
+        }
     }
 
-    public void DisableActiveInfo()
-    {
-        HotbarUI.transform.Find("One").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Two").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Three").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Four").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Five").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Six").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Seven").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Eight").GetComponent<Button>().interactable = true;
-        HotbarUI.transform.Find("Nine").GetComponent<Button>().interactable = true;
-    }
-
+    // Loads the menu scene
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
     }
 
+    // Sends all data to the save script
     public void Save()
     {
         Debug.Log("Attempting to save data");
-        SaveSystem.SaveGame(this, Spawner.GetComponent<WaveSpawner>());
+        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch);
         Debug.Log("Data was saved successfully");
 
-        SaveButton.buttonText = "SAVED";
-        SaveButton.GetComponent<CanvasGroup>().interactable = false;
-        SaveButton.UpdateUI();
+        UI.SaveButton.buttonText = "SAVED";
+        UI.SaveButton.GetComponent<CanvasGroup>().interactable = false;
+        UI.SaveButton.UpdateUI();
     }
 
+    // Returns all building locations when saving
     public int[,] GetLocationData()
     {
         Transform[] allObjects = FindObjectsOfType<Transform>();
@@ -838,14 +853,14 @@ public class Survival : MonoBehaviour
         int length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense") length += 1;
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production") length += 1;
         }
 
         int[,] data = new int[length, 4];
         length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense")
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production")
             {
                 try
                 {
@@ -866,25 +881,77 @@ public class Survival : MonoBehaviour
         return data;
     }
 
-    public void addUnlocked(GameObject a)
+    // Returns all building locations when saving
+    public float[,] GetEnemyData()
     {
-        unlocked.Add(a);
-        if (a == EssenceObj)
-        {
-            // SHOW RESEARCH GUI BUTTON
-        }
-    }
+        Transform[] allObjects = FindObjectsOfType<Transform>();
 
-    public bool checkIfBuildingUnlocked(GameObject a)
-    {
-        for (int i = 0; i < unlocked.Count; i++)
+        int length = 0;
+        for (int i = 0; i < allObjects.Length; i++)
         {
-            if (a.name == unlocked[i].name)
+            if (allObjects[i].tag == "Enemy") length += 1;
+        }
+
+        float[,] data = new float[length, 4];
+        length = 0;
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+            if (allObjects[i].tag == "Enemy")
             {
-                return true;
+                try
+                {
+                    Debug.Log(allObjects[i].name);
+                    data[length, 0] = allObjects[i].GetComponent<EnemyClass>().GetID();
+                    data[length, 1] = allObjects[i].GetComponent<EnemyClass>().GetHealth();
+                    data[length, 2] = allObjects[i].position.x;
+                    data[length, 3] = allObjects[i].position.y;
+                    length += 1;
+                }
+                catch
+                {
+                    Debug.Log("Error saving " + allObjects[i].name);
+                }
             }
         }
-        return false;
+
+        return data;
     }
 
+    // Place building loaded from a save file
+    public void PlaceSavedEnemies(float[,] a)
+    {
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            Transform enemy = GetEnemyWithID((int)a[i, 0]);
+
+            float x = a[i, 2];
+            float y = a[i, 3];
+            Vector2 position = new Vector2(x, y);
+
+            Transform obj = Instantiate(enemy, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+
+            obj.name = enemy.name;
+            enemy.gameObject.GetComponent<EnemyClass>().SetHealth((int)a[i, 1]);
+
+            Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
+        }
+    }
+
+    // Returns a buildings ID if unlocked
+    public Transform GetEnemyWithID(int a)
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i].GetComponent<EnemyClass>().GetID() == a)
+            {
+                return enemies[i];
+            }
+        }
+        return null;
+    }
+
+    public Transform GetEssenceObj()
+    {
+        return EssenceObj;
+    }
 }

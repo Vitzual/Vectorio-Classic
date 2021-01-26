@@ -38,7 +38,7 @@ public class Rocket : BulletClass
     // Move entity towards target every frame
     private void FixedUpdate()
     {
-        body.AddForce(Movement * 50f);
+        body.AddForce(Movement * 100f);
     }
 
     public override void collide()

@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 1740312508442694215}
   m_Layer: 8
   m_Name: Turbine
-  m_TagString: Defense
+  m_TagString: Production
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,22 +107,15 @@ MonoBehaviour:
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
   maxhp: 10
   health: 10
-  heat: 120
-  cost: 50000
+  heat: 50
+  cost: 20000
   level: 1
   power: 0
   ID: 11
   description: 'Uses advanced energy distribution
 
-    technology to create power.'
-  CatalogTitle1: INCREASE POWER
-  CatalogDesc1: Use turbines to increase available power by 200w each.
-  CatalogTitle2: WATCH HEAT
-  CatalogDesc2: Turbines create a LOT of heat, so make sure you're able to keep your
-    defenses up with your power production.
-  CatalogTitle3: DEFEND WELL
-  CatalogDesc3: Turbines have no defensive capabilties. Make sure to defend them
-    well, or they'll get taken down.
+    technology to create power
+    from heat.'
   rotator: {fileID: 7564783987434487212}
 --- !u!61 &1740312508442694215
 BoxCollider2D:

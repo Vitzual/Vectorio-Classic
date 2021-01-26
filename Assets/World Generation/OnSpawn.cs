@@ -7,6 +7,7 @@ public class OnSpawn : MonoBehaviour
     // Tile layer
     [SerializeField]
     private LayerMask TileLayer;
+    public LayerMask HiveLayer;
     public int WorldSeed;
 
     // Gold ore placements
@@ -30,7 +31,12 @@ public class OnSpawn : MonoBehaviour
     public int IridiumVeinSize;
     public int IridiumVeinNoise;
 
-    public void GenerateWorldData(int a)
+    // Enemy spawner thing
+    public GameObject Hive;
+    public int SpawnerRegionSize;
+    public int SpawnerSpawnAmount;
+
+    public void GenerateWorldData(int a, bool save)
     {
         // Sets the seed - This method is deprecated but works so who cares amiright?
         Random.seed = a;
@@ -38,6 +44,43 @@ public class OnSpawn : MonoBehaviour
         GenGold();
         GenEssence();
         GenIridium();
+        if (!save) GenHives();
+    }
+
+    // Gold Generation
+    private void GenHives()
+    {
+        int x;
+        int y;
+        int max = 10;
+        int att = 0;
+
+        bool valid = false;
+
+        for (int i = 0; i < SpawnerSpawnAmount; i++)
+        {
+            while (!valid)
+            {
+                x = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
+                y = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
+
+                RaycastHit2D a = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, HiveLayer);
+                RaycastHit2D b = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
+
+                if (a.collider == null && b.collider == null)
+                {
+                    valid = true;
+                    var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.identity);
+                    temp.name = Hive.name;
+                }
+
+                att++;
+                if (att >= max)
+                    valid = true;
+            }
+            att = 0;
+            valid = false;
+        }
     }
 
     // Gold Generation
@@ -50,8 +93,8 @@ public class OnSpawn : MonoBehaviour
 
         for (int i = 0; i < GoldSpawnAmount; i++)
         {
-            x = Random.Range(-GoldRegionSize, GoldRegionSize)*5;
-            y = Random.Range(-GoldRegionSize, GoldRegionSize)*5;
+            x = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
+            y = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
 
             if ((x >= 15 + GoldVeinSize || x <= -15 - GoldVeinSize) && (y >= 15 + GoldVeinSize || y <= -15 - GoldVeinSize))
             {
@@ -69,7 +112,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
+                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 10 || x + a <= -10) && (y + b >= 10 || y - b <= 10))
                     {
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;

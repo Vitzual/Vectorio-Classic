@@ -28,7 +28,7 @@ public abstract class TurretClass : TileClass
     {
         var colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position, 
-            range, 
+            range + Research.bonus_range, 
             1 << LayerMask.NameToLayer("Enemy"));
         GameObject result = null;
         float closest = float.PositiveInfinity;
@@ -98,13 +98,14 @@ public abstract class TurretClass : TileClass
         }
         else
         {
-            for(int i=0; i<bulletAmount; i+=1)
+            for (int i = 0; i < bulletAmount; i += 1)
             {
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
                 bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
             }
-            nextFire = fireRate;
+            if (fireRate - Research.bonus_firerate <= 0.03f) nextFire = 0.03f;
+            else nextFire = fireRate - Research.bonus_firerate;
         }
     }
 

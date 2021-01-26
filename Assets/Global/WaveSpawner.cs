@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
-using System.Collections.Generic;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-
+    public Survival survival;
+    public Technology technology;
     public ProgressBar heatUI;
+    public TextMeshProUGUI heatAmount;
     public int htrack = 0;
-    public int heat = 0;
-    List<GameObject> discovered = new List<GameObject>();
 
     private void Start()
     {
@@ -18,10 +18,12 @@ public class WaveSpawner : MonoBehaviour
     [System.Serializable]
     public class Enemies
     {
+        public string name;
         public Transform enemyObject;
         public float chance;
         public float minHeat;
         public float maxHeat;
+        public int amount;
     }
 
     public Enemies[] enemy;
@@ -30,12 +32,15 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int a=0; a<enemy.Length; a++)
         {
-            if (heat >= enemy[a].minHeat && heat <= enemy[a].maxHeat)
+            if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat) || (htrack >= enemy[a].minHeat && enemy[a].maxHeat == 10000))
             {
-                var proc = Random.Range(0, 100);
-                if (proc <= enemy[a].chance)
+                for(int b=0; b<enemy[a].amount; b++)
                 {
-                    SpawnEnemy(enemy[a].enemyObject);
+                    var proc = Random.Range(0, 100);
+                    if (proc <= enemy[a].chance)
+                    {
+                        SpawnEnemy(enemy[a].enemyObject);
+                    }
                 }
             }
         }
@@ -44,7 +49,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * 370;
+        transform.position += transform.right * (survival.AOC_Size + 100);
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
@@ -54,33 +59,15 @@ public class WaveSpawner : MonoBehaviour
     public void increaseHeat(int a)
     {
         htrack += a;
-        heat = htrack / 150;
-        heatUI.currentPercent = heat;
-
-        //bool foundEnemy = false;
-        //for(int i=0; i<discovered.Count; i++)
-        //{
-        //    if (discovered[i] == )
-        //}
+        heatUI.currentPercent = ((float)htrack / 10000f * 100f);
+        heatAmount.text = htrack.ToString();
+        technology.UpdateUnlock(htrack);
     }
 
     public void decreaseHeat(int a)
     {
         htrack -= a;
-        heat = htrack / 150;
-        if (heat < 0) heat = 0;
-        heatUI.currentPercent = heat;
-    }
-
-    public bool checkIfEnemyDiscovered(GameObject a)
-    {
-        for (int i=0; i<enemy.Length; i++)
-        {
-            if (enemy[i].enemyObject == a)
-            {
-                if (enemy[i].minHeat <= heat) return true;
-            }
-        }
-        return false;
+        heatUI.currentPercent = ((float)htrack / 10000f * 100f);
+        heatAmount.text = htrack.ToString();
     }
 }

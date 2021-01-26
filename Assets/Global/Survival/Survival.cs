@@ -175,11 +175,14 @@ public class Survival : MonoBehaviour
     {
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
-        else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
 
-        // Make color flash
-        AdjustAlphaValue();
+        // Check if object selected
+        if (SelectedObj != null)
+        {
+            // Check unit size and make flash
+            CheckSize();
+            AdjustAlphaValue();
+        }
 
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && Input.mousePosition.y >= 200)
@@ -204,6 +207,7 @@ public class Survival : MonoBehaviour
                 if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
                     RemoveGold(cost);
+                    Debug.Log(SelectedObj);
                     if (SelectedObj == WallObj)
                     {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -265,6 +269,7 @@ public class Survival : MonoBehaviour
             }
         }
 
+        // Check if hotbar selected
         CheckNumberInput();
 
         // Rotates object if no menus open
@@ -284,6 +289,7 @@ public class Survival : MonoBehaviour
             if (UI.ResearchOpen)
             {
                 UI.CloseResearchOverlay();
+                SetHoverObject(null);
             }
             UI.BuildingOpen = true;
             UI.SetOverlayStatus("Survival Menu", true);
@@ -347,6 +353,13 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
+    }
+
+    // Checks unit size
+    private void CheckSize()
+    {
+        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
+        else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
     }
 
     // Update per second variables

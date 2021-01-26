@@ -88,7 +88,7 @@ public class Research : MonoBehaviour
         // Still have to add hub & auto repair tool thing
         if (type.ToLower() == "hub")
         {
-            SurvivalCS.increaseAvailablePower(10000); // Increase hub power by 5000
+            SurvivalCS.increaseAvailablePower(5000); // Increase hub power by 5000
             SurvivalCS.IncreaseAOC(1); // Increases area of control by 1
         }
         else if (type.ToLower() == "damage") bonus_damage += 2; // Increases damage of all defenses by 2

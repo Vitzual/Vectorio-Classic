@@ -7,6 +7,7 @@ public class SaveData
 {
     //public int[][] Buildings;
     public int[,] Locations;
+    public float[,] Enemies;
     public int PowerUsage;
     public int PowerAvailable;
     public int Gold;
@@ -25,6 +26,7 @@ public class SaveData
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
         Locations = data.GetLocationData();
+        Enemies = data.GetEnemyData();
         PowerUsage = data.PowerConsumption;
         PowerAvailable = data.AvailablePower;
         Gold = data.gold;

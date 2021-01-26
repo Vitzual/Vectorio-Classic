@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a54a7257a6436d41b873f1053130384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonIcon: {fileID: 21300000, guid: 5b24b5ced7a8f544eb56801f706484eb, type: 3}
+  buttonIcon: {fileID: 21300000, guid: fdd6f2cd7deae1b4f91b6f60ced24705, type: 3}
   clickEvent:
     m_PersistentCalls:
       m_Calls:
@@ -867,7 +867,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 984b2f0993c285549b39d22485624a54, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1296,7 +1296,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5b24b5ced7a8f544eb56801f706484eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fdd6f2cd7deae1b4f91b6f60ced24705, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4352,6 +4352,16 @@ PrefabInstance:
       objectReference: {fileID: 1795444543}
     - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
+      propertyPath: EnemyLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
       propertyPath: UpgradeProgressName
       value: 
       objectReference: {fileID: 616342854}
@@ -4400,6 +4410,102 @@ PrefabInstance:
       propertyPath: hotbar.Array.data[8]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[2]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: dcb2a9dca3130894ca18fddf87c5a6f8,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[3]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 3749cca1cee8c56448e9e1b42c09331b,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[4]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[5]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[6]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: f2b4c901297b4114ca14deb67a95ccb7,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[7]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: e57ec123ab14d1341ad2ddc9a22232bd,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[8]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[9]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: e540792b38146094e9f14cff0843606a,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[10]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[11]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: bd514402c26c34244870ae236ef14dc5,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[12]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[13]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[14]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: e256f5ce0b4c32d4eb230de6b3fa1889,
+        type: 3}
+    - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
+        type: 3}
+      propertyPath: enemies.Array.data[15]
+      value: 
+      objectReference: {fileID: 6065519297016329532, guid: 86a14823f54eb524abc7611ba626ca99,
+        type: 3}
     - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
       propertyPath: hotbarButtons.Array.data[0]
@@ -5289,6 +5395,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 314160228769333364, guid: 96c4df673b42c474499c766f1755e112,
+        type: 3}
+      propertyPath: m_TagString
+      value: Sound
+      objectReference: {fileID: 0}
+    - target: {fileID: 314160228769333368, guid: 96c4df673b42c474499c766f1755e112,
+        type: 3}
+      propertyPath: sliderTag
+      value: Sound
+      objectReference: {fileID: 0}
+    - target: {fileID: 314160228769333368, guid: 96c4df673b42c474499c766f1755e112,
+        type: 3}
+      propertyPath: enableSaving
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 314160228769333368, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}

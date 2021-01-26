@@ -22,6 +22,9 @@ public class Survival : MonoBehaviour
     // Research object
     public Research rsrch;
 
+    // Enemy layer
+    public LayerMask EnemyLayer;
+
     // Resource stats
     public int gold = 0;
     public int essence = 0;
@@ -60,6 +63,9 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
     [SerializeField] private Transform TeslaObj;         // ID = 12
+
+    // Enemy list
+    public Transform[] enemies;
 
     // The seed the word is set to
     public int seed;
@@ -158,6 +164,16 @@ public class Survival : MonoBehaviour
 
             // Get research save data
             rsrch.SetResearchData(data.ResearchedTiers);
+
+            // Place saved enemies 
+            try
+            {
+                PlaceSavedEnemies(data.Enemies);
+            }
+            catch
+            {
+                Debug.Log("Save file doesn't contain enemy tracking");
+            }
         }
         catch
         {
@@ -191,11 +207,14 @@ public class Survival : MonoBehaviour
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
 
+            // Raycast tile to see if there is an enemy occupying the tile
+            RaycastHit2D enemyHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, EnemyLayer);
+
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
             // Check if placement is within AOC
-            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
+            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
             {
                 if (SelectedObj == EssenceObj)
                 {
@@ -851,6 +870,75 @@ public class Survival : MonoBehaviour
         }
 
         return data;
+    }
+
+    // Returns all building locations when saving
+    public float[,] GetEnemyData()
+    {
+        Transform[] allObjects = FindObjectsOfType<Transform>();
+
+        int length = 0;
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+            if (allObjects[i].tag == "Enemy") length += 1;
+        }
+
+        float[,] data = new float[length, 4];
+        length = 0;
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+            if (allObjects[i].tag == "Enemy")
+            {
+                try
+                {
+                    Debug.Log(allObjects[i].name);
+                    data[length, 0] = allObjects[i].GetComponent<EnemyClass>().GetID();
+                    data[length, 1] = allObjects[i].GetComponent<EnemyClass>().GetHealth();
+                    data[length, 2] = allObjects[i].position.x;
+                    data[length, 3] = allObjects[i].position.y;
+                    length += 1;
+                }
+                catch
+                {
+                    Debug.Log("Error saving " + allObjects[i].name);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    // Place building loaded from a save file
+    public void PlaceSavedEnemies(float[,] a)
+    {
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            Transform enemy = GetEnemyWithID((int)a[i, 0]);
+
+            float x = a[i, 2];
+            float y = a[i, 3];
+            Vector2 position = new Vector2(x, y);
+
+            Transform obj = Instantiate(enemy, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+
+            obj.name = enemy.name;
+            enemy.gameObject.GetComponent<EnemyClass>().SetHealth((int)a[i, 1]);
+
+            Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
+        }
+    }
+
+    // Returns a buildings ID if unlocked
+    public Transform GetEnemyWithID(int a)
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i].GetComponent<EnemyClass>().GetID() == a)
+            {
+                return enemies[i];
+            }
+        }
+        return null;
     }
 
     public Transform GetEssenceObj()

@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public abstract class EnemyClass : MonoBehaviour
 {
+    // Enemy ID
+    public int ID;
 
     // Effect variables
     private Transform burning_effect;
@@ -249,4 +251,7 @@ public abstract class EnemyClass : MonoBehaviour
         return result;
     }
 
+    public int GetID() { return ID; }
+    public int GetHealth() { return health; }
+    public void SetHealth(int a) { health = a; }
 }

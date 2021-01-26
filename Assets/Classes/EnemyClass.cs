@@ -112,7 +112,6 @@ public abstract class EnemyClass : MonoBehaviour
             }
 
             // Instantiate death effect and destroy self
-            GameObject.Find("Survival").GetComponent<Technology>().UpdateUnlock(gameObject.transform);
             Instantiate(Effect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

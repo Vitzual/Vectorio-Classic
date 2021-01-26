@@ -148,16 +148,6 @@ public class Survival : MonoBehaviour
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
             PlaceSavedBuildings(data.Locations);
 
-            // If old save file, set tracking progress to 0
-            try
-            {
-                if (data.UnlockProgress[0] >= 0)
-                {
-                    tech.SetProgress(data.UnlockProgress);
-                }
-            }
-            catch { Debug.Log("Save file does not contain tracking progress"); }
-
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
@@ -355,6 +345,14 @@ public class Survival : MonoBehaviour
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
             SelectedRadius.SetActive(false);
+        }
+
+        // If a placed building is selected, un select it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ShowingInfo)
+        {
+            UI.ShowingInfo = false;
+            PromptOverlay.alpha = 0;
+            SelectedOverlay.SetActive(false);
         }
 
         // If escape pressed and menu not open, open it
@@ -764,6 +762,11 @@ public class Survival : MonoBehaviour
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
     {
+        // Disable selected overlay
+        UI.ShowingInfo = false;
+        PromptOverlay.alpha = 0;
+        SelectedOverlay.SetActive(false);
+
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
         SwitchObj();

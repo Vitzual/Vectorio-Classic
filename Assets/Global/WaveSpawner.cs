@@ -5,6 +5,7 @@ using TMPro;
 public class WaveSpawner : MonoBehaviour
 {
     public Survival survival;
+    public Technology technology;
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
     public int htrack = 0;
@@ -60,6 +61,7 @@ public class WaveSpawner : MonoBehaviour
         htrack += a;
         heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
+        technology.UpdateUnlock(htrack);
     }
 
     public void decreaseHeat(int a)

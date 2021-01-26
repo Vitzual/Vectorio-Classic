@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
 
@@ -19,9 +20,7 @@ public class Technology : MonoBehaviour
     {
         public Transform Unlock;
         public ButtonManagerBasicIcon InventoryButton;
-        public Transform[] Enemy;
-        public int[] AmountNeeded;
-        public int[] AmountTracked;
+        public int HeatNeeded;
     }
     public Unlockables[] UnlockTier;
 
@@ -43,12 +42,6 @@ public class Technology : MonoBehaviour
         UnlockLvl = a;
     }
 
-    // Set unlock progress 
-    public void SetProgress(int[] a)
-    {
-        UnlockTier[UnlockLvl].AmountTracked = a;
-    }
-
     // Force unlock progress to update
     // Usually called when loading a save
     public void ForceUpdateCheck()
@@ -57,45 +50,23 @@ public class Technology : MonoBehaviour
         UpdateUnlockableGui();
     }
 
-    // 
+    // Updates all unlocks and UI's
     public void UpdateUnlockableGui()
     {
         for (int i = 0; i < UnlockLvl; i++)
         {
             addUnlocked(UnlockTier[i].Unlock);
-            Debug.Log(UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
             UnlockTier[i].InventoryButton.UpdateUI();
         }
     }
-
-    public void UpdateUnlock(Transform a)
+    
+    // Gets called when checking if something should be unlocked
+    public void UpdateUnlock(int a)
     {
         if (UnlocksLeft)
         {
-            // Itterate through list and update GUI accordingly
-            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
-            {
-                if (UnlockTier[UnlockLvl].Enemy[i].name == a.name)
-                {
-                    // Increment amount tracked and update GUI
-                    UnlockTier[UnlockLvl].AmountTracked[i] += 1;
-                    UpdateUnlockGui(i, ((double)UnlockTier[UnlockLvl].AmountTracked[i] / (double)UnlockTier[UnlockLvl].AmountNeeded[i]) * 100);
-                }
-            }
-
-            // Check if requirements have been met
-            bool RequirementsMetCheck = true;
-            for (int i = 0; i < UnlockTier[UnlockLvl].Enemy.Length; i++)
-            {
-                if (UnlockTier[UnlockLvl].AmountTracked[i] < UnlockTier[UnlockLvl].AmountNeeded[i])
-                {
-                    RequirementsMetCheck = false;
-                }
-            }
-
-            // If requirements met, unlock and start next unlock
-            if (RequirementsMetCheck == true)
+            if (UnlockTier[UnlockLvl].HeatNeeded <= a)
             {
                 Transform newUnlock = UnlockTier[UnlockLvl].Unlock;
 
@@ -105,25 +76,7 @@ public class Technology : MonoBehaviour
         }
     }
 
-    public void UpdateUnlockGui(int a, double b)
-    {
-        UI.UpgradeProgressBars[a].currentPercent = (float)b;
-    }
-
-    public int[] GetAmountTracked()
-    {
-        try
-        {
-            return UnlockTier[UnlockLvl].AmountTracked;
-        }
-        catch
-        {
-            int[] result = new int[1];
-            result[0] = 0;
-            return result;
-        }
-    }
-
+    // Starts the next unlock 
     public void StartNextUnlock()
     {
         UnlockLvl += 1;
@@ -131,7 +84,7 @@ public class Technology : MonoBehaviour
 
         try
         {
-            int z = UnlockTier[UnlockLvl].Enemy.Length;
+            int z = UnlockTier[UnlockLvl].HeatNeeded;
         }
         catch
         {
@@ -142,23 +95,14 @@ public class Technology : MonoBehaviour
         {
             if (UnlocksLeft)
             {
-                for (int i = 0; i <= 4; i++)
-                {
-                    UI.UpgradeProgressBars[i].currentPercent = 0;
-                    try
-                    {
-                        UI.UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Enemy[i].name);
-                    }
-                    catch
-                    {
-                        UI.UpgradeProgressBars[i].transform.Find("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + "Undiscovered");
-                    }
-                }
-                UI.UpgradeProgressName.text = UnlockTier[UnlockLvl].Unlock.transform.name;
+                c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].HeatNeeded.ToString();
+                c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].Unlock.name.ToString().ToUpper();
+                c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Unlock.name.ToString());
             }
         }
     }
 
+    // Unlocks a defense and displays to screen
     public void UnlockDefense(Transform a, ButtonManagerBasicIcon b, string c)
     {
         addUnlocked(a);
@@ -170,6 +114,7 @@ public class Technology : MonoBehaviour
         UI.UOL.OpenWindow();
     }
 
+    // Checks if a building is unlocked
     public bool checkIfUnlocked(Transform a)
     {
         for (int i = 0; i < unlocked.Count; i++)

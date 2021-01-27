@@ -20,23 +20,39 @@ public class WallAI : TileClass
         RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name == "Wall")
+        if (a.collider != null && a.collider.name.Contains("Wall"))
         {
+            if (a.collider.name == "Heavy Wall")
+                a.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(1);
+            if (transform.name == "Heavy Wall")
+                transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(3);
             a.collider.GetComponent<WallAI>().UpdateSprite(1);
             UpdateSprite(3);
         }
-        if (b.collider != null && b.collider.name == "Wall")
+        if (b.collider != null && b.collider.name.Contains("Wall"))
         {
+            if (b.collider.name == "Heavy Wall")
+                b.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(3);
+            if (transform.name == "Heavy Wall")
+                transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(1);
             b.collider.GetComponent<WallAI>().UpdateSprite(3);
             UpdateSprite(1);
         }
-        if (c.collider != null && c.collider.name == "Wall")
+        if (c.collider != null && c.collider.name.Contains("Wall"))
         {
+            if (c.collider.name == "Heavy Wall")
+                c.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(2);
+            if (transform.name == "Heavy Wall")
+                transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(4);
             c.collider.GetComponent<WallAI>().UpdateSprite(2);
             UpdateSprite(4);
         }
-        if (d.collider != null && d.collider.name == "Wall")
+        if (d.collider != null && d.collider.name.Contains("Wall"))
         {
+            if (d.collider.name == "Heavy Wall")
+                d.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(4);
+            if (transform.name == "Heavy Wall")
+                transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(2);
             d.collider.GetComponent<WallAI>().UpdateSprite(4);
             UpdateSprite(2);
         }
@@ -48,20 +64,28 @@ public class WallAI : TileClass
         RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name == "Wall")
+        if (a.collider != null && a.collider.name.Contains("Wall"))
         {
+            if (a.collider.name == "Heavy Wall")
+                a.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-1);
             a.collider.GetComponent<WallAI>().UpdateSprite(-1);
         }
-        if (b.collider != null && b.collider.name == "Wall")
+        if (b.collider != null && b.collider.name.Contains("Wall"))
         {
+            if (b.collider.name == "Heavy Wall")
+                b.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-3);
             b.collider.GetComponent<WallAI>().UpdateSprite(-3);
         }
-        if (c.collider != null && c.collider.name == "Wall")
+        if (c.collider != null && c.collider.name.Contains("Wall"))
         {
+            if (c.collider.name == "Heavy Wall")
+                c.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-2);
             c.collider.GetComponent<WallAI>().UpdateSprite(-2);
         }
-        if (d.collider != null && d.collider.name == "Wall")
+        if (d.collider != null && d.collider.name.Contains("Wall"))
         {
+            if (d.collider.name == "Heavy Wall")
+                d.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-4);
             d.collider.GetComponent<WallAI>().UpdateSprite(-4);
         }
 
@@ -123,17 +147,20 @@ public class WallAI : TileClass
         else if (total == 1)
         {
             SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallDuo");
-            if (bottom == 1)
+            if (transform.name != "Heavy Wall")
             {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
-            }
-            else if (right == 1)
-            {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180f));
-            } 
-            else if (top == 1)
-            {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
+                if (bottom == 1)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+                }
+                else if (right == 1)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180f));
+                }
+                else if (top == 1)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
+                }
             }
         }
         else if (total == 2)
@@ -141,54 +168,63 @@ public class WallAI : TileClass
             if (top == bottom || left == right)
             {
                 SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallCross");
-                if (top == 1 && bottom == 1)
+                if (transform.name != "Heavy Wall")
                 {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
-                }
-                else
-                {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                    if (top == 1 && bottom == 1)
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+                    }
+                    else
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                    }
                 }
             }
             else
             {
                 SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallCorner");
-                if (left == 1 && bottom == 1) 
+                if (transform.name != "Heavy Wall")
                 {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
-                }
-                else if (bottom == 1 && right == 1)
-                {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0f));
-                }
-                else if (right == 1 && top == 1)
-                {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
-                }
-                else if (top == 1 && left == 1)
-                {
-                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180f));
+                    if (left == 1 && bottom == 1)
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
+                    }
+                    else if (bottom == 1 && right == 1)
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0f));
+                    }
+                    else if (right == 1 && top == 1)
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+                    }
+                    else if (top == 1 && left == 1)
+                    {
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180f));
+                    }
                 }
             }
         }
         else if (total == 3)
         {
             SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallTrio");
-            if (top == 0)
+            if (transform.name != "Heavy Wall")
             {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0f));
-            }
-            else if (right == 0)
-            {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
-            }
-            else if (bottom == 0)
-            {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -180f));
-            } 
-            else
-            {
-                transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+                if (top == 0)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0f));
+                }
+                else if (right == 0)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
+                }
+                else if (bottom == 0)
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -180f));
+                }
+                else
+                {
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
+                }
             }
         }
         else if (total == 4)

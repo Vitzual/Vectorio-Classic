@@ -63,6 +63,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
     [SerializeField] private Transform TeslaObj;         // ID = 12
+    
 
     // Enemy list
     public Transform[] enemies;
@@ -101,7 +102,7 @@ public class Survival : MonoBehaviour
     public int AOC_Level = 1;
 
     // The area of control size
-    public float AOC_Size = 150;
+    private int AOC_Size = 150;
 
     // The AOC border game object;
     public Transform AOC_Object;
@@ -252,7 +253,7 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
-                if (rayHit.collider.name == "Wall")
+                if (rayHit.collider.name.Contains("Wall"))
                 {
                     UpdateWallRemoved();
                 }
@@ -384,6 +385,8 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
+
+        else if (Input.GetKeyDown(KeyCode.G)) IncreaseAOC();
     }
 
     // Checks unit size
@@ -511,46 +514,44 @@ public class Survival : MonoBehaviour
         RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name == "Wall")
+        if (a.collider != null && a.collider.name.Contains("Wall"))
         {
+            if (a.collider.name == "Heavy Wall")
+                a.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-1);
             a.collider.GetComponent<WallAI>().UpdateSprite(-1);
         }
-        if (b.collider != null && b.collider.name == "Wall")
+        if (b.collider != null && b.collider.name.Contains("Wall"))
         {
+            if (b.collider.name == "Heavy Wall")
+                b.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-3);
             b.collider.GetComponent<WallAI>().UpdateSprite(-3);
         }
-        if (c.collider != null && c.collider.name == "Wall")
+        if (c.collider != null && c.collider.name.Contains("Wall"))
         {
+            if (c.collider.name == "Heavy Wall")
+                c.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-2);
             c.collider.GetComponent<WallAI>().UpdateSprite(-2);
         }
-        if (d.collider != null && d.collider.name == "Wall")
+        if (d.collider != null && d.collider.name.Contains("Wall"))
         {
+            if (d.collider.name == "Heavy Wall")
+                d.collider.transform.GetChild(0).GetComponent<WallAI>().UpdateSprite(-4);
             d.collider.GetComponent<WallAI>().UpdateSprite(-4);
         }
     }
 
     // Increase the AOC size
-    public void IncreaseAOC(int a)
+    public void IncreaseAOC()
     {
-        AOC_Level += a;
-
-        if (AOC_Level == 2)
-        {
-            // Set new AOC_Size
-            AOC_Size = 455;
-
-            // Increase border sizes
-            AOC_Object.localScale = new Vector2(3, 3);
-
-        }
-        else if (AOC_Level == 3)
-        {
-            // Set new AOC_Size
-            AOC_Size = 745;
-
-            // Increase border sizes
-            AOC_Object.gameObject.SetActive(false);
-        }
+        AOC_Level += 1;
+        AOC_Size += 60;
+        AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
+    }
+    
+    // Returns the AOC size
+    public int GetAOC()
+    {
+        return AOC_Size;
     }
 
     // Set the games playback speed

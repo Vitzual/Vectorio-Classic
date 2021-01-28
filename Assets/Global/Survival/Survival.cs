@@ -217,14 +217,15 @@ public class Survival : MonoBehaviour
                 if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
                     RemoveGold(cost);
+
+                    // If it is a wall, dont use rotation
                     if (SelectedObj.name == "Wall")
-                    {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                    }
-                    else
-                    {
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
-                    }
+                    else if (SelectedObj.name == "Conveyor")
+                        CalculateConveyor();
+                    else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+
+
                     LastObj.name = SelectedObj.name;
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.GetComponent<WaveSpawner>().increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
@@ -386,6 +387,41 @@ public class Survival : MonoBehaviour
         }
 
         else if (Input.GetKeyDown(KeyCode.G)) IncreaseAOC();
+    }
+
+    // Calculates conveyor 
+    public void CalculateConveyor()
+    {
+        // Instantiate new object
+        Transform TempObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+
+        // Change rotation of a previous conveyor
+        if (LastObj != null && LastObj.transform.name == "Conveyor") {
+
+            if (transform.position.x - 5 == LastObj.position.x)
+            {
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
+            }
+            else if (transform.position.x + 5 == LastObj.position.x)
+            {
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
+            }
+            else if (transform.position.y - 5 == LastObj.position.y)
+            {
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
+            }
+            else if (transform.position.y + 5 == LastObj.position.y)
+            {
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
+            }
+        }
+
+        // Instantiate new object
+        LastObj = TempObj;
     }
 
     // Checks unit size

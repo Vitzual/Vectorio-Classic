@@ -57,13 +57,11 @@ public class CollectorAI: TileClass
         ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
         if (!ConveyorScript.EntranceOccupied && ConveyorScript.ValidRotation(rotation))
         {
-            Debug.Log("Valid tile, creating new gold");
             ConveyorScript.SetEntranceStatus(true);
             GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
             if (enhanced) GoldScript.RegisterNewCoin(Object.transform, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount * 2);
             else GoldScript.RegisterNewCoin(Object.transform, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount);
         }
-        else Debug.Log("Invalid tile");
     }
 
     // Increase gold

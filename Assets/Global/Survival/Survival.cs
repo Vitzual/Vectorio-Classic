@@ -92,6 +92,9 @@ public class Survival : MonoBehaviour
     // Stores information about previously selected object
     private Transform LastObj;
 
+    // Stores information about 3rd last conveyor object
+    private Transform LastConveyor;
+
     // The rotation of the selected object
     private float rotation = 0f;
 
@@ -394,29 +397,30 @@ public class Survival : MonoBehaviour
     {
         // Instantiate new object
         Transform TempObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        TempObj.name = SelectedObj.name;
 
         // Change rotation of a previous conveyor
         if (LastObj != null && LastObj.transform.name == "Conveyor") {
 
-            if (transform.position.x - 5 == LastObj.position.x)
+            if (transform.position.x - 5 == LastObj.position.x && transform.position.y == LastObj.position.y)
             {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
-                TempObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(0f, true);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(0f, false);
             }
-            else if (transform.position.x + 5 == LastObj.position.x)
+            else if (transform.position.x + 5 == LastObj.position.x && transform.position.y == LastObj.position.y)
             {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
-                TempObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(180f, true);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(180f, false);
             }
-            else if (transform.position.y - 5 == LastObj.position.y)
+            else if (transform.position.y - 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
             {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
-                TempObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(90f, true);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(90f, false);
             }
-            else if (transform.position.y + 5 == LastObj.position.y)
+            else if (transform.position.y + 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
             {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
-                TempObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
+                LastObj.GetComponent<ConveyorAI>().ChangeRotation(270f, true);
+                TempObj.GetComponent<ConveyorAI>().ChangeRotation(270f, false);
             }
         }
 

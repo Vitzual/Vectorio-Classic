@@ -217,8 +217,7 @@ public class Survival : MonoBehaviour
                 if (cost <= gold && PowerConsumption + power <= AvailablePower)
                 {
                     RemoveGold(cost);
-                    Debug.Log(SelectedObj);
-                    if (SelectedObj == WallObj)
+                    if (SelectedObj.name == "Wall")
                     {
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     }

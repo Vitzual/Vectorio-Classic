@@ -1075,7 +1075,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 984b2f0993c285549b39d22485624a54, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1875,9 +1875,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 873270996}
+  - component: {fileID: 873270997}
   - component: {fileID: 873270995}
   m_Layer: 0
-  m_Name: Settings Manager
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1912,6 +1913,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &873270997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873270994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbc9df35fd986e41be37ca21b92dda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  Coins: []
+  StagnantCoins: []
 --- !u!114 &909764020 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1358682669781503951, guid: b05f2e9544ae1a548b73b6ed3222e7fb,
@@ -4751,7 +4769,7 @@ PrefabInstance:
         type: 3}
       propertyPath: WallObj
       value: 
-      objectReference: {fileID: 7564576898396080589, guid: b45565eef60fc6c4fba5ffe1841691d7,
+      objectReference: {fileID: 698323475936855479, guid: 7c92b68f429d93341b554d5926fb4a88,
         type: 3}
     - target: {fileID: 5620137559107493224, guid: ef33d91db692f684a9dd204fde8841c6,
         type: 3}
@@ -8160,7 +8178,7 @@ PrefabInstance:
     - target: {fileID: 4862177310186051216, guid: b05f2e9544ae1a548b73b6ed3222e7fb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 250
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4862177310186051216, guid: b05f2e9544ae1a548b73b6ed3222e7fb,
         type: 3}
@@ -9813,7 +9831,7 @@ PrefabInstance:
     - target: {fileID: 7822942446693651252, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ae8584dbb91e6d44bda9f04f09bbf98, type: 3}

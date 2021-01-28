@@ -55,13 +55,12 @@ public class GoldAI : MonoBehaviour
     public List<InactiveCoins> StagnantCoins;
 
     // Every frame, update position of all coins
-    void FixedUpdate()
+    void Update()
     {
         CheckInactiveCoins();
-        for (int i=0; i < Coins.Count; i++)
+        for (int i = 0; i < Coins.Count; i++)
         {
             if (Coins[i].Object.position == Coins[i].Destination)
-                // Check if destination is valid
                 i -= GetNewDestination(i);
             else
                 Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);

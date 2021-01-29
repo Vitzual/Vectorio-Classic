@@ -13,58 +13,45 @@ public class GoldAI : MonoBehaviour
     public class ActiveCoins
     {
         // Constructor method
-        public ActiveCoins(Transform Object, ConveyorAI Target, Vector3 Destination, int Amount, bool AtEntrance)
+        public ActiveCoins(Transform Object, Vector3 Location, ConveyorAI Target, ConveyorAI Previous, Vector3 Destination, int Amount, bool AtEntrance, bool IsStagnant)
         {
             this.Object = Object;
+            this.Location = Location;
             this.Target = Target;
+            this.Previous = Previous;
             this.Destination = Destination;
             this.Amount = Amount;
             this.AtEntrance = AtEntrance;
+            this.IsStagnant = IsStagnant;
         }
 
         // Class variables
         public Transform Object { get; set; }
+        public Vector3 Location { get; set; }
         public ConveyorAI Target { get; set; }
+        public ConveyorAI Previous { get; set; }
         public Vector3 Destination { get; set; }
         public int Amount { get; set; }
         public bool AtEntrance { get; set; }
+        public bool IsStagnant { get; set; }
     }
     public List<ActiveCoins> Coins;
-
-    // Contains all inactive coins in scene
-    [System.Serializable]
-    public class InactiveCoins
-    {
-        // Constructor method
-        public InactiveCoins(Transform Object, ConveyorAI Target, int Amount, Vector2 Location, ConveyorAI Previous)
-        {
-            this.Object = Object;
-            this.Target = Target;
-            this.Amount = Amount;
-            this.Location = Location;
-            this.Previous = Previous;
-        }
-
-        // Class variables
-        public Vector2 Location { get; set; }
-        public Transform Object { get; set; }
-        public ConveyorAI Target { get; set; }
-        public ConveyorAI Previous { get; set; }
-        public int Amount { get; set; }
-    }
-    public List<InactiveCoins> StagnantCoins;
 
     // Every frame, update position of all coins
     void FixedUpdate()
     {
-        CheckInactiveCoins();
         for (int i = 0; i < Coins.Count; i++)
         {
             try
             {
+                if (Coins[i].IsStagnant)
+                {
+                    CheckInactiveCoin(i);
+                    continue;
+                }
                 if (Coins[i].Object.position == Coins[i].Destination)
-                    i -= GetNewDestination(i);
-                else
+                    GetNewDestination(i);
+                else 
                     Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);
             }
             catch
@@ -72,29 +59,27 @@ public class GoldAI : MonoBehaviour
                 SetCoinInactive(i);
                 i -= 1;
             }
-
         }
     }
 
     // Register a new coin under active class
-    public void RegisterNewCoin(Transform Object, ConveyorAI Target, Vector3 Destination, int Amount)
+    public void RegisterNewCoin(Transform Object, Vector3 Location, ConveyorAI Target, Vector3 Destination, int Amount)
     {
-        Coins.Add(new ActiveCoins(Object, Target, Destination, Amount, true));
+        Coins.Add(new ActiveCoins(Object, Location, Target, null, Destination, Amount, true, false));
     }
 
     // Sets a new target destination
-    protected int GetNewDestination(int CoinID)
+    protected void GetNewDestination(int CoinID)
     {
         // Check here if at entrance or exit
         ConveyorAI ConveyorScript = Coins[CoinID].Target;
-        Debug.Log("Looking if next conveyor has an exit open");
-        if (Coins[CoinID].AtEntrance && !ConveyorScript.ExitOccupied) // something
+
+        if (Coins[CoinID].AtEntrance && !ConveyorScript.ExitOccupied)
         {
             Coins[CoinID].AtEntrance = false;
             Coins[CoinID].Destination = ConveyorScript.GetExitLocation();
             ConveyorScript.SetExitStatus(true);
             ConveyorScript.SetEntranceStatus(false);
-            return 0;
         }
         else if (!Coins[CoinID].AtEntrance)
         {
@@ -115,55 +100,61 @@ public class GoldAI : MonoBehaviour
                     break;
             }
             RaycastHit2D Target = Physics2D.Raycast(RayLoc, Vector2.zero, Mathf.Infinity, TileLayer);
+            Coins[CoinID].Location = RayLoc;
 
             // Check target to see if it exists
             if (Target.transform != null && Target.transform.name == "Conveyor")
-
+            {
+                ConveyorAI Conveyor = Target.transform.GetComponent<ConveyorAI>();
+                Coins[CoinID].Target = Conveyor;
+                Coins[CoinID].Destination = Conveyor.GetEntranceLocation();
                 if (!Target.transform.GetComponent<ConveyorAI>().EntranceOccupied)
                 {
                     // If another valid conveyor has been found, move to it
                     ConveyorScript.SetExitStatus(false);
                     Coins[CoinID].AtEntrance = true;
-                    ConveyorAI Conveyor = Target.transform.GetComponent<ConveyorAI>();
-                    Coins[CoinID].Target = Conveyor;
-                    Coins[CoinID].Destination = Conveyor.GetEntranceLocation();
                     Conveyor.SetEntranceStatus(true);
-                    return 0;
+                    return;
                 }
-
-            StagnantCoins.Add(new InactiveCoins(Coins[CoinID].Object, null, Coins[CoinID].Amount, RayLoc, Coins[CoinID].Target.GetComponent<ConveyorAI>()));
-            Coins.RemoveAt(CoinID);
-            return 1;
+                Coins[CoinID].Previous = ConveyorScript;
+                Coins[CoinID].IsStagnant = true;
+                return;
+            }
+            Coins[CoinID].Target = null;
+            Coins[CoinID].Previous = ConveyorScript;
+            Coins[CoinID].IsStagnant = true;
         }
-        return 0;
     }
 
     // Checks the inactive group
-    protected void CheckInactiveCoins()
+    protected void CheckInactiveCoin(int CoinID)
     {
-        for (int i = 0; i < StagnantCoins.Count; i++)
+        if (Coins[CoinID].Target == null)
         {
-            if (StagnantCoins[i].Target == null)
+            RaycastHit2D Target = Physics2D.Raycast(Coins[CoinID].Location, Vector2.zero, Mathf.Infinity, TileLayer);
+            if (Target.transform != null && Target.transform.name == "Conveyor")
             {
-                RaycastHit2D Target = Physics2D.Raycast(StagnantCoins[i].Location, Vector2.zero, Mathf.Infinity, TileLayer);
-                if (Target.transform != null && Target.transform.name == "Conveyor")
+                ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
+                Coins[CoinID].Target = ConveyorScript;
+                if (ConveyorScript.GetEntranceLocation() != Vector3.zero)
                 {
-                    ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
-                    if (!ConveyorScript.IsEntranceOccupied() && ConveyorScript.GetEntranceLocation() != Vector3.zero)
-                    {
-                        Coins.Add(new ActiveCoins(StagnantCoins[i].Object, ConveyorScript, ConveyorScript.GetEntranceLocation(), StagnantCoins[i].Amount, true));
-                        StagnantCoins[i].Previous.SetExitStatus(false);
-                        StagnantCoins.RemoveAt(i);
-                        i -= 1;
-                    }
+                    Coins[CoinID].AtEntrance = true;
+                    Coins[CoinID].IsStagnant = false;
+                    Coins[CoinID].Previous.SetExitStatus(false);
+                    Coins[CoinID].Target.SetEntranceStatus(true);
+                    Coins[CoinID].Destination = ConveyorScript.GetEntranceLocation();
                 }
             }
-            else if (!StagnantCoins[i].Target.IsEntranceOccupied())
+        }
+        else if (!Coins[CoinID].Target.IsEntranceOccupied())
+        {
+            if (Coins[CoinID].Target.GetEntranceLocation() != Vector3.zero)
             {
-                Coins.Add(new ActiveCoins(StagnantCoins[i].Object, StagnantCoins[i].Target, StagnantCoins[i].Target.GetEntranceLocation(), StagnantCoins[i].Amount, true));
-                StagnantCoins[i].Previous.SetExitStatus(false);
-                StagnantCoins.RemoveAt(i);
-                i -= 1;
+                Coins[CoinID].Destination = Coins[CoinID].Target.GetEntranceLocation();
+                Coins[CoinID].AtEntrance = true;
+                Coins[CoinID].IsStagnant = false;
+                Coins[CoinID].Previous.SetExitStatus(false);
+                Coins[CoinID].Target.SetEntranceStatus(true);
             }
         }
     }
@@ -171,39 +162,22 @@ public class GoldAI : MonoBehaviour
     // Removes coins from the master class
     public void RemoveFloatingCoins(Vector3 position)
     {
-        // Check inactive group
-        bool bonn_is_bad_and_dumb_and_uhg = false;
-        for (int i=0; i < StagnantCoins.Count; i++)
-        {
-            if (Vector3.Distance(StagnantCoins[i].Object.position, position) <= 2.5f)
-            {
-                Debug.Log("Removed coin at " + StagnantCoins[i].Object.position);
-                SetStagnantCoinInactive(i);
-                bonn_is_bad_and_dumb_and_uhg = true;
-                break;
-            }
-        }
-
         // Check active group
+        Debug.Log("Attempting to remove floating coins");
+        bool RemovedOne = false;
         for (int i = 0; i < Coins.Count; i++)
         {
-            if (Vector3.Distance(Coins[i].Object.position, position) <= 2.5f)
+            if (Vector3.Distance(Coins[i].Object.position, position) <= 3f)
             {
                 Debug.Log("Removed coin at " + Coins[i].Object.position);
                 SetCoinInactive(i);
-                if (bonn_is_bad_and_dumb_and_uhg)
+                i -= 1;
+                if (RemovedOne)
                     return;
-                else bonn_is_bad_and_dumb_and_uhg = true;
+                else
+                    RemovedOne = true;
             }
         }
-    }
-
-    // Moves an inactive coin
-    protected void SetStagnantCoinInactive(int CoinID)
-    {
-        Transform Coin = StagnantCoins[CoinID].Object;
-        StagnantCoins.RemoveAt(CoinID);
-        Destroy(Coin.gameObject);
     }
 
     // Destroys a coin 

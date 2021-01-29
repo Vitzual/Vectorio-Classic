@@ -62,8 +62,8 @@ public class CollectorAI: TileClass
         {
             ConveyorScript.SetEntranceStatus(true);
             GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            if (enhanced) GoldScript.RegisterNewCoin(Object.transform, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount * 2);
-            else GoldScript.RegisterNewCoin(Object.transform, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount);
+            if (enhanced) GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount * 2);
+            else GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount);
         }
     }
 

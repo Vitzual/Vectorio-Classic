@@ -55,15 +55,24 @@ public class GoldAI : MonoBehaviour
     public List<InactiveCoins> StagnantCoins;
 
     // Every frame, update position of all coins
-    void Update()
+    void FixedUpdate()
     {
         CheckInactiveCoins();
         for (int i = 0; i < Coins.Count; i++)
         {
-            if (Coins[i].Object.position == Coins[i].Destination)
-                i -= GetNewDestination(i);
-            else
-                Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);
+            try
+            {
+                if (Coins[i].Object.position == Coins[i].Destination)
+                    i -= GetNewDestination(i);
+                else
+                    Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);
+            }
+            catch
+            {
+                SetCoinInactive(i);
+                i -= 1;
+            }
+
         }
     }
 
@@ -78,12 +87,13 @@ public class GoldAI : MonoBehaviour
     {
         // Check here if at entrance or exit
         ConveyorAI ConveyorScript = Coins[CoinID].Target;
-        if (Coins[CoinID].AtEntrance && !ConveyorScript.ExitOccupied)
+        Debug.Log("Looking if next conveyor has an exit open");
+        if (Coins[CoinID].AtEntrance && !ConveyorScript.ExitOccupied) // something
         {
             Coins[CoinID].AtEntrance = false;
             Coins[CoinID].Destination = ConveyorScript.GetExitLocation();
-            ConveyorScript.SetEntranceStatus(false);
             ConveyorScript.SetExitStatus(true);
+            ConveyorScript.SetEntranceStatus(false);
             return 0;
         }
         else if (!Coins[CoinID].AtEntrance)
@@ -121,9 +131,6 @@ public class GoldAI : MonoBehaviour
                     return 0;
                 }
 
-            // If no valid conveyor was found, object is stagnant and should be moved to inactive group
-            Debug.Log("No valid conveyor found, moving " + Coins[CoinID].Object.position + " to inactive");
-
             StagnantCoins.Add(new InactiveCoins(Coins[CoinID].Object, null, Coins[CoinID].Amount, RayLoc, Coins[CoinID].Target.GetComponent<ConveyorAI>()));
             Coins.RemoveAt(CoinID);
             return 1;
@@ -142,7 +149,7 @@ public class GoldAI : MonoBehaviour
                 if (Target.transform != null && Target.transform.name == "Conveyor")
                 {
                     ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
-                    if (!ConveyorScript.IsEntranceOccupied())
+                    if (!ConveyorScript.IsEntranceOccupied() && ConveyorScript.GetEntranceLocation() != Vector3.zero)
                     {
                         Coins.Add(new ActiveCoins(StagnantCoins[i].Object, ConveyorScript, ConveyorScript.GetEntranceLocation(), StagnantCoins[i].Amount, true));
                         StagnantCoins[i].Previous.SetExitStatus(false);
@@ -157,6 +164,36 @@ public class GoldAI : MonoBehaviour
                 StagnantCoins[i].Previous.SetExitStatus(false);
                 StagnantCoins.RemoveAt(i);
                 i -= 1;
+            }
+        }
+    }
+
+    // Removes coins from the master class
+    public void RemoveFloatingCoins(Vector3 position)
+    {
+        // Check inactive group
+        bool bonn_is_bad_and_dumb_and_uhg = false;
+        for (int i=0; i < StagnantCoins.Count; i++)
+        {
+            if (Vector3.Distance(StagnantCoins[i].Object.position, position) <= 2.5f)
+            {
+                Debug.Log("Removed coin at " + StagnantCoins[i].Object.position);
+                SetStagnantCoinInactive(i);
+                bonn_is_bad_and_dumb_and_uhg = true;
+                break;
+            }
+        }
+
+        // Check active group
+        for (int i = 0; i < Coins.Count; i++)
+        {
+            if (Vector3.Distance(Coins[i].Object.position, position) <= 2.5f)
+            {
+                Debug.Log("Removed coin at " + Coins[i].Object.position);
+                SetCoinInactive(i);
+                if (bonn_is_bad_and_dumb_and_uhg)
+                    return;
+                else bonn_is_bad_and_dumb_and_uhg = true;
             }
         }
     }

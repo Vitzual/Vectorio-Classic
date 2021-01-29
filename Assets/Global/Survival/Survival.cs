@@ -22,6 +22,9 @@ public class Survival : MonoBehaviour
     // Research object
     public Research rsrch;
 
+    // Gold script
+    public GoldAI GoldScript;
+
     // Enemy layer
     public LayerMask EnemyLayer;
 
@@ -259,12 +262,17 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
-                if (rayHit.collider.name.Contains("Wall"))
+                if (rayHit.collider.name == "Conveyor")
+                {
+                    GoldScript.RemoveFloatingCoins(transform.position);
+                }
+                
+                else if (rayHit.collider.name.Contains("Wall"))
                 {
                     UpdateWallRemoved();
                 }
 
-                if (rayHit.collider.name.Contains("Enhancer"))
+                else if (rayHit.collider.name.Contains("Enhancer"))
                 {
                     var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
                     for (int i = 0; i < colliders.Length; i++)
@@ -276,7 +284,7 @@ public class Survival : MonoBehaviour
                     }
                 }
 
-                if (rayHit.collider.name == "Turbine")
+                else if (rayHit.collider.name == "Turbine")
                 {
                     decreaseAvailablePower(100);
                 }

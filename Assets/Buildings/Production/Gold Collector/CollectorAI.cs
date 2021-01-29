@@ -55,6 +55,9 @@ public class CollectorAI: TileClass
             return;
         }
         ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
+        if (ConveyorScript.GetDirection() != rotation)
+            return;
+
         if (!ConveyorScript.EntranceOccupied && ConveyorScript.ValidRotation(rotation))
         {
             ConveyorScript.SetEntranceStatus(true);

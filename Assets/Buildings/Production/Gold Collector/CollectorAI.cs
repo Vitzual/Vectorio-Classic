@@ -42,7 +42,7 @@ public class CollectorAI: TileClass
 
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         GoldScript = GameObject.Find("Manager").GetComponent<GoldAI>();
-        InvokeRepeating("SendGold", 0f, 0.3f);
+        InvokeRepeating("SendGold", 0f, 1f);
     }
 
     // Send gold

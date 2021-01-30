@@ -5,15 +5,16 @@ using UnityEngine;
 public class GoldAI : MonoBehaviour
 {
     // Tile layer
+    public Survival SVRC;
     public LayerMask TileLayer;
-    public static float Speed = 20f;
+    public static float Speed = 10f;
 
     // Contains all active coins in scene
     [System.Serializable]
     public class ActiveCoins
     {
         // Constructor method
-        public ActiveCoins(Transform Object, Vector3 Location, ConveyorAI Target, ConveyorAI Previous, Vector3 Destination, int Amount, bool AtEntrance, bool IsStagnant)
+        public ActiveCoins(Transform Object, Vector3 Location, ConveyorAI Target, ConveyorAI Previous, Vector3 Destination, int Amount, bool AtEntrance, bool IsStagnant, bool IsSelling)
         {
             this.Object = Object;
             this.Location = Location;
@@ -23,6 +24,7 @@ public class GoldAI : MonoBehaviour
             this.Amount = Amount;
             this.AtEntrance = AtEntrance;
             this.IsStagnant = IsStagnant;
+            this.IsSelling = IsSelling;
         }
 
         // Class variables
@@ -34,6 +36,7 @@ public class GoldAI : MonoBehaviour
         public int Amount { get; set; }
         public bool AtEntrance { get; set; }
         public bool IsStagnant { get; set; }
+        public bool IsSelling { get; set; }
     }
     public List<ActiveCoins> Coins;
 
@@ -50,7 +53,7 @@ public class GoldAI : MonoBehaviour
                     continue;
                 }
                 if (Coins[i].Object.position == Coins[i].Destination)
-                    GetNewDestination(i);
+                    i -= GetNewDestination(i);
                 else 
                     Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);
             }
@@ -65,11 +68,11 @@ public class GoldAI : MonoBehaviour
     // Register a new coin under active class
     public void RegisterNewCoin(Transform Object, Vector3 Location, ConveyorAI Target, Vector3 Destination, int Amount)
     {
-        Coins.Add(new ActiveCoins(Object, Location, Target, null, Destination, Amount, true, false));
+        Coins.Add(new ActiveCoins(Object, Location, Target, null, Destination, Amount, true, false, false));
     }
 
     // Sets a new target destination
-    protected void GetNewDestination(int CoinID)
+    protected int GetNewDestination(int CoinID)
     {
         // Check here if at entrance or exit
         ConveyorAI ConveyorScript = Coins[CoinID].Target;
@@ -103,7 +106,12 @@ public class GoldAI : MonoBehaviour
             Coins[CoinID].Location = RayLoc;
 
             // Check target to see if it exists
-            if (Target.transform != null && Target.transform.name == "Conveyor")
+            if (Coins[CoinID].IsSelling)
+            {
+                SellCoin(CoinID);
+                return 1;
+            }
+            else if (Target.transform != null && Target.transform.name == "Conveyor")
             {
                 ConveyorAI Conveyor = Target.transform.GetComponent<ConveyorAI>();
                 Coins[CoinID].Target = Conveyor;
@@ -114,16 +122,31 @@ public class GoldAI : MonoBehaviour
                     ConveyorScript.SetExitStatus(false);
                     Coins[CoinID].AtEntrance = true;
                     Conveyor.SetEntranceStatus(true);
-                    return;
+                    return 0;
                 }
                 Coins[CoinID].Previous = ConveyorScript;
                 Coins[CoinID].IsStagnant = true;
-                return;
+                return 0;
             }
+            // Check if near seller thing
+            else if (Target.transform != null && Target.transform.name == "Seller" || Target.transform.name == "Hub")
+            {
+                ConveyorScript.SetExitStatus(false);
+                Coins[CoinID].Destination = Target.transform.position;
+                Coins[CoinID].IsSelling = true;
+                return 0;
+            }
+
             Coins[CoinID].Target = null;
             Coins[CoinID].Previous = ConveyorScript;
             Coins[CoinID].IsStagnant = true;
         }
+        else if (Coins[CoinID].Target == null)
+        {
+            SetCoinInactive(CoinID);
+            return 1;
+        }
+        return 0;
     }
 
     // Checks the inactive group
@@ -178,6 +201,15 @@ public class GoldAI : MonoBehaviour
                     RemovedOne = true;
             }
         }
+    }
+
+    // Sell the coin
+    protected void SellCoin(int CoinID)
+    {
+        SVRC.AddGold(Coins[CoinID].Amount);
+        Transform Coin = Coins[CoinID].Object;
+        Coins.RemoveAt(CoinID);
+        Destroy(Coin.gameObject);
     }
 
     // Destroys a coin 

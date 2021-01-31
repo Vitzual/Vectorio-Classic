@@ -23,6 +23,8 @@ public abstract class BulletClass : MonoBehaviour
                 // Set the particle effect when hitting enemy
                 if (other.name.Contains("Dark"))
                     HitEffect = Resources.Load<ParticleSystem>("Particles/DarkParticle");
+                else if (other.name.Contains("Phantom"))
+                    HitEffect = Resources.Load<ParticleSystem>("Particles/PhantomParticle");
                 else
                     HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
 

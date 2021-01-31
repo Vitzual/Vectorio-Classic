@@ -3,13 +3,16 @@
 public class ConveyorAI : TileClass
 {
     public int Rotation;
+    public int Nearby = 0;
+    public bool IsCorner = false;
+    public Transform LastCheck;
 
     // Conveyor variables
     public Vector3 EntranceDestination;
     public Vector3 ExitDestination;
     public bool EntranceOccupied;
     public bool ExitOccupied;
-
+    
     // Tile layer
     [SerializeField]
     private LayerMask TileLayer;
@@ -54,6 +57,57 @@ public class ConveyorAI : TileClass
         }
     }
 
+    // Checks if leading into a nearby conveyor belt
+    public  void CheckForConveyors(Transform Conveyor)
+    {
+        // Check if a call is being made twice
+        if (Conveyor == LastCheck)
+            return;
+        else
+            LastCheck = Conveyor;
+
+        // Check if nearby conveyors
+        Vector2 RayLoc;
+        switch (Rotation)
+        {
+            case 1:
+                RayLoc = new Vector2(transform.position.x, transform.position.y + 5);
+                break;
+            case 2:
+                RayLoc = new Vector2(transform.position.x + 5, transform.position.y);
+                break;
+            case 3:
+                RayLoc = new Vector2(transform.position.x, transform.position.y - 5);
+                break;
+            default:
+                RayLoc = new Vector2(transform.position.x - 5, transform.position.y);
+                break;
+        }
+        RaycastHit2D Target = Physics2D.Raycast(RayLoc, Vector2.zero, Mathf.Infinity, TileLayer);
+
+        if (Target.transform != null && Target.transform.name == "Conveyor")
+        {
+            ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
+            if (ConveyorScript.GetDirection() != Rotation && !ConveyorScript.IsCorner)
+            {
+                Debug.Log("Checking for conveyors");
+                ConveyorScript.IncreaseNearby(1);
+                int OtherNearby = ConveyorScript.GetNearbyAmount();
+                if (OtherNearby == 1)
+                {
+                    Target.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorTrio");
+                    if ((Rotation == 3 || Rotation == 4) && ConveyorScript.GetDirection() != 4)
+                        Target.transform.localEulerAngles = new Vector3(Target.transform.localEulerAngles.x + 180f, Target.transform.localEulerAngles.y, Target.transform.localEulerAngles.z);
+                }
+                else if (OtherNearby == 2)
+                {
+                    Target.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorCross");
+                }
+            }
+        }
+    }
+
+
     // Calculate conveyor corner logic 
     public void CalculateCorner(Transform LastConveyor, Transform CurrentConveyor)
     {
@@ -61,8 +115,6 @@ public class ConveyorAI : TileClass
         RaycastHit2D right = Physics2D.Raycast(new Vector2(transform.position.x + 5, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D down = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D left = Physics2D.Raycast(new Vector2(transform.position.x - 5, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-
 
         // Conveyor on top and right
         if (top.collider != null && right.collider != null && top.collider.name == "Conveyor" && right.collider.name == "Conveyor")
@@ -89,6 +141,7 @@ public class ConveyorAI : TileClass
                     Rotation = 1;
                 }
                 transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorCorner");
+                IsCorner = true;
                 return;
             }
         }
@@ -117,8 +170,8 @@ public class ConveyorAI : TileClass
                     ExitDestination = new Vector3(transform.position.x + 1.25f, transform.position.y, 0);
                     Rotation = 2;
                 }
-
                 transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorCorner");
+                IsCorner = true;
                 return;
             }
         }
@@ -147,8 +200,8 @@ public class ConveyorAI : TileClass
                     ExitDestination = new Vector3(transform.position.x, transform.position.y - 1.25f, 0);
                     Rotation = 3;
                 }
-
                 transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorCorner");
+                IsCorner = true;
                 return;
             }
         }
@@ -177,8 +230,8 @@ public class ConveyorAI : TileClass
                     ExitDestination = new Vector3(transform.position.x - 1.25f, transform.position.y, 0);
                     Rotation = 4;
                 }
-
                 transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ConveyorCorner");
+                IsCorner = true;
                 return;
             }
         }
@@ -192,6 +245,8 @@ public class ConveyorAI : TileClass
     public bool IsExitOccupied() { return ExitOccupied; }
     public Vector3 GetEntranceLocation() { return EntranceDestination; }
     public Vector3 GetExitLocation() { return ExitDestination; }
+    public void IncreaseNearby(int a) { Nearby += a; }
+    public int GetNearbyAmount() { return Nearby; }
 
     public override void DestroyTile()
     {

@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 
-public class CollectorAI: TileClass
+public class CollectorMenu: TileClass
 {
     // Declare local object variables
-    public int amount;
     public int rotation;
-    public bool enhanced;
     public GameObject Gold;
     private Vector3 Destination;
     private GoldAI GoldScript;
-    private Survival SRVSC;
     public LayerMask TileLayer;
 
     // On start, invoke repeating SendGold() method
@@ -40,7 +37,6 @@ public class CollectorAI: TileClass
             rotation = 3;
         }
 
-        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         GoldScript = GameObject.Find("Manager").GetComponent<GoldAI>();
         InvokeRepeating("SendGold", 0f, 1f);
     }
@@ -62,33 +58,13 @@ public class CollectorAI: TileClass
         {
             ConveyorScript.SetEntranceStatus(true);
             GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            if (enhanced) GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount * 2);
-            else GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount);
+            GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), 1);
         }
-    }
-
-    // Increase gold
-    public void doubleAmount()
-    {
-        amount = amount * 2;
-    }
-
-    // Enhance collector
-    public void enhanceCollector()
-    {
-        enhanced = true;
-    }
-
-    // Deenhance collector
-    public void deenhanceCollector()
-    {
-        enhanced = false;
     }
 
     // Kill defense
     public override void DestroyTile()
     {
-        SRVSC.decreasePowerConsumption(power);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

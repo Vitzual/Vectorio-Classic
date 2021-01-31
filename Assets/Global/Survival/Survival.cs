@@ -66,7 +66,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
     [SerializeField] private Transform TeslaObj;         // ID = 12
-    
+    [SerializeField] private Transform ConveyorObj;      // ID = 13
 
     // Enemy list
     public Transform[] enemies;
@@ -111,7 +111,7 @@ public class Survival : MonoBehaviour
     public int AOC_Level = 1;
 
     // The area of control size
-    private int AOC_Size = 150;
+    private int AOC_Size = 750;
 
     // The AOC border game object;
     public Transform AOC_Object;
@@ -134,6 +134,7 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
+        tech.unlocked.Add(ConveyorObj);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -213,8 +214,14 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
 
+            // Check for conveyor
+            //if (SelectedObj != null && SelectedObj.name == "Conveyor" && rayHit.collider != null && rayHit.collider.name == "Conveyor" && rayHit.collider != LastObj && LastObj.name == "Conveyor")
+            //{
+            //    LastObj.GetComponent<ConveyorAI>().CheckForConveyors(LastObj);
+            //}
+
             // Check if placement is within AOC
-            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
+            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
                 if (SelectedObj == EssenceObj)
                 {
@@ -407,7 +414,7 @@ public class Survival : MonoBehaviour
     public void CalculateConveyor()
     {
         // Instantiate new object
-        CurrentConveyor = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        CurrentConveyor = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
         CurrentConveyor.name = SelectedObj.name;
 
         // Change rotation of a previous conveyor
@@ -599,8 +606,8 @@ public class Survival : MonoBehaviour
     public void IncreaseAOC()
     {
         AOC_Level += 1;
-        AOC_Size += 60;
-        AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
+        //AOC_Size += 60;
+        //AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
     }
     
     // Returns the AOC size
@@ -794,6 +801,7 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
+        hotbar[3] = ConveyorObj;
         UI.UpdateHotbar();
     }
 

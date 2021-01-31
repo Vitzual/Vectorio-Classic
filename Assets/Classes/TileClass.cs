@@ -26,6 +26,8 @@ public abstract class TileClass : MonoBehaviour
         if (health + Research.bonus_health <= 0)
         {
             GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
+            if (transform.name == "Conveyor")
+                GameObject.Find("Manager").GetComponent<GoldAI>().RemoveFloatingCoins(transform.position);
             DestroyTile();
         }
     }

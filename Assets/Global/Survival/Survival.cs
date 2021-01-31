@@ -111,7 +111,7 @@ public class Survival : MonoBehaviour
     public int AOC_Level = 1;
 
     // The area of control size
-    private int AOC_Size = 150;
+    private int AOC_Size = 750;
 
     // The AOC border game object;
     public Transform AOC_Object;
@@ -221,7 +221,7 @@ public class Survival : MonoBehaviour
             //}
 
             // Check if placement is within AOC
-            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size)
+            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
                 if (SelectedObj == EssenceObj)
                 {
@@ -606,8 +606,8 @@ public class Survival : MonoBehaviour
     public void IncreaseAOC()
     {
         AOC_Level += 1;
-        AOC_Size += 60;
-        AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
+        //AOC_Size += 60;
+        //AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
     }
     
     // Returns the AOC size

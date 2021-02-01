@@ -45,8 +45,8 @@ public class GoldAI : MonoBehaviour
     {
         for (int i = 0; i < Coins.Count; i++)
         {
-            try
-            {
+            //try
+            //{
                 if (Coins[i].IsStagnant)
                 {
                     CheckInactiveCoin(i);
@@ -56,12 +56,12 @@ public class GoldAI : MonoBehaviour
                     i -= GetNewDestination(i);
                 else 
                     Coins[i].Object.position = Vector2.MoveTowards(Coins[i].Object.position, Coins[i].Destination, Speed * Time.deltaTime);
-            }
-            catch
-            {
-                SetCoinInactive(i);
-                i -= 1;
-            }
+            //}
+            //catch
+            //{
+            //    SetCoinInactive(i);
+            //    i -= 1;
+            //}
         }
     }
 
@@ -114,22 +114,25 @@ public class GoldAI : MonoBehaviour
             else if (Target.transform != null && Target.transform.name == "Conveyor")
             {
                 ConveyorAI Conveyor = Target.transform.GetComponent<ConveyorAI>();
-                Coins[CoinID].Target = Conveyor;
-                Coins[CoinID].Destination = Conveyor.GetEntranceLocation();
-                if (!Target.transform.GetComponent<ConveyorAI>().EntranceOccupied)
+                if (Conveyor.GetDirection() == ConveyorScript.GetDirection() || Conveyor.IsCorner)
                 {
-                    // If another valid conveyor has been found, move to it
-                    ConveyorScript.SetExitStatus(false);
-                    Coins[CoinID].AtEntrance = true;
-                    Conveyor.SetEntranceStatus(true);
+                    Coins[CoinID].Target = Conveyor;
+                    Coins[CoinID].Destination = Conveyor.GetEntranceLocation();
+                    if (!Target.transform.GetComponent<ConveyorAI>().EntranceOccupied)
+                    {
+                        // If another valid conveyor has been found, move to it
+                        ConveyorScript.SetExitStatus(false);
+                        Coins[CoinID].AtEntrance = true;
+                        Conveyor.SetEntranceStatus(true);
+                        return 0;
+                    }
+                    Coins[CoinID].Previous = ConveyorScript;
+                    Coins[CoinID].IsStagnant = true;
                     return 0;
                 }
-                Coins[CoinID].Previous = ConveyorScript;
-                Coins[CoinID].IsStagnant = true;
-                return 0;
             }
             // Check if near seller thing
-            else if (Target.transform != null && Target.transform.name == "Seller" || (Target.transform.name == "Hub" && (Coins[CoinID].Object.position.x == 0 || Coins[CoinID].Object.position.y == 0)))
+            else if (Target.transform != null && (Target.transform.name == "Seller" || (Target.transform.name == "Hub" && (Coins[CoinID].Object.position.x == 0 || Coins[CoinID].Object.position.y == 0))))
             {
                 ConveyorScript.SetExitStatus(false);
                 Coins[CoinID].Destination = Target.transform.position;
@@ -158,14 +161,17 @@ public class GoldAI : MonoBehaviour
             if (Target.transform != null && Target.transform.name == "Conveyor")
             {
                 ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
-                Coins[CoinID].Target = ConveyorScript;
-                if (ConveyorScript.GetEntranceLocation() != Vector3.zero)
+                if (ConveyorScript.GetDirection() == Coins[CoinID].Previous.GetDirection() || ConveyorScript.IsCorner)
                 {
-                    Coins[CoinID].AtEntrance = true;
-                    Coins[CoinID].IsStagnant = false;
-                    Coins[CoinID].Previous.SetExitStatus(false);
-                    Coins[CoinID].Target.SetEntranceStatus(true);
-                    Coins[CoinID].Destination = ConveyorScript.GetEntranceLocation();
+                    Coins[CoinID].Target = ConveyorScript;
+                    if (ConveyorScript.GetEntranceLocation() != Vector3.zero)
+                    {
+                        Coins[CoinID].AtEntrance = true;
+                        Coins[CoinID].IsStagnant = false;
+                        Coins[CoinID].Previous.SetExitStatus(false);
+                        Coins[CoinID].Target.SetEntranceStatus(true);
+                        Coins[CoinID].Destination = ConveyorScript.GetEntranceLocation();
+                    }
                 }
             }
         }
@@ -186,13 +192,11 @@ public class GoldAI : MonoBehaviour
     public void RemoveFloatingCoins(Vector3 position)
     {
         // Check active group
-        Debug.Log("Attempting to remove floating coins");
         bool RemovedOne = false;
         for (int i = 0; i < Coins.Count; i++)
         {
             if (Vector3.Distance(Coins[i].Object.position, position) <= 3f)
-            {
-                Debug.Log("Removed coin at " + Coins[i].Object.position);
+            { 
                 SetCoinInactive(i);
                 i -= 1;
                 if (RemovedOne)

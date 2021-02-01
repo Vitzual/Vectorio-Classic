@@ -18,7 +18,7 @@ public abstract class BulletClass : MonoBehaviour
                 other.GetComponent<SpawnerAI>().SpawnEnemy();
 
             other.GetComponent<EnemyClass>().DamageEntity(damage + Research.bonus_damage);
-            if (!this.name.Contains("BoltBullet"))
+            if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam"))
             {
                 // Set the particle effect when hitting enemy
                 if (other.name.Contains("Dark"))

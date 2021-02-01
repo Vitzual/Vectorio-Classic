@@ -231,7 +231,7 @@ public class ConveyorAI : TileClass
         }
     }
 
-    // Calculate conveyor corner logic 
+    // Calculate conveyor corner logic
     public void CalculateCorner(Transform LastConveyor, Transform CurrentConveyor)
     {
         RaycastHit2D top = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5), Vector2.zero, Mathf.Infinity, TileLayer);

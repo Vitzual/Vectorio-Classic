@@ -425,24 +425,28 @@ public class Survival : MonoBehaviour
                 LastObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
                 LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
                 CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(0f);
+                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
             }
             else if (transform.position.x + 5 == LastObj.position.x && transform.position.y == LastObj.position.y)
             {
                 LastObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
                 LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
                 CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(180f);
+                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
             }
             else if (transform.position.y - 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
             {
                 LastObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
                 LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
                 CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(90f);
+                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
             }
             else if (transform.position.y + 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
             {
                 LastObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
                 LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
                 CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(270f);
+                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
             }
         }
 

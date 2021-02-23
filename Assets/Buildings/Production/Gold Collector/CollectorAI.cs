@@ -1,24 +1,30 @@
 ﻿using UnityEngine;
 
+/*
+ * A lot of comments in this document is logic from when we were toying
+ * with the idea of logistics. Ignore most of it.
+ */
+
 public class CollectorAI: TileClass
 {
     // Declare local object variables
     public int amount;
-    public int rotation;
+    // public int rotation;
     public bool enhanced;
-    public GameObject Gold;
-    private Vector3 Destination;
-    private GoldAI GoldScript;
+    // public GameObject Gold;
+    // private Vector3 Destination;
+    //private GoldAI GoldScript;
     private Survival SRVSC;
     public LayerMask TileLayer;
 
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        //RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Resource"));
-        //if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
+        RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Resource"));
+        if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
 
         // Get destination
+        /*
         if (transform.localEulerAngles.z >= 270f)
         {
             Destination = new Vector3(transform.position.x - 5, transform.position.y, 0);
@@ -39,32 +45,20 @@ public class CollectorAI: TileClass
             Destination = new Vector3(transform.position.x, transform.position.y - 5, 0);
             rotation = 3;
         }
+        */
 
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        GoldScript = GameObject.Find("Manager").GetComponent<GoldAI>();
+        //GoldScript = GameObject.Find("Manager").GetComponent<GoldAI>();
         InvokeRepeating("SendGold", 0f, 1f);
     }
 
     // Send gold
     private void SendGold()
     {
-        // Create gold
-        RaycastHit2D Target = Physics2D.Raycast(Destination, Vector2.zero, Mathf.Infinity, TileLayer);
-        if (Target.transform == null || Target.transform.name != "Conveyor")
-        {
-            return;
-        }
-        ConveyorAI ConveyorScript = Target.transform.GetComponent<ConveyorAI>();
-        if (ConveyorScript.GetDirection() != rotation)
-            return;
-
-        if (!ConveyorScript.EntranceOccupied && ConveyorScript.ValidRotation(rotation))
-        {
-            ConveyorScript.SetEntranceStatus(true);
-            GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            if (enhanced) GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount * 2);
-            else GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), amount);
-        }
+        // ConveyorScript.SetEntranceStatus(true);
+        // GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        if (enhanced) SRVSC.AddGold(amount * 2);
+        else SRVSC.AddGold(amount);
     }
 
     // Increase gold

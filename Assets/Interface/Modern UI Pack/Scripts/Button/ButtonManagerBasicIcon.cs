@@ -66,7 +66,14 @@ namespace Michsky.UI.ModernUIPack
 
         public void UpdateUI()
         {
-            normalIcon.sprite = buttonIcon;
+            try
+            {
+                normalIcon.sprite = buttonIcon;
+            } 
+            catch
+            {
+                return;
+            }
         }
 
         public void CreateRipple(Vector2 pos)

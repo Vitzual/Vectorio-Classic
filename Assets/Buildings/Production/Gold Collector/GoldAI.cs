@@ -132,7 +132,7 @@ public class GoldAI : MonoBehaviour
                 }
             }
             // Check if near seller thing
-            else if (Target.transform != null && (Target.transform.name == "Seller" || (Target.transform.name == "Hub" && (Coins[CoinID].Object.position.x == 0 || Coins[CoinID].Object.position.y == 0))))
+            else if (Target.transform != null && Target.transform.name == "Processor")
             {
                 ConveyorScript.SetExitStatus(false);
                 Coins[CoinID].Destination = Target.transform.position;

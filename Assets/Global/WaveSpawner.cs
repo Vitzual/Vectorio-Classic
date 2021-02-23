@@ -49,7 +49,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * (150f/*survival.GetAOC() * 1.7f*/);
+        transform.position += transform.right * (1200f/*survival.GetAOC() * 1.7f*/);
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));

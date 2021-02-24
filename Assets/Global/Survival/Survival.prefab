@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c56cb8102375c4ea54352a9f21550d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 0}
+  UI: {fileID: 0}
   UnlockLvl: 0
   UnlocksLeft: 1
   UnlockTier: []
@@ -64,20 +66,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc878096f7a7e74182495634a549bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HotbarUI: {fileID: 0}
+  main: {fileID: 0}
+  ResearchOverlay: {fileID: 0}
+  HotbarUI:
+  - {fileID: 0}
   Overlay: {fileID: 0}
   MenuOpen: 0
   BuildingOpen: 0
   ResearchOpen: 0
+  SettingsOpen: 0
   ShowingInfo: 0
   GoldAmount: {fileID: 0}
   EssenceAmount: {fileID: 0}
   IridiumAmount: {fileID: 0}
+  PowerUsage: {fileID: 0}
+  AvailablePower: {fileID: 0}
+  GPS: {fileID: 0}
+  EPS: {fileID: 0}
+  IPS: {fileID: 0}
   UOL: {fileID: 0}
   PowerUsageBar: {fileID: 0}
   UpgradeProgressBars: []
   UpgradeProgressName: {fileID: 0}
   SaveButton: {fileID: 0}
+  ResearchButton: {fileID: 0}
   hotbarButtons: []
 --- !u!114 &5620137559107493224
 MonoBehaviour:
@@ -91,11 +103,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543d9cbdce8268c4784eb2bf1bc7f35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tech: {fileID: 0}
+  UI: {fileID: 0}
+  rsrch: {fileID: 0}
+  GoldScript: {fileID: 0}
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  AOCB: {fileID: 0}
   gold: 10000
   essence: 0
   iridium: 0
   PowerConsumption: 0
   AvailablePower: 5000
+  GPS: 0
+  EPS: 0
+  IPS: 0
+  GPSP: 0
+  EPSP: 0
+  IPSP: 0
   HubObj: {fileID: 5628938638249383948, guid: d4f5265620f10a748a88759a975e86b0, type: 3}
   TurretObj: {fileID: 7459549504340388867, guid: 965d88ca79ad6ac4f938aea8d6a43058,
     type: 3}
@@ -118,10 +144,18 @@ MonoBehaviour:
     type: 3}
   TurbineObj: {fileID: 165687244735643869, guid: 981b14a184b67e24ab424c98bd63904a,
     type: 3}
+  TeslaObj: {fileID: 0}
+  PowerObj: {fileID: 0}
+  enemies: []
   seed: 0
   Spawner: {fileID: 0}
   SelectedOverlay: {fileID: 0}
+  PromptOverlay: {fileID: 0}
+  SelectedRadius: {fileID: 0}
+  HoveredObj: {fileID: 0}
   largerUnit: 0
+  AOC_Level: 1
+  AOC_Object: {fileID: 0}
   ResourceLayer:
     serializedVersion: 2
     m_Bits: 8192
@@ -153,6 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c56cb8102375c4ea54352a9f21550d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main: {fileID: 0}
+  UI: {fileID: 0}
   UnlockLvl: 0
   UnlocksLeft: 0
   UnlockTier: []

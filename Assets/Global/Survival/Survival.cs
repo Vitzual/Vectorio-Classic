@@ -28,6 +28,9 @@ public class Survival : MonoBehaviour
     // Enemy layer
     public LayerMask EnemyLayer;
 
+    // Area of control border
+    public GameObject AOCB;
+
     // Resource stats
     public int gold = 0;
     public int essence = 0;
@@ -66,7 +69,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EssenceObj;       // ID = 10
     [SerializeField] private Transform TurbineObj;       // ID = 11
     [SerializeField] private Transform TeslaObj;         // ID = 12
-    [SerializeField] private Transform ConveyorObj;      // ID = 13
+    [SerializeField] private Transform PowerObj;         // ID = 13
 
     // Enemy list
     public Transform[] enemies;
@@ -94,12 +97,6 @@ public class Survival : MonoBehaviour
 
     // Stores information about previously selected object
     private Transform LastObj;
-
-    // Stores information about 3rd last conveyor object
-    private Transform LastConveyor;
-
-    // Stores information about the current conveyor object
-    private Transform CurrentConveyor;
 
     // The rotation of the selected object
     private float rotation = 0f;
@@ -134,7 +131,7 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
-        tech.unlocked.Add(ConveyorObj);
+        tech.unlocked.Add(PowerObj);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -199,6 +196,7 @@ public class Survival : MonoBehaviour
             // Check unit size and make flash
             CheckSize();
             AdjustAlphaValue();
+            if (AOCB.activeSelf) AOCB.transform.position = new Vector3(transform.position.x, transform.position.y, 5);
         }
 
         // Check if user left clicks
@@ -213,12 +211,6 @@ public class Survival : MonoBehaviour
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-
-            // Check for conveyor
-            //if (SelectedObj != null && SelectedObj.name == "Conveyor" && rayHit.collider != null && rayHit.collider.name == "Conveyor" && rayHit.collider != LastObj && LastObj.name == "Conveyor")
-            //{
-            //    LastObj.GetComponent<ConveyorAI>().CheckForConveyors(LastObj);
-            //}
 
             // Check if placement is within AOC
             if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
@@ -237,8 +229,6 @@ public class Survival : MonoBehaviour
                     // If it is a wall, dont use rotation
                     if (SelectedObj.name == "Wall")
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                    else if (SelectedObj.name == "Conveyor")
-                        CalculateConveyor();
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
 
 
@@ -269,14 +259,15 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
-                if (rayHit.collider.name == "Conveyor")
-                {
-                    GoldScript.RemoveFloatingCoins(transform.position);
-                }
-                
-                else if (rayHit.collider.name.Contains("Wall"))
+                if (rayHit.collider.name.Contains("Wall"))
                 {
                     UpdateWallRemoved();
+                }
+
+                else if (rayHit.collider.name.Contains("Energizer"))
+                {
+                    rayHit.collider.GetComponent<Distributor>().DestroyTile();
+                    return;
                 }
 
                 else if (rayHit.collider.name.Contains("Enhancer"))
@@ -367,6 +358,7 @@ public class Survival : MonoBehaviour
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
             SelectedRadius.SetActive(false);
+            AOCB.SetActive(false);
         }
 
         // If a placed building is selected, un select it
@@ -406,53 +398,6 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
-
-        else if (Input.GetKeyDown(KeyCode.G)) IncreaseAOC();
-    }
-
-    // Calculates conveyor 
-    public void CalculateConveyor()
-    {
-        // Instantiate new object
-        CurrentConveyor = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
-        CurrentConveyor.name = SelectedObj.name;
-
-        // Change rotation of a previous conveyor
-        if (LastObj != null && LastObj.transform.name == "Conveyor") {
-
-            if (transform.position.x - 5 == LastObj.position.x && transform.position.y == LastObj.position.y)
-            {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(0f);
-                LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
-                CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(0f);
-                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
-            }
-            else if (transform.position.x + 5 == LastObj.position.x && transform.position.y == LastObj.position.y)
-            {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(180f);
-                LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
-                CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(180f);
-                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
-            }
-            else if (transform.position.y - 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
-            {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(90f);
-                LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
-                CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(90f);
-                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
-            }
-            else if (transform.position.y + 5 == LastObj.position.y && transform.position.x == LastObj.position.x)
-            {
-                LastObj.GetComponent<ConveyorAI>().ChangeRotation(270f);
-                LastObj.GetComponent<ConveyorAI>().CalculateCorner(LastConveyor, CurrentConveyor);
-                CurrentConveyor.GetComponent<ConveyorAI>().ChangeRotation(270f);
-                CurrentConveyor.GetComponent<ConveyorAI>().CheckForSeller(LastObj);
-            }
-        }
-
-        // Instantiate new object
-        LastConveyor = LastObj;
-        LastObj = CurrentConveyor;
     }
 
     // Checks unit size
@@ -805,7 +750,7 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
-        hotbar[3] = ConveyorObj;
+        hotbar[3] = PowerObj;
         UI.UpdateHotbar();
     }
 
@@ -893,6 +838,10 @@ public class Survival : MonoBehaviour
         {
             SelectedRadius.SetActive(false);
         }
+
+        // Set AOCB if required
+        if (SelectedObj != null && SelectedObj == PowerObj) AOCB.SetActive(true);
+        else AOCB.SetActive(false);
     }
 
     // Loads the menu scene

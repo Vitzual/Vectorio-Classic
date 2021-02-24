@@ -144,6 +144,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!61 &7557997774811479306
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729310686031504914}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.999999, y: 0.0001}
+  m_EdgeRadius: 0
 --- !u!1 &1910725502658189814
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,8 +805,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: AOCB
       objectReference: {fileID: 0}
+    - target: {fileID: 7200503793681735254, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85aaab71c1b6fda4f9a37cab0136f4d9, type: 3}
+--- !u!1 &1729310686031504914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7200503793681735254, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8364005727004620868}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3012285157321768741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6764164202243884897, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,

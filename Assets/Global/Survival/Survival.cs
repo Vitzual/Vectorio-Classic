@@ -25,8 +25,9 @@ public class Survival : MonoBehaviour
     // Gold script
     public GoldAI GoldScript;
 
-    // Enemy layer
+    // layers
     public LayerMask EnemyLayer;
+    public LayerMask AOCBLayer;
 
     // Area of control border
     public GameObject AOCB;
@@ -211,6 +212,20 @@ public class Survival : MonoBehaviour
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+            // Raycast tile to see if it is within the AOCB
+            RaycastHit2D aocbHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, AOCBLayer);
+
+            Debug.Log(aocbHit.collider);
+
+            // Check the AOCB
+            if (SelectedObj != null && SelectedObj.name == "Energizer")
+            {
+                var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(60, 60), 0, 1 << LayerMask.NameToLayer("AOCB"));
+                if (colliders.Length == 0) return;
+            }
+            else if (SelectedObj != null)
+                if (aocbHit.collider == null) return;
 
             // Check if placement is within AOC
             if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)

@@ -19,7 +19,7 @@ public class Distributor : TileClass
         var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].name != "Energizer")
+            if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
             {
                 try
                 {

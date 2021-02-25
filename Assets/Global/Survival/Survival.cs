@@ -32,6 +32,10 @@ public class Survival : MonoBehaviour
     // Area of control border
     public GameObject AOCB;
 
+    // Camera thing
+    public Camera MainCamera;
+    Color CameraColor;
+
     // Resource stats
     public int gold = 0;
     public int essence = 0;
@@ -71,6 +75,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform TurbineObj;       // ID = 11
     [SerializeField] private Transform TeslaObj;         // ID = 12
     [SerializeField] private Transform PowerObj;         // ID = 13
+    [SerializeField] private Transform FlamethrowerObj;  // ID = 14
 
     // Enemy list
     public Transform[] enemies;
@@ -126,6 +131,11 @@ public class Survival : MonoBehaviour
     {
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
+        CameraColor = new Color();
+
+        // Set color
+        ColorUtility.TryParseHtmlString("#444444", out CameraColor);
+        MainCamera.backgroundColor = CameraColor;
 
         // Default starting unlocks / hotbar
         PopulateHotbar();
@@ -371,6 +381,10 @@ public class Survival : MonoBehaviour
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
             SelectedRadius.SetActive(false);
+
+            // Set color
+            ColorUtility.TryParseHtmlString("#444444", out CameraColor);
+            MainCamera.backgroundColor = CameraColor;
             AOCB.SetActive(false);
         }
 
@@ -821,6 +835,10 @@ public class Survival : MonoBehaviour
     // Switch the selected object
     public void SwitchObj()
     {
+        // Set color
+        ColorUtility.TryParseHtmlString("#333333", out CameraColor);
+        MainCamera.backgroundColor = CameraColor;
+
         // If unit is larger then 1x1, change selected obj accordingly
         if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
         {
@@ -853,8 +871,10 @@ public class Survival : MonoBehaviour
         }
 
         // Set AOCB if required
-        if (SelectedObj != null && SelectedObj == PowerObj) AOCB.SetActive(true);
-        else AOCB.SetActive(false);
+        if (SelectedObj != null && SelectedObj == PowerObj)
+            AOCB.SetActive(true);
+        else
+            AOCB.SetActive(false);
     }
 
     // Loads the menu scene

@@ -8,6 +8,7 @@ public class WaveSpawner : MonoBehaviour
     public Technology technology;
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
+    public int SpawnRegion = 1000;
     public int htrack = 0;
 
     private void Start()
@@ -48,12 +49,26 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy(Transform _enemy)
     {
-        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
-        transform.position += transform.right * (1200f/*survival.GetAOC() * 1.7f*/);
-        var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        Transform holder;
+        switch(Random.Range(0, 4))
+        {
+            case 0:
+                holder = Instantiate(_enemy, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                break;
+            case 1:
+                holder = Instantiate(_enemy, new Vector2(-SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                break;
+            case 2:
+                holder = Instantiate(_enemy, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0))); ;
+                break;
+            case 3:
+                holder = Instantiate(_enemy, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
+                break;
+            default:
+                holder = Instantiate(_enemy, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                break;
+        }
         holder.name = _enemy.name;
-        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        transform.position = new Vector3(0, 0, 0);
     }
 
     public void increaseHeat(int a)

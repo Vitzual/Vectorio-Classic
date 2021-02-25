@@ -32,7 +32,6 @@ public abstract class TurretClass : TileClass
             1 << LayerMask.NameToLayer("Enemy"));
         GameObject result = null;
         float closest = float.PositiveInfinity;
-        Debug.Log(colliders.Length);
 
         foreach (Collider2D collider in colliders)
         {

@@ -88,7 +88,7 @@ Transform:
   - {fileID: 5216431952424366105}
   - {fileID: 7148509686931173026}
   - {fileID: 2910927284574648286}
-  - {fileID: 3012285157321768741}
+  - {fileID: 6774896206830100350}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,7 +112,12 @@ MonoBehaviour:
   level: 1
   power: 500
   ID: 50
-  description: No description provided.
+  description: 'Distributes power to all buildings in
+
+    small area around itself. '
+  AOCBLayer:
+    serializedVersion: 2
+    m_Bits: 262144
   TileLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -125,32 +130,6 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711705259399207453}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5, y: 5}
-  m_EdgeRadius: 0
---- !u!61 &7557997774811479306
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1729310686031504914}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -168,7 +147,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.999999, y: 0.0001}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!1 &1910725502658189814
 GameObject:
@@ -745,6 +724,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 165687244735643869}
     m_Modifications:
+    - target: {fileID: 3033085084435392313, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033085084435392314, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033085084435392318, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6764164202243884897, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
         type: 3}
       propertyPath: m_RootOrder
@@ -812,15 +806,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85aaab71c1b6fda4f9a37cab0136f4d9, type: 3}
---- !u!1 &1729310686031504914 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7200503793681735254, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 8364005727004620868}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3012285157321768741 stripped
+--- !u!4 &6774896206830100350 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6764164202243884897, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
+  m_CorrespondingSourceObject: {fileID: 3033085084435392314, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
     type: 3}
   m_PrefabInstance: {fileID: 8364005727004620868}
   m_PrefabAsset: {fileID: 0}

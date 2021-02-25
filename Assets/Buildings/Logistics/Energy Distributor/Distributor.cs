@@ -17,13 +17,14 @@ public class Distributor : TileClass
     public override void DestroyTile()
     {
         var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
+        transform.Find("AOCB").gameObject.SetActive(false);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
             {
                 try
                 {
-                    colliders[i].GetComponent<TileClass>().DestroyTile();
+                    colliders[i].GetComponent<TileClass>().UpdatePower();
                 }
                 catch
                 {
@@ -32,7 +33,7 @@ public class Distributor : TileClass
             }
         }
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
-        Instantiate(Effect, transform.position, Quaternion.identity);
+        Instantiate(Effect, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);
     }
 }

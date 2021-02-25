@@ -216,8 +216,6 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if it is within the AOCB
             RaycastHit2D aocbHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, AOCBLayer);
 
-            Debug.Log(aocbHit.collider);
-
             // Check the AOCB
             if (SelectedObj != null && SelectedObj.name == "Energizer")
             {

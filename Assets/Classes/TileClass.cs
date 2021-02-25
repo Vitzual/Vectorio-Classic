@@ -15,9 +15,16 @@ public abstract class TileClass : MonoBehaviour
     public int ID = 0;
     [TextArea] public string description = "No description provided.";
 
-
     // Abstract methods
     public abstract void DestroyTile();
+
+    // Update power
+    public void UpdatePower()
+    {
+        RaycastHit2D aocbHit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("AOCB"));
+        Debug.Log(transform.position);
+        if (aocbHit.collider == null) DestroyTile();
+    }
 
     // Apply damage to entity
     public void DamageTile(int dmgRecieved)

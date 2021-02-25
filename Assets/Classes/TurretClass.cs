@@ -32,6 +32,7 @@ public abstract class TurretClass : TileClass
             1 << LayerMask.NameToLayer("Enemy"));
         GameObject result = null;
         float closest = float.PositiveInfinity;
+        Debug.Log(colliders.Length);
 
         foreach (Collider2D collider in colliders)
         {
@@ -42,6 +43,74 @@ public abstract class TurretClass : TileClass
             }
         }
         return result;
+    }
+
+    protected GameObject FindNearestPlayer()
+    {
+        var colliders = Physics2D.OverlapCircleAll(
+            this.gameObject.transform.position,
+            range + Research.bonus_range,
+            1 << LayerMask.NameToLayer("Building"));
+        GameObject result = null;
+        float closest = float.PositiveInfinity;
+
+        foreach (Collider2D collider in colliders)
+        {
+            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+            if (distance < closest)
+            {
+                result = collider.gameObject;
+                closest = distance;
+            }
+        }
+        return result;
+    }
+
+    protected void RotateTowardsPlayer()
+    {
+        if (!hasTarget)
+        {
+            target = FindNearestPlayer();
+        }
+
+        // If a target exists, shoot at it
+        if (target != null)
+        {
+            // Flag hasTarget
+            hasTarget = true;
+
+            // Rotate turret towards target
+            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+            Vector2 lookDirection = (TargetPosition - Gun.position);
+            enemyAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            enemyAngle = AlignRotation(enemyAngle);
+            gunRotation = AlignRotation(Gun.rotation);
+
+            // Smooth rotation when targetting enemies
+            if (((gunRotation >= enemyAngle && !(gunRotation >= 270 && enemyAngle <= 90)) || (gunRotation <= 90 && enemyAngle >= 270))
+            && !((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
+            {
+                if (Gun.rotation - rotationSpeed < enemyAngle)
+                {
+                    Gun.rotation = enemyAngle;
+                }
+                else
+                {
+                    Gun.rotation -= rotationSpeed;
+                }
+            }
+            else if (!((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
+            {
+                if (Gun.rotation + rotationSpeed > enemyAngle)
+                {
+                    Gun.rotation = enemyAngle;
+                }
+                else
+                {
+                    Gun.rotation += rotationSpeed;
+                }
+            }
+        }
     }
 
     protected void RotateTowardNearestEnemy() 

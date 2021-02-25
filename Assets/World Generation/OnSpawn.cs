@@ -36,6 +36,10 @@ public class OnSpawn : MonoBehaviour
     public int SpawnerRegionSize;
     public int SpawnerSpawnAmount;
 
+    // Enemy base spawning 
+    public int BaseRegionSize;
+    public GameObject[] EnemyBases;
+
     public void GenerateWorldData(int a, bool save)
     {
         // Sets the seed - This method is deprecated but works so who cares amiright?
@@ -44,10 +48,56 @@ public class OnSpawn : MonoBehaviour
         GenGold();
         GenEssence();
         GenIridium();
-        if (!save) GenHives();
+        if (!save) { GenHives(); GenBases(); }
     }
 
-    // Gold Generation
+    // Enemy Base Generation
+    private void GenBases()
+    {
+        int x;
+        int y;
+        int max = 100;
+        int att = 0;
+
+        bool valid = false;
+
+        for (int i = 0; i < EnemyBases.Length; i++)
+        {
+            while (!valid)
+            {
+                x = Random.Range(-BaseRegionSize, BaseRegionSize) * 10;
+                y = Random.Range(-BaseRegionSize, BaseRegionSize) * 10;
+
+                if ((x > 100 || x < -100) && (y > 100 || y < -100))
+                {
+                    var colliders = Physics2D.OverlapBoxAll(new Vector2(x, y), new Vector2(500, 500), 0, 1 << LayerMask.NameToLayer("Enemy"));
+                    if (colliders.Length == 0)
+                    {
+                        // Generate base
+                        float rotation = Random.Range(1, 5) * 90f;
+                        var temp = Instantiate(EnemyBases[i], new Vector3(x, y, 0), Quaternion.Euler(0, 0, transform.localEulerAngles.z + rotation));
+                        temp.name = EnemyBases[i].name;
+
+                        // Undo turret rotation
+                        foreach (Transform child in temp.transform)
+                            if (child.name == "Enemy Turret")
+                                child.transform.localEulerAngles = new Vector3(child.transform.rotation.x, child.transform.rotation.y, child.transform.rotation.z - rotation);
+
+                        valid = true;
+                    }
+                }
+
+                att++;
+                if (att > max)
+                    valid = true;
+            }
+            att = 0;
+            valid = false;
+        }
+    }
+ 
+
+    // Enemy Hive Generation
     private void GenHives()
     {
         int x;

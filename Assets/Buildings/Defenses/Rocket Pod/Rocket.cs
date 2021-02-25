@@ -57,7 +57,12 @@ public class Rocket : BulletClass
                 1 << LayerMask.NameToLayer("Enemy"));
             foreach (var colider in colliders)
             {
-                colider.GetComponent<EnemyClass>().DamageEntity(damage);
+                if (other.name == "Enemy Turret")
+                    colider.GetComponent<EnemyTurretAI>().DamageTile(damage);
+                else if (other.name == "Enemy Static")
+                    colider.GetComponent<EnemyWallAI>().DamageTile(damage);
+                else
+                    colider.GetComponent<EnemyClass>().DamageEntity(damage);
             }
             collide();
         }

@@ -11,12 +11,26 @@ public abstract class BulletClass : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
+        if (transform.tag == "Bullet" && other.tag == "Enemy")
         {
             // Check to see if other enemy is spawner
             if (other.name == "Hive")
                 other.GetComponent<SpawnerAI>().SpawnEnemy();
-
+            else if (other.name == "Enemy Turret")
+            {
+                other.GetComponent<EnemyTurretAI>().DamageTile(damage);
+                HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
+                collide();
+                return;
+            }
+            else if (other.name == "Enemy Static")
+            {
+                other.GetComponent<EnemyWallAI>().DamageTile(damage);
+                HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
+                collide();
+                return;
+            }
+            
             other.GetComponent<EnemyClass>().DamageEntity(damage + Research.bonus_damage);
             if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam"))
             {
@@ -32,6 +46,12 @@ public abstract class BulletClass : MonoBehaviour
                 if (!pierced && Research.bonus_pierce) pierced = true;
                 else collide();
             }
+        }
+        else if (transform.tag == "Enemy Bullet" && other.tag == "Defense")
+        {
+            Debug.Log("Hit " + other.name);
+            other.GetComponent<TileClass>().DamageTile(damage);
+            collide();
         }
     }
 

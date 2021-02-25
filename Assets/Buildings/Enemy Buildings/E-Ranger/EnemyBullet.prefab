@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544994017379734926}
-  - component: {fileID: 955843775117654305}
+  - component: {fileID: 8508275946554457172}
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 8371128599779309114}
   - component: {fileID: 3760844040989154300}
   - component: {fileID: 2937699046400398723}
-  m_Layer: 11
-  m_Name: Rocket
-  m_TagString: Bullet
+  m_Layer: 10
+  m_Name: EnemyBullet
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &955843775117654305
+--- !u!114 &8508275946554457172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,12 +44,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3293027712645128820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e908e011c191a4cae87cbf1f16fb63, type: 3}
+  m_Script: {fileID: 11500000, guid: 810830518bbdb3846a18bf1e3c895c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
-  Effect: {fileID: 918402723469912044, guid: 17a602cb45ef54f42b927552d300dcbe, type: 3}
-  explosionRadius: 10
+  damage: 25
+  Effect: {fileID: 5288641948714270505, guid: bcc6e0aeac06a2346808527c1c1f5929, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +67,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 721e55663983b4947ac0ebc3740c819d, type: 2}
+  - {fileID: 2100000, guid: 0916a315857992b489d2d737bf9d90c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,7 +118,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 721e55663983b4947ac0ebc3740c819d, type: 2}
+  - {fileID: 2100000, guid: 0916a315857992b489d2d737bf9d90c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,9 +243,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.08
-  m_LinearDrag: 1.83
-  m_AngularDrag: 0.12
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0

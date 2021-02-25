@@ -9,38 +9,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
       propertyPath: ShapeModule.angle
       value: 36.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: SizeModule.curve.minMaxState
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
@@ -54,13 +24,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: ClampVelocityModule.multiplyDragByParticleSize
-      value: 0
+      propertyPath: ClampVelocityModule.dampen
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: ClampVelocityModule.dampen
-      value: 0.01
+      propertyPath: TrailModule.lifetime.scalar
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: SizeModule.curve.minMaxState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
@@ -69,8 +49,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: TrailModule.lifetime.scalar
-      value: 0.09
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
@@ -82,10 +62,35 @@ PrefabInstance:
       propertyPath: TrailModule.widthOverTrail.scalar
       value: 0.22
       objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: ClampVelocityModule.multiplyDragByParticleSize
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1930216812769747566, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
       propertyPath: m_Name
       value: HitEffect Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
@@ -104,6 +109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -115,16 +125,6 @@ PrefabInstance:
     - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2615408535421147822, guid: ea2398392b1ec0f45b369012c1c7a337,
@@ -154,6 +154,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6714194749485206727, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
+      propertyPath: m_SortingLayer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714194749485206727, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1939573483
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714194749485206727, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b28270296bbf5bf4595051da73e0106d, type: 2}
@@ -179,8 +189,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: 10
+      propertyPath: TrailModule.lifetime.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
@@ -189,18 +199,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
+      propertyPath: TrailModule.widthOverTrail.scalar
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
+        type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
         type: 3}
-      propertyPath: TrailModule.lifetime.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8342469565711734033, guid: ea2398392b1ec0f45b369012c1c7a337,
-        type: 3}
-      propertyPath: TrailModule.widthOverTrail.scalar
-      value: 0.64
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea2398392b1ec0f45b369012c1c7a337, type: 3}

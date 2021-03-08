@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
-public class Beam : BulletClass
+public class MinigunBullet : BulletClass
 {
+
     public ParticleSystem Effect;
 
     public void Start()
     {
         HitEffect = Effect;
-        StartCoroutine(SetLifetime(Random.Range(10f, 15f)));
+        StartCoroutine(SetLifetime(Random.Range(0.4f, 0.6f)));
     }
 
     public override void collide()

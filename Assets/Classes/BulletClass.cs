@@ -20,14 +20,14 @@ public abstract class BulletClass : MonoBehaviour
             {
                 other.GetComponent<EnemyTurretAI>().DamageTile(damage);
                 HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
-                collide();
+                if(!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
                 return;
             }
             else if (other.name == "Enemy Static")
             {
                 other.GetComponent<EnemyWallAI>().DamageTile(damage);
                 HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
-                collide();
+                if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
                 return;
             }
             

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using Michsky.UI.ModernUIPack;
 
 public class Menu : MonoBehaviour
 {
-
     public GameObject MainMenu;
     public GameObject SaveButtons;
     public GameObject MenuButtons;

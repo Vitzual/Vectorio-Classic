@@ -3,8 +3,9 @@ using UnityEngine;
 
 public abstract class TurretClass : TileClass
 {
-    
+
     // Weapon variables
+    public float bulletOffset;
     public float fireRate;
     public float bulletForce;
     public float bulletSpread;
@@ -169,7 +170,9 @@ public abstract class TurretClass : TileClass
             for (int i = 0; i < bulletAmount; i += 1)
             {
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
+                Debug.Log(pos.localRotation);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
+                bullet.transform.localPosition = new Vector2(bullet.transform.position.x + Random.Range(-bulletOffset, bulletOffset), bullet.transform.position.y);
                 bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
             }
             if (fireRate - Research.bonus_firerate <= 0.03f) nextFire = 0.03f;

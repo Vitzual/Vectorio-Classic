@@ -2,9 +2,17 @@
 
 public class SunbeamAI : TurretClass
 {
+    // Rotation variables
+    public Transform rotator1;
+    public Transform rotator2;
+
     // Targetting system
     void Update()
     {
+        // Handles rotation
+        rotator1.Rotate(Vector3.forward, 50f * Time.deltaTime);
+        rotator2.Rotate(-Vector3.forward, 50f * Time.deltaTime);
+
         RotateTowardNearestEnemy();
 
         // If a target exists, shoot at it

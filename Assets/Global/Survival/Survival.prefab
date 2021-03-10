@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -4787702860788770654}
   - component: {fileID: -2330448280664924150}
   - component: {fileID: 5620137559107493224}
-  - component: {fileID: 4667254654476838405}
   - component: {fileID: 581920495478843619}
   - component: {fileID: -6338715430864200996}
   m_Layer: 0
@@ -110,7 +109,11 @@ MonoBehaviour:
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  AOCBLayer:
+    serializedVersion: 2
+    m_Bits: 0
   AOCB: {fileID: 0}
+  MainCamera: {fileID: 0}
   gold: 10000
   essence: 0
   iridium: 0
@@ -146,6 +149,15 @@ MonoBehaviour:
     type: 3}
   TeslaObj: {fileID: 0}
   PowerObj: {fileID: 0}
+  FlamethrowerObj: {fileID: 0}
+  MinigunObj: {fileID: 0}
+  EngineerObj: {fileID: 0}
+  TurretMK2: {fileID: 0}
+  ShotgunMK2: {fileID: 0}
+  SniperMK2: {fileID: 0}
+  SunbeamObj: {fileID: 0}
+  TurretMK3: {fileID: 0}
+  AreaCoolerObj: {fileID: 0}
   enemies: []
   seed: 0
   Spawner: {fileID: 0}
@@ -175,24 +187,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &4667254654476838405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7221066091301988531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c56cb8102375c4ea54352a9f21550d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  main: {fileID: 0}
-  UI: {fileID: 0}
-  UnlockLvl: 0
-  UnlocksLeft: 0
-  UnlockTier: []
-  unlocked: []
 --- !u!50 &581920495478843619
 Rigidbody2D:
   serializedVersion: 4

@@ -35,10 +35,18 @@ public abstract class EnemyClass : MonoBehaviour
     protected int attackTimeout;
     protected Vector2 Movement;
 
+    private void Start()
+    {
+        Physics2D.IgnoreLayerCollision(9, 19, true);
+    }
+
     // Attack Tile
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        OnCollisionStay2D(collision);
+        Debug.Log("Collision detected");
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Defense"))
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+        else OnCollisionStay2D(collision);
     }
 
     // Damage building on collision

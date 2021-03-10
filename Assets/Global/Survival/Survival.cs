@@ -76,6 +76,14 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform TeslaObj;         // ID = 12
     [SerializeField] private Transform PowerObj;         // ID = 13
     [SerializeField] private Transform FlamethrowerObj;  // ID = 14
+    [SerializeField] private Transform MinigunObj;       // ID = 15
+    [SerializeField] private Transform EngineerObj;      // ID = 16
+    [SerializeField] private Transform TurretMK2;        // ID = 17
+    [SerializeField] private Transform ShotgunMK2;       // ID = 18
+    [SerializeField] private Transform SniperMK2;        // ID = 19
+    [SerializeField] private Transform SunbeamObj;       // ID = 20
+    [SerializeField] private Transform TurretMK3;        // ID = 21
+    [SerializeField] private Transform AreaCoolerObj;    // ID = 22
 
     // Enemy list
     public Transform[] enemies;
@@ -142,7 +150,6 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
-        tech.unlocked.Add(PowerObj);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -298,9 +305,37 @@ public class Survival : MonoBehaviour
                     var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
                     for (int i = 0; i < colliders.Length; i++)
                     {
-                        if (colliders[i].name.Contains("Collector"))
+                        if (colliders[i].name == "Collector")
                         {
-                            colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
+                            colliders[i].GetComponent<CollectorAI>().enhanceCollector();
+                        }
+                        else if (colliders[i].name == "Essence Drill")
+                        {
+                            colliders[i].GetComponent<EssenceAI>().enhanceCollector();
+                        }
+                        else if (colliders[i].name == "Iridium Mine")
+                        {
+                            colliders[i].GetComponent<IridiumAI>().enhanceCollector();
+                        }
+                    }
+                }
+
+                else if (rayHit.collider.name.Contains("Area Cooler"))
+                {
+                    var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
+                    for (int i = 0; i < colliders.Length; i++)
+                    {
+                        if (colliders[i].name != "Hub" && colliders[i].name != "Area Cooler" && colliders[i].name != "AOCB")
+                        {
+                            Debug.Log("Trying to decool: " + colliders[i].name);
+                            try
+                            {
+                                colliders[i].GetComponent<TileClass>().IncreaseHeat();
+                            }
+                            catch
+                            {
+                                Debug.Log("Cant decool: "+colliders[i].name);
+                            }
                         }
                     }
                 }
@@ -609,7 +644,7 @@ public class Survival : MonoBehaviour
             float y = a[i, 3];
             Vector2 position;
 
-            if (building.name == "Rocket Pod" || building.name == "Turbine")
+            if (building.name == "Rocket Pod" || building.name == "Turbine" || building.name == "Engineer" || building.name == "Sunbeam")
             {
                 // Check the x coordinate
                 if (x >= 0)
@@ -629,7 +664,7 @@ public class Survival : MonoBehaviour
                 position = new Vector2(x, y);
 
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
-
+            obj.GetComponent<TileClass>().SetHealth(a[i, 1]);
             obj.name = building.name;
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
@@ -777,7 +812,6 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
-        hotbar[3] = PowerObj;
         UI.UpdateHotbar();
     }
 
@@ -916,7 +950,7 @@ public class Survival : MonoBehaviour
                 {
                     Debug.Log(allObjects[i].name);
                     data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
-                    data[length, 1] = allObjects[i].GetComponent<TileClass>().GetLevel();
+                    data[length, 1] = allObjects[i].GetComponent<TileClass>().GetHealth();
                     data[length, 2] = (int)allObjects[i].position.x;
                     data[length, 3] = (int)allObjects[i].position.y;
                     length += 1;

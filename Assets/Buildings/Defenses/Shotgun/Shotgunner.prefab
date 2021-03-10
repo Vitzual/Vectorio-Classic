@@ -114,7 +114,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7459549504340388867}
   - component: {fileID: 7184227371150341994}
-  - component: {fileID: 3961812326880450799}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
@@ -159,7 +158,6 @@ MonoBehaviour:
   health: 15
   heat: 20
   cost: 750
-  level: 1
   power: 25
   ID: 3
   description: 'Fires multiple projectiles at once to quickly
@@ -167,26 +165,13 @@ MonoBehaviour:
     eliminate large
     groups of enemies.'
   fireRate: 0.75
-  bulletForce: 50
-  bulletSpread: 0.45
+  bulletSpread: 15
   bulletAmount: 8
   rotationSpeed: 1
   range: 40
   Point: {fileID: 3069989843565101140}
   Gun: {fileID: 1336093179921713143}
   Bullet: {fileID: 3293027712645128820, guid: 5806be12216f0d64988527f58da24088, type: 3}
---- !u!114 &3961812326880450799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0

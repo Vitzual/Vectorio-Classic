@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BulletClass : MonoBehaviour
@@ -6,6 +7,7 @@ public abstract class BulletClass : MonoBehaviour
     protected ParticleSystem HitEffect;
     private bool pierced = false;
     public int damage;
+    public float speed;
 
     public abstract void collide();
 
@@ -83,5 +85,10 @@ public abstract class BulletClass : MonoBehaviour
         {
             collide();
         }
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 }

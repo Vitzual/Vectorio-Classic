@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7459549504340388867}
   - component: {fileID: 6908471939941203755}
-  - component: {fileID: 3961812326880450799}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
@@ -55,33 +54,19 @@ MonoBehaviour:
   health: 10
   heat: 60
   cost: 25000
-  level: 1
   power: 55
   ID: 6
-  description: 'Low accuracy turret that sprays
+  description: 'Low accuracy turret that sprays tons
 
-    tons of low damage bullets.'
+    of low damaging bullets.'
   fireRate: 0.05
-  bulletForce: 125
-  bulletSpread: 0.2
+  bulletSpread: 8
   bulletAmount: 1
   rotationSpeed: 1.5
   range: 45
   Point: {fileID: 3069989843565101140}
   Gun: {fileID: 7486538099146903394}
   Bullet: {fileID: 3293027712645128820, guid: c571360961b51b5418ca4b9e14906205, type: 3}
---- !u!114 &3961812326880450799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0

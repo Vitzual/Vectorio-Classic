@@ -54,18 +54,16 @@ MonoBehaviour:
   health: 80
   heat: 250
   cost: 5
-  level: 1
   power: 1
   ID: 14
   description: 'Covers an area with flames when
 
     enemies get close to it.'
   fireRate: 0.1
-  bulletForce: 50
-  bulletSpread: 0.3
+  bulletSpread: 10
   bulletAmount: 5
-  rotationSpeed: 2
-  range: 50
+  rotationSpeed: 0.5
+  range: 25
   Point: {fileID: 5062284943659950144}
   Gun: {fileID: 1641333415435236104}
   Bullet: {fileID: 3293027712645128820, guid: a8aa4826e4ccf0f4dab8af22a89a4ef5, type: 3}
@@ -106,7 +104,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,7 +211,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: e8da4db7985ce684887d3eea5407ab5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -294,7 +292,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16a92af1a9de1a24083ec0abae381d07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -378,7 +376,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 756239997a407284097f61b442210a24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -510,7 +508,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 753dbd35d779e4c4497ea0fb787156b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -673,7 +671,7 @@ PrefabInstance:
     - target: {fileID: 199000012247684184, guid: 28fbc97a4e7e92144af43a4bd05be737,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 199000012247684184, guid: 28fbc97a4e7e92144af43a4bd05be737,
         type: 3}

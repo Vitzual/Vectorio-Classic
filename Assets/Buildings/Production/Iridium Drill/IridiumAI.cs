@@ -11,7 +11,7 @@ public class IridiumAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival");
-        InvokeRepeating("SendIridium", 0f, 1f);
+        InvokeRepeating("SendIridium", 0f, 10f);
     }
 
     // Send gold

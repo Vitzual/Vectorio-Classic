@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 3961812326880450799}
   - component: {fileID: 2048516651047028956}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
@@ -38,18 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3961812326880450799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2048516651047028956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,16 +54,13 @@ MonoBehaviour:
   health: 50
   heat: 150
   cost: 100
-  level: 1
   power: 250
   ID: 12
-  description: 'Fires a barrage of electricty that
+  description: 'Fires a barrage of lightning that
 
-    deals electric damage to
-    enemies.'
+    deals electric damage to enemies.'
   fireRate: 0.1
-  bulletForce: 100
-  bulletSpread: 0.3
+  bulletSpread: 15
   bulletAmount: 3
   rotationSpeed: 5
   range: 80

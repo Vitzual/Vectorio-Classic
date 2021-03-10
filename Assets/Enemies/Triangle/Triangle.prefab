@@ -172,7 +172,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6065519297016329532}
   - component: {fileID: -5564202135197978480}
-  - component: {fileID: 3310720871437840357}
   - component: {fileID: 6065519297016329531}
   - component: {fileID: 9218725160157042262}
   - component: {fileID: 5409734555225548137}
@@ -221,7 +220,6 @@ MonoBehaviour:
   range: 1000
   moveSpeed: 10
   attackSpeed: 10
-  worth: 3
   explosiveRadius: 0
   explosiveDamage: 0
   effectImmunity: 0
@@ -229,20 +227,10 @@ MonoBehaviour:
   amountToSpawn: 
   Effect: {fileID: 7050970385817730975, guid: 488f4063d72db284cb7dc12462e1bce7, type: 3}
   body: {fileID: 0}
+  PreferredTarget: {fileID: 7459549504340388867, guid: 965d88ca79ad6ac4f938aea8d6a43058,
+    type: 3}
   ChargeEffect: {fileID: 6280382550920895699, guid: 06bcafd9a6a907e4ca31147c3f4f3dda,
     type: 3}
---- !u!114 &3310720871437840357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cdc9316a1367d4aa0e88c7ab96ac4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0

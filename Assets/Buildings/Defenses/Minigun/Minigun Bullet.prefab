@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 8371128599779309114}
   - component: {fileID: 3760844040989154300}
-  - component: {fileID: 2937699046400398723}
   m_Layer: 10
   m_Name: Minigun Bullet
   m_TagString: Bullet
@@ -48,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 7
+  speed: 100
   Effect: {fileID: 8342469565711734033, guid: 83ca6d2140c381a4d8790ee134c4b305, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
@@ -67,7 +67,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24b3adb78b0bfa4468a1e756e5d80246, type: 2}
+  - {fileID: 2100000, guid: 96fc0c9ab7293f04ab0242f0604c1b62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 972303193
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2b939f4628fca7947b852edc05596f96, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -118,7 +118,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24b3adb78b0bfa4468a1e756e5d80246, type: 2}
+  - {fileID: 2100000, guid: 96fc0c9ab7293f04ab0242f0604c1b62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +137,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 972303193
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Time: 0.69
   m_Parameters:
@@ -231,24 +231,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9256082, y: 1.4518538}
   m_EdgeRadius: 0
---- !u!50 &2937699046400398723
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3293027712645128820}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4

@@ -91,7 +91,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7459549504340388867}
   - component: {fileID: 3702351155716561428}
-  - component: {fileID: 3961812326880450799}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 8
@@ -138,13 +137,13 @@ MonoBehaviour:
   health: 10
   heat: 5
   cost: 150
-  level: 1
   power: 10
   ID: 0
-  description: Weak early game turret that targets and fires at nearby enemies.
+  description: 'Weak early game turret that targets
+
+    and fires at nearby enemies.'
   fireRate: 0.6
-  bulletForce: 110
-  bulletSpread: 0.05
+  bulletSpread: 5
   bulletAmount: 1
   rotationSpeed: 0.8
   range: 50
@@ -153,18 +152,6 @@ MonoBehaviour:
   Bullet: {fileID: 3293027712645128820, guid: c48cecef139047b4fbc9277c8ee729c6, type: 3}
   SwitchBarrel: 0
   Point2: {fileID: 3069989843565101140}
---- !u!114 &3961812326880450799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0

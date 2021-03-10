@@ -21,7 +21,6 @@ public abstract class EnemyClass : MonoBehaviour
     public int range;
     public float moveSpeed;
     public int attackSpeed;
-    public int worth;
     public int explosiveRadius;
     public int explosiveDamage;
     public bool effectImmunity = false;
@@ -31,6 +30,7 @@ public abstract class EnemyClass : MonoBehaviour
     public Rigidbody2D body;
 
     // Enemy vars
+    public Transform PreferredTarget = null;
     protected GameObject target;
     protected int attackTimeout;
     protected Vector2 Movement;
@@ -239,9 +239,23 @@ public abstract class EnemyClass : MonoBehaviour
         GameObject result = null;
         float closest = float.PositiveInfinity;
 
+        bool isTarget = false;
+
         foreach (Collider2D collider in colliders)
         {
+            if (PreferredTarget != null && isTarget && collider.name != PreferredTarget.name)
+                continue;
+
             float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+
+            if (PreferredTarget != null && !isTarget && collider.name == PreferredTarget.name)
+            {
+                result = collider.gameObject;
+                closest = distance;
+                isTarget = true;
+                continue;
+            }
+
             if (distance < closest) {
                 result = collider.gameObject;
                 closest = distance;

@@ -9,7 +9,7 @@ public class MiniBullet : BulletClass
     {
         HitEffect = Effect;
         damage = 5;
-        StartCoroutine(SetLifetime(Random.Range(0.2f, 0.5f)));
+        StartCoroutine(SetLifetime(Random.Range(5f, 10f)));
     }
 
     public override void collide()

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class TurretClass : TileClass
 {
+    // Bullet Handler
+    private BulletHandler bulletHandler;
 
     // Weapon variables
-    public float bulletOffset;
     public float fireRate;
-    public float bulletForce;
     public float bulletSpread;
     public float bulletAmount;
     public float rotationSpeed;
@@ -24,6 +24,12 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
+
+    // Let's see if this shit works amiright my dude
+    private void Start()
+    {
+        bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+    }
 
     protected GameObject FindNearestEnemy()
     {
@@ -172,8 +178,15 @@ public abstract class TurretClass : TileClass
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 Debug.Log(pos.localRotation);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
-                bullet.transform.localPosition = new Vector2(bullet.transform.position.x + Random.Range(-bulletOffset, bulletOffset), bullet.transform.position.y);
-                bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
+                bullet.transform.rotation = Point.rotation;
+                bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
+
+                // Register the bullet
+                float speed = bullet.GetComponent<BulletClass>().GetSpeed();
+                bulletHandler.RegisterBullet(bullet.transform, Random.Range(speed-10,speed+10));
+
+                // This is like, physics and stuff (until it's not hehe)
+                // bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
             }
             if (fireRate - Research.bonus_firerate <= 0.03f) nextFire = 0.03f;
             else nextFire = fireRate - Research.bonus_firerate;

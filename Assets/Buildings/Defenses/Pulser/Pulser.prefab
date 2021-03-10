@@ -284,7 +284,6 @@ GameObject:
   - component: {fileID: 2528225824149251387}
   - component: {fileID: 5219965094630755300}
   - component: {fileID: 4634768836004047852}
-  - component: {fileID: 7786352148792181197}
   m_Layer: 8
   m_Name: Pulser
   m_TagString: Defense
@@ -336,6 +335,7 @@ MonoBehaviour:
 
     pierces through multiple
     enemies at a time.'
+  bulletOffset: 0
   fireRate: 1
   bulletForce: 100
   bulletSpread: 0
@@ -371,18 +371,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
---- !u!114 &7786352148792181197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5638880538173755297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6930377803330487759
 GameObject:
   m_ObjectHideFlags: 0

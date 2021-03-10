@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4788893055711555956}
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 3760844040989154300}
-  - component: {fileID: 2937699046400398723}
   m_Layer: 10
   m_Name: Flame
   m_TagString: Bullet
@@ -48,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
+  speed: 40
   Effect: {fileID: 7435560506578123163, guid: 246c85525b41ccd40abd9e9f3ebd9a75, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
@@ -125,27 +125,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9256082, y: 1.4518538}
   m_EdgeRadius: 0
---- !u!50 &2937699046400398723
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3293027712645128820}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1001 &9019173639053957073
 PrefabInstance:
   m_ObjectHideFlags: 0

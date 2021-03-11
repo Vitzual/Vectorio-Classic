@@ -43,7 +43,9 @@ public class OnSpawn : MonoBehaviour
     public void GenerateWorldData(int a, bool save)
     {
         // Sets the seed - This method is deprecated but works so who cares amiright?
+        #pragma warning disable CS0618 
         Random.seed = a;
+        #pragma warning restore CS0618 
 
         GenGold();
         GenEssence();

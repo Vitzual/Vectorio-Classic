@@ -10,6 +10,7 @@ public class Interface : MonoBehaviour
 
     // Interace Elements
     public GameObject ResearchOverlay;
+    public Transform[] InfoPanels;
     public Transform[] HotbarUI;
     public Canvas Overlay;
     public bool MenuOpen;
@@ -58,6 +59,37 @@ public class Interface : MonoBehaviour
             Overlay.transform.Find(a).GetComponent<CanvasGroup>().alpha = 0;
             Overlay.transform.Find(a).GetComponent<CanvasGroup>().interactable = false;
             Overlay.transform.Find(a).GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+    }
+
+    // plz dont ask me how this works :(
+    public void UpdateInventoryInfo(Transform obj)
+    {
+        foreach (Transform panel in InfoPanels)
+        {
+            if (panel.parent.parent.GetComponent<CanvasGroup>().alpha == 1f)
+            {
+                if (obj == null)
+                {
+                    panel.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Undiscovered");
+                    panel.Find("Name").GetComponent<TextMeshProUGUI>().text = "???";
+                    panel.Find("Description").GetComponent<TextMeshProUGUI>().text = "???";
+                    panel.Find("Gold").GetComponent<TextMeshProUGUI>().text = "???";
+                    panel.Find("Heat").GetComponent<TextMeshProUGUI>().text = "???";
+                    panel.Find("Power").GetComponent<TextMeshProUGUI>().text = "???";
+                    break;
+                }
+                else
+                {
+                    panel.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
+                    panel.Find("Name").GetComponent<TextMeshProUGUI>().text = obj.name.ToUpper();
+                    panel.Find("Description").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetDescription();
+                    panel.Find("Gold").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetCost().ToString();
+                    panel.Find("Heat").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetHeat().ToString();
+                    panel.Find("Power").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().getConsumption().ToString();
+                    break;
+                }
+            }
         }
     }
 

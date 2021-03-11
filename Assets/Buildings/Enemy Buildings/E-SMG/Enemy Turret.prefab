@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 523232b449f6c3847b293647eca4aedb, type: 3}
   m_Color: {r: 1, g: 0.09307521, b: 0, a: 1}
@@ -91,7 +91,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7459549504340388867}
   - component: {fileID: 3868521708513623825}
-  - component: {fileID: 3961812326880450799}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   m_Layer: 9
@@ -135,33 +134,19 @@ MonoBehaviour:
   health: 1
   heat: 1
   cost: 1
-  level: 1
   power: 1
   ID: 0
   description: No description provided.
   fireRate: 0.2
-  bulletForce: 120
   bulletSpread: 1
   bulletAmount: 1
   rotationSpeed: 2
   range: 30
-  Point: {fileID: 3069989843565101140}
+  FirePoints:
+  - {fileID: 3069989843565101140}
   Gun: {fileID: 5865514787985018872}
   Bullet: {fileID: 3293027712645128820, guid: 13c393824ff9f474abddb10bcdad170a, type: 3}
   SwitchBarrel: 0
-  Point2: {fileID: 3069989843565101140}
---- !u!114 &3961812326880450799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fef1d682fd5a6448f586e2a172ae08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -199,7 +184,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -308,7 +293,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: c441fb5934289ea489841dbd34f87930, type: 3}
   m_Color: {r: 1, g: 0, b: 0.007987976, a: 1}
@@ -410,7 +395,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 847b642a9e9286a4ea26aa5e2c505f73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -447,7 +432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9215428734190905872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 2.37, z: 0}
+  m_LocalPosition: {x: -0.01, y: 1.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8908416096621829035}

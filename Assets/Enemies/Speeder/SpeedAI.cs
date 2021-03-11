@@ -40,16 +40,6 @@ public class SpeedAI : EnemyClass
         }
     }
 
-    // Explode on impact
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
-        {
-            KillEntity();
-            collision.collider.GetComponent<TileClass>().DamageTile(damage);
-        }
-    }
-
     // Move entity towards target every frame
     private void FixedUpdate()
     {

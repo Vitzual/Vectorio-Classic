@@ -3,7 +3,6 @@
 public class EnemyTurretAI : TurretClass
 {
     public bool SwitchBarrel = false;
-    public Transform Point2;
 
     // Targetting system
     void Update()
@@ -21,14 +20,14 @@ public class EnemyTurretAI : TurretClass
                 if (!SwitchBarrel) 
                 { 
                     SwitchBarrel = true;
-                    Shoot(Bullet, Point2);
+                    Shoot(Bullet, FirePoints[1]);
                 }
                 else 
                 { 
                     SwitchBarrel = false;
-                    Shoot(Bullet, Point);
+                    Shoot(Bullet, FirePoints[0]);
                 }
-                Shoot(Bullet, Point);
+                Shoot(Bullet, FirePoints[0]);
             }
         } else {
             // Unflag hasTarget when target is null

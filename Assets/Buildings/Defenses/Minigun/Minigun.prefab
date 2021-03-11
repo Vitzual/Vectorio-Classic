@@ -56,21 +56,19 @@ MonoBehaviour:
   cost: 1
   power: 150
   ID: 15
-  description: 'High accuracy turret that unleashes
-
-    a storm of high-damaging
-    bullets.'
+  description: High accuracy turret that unleashes a storm of high-damaging bullets.
   fireRate: 0.08
   bulletSpread: 6
   bulletAmount: 1
   rotationSpeed: 0.8
   range: 70
-  Point: {fileID: 3069989843565101140}
+  FirePoints:
+  - {fileID: 3069989843565101140}
+  - {fileID: 7831787184239906878}
+  - {fileID: 2441988496468078948}
+  - {fileID: 7328376403646076968}
   Gun: {fileID: 7314323694009131301}
   Bullet: {fileID: 3293027712645128820, guid: 678e0c8e79e57b547a0a5bfd71a1d4a5, type: 3}
-  FirePoint2: {fileID: 7831787184239906878}
-  FirePoint3: {fileID: 2441988496468078948}
-  FirePoint4: {fileID: 7328376403646076968}
   FireTracker: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:

@@ -12,7 +12,7 @@ public abstract class TurretClass : TileClass
     public float bulletAmount;
     public float rotationSpeed;
     public int range;
-    public Transform Point;
+    public Transform[] FirePoints;
     public Rigidbody2D Gun;
     public GameObject Bullet;
     public HashSet<GameObject> nearbyEnemies = new HashSet<GameObject>();
@@ -164,7 +164,7 @@ public abstract class TurretClass : TileClass
     }
 
     // Creates bullet object
-    protected void Shoot(GameObject prefab, Transform pos)
+    protected void Shoot(GameObject prefab, Transform pos, float multiplier = 1)
     {
         if (nextFire > 0)
         {
@@ -178,8 +178,11 @@ public abstract class TurretClass : TileClass
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 Debug.Log(pos.localRotation);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
-                bullet.transform.rotation = Point.rotation;
+                bullet.transform.rotation = FirePoints[0].rotation;
                 bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
+
+                // Set optional damage multiplier
+                bullet.GetComponent<BulletClass>().MultiplyDamage(multiplier);
 
                 // Register the bullet
                 float speed = bullet.GetComponent<BulletClass>().GetSpeed();

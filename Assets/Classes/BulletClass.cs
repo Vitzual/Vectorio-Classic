@@ -91,4 +91,14 @@ public abstract class BulletClass : MonoBehaviour
     {
         return speed;
     }
+
+    public void SetDamage(int a)
+    {
+        damage = a;
+    }
+
+    public void MultiplyDamage(float a)
+    {
+        damage = (int)(damage * a);
+    }
 }

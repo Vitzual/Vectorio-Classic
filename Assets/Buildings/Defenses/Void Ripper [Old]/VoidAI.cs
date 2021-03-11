@@ -17,7 +17,7 @@ public class VoidAI : TurretClass
                 hasTarget = false;
                 
                 // Call shoot function
-                Shoot(Bullet, Point);
+                Shoot(Bullet, FirePoints[0]);
             }
         } else {
             // Unflag hasTarget when target is null

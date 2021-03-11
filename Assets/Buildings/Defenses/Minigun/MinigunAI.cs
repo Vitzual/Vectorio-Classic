@@ -3,9 +3,6 @@
 public class MinigunAI : TurretClass
 {
     // Multi barrel
-    public Transform FirePoint2;
-    public Transform FirePoint3;
-    public Transform FirePoint4;
     public int FireTracker = 0;
 
     // Targetting system
@@ -26,19 +23,19 @@ public class MinigunAI : TurretClass
                 switch(FireTracker)
                 {
                     case 0:
-                        Shoot(Bullet, Point);
+                        Shoot(Bullet, FirePoints[0]);
                         FireTracker = 1;
                         break;
                     case 1:
-                        Shoot(Bullet, FirePoint2);
+                        Shoot(Bullet, FirePoints[1]);
                         FireTracker = 2;
                         break;
                     case 2:
-                        Shoot(Bullet, FirePoint3);
+                        Shoot(Bullet, FirePoints[2]);
                         FireTracker = 3;
                         break;
                     case 3:
-                        Shoot(Bullet, FirePoint4);
+                        Shoot(Bullet, FirePoints[3]);
                         FireTracker = 0;
                         break;
                 }

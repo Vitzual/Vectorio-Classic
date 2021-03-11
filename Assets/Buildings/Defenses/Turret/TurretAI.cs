@@ -2,8 +2,12 @@
 
 public class TurretAI : TurretClass
 {
+    // Engineer stuff
+    public float damageBoost = 1;
+    public bool firerateBoost;
+
+    // Default stuff
     public bool SwitchBarrel = false;
-    public Transform Point2;
 
     // Targetting system
     void Update()
@@ -18,26 +22,28 @@ public class TurretAI : TurretClass
             {
                 // Unflag hasTarget
                 hasTarget = false;
-                if (transform.name == "Turret MK2" || transform.name == "Turret MK3")
+                if (firerateBoost)
                 { 
                     if (!SwitchBarrel) 
                     { 
                         SwitchBarrel = true; 
-                        Shoot(Bullet, Point2); 
+                        Shoot(Bullet, FirePoints[2], damageBoost); 
                     }
                     else 
                     { 
                         SwitchBarrel = false; 
-                        Shoot(Bullet, Point); 
+                        Shoot(Bullet, FirePoints[1], damageBoost); 
                     }
                 } 
-                else Shoot(Bullet, Point);
+                else Shoot(Bullet, FirePoints[0], damageBoost);
             }
         } else {
             // Unflag hasTarget when target is null
             hasTarget = false;
         }
     }
+
+
 
     // Kill defense
     public override void DestroyTile()

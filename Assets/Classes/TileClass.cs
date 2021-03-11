@@ -15,6 +15,9 @@ public abstract class TileClass : MonoBehaviour
     public int ID = 0;
     [TextArea] public string description = "No description provided.";
 
+    // Engineer variables
+    public bool isEngineered = false;
+
     // Abstract methods
     public abstract void DestroyTile();
 
@@ -90,4 +93,12 @@ public abstract class TileClass : MonoBehaviour
     }
     public int GetHealth() { return (int) health; }
     public void SetHealth(int a) { health = (float) a; }
+    public void setEngineered(bool a)
+    {
+        isEngineered = a;
+    }
+    public bool checkEngineered()
+    {
+        return isEngineered;
+    }
 }

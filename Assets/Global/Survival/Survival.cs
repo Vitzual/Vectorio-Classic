@@ -849,7 +849,14 @@ public class Survival : MonoBehaviour
     // Changes the stored object for hotbar changing
     public void SetHoverObject(Transform obj)
     {
-        if (!tech.checkIfUnlocked(obj)) return;
+        if (!tech.checkIfUnlocked(obj))
+        {
+            // Change to some default shit
+            UI.UpdateInventoryInfo(null);
+            return;
+        }
+        // Change to some good shit oh fyck ya
+        UI.UpdateInventoryInfo(obj);
         HoveredObj = obj;
     }
 

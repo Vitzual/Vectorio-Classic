@@ -40,14 +40,6 @@ public class BomberAI : EnemyClass
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
-        {
-            KillEntity();
-        }
-    }
-
     // Move entity towards target every frame
     private void FixedUpdate()
     {

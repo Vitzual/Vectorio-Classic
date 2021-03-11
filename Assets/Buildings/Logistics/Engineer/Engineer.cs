@@ -1,29 +1,95 @@
 ﻿using UnityEngine;
+using Michsky.UI.ModernUIPack;
+using System.Collections.Generic;
+using System;
+using System.Collections;
+
+// Not displaying "no targets found" message correctly
 
 public class Engineer : TileClass
 {
-    // Internal placement variables
-    [SerializeField] private LayerMask TileLayer;
-    public Collider2D[] colliders;
-    public Transform[] engineerOptions;
-    public bool[] turretOptions;
+    // Interface interaction
+    private Interface UI;
 
+    // Engineer variables
+    public bool applyingModifications;
+    public Transform engineerCog;
+
+    // Internal placement variables
+    public List<Transform> availableBuildings = new List<Transform>();
+
+    // Called when awoken
     private void Start()
     {
-        
+        UI = GameObject.Find("Survival").GetComponent<Interface>();
+    }
+
+    // Update moves COG when applying a modification
+    private void Update()
+    {
+        if (applyingModifications)
+            engineerCog.Rotate(Vector3.forward, 50f * Time.deltaTime);
+    }
+
+    // Gets called when clicking on an Engineer
+    public void SelectEngineer()
+    {
+        CheckAdjacentTiles();
+    }
+
+    public IEnumerator StartEngineer(string building, int modID, int time)
+    {
+        int localTime = time;
+        applyingModifications = true;
+        UI.OpenEngineer(true);
+        do
+        {
+            UI.SetEngineerTimer(localTime + " SECONDS REMAINING...");
+            yield return new WaitForSeconds(1);
+            localTime--;
+        }
+        while (this != null && localTime > 0);
+        if (this != null)
+            FinishEngineer(building, modID);
+    }
+
+    public void FinishEngineer(string building, int modID)
+    {
+        // Stop spinning Cog
+        applyingModifications = false;
+        engineerCog.rotation = Quaternion.identity;
+
+        // Refresh the UI
+        UI.EngineerCooldownOverlay.SetActive(false);
+
+        // Apply the modifications
+        if (building == "Turret")
+            foreach (Transform turret in availableBuildings)
+                if (turret.name == "Turret" && turret.GetComponent<TileClass>().IsModifiable())
+                    turret.GetComponent<TileClass>().ApplyModification(modID);
     }
 
     // Check for collectors
     private void CheckAdjacentTiles()
     {
-        var colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(10, 10), 1 << LayerMask.NameToLayer("Building"));
+        // Reset all child error transforms and set parsing between selected Engineer and the overlay
+        foreach (Transform child in UI.EngineerList)
+        {
+            child.Find("Error").GetComponent<CanvasGroup>().alpha = 1;
+            child.Find("Error").GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+
+        availableBuildings = new List<Transform>();
+        var colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].name != "Turret")
+            if (colliders[i].name == "Turret")
             {
-                if (!colliders[i].GetComponent<TileClass>().checkEngineered())
+                if (colliders[i].GetComponent<TileClass>().IsModifiable())
                 {
-
+                    availableBuildings.Add(colliders[i].transform);
+                    UI.EngineerList.Find(colliders[i].name).Find("Error").GetComponent<CanvasGroup>().alpha = 0;
+                    UI.EngineerList.Find(colliders[i].name).Find("Error").GetComponent<CanvasGroup>().blocksRaycasts = false;
                 }
             }
         }

@@ -178,7 +178,7 @@ public abstract class TurretClass : TileClass
                 pos.position = new Vector3(pos.position.x, pos.position.y, 0);
                 Debug.Log(pos.localRotation);
                 GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
-                bullet.transform.rotation = FirePoints[0].rotation;
+                bullet.transform.rotation = pos.rotation;
                 bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
 
                 // Set optional damage multiplier

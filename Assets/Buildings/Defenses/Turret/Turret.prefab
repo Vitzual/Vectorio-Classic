@@ -172,6 +172,8 @@ MonoBehaviour:
   power: 10
   ID: 0
   description: Weak early game turret that targets and fires at nearby enemies.
+  engineerModifications: 
+  isEngineered: 0
   fireRate: 0.6
   bulletSpread: 5
   bulletAmount: 1
@@ -183,8 +185,12 @@ MonoBehaviour:
   - {fileID: 3005334070090899536}
   Gun: {fileID: 5865514787985018872}
   Bullet: {fileID: 3293027712645128820, guid: c48cecef139047b4fbc9277c8ee729c6, type: 3}
-  damageBoost: 0
-  firerateBoost: 0
+  normalObjects:
+  - {fileID: 353099131532261407}
+  - {fileID: 1795506980162462511}
+  engineerObjects:
+  - {fileID: 1397037716342002614}
+  - {fileID: 5818148867272930388}
   SwitchBarrel: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
@@ -285,8 +291,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397037716342002614}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8003438, y: 0.45549166, z: -12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 91193687508054888}
@@ -318,8 +324,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413296018222088506}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8003438, y: -0.45549166, z: 12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2729983306437495538}
@@ -454,8 +460,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220566247149590780}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8003438, y: -0.45549166, z: 12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 975335502468782053}
@@ -750,13 +756,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4482826824150608254}
-  m_LocalRotation: {x: -0, y: -0, z: -0.3826832, w: 0.9238796}
-  m_LocalPosition: {x: -0.8003438, y: -0.45549166, z: 12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 975335502468782053}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45.000004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8688152127809507105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -831,13 +837,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5704677102809973293}
-  m_LocalRotation: {x: -0, y: -0, z: -0.3826832, w: 0.9238796}
-  m_LocalPosition: {x: -0.8003438, y: -0.45549166, z: 12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 975335502468782053}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45.000004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6834147890462125777
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -912,8 +918,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5744280574690891661}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8003438, y: -0.45549166, z: 12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 975335502468782053}
@@ -992,8 +998,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5818148867272930388}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8003438, y: 0.45549166, z: -12.569502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1832979377322346285}

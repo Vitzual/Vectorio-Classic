@@ -85,6 +85,12 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform TurretMK3;        // ID = 21
     [SerializeField] private Transform AreaCoolerObj;    // ID = 22
 
+    // Holds the most recent engineer
+    public Transform EngineerHolder;
+    public int EngineerModID = 0;
+    public int EngineerTime = 0;
+    public string EngineerName = "Default";
+
     // Enemy list
     public Transform[] enemies;
 
@@ -218,7 +224,7 @@ public class Survival : MonoBehaviour
         }
 
         // Check if user left clicks
-        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && Input.mousePosition.y >= 200)
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && Input.mousePosition.y >= 200)
         {
 
             // Check if valid placement
@@ -276,12 +282,20 @@ public class Survival : MonoBehaviour
                     SelectedOverlay.SetActive(true);
                     SelectedOverlay.transform.position = rayHit.collider.transform.position;
                     PromptOverlay.alpha = 1;
+
+                    // Check to see if the object is an engineer
+                    if (rayHit.collider.name == "Engineer")
+                    {
+                        EngineerHolder = rayHit.collider.transform;
+                        rayHit.collider.GetComponent<Engineer>().SelectEngineer();
+                        UI.OpenEngineer(EngineerHolder.GetComponent<Engineer>().applyingModifications);
+                    }
                 }
             }
         }
 
         // If user right clicks, remove object
-        else if (Input.GetButton("Fire2") && !UI.BuildingOpen)
+        else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.EngineerOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -359,7 +373,7 @@ public class Survival : MonoBehaviour
         CheckNumberInput();
 
         // Rotates object if no menus open
-        if (Input.GetKeyDown(KeyCode.R) && UI.BuildingOpen == false && UI.MenuOpen == false && SelectedObj != null)
+        if (Input.GetKeyDown(KeyCode.R) && !UI.BuildingOpen && !UI.MenuOpen && !UI.EngineerOpen && SelectedObj != null)
         {
             rotation = rotation -= 90f;
             if (rotation == -360f)
@@ -377,6 +391,8 @@ public class Survival : MonoBehaviour
                 UI.CloseResearchOverlay();
                 SetHoverObject(null);
             }
+            if (UI.EngineerOpen)
+                UI.CloseEngineer();
             UI.BuildingOpen = true;
             UI.SetOverlayStatus("Survival Menu", true);
         }
@@ -384,6 +400,8 @@ public class Survival : MonoBehaviour
         // If T pressed, open research menu
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false)
         {
+            if (UI.EngineerOpen)
+                UI.CloseEngineer();
             UI.OpenResearchOverlay();
         }
 
@@ -391,6 +409,12 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
         {
             UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and engineer open, close it
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.EngineerOpen == true)
+        {
+            UI.CloseEngineer();
         }
 
         // If escape pressed and building menu open, close it
@@ -461,6 +485,12 @@ public class Survival : MonoBehaviour
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
     }
+
+    // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud
+    public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID, EngineerTime)); }
+    public void SetEngineerName(string a) { EngineerName = a; }
+    public void SetEngineerID(int a) { EngineerModID = a; }
+    public void SetEngineerTime(int a) { EngineerTime = a; }
 
     // Checks unit size
     private void CheckSize()
@@ -566,7 +596,7 @@ public class Survival : MonoBehaviour
     // Checks if a unit can be placed
     public bool CheckPlacement(Transform obj)
     {
-        if (obj != null && (obj.name == "Rocket Pod" || obj.name == "Turbine"))
+        if (obj != null && (obj.name == "Rocket Pod" || obj.name == "Turbine" || obj.name == "Sunbeam"))
         {
             // Check for wires and adjust accordingly 
             RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -644,7 +674,7 @@ public class Survival : MonoBehaviour
             float y = a[i, 3];
             Vector2 position;
 
-            if (building.name == "Rocket Pod" || building.name == "Turbine" || building.name == "Engineer" || building.name == "Sunbeam")
+            if (building.name == "Rocket Pod" || building.name == "Turbine" || building.name == "Sunbeam")
             {
                 // Check the x coordinate
                 if (x >= 0)
@@ -881,10 +911,10 @@ public class Survival : MonoBehaviour
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly
-        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine")
+        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine" || SelectedObj.name == "Sunbeam")
         {
             largerUnit = true;
-            if (SelectedObj.name == "Rocket Pod") 
+            if (SelectedObj.name != "Turbine")
                 transform.localScale = new Vector2(2, 2);
         }
         else

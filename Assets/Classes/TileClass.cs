@@ -16,10 +16,22 @@ public abstract class TileClass : MonoBehaviour
     [TextArea] public string description = "No description provided.";
 
     // Engineer variables
+    public List<int> engineerModifications = new List<int>();
+
+    // Engineer variables
     public bool isEngineered = false;
 
     // Abstract methods
     public abstract void DestroyTile();
+
+    // Create empty applyModification() method
+    public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain any available modifications"); }
+
+    // Check if the building is engineered
+    public bool IsModifiable()
+    {
+        return engineerModifications.Count == 0;
+    }
 
     // Update power
     public void UpdatePower()

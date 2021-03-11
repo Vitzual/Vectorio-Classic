@@ -10,6 +10,10 @@ public class Interface : MonoBehaviour
 
     // Interace Elements
     public GameObject ResearchOverlay;
+    public GameObject EngineerOverlay;
+    public Transform EngineerList;
+    public GameObject EngineerCooldownOverlay;
+    public TextMeshProUGUI EngineerCooldown;
     public Transform[] InfoPanels;
     public Transform[] HotbarUI;
     public Canvas Overlay;
@@ -17,6 +21,7 @@ public class Interface : MonoBehaviour
     public bool BuildingOpen;
     public bool ResearchOpen;
     public bool SettingsOpen;
+    public bool EngineerOpen;
     public bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
@@ -41,6 +46,40 @@ public class Interface : MonoBehaviour
         MenuOpen = false;
         ResearchOpen = false;
         BuildingOpen = false;
+    }
+
+    // Set the engineer cooldown
+    public void SetEngineerTimer(string a)
+    {
+        EngineerCooldown.text = a;
+    }
+
+    // Activates an engineers UI panel
+    public void OpenEngineer(bool isActive)
+    {
+        EngineerCooldownOverlay.SetActive(isActive);
+        EngineerOverlay.SetActive(true);
+        EngineerOpen = true;
+    }
+
+    // Deactivates an engineers UI panel
+    public void CloseEngineer()
+    {
+        EngineerOverlay.SetActive(false);
+        EngineerOpen = false;
+    }
+
+    // Enable cooling overlay
+    public void EnableCooldown()
+    {
+        EngineerCooldownOverlay.SetActive(true);
+
+    }
+
+    // Disable cooling overlay
+    public void DisableCooldown()
+    {
+        EngineerCooldownOverlay.SetActive(false);
     }
 
     // Set the status of an overlay. 

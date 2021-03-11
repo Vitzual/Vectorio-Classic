@@ -163,37 +163,40 @@ public abstract class TurretClass : TileClass
         }
     }
 
-    // Creates bullet object
-    protected void Shoot(GameObject prefab, Transform pos, float multiplier = 1)
+    // Attempts to fire a bullet and returns true if fired
+    protected bool Shoot(GameObject prefab, Transform pos, float multiplier = 1)
     {
         if (nextFire > 0)
         {
             nextFire -= Time.deltaTime;
-            return;
+            return false;
         }
         else
         {
             for (int i = 0; i < bulletAmount; i += 1)
             {
-                pos.position = new Vector3(pos.position.x, pos.position.y, 0);
-                Debug.Log(pos.localRotation);
-                GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
-                bullet.transform.rotation = pos.rotation;
-                bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
-
-                // Set optional damage multiplier
-                bullet.GetComponent<BulletClass>().MultiplyDamage(multiplier);
-
-                // Register the bullet
-                float speed = bullet.GetComponent<BulletClass>().GetSpeed();
-                bulletHandler.RegisterBullet(bullet.transform, Random.Range(speed-10,speed+10));
-
-                // This is like, physics and stuff (until it's not hehe)
-                // bullet.GetComponent<Rigidbody2D>().AddForce(BulletSpread(pos.up, Random.Range(bulletSpread, -bulletSpread)) * bulletForce * Random.Range(1f, 1.5f), ForceMode2D.Impulse);
+                CreateBullet(prefab, pos, multiplier);
             }
             if (fireRate - Research.bonus_firerate <= 0.03f) nextFire = 0.03f;
             else nextFire = fireRate - Research.bonus_firerate;
+            return true;
         }
+    }
+
+    // Createa a bullet object
+    protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
+    {
+        pos.position = new Vector3(pos.position.x, pos.position.y, 0);
+        GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
+        bullet.transform.rotation = pos.rotation;
+        bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
+
+        // Set optional damage multiplier
+        bullet.GetComponent<BulletClass>().MultiplyDamage(multiplier);
+
+        // Register the bullet
+        float speed = bullet.GetComponent<BulletClass>().GetSpeed();
+        bulletHandler.RegisterBullet(bullet.transform, Random.Range(speed - 10, speed + 10));
     }
 
     // Calculate bullet spread

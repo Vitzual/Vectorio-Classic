@@ -31,15 +31,18 @@ public class Engineer : TileClass
             engineerCog.Rotate(Vector3.forward, 50f * Time.deltaTime);
     }
 
-    // Gets called when clicking on an Engineer
-    public void SelectEngineer()
+    public IEnumerator StartEngineer(String building, int modID)
     {
-        CheckAdjacentTiles();
-    }
+        // Get the local time from the defense
+        int localTime = 0;
+        foreach (Transform turret in availableBuildings)
+            if (turret.name == building)
+            {
+                localTime = turret.GetComponent<TileClass>().GetModificationTime(modID);
+                break;
+            }
 
-    public IEnumerator StartEngineer(string building, int modID, int time)
-    {
-        int localTime = time;
+        // Start the timer
         applyingModifications = true;
         UI.OpenEngineer(true);
         do
@@ -63,14 +66,13 @@ public class Engineer : TileClass
         UI.EngineerCooldownOverlay.SetActive(false);
 
         // Apply the modifications
-        if (building == "Turret")
-            foreach (Transform turret in availableBuildings)
-                if (turret.name == "Turret" && turret.GetComponent<TileClass>().IsModifiable())
-                    turret.GetComponent<TileClass>().ApplyModification(modID);
+        foreach (Transform turret in availableBuildings)
+            if (turret.name == building && turret.GetComponent<TileClass>().IsModifiable())
+                turret.GetComponent<TileClass>().ApplyModification(modID);
     }
 
     // Check for collectors
-    private void CheckAdjacentTiles()
+    public void CheckAdjacentTiles()
     {
         // Reset all child error transforms and set parsing between selected Engineer and the overlay
         foreach (Transform child in UI.EngineerList)

@@ -88,7 +88,6 @@ public class Survival : MonoBehaviour
     // Holds the most recent engineer
     public Transform EngineerHolder;
     public int EngineerModID = 0;
-    public int EngineerTime = 0;
     public string EngineerName = "Default";
 
     // Enemy list
@@ -287,7 +286,7 @@ public class Survival : MonoBehaviour
                     if (rayHit.collider.name == "Engineer")
                     {
                         EngineerHolder = rayHit.collider.transform;
-                        rayHit.collider.GetComponent<Engineer>().SelectEngineer();
+                        rayHit.collider.GetComponent<Engineer>().CheckAdjacentTiles();
                         UI.OpenEngineer(EngineerHolder.GetComponent<Engineer>().applyingModifications);
                     }
                 }
@@ -487,10 +486,32 @@ public class Survival : MonoBehaviour
     }
 
     // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud
-    public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID, EngineerTime)); }
+    public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID)); }
     public void SetEngineerName(string a) { EngineerName = a; }
     public void SetEngineerID(int a) { EngineerModID = a; }
-    public void SetEngineerTime(int a) { EngineerTime = a; }
+    public void SetEngineerButton(Sprite Icon)
+    {
+        foreach(Transform building in EngineerHolder.GetComponent<Engineer>().availableBuildings)
+        {
+            if (building.name == EngineerName)
+            {
+                TileClass selected = building.GetComponent<TileClass>();
+                UI.EngineerIcon.sprite = Icon;
+                UI.EngineerTitle.text = selected.EngineerModifications[EngineerModID].title.ToUpper();
+                UI.EngineerDescription.text = selected.EngineerModifications[EngineerModID].description;
+                UI.EngineerTime.text = selected.EngineerModifications[EngineerModID].upgradeTime + " seconds";
+                UI.EngineerChance.text = selected.EngineerModifications[EngineerModID].successRate + "% success rate";
+                UI.EngineerCost.text = selected.EngineerModifications[EngineerModID].iridiumCost.ToString();
+                return;
+            }
+        }
+        UI.EngineerIcon.sprite = Resources.Load<Sprite>("Undiscovered");
+        UI.EngineerTitle.text = "???";
+        UI.EngineerDescription.text = "???";
+        UI.EngineerTime.text = "???";
+        UI.EngineerChance.text = "???";
+        UI.EngineerCost.text = "???";
+    }
 
     // Checks unit size
     private void CheckSize()

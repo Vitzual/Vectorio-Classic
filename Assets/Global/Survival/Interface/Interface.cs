@@ -14,6 +14,12 @@ public class Interface : MonoBehaviour
     public Transform EngineerList;
     public GameObject EngineerCooldownOverlay;
     public TextMeshProUGUI EngineerCooldown;
+    public Image EngineerIcon;
+    public TextMeshProUGUI EngineerTitle;
+    public TextMeshProUGUI EngineerDescription;
+    public TextMeshProUGUI EngineerTime;
+    public TextMeshProUGUI EngineerChance;
+    public TextMeshProUGUI EngineerCost;
     public Transform[] InfoPanels;
     public Transform[] HotbarUI;
     public Canvas Overlay;

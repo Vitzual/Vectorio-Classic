@@ -15,8 +15,22 @@ public abstract class TileClass : MonoBehaviour
     public int ID = 0;
     [TextArea] public string description = "No description provided.";
 
+    // Engineer mods
+    [System.Serializable]
+    public class EngineerMods
+    {
+        public string title;
+        [TextArea] public string description;
+        public int upgradeTime;
+        public int successRate;
+        public int iridiumCost;
+        public GameObject originalObj;
+        public GameObject engineerObj;
+    }
+    public EngineerMods[] EngineerModifications;
+
     // Engineer variables
-    public List<int> engineerModifications = new List<int>();
+    public List<int> AppliedModification = new List<int>();
 
     // Engineer variables
     public bool isEngineered = false;
@@ -25,12 +39,26 @@ public abstract class TileClass : MonoBehaviour
     public abstract void DestroyTile();
 
     // Create empty applyModification() method
-    public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain any available modifications"); }
+    public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain a modification with ID " + modID); }
+
+    // Returns the modification time of a unit
+    public int GetModificationTime(int modID)
+    {
+        return EngineerModifications[modID].upgradeTime;
+    }
+
+
+    // Sets an engineer button based on the modID
+    public void SetEngineerButton(Transform building, int modID) 
+    {
+        if (name == "Turret")
+            Debug.Log("a");
+    }
 
     // Check if the building is engineered
     public bool IsModifiable()
     {
-        return engineerModifications.Count == 0;
+        return AppliedModification.Count == 0;
     }
 
     // Update power

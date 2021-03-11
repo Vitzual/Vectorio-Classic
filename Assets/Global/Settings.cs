@@ -6,6 +6,27 @@ public class Settings : MonoBehaviour
     public AudioSource music;
     public MKGlowLite glowing;
     public Interface ui;
+    public int glowMode = 2;
+
+    public void SaveSettings()
+    {
+        // Save user settings
+        SaveSystem.SaveSettings(Screen.width, Screen.height, music.volume, Screen.fullScreen, glowMode);
+    }
+
+    public void LoadSettings()
+    {
+        // Load settings from file
+        SettingsData settings = SaveSystem.LoadSettings();
+        if (settings == null)
+            return;
+
+        SetMusic(settings.volume);
+        SetScreenmode(settings.fullscreen);
+        SetShaderMode(settings.glowMode);
+
+        Screen.SetResolution(settings.width, settings.height, Screen.fullScreen);
+    }
 
     public void SetMusic(float a)
     {
@@ -33,6 +54,7 @@ public class Settings : MonoBehaviour
     {
         if (a == 1) glowing.enabled = false;
         else glowing.enabled = true;
+        glowMode = a;
     }
 
     public void EnableMenuAndPaused()

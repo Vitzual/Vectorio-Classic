@@ -13,6 +13,9 @@ using UnityEngine.SceneManagement;
 
 public class Survival : MonoBehaviour
 {
+    // Manager
+    public GameObject manager;
+    
     // Technology script
     public Technology tech;
 
@@ -177,7 +180,16 @@ public class Survival : MonoBehaviour
             // Force tech tree update
             tech.ForceUpdateCheck();
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
-            PlaceSavedBuildings(data.Locations);
+
+            // Attempt to place saved buildings
+            try
+            {
+                PlaceSavedBuildings(data.Locations);
+            }
+            catch
+            {
+                Debug.Log("Save file doesn't contain engineer tracking\nThis save will no longer work. Sorry!");
+            }
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -193,7 +205,7 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file doesn't contain enemy tracking");
+                Debug.Log("Save file doesn't contain enemy tracking\nThis save will no longer work. Sorry!");
             }
         }
         catch
@@ -202,6 +214,9 @@ public class Survival : MonoBehaviour
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
         }
+
+        // Load settings
+        manager.GetComponent<Settings>().LoadSettings();
 
         // Start repeating PS function
         InvokeRepeating("UpdatePerSecond", 0f, 1f);
@@ -473,6 +488,9 @@ public class Survival : MonoBehaviour
             UI.SettingsOpen = false;
             UI.SetOverlayStatus("Settings", false);
             UI.SetOverlayStatus("Paused", true);
+
+            // Save user settings
+            manager.GetComponent<Settings>().SaveSettings();
         }
 
         // If escape pressed and menu open, close it
@@ -720,6 +738,20 @@ public class Survival : MonoBehaviour
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
+
+            // Set engineering
+            if (a[i, 4] != -1)
+            {
+                try
+                {
+                    obj.GetComponent<TileClass>().ApplyModification(a[i, 4]);
+                    obj.GetComponent<TileClass>().isEngineered = true;
+                }
+                catch
+                {
+                    Debug.Log("A modification on " + obj.name + " has become obsolete, and was removed.");
+                }
+            }
 
             Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
@@ -998,7 +1030,7 @@ public class Survival : MonoBehaviour
             if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production") length += 1;
         }
 
-        int[,] data = new int[length, 4];
+        int[,] data = new int[length, 5];
         length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
@@ -1011,6 +1043,10 @@ public class Survival : MonoBehaviour
                     data[length, 1] = allObjects[i].GetComponent<TileClass>().GetHealth();
                     data[length, 2] = (int)allObjects[i].position.x;
                     data[length, 3] = (int)allObjects[i].position.y;
+                    if (allObjects[i].GetComponent<TileClass>().AppliedModification.Count > 0)
+                        data[length, 4] = allObjects[i].GetComponent<TileClass>().AppliedModification[0];
+                    else
+                        data[length, 4] = -1; // No engineer modifications on this unit
                     length += 1;
                 }
                 catch

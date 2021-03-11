@@ -86,7 +86,7 @@ public class TurretAI : TurretClass
 
                     // Apply variable modifications
                     Gun = EngineerModifications[1].engineerObj.transform.GetChild(0).GetComponent<Rigidbody2D>();
-                    fireRate -= 0.05f;
+                    fireRate = 0.05f;
 
                     // Set the barrel
                     isRotating = true;
@@ -111,8 +111,8 @@ public class TurretAI : TurretClass
                     EngineerModifications[3].originalObj.SetActive(false);
                     EngineerModifications[3].engineerObj.SetActive(true);
 
-                    health += 100;
-                    maxhp += 100;
+                    health = 100;
+                    maxhp = 100;
 
                     break;
 
@@ -125,7 +125,7 @@ public class TurretAI : TurretClass
 
                     // Lower heat / power costs
                     GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power - 1);
-                    GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat - 1);
+                    GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(GetHeat() - 1);
                     power = 1;
                     heatStack.Push(1);
                     break;

@@ -73,4 +73,41 @@ public static class SaveSystem
             return null;
         }
     }
+
+    public static void SaveSettings(int width, int height, float volume, bool fullscreen, int glowMode)
+    {
+        string path = Application.persistentDataPath + "/settings.save";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SettingsData data = new SettingsData(width, height, volume, fullscreen, glowMode);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+
+        Debug.Log("Saved file to " + path);
+    }
+
+    public static SettingsData LoadSettings()
+    {
+        string path = Application.persistentDataPath + "/settings.save";
+        BinaryFormatter formatter = new BinaryFormatter();
+        if (File.Exists(path))
+        {
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            SettingsData data = formatter.Deserialize(stream) as SettingsData;
+            stream.Close();
+
+            Debug.Log("Loaded file from " + path);
+
+            return data;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in " + path);
+            return null;
+        }
+    }
+
 }

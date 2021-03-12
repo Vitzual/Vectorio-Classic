@@ -69,6 +69,7 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
+
     [SerializeField] private Transform HubObj;           // No ID
     [SerializeField] private Transform TurretObj;        // ID = 0
     [SerializeField] private Transform WallObj;          // ID = 1
@@ -93,6 +94,12 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform SunbeamObj;       // ID = 20
     [SerializeField] private Transform TurretMK3;        // ID = 21
     [SerializeField] private Transform AreaCoolerObj;    // ID = 22
+
+    [SerializeField] private Transform EnemyTurretDual;  // ID = 201
+    [SerializeField] private Transform EnemyTurretSMG;   // ID = 200
+    [SerializeField] private Transform EnemyTurretRanger;// ID = 202
+    [SerializeField] private Transform EnemyStaticWall;  // ID = 205
+    [SerializeField] private Transform EnemyStaticMine;  // ID = 204
 
     // Holds the most recent engineer
     public Transform EngineerHolder;
@@ -800,6 +807,20 @@ public class Survival : MonoBehaviour
     // Returns a buildings ID if unlocked
     public Transform GetBuildingWithID(int a)
     {
+        switch (a)
+        {
+            case 200:
+                return EnemyTurretSMG;
+            case 201:
+                return EnemyTurretDual;
+            case 202:
+                return EnemyTurretRanger;
+            case 204:
+                return EnemyStaticMine;
+            case 205:
+                return EnemyStaticWall;
+        }
+
         for (int i = 0; i < tech.unlocked.Count; i++)
         {
             if (tech.unlocked[i].GetComponent<TileClass>().getID() == a)
@@ -1067,14 +1088,14 @@ public class Survival : MonoBehaviour
         int length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production") length += 1;
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production" || allObjects[i].tag == "Enemy Defense") length += 1;
         }
 
         int[,] data = new int[length, 5];
         length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
-            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production")
+            if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production" || allObjects[i].tag == "Enemy Defense")
             {
                 try
                 {
@@ -1118,7 +1139,6 @@ public class Survival : MonoBehaviour
             {
                 try
                 {
-                    Debug.Log(allObjects[i].name);
                     data[length, 0] = allObjects[i].GetComponent<EnemyClass>().GetID();
                     data[length, 1] = allObjects[i].GetComponent<EnemyClass>().GetHealth();
                     data[length, 2] = allObjects[i].position.x;

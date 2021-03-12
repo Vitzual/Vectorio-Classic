@@ -33,10 +33,14 @@ public abstract class TurretClass : TileClass
 
     protected GameObject FindNearestEnemy()
     {
-        var colliders = Physics2D.OverlapCircleAll(
+        var layermask1 = 1 << LayerMask.NameToLayer("Enemy");
+        var layermask2 = 1 << LayerMask.NameToLayer("Enemy Defense");
+        var finalmask = layermask1 | layermask2; 
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position, 
-            range + Research.bonus_range, 
-            1 << LayerMask.NameToLayer("Enemy"));
+            range + Research.bonus_range, finalmask);
+
         GameObject result = null;
         float closest = float.PositiveInfinity;
 

@@ -41,6 +41,7 @@ public class Rocket : BulletClass
         Destroy(gameObject);
     }
 
+    /*
     public override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
@@ -61,6 +62,7 @@ public class Rocket : BulletClass
             collide();
         }
     }
+    */
 
     protected static float AlignRotation(float r)
     {

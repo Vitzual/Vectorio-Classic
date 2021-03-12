@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8186868752073983356
+--- !u!1 &6222278985712307857
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,64 +8,64 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7564576898396080589}
-  - component: {fileID: -3792495767813713534}
-  - component: {fileID: 2466816564429054897}
-  - component: {fileID: 6541985011069221559}
-  m_Layer: 8
-  m_Name: Wall
-  m_TagString: Defense
+  - component: {fileID: 6222278985712307869}
+  - component: {fileID: 6222278985712307870}
+  - component: {fileID: 6222278985712307859}
+  - component: {fileID: 6222278985712307858}
+  m_Layer: 19
+  m_Name: Enemy Wall
+  m_TagString: Enemy Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7564576898396080589
+--- !u!4 &6222278985712307869
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186868752073983356}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 6222278985712307857}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3792495767813713534
+--- !u!114 &6222278985712307870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186868752073983356}
+  m_GameObject: {fileID: 6222278985712307857}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a186415cac53ef4c9cad98366796ff5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d7752ad05fe07f4b87634a076da1b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
+  Effect: {fileID: 7050970385817730975, guid: 488f4063d72db284cb7dc12462e1bce7, type: 3}
   maxhp: 50
   health: 50
   heat: 0
-  cost: 50
-  power: 0
-  ID: 1
-  description: It's a wall.
+  cost: 0
+  power: 1
+  ID: 205
+  description: No description provided.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
   TileLayer:
     serializedVersion: 2
-    m_Bits: 256
---- !u!212 &2466816564429054897
+    m_Bits: 524288
+--- !u!212 &6222278985712307859
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186868752073983356}
+  m_GameObject: {fileID: 6222278985712307857}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -98,8 +98,8 @@ SpriteRenderer:
   m_SortingLayerID: 585715533
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b430c3018854ba047a95c8b9d8361377, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 3913a843dc18a2c459c5910f4ee93ebd, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -109,13 +109,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6541985011069221559
+--- !u!61 &6222278985712307858
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186868752073983356}
+  m_GameObject: {fileID: 6222278985712307857}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}

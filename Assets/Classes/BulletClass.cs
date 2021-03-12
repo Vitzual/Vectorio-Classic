@@ -13,21 +13,34 @@ public abstract class BulletClass : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (transform.tag == "Bullet" && other.tag == "Enemy")
+        Debug.Log("Hit");
+        if (transform.tag == "Bullet" && (other.tag == "Enemy Defense" || other.tag == "Enemy"))
         {
             // Check to see if other enemy is spawner
             if (other.name == "Hive")
+            {
                 other.GetComponent<SpawnerAI>().SpawnEnemy();
+                HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
+                if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
+                return;
+            }
             else if (other.name == "Enemy Turret")
             {
                 other.GetComponent<EnemyTurretAI>().DamageTile(damage);
                 HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
-                if(!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
+                if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
+                return;
+            }
+            else if (other.name == "Enemy Wall")
+            {
+                other.GetComponent<EnemyWallAI>().DamageTile(damage);
+                HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
+                if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
                 return;
             }
             else if (other.name == "Enemy Static")
             {
-                other.GetComponent<EnemyWallAI>().DamageTile(damage);
+                other.GetComponent<EnemyStaticAI>().DamageTile(damage);
                 HitEffect = Resources.Load<ParticleSystem>("Particles/EnemyParticle");
                 if (!this.name.Contains("BoltBullet") && !this.name.Contains("Beam")) collide();
                 return;
@@ -57,6 +70,7 @@ public abstract class BulletClass : MonoBehaviour
         }
     }
 
+    // Obsolete
     protected GameObject FindNearestEnemy()
     {
         var colliders = Physics2D.OverlapCircleAll(

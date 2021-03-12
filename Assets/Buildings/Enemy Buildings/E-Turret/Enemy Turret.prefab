@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1190493900998018801}
   - component: {fileID: 8140955260837823806}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 3868521708513623825}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: Enemy Turret
-  m_TagString: Enemy
+  m_TagString: Enemy Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,16 +132,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada96bc1bee4804e8a3a103a7ac42d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 0}
-  maxhp: 200
-  health: 200
+  Effect: {fileID: 3295080414431335284, guid: f22875b68df538d4d8741dbfa47b6895, type: 3}
+  maxhp: 100
+  health: 100
   heat: 0
   cost: 0
   power: 0
-  ID: 0
+  ID: 201
   description: No description provided.
+  EngineerModifications: []
+  AppliedModification: 
+  isEngineered: 0
   fireRate: 1
-  bulletSpread: 1
+  bulletSpread: 0.3
   bulletAmount: 0
   rotationSpeed: 1
   range: 50
@@ -237,7 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7405844398886340358}
   - component: {fileID: 1225715366431229570}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +322,7 @@ GameObject:
   - component: {fileID: 8908416096621829035}
   - component: {fileID: 3167835580485890923}
   - component: {fileID: 5865514787985018872}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2950084637759095388}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: FirePoint 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6941607670959578118}
   - component: {fileID: 7335429759588082062}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretLightInside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4879405916952119577}
   - component: {fileID: 7704099059762360647}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8039993694454009214}
   - component: {fileID: 7131175123649335127}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: TurretSidings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3069989843565101140}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -104,13 +104,8 @@ public class OnSpawn : MonoBehaviour
                     {
                         // Generate base
                         float rotation = Random.Range(1, 5) * 90f;
-                        var temp = Instantiate(EnemyBases[i], new Vector3(x, y, 0), Quaternion.Euler(0, 0, transform.localEulerAngles.z + rotation));
+                        var temp = Instantiate(EnemyBases[i], new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
                         temp.name = EnemyBases[i].name;
-
-                        // Undo turret rotation
-                        foreach (Transform child in temp.transform)
-                            if (child.name == "Enemy Turret")
-                                child.transform.localEulerAngles = new Vector3(child.transform.rotation.x, child.transform.rotation.y, child.transform.rotation.z - rotation);
 
                         valid = true;
                     }

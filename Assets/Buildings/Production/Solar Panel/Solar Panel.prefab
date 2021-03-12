@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 165687244735643869}
   - component: {fileID: 2314487847566241082}
   - component: {fileID: 1740312508442694215}
+  - component: {fileID: -7897967490759336136}
   m_Layer: 8
   m_Name: Solar Panel
   m_TagString: Defense
@@ -133,19 +134,15 @@ MonoBehaviour:
   health: 10
   heat: 45
   cost: 10000
-  level: 1
   power: 0
   ID: 11
   description: 'Uses solar technology to generate power
 
     at the cost of also
     generating heat.'
-  TileLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  rotator: {fileID: 0}
-  IncreaseAmount: 0
-  colliders: []
+  EngineerModifications: []
+  AppliedModification: 
+  isEngineered: 0
 --- !u!61 &1740312508442694215
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,6 +169,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!50 &-7897967490759336136
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711705259399207453}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5383020415088979828
 GameObject:
   m_ObjectHideFlags: 0

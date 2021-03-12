@@ -8,7 +8,6 @@ public class MiniBullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        damage = 5;
         StartCoroutine(SetLifetime(Random.Range(5f, 10f)));
     }
 

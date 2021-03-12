@@ -6,7 +6,6 @@ public abstract class EnemyClass : MonoBehaviour
 {
     // Enemy ID
     public int ID;
-    protected Difficulties difficulties;
 
     // Effect variables
     private Transform burning_effect;
@@ -19,7 +18,6 @@ public abstract class EnemyClass : MonoBehaviour
     // Enemy stats
     public int health;
     public int damage;
-    public int range;
     public float moveSpeed;
     public int attackSpeed;
     public int explosiveRadius;
@@ -28,18 +26,22 @@ public abstract class EnemyClass : MonoBehaviour
     public GameObject[] spawnOnDeath;
     public int[] amountToSpawn;
     public ParticleSystem Effect;
-    public Rigidbody2D body;
 
     // Enemy vars
     public Transform PreferredTarget = null;
     protected GameObject target;
     protected int attackTimeout;
-    protected Vector2 Movement;
+
+    private void Start()
+    {
+        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, moveSpeed);
+    }
 
     // Attack Tile
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Defense"))
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Defense") ||
+            collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
         else OnCollisionStay2D(collision);
     }
@@ -47,6 +49,7 @@ public abstract class EnemyClass : MonoBehaviour
     // Damage building on collision
     public void OnCollisionStay2D(Collision2D collision)
     {
+        Debug.Log("Collision detected");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
         {
             if (attackTimeout <= 0)
@@ -231,7 +234,7 @@ public abstract class EnemyClass : MonoBehaviour
     {
         var colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position, 
-            range, 
+            2000, 
             1 << LayerMask.NameToLayer("Building"));
         GameObject result = null;
         float closest = float.PositiveInfinity;

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2265546855456456335}
   - component: {fileID: 5990330869137716508}
   - component: {fileID: 8371128599779309114}
-  - component: {fileID: 3760844040989154300}
   m_Layer: 11
   m_Name: Bullet
   m_TagString: Bullet
@@ -46,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c360b84188a9ee4b947049ac59c5612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  speed: 80
   Effect: {fileID: 918402723469912044, guid: ea2398392b1ec0f45b369012c1c7a337, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
@@ -205,29 +202,3 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!61 &3760844040989154300
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3293027712645128820}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.002186805, y: -0.0024168491}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 6.4}
-    newSize: {x: 6.4, y: 6.4}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9256082, y: 1.4518538}
-  m_EdgeRadius: 0

@@ -3,47 +3,27 @@ using System.Collections;
 
 public class ShurikenAI : EnemyClass
 {
-
-    // On start, get rigidbody and assign death effect
-    void Start()
-    {
-        body = this.GetComponent<Rigidbody2D>();
-    }
-
     // Targetting system
     void Update()
     {
         BaseUpdate();
 
         // Find closest enemy 
-        if (target == null) {
+        if (target == null)
+        {
             target = FindNearestDefence();
         }
         if (target != null)
         {
-            float distance = (target.transform.position - this.transform.position).sqrMagnitude;
             // Rotate towards current target
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
             // Move towards defense
-            Vector2 lookDirection = TargetPosition - body.position;
+            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
 
+            // Get the angle between the target and this transform
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            body.rotation = angle;
-            lookDirection.Normalize();
-            Movement = lookDirection;
-            Movement = lookDirection;
-        } 
-        else
-        {
-            Movement = new Vector2(0, 0);
+            transform.eulerAngles = new Vector3(0, 0, angle);
         }
-    }
-
-    // Move entity towards target every frame
-    private void FixedUpdate()
-    {
-        body.AddForce(Movement * moveSpeed);
-        transform.Rotate(Vector3.forward * Time.deltaTime * 200f);
     }
 }

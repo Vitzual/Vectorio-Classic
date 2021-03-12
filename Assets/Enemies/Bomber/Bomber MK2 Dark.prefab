@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 6c91deec5b2d7e8458b0482341d8d0c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 72968c56c0214294aa51d89ff77213e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -230,7 +230,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 597c612a7db0b70489df481f550b0a3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -311,7 +311,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 9d999a02f3b68924ba29bc16a5754325, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -335,8 +335,7 @@ GameObject:
   - component: {fileID: 6065519297016329532}
   - component: {fileID: 3902326111899914685}
   - component: {fileID: 6065519297016329531}
-  - component: {fileID: 9218725160157042262}
-  - component: {fileID: 4329640967118122554}
+  - component: {fileID: 225601560032148806}
   m_Layer: 9
   m_Name: Bomber MK2 Dark
   m_TagString: Enemy
@@ -382,7 +381,6 @@ MonoBehaviour:
   is_poisoned: 0
   health: 50
   damage: 0
-  range: 1000
   moveSpeed: 40
   attackSpeed: 0
   explosiveRadius: 10
@@ -392,7 +390,7 @@ MonoBehaviour:
   - {fileID: 6065519297016329530, guid: 86a14823f54eb524abc7611ba626ca99, type: 3}
   amountToSpawn: 03000000
   Effect: {fileID: 7050970385817730975, guid: c2ade926340faa94caa197fcaeed1161, type: 3}
-  body: {fileID: 9218725160157042262}
+  PreferredTarget: {fileID: 0}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -430,7 +428,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -443,29 +441,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &9218725160157042262
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 2.21
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!61 &4329640967118122554
-BoxCollider2D:
+--- !u!58 &225601560032148806
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -477,19 +454,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.024216175}
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 3.5}
-  m_EdgeRadius: 0
+  m_Radius: 2.8731499
 --- !u!1 &6242784477916823959
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +525,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 597c612a7db0b70489df481f550b0a3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -639,7 +606,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 72968c56c0214294aa51d89ff77213e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

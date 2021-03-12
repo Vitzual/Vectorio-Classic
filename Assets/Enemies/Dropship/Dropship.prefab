@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 8d3b7a9f31b2dfe4e860f69b54fd82e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -423,7 +423,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 04b17de8474668a4b8b55858868961b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -585,7 +585,6 @@ GameObject:
   - component: {fileID: 5406036014951324092}
   - component: {fileID: 6065519297016329531}
   - component: {fileID: 6585524150390319789}
-  - component: {fileID: 5576274064267988755}
   m_Layer: 9
   m_Name: Dropship
   m_TagString: Enemy
@@ -632,7 +631,6 @@ MonoBehaviour:
   is_poisoned: 0
   health: 800
   damage: 500
-  range: 1000
   moveSpeed: 3
   attackSpeed: 0
   explosiveRadius: 10
@@ -642,7 +640,7 @@ MonoBehaviour:
   - {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
   amountToSpawn: 03000000
   Effect: {fileID: 7172306552677707968, guid: fa385ab316882e049bb820c2e60cdda0, type: 3}
-  body: {fileID: 0}
+  PreferredTarget: {fileID: 0}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -680,7 +678,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -724,27 +722,6 @@ PolygonCollider2D:
       - {x: -0.15638024, y: -3.0038357}
       - {x: 18.392523, y: -5.527239}
       - {x: 18.695942, y: -4.924775}
---- !u!50 &5576274064267988755
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 2.21
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &6186725694874111201
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +790,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 21cc8c4892d0e664fa145f3687f1b1ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

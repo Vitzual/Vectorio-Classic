@@ -31,10 +31,7 @@ public class CameraMovement : MonoBehaviour
             moveSpeed = 20f;
         else if (Input.GetKeyUp(KeyCode.LeftControl))
             moveSpeed = 50f;
-    }
 
-    private void FixedUpdate()
-    {
         LegalMovement = true;
 
         if (camera.position.x + movement.x > maxRange) { LegalMovement = false; movement.x = 0; }

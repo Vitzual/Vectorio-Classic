@@ -13,9 +13,10 @@ public class Research : MonoBehaviour
     public static int bonus_poisoning = 0;
     public static int bonus_shield = 0;
     public static int bonus_health = 0;
-    public static bool bonus_pierce = false;
+    public static int bonus_pierce = 0;
     public static float bonus_range = 0;
     public static float bonus_firerate = 0;
+    public static float bonus_bulletspeed = 1;
     public static bool research_unlocked = false;
 
     // Research UI stuff
@@ -98,7 +99,7 @@ public class Research : MonoBehaviour
         else if (type.ToLower() == "freezing") bonus_freezing += 10; // Adds 10 seconds of freezing (5% proc chance)
         else if (type.ToLower() == "poisoning") bonus_poisoning += 3; // Adds 3 seconds of poisoning (5% proc chance)
         else if (type.ToLower() == "shield") bonus_shield += 1; // Adds defensive shield to all buildings
-        else if (type.ToLower() == "pierce") bonus_pierce = true; // Add piercing shots to bullets
+        else if (type.ToLower() == "pierce") bonus_pierce += 1; // Add piercing shots to bullets
         else if (type.ToLower() == "range") bonus_range += 5f; // Increase range by 5 units (1x1 tile)
         else if (type.ToLower() == "firerate") bonus_firerate += 0.1f; // Decrease shoot cooldown by 0.1s
         else Debug.Log("The research type supplied is invalid.");

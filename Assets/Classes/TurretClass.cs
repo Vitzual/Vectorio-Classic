@@ -7,11 +7,14 @@ public abstract class TurretClass : TileClass
     private BulletHandler bulletHandler;
 
     // Weapon variables
-    public float fireRate;
-    public float bulletSpread;
-    public float bulletAmount;
-    public float rotationSpeed;
     public int range;
+    public float rotationSpeed;
+    public int bulletDamage = 1;
+    public int bulletPierces = 1;
+    public int bulletAmount = 1;
+    public float bulletSpeed = 80;
+    public float bulletSpread = 1;
+    public float fireRate;
     public Transform[] FirePoints;
     public Rigidbody2D Gun;
     public GameObject Bullet;
@@ -195,21 +198,11 @@ public abstract class TurretClass : TileClass
         bullet.transform.rotation = pos.rotation;
         bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
 
-        // Set optional damage multiplier
-        bullet.GetComponent<BulletClass>().MultiplyDamage(multiplier);
-
         // Register the bullet
-        float speed = bullet.GetComponent<BulletClass>().GetSpeed();
-        bulletHandler.RegisterBullet(bullet.transform, Random.Range(speed - 10, speed + 10));
-    }
-
-    // Calculate bullet spread
-    private static Vector2 BulletSpread(Vector2 v, float delta)
-    {
-        return new Vector2(
-            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
-            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
-        );
+        float speed = Random.Range(bulletSpeed - 10, bulletSpeed + 10) * Research.bonus_bulletspeed;
+        int pierces = bulletPierces + Research.bonus_pierce;
+        int damage = bulletDamage + Research.bonus_damage;
+        bulletHandler.RegisterBullet(bullet.transform, speed, pierces, damage);
     }
 
     protected static float AlignRotation(float r) {

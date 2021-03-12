@@ -1,15 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BomberAI : EnemyClass
 {
-
-    // On start, get rigidbody and assign death effect
-    void Start()
-    {
-        body = this.GetComponent<Rigidbody2D>();
-    }
-
     // Targetting system
     void Update()
     {
@@ -21,28 +13,15 @@ public class BomberAI : EnemyClass
         }
         if (target != null)
         {
-            float distance = (target.transform.position - this.transform.position).sqrMagnitude;
             // Rotate towards current target
             Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
             // Move towards defense
-            Vector2 lookDirection = TargetPosition - body.position;
+            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
 
+            // Get the angle between the target and this transform
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            body.rotation = angle;
-            lookDirection.Normalize();
-            Movement = lookDirection;
-            Movement = lookDirection;
+            transform.eulerAngles = new Vector3(0, 0, angle);
         } 
-        else
-        {
-            Movement = new Vector2(0, 0);
-        }
-    }
-
-    // Move entity towards target every frame
-    private void FixedUpdate()
-    {
-        body.AddForce(Movement * moveSpeed);
     }
 }

@@ -14,7 +14,7 @@ public class Rocket : BulletClass
         body = this.GetComponent<Rigidbody2D>();
         HitEffect = Effect;
         StartCoroutine(SetLifetime(6f));
-        target = FindNearestEnemy();
+        //target = FindNearestEnemy();
     }
 
     public void Update()

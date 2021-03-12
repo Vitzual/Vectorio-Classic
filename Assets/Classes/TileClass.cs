@@ -6,6 +6,7 @@ public abstract class TileClass : MonoBehaviour
     // Tile class variables
     [SerializeField]
     protected ParticleSystem Effect;
+    protected Difficulties difficulties;
     public float maxhp = 1;
     public float health = 1;
     public int heat = 1;
@@ -28,6 +29,11 @@ public abstract class TileClass : MonoBehaviour
         public GameObject engineerObj;
     }
     public EngineerMods[] EngineerModifications;
+
+    private void Start()
+    {
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+    }
 
     // Engineer variables
     public List<int> AppliedModification = new List<int>();
@@ -123,7 +129,7 @@ public abstract class TileClass : MonoBehaviour
     }
     public int GetCost()
     {
-        return cost;
+        return (int)(cost * GameObject.Find("Difficulty").GetComponent<Difficulties>().GetAdditionalCost());
     }
     public int GetHeat()
     {
@@ -133,6 +139,7 @@ public abstract class TileClass : MonoBehaviour
     }
     public int GetHealth() { return (int) health; }
     public void SetHealth(int a) { health = (float) a; }
+    public void IncreaseHealth() { health = health * GameObject.Find("Difficulty").GetComponent<Difficulties>().GetDefenseHP(); }
     public void setEngineered(bool a)
     {
         isEngineered = a;

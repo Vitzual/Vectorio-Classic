@@ -10,6 +10,9 @@ public class OnSpawn : MonoBehaviour
     public LayerMask HiveLayer;
     public int WorldSeed;
 
+    // Difficulty class
+    private Difficulties difficulties;
+
     // Gold ore placements
     public GameObject GoldOre;
     public int GoldRegionSize;
@@ -39,6 +42,30 @@ public class OnSpawn : MonoBehaviour
     // Enemy base spawning 
     public int BaseRegionSize;
     public GameObject[] EnemyBases;
+    public int maxBases;
+
+    public void Start()
+    {
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+
+        int[] goldInfo = difficulties.GetGold();
+        int[] essenceInfo = difficulties.GetEssence();
+        int[] iridiumInfo = difficulties.GetIridium();
+
+        GoldSpawnAmount = goldInfo[0];
+        GoldVeinSize = goldInfo[1];
+        GoldVeinNoise = goldInfo[2];
+
+        EssenceSpawnAmount = essenceInfo[0];
+        EssenceVeinSize = essenceInfo[1];
+        EssenceVeinNoise = essenceInfo[2];
+
+        IridiumSpawnAmount = iridiumInfo[0];
+        IridiumVeinSize = iridiumInfo[1];
+        IridiumVeinNoise = iridiumInfo[2];
+
+        maxBases = difficulties.GetBases();
+    }
 
     public void GenerateWorldData(int a, bool save)
     {
@@ -58,7 +85,7 @@ public class OnSpawn : MonoBehaviour
     {
         int x;
         int y;
-        int max = 100;
+        int max = maxBases;
         int att = 0;
 
         bool valid = false;

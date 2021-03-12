@@ -6,6 +6,7 @@ public abstract class EnemyClass : MonoBehaviour
 {
     // Enemy ID
     public int ID;
+    protected Difficulties difficulties;
 
     // Effect variables
     private Transform burning_effect;
@@ -35,15 +36,9 @@ public abstract class EnemyClass : MonoBehaviour
     protected int attackTimeout;
     protected Vector2 Movement;
 
-    private void Start()
-    {
-        Physics2D.IgnoreLayerCollision(9, 19, true);
-    }
-
     // Attack Tile
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision detected");
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Defense"))
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
         else OnCollisionStay2D(collision);
@@ -220,12 +215,6 @@ public abstract class EnemyClass : MonoBehaviour
         is_poisoned = false;
     }
 
-    // Return damage
-    public int getDamage()
-    {
-        return damage;
-    }
-
     // Return moveSpeed
     public float getSpeed()
     {
@@ -275,4 +264,6 @@ public abstract class EnemyClass : MonoBehaviour
     public int GetID() { return ID; }
     public int GetHealth() { return health; }
     public void SetHealth(int a) { health = a; }
+    public int GetDamage() { return damage; }
+    public void SetDamage(int a) { damage = a; }
 }

@@ -4,6 +4,7 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
+    private Difficulties difficulties;
     public Survival survival;
     public Technology technology;
     public ProgressBar heatUI;
@@ -13,6 +14,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
         InvokeRepeating("SpawnEnemies", 0f, 1f);
     }
 
@@ -69,6 +71,9 @@ public class WaveSpawner : MonoBehaviour
                 break;
         }
         holder.name = _enemy.name;
+
+        holder.GetComponent<EnemyClass>().SetHealth((int)(holder.GetComponent<EnemyClass>().GetHealth() * difficulties.GetEnemyHP()));
+        holder.GetComponent<EnemyClass>().SetDamage((int)(holder.GetComponent<EnemyClass>().GetDamage() * difficulties.GetEnemyDMG()));
     }
 
     public void increaseHeat(int a)

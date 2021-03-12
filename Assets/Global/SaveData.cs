@@ -19,8 +19,19 @@ public class SaveData
     public bool UnlocksLeft;
     public int RLevel;
     public bool[] ResearchedTiers;
+    public int Difficulty;
+    public int startingGold;
+    public int startingPower;
+    public float defenseHP;
+    public float enemyHP;
+    public float enemyDMG;
+    public float additionalCost;
+    public int[] goldSpawn;
+    public int[] essenceSpawn;
+    public int[] iridiumSpawn;
+    public int enemyBases;
 
-    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research) 
+    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty) 
     {
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
@@ -35,5 +46,15 @@ public class SaveData
         UnlockLevel = unlock.UnlockLvl;
         UnlocksLeft = unlock.UnlocksLeft;
         ResearchedTiers = research.GetResearchData();
-    }
+        startingGold = difficulty.GetStartingGold();
+        startingPower = difficulty.GetStartingPower();
+        defenseHP = difficulty.GetDefenseHP();
+        enemyHP = difficulty.GetEnemyHP();
+        enemyDMG = difficulty.GetEnemyDMG();
+        additionalCost = difficulty.GetAdditionalCost();
+        goldSpawn = difficulty.GetGold();
+        essenceSpawn = difficulty.GetEssence();
+        iridiumSpawn = difficulty.GetIridium();
+        enemyBases = difficulty.GetBases();
+}
 }

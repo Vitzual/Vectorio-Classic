@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enhancer : TileClass
 {
@@ -10,7 +11,8 @@ public class Enhancer : TileClass
 
     private void Start()
     {
-        InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
+        if (SceneManager.GetActiveScene().name != "Menu")
+            InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
     }
 
     // Update is called once per frame

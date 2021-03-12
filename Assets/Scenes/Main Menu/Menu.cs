@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
     public GameObject SaveButtons;
     public GameObject MenuButtons;
     public GameObject NewGame;
+    public Settings settings;
     public bool SaveSelected = false;
     public bool NewSelected = false;
 
@@ -18,6 +19,8 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1f;
         Application.targetFrameRate = 300;
+
+        settings.LoadSettings();
     }
 
     public void Update()
@@ -124,6 +127,12 @@ public class Menu : MonoBehaviour
             transform.Find("Subtitle").GetComponent<CanvasGroup>().alpha = 0f;
         }
 
+    }
+
+    public void StartNewGame(int a)
+    {
+        GameObject.Find("Difficulty").GetComponent<Difficulties>().SetDifficulty(a);
+        SceneManager.LoadScene("Survival");
     }
 
     public void SetGameSave(int a)

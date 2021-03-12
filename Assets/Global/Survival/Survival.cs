@@ -22,6 +22,9 @@ public class Survival : MonoBehaviour
     // Interface script
     public Interface UI;
 
+    // Difficulties script
+    private Difficulties difficulties;
+
     // Research object
     public Research rsrch;
 
@@ -53,6 +56,9 @@ public class Survival : MonoBehaviour
     public int GPSP = 0;
     public int EPSP = 0;
     public int IPSP = 0;
+
+    // Add additional cost
+    public float additionalCost = 1f;
 
     // Sprite of the selected object
     private SpriteRenderer Selected;
@@ -161,6 +167,40 @@ public class Survival : MonoBehaviour
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
+
+        // Get difficulty object
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+        int holder = difficulties.GetDifficulty();
+
+        // Check to see if there's a difficulty saved
+        try
+        {
+            difficulties.SetDifficulty(0);
+            difficulties.SetStartingGold(data.startingGold);
+            difficulties.SetStartingPower(data.startingPower);
+            difficulties.SetAdditionalCost(data.additionalCost);
+            difficulties.SetEnemyHP(data.enemyHP);
+            difficulties.SetEnemyDMG(data.enemyDMG);
+            difficulties.SetDefenseHP(data.defenseHP);
+            difficulties.SetGold(data.goldSpawn);
+            difficulties.SetEssence(data.essenceSpawn);
+            difficulties.SetIridium(data.iridiumSpawn);
+            difficulties.SetBases(data.enemyBases);
+        }
+        catch
+        {
+            difficulties.SetDifficulty(holder);
+        }
+
+        // Get default stats
+        gold = difficulties.GetStartingGold();
+        AvailablePower = difficulties.GetStartingPower();
+        additionalCost = difficulties.GetAdditionalCost();
+        UI.GoldAmount.text = gold.ToString();
+
+        // Set power usage
+        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
         // Attempt to load save data 
         try
@@ -281,8 +321,8 @@ public class Survival : MonoBehaviour
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
 
-
                     LastObj.name = SelectedObj.name;
+                    LastObj.GetComponent<TileClass>().IncreaseHealth();
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.GetComponent<WaveSpawner>().increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
                 }
@@ -1011,7 +1051,7 @@ public class Survival : MonoBehaviour
     public void Save()
     {
         Debug.Log("Attempting to save data");
-        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch);
+        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties);
         Debug.Log("Data was saved successfully");
 
         UI.SaveButton.buttonText = "SAVED";

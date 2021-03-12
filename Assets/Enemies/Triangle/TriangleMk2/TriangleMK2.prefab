@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: da6627323afdfcf4ca34602281725c22, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 150fb9cc181ff3148a7d54fb49d346d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -172,7 +172,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6065519297016329532}
   - component: {fileID: -584769959341997936}
-  - component: {fileID: 3310720871437840357}
   - component: {fileID: 6065519297016329531}
   - component: {fileID: 9218725160157042262}
   - component: {fileID: 5409734555225548137}
@@ -221,7 +220,6 @@ MonoBehaviour:
   range: 1000
   moveSpeed: 14
   attackSpeed: 8
-  worth: 7
   explosiveRadius: 0
   explosiveDamage: 0
   effectImmunity: 0
@@ -229,20 +227,9 @@ MonoBehaviour:
   amountToSpawn: 
   Effect: {fileID: 7050970385817730975, guid: 1b9a20db14bca94449de4d56853865b8, type: 3}
   body: {fileID: 0}
+  PreferredTarget: {fileID: 0}
   ChargeEffect: {fileID: 6280382550920895699, guid: 45e774aefffa3624c9ba49ab25e51c13,
     type: 3}
---- !u!114 &3310720871437840357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24cdc9316a1367d4aa0e88c7ab96ac4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -280,7 +267,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -417,7 +404,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Time: 3.3
   m_Parameters:

@@ -9,7 +9,7 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform Object, float Speed, bool Tracker, int Piercing, int Damage)
+        public ActiveBullets(Transform Object, float Speed, int Tracker, int Piercing, int Damage)
         {
             this.Object = Object;
             this.Speed = Speed;
@@ -21,7 +21,7 @@ public class BulletHandler : MonoBehaviour
         // Class variables
         public Transform Object { get; set; }
         public float Speed { get; set; }
-        public bool Tracker { get; set; }
+        public int Tracker { get; set; }
         public int Piercing { get; set; }
         public int Damage { get; set; }
         public List<Transform> IgnoreEnemies = new List<Transform>();
@@ -30,6 +30,14 @@ public class BulletHandler : MonoBehaviour
     public List<ActiveBullets> Bullets;
 
     public LayerMask EnemyLayer;
+    public LayerMask EnemyBuildingLayer;
+    private LayerMask LayerCast;
+
+    // Called when awoken
+    public void Start()
+    {
+        LayerCast = EnemyLayer | EnemyBuildingLayer;
+    }
 
     // Handles bullet movement and hit detection frame-by-frame
     public void Update()
@@ -38,16 +46,16 @@ public class BulletHandler : MonoBehaviour
             try
             {
                 Bullets[i].Object.position += Bullets[i].Object.up * Bullets[i].Speed * Time.deltaTime;
-                if (Bullets[i].Tracker)
+                if (Bullets[i].Tracker == 4)
                 {
-                    Bullets[i].Tracker = false;
-                    RaycastHit2D hit = Physics2D.Raycast(Bullets[i].Object.position, Bullets[i].Object.up, 1.5f, EnemyLayer);
+                    Bullets[i].Tracker = 1;
+                    RaycastHit2D hit = Physics2D.Raycast(Bullets[i].Object.position, Bullets[i].Object.up, 1.5f, LayerCast);
                     if (hit.collider != null && !Bullets[i].IgnoreEnemies.Contains(hit.collider.transform))
                         if (OnHit(i, hit.collider.transform)) { i--; continue; }
                 }
                 else
                 {
-                    Bullets[i].Tracker = true;
+                    Bullets[i].Tracker+=1;
                     continue;
                 }
             }
@@ -61,7 +69,7 @@ public class BulletHandler : MonoBehaviour
     // Registers a bullet to be handled by the updater in this script
     public void RegisterBullet(Transform bullet, float speed, int pierces, int damage)
     {
-        Bullets.Add(new ActiveBullets(bullet, speed, true, pierces, damage));
+        Bullets.Add(new ActiveBullets(bullet, speed, 1, pierces, damage));
     }
 
     // Called when a hit is detected in the updater 
@@ -95,12 +103,13 @@ public class BulletHandler : MonoBehaviour
         if (Bullets[bulletID].Piercing == 0)
         {
             BulletClass bds = Bullets[bulletID].Object.GetComponent<BulletClass>();
-            if (other.name.Contains("Dark"))
-                bds.SetHitEffect("DarkParticle");
-            else if (other.name.Contains("Phantom"))
-                bds.SetHitEffect("PhantomParticle");
-            else
-                bds.SetHitEffect("EnemyParticle");
+            if (bds.IsParticleChangeable())
+                if (other.name.Contains("Dark"))
+                    bds.SetHitEffect("DarkParticle");
+                else if (other.name.Contains("Phantom"))
+                    bds.SetHitEffect("PhantomParticle");
+                else
+                    bds.SetHitEffect("EnemyParticle");
             bds.collide();
             Bullets.RemoveAt(bulletID);
             return true;

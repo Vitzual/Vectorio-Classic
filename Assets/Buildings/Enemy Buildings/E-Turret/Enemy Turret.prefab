@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 3868521708513623825}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
-  - component: {fileID: 290213292191063420}
   m_Layer: 19
   m_Name: Enemy Turret
   m_TagString: Enemy Defense
@@ -144,11 +143,14 @@ MonoBehaviour:
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  fireRate: 1
-  bulletSpread: 0.3
-  bulletAmount: 0
-  rotationSpeed: 1
   range: 50
+  rotationSpeed: 1
+  bulletDamage: 1
+  bulletPierces: 1
+  bulletAmount: 1
+  bulletSpeed: 80
+  bulletSpread: 0.3
+  fireRate: 1
   FirePoints:
   - {fileID: 3069989843565101140}
   - {fileID: 2950084637759095388}
@@ -231,27 +233,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
---- !u!50 &290213292191063420
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &3315152472104292069
 GameObject:
   m_ObjectHideFlags: 0

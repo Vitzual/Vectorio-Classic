@@ -41,18 +41,17 @@ public abstract class TileClass : MonoBehaviour
     // Engineer variables
     public bool isEngineered = false;
 
-    // Abstract methods
-    public abstract void DestroyTile();
-
     // Create empty applyModification() method
     public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain a modification with ID " + modID); }
+
+    // Abstract methods
+    public abstract void DestroyTile();
 
     // Returns the modification time of a unit
     public int GetModificationTime(int modID)
     {
         return EngineerModifications[modID].upgradeTime;
     }
-
 
     // Sets an engineer button based on the modID
     public void SetEngineerButton(Transform building, int modID) 
@@ -76,14 +75,16 @@ public abstract class TileClass : MonoBehaviour
     }
 
     // Apply damage to entity
-    public void DamageTile(int dmgRecieved)
+    public bool DamageTile(int dmgRecieved)
     {
         health -= dmgRecieved;
         if (health + Research.bonus_health <= 0)
         {
             GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
             DestroyTile();
+            return true;
         }
+        return false;
     }
 
     public void DecreaseHeat(int amount)

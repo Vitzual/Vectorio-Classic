@@ -5,6 +5,8 @@ public abstract class TurretClass : TileClass
 {
     // Bullet Handler
     private BulletHandler bulletHandler;
+    private EnemyBulletHandler enemyHandler;
+    private bool isEnemy = false;
 
     // Weapon variables
     public int range;
@@ -31,7 +33,12 @@ public abstract class TurretClass : TileClass
     // Let's see if this shit works amiright my dude
     private void Start()
     {
-        bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+        if (transform.name.Contains("Enemy"))
+        {
+            enemyHandler = GameObject.Find("Enemy Bullet Handler").GetComponent<EnemyBulletHandler>();
+            isEnemy = true;
+        }
+        else bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
     }
 
     protected GameObject FindNearestEnemy()
@@ -202,7 +209,12 @@ public abstract class TurretClass : TileClass
         float speed = Random.Range(bulletSpeed - 10, bulletSpeed + 10) * Research.bonus_bulletspeed;
         int pierces = bulletPierces + Research.bonus_pierce;
         int damage = bulletDamage + Research.bonus_damage;
-        bulletHandler.RegisterBullet(bullet.transform, speed, pierces, damage);
+
+        // Dependent on the bullet, register under the correct master script
+        if (isEnemy)
+            enemyHandler.RegisterBullet(bullet.transform, bullet.GetComponent<EnemyBullet>(), speed, pierces, damage);
+        else
+            bulletHandler.RegisterBullet(bullet.transform, speed, pierces, damage);
     }
 
     protected static float AlignRotation(float r) {

@@ -272,18 +272,20 @@ MonoBehaviour:
   is_frozen: 0
   is_poisoned: 0
   health: 35
-  damage: 15
-  moveSpeed: 5
+  damage: 500
+  moveSpeed: 3
   attackSpeed: 15
   explosiveRadius: 1
   explosiveDamage: 1
+  rayLength: 0
   effectImmunity: 0
   spawnOnDeath:
   - {fileID: 6065519297016329530, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
   - {fileID: 6065519297016329530, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
   amountToSpawn: 0500000003000000
   Effect: {fileID: 3295080414431335284, guid: a1fe257b4994e9c47800ffa57543006b, type: 3}
-  PreferredTarget: {fileID: 0}
+  PreferredTarget: {fileID: 5628938638249383948, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0

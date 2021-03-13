@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: 5406036014951324092}
   - component: {fileID: 6065519297016329531}
   - component: {fileID: 6585524150390319789}
+  - component: {fileID: 3218542028071005407}
   m_Layer: 9
   m_Name: Dropship
   m_TagString: Enemy
@@ -631,16 +632,18 @@ MonoBehaviour:
   is_poisoned: 0
   health: 800
   damage: 500
-  moveSpeed: 3
+  moveSpeed: 1
   attackSpeed: 0
   explosiveRadius: 10
   explosiveDamage: 100
+  rayLength: 0
   effectImmunity: 0
   spawnOnDeath:
   - {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
   amountToSpawn: 03000000
   Effect: {fileID: 7172306552677707968, guid: fa385ab316882e049bb820c2e60cdda0, type: 3}
-  PreferredTarget: {fileID: 0}
+  PreferredTarget: {fileID: 5628938638249383948, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -722,6 +725,27 @@ PolygonCollider2D:
       - {x: -0.15638024, y: -3.0038357}
       - {x: 18.392523, y: -5.527239}
       - {x: 18.695942, y: -4.924775}
+--- !u!50 &3218542028071005407
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6186725694874111201
 GameObject:
   m_ObjectHideFlags: 0

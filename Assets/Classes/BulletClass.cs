@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class BulletClass : MonoBehaviour
 {
     protected ParticleSystem HitEffect;
+    public bool isParticleChangeable = true;
 
     public abstract void collide();
 
@@ -19,5 +20,10 @@ public abstract class BulletClass : MonoBehaviour
         {
             collide();
         }
+    }
+
+    public bool IsParticleChangeable()
+    {
+        return isParticleChangeable;
     }
 }

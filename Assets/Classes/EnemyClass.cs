@@ -22,6 +22,7 @@ public abstract class EnemyClass : MonoBehaviour
     public int attackSpeed;
     public int explosiveRadius;
     public int explosiveDamage;
+    public float rayLength;
     public bool effectImmunity = false;
     public GameObject[] spawnOnDeath;
     public int[] amountToSpawn;
@@ -32,45 +33,33 @@ public abstract class EnemyClass : MonoBehaviour
     protected GameObject target;
     protected int attackTimeout;
 
+    // Start method
     private void Start()
     {
-        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, moveSpeed);
+        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, this, moveSpeed, damage, rayLength);
     }
 
-    // Attack Tile
-    public void OnCollisionEnter2D(Collision2D collision)
+    // Keeps an object oriented to it's target at all times
+    // Movement is handled in the controller script
+    public void Update()
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Defense") ||
-            collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
-        else OnCollisionStay2D(collision);
-    }
-
-    // Damage building on collision
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-        Debug.Log("Collision detected");
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
+        // Find closest enemy 
+        if (target == null)
         {
-            if (attackTimeout <= 0)
-            {
-                collision.gameObject.GetComponent<TileClass>().DamageTile(damage);
-                attackTimeout = attackSpeed;
-
-                // If bonus shield is unlocked, apply damage to entity
-                if (Research.bonus_shield > 0)
-                {
-                    health -= Research.bonus_shield;
-                    if (health <= 0) KillEntity();
-                }
-            }
+            target = FindNearestDefence();
         }
-    }
+        if (target != null)
+        {
+            // Get target position relative to this entity
+            Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
 
-    // Called by Update() of child classes
-    public void BaseUpdate()
-    {
-        if (attackTimeout > 0) attackTimeout -= 1;
+            // Get the direction towards that unit from this entity
+            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
+
+            // Get the angle between the target and this transform
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            transform.eulerAngles = new Vector3(0, 0, angle);
+        }
     }
 
     // Kill entity
@@ -216,18 +205,6 @@ public abstract class EnemyClass : MonoBehaviour
         yield return new WaitForSeconds(amount);
         Destroy(poison_effect.gameObject);
         is_poisoned = false;
-    }
-
-    // Return moveSpeed
-    public float getSpeed()
-    {
-        return moveSpeed;
-    }
-
-    // Set the move speed
-    public void setSpeed(float a)
-    {
-        moveSpeed = a;
     }
 
     protected GameObject FindNearestDefence()

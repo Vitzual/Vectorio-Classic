@@ -10,15 +10,15 @@ public class GoldStorageAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        SRVSC.goldStorage += amount;
+        SRVSC.UI.GoldStorage.text = SRVSC.goldStorage + " MAX";
     }
 
     // Kill defense
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        SRVSC.goldStorage -= amount;
-        if (SRVSC.gold > SRVSC.goldStorage)
-            SRVSC.gold = SRVSC.goldStorage;
+        SRVSC.UpdateGoldStorage(amount);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

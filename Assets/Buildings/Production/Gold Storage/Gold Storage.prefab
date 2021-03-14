@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2009550350632877460}
+  - component: {fileID: -9078372205753033971}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
   m_Name: Gold Storage
@@ -34,6 +35,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-9078372205753033971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892923713960991008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cac2fc948c4acb4898b8a721b43cbc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Effect: {fileID: 8342469565711734033, guid: 13139a4e8f9eab741a4c4d6198c3513d, type: 3}
+  maxhp: 25
+  health: 25
+  heat: 1
+  cost: 400
+  power: 0
+  ID: 25
+  description: Holds gold mined from collectors. You should probably protect these.
+  EngineerModifications: []
+  AppliedModification: 
+  isEngineered: 0
+  amount: 1000
 --- !u!61 &8672284101732978617
 BoxCollider2D:
   m_ObjectHideFlags: 0

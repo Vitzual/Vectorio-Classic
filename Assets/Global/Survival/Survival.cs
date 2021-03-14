@@ -92,14 +92,13 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform FlamethrowerObj;  // ID = 14
     [SerializeField] private Transform MinigunObj;       // ID = 15
     [SerializeField] private Transform EngineerObj;      // ID = 16
-    [SerializeField] private Transform TurretMK2;        // ID = 17
-    [SerializeField] private Transform ShotgunMK2;       // ID = 18
-    [SerializeField] private Transform SniperMK2;        // ID = 19
     [SerializeField] private Transform SunbeamObj;       // ID = 20
-    [SerializeField] private Transform TurretMK3;        // ID = 21
     [SerializeField] private Transform AreaCoolerObj;    // ID = 22
     [SerializeField] private Transform Iridium;          // ID = 23
     [SerializeField] private Transform Solar;            // ID = 24
+    [SerializeField] private Transform GoldStorage;      // ID = 25
+    [SerializeField] private Transform EssenceStorage;   // ID = 26
+    [SerializeField] private Transform IridiumStorage;   // ID = 27
 
     [SerializeField] private Transform EnemyTurretDual;  // ID = 201
     [SerializeField] private Transform EnemyTurretSMG;   // ID = 200
@@ -177,6 +176,7 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
+        tech.unlocked.Add(GoldStorage);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -208,6 +208,7 @@ public class Survival : MonoBehaviour
         // Get default stats
         gold = difficulties.GetStartingGold();
         goldStorage = gold * 4;
+        UI.GoldStorage.text = goldStorage + " MAX";
         AvailablePower = difficulties.GetStartingPower();
         additionalCost = difficulties.GetAdditionalCost();
         UI.GoldAmount.text = gold.ToString();
@@ -278,9 +279,6 @@ public class Survival : MonoBehaviour
 
         // Load settings
         manager.GetComponent<Settings>().LoadSettings();
-
-        // Start repeating PS function
-        InvokeRepeating("UpdatePerSecond", 0f, 1f);
     }
 
     // Gets called once every frame
@@ -384,73 +382,17 @@ public class Survival : MonoBehaviour
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
 
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
-                if (rayHit.collider.name.Contains("Wall"))
-                {
-                    UpdateWallRemoved();
-                }
-
-                else if (rayHit.collider.name.Contains("Energizer"))
-                {
-                    rayHit.collider.GetComponent<Distributor>().DestroyTile();
-                    return;
-                }
-
-                else if (rayHit.collider.name.Contains("Enhancer"))
-                {
-                    var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        if (colliders[i].name == "Collector")
-                        {
-                            colliders[i].GetComponent<CollectorAI>().enhanceCollector();
-                        }
-                        else if (colliders[i].name == "Essence Drill")
-                        {
-                            colliders[i].GetComponent<EssenceAI>().enhanceCollector();
-                        }
-                        else if (colliders[i].name == "Iridium Mine")
-                        {
-                            colliders[i].GetComponent<IridiumAI>().enhanceCollector();
-                        }
-                    }
-                }
-
-                else if (rayHit.collider.name.Contains("Area Cooler"))
-                {
-                    var colliders = Physics2D.OverlapBoxAll(rayHit.collider.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
-                    for (int i = 0; i < colliders.Length; i++)
-                    {
-                        if (colliders[i].name != "Hub" && colliders[i].name != "Area Cooler" && colliders[i].name != "AOCB")
-                        {
-                            Debug.Log("Trying to decool: " + colliders[i].name);
-                            try
-                            {
-                                colliders[i].GetComponent<TileClass>().IncreaseHeat();
-                            }
-                            catch
-                            {
-                                Debug.Log("Cant decool: "+colliders[i].name);
-                            }
-                        }
-                    }
-                }
-
-                else if (rayHit.collider.name == "Turbine")
-                {
-                    decreaseAvailablePower(100);
-                }
-
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
-                Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayHit.collider.GetComponent<TileClass>().GetHeat());
-                decreasePowerConsumption(rayHit.collider.gameObject.GetComponent<TileClass>().getConsumption());
-                int cost = rayHit.collider.GetComponent<TileClass>().GetCost();
-                AddGold(cost - cost / 5);
-                Destroy(rayHit.collider.gameObject);
+                Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayScript.GetHeat());
+                decreasePowerConsumption(rayScript.getConsumption());
+                AddGold(rayScript.GetCost() - rayScript.GetCost() / 5);
+                rayScript.DestroyTile();
             }
         }
 
@@ -609,6 +551,37 @@ public class Survival : MonoBehaviour
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
     }
+
+    // Updates the gold storage
+    public void UpdateGoldStorage(int amount)
+    {
+        goldStorage -= amount;
+        if (gold > goldStorage)
+            gold = goldStorage;
+        UI.GoldStorage.text = goldStorage + " MAX";
+        UI.GoldAmount.text = gold.ToString();
+    }
+
+    // Updates the essence storage
+    public void UpdateEssenceStorage(int amount)
+    {
+        essenceStorage -= amount;
+        if (essence > essenceStorage)
+            essence = essenceStorage;
+        UI.EssenceStorage.text = essenceStorage + " MAX";
+        UI.EssenceAmount.text = essence.ToString();
+    }
+
+    // Updates the iridium storage
+    public void UpdateIridiumStorage(int amount)
+    {
+        iridiumStorage -= amount;
+        if (iridium > iridiumStorage)
+            iridium = iridiumStorage;
+        UI.IridiumStorage.text = iridiumStorage + " MAX";
+        UI.IridiumAmount.text = iridium.ToString();
+    }
+
 
     // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud
     public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID)); }
@@ -1015,6 +988,7 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
+        hotbar[3] = GoldStorage;
         UI.UpdateHotbar();
     }
 

@@ -32,6 +32,9 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
     public TextMeshProUGUI IridiumAmount;
+    public TextMeshProUGUI GoldStorage;
+    public TextMeshProUGUI EssenceStorage;
+    public TextMeshProUGUI IridiumStorage;
     public TextMeshProUGUI PowerUsage;
     public TextMeshProUGUI AvailablePower;
     public TextMeshProUGUI GPS;

@@ -135,6 +135,7 @@ public class Technology : MonoBehaviour
         if (a == main.GetEssenceObj())
         {
             UI.ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
+            UI.ResearchButton.UpdateUI();
             Research.research_unlocked = true;
         }
     }

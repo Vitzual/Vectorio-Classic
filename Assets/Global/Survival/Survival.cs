@@ -1042,8 +1042,6 @@ public class Survival : MonoBehaviour
     // Changes the object stored in a hotbar slot
     public void SetHotbarSlot(int slot, Transform obj)
     {
-        Debug.Log("3 > " + obj.name);
-
         if (!tech.checkIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
         hotbar[slot] = obj;

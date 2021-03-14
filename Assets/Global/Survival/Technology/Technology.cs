@@ -21,6 +21,7 @@ public class Technology : MonoBehaviour
         public Transform Unlock;
         public ButtonManagerBasicIcon InventoryButton;
         public int HeatNeeded;
+        public bool Unlocked = false;
     }
     public Unlockables[] UnlockTier;
 
@@ -79,26 +80,30 @@ public class Technology : MonoBehaviour
     // Starts the next unlock 
     public void StartNextUnlock()
     {
-        UnlockLvl += 1;
         Transform c = UI.Overlay.transform.Find("Upgrade");
 
-        try
-        {
-            int z = UnlockTier[UnlockLvl].HeatNeeded;
-        }
-        catch
+        int lowestHeat = 100000;
+        bool anyLeft = false;
+        for (int i = 0; i < UnlockTier.Length; i++)
+            if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
+            {
+                lowestHeat = UnlockTier[i].HeatNeeded;
+                UnlockLvl = i;
+                anyLeft = true;
+            }
+
+        if (!anyLeft)
         {
             UnlocksLeft = false;
             c.gameObject.SetActive(false);
+            return;
         }
-        finally
+
+        if (UnlocksLeft)
         {
-            if (UnlocksLeft)
-            {
-                c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].HeatNeeded.ToString();
-                c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].Unlock.name.ToString().ToUpper();
-                c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Unlock.name.ToString());
-            }
+            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].HeatNeeded.ToString();
+            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].Unlock.name.ToString().ToUpper();
+            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Unlock.name.ToString());
         }
     }
 
@@ -132,6 +137,13 @@ public class Technology : MonoBehaviour
     public void addUnlocked(Transform a)
     {
         unlocked.Add(a);
+
+        // Find the object in the array list
+        for (int i = 0; i < UnlockTier.Length; i++)
+            if (UnlockTier[i].Unlock == a)
+                UnlockTier[i].Unlocked = true;
+
+
         if (a == main.GetEssenceObj())
         {
             UI.ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");

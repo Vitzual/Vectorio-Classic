@@ -70,7 +70,6 @@ public abstract class TileClass : MonoBehaviour
     public void UpdatePower()
     {
         RaycastHit2D aocbHit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("AOCB"));
-        Debug.Log(transform.position);
         if (aocbHit.collider == null) DestroyTile();
     }
 

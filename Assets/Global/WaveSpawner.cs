@@ -11,6 +11,7 @@ public class WaveSpawner : MonoBehaviour
     public TextMeshProUGUI heatAmount;
     public int SpawnRegion = 1000;
     public int htrack = 0;
+    public int totalSpawned = 0;
 
     private void Start()
     {
@@ -23,10 +24,9 @@ public class WaveSpawner : MonoBehaviour
     {
         public string name;
         public Transform enemyObject;
-        public float chance;
-        public float minHeat;
-        public float maxHeat;
-        public int amount;
+        public int minHeat;
+        public int maxHeat;
+        public int procChance;
     }
 
     public Enemies[] enemy;
@@ -35,15 +35,14 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int a=0; a<enemy.Length; a++)
         {
-            if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat) || (htrack >= enemy[a].minHeat && enemy[a].maxHeat == 10000))
+            if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat))
             {
-                for(int b=0; b<enemy[a].amount; b++)
+                int chance = ((htrack - enemy[a].minHeat) / 1000) + 1;
+                if (chance >= 10) chance = 10;
+                var proc = Random.Range(0, enemy[a].procChance);
+                if (chance >= proc)
                 {
-                    var proc = Random.Range(0, 100);
-                    if (proc <= enemy[a].chance)
-                    {
-                        SpawnEnemy(enemy[a].enemyObject);
-                    }
+                    SpawnEnemy(enemy[a].enemyObject);
                 }
             }
         }
@@ -51,6 +50,7 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy(Transform _enemy)
     {
+        totalSpawned += 1;
         Transform holder;
         switch(Random.Range(0, 4))
         {
@@ -72,8 +72,10 @@ public class WaveSpawner : MonoBehaviour
         }
         holder.name = _enemy.name;
 
-        holder.GetComponent<EnemyClass>().SetHealth((int)(holder.GetComponent<EnemyClass>().GetHealth() * difficulties.GetEnemyHP()));
-        holder.GetComponent<EnemyClass>().SetDamage((int)(holder.GetComponent<EnemyClass>().GetDamage() * difficulties.GetEnemyDMG()));
+        EnemyClass holderScript;
+        holderScript = holder.GetComponent<EnemyClass>();
+        holderScript.SetHealth((int)(holderScript.GetHealth() * difficulties.GetEnemyHP()));
+        holderScript.SetDamage((int)(holderScript.GetDamage() * difficulties.GetEnemyDMG()));
     }
 
     public void increaseHeat(int a)

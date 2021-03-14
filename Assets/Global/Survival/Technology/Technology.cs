@@ -117,6 +117,8 @@ public class Technology : MonoBehaviour
         UI.UOL.descriptionText = c;
         UI.UOL.UpdateUI();
         UI.UOL.OpenWindow();
+        UI.UOLOpen = true;
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 
     // Checks if a building is unlocked

@@ -450,7 +450,7 @@ public class Survival : MonoBehaviour
         }
 
         // Opens the building menu if E is pressed.
-        if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false)
+        if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false && UI.UOLOpen == false)
         {
             if (UI.ResearchOpen)
             {
@@ -464,7 +464,7 @@ public class Survival : MonoBehaviour
         }
 
         // If T pressed, open research menu
-        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false)
+        else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false && UI.UOLOpen == false)
         {
             if (UI.EngineerOpen)
                 UI.CloseEngineer();
@@ -475,6 +475,12 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
         {
             UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and new info is open, close it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.UOLOpen == true)
+        {
+            UI.AdjustTimescale();
         }
 
         // If escape pressed and engineer open, close it
@@ -522,7 +528,7 @@ public class Survival : MonoBehaviour
         }
 
         // If escape pressed and menu not open, open it
-        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false)
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false && UI.UOLOpen == false)
         {
             UI.SaveButton.GetComponent<CanvasGroup>().interactable = true;
             UI.SaveButton.buttonText = "SAVE";

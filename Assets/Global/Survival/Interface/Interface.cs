@@ -41,6 +41,7 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI EPS;
     public TextMeshProUGUI IPS;
     public ModalWindowManager UOL;
+    public bool UOLOpen;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
@@ -55,6 +56,14 @@ public class Interface : MonoBehaviour
         MenuOpen = false;
         ResearchOpen = false;
         BuildingOpen = false;
+    }
+
+    public void AdjustTimescale()
+    {
+        UOLOpen = false;
+        UOL.CloseWindow();
+        if (Time.timeScale != 1.0f)
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 
     // Set the engineer cooldown

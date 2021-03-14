@@ -41,7 +41,7 @@ public abstract class EnemyClass : MonoBehaviour
 
     // Keeps an object oriented to it's target at all times
     // Movement is handled in the controller script
-    public void Update()
+    protected void Update()
     {
         // Find closest enemy 
         if (target == null)
@@ -100,7 +100,7 @@ public abstract class EnemyClass : MonoBehaviour
                         }
                         else
                         {
-                            Instantiate(spawnOnDeath[a], transform.position, Quaternion.identity);
+                            Instantiate(spawnOnDeath[a], new Vector2(transform.position.x + Random.Range(-6, 6), transform.position.y + Random.Range(-6, 6)), Quaternion.identity);
                         }
                     }
                 }

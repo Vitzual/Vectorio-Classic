@@ -14,6 +14,7 @@ public class Menu : MonoBehaviour
     public Settings settings;
     public bool SaveSelected = false;
     public bool NewSelected = false;
+    public bool SettingsOpen = false;
 
     public void Start()
     {
@@ -54,6 +55,26 @@ public class Menu : MonoBehaviour
             transform.Find("Title").GetComponent<CanvasGroup>().alpha = 1f;
             transform.Find("Subtitle").GetComponent<CanvasGroup>().alpha = 1f;
         }
+        else if ((Input.GetKeyDown(KeyCode.Escape) && SettingsOpen))
+        {
+            settings.DisableMenu();
+            SettingsOpen = false;
+        }
+    }
+
+    public void OpenDiscordURL()
+    {
+        Application.OpenURL("https://discord.com/invite/auDgRJqtT9");
+    }
+
+    public void OpenRedditURL()
+    {
+        Application.OpenURL("https://www.reddit.com/r/Vectorio/");
+    }
+
+    public void SetSettingsState(bool a)
+    {
+        SettingsOpen = a;
     }
 
     public void Quit()

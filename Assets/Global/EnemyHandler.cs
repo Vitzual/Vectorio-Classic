@@ -41,7 +41,9 @@ public class EnemyHandler : MonoBehaviour
             {
                 Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
                 if (Enemies[i].RayLength == 0)
-                    return; // This ensures not to waste resources casting a ray
+                {
+                    continue;
+                }
                 else if (Enemies[i].Tracker == 4)
                 {
                     Enemies[i].Tracker = 1;

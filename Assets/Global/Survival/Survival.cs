@@ -31,6 +31,15 @@ public class Survival : MonoBehaviour
     // Gold script
     public GoldAI GoldScript;
 
+    // Music audio source
+    public AudioSource music;
+
+    // Tutorial Elements (Survival Exclusive)
+    public GameObject TutorialOverlay;
+    public GameObject[] TutorialSlides;
+    public bool showingTutorial;
+    public int tutorialNumber = 0;
+
     // layers
     public LayerMask EnemyLayer;
     public LayerMask AOCBLayer;
@@ -46,16 +55,11 @@ public class Survival : MonoBehaviour
     public int gold = 0;
     public int essence = 0;
     public int iridium = 0;
+    public int goldStorage = 1000;
+    public int essenceStorage = 1000;
+    public int iridiumStorage = 1000;
     public int PowerConsumption = 0;
     public int AvailablePower = 1000;
-
-    // Resource per second variables
-    public int GPS = 0;
-    public int EPS = 0;
-    public int IPS = 0;
-    public int GPSP = 0;
-    public int EPSP = 0;
-    public int IPSP = 0;
 
     // Add additional cost
     public float additionalCost = 1f;
@@ -94,6 +98,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform SunbeamObj;       // ID = 20
     [SerializeField] private Transform TurretMK3;        // ID = 21
     [SerializeField] private Transform AreaCoolerObj;    // ID = 22
+    [SerializeField] private Transform Iridium;          // ID = 23
+    [SerializeField] private Transform Solar;            // ID = 24
 
     [SerializeField] private Transform EnemyTurretDual;  // ID = 201
     [SerializeField] private Transform EnemyTurretSMG;   // ID = 200
@@ -163,7 +169,7 @@ public class Survival : MonoBehaviour
         CameraColor = new Color();
 
         // Set color
-        ColorUtility.TryParseHtmlString("#444444", out CameraColor);
+        ColorUtility.TryParseHtmlString("#333333", out CameraColor);
         MainCamera.backgroundColor = CameraColor;
 
         // Default starting unlocks / hotbar
@@ -201,6 +207,7 @@ public class Survival : MonoBehaviour
 
         // Get default stats
         gold = difficulties.GetStartingGold();
+        goldStorage = gold * 4;
         AvailablePower = difficulties.GetStartingPower();
         additionalCost = difficulties.GetAdditionalCost();
         UI.GoldAmount.text = gold.ToString();
@@ -235,7 +242,7 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file doesn't contain engineer tracking\nThis save will no longer work. Sorry!");
+                Debug.Log("Save file contains obsolete data!");
             }
 
             // Set power usage
@@ -252,14 +259,21 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file doesn't contain enemy tracking\nThis save will no longer work. Sorry!");
+                Debug.Log("Save file contains obsolete data!");
             }
         }
         catch
         {
+            // New save
             Debug.Log("No save data was found, or the save data found was corrupt.");
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
+
+            // Show tutorial UI
+            TutorialOverlay.SetActive(true);
+            showingTutorial = true;
+            music.Stop();
+            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
 
         // Load settings
@@ -312,10 +326,20 @@ public class Survival : MonoBehaviour
             // Check if placement is within AOC
             if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
-                if (SelectedObj == EssenceObj)
+                if (SelectedObj == CollectorObj)
+                {
+                    RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
+                    if (resourceCheck.collider == null || resourceCheck.collider.name != "Goldtile") return;
+                }
+                else if (SelectedObj == EssenceObj)
                 {
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Essencetile") return;
+                }
+                else if (SelectedObj == Iridium)
+                {
+                    RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
+                    if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
                 int cost = SelectedObj.GetComponent<TileClass>().GetCost();
                 int power = SelectedObj.GetComponent<TileClass>().getConsumption();
@@ -430,7 +454,43 @@ public class Survival : MonoBehaviour
             }
         }
 
-        // Check if hotbar selected
+        // Iterates through the tutorial sequence if enabled
+        if (showingTutorial && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space)))
+        {
+            if (tutorialNumber == 0 && Input.GetKeyDown(KeyCode.Escape))
+            {
+                TutorialOverlay.SetActive(false);
+                showingTutorial = false;
+                Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+                music.Play();
+            }
+            else if (tutorialNumber == 5 && Input.GetKeyDown(KeyCode.Escape))
+            {
+                TutorialSlides[tutorialNumber].SetActive(false);
+                tutorialNumber = 0;
+                TutorialSlides[tutorialNumber].SetActive(true);
+            }
+            else if (tutorialNumber == 5)
+            {
+                TutorialSlides[tutorialNumber].GetComponent<AudioSource>().Play();
+                TutorialOverlay.SetActive(false);
+                showingTutorial = false;
+                Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+                music.Play();
+            }
+            else
+            {
+                // Move slides
+                TutorialSlides[tutorialNumber].SetActive(false);
+                TutorialSlides[tutorialNumber + 1].SetActive(true);
+                TutorialSlides[tutorialNumber + 1].GetComponent<AudioSource>().Play();
+                tutorialNumber++;
+            }
+            return;
+        }
+        else if (showingTutorial) return;
+
+        // Check hotbar thing        
         CheckNumberInput();
 
         // Rotates object if no menus open
@@ -503,7 +563,7 @@ public class Survival : MonoBehaviour
             SelectedRadius.SetActive(false);
 
             // Set color
-            ColorUtility.TryParseHtmlString("#444444", out CameraColor);
+            // ColorUtility.TryParseHtmlString("#444444", out CameraColor);
             MainCamera.backgroundColor = CameraColor;
             AOCB.SetActive(false);
         }
@@ -583,20 +643,6 @@ public class Survival : MonoBehaviour
     {
         if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
         else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
-    }
-
-    // Update per second variables
-    public void UpdatePerSecond()
-    {
-        GPS = gold - GPSP;
-        EPS = essence - EPSP;
-        IPS = iridium - IPSP;
-        UI.GPS.text = GPS.ToString() + " / SEC";
-        UI.EPS.text = EPS.ToString() + " / SEC";
-        UI.IPS.text = IPS.ToString() + " / SEC";
-        GPSP = gold;
-        EPSP = essence;
-        IPSP = iridium;
     }
 
     // Checks if for numeric input
@@ -787,17 +833,24 @@ public class Survival : MonoBehaviour
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
 
             // Set engineering
-            if (a[i, 4] != -1)
+            try
             {
-                try
+                if (a[i, 4] != -1)
                 {
-                    obj.GetComponent<TileClass>().ApplyModification(a[i, 4]);
-                    obj.GetComponent<TileClass>().isEngineered = true;
+                    try
+                    {
+                        obj.GetComponent<TileClass>().ApplyModification(a[i, 4]);
+                        obj.GetComponent<TileClass>().isEngineered = true;
+                    }
+                    catch
+                    {
+                        Debug.Log("A modification on " + obj.name + " has become obsolete, and was removed.");
+                    }
                 }
-                catch
-                {
-                    Debug.Log("A modification on " + obj.name + " has become obsolete, and was removed.");
-                }
+            } 
+            catch
+            {
+                Debug.Log("This save file does not contain engineering data and may become unstable.\nGenerate a new save file to fix this issue");
             }
 
             Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
@@ -878,7 +931,9 @@ public class Survival : MonoBehaviour
     // Add x gold to player
     public void AddGold(int a)
     {
-        gold += a;
+        if (a + gold >= goldStorage)
+            gold = goldStorage;
+        else gold += a;
         UI.GoldAmount.text = gold.ToString();
     }
 
@@ -892,7 +947,9 @@ public class Survival : MonoBehaviour
     // Add x essence to player
     public void AddEssence(int a)
     {
-        essence += a;
+        if (a + essence >= essenceStorage)
+            essence = essenceStorage;
+        else essence += a;
         UI.EssenceAmount.text = essence.ToString();
     }
 
@@ -906,7 +963,9 @@ public class Survival : MonoBehaviour
     // Add x iridium to player
     public void AddIridium(int a)
     {
-        iridium += a;
+        if (a + iridium >= iridiumStorage)
+            iridium = iridiumStorage;
+        else iridium += a;
         UI.IridiumAmount.text = iridium.ToString();
     }
 
@@ -1021,7 +1080,7 @@ public class Survival : MonoBehaviour
     public void SwitchObj()
     {
         // Set color
-        ColorUtility.TryParseHtmlString("#333333", out CameraColor);
+        // ColorUtility.TryParseHtmlString("#333333", out CameraColor);
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly

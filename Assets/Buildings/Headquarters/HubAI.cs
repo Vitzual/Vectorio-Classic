@@ -10,8 +10,8 @@ public class HubAI : TileClass
     // On start, assign weapon variables
     void Start()
     {
-        health = 30;
-        maxhp = 30;
+        health = 100;
+        maxhp = 100;
     }
 
     // Kill defense

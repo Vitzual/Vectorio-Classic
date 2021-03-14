@@ -46,7 +46,7 @@ public class BulletHandler : MonoBehaviour
             try
             {
                 Bullets[i].Object.position += Bullets[i].Object.up * Bullets[i].Speed * Time.deltaTime;
-                if (Bullets[i].Tracker == 4)
+                if (Bullets[i].Tracker == 2)
                 {
                     Bullets[i].Tracker = 1;
                     RaycastHit2D hit = Physics2D.Raycast(Bullets[i].Object.position, Bullets[i].Object.up, 1.5f, LayerCast);
@@ -94,7 +94,6 @@ public class BulletHandler : MonoBehaviour
                 other.GetComponent<EnemyStaticAI>().DamageTile(Bullets[bulletID].Damage);
                 break;
             default:
-                Debug.Log("Applying damage");
                 other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
                 break;
         }

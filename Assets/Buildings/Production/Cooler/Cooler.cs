@@ -28,7 +28,7 @@ public class Cooler : TileClass
             {
                 if (colliders[i].name != "Hub" && colliders[i].name != "Area Cooler" && colliders[i].name != "AOCB")
                 {
-                    colliders[i].GetComponent<TileClass>().DecreaseHeat(10);
+                    colliders[i].GetComponent<TileClass>().DecreaseHeat(25);
                 }
             } catch { Debug.Log("Ignoring cooling for " + colliders[i].transform.name); }
         }

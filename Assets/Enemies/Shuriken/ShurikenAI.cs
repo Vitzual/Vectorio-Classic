@@ -3,5 +3,12 @@ using System.Collections;
 
 public class ShurikenAI : EnemyClass
 {
-    // Additional AI behaviour can be outlined here.
+    public Transform body;
+    
+    private void Update()
+    {
+        body.Rotate(0, 0, -300 * Time.deltaTime);
+        base.Update();
+    }
+    
 }

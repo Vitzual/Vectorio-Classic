@@ -44,7 +44,7 @@ public class EnemyHandler : MonoBehaviour
                 {
                     continue;
                 }
-                else if (Enemies[i].Tracker == 4)
+                else if (Enemies[i].Tracker == 3)
                 {
                     Enemies[i].Tracker = 1;
                     RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);

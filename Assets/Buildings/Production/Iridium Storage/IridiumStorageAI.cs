@@ -4,7 +4,10 @@ public class IridiumStorageAI: TileClass
 {
     // Declare local object variables
     public int amount;
+    public float grow;
+    public bool growEnd;
     public Transform rotator;
+    public Transform symbol;
     private Survival SRVSC;
 
     // On start, invoke repeating SendGold() method
@@ -18,7 +21,21 @@ public class IridiumStorageAI: TileClass
     // Rotates a thing
     private void Update()
     {
-        rotator.Rotate(0, 0, 300 * Time.deltaTime);
+        rotator.Rotate(0, 0, 100 * Time.deltaTime);
+        symbol.localScale = new Vector2(grow, grow);
+        if (growEnd)
+        {
+            grow += 0.001f;
+            if (grow >= 1f)
+                growEnd = false;
+        } 
+        else
+        {
+            grow -= 0.001f;
+            if (grow <= 0.8f)
+                growEnd = true;
+        }
+
     }
 
     // Kill defense

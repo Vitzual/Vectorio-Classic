@@ -2,15 +2,18 @@
 
 public class Solar : TileClass
 {
+    public Survival SRV;
+
     public void Start()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().increaseAvailablePower(250);
+        SRV = GameObject.Find("Survival").GetComponent<Survival>();
+        SRV.increaseAvailablePower(500);
     }
 
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().decreaseAvailablePower(250);
+        SRV.decreaseAvailablePower(500);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

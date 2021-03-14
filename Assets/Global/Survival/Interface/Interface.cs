@@ -130,7 +130,10 @@ public class Interface : MonoBehaviour
                 else
                 {
                     panel.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                    panel.Find("Name").GetComponent<TextMeshProUGUI>().text = obj.name.ToUpper();
+                    if (obj.name.Contains("Storage"))
+                        panel.Find("Name").GetComponent<TextMeshProUGUI>().text = "STORAGE";
+                    else
+                        panel.Find("Name").GetComponent<TextMeshProUGUI>().text = obj.name.ToUpper();
                     panel.Find("Description").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetDescription();
                     panel.Find("Gold").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetCost().ToString();
                     panel.Find("Heat").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetHeat().ToString();

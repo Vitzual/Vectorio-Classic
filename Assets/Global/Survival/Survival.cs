@@ -57,9 +57,9 @@ public class Survival : MonoBehaviour
     public int iridium = 0;
     public int goldStorage = 1000;
     public int essenceStorage = 1000;
-    public int iridiumStorage = 1000;
+    public int iridiumStorage = 0;
     public int PowerConsumption = 0;
-    public int AvailablePower = 1000;
+    public int AvailablePower = 0;
 
     // Add additional cost
     public float additionalCost = 1f;
@@ -209,7 +209,10 @@ public class Survival : MonoBehaviour
         gold = difficulties.GetStartingGold();
         goldStorage = gold * 4;
         UI.GoldStorage.text = goldStorage + " MAX";
-        AvailablePower = difficulties.GetStartingPower();
+        if (AvailablePower == 0)
+            AvailablePower = difficulties.GetStartingPower();
+        else
+            AvailablePower += difficulties.GetStartingPower();
         additionalCost = difficulties.GetAdditionalCost();
         UI.GoldAmount.text = gold.ToString();
 
@@ -382,11 +385,11 @@ public class Survival : MonoBehaviour
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
-            TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
 
             // Raycast tile to see if there is already a tile placed
             if (rayHit.collider != null && rayHit.collider.name != "Hub")
             {
+                TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayScript.GetHeat());

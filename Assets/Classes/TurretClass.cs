@@ -156,7 +156,7 @@ public abstract class TurretClass : TileClass
     // Createa a bullet object
     protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
     {
-        if (hasAudio) PlayAudio();
+        if (hasAudio) try { PlayAudio(); } catch { }
 
         pos.position = new Vector3(pos.position.x, pos.position.y, 0);
         GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);

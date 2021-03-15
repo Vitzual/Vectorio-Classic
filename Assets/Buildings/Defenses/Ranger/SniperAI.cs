@@ -5,6 +5,7 @@ public class SniperAI : TurretClass
     // Targetting system
     void Update()
     {
+
         RotateTowardNearestEnemy();
 
         // If a target exists, shoot at it

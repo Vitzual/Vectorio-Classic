@@ -5,7 +5,6 @@ public class TurretAI : TurretClass
 {
     // Engineer variables
     private float damageBoost = 1;
-    private bool isRotating = false;
 
     // Default stuff
     public int SwitchBarrel = 0;

@@ -30,6 +30,7 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
+    protected bool isRotating = false;
 
     // Let's see if this shit works amiright my dude
     private void Start()
@@ -124,7 +125,11 @@ public abstract class TurretClass : TileClass
 
             // Get the angle between the target and this transform
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            Gun.eulerAngles = new Vector3(0, 0, angle);
+
+            if(angle > 0)
+                Gun.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+            else if (angle < 0)
+                Gun.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
         }
     }
 

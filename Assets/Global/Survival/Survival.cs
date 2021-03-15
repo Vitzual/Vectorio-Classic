@@ -222,8 +222,7 @@ public class Survival : MonoBehaviour
         UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
         // Attempt to load save data 
-        try
-        {
+
             // Set resource amounts
             gold = data.Gold;
             essence = data.Essence;
@@ -241,14 +240,9 @@ public class Survival : MonoBehaviour
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
 
             // Attempt to place saved buildings
-            try
-            {
+
                 PlaceSavedBuildings(data.Locations);
-            }
-            catch
-            {
-                Debug.Log("Save file contains obsolete data!");
-            }
+
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -266,20 +260,7 @@ public class Survival : MonoBehaviour
             {
                 Debug.Log("Save file contains obsolete data!");
             }
-        }
-        catch
-        {
-            // New save
-            Debug.Log("No save data was found, or the save data found was corrupt.");
-            seed = Random.Range(1000000, 10000000);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
 
-            // Show tutorial UI
-            TutorialOverlay.SetActive(true);
-            showingTutorial = true;
-            music.Stop();
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
-        }
 
         // Load settings
         manager.GetComponent<Settings>().LoadSettings();

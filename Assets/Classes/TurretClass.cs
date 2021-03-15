@@ -103,7 +103,7 @@ public abstract class TurretClass : TileClass
 
     protected void RotateTowardNearestEnemy() 
     {
-        if (!hasTarget) 
+        if (!hasTarget)
             target = FindNearestEnemy();
         if (target != null)
             RotationHandler();
@@ -118,18 +118,40 @@ public abstract class TurretClass : TileClass
             hasTarget = true;
 
             // Get target position relative to this entity
-            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+            Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
 
-            // Get the direction towards that unit from this entity
-            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
+            // Get the distance from the turret to the target
+            Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
 
-            // Get the angle between the target and this transform
-            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            // Get the angle between the gun position and the target position
+            float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
+            if (distance.x > 0) targetAngle += 180;
 
-            if(angle > 0)
-                Gun.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-            else if (angle < 0)
-                Gun.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
+            // Calculate the difference between the target angle and the current angle
+            float difference = targetAngle - (Gun.rotation.eulerAngles.z);
+
+            if ((difference < 0 || difference >= 180) && !(difference < -180))
+            {
+                // Calculate how far to rotate the turret given how long since the last frame
+                float distanceToRotate = -rotationSpeed * Time.deltaTime;
+
+                // If distance to rotate would rotate past the target only rotate the distance
+                if (distanceToRotate < difference) distanceToRotate = difference;
+
+                // Rotate the turret
+                Gun.Rotate(Vector3.forward, distanceToRotate);
+            }
+            else if (difference != 0)
+            {
+                // Calculate how far to rotate the turret given how long since the last frame
+                float distanceToRotate = rotationSpeed * Time.deltaTime;
+
+                // If distance to rotate would rotate past the target only rotate the distance
+                if (distanceToRotate > difference) distanceToRotate = difference;
+
+                // Rotate the turret
+                Gun.Rotate(Vector3.forward, distanceToRotate);
+            }
         }
     }
 

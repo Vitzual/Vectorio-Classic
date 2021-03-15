@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2009550350632877460}
   - component: {fileID: -7415048325933903175}
+  - component: {fileID: 2412374506016095676}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
   m_Name: Collector
@@ -131,11 +132,13 @@ MonoBehaviour:
   Effect: {fileID: 8342469565711734033, guid: 4e90331f6e377bb419d9ba9ac0e50379, type: 3}
   maxhp: 25
   health: 25
-  heat: 50
-  cost: 800
+  heat: 15
+  cost: 600
   power: 12
   ID: 2
   description: Extracts gold from the ground. More effecient when placed on a node.
+  animEnabled: 1
+  animSize: 1.5
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
@@ -144,6 +147,31 @@ MonoBehaviour:
   TileLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &2412374506016095676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892923713960991008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Effect: {fileID: 0}
+  maxhp: 1
+  health: 1
+  heat: 1
+  cost: 1
+  power: 1
+  ID: 0
+  description: No description provided.
+  animEnabled: 1
+  animSize: 1.5
+  EngineerModifications: []
+  AppliedModification: 
+  isEngineered: 0
 --- !u!61 &8672284101732978617
 BoxCollider2D:
   m_ObjectHideFlags: 0

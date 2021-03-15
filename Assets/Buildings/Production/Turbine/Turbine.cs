@@ -21,6 +21,7 @@ public class Turbine : TileClass
     public override void DestroyTile()
     {
         SRV.decreaseAvailablePower(100);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

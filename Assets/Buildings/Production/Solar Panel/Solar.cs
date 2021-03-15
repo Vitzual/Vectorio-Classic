@@ -14,6 +14,7 @@ public class Solar : TileClass
     public override void DestroyTile()
     {
         SRV.decreaseAvailablePower(500);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

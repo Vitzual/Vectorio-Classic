@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 2528225824149251387}
   - component: {fileID: 5219965094630755300}
   - component: {fileID: 4634768836004047852}
+  - component: {fileID: -2580251401245114387}
   m_Layer: 8
   m_Name: Pulser
   m_TagString: Defense
@@ -326,7 +327,7 @@ MonoBehaviour:
   Effect: {fileID: 746743657795411673, guid: 8e750babb9d96dc41913ff9a44db0b48, type: 3}
   maxhp: 25
   health: 25
-  heat: 160
+  heat: 120
   cost: 50000
   power: 80
   ID: 7
@@ -336,7 +337,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 140
-  rotationSpeed: 1.5
+  rotationSpeed: 70
   bulletDamage: 25
   bulletPierces: 50
   bulletAmount: 1
@@ -345,8 +346,9 @@ MonoBehaviour:
   fireRate: 0.5
   FirePoints:
   - {fileID: 8893759301652938954}
-  Gun: {fileID: 3510960711814905140}
+  Gun: {fileID: 4415353801824821857}
   Bullet: {fileID: 3293027712645128820, guid: bfe8afa260ff41d42a7c31b6a43c2ca4, type: 3}
+  hasAudio: 0
 --- !u!61 &4634768836004047852
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -373,6 +375,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &-2580251401245114387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638880538173755297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &6930377803330487759
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +399,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4415353801824821857}
   - component: {fileID: 3350662103475385107}
-  - component: {fileID: 3510960711814905140}
   m_Layer: 8
   m_Name: BoltGun
   m_TagString: Untagged
@@ -456,27 +471,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3510960711814905140
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6930377803330487759}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &7484432555249899047
 GameObject:
   m_ObjectHideFlags: 0

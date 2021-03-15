@@ -19,6 +19,7 @@ public class GoldStorageAI: TileClass
     {
         SRVSC.decreasePowerConsumption(power);
         SRVSC.UpdateGoldStorage(amount);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

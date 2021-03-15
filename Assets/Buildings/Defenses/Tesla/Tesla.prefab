@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2048516651047028956}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: -4469380767562847511}
   m_Layer: 8
   m_Name: Tesla
   m_TagString: Defense
@@ -61,7 +62,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 80
-  rotationSpeed: 5
+  rotationSpeed: 500
   bulletDamage: 5
   bulletPierces: 1
   bulletAmount: 3
@@ -70,8 +71,9 @@ MonoBehaviour:
   fireRate: 0.1
   FirePoints:
   - {fileID: 3069989843565101140}
-  Gun: {fileID: 3496771299824963999}
+  Gun: {fileID: 4558331692551859083}
   Bullet: {fileID: 3293027712645128820, guid: b7f669ac45c19f24b820f089524cc895, type: 3}
+  hasAudio: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -148,6 +150,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &-4469380767562847511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &2360406291137728608
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +336,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4558331692551859083}
   - component: {fileID: 8579540604625912380}
-  - component: {fileID: 3496771299824963999}
   m_Layer: 8
   m_Name: TeslaCoil
   m_TagString: Untagged
@@ -393,27 +408,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3496771299824963999
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6240563961125864260}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &9215357637645939470
 GameObject:
   m_ObjectHideFlags: 0

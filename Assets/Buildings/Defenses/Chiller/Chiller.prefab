@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: -8608446681562890158}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
-  - component: {fileID: -1053699826069747325}
+  - component: {fileID: 3707281681242850645}
   m_Layer: 8
   m_Name: Chiller
   m_TagString: Defense
@@ -144,7 +144,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 90
-  rotationSpeed: 0.8
+  rotationSpeed: 70
   bulletDamage: 25
   bulletPierces: 3
   bulletAmount: 1
@@ -153,8 +153,9 @@ MonoBehaviour:
   fireRate: 0.2
   FirePoints:
   - {fileID: 3069989843565101140}
-  Gun: {fileID: 1533881044471320089}
+  Gun: {fileID: 868748940344737781}
   Bullet: {fileID: 3293027712645128820, guid: 2a93d27339bae654a9173892b6a37a4d, type: 3}
+  hasAudio: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -231,27 +232,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
---- !u!50 &-1053699826069747325
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &3707281681242850645
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420473218063467210}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &1688262179590608685
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +256,6 @@ GameObject:
   m_Component:
   - component: {fileID: 868748940344737781}
   - component: {fileID: 893789783925788492}
-  - component: {fileID: 1533881044471320089}
   m_Layer: 8
   m_Name: ChillerGun
   m_TagString: Untagged
@@ -337,27 +330,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1533881044471320089
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688262179590608685}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &4117315956502072317
 GameObject:
   m_ObjectHideFlags: 0

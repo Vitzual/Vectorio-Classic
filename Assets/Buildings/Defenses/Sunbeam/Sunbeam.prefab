@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8990058187583287753}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: -1696219477063488349}
   m_Layer: 8
   m_Name: Sunbeam
   m_TagString: Defense
@@ -61,7 +62,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 1000
-  rotationSpeed: 0.8
+  rotationSpeed: 50
   bulletDamage: 5000
   bulletPierces: 500
   bulletAmount: 1
@@ -70,8 +71,9 @@ MonoBehaviour:
   fireRate: 3
   FirePoints:
   - {fileID: 4275736863817768540}
-  Gun: {fileID: 648314702612529091}
+  Gun: {fileID: 50363934921671977}
   Bullet: {fileID: 3293027712645128820, guid: f30fe32ce862f7e48b6315b2a924df41, type: 3}
+  hasAudio: 0
   rotator1: {fileID: 6715412473779333749}
   rotator2: {fileID: 2982515700406077949}
 --- !u!212 &5426603781963460672
@@ -150,6 +152,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &-1696219477063488349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &922344869482399457
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +594,6 @@ GameObject:
   m_Component:
   - component: {fileID: 50363934921671977}
   - component: {fileID: 9071613124470215579}
-  - component: {fileID: 648314702612529091}
   m_Layer: 8
   m_Name: SunbeamGun
   m_TagString: Untagged
@@ -651,27 +666,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &648314702612529091
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7453208213436728198}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &8070622039584242853
 GameObject:
   m_ObjectHideFlags: 0

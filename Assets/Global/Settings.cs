@@ -3,6 +3,7 @@ using MK.Glow.Legacy;
 
 public class Settings : MonoBehaviour
 {
+    public static float soundVolume = 1f;
     public AudioSource music;
     public MKGlowLite glowing;
     public Interface ui;
@@ -11,7 +12,7 @@ public class Settings : MonoBehaviour
     public void SaveSettings()
     {
         // Save user settings
-        SaveSystem.SaveSettings(Screen.width, Screen.height, music.volume, Screen.fullScreen, glowMode);
+        SaveSystem.SaveSettings(Screen.width, Screen.height, music.volume, soundVolume, Screen.fullScreen, glowMode);
     }
 
     public void LoadSettings()
@@ -20,6 +21,9 @@ public class Settings : MonoBehaviour
         SettingsData settings = SaveSystem.LoadSettings();
         if (settings == null)
             return;
+
+        try { soundVolume = settings.sound; }
+        catch { soundVolume = 1f; }
 
         SetMusic(settings.volume);
         SetScreenmode(settings.fullscreen);
@@ -31,6 +35,11 @@ public class Settings : MonoBehaviour
     public void SetMusic(float a)
     {
         music.volume = a;
+    }
+
+    public void SetSound(float a)
+    {
+        soundVolume = a;
     }
 
     public void SetResolution(int a)

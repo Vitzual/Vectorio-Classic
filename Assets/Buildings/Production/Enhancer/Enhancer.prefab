@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 165687244735643869}
   - component: {fileID: 1986114435685790880}
   - component: {fileID: 1740312508442694215}
+  - component: {fileID: 5764732531270368181}
   m_Layer: 8
   m_Name: Enhancer
   m_TagString: Production
@@ -106,12 +107,11 @@ MonoBehaviour:
   Effect: {fileID: 8342469565711734033, guid: 51b785f1079832245b42c9e18191eda5, type: 3}
   maxhp: 5
   health: 5
-  heat: 120
+  heat: 80
   cost: 8500
   power: 30
   ID: 5
-  description: Increases gold mine productivity a in a 3x3 area. Produces a lot of
-    heat.
+  description: Increases gold mine productivity a in a 3x3 area.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
@@ -147,6 +147,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &5764732531270368181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711705259399207453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &1910725502658189814
 GameObject:
   m_ObjectHideFlags: 0

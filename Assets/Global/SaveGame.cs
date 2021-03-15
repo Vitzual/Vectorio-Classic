@@ -74,13 +74,13 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveSettings(int width, int height, float volume, bool fullscreen, int glowMode)
+    public static void SaveSettings(int width, int height, float volume, float sound, bool fullscreen, int glowMode)
     {
         string path = Application.persistentDataPath + "/settings.save";
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SettingsData data = new SettingsData(width, height, volume, fullscreen, glowMode);
+        SettingsData data = new SettingsData(width, height, volume, sound, fullscreen, glowMode);
 
         formatter.Serialize(stream, data);
         stream.Close();

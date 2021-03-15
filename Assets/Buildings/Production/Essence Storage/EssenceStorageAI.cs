@@ -19,6 +19,7 @@ public class EssenceStorageAI: TileClass
     {
         SRVSC.decreasePowerConsumption(power);
         SRVSC.UpdateEssenceStorage(amount);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

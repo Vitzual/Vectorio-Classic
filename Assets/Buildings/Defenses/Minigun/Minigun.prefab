@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -7688334344611405368}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: 5633800536072645006}
   m_Layer: 8
   m_Name: Minigun
   m_TagString: Defense
@@ -61,7 +62,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 70
-  rotationSpeed: 0.8
+  rotationSpeed: 90
   bulletDamage: 10
   bulletPierces: 1
   bulletAmount: 1
@@ -73,8 +74,9 @@ MonoBehaviour:
   - {fileID: 7831787184239906878}
   - {fileID: 2441988496468078948}
   - {fileID: 7328376403646076968}
-  Gun: {fileID: 7314323694009131301}
+  Gun: {fileID: 4975649507425085726}
   Bullet: {fileID: 3293027712645128820, guid: 678e0c8e79e57b547a0a5bfd71a1d4a5, type: 3}
+  hasAudio: 0
   FireTracker: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
@@ -152,6 +154,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &5633800536072645006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!1 &1357030762067731375
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +535,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4975649507425085726}
-  - component: {fileID: 7314323694009131301}
   m_Layer: 8
   m_Name: Minigun Turret Holder
   m_TagString: Untagged
@@ -542,27 +557,6 @@ Transform:
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &7314323694009131301
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4973699443612800352}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &7090222570691961293
 GameObject:
   m_ObjectHideFlags: 0

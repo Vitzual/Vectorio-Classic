@@ -35,7 +35,6 @@ public class IridiumStorageAI: TileClass
             if (grow <= 0.8f)
                 growEnd = true;
         }
-
     }
 
     // Kill defense
@@ -43,6 +42,7 @@ public class IridiumStorageAI: TileClass
     {
         SRVSC.decreasePowerConsumption(power);
         SRVSC.UpdateGoldStorage(amount);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

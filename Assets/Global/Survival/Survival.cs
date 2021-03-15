@@ -33,6 +33,7 @@ public class Survival : MonoBehaviour
 
     // Music audio source
     public AudioSource music;
+    public AudioClip placementSound;
 
     // Tutorial Elements (Survival Exclusive)
     public GameObject TutorialOverlay;
@@ -357,6 +358,8 @@ public class Survival : MonoBehaviour
                     LastObj.GetComponent<TileClass>().IncreaseHealth();
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.GetComponent<WaveSpawner>().increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
+
+                    AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume);
                 }
             }
             else if (rayHit.collider != null)
@@ -392,8 +395,6 @@ public class Survival : MonoBehaviour
                 TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
-                Spawner.GetComponent<WaveSpawner>().decreaseHeat(rayScript.GetHeat());
-                decreasePowerConsumption(rayScript.getConsumption());
                 AddGold(rayScript.GetCost() - rayScript.GetCost() / 5);
                 rayScript.DestroyTile();
             }

@@ -18,8 +18,9 @@ public abstract class TurretClass : TileClass
     public float bulletSpread = 1;
     public float fireRate;
     public Transform[] FirePoints;
-    public Rigidbody2D Gun;
+    public Transform Gun;
     public GameObject Bullet;
+    public bool hasAudio = false;
     public HashSet<GameObject> nearbyEnemies = new HashSet<GameObject>();
 
     // Global variables
@@ -39,6 +40,11 @@ public abstract class TurretClass : TileClass
             isEnemy = true;
         }
         else bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+    }
+
+    public void PlayAudio()
+    {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), this.gameObject.transform.position, Settings.soundVolume);
     }
 
     protected GameObject FindNearestEnemy()
@@ -89,91 +95,36 @@ public abstract class TurretClass : TileClass
     protected void RotateTowardsPlayer()
     {
         if (!hasTarget)
-        {
             target = FindNearestPlayer();
-        }
-
-        // If a target exists, shoot at it
         if (target != null)
-        {
-            // Flag hasTarget
-            hasTarget = true;
-
-            // Rotate turret towards target
-            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-            Vector2 lookDirection = (TargetPosition - Gun.position);
-            enemyAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            enemyAngle = AlignRotation(enemyAngle);
-            gunRotation = AlignRotation(Gun.rotation);
-
-            // Smooth rotation when targetting enemies
-            if (((gunRotation >= enemyAngle && !(gunRotation >= 270 && enemyAngle <= 90)) || (gunRotation <= 90 && enemyAngle >= 270))
-            && !((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
-            {
-                if (Gun.rotation - rotationSpeed < enemyAngle)
-                {
-                    Gun.rotation = enemyAngle;
-                }
-                else
-                {
-                    Gun.rotation -= rotationSpeed;
-                }
-            }
-            else if (!((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
-            {
-                if (Gun.rotation + rotationSpeed > enemyAngle)
-                {
-                    Gun.rotation = enemyAngle;
-                }
-                else
-                {
-                    Gun.rotation += rotationSpeed;
-                }
-            }
-        }
+            RotationHandler();
     }
 
     protected void RotateTowardNearestEnemy() 
     {
-        if (!hasTarget) {
+        if (!hasTarget) 
             target = FindNearestEnemy();
-        }
+        if (target != null)
+            RotationHandler();
+    }
 
+    protected void RotationHandler()
+    {
         // If a target exists, shoot at it
         if (target != null)
         {
             // Flag hasTarget
             hasTarget = true;
 
-            // Rotate turret towards target
+            // Get target position relative to this entity
             Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-            Vector2 lookDirection = (TargetPosition - Gun.position);
-            enemyAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            enemyAngle = AlignRotation(enemyAngle);
-            gunRotation = AlignRotation(Gun.rotation);
 
-            // Smooth rotation when targetting enemies
-            if (((gunRotation >= enemyAngle && !(gunRotation >= 270 && enemyAngle <= 90)) || (gunRotation <= 90 && enemyAngle >= 270))
-            && !((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
-            {
-                if (Gun.rotation - rotationSpeed < enemyAngle) 
-                {
-                    Gun.rotation = enemyAngle;
-                } else 
-                {
-                    Gun.rotation -= rotationSpeed;
-                }
-            }
-            else if (!((gunRotation - enemyAngle) <= 0.3 && (gunRotation - enemyAngle) >= -0.3))
-            {
-                if (Gun.rotation + rotationSpeed > enemyAngle) 
-                {
-                    Gun.rotation = enemyAngle;
-                } else 
-                {
-                    Gun.rotation += rotationSpeed;
-                }
-            }
+            // Get the direction towards that unit from this entity
+            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
+
+            // Get the angle between the target and this transform
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            Gun.eulerAngles = new Vector3(0, 0, angle);
         }
     }
 
@@ -200,6 +151,8 @@ public abstract class TurretClass : TileClass
     // Createa a bullet object
     protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
     {
+        if (hasAudio) PlayAudio();
+
         pos.position = new Vector3(pos.position.x, pos.position.y, 0);
         GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);
         bullet.transform.rotation = pos.rotation;
@@ -215,18 +168,5 @@ public abstract class TurretClass : TileClass
             enemyHandler.RegisterBullet(bullet.transform, bullet.GetComponent<EnemyBullet>(), speed, pierces, damage);
         else
             bulletHandler.RegisterBullet(bullet.transform, speed, pierces, damage);
-    }
-
-    protected static float AlignRotation(float r) {
-        float temp = r;
-        while (temp < 0f) 
-        {
-            temp += 360f;
-        }
-        while (temp > 360f)
-        {
-            temp -= 360f;
-        }
-        return temp;
     }
 }

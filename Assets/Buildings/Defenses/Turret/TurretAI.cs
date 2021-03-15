@@ -68,7 +68,7 @@ public class TurretAI : TurretClass
                     EngineerModifications[0].engineerObj.SetActive(true);
 
                     // Apply variable modifications
-                    Gun = EngineerModifications[0].engineerObj.transform.GetChild(0).GetComponent<Rigidbody2D>();
+                    Gun = EngineerModifications[0].engineerObj.transform.GetChild(0).GetComponent<Transform>();
                     fireRate = 0.2f;
                     damageBoost = 2;
 
@@ -85,7 +85,7 @@ public class TurretAI : TurretClass
                     EngineerModifications[1].engineerObj.SetActive(true);
 
                     // Apply variable modifications
-                    Gun = EngineerModifications[1].engineerObj.transform.GetChild(0).GetComponent<Rigidbody2D>();
+                    Gun = EngineerModifications[1].engineerObj.transform.GetChild(0).GetComponent<Transform>();
                     fireRate = 0.05f;
 
                     // Set the barrel
@@ -144,6 +144,7 @@ public class TurretAI : TurretClass
     public override void DestroyTile()
     {
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

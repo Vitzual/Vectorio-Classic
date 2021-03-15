@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165687244735643869}
   - component: {fileID: 2314487847566241082}
+  - component: {fileID: 810012840993493183}
   - component: {fileID: 1740312508442694215}
   m_Layer: 8
   m_Name: Solar Panel
@@ -137,9 +138,26 @@ MonoBehaviour:
   ID: 24
   description: 'Uses solar technology to generate power more efficiently then it''s
     predecessor '
+  animEnabled: 1
+  animSize: 1.5
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
+  SRV: {fileID: 0}
+--- !u!114 &810012840993493183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711705259399207453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animEnabled: 1
+  animSize: 1.5
 --- !u!61 &1740312508442694215
 BoxCollider2D:
   m_ObjectHideFlags: 0

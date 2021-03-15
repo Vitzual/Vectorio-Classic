@@ -55,6 +55,7 @@ public class Enhancer : TileClass
         }
 
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

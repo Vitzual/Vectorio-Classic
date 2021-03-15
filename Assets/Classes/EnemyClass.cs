@@ -51,7 +51,7 @@ public abstract class EnemyClass : MonoBehaviour
         if (target != null)
         {
             // Get target position relative to this entity
-            Vector2 TargetPosition = new Vector2(target.gameObject.transform.position.x, target.gameObject.transform.position.y);
+            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
 
             // Get the direction towards that unit from this entity
             Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);

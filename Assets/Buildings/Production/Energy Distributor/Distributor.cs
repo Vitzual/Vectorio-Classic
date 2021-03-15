@@ -33,6 +33,7 @@ public class Distributor : TileClass
             }
         }
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);
     }

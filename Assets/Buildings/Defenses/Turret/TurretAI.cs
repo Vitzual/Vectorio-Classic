@@ -12,13 +12,11 @@ public class TurretAI : TurretClass
     // Targetting system
     void Update()
     {
-        if (!isRotating)
+        if(isRotating)
             RotateTowardNearestEnemy();
-        else
-            Gun.transform.Rotate(Vector3.forward, 50f * Time.deltaTime);
 
         // If a target exists, shoot at it
-        if (target != null || isRotating)
+        if (target != null && !isRotating)
         {            
             // If turret is pointing at target, fire at it
             if (((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1) || isRotating)
@@ -69,7 +67,7 @@ public class TurretAI : TurretClass
                     // Apply variable modifications
                     Gun = EngineerModifications[0].engineerObj.transform.GetChild(0).GetComponent<Transform>();
                     fireRate = 0.2f;
-                    damageBoost = 2;
+                    damageBoost = 5;
 
                     // Set the barrel
                     SwitchBarrel = 1;
@@ -99,7 +97,8 @@ public class TurretAI : TurretClass
                     EngineerModifications[2].originalObj.SetActive(false);
                     EngineerModifications[2].engineerObj.SetActive(true);
 
-                    damageBoost = 10;
+                    damageBoost = 150;
+                    fireRate = 0.2f;
 
                     break;
 

@@ -8,11 +8,12 @@ public class MinigunAI : TurretClass
     // Targetting system
     void Update()
     {
-        RotateTowardNearestEnemy();
+        if (isRotating)
+            RotateTowardNearestEnemy();
 
         // If a target exists, shoot at it
-        if (target != null)
-        {            
+        if (target != null && !isRotating)
+        {
             // If turret is pointing at target, fire at it
             if ((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1)
             {

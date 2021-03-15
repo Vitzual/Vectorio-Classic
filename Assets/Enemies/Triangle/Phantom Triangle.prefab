@@ -130,7 +130,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d66fb33b70949e4b965172347a3d0a5, type: 2}
+  - {fileID: 2100000, guid: 8b6a2a361c8cc1148b2b9d5052598c04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,9 +222,10 @@ MonoBehaviour:
   explosiveDamage: 0
   rayLength: 1
   effectImmunity: 0
-  spawnOnDeath: []
-  amountToSpawn: 
-  Effect: {fileID: 5535787351378139189, guid: c8811c47963ea58499d328dfead2f376, type: 3}
+  spawnOnDeath:
+  - {fileID: 6065519297016329530, guid: fc79aac7df542f54c85cf8f1f6331b97, type: 3}
+  amountToSpawn: 05000000
+  Effect: {fileID: 5535787351378139189, guid: f2a363717dff91447aa55a9de450e58e, type: 3}
   PreferredTarget: {fileID: 0}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
@@ -342,7 +343,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d66fb33b70949e4b965172347a3d0a5, type: 2}
+  - {fileID: 2100000, guid: 8b6a2a361c8cc1148b2b9d5052598c04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

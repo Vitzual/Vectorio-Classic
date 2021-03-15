@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
 {
+    // If the enemy destroys a building, play this sound
+    public AudioSource BuildingGoDeadSound;
 
     // Contains all active coins in scene
     [System.Serializable]
@@ -77,8 +79,10 @@ public class EnemyHandler : MonoBehaviour
         {
             Enemies[enemyID].ObjectClass.KillEntity();
             Enemies.RemoveAt(enemyID);
+
             return true;
         }
+        BuildingGoDeadSound.Play();
         return false;
     }
 }

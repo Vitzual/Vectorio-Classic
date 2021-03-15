@@ -13,10 +13,11 @@ public class SunbeamAI : TurretClass
         rotator1.Rotate(Vector3.forward, 50f * Time.deltaTime);
         rotator2.Rotate(-Vector3.forward, 50f * Time.deltaTime);
 
-        RotateTowardNearestEnemy();
+        if (isRotating)
+            RotateTowardNearestEnemy();
 
         // If a target exists, shoot at it
-        if (target != null)
+        if (target != null && !isRotating)
         {
             // If turret is pointing at target, fire at it
             if ((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1)

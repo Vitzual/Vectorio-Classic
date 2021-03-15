@@ -30,7 +30,7 @@ public abstract class TurretClass : TileClass
     protected GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
-    protected bool isRotating = false;
+    protected bool isRotating = true;
 
     // Let's see if this shit works amiright my dude
     private void Start()
@@ -114,6 +114,9 @@ public abstract class TurretClass : TileClass
         // If a target exists, shoot at it
         if (target != null)
         {
+            // Set turret to rotating state
+            isRotating = true;
+
             // Flag hasTarget
             hasTarget = true;
 
@@ -141,7 +144,7 @@ public abstract class TurretClass : TileClass
                 // Rotate the turret
                 Gun.Rotate(Vector3.forward, distanceToRotate);
             }
-            else if (difference != 0)
+            else if (!(difference <= 1 && difference >= -1))
             {
                 // Calculate how far to rotate the turret given how long since the last frame
                 float distanceToRotate = rotationSpeed * Time.deltaTime;
@@ -152,12 +155,18 @@ public abstract class TurretClass : TileClass
                 // Rotate the turret
                 Gun.Rotate(Vector3.forward, distanceToRotate);
             }
+            else
+            {
+                Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+                isRotating = false;
+            }
         }
     }
 
     // Attempts to fire a bullet and returns true if fired
     protected bool Shoot(GameObject prefab, Transform pos, float multiplier = 1)
     {
+        isRotating = true;
         if (nextFire > 0)
         {
             nextFire -= Time.deltaTime;

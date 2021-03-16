@@ -70,7 +70,7 @@ public class TurretAI : TurretClass
                     // Apply variable modifications
                     Gun = EngineerModifications[0].engineerObj.transform.GetChild(0).GetComponent<Transform>();
                     fireRate = 0.2f;
-                    damageBoost = 5;
+                    damageBoost = 60;
 
                     // Set the barrel
                     SwitchBarrel = 1;
@@ -87,6 +87,7 @@ public class TurretAI : TurretClass
                     // Apply variable modifications
                     Gun = EngineerModifications[1].engineerObj.transform.GetChild(0).GetComponent<Transform>();
                     fireRate = 0.05f;
+                    damageBoost = 50;
 
                     // Set the barrel
                     isRotating = true;
@@ -112,8 +113,8 @@ public class TurretAI : TurretClass
                     EngineerModifications[3].originalObj.SetActive(false);
                     EngineerModifications[3].engineerObj.SetActive(true);
 
-                    health = 100;
-                    maxhp = 100;
+                    health = 1000;
+                    maxhp = 1000;
 
                     break;
 

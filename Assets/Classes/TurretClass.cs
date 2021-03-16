@@ -32,6 +32,8 @@ public abstract class TurretClass : TileClass
     protected float gunRotation;
     public bool isRotating = true;
 
+    protected CameraScroll cameraScript;
+
     // Gun shot particle
     public bool gunShotParticles = false;
     public ParticleSystem shotParticle;
@@ -54,6 +56,7 @@ public abstract class TurretClass : TileClass
             isEnemy = true;
         }
         else bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+        cameraScript = GameObject.Find("Camera").GetComponent<CameraScroll>();
     }
 
     public void PlayAnim()
@@ -84,7 +87,8 @@ public abstract class TurretClass : TileClass
 
     public void PlayAudio()
     {
-        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), this.gameObject.transform.position, Settings.soundVolume);
+        float audioScale = cameraScript.getZoom() / 1400f;
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), this.gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
     protected GameObject FindNearestEnemy()

@@ -31,6 +31,9 @@ public class Survival : MonoBehaviour
     // The game object used to spawn enemies
     public WaveSpawner Spawner;
 
+    // Camera zoom object
+    public CameraScroll cameraScroll;
+
     // Music audio source
     public AudioSource music;
     public AudioClip placementSound;
@@ -366,7 +369,9 @@ public class Survival : MonoBehaviour
                     Spawner.increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
 
                     // Play placement sound
-                    AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume);
+                    float audioScale = cameraScroll.getZoom() / 1400f;
+                    Debug.Log(audioScale);
+                    AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
                 }
             }
             else if (rayHit.collider != null)

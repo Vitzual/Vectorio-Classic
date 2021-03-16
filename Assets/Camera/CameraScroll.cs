@@ -38,4 +38,9 @@ public class CameraScroll : MonoBehaviour
             gridActive = true;
         }
     }
+
+    public float getZoom()
+    {
+        return targetZoom;
+    }
 }

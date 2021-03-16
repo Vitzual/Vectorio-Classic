@@ -309,7 +309,7 @@ public class Survival : MonoBehaviour
         }
 
         // Check if user left clicks
-        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.ShowingInfo && Input.mousePosition.y >= 200)
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen&& Input.mousePosition.y >= 200)
         {
 
             // Check if valid placement

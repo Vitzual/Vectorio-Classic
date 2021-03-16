@@ -219,6 +219,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void closeBossInfo()
     {
+        survival.UI.BossInfoOpen = false;
         bossInfo.CloseWindow();
         bossDestroyed.CloseWindow();
         Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;

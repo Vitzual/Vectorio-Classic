@@ -40,29 +40,34 @@ public class Technology : MonoBehaviour
     // Sets the unlock tree back to the level that was saved
     public void loadSaveData(int unlockAmount)
     {
-        UnlockAmount = unlockAmount - 1;
+        UnlockAmount = unlockAmount;
 
-        // Iterate through the UnlockTier array and find each unlock in order
-        for (int a = 0; a < UnlockTier.Length; a++)
+        // Unlock set amount of tech https://www.youtube.com/watch?v=vVrjh-1CTtQ
+        int unlockedCount = 0;
+        while (unlockedCount < unlockAmount)
         {
             int lowestHeat = int.MaxValue;
-            int indexHolder = -1;
-            for (int b = 0; b < UnlockTier.Length; b++)
+            int indexOfLowestHeat = -1;
+            for (int i = 0; i < UnlockTier.Length; i++)
             {
-                if (!UnlockTier[b].Unlocked && UnlockTier[b].HeatNeeded < lowestHeat)
+                if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
                 {
-                    lowestHeat = UnlockTier[b].HeatNeeded;
-                    indexHolder = b;
+                    lowestHeat = UnlockTier[i].HeatNeeded;
+                    indexOfLowestHeat = i;
                 }
             }
-            if (indexHolder != -1)
+
+            if (indexOfLowestHeat != -1)
             {
                 // Adds the unlock transform to the unlocked list
-                addUnlocked(UnlockTier[indexHolder].Unlock);
+                addUnlocked(UnlockTier[indexOfLowestHeat].Unlock);
 
                 // Updates the inventory button of the unlock
-                UnlockTier[indexHolder].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexHolder].Unlock.name);
-                UnlockTier[indexHolder].InventoryButton.UpdateUI();
+                UnlockTier[indexOfLowestHeat].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Unlock.name);
+                UnlockTier[indexOfLowestHeat].InventoryButton.UpdateUI();
+
+                // Increment unlock counter
+                unlockedCount++;
             }
             else
             {
@@ -104,10 +109,13 @@ public class Technology : MonoBehaviour
     {
         if (UnlocksLeft)
         {
-            if (UnlockTier[UnlockAmount].HeatNeeded <= a)
+            for (int i = 0; i < UnlockTier.Length; i++)
             {
-                UnlockDefense(UnlockTier[UnlockAmount].Unlock, UnlockTier[UnlockAmount].InventoryButton, UnlockTier[UnlockAmount].Unlock.GetComponent<TileClass>().GetDescription());
-                StartNextUnlock();
+                if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded <= a)
+                {
+                    UnlockDefense(UnlockTier[i].Unlock, UnlockTier[i].InventoryButton, UnlockTier[i].Unlock.GetComponent<TileClass>().GetDescription());
+                    StartNextUnlock();
+                }
             }
         }
     }
@@ -118,22 +126,21 @@ public class Technology : MonoBehaviour
         Transform c = UI.Overlay.transform.Find("Upgrade");
 
         int lowestHeat = int.MaxValue;
-        bool anyLeft = false;
+        int indexOfLowestHeat = -1;
 
         for (int i = 0; i < UnlockTier.Length; i++)
             if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
             {
                 lowestHeat = UnlockTier[i].HeatNeeded;
-                UnlockAmount = i;
-                anyLeft = true;
+                indexOfLowestHeat = i;
             }
 
-        if (!anyLeft)
+        if (indexOfLowestHeat == -1)
             closeUnlockTree();
         else {
-            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockAmount].HeatNeeded.ToString();
-            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockAmount].Unlock.name.ToString().ToUpper();
-            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockAmount].Unlock.name.ToString());
+            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].HeatNeeded.ToString();
+            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].Unlock.name.ToString().ToUpper();
+            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Unlock.name.ToString());
         }
     }
 
@@ -141,6 +148,7 @@ public class Technology : MonoBehaviour
     public void UnlockDefense(Transform a, ButtonManagerBasicIcon b, string c)
     {
         addUnlocked(a);
+        UnlockAmount++;
         b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.transform.name);
         UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + a.transform.name);
         UI.UOL.titleText = a.transform.name.ToUpper();

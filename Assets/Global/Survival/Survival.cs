@@ -221,6 +221,9 @@ public class Survival : MonoBehaviour
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
         UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
+        // Load settings
+        manager.GetComponent<Settings>().LoadSettings();
+
         // Attempt to load save data 
         try
         {
@@ -241,6 +244,8 @@ public class Survival : MonoBehaviour
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
 
             // Attempt to place saved buildings
+            float soundHolder = manager.GetComponent<Settings>().GetSound();
+            manager.GetComponent<Settings>().SetSound(0);
             try
             {
                 PlaceSavedBuildings(data.Locations);
@@ -266,6 +271,7 @@ public class Survival : MonoBehaviour
             {
                 Debug.Log("Save file contains obsolete data!");
             }
+            manager.GetComponent<Settings>().SetSound(soundHolder);
         }
         catch
         {
@@ -280,9 +286,6 @@ public class Survival : MonoBehaviour
             music.Stop();
             Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
         }
-
-        // Load settings
-        manager.GetComponent<Settings>().LoadSettings();
     }
 
     // Gets called once every frame

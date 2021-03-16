@@ -54,7 +54,7 @@ MonoBehaviour:
   maxhp: 10
   health: 10
   heat: 60
-  cost: 15000
+  cost: 12000
   power: 55
   ID: 6
   description: Low accuracy turret that sprays tons of low damaging bullets.
@@ -74,6 +74,8 @@ MonoBehaviour:
   Gun: {fileID: 4448969581651554319}
   Bullet: {fileID: 3293027712645128820, guid: c571360961b51b5418ca4b9e14906205, type: 3}
   hasAudio: 1
+  target: {fileID: 0}
+  isRotating: 1
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -164,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
+  animOriginal: 1
 --- !u!1 &1576630051450929366
 GameObject:
   m_ObjectHideFlags: 0

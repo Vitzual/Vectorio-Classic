@@ -62,7 +62,7 @@ MonoBehaviour:
   AppliedModification: 
   isEngineered: 0
   range: 80
-  rotationSpeed: 500
+  rotationSpeed: 200
   bulletDamage: 50
   bulletPierces: 1
   bulletAmount: 3
@@ -74,6 +74,8 @@ MonoBehaviour:
   Gun: {fileID: 4558331692551859083}
   Bullet: {fileID: 3293027712645128820, guid: b7f669ac45c19f24b820f089524cc895, type: 3}
   hasAudio: 0
+  target: {fileID: 0}
+  isRotating: 1
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -164,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
+  animOriginal: 1
 --- !u!1 &2360406291137728608
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9215428734190905872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.47, z: 0}
   m_LocalScale: {x: 1.1271496, y: 1.1271496, z: 1.1271496}
   m_Children: []
   m_Father: {fileID: 4558331692551859083}

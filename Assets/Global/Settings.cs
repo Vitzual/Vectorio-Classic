@@ -42,6 +42,11 @@ public class Settings : MonoBehaviour
         soundVolume = a;
     }
 
+    public float GetSound()
+    {
+        return soundVolume;
+    }
+
     public void SetResolution(int a)
     {
         if (a == 1) Screen.SetResolution(1280, 720, Screen.fullScreen);

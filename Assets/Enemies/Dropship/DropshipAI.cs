@@ -8,6 +8,9 @@ public class DropshipAI : EnemyClass
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Building"))
+        {
+            GameObject.Find("BuildingGoDeadSound").GetComponent<AudioSource>().Play();
             collision.collider.GetComponent<TileClass>().DestroyTile();
+        }
     }
 }

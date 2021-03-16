@@ -18,31 +18,27 @@ public class TurretAI : TurretClass
         // If a target exists, shoot at it
         if (target != null && !isRotating)
         {            
-            // If turret is pointing at target, fire at it
-            if (((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1) || isRotating)
+            // Unflag hasTarget
+            hasTarget = false;
+            if (AppliedModification.Contains(0))
             {
-                // Unflag hasTarget
-                hasTarget = false;
-                if (AppliedModification.Contains(0))
-                {
-                    bool wasFired = Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
-                    if (wasFired)
-                        if (SwitchBarrel == 1)
-                            SwitchBarrel = 2;
-                        else
-                            SwitchBarrel = 1;
-                } 
-                else if (AppliedModification.Contains(1))
-                {
-                    bool wasFired = Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
-                    if (wasFired)
-                        if (SwitchBarrel + 1 == 7) 
-                            SwitchBarrel = 3;
-                        else
-                            SwitchBarrel += 1;
-                }
-                else Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
+                bool wasFired = Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
+                if (wasFired)
+                    if (SwitchBarrel == 1)
+                        SwitchBarrel = 2;
+                    else
+                        SwitchBarrel = 1;
+            } 
+            else if (AppliedModification.Contains(1))
+            {
+                bool wasFired = Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
+                if (wasFired)
+                    if (SwitchBarrel + 1 == 7) 
+                        SwitchBarrel = 3;
+                    else
+                        SwitchBarrel += 1;
             }
+            else Shoot(Bullet, FirePoints[SwitchBarrel], damageBoost);
         } else {
             // Unflag hasTarget when target is null
             hasTarget = false;

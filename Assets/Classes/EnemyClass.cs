@@ -6,7 +6,7 @@ public abstract class EnemyClass : MonoBehaviour
 {
     // Enemy ID
     public int ID;
-
+    
     // Effect variables
     private Transform burning_effect;
     private Transform freezing_effect;

@@ -144,7 +144,7 @@ MonoBehaviour:
   isEngineered: 0
   range: 90
   rotationSpeed: 70
-  bulletDamage: 15
+  bulletDamage: 20
   bulletPierces: 3
   bulletAmount: 1
   bulletSpeed: 80
@@ -155,6 +155,8 @@ MonoBehaviour:
   Gun: {fileID: 868748940344737781}
   Bullet: {fileID: 3293027712645128820, guid: 2a93d27339bae654a9173892b6a37a4d, type: 3}
   hasAudio: 1
+  target: {fileID: 0}
+  isRotating: 1
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -245,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
+  animOriginal: 1
 --- !u!1 &1688262179590608685
 GameObject:
   m_ObjectHideFlags: 0

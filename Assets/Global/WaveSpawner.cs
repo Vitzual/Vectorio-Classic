@@ -13,6 +13,7 @@ public class WaveSpawner : MonoBehaviour
     public int htrack = 0;
     public int totalSpawned = 0;
     public bool groupSpawned = false;
+    public GameObject[] borders;
 
     private void Start()
     {
@@ -103,6 +104,23 @@ public class WaveSpawner : MonoBehaviour
         heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
         technology.UpdateUnlock(htrack);
+
+        if (htrack >= 20000)
+        {
+            borders[2].SetActive(true);
+            borders[1].SetActive(false);
+        }
+        else if (htrack >= 10000)
+        {
+            borders[2].SetActive(false);
+            borders[1].SetActive(true);
+            borders[0].SetActive(false);
+        }
+        else
+        {
+            borders[0].SetActive(true);
+            borders[1].SetActive(false);
+        }
     }
 
     public void decreaseHeat(int a)

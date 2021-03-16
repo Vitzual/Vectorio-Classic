@@ -27,10 +27,10 @@ public abstract class TurretClass : TileClass
     protected float nextFire = 0;
     protected float timePassed = 0;
     protected bool hasTarget = false;
-    protected GameObject target = null;
+    public GameObject target = null;
     protected float enemyAngle;
     protected float gunRotation;
-    protected bool isRotating = true;
+    public bool isRotating = true;
 
     // Let's see if this shit works amiright my dude
     private void Start()
@@ -139,18 +139,26 @@ public abstract class TurretClass : TileClass
                 float distanceToRotate = -rotationSpeed * Time.deltaTime;
 
                 // If distance to rotate would rotate past the target only rotate the distance
-                if (distanceToRotate < difference) distanceToRotate = difference;
+                if (distanceToRotate < difference)
+                {
+                    isRotating = false;
+                    distanceToRotate = difference;
+                }
 
                 // Rotate the turret
                 Gun.Rotate(Vector3.forward, distanceToRotate);
             }
-            else if (!(difference <= 1 && difference >= -1))
+            else if (!(difference <= 5 && difference >= -5))
             {
                 // Calculate how far to rotate the turret given how long since the last frame
                 float distanceToRotate = rotationSpeed * Time.deltaTime;
 
                 // If distance to rotate would rotate past the target only rotate the distance
-                if (distanceToRotate > difference) distanceToRotate = difference;
+                if (distanceToRotate > difference)
+                {
+                    isRotating = false;
+                    distanceToRotate = difference;
+                }
 
                 // Rotate the turret
                 Gun.Rotate(Vector3.forward, distanceToRotate);

@@ -14,32 +14,28 @@ public class MinigunAI : TurretClass
         // If a target exists, shoot at it
         if (target != null && !isRotating)
         {
-            // If turret is pointing at target, fire at it
-            if ((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1)
-            {
-                // Unflag hasTarget
-                hasTarget = false;
+            // Unflag hasTarget
+            hasTarget = false;
                 
-                // Call shoot function
-                switch(FireTracker)
-                {
-                    case 0:
-                        Shoot(Bullet, FirePoints[0]);
-                        FireTracker = 1;
-                        break;
-                    case 1:
-                        Shoot(Bullet, FirePoints[1]);
-                        FireTracker = 2;
-                        break;
-                    case 2:
-                        Shoot(Bullet, FirePoints[2]);
-                        FireTracker = 3;
-                        break;
-                    case 3:
-                        Shoot(Bullet, FirePoints[3]);
-                        FireTracker = 0;
-                        break;
-                }
+            // Call shoot function
+            switch(FireTracker)
+            {
+                case 0:
+                    Shoot(Bullet, FirePoints[0]);
+                    FireTracker = 1;
+                    break;
+                case 1:
+                    Shoot(Bullet, FirePoints[1]);
+                    FireTracker = 2;
+                    break;
+                case 2:
+                    Shoot(Bullet, FirePoints[2]);
+                    FireTracker = 3;
+                    break;
+                case 3:
+                    Shoot(Bullet, FirePoints[3]);
+                    FireTracker = 0;
+                    break;
             }
         } else {
             // Unflag hasTarget when target is null

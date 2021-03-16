@@ -11,15 +11,11 @@ public class ShotgunAI : TurretClass
         // If a target exists, shoot at it
         if (target != null && !isRotating)
         {
-            // If turret is pointing at target, fire at it
-            if ((gunRotation - enemyAngle) <= 1 && (gunRotation - enemyAngle) >= -1)
-            {
-                // Unflag hasTarget
-                hasTarget = false;
+            // Unflag hasTarget
+            hasTarget = false;
                 
-                // Call shoot function
-                Shoot(Bullet, FirePoints[0]);
-            }
+            // Call shoot function
+            Shoot(Bullet, FirePoints[0]);
         } else {
             // Unflag hasTarget when target is null
             hasTarget = false;

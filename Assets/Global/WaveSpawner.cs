@@ -4,22 +4,38 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
+    // Spawner elements
     private Difficulties difficulties;
     public Survival survival;
     public Technology technology;
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
+    public TextMeshProUGUI maxHeatAmount;
     public int SpawnRegion = 1000;
     public int htrack = 0;
+    public int maxHeat = 10000;
     public int totalSpawned = 0;
     public bool groupSpawned = false;
     public GameObject[] borders;
+    public bool loadingSave = true;
+    public bool bossSpawned = false;
+    public int bossesDefeated = 0;
 
-    private void Start()
+    // UI Elements
+    public GameObject bossWarning;
+    public ModalWindowManager bossInfo;
+    public ModalWindowManager bossDestroyed;
+
+    [System.Serializable]
+    public class Bosses
     {
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
-        InvokeRepeating("SpawnEnemies", 0f, 1f);
+        public Transform bossObject;
+        public string name;
+        [TextArea] public string description;
+        [TextArea] public string destroyedInfo;
+        public bool isDefeated;
     }
+    public Bosses[] bosses;
 
     [System.Serializable]
     public class Enemies
@@ -35,8 +51,15 @@ public class WaveSpawner : MonoBehaviour
 
     public Enemies[] enemy;
 
+    private void Start()
+    {
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+        InvokeRepeating("SpawnEnemies", 0f, 1f);
+    }
+
     private void SpawnEnemies()
     {
+        if (bossSpawned) return;
         groupSpawned = true;
         for (int a=0; a<enemy.Length; a++)
         {
@@ -91,8 +114,12 @@ public class WaveSpawner : MonoBehaviour
                 {
                     groupSpawned = true;
                     enemy[index].groupSpawnEvery = enemy[index].groupSpawnTracker;
+                    Transform groupHolder;
                     for (int i = 0; i < 20; i++)
-                        Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-10, 10) + holder.transform.position.x, Random.Range(-10, 10) + holder.transform.position.y), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    {
+                        groupHolder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-10, 10) + holder.transform.position.x, Random.Range(-10, 10) + holder.transform.position.y), Quaternion.Euler(new Vector3(0, 0, 0)));
+                        groupHolder.name = enemy[index].enemyObject.name;
+                    }
                 }
             } else enemy[index].groupSpawnEvery--;
         }
@@ -105,22 +132,62 @@ public class WaveSpawner : MonoBehaviour
         heatAmount.text = htrack.ToString();
         technology.UpdateUnlock(htrack);
 
-        if (htrack >= 20000)
+        if (bossesDefeated == 0 && htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
         {
-            borders[2].SetActive(true);
-            borders[1].SetActive(false);
+            Transform holder = Instantiate(bosses[0].bossObject, new Vector2(0, SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
+            holder.name = bosses[0].bossObject.name;
+            bossSpawned = true;
         }
-        else if (htrack >= 10000)
+
+        // Check if the warning should be displayed or not
+        if (htrack <= 10000 && htrack >= 9000 && bossesDefeated == 0) {
+            if (!bossWarning.activeInHierarchy) { bossWarning.SetActive(true); }
+        } else if (bossWarning.activeInHierarchy) { bossWarning.SetActive(false); }
+
+        if (!bossSpawned)
         {
-            borders[2].SetActive(false);
-            borders[1].SetActive(true);
-            borders[0].SetActive(false);
+            if (htrack >= 20000)
+            {
+                borders[2].SetActive(true);
+                borders[1].SetActive(false);
+            }
+            else if (htrack >= 10000)
+            {
+
+                borders[2].SetActive(false);
+                borders[1].SetActive(true);
+                borders[0].SetActive(false);
+            }
+            else
+            {
+                borders[0].SetActive(true);
+                borders[1].SetActive(false);
+            }
         }
-        else
-        {
-            borders[0].SetActive(true);
-            borders[1].SetActive(false);
-        }
+    }
+
+    public void updateBosses()
+    {
+        for (int i=1; i <= bosses.Length; i++)
+            if (htrack >= i * 10000)
+                defeatBoss(i-1);
+        loadingSave = false;
+    }
+
+    public void defeatBoss(int a)
+    {
+        // Show info
+        if (!loadingSave) displayBossDestroyed();
+
+        // Set new values
+        bosses[a].isDefeated = true;
+        bossesDefeated += 1;
+        bossSpawned = false;
+        maxHeat += 10000;
+        maxHeatAmount.text = maxHeat + " MAX";
+
+        // Updates the border
+        increaseHeat(0);
     }
 
     public void decreaseHeat(int a)
@@ -128,5 +195,32 @@ public class WaveSpawner : MonoBehaviour
         htrack -= a;
         heatUI.currentPercent = ((float)htrack / 10000f * 100f);
         heatAmount.text = htrack.ToString();
+    }
+
+    public void displayBossInfo()
+    {
+        bossInfo.titleText = bosses[bossesDefeated].name;
+        bossInfo.descriptionText = bosses[bossesDefeated].description;
+        bossInfo.UpdateUI();
+        bossInfo.OpenWindow();
+        survival.UI.BossInfoOpen = true;
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+    }
+
+    public void displayBossDestroyed()
+    {
+        bossDestroyed.titleText = bosses[bossesDefeated].name;
+        bossDestroyed.descriptionText = bosses[bossesDefeated].destroyedInfo;
+        bossDestroyed.UpdateUI();
+        bossDestroyed.OpenWindow();
+        survival.UI.BossInfoOpen = true;
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+    }
+
+    public void closeBossInfo()
+    {
+        bossInfo.CloseWindow();
+        bossDestroyed.CloseWindow();
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 }

@@ -28,6 +28,7 @@ public class Interface : MonoBehaviour
     public bool ResearchOpen;
     public bool SettingsOpen;
     public bool EngineerOpen;
+    public bool BossInfoOpen;
     public bool ShowingInfo;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
@@ -56,6 +57,7 @@ public class Interface : MonoBehaviour
         MenuOpen = false;
         ResearchOpen = false;
         BuildingOpen = false;
+        BossInfoOpen = false;
     }
 
     public void AdjustTimescale()

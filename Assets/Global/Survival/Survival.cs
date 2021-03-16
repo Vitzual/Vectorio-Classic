@@ -28,8 +28,8 @@ public class Survival : MonoBehaviour
     // Research object
     public Research rsrch;
 
-    // Gold script
-    public GoldAI GoldScript;
+    // The game object used to spawn enemies
+    public WaveSpawner Spawner;
 
     // Music audio source
     public AudioSource music;
@@ -118,9 +118,6 @@ public class Survival : MonoBehaviour
 
     // The seed the word is set to
     public int seed;
-
-    // The game object used to spawn enemies
-    public GameObject Spawner;
 
     // The square that appears around buildings when clicked
     public GameObject SelectedOverlay;
@@ -257,6 +254,9 @@ public class Survival : MonoBehaviour
                 Debug.Log("Save file contains obsolete data!");
             }
 
+            // Update bosses
+            Spawner.updateBosses();
+
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
@@ -306,7 +306,7 @@ public class Survival : MonoBehaviour
         }
 
         // Check if user left clicks
-        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && Input.mousePosition.y >= 200)
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.ShowingInfo && Input.mousePosition.y >= 200)
         {
 
             // Check if valid placement
@@ -348,22 +348,24 @@ public class Survival : MonoBehaviour
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
-                int cost = SelectedObj.GetComponent<TileClass>().GetCost();
-                int power = SelectedObj.GetComponent<TileClass>().getConsumption();
-                if (cost <= gold && PowerConsumption + power <= AvailablePower)
+                TileClass ObjectComponent = SelectedObj.GetComponent<TileClass>();
+                if (ObjectComponent.GetCost() <= gold && PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower)
                 {
-                    RemoveGold(cost);
+                    // Remove gold from player once confirmed
+                    RemoveGold(ObjectComponent.GetCost());
 
                     // If it is a wall, dont use rotation
                     if (SelectedObj.name == "Wall")
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
 
+                    // Set component values
                     LastObj.name = SelectedObj.name;
                     LastObj.GetComponent<TileClass>().IncreaseHealth();
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
-                    Spawner.GetComponent<WaveSpawner>().increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
+                    Spawner.increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
 
+                    // Play placement sound
                     AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume);
                 }
             }
@@ -481,6 +483,12 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
         {
             UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and boss panel is open, close it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.BossInfoOpen == true)
+        {
+            Spawner.closeBossInfo();
         }
 
         // If escape pressed and new info is open, close it
@@ -1111,13 +1119,21 @@ public class Survival : MonoBehaviour
     // Sends all data to the save script
     public void Save()
     {
-        Debug.Log("Attempting to save data");
-        SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties);
-        Debug.Log("Data was saved successfully");
+        if (!Spawner.bossSpawned)
+        {
+            Debug.Log("Attempting to save data");
+            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties);
+            Debug.Log("Data was saved successfully");
 
-        UI.SaveButton.buttonText = "SAVED";
-        UI.SaveButton.GetComponent<CanvasGroup>().interactable = false;
-        UI.SaveButton.UpdateUI();
+            UI.SaveButton.buttonText = "SAVED";
+            UI.SaveButton.GetComponent<CanvasGroup>().interactable = false;
+            UI.SaveButton.UpdateUI();
+        }
+        else
+        {
+            UI.SaveButton.buttonText = "DISABLED";
+            UI.SaveButton.UpdateUI();
+        }
     }
 
     // Returns all building locations when saving

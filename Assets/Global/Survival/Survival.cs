@@ -235,12 +235,16 @@ public class Survival : MonoBehaviour
             UI.EssenceAmount.text = essence.ToString();
             UI.IridiumAmount.text = iridium.ToString();
 
+            Debug.Log(data.UnlockLevel);
+
             // Update unlock level and research
             tech.SetUnlock(data.UnlockLevel - 1);
             seed = data.WorldSeed;
 
             // Force tech tree update
+            Debug.Log("Starting force update check");
             tech.ForceUpdateCheck();
+            Debug.Log("Finised force update check");
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
 
             // Attempt to place saved buildings
@@ -273,10 +277,10 @@ public class Survival : MonoBehaviour
             }
             manager.GetComponent<Settings>().SetSound(soundHolder);
         }
-        catch
+        catch (System.Exception e)
         {
             // New save
-            Debug.Log("No save data was found, or the save data found was corrupt.");
+            Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
 
@@ -840,7 +844,7 @@ public class Survival : MonoBehaviour
                 Debug.Log("This save file does not contain engineering data and may become unstable.\nGenerate a new save file to fix this issue");
             }
 
-            Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
+            //Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
     }
 
@@ -1209,7 +1213,7 @@ public class Survival : MonoBehaviour
             obj.name = enemy.name;
             enemy.gameObject.GetComponent<EnemyClass>().SetHealth((int)a[i, 1]);
 
-            Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
+            //Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
     }
 

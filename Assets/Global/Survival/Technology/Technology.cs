@@ -40,6 +40,7 @@ public class Technology : MonoBehaviour
     // Set unlock level
     public void SetUnlock(int a)
     {
+        Debug.Log("Setting unlock level to " + a);
         UnlockLvl = a;
     }
 
@@ -54,11 +55,16 @@ public class Technology : MonoBehaviour
     // Updates all unlocks and UI's
     public void UpdateUnlockableGui()
     {
-        for (int i = 0; i < UnlockLvl; i++)
+        Debug.Log(UnlockLvl + " " + UnlockTier.Length);
+        int unlockedHeat = UnlockTier[UnlockLvl].HeatNeeded;
+        foreach (var unlockable in UnlockTier)
         {
-            addUnlocked(UnlockTier[i].Unlock);
-            UnlockTier[i].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[i].Unlock.name);
-            UnlockTier[i].InventoryButton.UpdateUI();
+            if (unlockable.HeatNeeded <= unlockedHeat)
+            {
+                addUnlocked(unlockable.Unlock);
+                unlockable.InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + unlockable.Unlock.name);
+                unlockable.InventoryButton.UpdateUI();
+            }
         }
     }
 
@@ -100,7 +106,9 @@ public class Technology : MonoBehaviour
     {
         Transform c = UI.Overlay.transform.Find("Upgrade");
 
-        int lowestHeat = 100000;
+        int temp = UnlockLvl;
+
+        int lowestHeat = int.MaxValue;
         bool anyLeft = false;
         for (int i = 0; i < UnlockTier.Length; i++)
             if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
@@ -114,6 +122,7 @@ public class Technology : MonoBehaviour
         {
             UnlocksLeft = false;
             c.gameObject.SetActive(false);
+            UnlockLvl = temp;
             return;
         }
 
@@ -123,6 +132,7 @@ public class Technology : MonoBehaviour
             c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].Unlock.name.ToString().ToUpper();
             c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Unlock.name.ToString());
         }
+        UnlockLvl = temp;
     }
 
     // Unlocks a defense and displays to screen

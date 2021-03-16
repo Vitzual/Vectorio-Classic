@@ -235,16 +235,13 @@ public class Survival : MonoBehaviour
             UI.EssenceAmount.text = essence.ToString();
             UI.IridiumAmount.text = iridium.ToString();
 
-            Debug.Log(data.UnlockLevel);
-
             // Update unlock level and research
-            tech.SetUnlock(data.UnlockLevel - 1);
             seed = data.WorldSeed;
 
             // Force tech tree update
-            Debug.Log("Starting force update check");
-            tech.ForceUpdateCheck();
-            Debug.Log("Finised force update check");
+            tech.loadSaveData(data.UnlockLevel);
+
+            // Generate world data
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
 
             // Attempt to place saved buildings

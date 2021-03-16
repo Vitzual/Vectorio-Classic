@@ -43,7 +43,7 @@ public class SaveData
         Essence = data.essence;
         Iridium = data.iridium;
         HeatUsage = heat.htrack;
-        UnlockLevel = unlock.UnlockLvl;
+        UnlockLevel = unlock.UnlockAmount;
         UnlocksLeft = unlock.UnlocksLeft;
         ResearchedTiers = research.GetResearchData();
         startingGold = difficulty.GetStartingGold();

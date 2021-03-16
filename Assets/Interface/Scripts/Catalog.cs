@@ -4,6 +4,7 @@ using TMPro;
 
 public class Catalog : MonoBehaviour
 {
+    /*
     public GameObject BuildingCatalog;
     public GameObject EnemyCatalog;
     public GameObject[] DiscoveredEnemies;
@@ -52,5 +53,5 @@ public class Catalog : MonoBehaviour
             //BuildingCatalog.transform.Find("Description 3").GetComponent<TextMeshProUGUI>().text = DiscoveredBuildings[enemyIndex].GetComponent<EnemyClass>().CatalogDesc3;
         }
     }
-
+    */
 }

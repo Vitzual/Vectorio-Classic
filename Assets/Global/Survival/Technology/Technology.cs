@@ -13,7 +13,7 @@ public class Technology : MonoBehaviour
     public Interface UI;
 
     // Unlock variables 
-    public int UnlockLvl = 0;
+    public int UnlockAmount = 0;
     public bool UnlocksLeft = true;
     [System.Serializable]
     public class Unlockables
@@ -37,35 +37,48 @@ public class Technology : MonoBehaviour
         UI = gameObject.GetComponent<Interface>();
     }
 
+    // Sets the unlock tree back to the level that was saved
+    public void loadSaveData(int unlockAmount)
+    {
+        UnlockAmount = unlockAmount - 1;
+
+        // Iterate through the UnlockTier array and find each unlock in order
+        for (int a = 0; a < UnlockTier.Length; a++)
+        {
+            int lowestHeat = int.MaxValue;
+            int indexHolder = -1;
+            for (int b = 0; b < UnlockTier.Length; b++)
+            {
+                if (!UnlockTier[b].Unlocked && UnlockTier[b].HeatNeeded < lowestHeat)
+                {
+                    lowestHeat = UnlockTier[b].HeatNeeded;
+                    indexHolder = b;
+                }
+            }
+            if (indexHolder != -1)
+            {
+                // Adds the unlock transform to the unlocked list
+                addUnlocked(UnlockTier[indexHolder].Unlock);
+
+                // Updates the inventory button of the unlock
+                UnlockTier[indexHolder].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexHolder].Unlock.name);
+                UnlockTier[indexHolder].InventoryButton.UpdateUI();
+            }
+            else
+            {
+                closeUnlockTree();
+                return;
+            }
+        }
+
+        // Start next unlock
+        StartNextUnlock();
+    }
+
     // Set unlock level
     public void SetUnlock(int a)
     {
-        Debug.Log("Setting unlock level to " + a);
-        UnlockLvl = a;
-    }
-
-    // Force unlock progress to update
-    // Usually called when loading a save
-    public void ForceUpdateCheck()
-    {
-        StartNextUnlock();
-        UpdateUnlockableGui();
-    }
-
-    // Updates all unlocks and UI's
-    public void UpdateUnlockableGui()
-    {
-        Debug.Log(UnlockLvl + " " + UnlockTier.Length);
-        int unlockedHeat = UnlockTier[UnlockLvl].HeatNeeded;
-        foreach (var unlockable in UnlockTier)
-        {
-            if (unlockable.HeatNeeded <= unlockedHeat)
-            {
-                addUnlocked(unlockable.Unlock);
-                unlockable.InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + unlockable.Unlock.name);
-                unlockable.InventoryButton.UpdateUI();
-            }
-        }
+        UnlockAmount = a;
     }
 
     // Iterates through all buildings in the tree, and returns the correct ID
@@ -91,11 +104,9 @@ public class Technology : MonoBehaviour
     {
         if (UnlocksLeft)
         {
-            if (UnlockTier[UnlockLvl].HeatNeeded <= a)
+            if (UnlockTier[UnlockAmount].HeatNeeded <= a)
             {
-                Transform newUnlock = UnlockTier[UnlockLvl].Unlock;
-
-                UnlockDefense(newUnlock, UnlockTier[UnlockLvl].InventoryButton, newUnlock.GetComponent<TileClass>().GetDescription());
+                UnlockDefense(UnlockTier[UnlockAmount].Unlock, UnlockTier[UnlockAmount].InventoryButton, UnlockTier[UnlockAmount].Unlock.GetComponent<TileClass>().GetDescription());
                 StartNextUnlock();
             }
         }
@@ -106,33 +117,24 @@ public class Technology : MonoBehaviour
     {
         Transform c = UI.Overlay.transform.Find("Upgrade");
 
-        int temp = UnlockLvl;
-
         int lowestHeat = int.MaxValue;
         bool anyLeft = false;
+
         for (int i = 0; i < UnlockTier.Length; i++)
             if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
             {
                 lowestHeat = UnlockTier[i].HeatNeeded;
-                UnlockLvl = i;
+                UnlockAmount = i;
                 anyLeft = true;
             }
 
         if (!anyLeft)
-        {
-            UnlocksLeft = false;
-            c.gameObject.SetActive(false);
-            UnlockLvl = temp;
-            return;
+            closeUnlockTree();
+        else {
+            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockAmount].HeatNeeded.ToString();
+            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockAmount].Unlock.name.ToString().ToUpper();
+            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockAmount].Unlock.name.ToString());
         }
-
-        if (UnlocksLeft)
-        {
-            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].HeatNeeded.ToString();
-            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[UnlockLvl].Unlock.name.ToString().ToUpper();
-            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[UnlockLvl].Unlock.name.ToString());
-        }
-        UnlockLvl = temp;
     }
 
     // Unlocks a defense and displays to screen
@@ -173,7 +175,7 @@ public class Technology : MonoBehaviour
             if (UnlockTier[i].Unlock == a)
                 UnlockTier[i].Unlocked = true;
 
-
+        // If essence object, unlock research
         if (a == main.GetEssenceObj())
         {
             UI.ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
@@ -182,18 +184,11 @@ public class Technology : MonoBehaviour
         }
     }
 
-    // Check if a building is unlocked
-    public bool checkIfBuildingUnlocked(GameObject a)
+    public void closeUnlockTree()
     {
-        for (int i = 0; i < unlocked.Count; i++)
-        {
-            if (a.name == unlocked[i].name)
-            {
-                return true;
-            }
-        }
-        return false;
+        UnlocksLeft = false;
+        UI.Overlay.transform.Find("Upgrade").gameObject.SetActive(false);
+        UnlockAmount = UnlockTier.Length;
+        return;
     }
-
-
 }

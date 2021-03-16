@@ -5,6 +5,13 @@ public class SniperAI : TurretClass
     // Targetting system
     void Update()
     {
+        // If animation is playing, wait
+        if (animPlaying)
+        {
+            PlayAnim();
+            return;
+        }
+
         if (isRotating)
             RotateTowardNearestEnemy();
 

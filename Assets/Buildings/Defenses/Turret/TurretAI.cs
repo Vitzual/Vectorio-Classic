@@ -12,7 +12,14 @@ public class TurretAI : TurretClass
     // Targetting system
     void Update()
     {
-        if(isRotating)
+        // If animation is playing, wait
+        if (animPlaying)
+        {
+            PlayAnim();
+            return;
+        }
+
+        if (isRotating)
             RotateTowardNearestEnemy();
 
         // If a target exists, shoot at it

@@ -156,6 +156,14 @@ MonoBehaviour:
   Gun: {fileID: 2055557111240337833}
   Bullet: {fileID: 3293027712645128820, guid: 5806be12216f0d64988527f58da24088, type: 3}
   hasAudio: 1
+  target: {fileID: 0}
+  isRotating: 1
+  gunShotParticles: 1
+  shotParticle: {fileID: 5935417771904588832, guid: 078d87907f6578145b62ae1aa0058c72,
+    type: 3}
+  animationEnabled: 1
+  animTracker: 10
+  animMovement: 2
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -246,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
+  animOriginal: 1
 --- !u!1 &3800980028605351455
 GameObject:
   m_ObjectHideFlags: 0

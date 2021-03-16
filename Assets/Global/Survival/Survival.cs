@@ -479,6 +479,7 @@ public class Survival : MonoBehaviour
         // If T pressed, open research menu
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false && UI.UOLOpen == false)
         {
+            UI.closeResearchUnlock();
             if (UI.EngineerOpen)
                 UI.CloseEngineer();
             UI.OpenResearchOverlay();
@@ -487,6 +488,7 @@ public class Survival : MonoBehaviour
         // If T pressed and research menu open, close it
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == true)
         {
+            UI.closeResearchUnlock();
             UI.CloseResearchOverlay();
         }
 

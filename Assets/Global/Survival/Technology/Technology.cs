@@ -12,6 +12,8 @@ public class Technology : MonoBehaviour
     // Interface script
     public Interface UI;
 
+    public bool loadingSave = false;
+
     // Unlock variables 
     public int UnlockAmount = 0;
     public bool UnlocksLeft = true;
@@ -40,6 +42,7 @@ public class Technology : MonoBehaviour
     // Sets the unlock tree back to the level that was saved
     public void loadSaveData(int unlockAmount)
     {
+        loadingSave = true;
         UnlockAmount = unlockAmount;
 
         // Unlock set amount of tech https://www.youtube.com/watch?v=vVrjh-1CTtQ
@@ -77,6 +80,7 @@ public class Technology : MonoBehaviour
         }
 
         // Start next unlock
+        loadingSave = false;
         StartNextUnlock();
     }
 
@@ -154,8 +158,12 @@ public class Technology : MonoBehaviour
         UI.UOL.titleText = a.transform.name.ToUpper();
         UI.UOL.descriptionText = c;
         UI.UOL.UpdateUI();
-        UI.UOL.OpenWindow();
-        UI.UOLOpen = true;
+        if (a.name == "Essence Drill") UI.showResearchUnlock();
+        else
+        {
+            UI.UOL.OpenWindow();
+            UI.UOLOpen = true;
+        }
         Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
     }
 

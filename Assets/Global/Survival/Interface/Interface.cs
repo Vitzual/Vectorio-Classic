@@ -30,6 +30,7 @@ public class Interface : MonoBehaviour
     public bool EngineerOpen;
     public bool BossInfoOpen;
     public bool ShowingInfo;
+    public bool UOLOpen;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
     public TextMeshProUGUI IridiumAmount;
@@ -42,7 +43,7 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI EPS;
     public TextMeshProUGUI IPS;
     public ModalWindowManager UOL;
-    public bool UOLOpen;
+    public ModalWindowManager ResearchUnlockedWindow;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
@@ -87,6 +88,20 @@ public class Interface : MonoBehaviour
     {
         EngineerOverlay.SetActive(false);
         EngineerOpen = false;
+    }
+
+    // Enables the research overlay
+    public void showResearchUnlock()
+    {
+        ResearchOpen = true;
+        ResearchUnlockedWindow.OpenWindow();
+    }
+
+    // Disables the research overlay
+    public void closeResearchUnlock()
+    {
+        ResearchOpen = false;
+        ResearchUnlockedWindow.CloseWindow();
     }
 
     // Enable cooling overlay

@@ -32,15 +32,54 @@ public abstract class TurretClass : TileClass
     protected float gunRotation;
     public bool isRotating = true;
 
+    // Gun shot particle
+    public bool gunShotParticles = false;
+    public ParticleSystem shotParticle;
+
+    // Shot anim variables
+    public bool animationEnabled = false;
+    protected bool animPlaying = false;
+    protected bool animRebound = false;
+    public int animTracker;
+    private int animHolder;
+    public float animMovement = 4f;
+
     // Let's see if this shit works amiright my dude
     private void Start()
     {
+        if (animationEnabled) animHolder = animTracker;
         if (transform.name.Contains("Enemy"))
         {
             enemyHandler = GameObject.Find("Enemy Bullet Handler").GetComponent<EnemyBulletHandler>();
             isEnemy = true;
         }
         else bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+    }
+
+    public void PlayAnim()
+    {
+        if (!animRebound)
+        {
+            animTracker -= 1;
+            Gun.localPosition -= Gun.up * animMovement * Time.deltaTime;
+            if (animTracker == animHolder/2)
+            {
+                animTracker = 0;
+                animRebound = true;
+            }
+        }
+        else
+        {
+            animTracker += 1;
+            Gun.localPosition += Gun.up * animMovement/2 * Time.deltaTime;
+            if (animTracker == animHolder)
+            {
+                Gun.localPosition = new Vector2(0, 0);
+                animRebound = false;
+                animPlaying = false;
+            }
+        }
+        return;
     }
 
     public void PlayAudio()
@@ -195,7 +234,9 @@ public abstract class TurretClass : TileClass
     // Createa a bullet object
     protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
     {
+        if (gunShotParticles) Instantiate(shotParticle, FirePoints[0].position, Quaternion.Euler(0, 0, Gun.localEulerAngles.z + 180f));
         if (hasAudio) try { PlayAudio(); } catch { }
+        if (animationEnabled) animPlaying = true;
 
         pos.position = new Vector3(pos.position.x, pos.position.y, 0);
         GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);

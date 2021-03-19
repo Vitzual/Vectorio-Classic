@@ -54,7 +54,7 @@ MonoBehaviour:
   maxhp: 120
   health: 120
   heat: 200
-  cost: 250000
+  cost: 100000
   power: 150
   ID: 15
   description: High accuracy turret that unleashes a storm of high-damaging bullets.
@@ -77,6 +77,13 @@ MonoBehaviour:
   Gun: {fileID: 4975649507425085726}
   Bullet: {fileID: 3293027712645128820, guid: 678e0c8e79e57b547a0a5bfd71a1d4a5, type: 3}
   hasAudio: 1
+  target: {fileID: 0}
+  isRotating: 1
+  gunShotParticles: 0
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
   FireTracker: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
@@ -168,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
-  isChonkyBoi: 0
+  animOriginal: 1
 --- !u!1 &1357030762067731375
 GameObject:
   m_ObjectHideFlags: 0

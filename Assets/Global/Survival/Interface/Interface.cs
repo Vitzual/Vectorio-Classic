@@ -31,6 +31,7 @@ public class Interface : MonoBehaviour
     public bool BossInfoOpen;
     public bool ShowingInfo;
     public bool UOLOpen;
+    public bool EndScreenOpen;
     public TextMeshProUGUI GoldAmount;
     public TextMeshProUGUI EssenceAmount;
     public TextMeshProUGUI IridiumAmount;
@@ -44,6 +45,7 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI IPS;
     public ModalWindowManager UOL;
     public ModalWindowManager ResearchUnlockedWindow;
+    public ModalWindowManager EndOfEarlyAccessWindow;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
@@ -61,12 +63,26 @@ public class Interface : MonoBehaviour
         BossInfoOpen = false;
     }
 
+    public void OpenEndWindow()
+    {
+        EndOfEarlyAccessWindow.OpenWindow();
+        Time.timeScale = 0f;
+        EndScreenOpen = true;
+    }
+
+    public void CloseEndWindow()
+    {
+        EndOfEarlyAccessWindow.CloseWindow();
+        Time.timeScale = 1f;
+        EndScreenOpen = false;
+    }
+
     public void AdjustTimescale()
     {
         UOLOpen = false;
         UOL.CloseWindow();
         if (Time.timeScale != 1.0f)
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+            Time.timeScale = 1f;
     }
 
     // Set the engineer cooldown
@@ -229,7 +245,7 @@ public class Interface : MonoBehaviour
         if (!Research.research_unlocked) return;
         ResearchOpen = true;
         SetOverlayStatus("Research UI", true);
-        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        Time.timeScale = 0f;
     }
 
     // Closes research overlay and unpauses game
@@ -238,6 +254,6 @@ public class Interface : MonoBehaviour
         if (!Research.research_unlocked) return;
         ResearchOpen = false;
         SetOverlayStatus("Research UI", false);
-        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        Time.timeScale = 1f;
     }
 }

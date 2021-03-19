@@ -289,7 +289,7 @@ public class Survival : MonoBehaviour
             TutorialOverlay.SetActive(true);
             showingTutorial = true;
             music.Stop();
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+            Time.timeScale = 0f;
         }
     }
 
@@ -419,7 +419,7 @@ public class Survival : MonoBehaviour
             {
                 TutorialOverlay.SetActive(false);
                 showingTutorial = false;
-                Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+                Time.timeScale = 1f;
                 music.Play();
             }
             else if (tutorialNumber == 5 && Input.GetKeyDown(KeyCode.Escape))
@@ -433,7 +433,7 @@ public class Survival : MonoBehaviour
                 TutorialSlides[tutorialNumber].GetComponent<AudioSource>().Play();
                 TutorialOverlay.SetActive(false);
                 showingTutorial = false;
-                Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+                Time.timeScale = 1f;
                 music.Play();
             }
             else
@@ -490,6 +490,12 @@ public class Survival : MonoBehaviour
         {
             UI.closeResearchUnlock();
             UI.CloseResearchOverlay();
+        }
+
+        // If escape pressed and boss panel is open, close it
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.EndScreenOpen == true)
+        {
+            UI.CloseEndWindow();
         }
 
         // If escape pressed and boss panel is open, close it
@@ -558,7 +564,7 @@ public class Survival : MonoBehaviour
             UI.MenuOpen = true;
             UI.SetOverlayStatus("Paused", true);
 
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+            Time.timeScale = 0f;
         }
 
         // If escape pressed and settings open, close it and open menu
@@ -578,7 +584,7 @@ public class Survival : MonoBehaviour
             UI.MenuOpen = false;
             UI.SetOverlayStatus("Paused", false);
 
-            Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+            Time.timeScale = 1f;
         }
     }
 
@@ -1141,6 +1147,12 @@ public class Survival : MonoBehaviour
             UI.SaveButton.buttonText = "DISABLED";
             UI.SaveButton.UpdateUI();
         }
+    }
+
+    public void SaveAndQuit()
+    {
+        Save();
+        Quit();
     }
 
     // Returns all building locations when saving

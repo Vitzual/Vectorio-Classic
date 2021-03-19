@@ -11,7 +11,7 @@ public class EssenceAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival");
-        InvokeRepeating("SendEssence", 0f, 2f);
+        InvokeRepeating("SendEssence", 0f, 1f);
     }
 
     // Send gold

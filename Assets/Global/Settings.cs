@@ -20,7 +20,14 @@ public class Settings : MonoBehaviour
         // Load settings from file
         SettingsData settings = SaveSystem.LoadSettings();
         if (settings == null)
+        {
+            SetMusic(1f);
+            SetSound(1f);
+            SetScreenmode(true);
+            SetShaderMode(3);
+            SetResolution(8);
             return;
+        }
 
         try { soundVolume = settings.sound; }
         catch { soundVolume = 1f; }

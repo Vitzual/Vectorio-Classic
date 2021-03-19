@@ -54,14 +54,14 @@ MonoBehaviour:
   maxhp: 80
   health: 80
   heat: 250
-  cost: 125000
+  cost: 80000
   power: 30
   ID: 14
   description: Covers an area with flames when enemies get close to it.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  range: 35
+  range: 45
   rotationSpeed: 120
   bulletDamage: 20
   bulletPierces: 50
@@ -74,6 +74,13 @@ MonoBehaviour:
   Gun: {fileID: 4228772720140216805}
   Bullet: {fileID: 3293027712645128820, guid: a8aa4826e4ccf0f4dab8af22a89a4ef5, type: 3}
   hasAudio: 1
+  target: {fileID: 0}
+  isRotating: 1
+  gunShotParticles: 0
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -164,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
-  isChonkyBoi: 0
+  animOriginal: 1
 --- !u!1 &847826908518905327
 GameObject:
   m_ObjectHideFlags: 0

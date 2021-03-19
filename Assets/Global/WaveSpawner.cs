@@ -19,6 +19,7 @@ public class WaveSpawner : MonoBehaviour
     public GameObject[] borders;
     public bool loadingSave = true;
     public bool bossSpawned = false;
+    public bool firstDisplay = true;
     public int bossesDefeated = 0;
 
     // UI Elements
@@ -60,7 +61,7 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnEnemies()
     {
         if (bossSpawned) return;
-        groupSpawned = true;
+        groupSpawned = false;
         for (int a=0; a<enemy.Length; a++)
         {
             if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat))
@@ -117,7 +118,7 @@ public class WaveSpawner : MonoBehaviour
                     Transform groupHolder;
                     for (int i = 0; i < 20; i++)
                     {
-                        groupHolder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-10, 10) + holder.transform.position.x, Random.Range(-10, 10) + holder.transform.position.y), Quaternion.Euler(new Vector3(0, 0, 0)));
+                        groupHolder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-15, 15) + holder.transform.position.x, Random.Range(-15, 15) + holder.transform.position.y), Quaternion.Euler(new Vector3(0, 0, 0)));
                         groupHolder.name = enemy[index].enemyObject.name;
                     }
                 }
@@ -143,6 +144,13 @@ public class WaveSpawner : MonoBehaviour
         if (htrack <= 10000 && htrack >= 9000 && bossesDefeated == 0) {
             if (!bossWarning.activeInHierarchy) { bossWarning.SetActive(true); }
         } else if (bossWarning.activeInHierarchy) { bossWarning.SetActive(false); }
+
+        // Display end screen
+        if (htrack >= 20000 && firstDisplay)
+        {
+            GameObject.Find("Survival").GetComponent<Interface>().OpenEndWindow();
+            firstDisplay = false;
+        }
 
         if (!bossSpawned)
         {
@@ -204,7 +212,7 @@ public class WaveSpawner : MonoBehaviour
         bossInfo.UpdateUI();
         bossInfo.OpenWindow();
         survival.UI.BossInfoOpen = true;
-        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        Time.timeScale = 0f;
     }
 
     public void displayBossDestroyed()
@@ -214,7 +222,7 @@ public class WaveSpawner : MonoBehaviour
         bossDestroyed.UpdateUI();
         bossDestroyed.OpenWindow();
         survival.UI.BossInfoOpen = true;
-        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        Time.timeScale = 0f;
     }
 
     public void closeBossInfo()
@@ -222,6 +230,6 @@ public class WaveSpawner : MonoBehaviour
         survival.UI.BossInfoOpen = false;
         bossInfo.CloseWindow();
         bossDestroyed.CloseWindow();
-        Time.timeScale = Mathf.Approximately(Time.timeScale, 0.0f) ? 1.0f : 0.0f;
+        Time.timeScale = 1f;
     }
 }

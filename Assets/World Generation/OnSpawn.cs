@@ -12,6 +12,7 @@ public class OnSpawn : MonoBehaviour
 
     // Difficulty class
     private Difficulties difficulties;
+    public GameObject DefaultOre;
 
     // Gold ore placements
     public GameObject GoldOre;
@@ -46,6 +47,7 @@ public class OnSpawn : MonoBehaviour
 
     public void Start()
     {
+
         difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
 
         int[] goldInfo = difficulties.GetGold();
@@ -70,7 +72,7 @@ public class OnSpawn : MonoBehaviour
     public void GenerateWorldData(int a, bool save)
     {
         // Sets the seed - This method is deprecated but works so who cares amiright?
-        #pragma warning disable CS0618 
+        #pragma warning disable CS0618
         Random.seed = a;
         #pragma warning restore CS0618 
 

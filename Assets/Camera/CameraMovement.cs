@@ -28,7 +28,7 @@ public class CameraMovement : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             moveSpeed = 150f;
         else if (Input.GetKeyDown(KeyCode.LeftControl))
-            moveSpeed = 50f;
+            moveSpeed = 20f;
         else if (Input.GetKeyUp(KeyCode.LeftControl))
             moveSpeed = 150f;
 

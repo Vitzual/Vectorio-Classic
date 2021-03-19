@@ -1025,6 +1025,7 @@ public class Survival : MonoBehaviour
     // Select object on hotbar
     public void SelectHotbar(int index)
     {
+        Transform holder = SelectedObj;
         try
         {
             // Disable selected overlay
@@ -1033,11 +1034,12 @@ public class Survival : MonoBehaviour
             SelectedOverlay.SetActive(false);
 
             // Set hotbar transform
+            holder = SelectedObj;
             SelectedObj = hotbar[index];
             SwitchObj();
+            UI.SetSelectedHotbar(index);
         }
-        catch { return; }
-        UI.SetSelectedHotbar(index);
+        catch { SelectedObj = holder; }
     }
 
     // Changes the object that the player has selected (pass null to deselect)

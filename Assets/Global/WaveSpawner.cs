@@ -149,6 +149,7 @@ public class WaveSpawner : MonoBehaviour
         if (htrack >= 20000 && firstDisplay)
         {
             GameObject.Find("Survival").GetComponent<Interface>().OpenEndWindow();
+            maxHeat = 30000;
             firstDisplay = false;
         }
 
@@ -191,7 +192,8 @@ public class WaveSpawner : MonoBehaviour
         bosses[a].isDefeated = true;
         bossesDefeated += 1;
         bossSpawned = false;
-        maxHeat += 10000;
+        if (maxHeat + 10000 > 30000) maxHeat = 30000;
+        else maxHeat += 10000;
         maxHeatAmount.text = maxHeat + " MAX";
 
         // Updates the border

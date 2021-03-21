@@ -141,7 +141,15 @@ public abstract class TurretClass : TileClass
         if (!hasTarget)
             target = FindNearestPlayer();
         if (target != null)
-            RotationHandler();
+        {
+            // Temporary fix to the enemy turret rotation logic
+            // Uses targetting logic from RotationHandler() but just applies rotation towards target 
+            Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+            Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
+            float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
+            if (distance.x > 0) targetAngle += 180;
+            Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+        }
     }
 
     protected void RotateTowardNearestEnemy() 

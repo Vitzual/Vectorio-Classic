@@ -193,6 +193,7 @@ public class OnSpawn : MonoBehaviour
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
                     }
+                    else continue;
                 }
             } 
             else

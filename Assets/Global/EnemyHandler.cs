@@ -6,6 +6,7 @@ public class EnemyHandler : MonoBehaviour
 {
     // If the enemy destroys a building, play this sound
     public AudioSource BuildingGoDeadSound;
+    public Survival survival;
 
     // Contains all active coins in scene
     [System.Serializable]
@@ -83,6 +84,7 @@ public class EnemyHandler : MonoBehaviour
             return true;
         }
         BuildingGoDeadSound.Play();
+        survival.SetLastHit(other.position);
         return false;
     }
 }

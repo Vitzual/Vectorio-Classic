@@ -10,6 +10,7 @@ public class DropshipAI : EnemyClass
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Building"))
         {
             GameObject.Find("BuildingGoDeadSound").GetComponent<AudioSource>().Play();
+            GameObject.Find("Survival").GetComponent<Survival>().SetLastHit(collision.collider.transform.position);
             collision.collider.GetComponent<TileClass>().DestroyTile();
         }
     }

@@ -77,7 +77,6 @@ public class Survival : MonoBehaviour
     private bool AdjustSwitch = false;
 
     // Object placements
-
     [SerializeField] private Transform HubObj;             // No ID
     [SerializeField] private Transform TurretObj;          // ID = 0
     [SerializeField] private Transform WallObj;            // ID = 1
@@ -110,6 +109,9 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform EnemyTurretRanger;  // ID = 202
     [SerializeField] private Transform EnemyStaticWall;    // ID = 205
     [SerializeField] private Transform EnemyStaticMine;    // ID = 204
+
+    // Holds the last building that was hit
+    public Vector3 lastHit;
 
     // Holds the most recent engineer
     public Transform EngineerHolder;
@@ -618,6 +620,18 @@ public class Survival : MonoBehaviour
         UI.IridiumAmount.text = iridium.ToString();
     }
 
+    // Set the last object that was hit
+    public void SetLastHit(Vector3 pos)
+    {
+        lastHit = pos;
+        UI.EnableWarning();
+    }
+
+    // Go to the position of the last hit object
+    public void MoveToLastHit()
+    {
+        MainCamera.transform.position = lastHit;
+    }
 
     // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud
     public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID)); }

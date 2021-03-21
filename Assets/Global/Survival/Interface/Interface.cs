@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
 using TMPro;
+using System.Collections;
 
 public class Interface : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class Interface : MonoBehaviour
     public ButtonManagerBasic SaveButton;
     public ButtonManagerBasicIcon ResearchButton;
     public ButtonManagerBasicIcon[] hotbarButtons;
+    public GameObject WarningButton;
+    public int ActiveWarnings = 0;
 
     // Start is called before the first frame update
     private void Start()
@@ -61,6 +64,21 @@ public class Interface : MonoBehaviour
         ResearchOpen = false;
         BuildingOpen = false;
         BossInfoOpen = false;
+    }
+
+    public void EnableWarning()
+    {
+        ActiveWarnings++;
+        WarningButton.SetActive(true);
+        StartCoroutine(DisableWarning(5));
+    }
+
+    // Disabled the active warning after 5 seconds
+    private IEnumerator DisableWarning(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ActiveWarnings--;
+        if (ActiveWarnings == 0) WarningButton.SetActive(false);
     }
 
     public void OpenEndWindow()

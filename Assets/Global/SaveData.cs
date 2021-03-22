@@ -41,7 +41,7 @@ public class SaveData
         PowerAvailable = data.AvailablePower;
         Gold = data.gold;
         Essence = data.essence;
-        Iridium = data.iridium;
+        Iridium = data.iridium; 
         HeatUsage = heat.htrack;
         UnlockLevel = unlock.UnlockAmount;
         UnlocksLeft = unlock.UnlocksLeft;

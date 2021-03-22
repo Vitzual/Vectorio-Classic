@@ -40,8 +40,10 @@ public class Survival : MonoBehaviour
 
     // Tutorial Elements (Survival Exclusive)
     public GameObject TutorialOverlay;
-    public GameObject[] TutorialSlides;
-    public bool showingTutorial;
+    public GameObject TutorialSlides;
+    public GameObject[] Slides;
+    public bool showingTutorial = false;
+    public bool firstWhatever = false;
     public int tutorialNumber = 0;
 
     // layers
@@ -425,15 +427,31 @@ public class Survival : MonoBehaviour
                 Time.timeScale = 1f;
                 music.Play();
             }
-            else if (tutorialNumber == 5 && Input.GetKeyDown(KeyCode.Escape))
+            else if (tutorialNumber == 0 && Input.GetKeyDown(KeyCode.Space))
             {
-                TutorialSlides[tutorialNumber].SetActive(false);
-                tutorialNumber = 0;
-                TutorialSlides[tutorialNumber].SetActive(true);
+                TutorialOverlay.SetActive(false);
+                TutorialSlides.SetActive(true);
+                Slides[tutorialNumber].SetActive(true);
+                tutorialNumber++;
             }
-            else if (tutorialNumber == 5)
+            else if (tutorialNumber == 12 && Input.GetKeyDown(KeyCode.Escape))
             {
-                TutorialSlides[tutorialNumber].GetComponent<AudioSource>().Play();
+                Slides[12].SetActive(false);
+                tutorialNumber = 0;
+                TutorialOverlay.SetActive(true);
+                firstWhatever = false;
+            }
+            else if (tutorialNumber == 12)
+            {
+                Slides[tutorialNumber].GetComponent<AudioSource>().Play();
+                TutorialSlides.SetActive(false);
+                TutorialOverlay.SetActive(false);
+                showingTutorial = false;
+                Time.timeScale = 1f;
+                music.Play();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
                 TutorialOverlay.SetActive(false);
                 showingTutorial = false;
                 Time.timeScale = 1f;
@@ -441,11 +459,19 @@ public class Survival : MonoBehaviour
             }
             else
             {
-                // Move slides
-                TutorialSlides[tutorialNumber].SetActive(false);
-                TutorialSlides[tutorialNumber + 1].SetActive(true);
-                TutorialSlides[tutorialNumber + 1].GetComponent<AudioSource>().Play();
-                tutorialNumber++;
+                if (tutorialNumber == 1 && !firstWhatever)
+                {
+                    Slides[0].SetActive(false);
+                    Slides[1].SetActive(true);
+                    firstWhatever = true;
+                } 
+                else
+                {
+                    Slides[tutorialNumber].SetActive(false);
+                    tutorialNumber++;
+                    Slides[tutorialNumber].SetActive(true);
+                }
+                Slides[tutorialNumber].GetComponent<AudioSource>().Play();
             }
             return;
         }

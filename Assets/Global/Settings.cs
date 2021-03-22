@@ -3,6 +3,7 @@ using MK.Glow.Legacy;
 
 public class Settings : MonoBehaviour
 {
+    // Settings variables
     public static float soundVolume = 1f;
     public AudioSource music;
     public MKGlowLite glowing;

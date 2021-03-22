@@ -159,6 +159,7 @@ public class Technology : MonoBehaviour
         UI.UOL.descriptionText = c;
         UI.UOL.UpdateUI();
         if (a.name == "Essence Drill") UI.showResearchUnlock();
+        else if (a.name == "Energizer") UI.showEnergizerUnlock();
         else
         {
             UI.UOL.OpenWindow();

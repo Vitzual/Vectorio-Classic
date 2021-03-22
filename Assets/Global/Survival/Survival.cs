@@ -467,15 +467,7 @@ public class Survival : MonoBehaviour
         // Opens the building menu if E is pressed.
         if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false && UI.UOLOpen == false)
         {
-            if (UI.ResearchOpen)
-            {
-                UI.CloseResearchOverlay();
-                SetHoverObject(null);
-            }
-            if (UI.EngineerOpen)
-                UI.CloseEngineer();
-            UI.BuildingOpen = true;
-            UI.SetOverlayStatus("Survival Menu", true);
+            UI.OpenSurvivalMenu();
         }
 
         // If T pressed, open research menu
@@ -521,8 +513,7 @@ public class Survival : MonoBehaviour
         // If escape pressed and building menu open, close it
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.BuildingOpen == true)
         {
-            UI.BuildingOpen = false;
-            UI.SetOverlayStatus("Survival Menu", false);
+            UI.OpenSurvivalMenu();
         }
 
         // If escape pressed and research open, close it.

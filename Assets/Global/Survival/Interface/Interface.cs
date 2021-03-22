@@ -46,6 +46,7 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI IPS;
     public ModalWindowManager UOL;
     public ModalWindowManager ResearchUnlockedWindow;
+    public ModalWindowManager EnergizerUnlockedWindow;
     public ModalWindowManager EndOfEarlyAccessWindow;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
@@ -98,7 +99,9 @@ public class Interface : MonoBehaviour
     public void AdjustTimescale()
     {
         UOLOpen = false;
-        UOL.CloseWindow();
+        if (UOL.isOn) UOL.CloseWindow();
+        if (ResearchUnlockedWindow.isOn) ResearchUnlockedWindow.CloseWindow();
+        if (EnergizerUnlockedWindow.isOn) EnergizerUnlockedWindow.CloseWindow();
         if (Time.timeScale != 1.0f)
             Time.timeScale = 1f;
     }
@@ -127,15 +130,31 @@ public class Interface : MonoBehaviour
     // Enables the research overlay
     public void showResearchUnlock()
     {
-        ResearchOpen = true;
+        UOLOpen = true;
         ResearchUnlockedWindow.OpenWindow();
+    }
+
+    // Enables the research overlay
+    public void showEnergizerUnlock()
+    {
+        UOLOpen = true;
+        EnergizerUnlockedWindow.OpenWindow();
     }
 
     // Disables the research overlay
     public void closeResearchUnlock()
     {
-        ResearchOpen = false;
+        UOLOpen = false;
         ResearchUnlockedWindow.CloseWindow();
+        Time.timeScale = 1f;
+    }
+
+    // Disables the research overlay
+    public void closeEnergizerUnlocks()
+    {
+        UOLOpen = false;
+        EnergizerUnlockedWindow.CloseWindow();
+        Time.timeScale = 1f;
     }
 
     // Enable cooling overlay
@@ -149,6 +168,30 @@ public class Interface : MonoBehaviour
     public void DisableCooldown()
     {
         EngineerCooldownOverlay.SetActive(false);
+    }
+
+    public void OpenSurvivalMenu()
+    {
+        // Check if other menus open, if so, close them
+        if (ResearchOpen)
+        {
+            CloseResearchOverlay();
+            main.SetHoverObject(null);
+        }
+        if (EngineerOpen)
+            CloseEngineer();
+
+        // Toggle menu
+        if (!BuildingOpen)
+        {
+            BuildingOpen = true;
+            SetOverlayStatus("Survival Menu", true);
+        }
+        else
+        {
+            BuildingOpen = false;
+            SetOverlayStatus("Survival Menu", false);
+        }
     }
 
     // Set the status of an overlay. 

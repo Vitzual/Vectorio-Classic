@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Difficulties : MonoBehaviour
 {
-    public int difficultyID = 2;
+    public int difficultyID;
 
     [System.Serializable]
     public class GameDifficulties

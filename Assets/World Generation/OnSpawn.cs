@@ -48,7 +48,18 @@ public class OnSpawn : MonoBehaviour
     public void Start()
     {
         difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+    }
 
+    public void GenerateWorldData(int a, bool save)
+    {
+        Debug.Log("Generating world data with seed " + a);
+
+        // Sets the seed - This method is deprecated but works so who cares amiright?
+        #pragma warning disable CS0618
+        Random.seed = a;
+        #pragma warning restore CS0618
+
+        // Set the difficulty data
         int[] goldInfo = difficulties.GetGold();
         int[] essenceInfo = difficulties.GetEssence();
         int[] iridiumInfo = difficulties.GetIridium();
@@ -56,10 +67,6 @@ public class OnSpawn : MonoBehaviour
         GoldSpawnAmount = goldInfo[0];
         GoldVeinSize = goldInfo[1];
         GoldVeinNoise = goldInfo[2];
-
-        Debug.Log(GoldSpawnAmount);
-        Debug.Log(GoldVeinSize);
-        Debug.Log(GoldVeinNoise);
 
         EssenceSpawnAmount = essenceInfo[0];
         EssenceVeinSize = essenceInfo[1];
@@ -70,14 +77,6 @@ public class OnSpawn : MonoBehaviour
         IridiumVeinNoise = iridiumInfo[2];
 
         maxBases = difficulties.GetBases();
-    }
-
-    public void GenerateWorldData(int a, bool save)
-    {
-        // Sets the seed - This method is deprecated but works so who cares amiright?
-        #pragma warning disable CS0618
-        Random.seed = a;
-        #pragma warning restore CS0618 
 
         GenGold();
         GenEssence();

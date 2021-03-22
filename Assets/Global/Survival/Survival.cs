@@ -206,6 +206,7 @@ public class Survival : MonoBehaviour
         }
         catch
         {
+            Debug.Log("Difficulty settings could not be loaded!");
             difficulties.SetDifficulty(holder);
         }
 
@@ -256,7 +257,7 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file contains obsolete data!");
+                Debug.Log("Save file contains obsolete defense data!");
             }
 
             // Update bosses
@@ -276,7 +277,7 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file contains obsolete data!");
+                Debug.Log("Save file contains obsolete enemy data!");
             }
             manager.GetComponent<Settings>().SetSound(soundHolder);
         }

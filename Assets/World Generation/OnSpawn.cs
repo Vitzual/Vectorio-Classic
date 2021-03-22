@@ -47,7 +47,6 @@ public class OnSpawn : MonoBehaviour
 
     public void Start()
     {
-
         difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
 
         int[] goldInfo = difficulties.GetGold();
@@ -57,6 +56,10 @@ public class OnSpawn : MonoBehaviour
         GoldSpawnAmount = goldInfo[0];
         GoldVeinSize = goldInfo[1];
         GoldVeinNoise = goldInfo[2];
+
+        Debug.Log(GoldSpawnAmount);
+        Debug.Log(GoldVeinSize);
+        Debug.Log(GoldVeinNoise);
 
         EssenceSpawnAmount = essenceInfo[0];
         EssenceVeinSize = essenceInfo[1];
@@ -162,6 +165,8 @@ public class OnSpawn : MonoBehaviour
     // Gold Generation
     private void GenGold()
     {
+        int something = 0;
+
         int x;
         int y;
         int a;
@@ -190,10 +195,10 @@ public class OnSpawn : MonoBehaviour
 
                     if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 10 || x + a <= -10) && (y + b >= 10 || y - b <= 10))
                     {
+                        something++;
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
                     }
-                    else continue;
                 }
             } 
             else
@@ -201,6 +206,7 @@ public class OnSpawn : MonoBehaviour
                 i--;
             }
         }
+        Debug.Log("Spawned " + something + " nodes total");
     }
 
     private void GenEssence()

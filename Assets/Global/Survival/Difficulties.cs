@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Difficulties : MonoBehaviour
 {
@@ -32,7 +31,9 @@ public class Difficulties : MonoBehaviour
 
     public void Start()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        if (SceneManager.GetActiveScene().name == "Menu")
+            DontDestroyOnLoad(transform.gameObject);
+        else Destroy(this.gameObject);
     }
 
     public int[] GetGold()
@@ -47,8 +48,8 @@ public class Difficulties : MonoBehaviour
     public void SetGold(int[] holder)
     {
         difficulties[difficultyID].goldSpawnFrequency = holder[0];
-        difficulties[difficultyID].goldSpawnSize = holder[0];
-        difficulties[difficultyID].goldSpawnNoise = holder[0];
+        difficulties[difficultyID].goldSpawnSize = holder[1];
+        difficulties[difficultyID].goldSpawnNoise = holder[2];
     }
 
     public int[] GetEssence()
@@ -63,8 +64,8 @@ public class Difficulties : MonoBehaviour
     public void SetEssence(int[] holder)
     {
         difficulties[difficultyID].essenceSpawnFrequency = holder[0];
-        difficulties[difficultyID].essenceSpawnSize = holder[0];
-        difficulties[difficultyID].essenceSpawnNoise = holder[0];
+        difficulties[difficultyID].essenceSpawnSize = holder[1];
+        difficulties[difficultyID].essenceSpawnNoise = holder[2];
     }
 
     public int[] GetIridium()
@@ -79,8 +80,8 @@ public class Difficulties : MonoBehaviour
     public void SetIridium(int[] holder)
     {
         difficulties[difficultyID].iridiumSpawnFrequency = holder[0];
-        difficulties[difficultyID].iridiumSpawnSize = holder[0];
-        difficulties[difficultyID].iridiumSpawnNoise = holder[0];
+        difficulties[difficultyID].iridiumSpawnSize = holder[1];
+        difficulties[difficultyID].iridiumSpawnNoise = holder[2];
     }
 
     public int GetBases()

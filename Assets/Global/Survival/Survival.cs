@@ -67,6 +67,9 @@ public class Survival : MonoBehaviour
     public int PowerConsumption = 0;
     public int AvailablePower = 0;
 
+    // Resource UI popups
+    public GameObject popup;
+
     // Add additional cost
     public float additionalCost = 1f;
 
@@ -367,6 +370,10 @@ public class Survival : MonoBehaviour
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
 
+                    // Instantiate the price floating thing
+                    // GameObject PriceHolder = Instantiate(popup, new Vector3(LastObj.position.x, LastObj.position.y + 5f, LastObj.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    // PriceHolder.GetComponent<Popup>().SetPopup("- " + ObjectComponent.GetCost());
+
                     // Set component values
                     LastObj.name = SelectedObj.name;
                     LastObj.GetComponent<TileClass>().IncreaseHealth();
@@ -479,6 +486,17 @@ public class Survival : MonoBehaviour
 
         // Check hotbar thing        
         CheckNumberInput();
+
+        // Pipette a building
+        if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.EngineerOpen && !UI.UOLOpen)
+        {
+            // Attempt a raycast on the tile survival is in
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+
+            // Set the selected object to the collider if not null
+            if (rayHit.collider != null)
+                SelectObject(rayHit.collider.transform);
+        }
 
         // Rotates object if no menus open
         if (Input.GetKeyDown(KeyCode.R) && !UI.BuildingOpen && !UI.MenuOpen && !UI.EngineerOpen && SelectedObj != null)

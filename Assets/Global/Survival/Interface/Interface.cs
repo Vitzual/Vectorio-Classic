@@ -10,6 +10,8 @@ public class Interface : MonoBehaviour
     public Survival main;
 
     // Interace Elements
+    public Canvas IngameCanvas;
+    public GameObject ResourcePopup;
     public GameObject ResearchOverlay;
     public GameObject EngineerOverlay;
     public Transform EngineerList;
@@ -67,6 +69,13 @@ public class Interface : MonoBehaviour
         ResearchOpen = false;
         BuildingOpen = false;
         BossInfoOpen = false;
+    }
+
+    public void CreateResourcePopup(string amount, string name, Vector3 position)
+    {
+        GameObject ResourceObject = Instantiate(ResourcePopup, new Vector3(position.x, position.y + 2.5f, position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+        ResourceObject.transform.parent = IngameCanvas.transform;
+        ResourceObject.GetComponent<Popup>().SetPopup(amount, name);
     }
 
     public void DisplayAutosave()

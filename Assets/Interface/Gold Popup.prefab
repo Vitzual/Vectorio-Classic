@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2886135712145601883}
   - component: {fileID: 6153250979236539630}
+  - component: {fileID: 3877223327500103426}
   m_Layer: 0
   m_Name: Gold Popup
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4128734316027269490}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.5, y: 0, z: 0}
-  m_LocalScale: {x: 5.91, y: 5.91, z: 5.91}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children:
   - {fileID: 8698757535581386882}
   - {fileID: 1021112472943922667}
@@ -45,9 +46,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a3afd8094696049a9f6a650591496a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparency: {fileID: 3877223327500103426}
   amountText: {fileID: 8019554499350135300}
-  amountType: {fileID: 0}
+  icon: {fileID: 4498406498198057735}
   moveUp: 0
+--- !u!225 &3877223327500103426
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128734316027269490}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5124509818110031232
 GameObject:
   m_ObjectHideFlags: 0

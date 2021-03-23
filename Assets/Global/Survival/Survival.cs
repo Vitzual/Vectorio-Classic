@@ -463,6 +463,10 @@ public class Survival : MonoBehaviour
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
 
+                    // Create a UI resource popup thing idk lmaooo
+                    UI.CreateResourcePopup("- " + ObjectComponent.GetCost(), "Gold", LastObj.position);
+
+                    // Tutorial only
                     if (showingTutorial)
                     {
                         if (tutorialNumber == 2)
@@ -548,8 +552,12 @@ public class Survival : MonoBehaviour
                 TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
-                AddGold(rayScript.GetCost() - rayScript.GetCost() / 5);
+                int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
+                AddGold(amount);
                 rayScript.DestroyTile();
+
+                // Create a UI resource popup thing idk lmaooo
+                UI.CreateResourcePopup("+ " + amount, "Gold", rayHit.collider.transform.position);
             }
         }
 

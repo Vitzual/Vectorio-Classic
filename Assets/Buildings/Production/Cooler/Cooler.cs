@@ -4,12 +4,6 @@ public class Cooler : TileClass
 {
     // Internal placement variables
     public Transform rotator;
-    public int amount = 25;
-
-    private void Start()
-    {
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(amount);
-    }
 
     // Update is called once per frame
     void Update()
@@ -20,7 +14,7 @@ public class Cooler : TileClass
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().increaseHeat(amount);
+        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

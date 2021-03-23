@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Michsky.UI.ModernUIPack;
 
-public class RevenantAI : EnemyClass
+public class RevenantAI : BossClass
 {
     // Dropships will destroy any building they touch
     // Additional logic requires a Rigibody component be attached to this unit

@@ -40,6 +40,22 @@ public class Settings : MonoBehaviour
         Screen.SetResolution(settings.width, settings.height, Screen.fullScreen);
     }
 
+    public void EnableControls()
+    {
+        ui.SettingsOpen = false;
+        ui.ControlsOpen = true;
+        ui.SetOverlayStatus("Settings", false);
+        ui.SetOverlayStatus("Controls", true);
+    }
+
+    public void DisableControls()
+    {
+        ui.SettingsOpen = true;
+        ui.ControlsOpen = false;
+        ui.SetOverlayStatus("Controls", false);
+        ui.SetOverlayStatus("Settings", true);
+    }
+
     public void SetMusic(float a)
     {
         music.volume = a/2;

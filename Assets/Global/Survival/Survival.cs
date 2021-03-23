@@ -699,6 +699,15 @@ public class Survival : MonoBehaviour
             manager.GetComponent<Settings>().SaveSettings();
         }
 
+        // If escape pressed and settings open, close it and open menu
+        else if (Input.GetKeyDown(KeyCode.Escape) && UI.ControlsOpen == true)
+        {
+            UI.ControlsOpen = false;
+            UI.SettingsOpen = true;
+            UI.SetOverlayStatus("Controls", false);
+            UI.SetOverlayStatus("Settings", true);
+        }
+
         // If escape pressed and menu open, close it
         else if (Input.GetKeyDown(KeyCode.Escape))
         {

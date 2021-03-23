@@ -31,6 +31,7 @@ public class Interface : MonoBehaviour
     public bool BuildingOpen;
     public bool ResearchOpen;
     public bool SettingsOpen;
+    public bool ControlsOpen;
     public bool EngineerOpen;
     public bool BossInfoOpen;
     public bool ShowingInfo;

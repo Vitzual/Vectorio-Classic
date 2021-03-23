@@ -43,8 +43,10 @@ public class Survival : MonoBehaviour
     public GameObject TutorialSlides;
     public GameObject[] Slides;
     public bool showingTutorial = false;
-    public bool firstWhatever = false;
     public int tutorialNumber = 0;
+    public int tutorialCollectors = 0;
+    public Transform[] TutorialEnemies = new Transform[3];
+    public GameObject TutorialHolder;
 
     // layers
     public LayerMask EnemyLayer;
@@ -296,14 +298,76 @@ public class Survival : MonoBehaviour
             // Show tutorial UI
             TutorialOverlay.SetActive(true);
             showingTutorial = true;
-            music.Stop();
-            Time.timeScale = 0f;
         }
     }
 
     // Gets called once every frame
     private void Update()
     {
+        // Iterates through the tutorial sequence if enabled
+        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4)
+        {
+            if (tutorialNumber == 5 && (TutorialEnemies[0] != null || TutorialEnemies[1] != null || TutorialEnemies[2] != null))
+            {
+                return;
+            }
+            else if (tutorialNumber == 5)
+            {
+                Slides[4].SetActive(false);
+                Slides[5].SetActive(true);
+            }
+
+            // Main slide (1)
+            if (Input.GetKeyDown(KeyCode.Escape) && tutorialNumber == 0)
+            {
+                TutorialOverlay.SetActive(false);
+                showingTutorial = false;
+            }
+
+            // Second slide - Welcome to Vectorio!
+            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 0)
+            {
+                Slides[0].SetActive(false);
+                Slides[1].SetActive(true);
+                tutorialNumber = 1;
+            }
+
+            // Third slide - Place gold mines
+            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 1)
+            {
+                Slides[1].SetActive(false);
+                Slides[2].SetActive(true);
+                tutorialNumber = 2;
+            }
+
+            // Fourth side - Heat 
+            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 3)
+            {
+                Slides[3].SetActive(false);
+                Slides[4].SetActive(true);
+                tutorialNumber = 4;
+                TutorialHolder.SetActive(true);
+            }
+
+            // Fourth side - Heat 
+            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 5)
+            {
+                Slides[5].SetActive(false);
+                Slides[6].SetActive(true);
+                tutorialNumber = 6;
+            }
+
+            // Fourth side - Heat 
+            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 6)
+            {
+                TutorialOverlay.SetActive(false);
+                showingTutorial = false;
+            }
+
+            return;
+        }
+
+
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -319,6 +383,27 @@ public class Survival : MonoBehaviour
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen&& Input.mousePosition.y >= 200)
         {
+            if (showingTutorial)
+            {
+                if (tutorialNumber == 2)
+                {
+                    if (SelectedObj != CollectorObj)
+                    {
+                        return;
+                    }
+                }
+                else if (tutorialNumber == 4)
+                {
+                    if (SelectedObj == TurretObj)
+                    {
+                        if (!(transform.position.x == -20 && transform.position.y == 35) &&
+                            !(transform.position.x == 0 && transform.position.y == 35) &&
+                            !(transform.position.x == 20 && transform.position.y == 35)) { return; }
+                    }
+                    else return;
+                }
+            }
+
 
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
@@ -369,6 +454,43 @@ public class Survival : MonoBehaviour
                     if (SelectedObj.name == "Wall")
                         LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+
+                    if (showingTutorial)
+                    {
+                        if (tutorialNumber == 2)
+                        {
+                            Debug.Log(tutorialCollectors);
+                            tutorialCollectors++;
+                            if (tutorialCollectors == 5)
+                            {
+                                Slides[2].SetActive(false);
+                                Slides[3].SetActive(true);
+                                tutorialNumber = 3;
+                                tutorialCollectors = 0;
+                            }
+                        }
+                        else if (tutorialNumber == 4 && tutorialCollectors != 3)
+                        {
+                            tutorialCollectors++;
+                            if (tutorialCollectors == 3)
+                            {
+                                UI.Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
+                                Selected.sprite = null;
+                                SelectedObj = null;
+                                rotation = 0;
+                                UI.DisableActiveInfo();
+                                UI.ShowingInfo = false;
+                                SelectedRadius.SetActive(false);
+
+                                TutorialEnemies[0] = Instantiate(enemies[0], new Vector3(5, 75), Quaternion.Euler(new Vector3(0, 0, 0)));
+                                TutorialEnemies[1] = Instantiate(enemies[0], new Vector3(10, 96), Quaternion.Euler(new Vector3(0, 0, 0)));
+                                TutorialEnemies[2] = Instantiate(enemies[0], new Vector3(-5, 80), Quaternion.Euler(new Vector3(0, 0, 0)));
+
+                                tutorialNumber = 5;
+                                TutorialHolder.SetActive(false);
+                            }
+                        }
+                    }
 
                     // Instantiate the price floating thing
                     // GameObject PriceHolder = Instantiate(popup, new Vector3(LastObj.position.x, LastObj.position.y + 5f, LastObj.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -422,66 +544,6 @@ public class Survival : MonoBehaviour
                 rayScript.DestroyTile();
             }
         }
-
-        // Iterates through the tutorial sequence if enabled
-        if (showingTutorial && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space)))
-        {
-            if (tutorialNumber == 0 && Input.GetKeyDown(KeyCode.Escape))
-            {
-                TutorialOverlay.SetActive(false);
-                showingTutorial = false;
-                Time.timeScale = 1f;
-                music.Play();
-            }
-            else if (tutorialNumber == 0 && Input.GetKeyDown(KeyCode.Space))
-            {
-                TutorialOverlay.SetActive(false);
-                TutorialSlides.SetActive(true);
-                Slides[tutorialNumber].SetActive(true);
-                tutorialNumber++;
-            }
-            else if (tutorialNumber == 12 && Input.GetKeyDown(KeyCode.Escape))
-            {
-                Slides[12].SetActive(false);
-                tutorialNumber = 0;
-                TutorialOverlay.SetActive(true);
-                firstWhatever = false;
-            }
-            else if (tutorialNumber == 12)
-            {
-                Slides[tutorialNumber].GetComponent<AudioSource>().Play();
-                TutorialSlides.SetActive(false);
-                TutorialOverlay.SetActive(false);
-                showingTutorial = false;
-                Time.timeScale = 1f;
-                music.Play();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                TutorialOverlay.SetActive(false);
-                showingTutorial = false;
-                Time.timeScale = 1f;
-                music.Play();
-            }
-            else
-            {
-                if (tutorialNumber == 1 && !firstWhatever)
-                {
-                    Slides[0].SetActive(false);
-                    Slides[1].SetActive(true);
-                    firstWhatever = true;
-                } 
-                else
-                {
-                    Slides[tutorialNumber].SetActive(false);
-                    tutorialNumber++;
-                    Slides[tutorialNumber].SetActive(true);
-                }
-                Slides[tutorialNumber].GetComponent<AudioSource>().Play();
-            }
-            return;
-        }
-        else if (showingTutorial) return;
 
         // Check hotbar thing        
         CheckNumberInput();
@@ -1074,6 +1136,8 @@ public class Survival : MonoBehaviour
     // Select object on hotbar
     public void SelectHotbar(int index)
     {
+        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4) return;
+
         Transform holder = SelectedObj;
         try
         {
@@ -1094,6 +1158,8 @@ public class Survival : MonoBehaviour
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
     {
+        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4) return;
+
         // Disable selected overlay
         UI.ShowingInfo = false;
         PromptOverlay.alpha = 0;

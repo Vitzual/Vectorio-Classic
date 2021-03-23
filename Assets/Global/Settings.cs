@@ -42,7 +42,7 @@ public class Settings : MonoBehaviour
 
     public void SetMusic(float a)
     {
-        music.volume = a;
+        music.volume = a/2;
     }
 
     public void SetSound(float a)

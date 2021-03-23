@@ -15,7 +15,8 @@ public class AnimateThenStop : MonoBehaviour
     {
         if (animEnabled)
             DropInAnim();
-        else enabled = false; // Disable script when finished
+        else
+            enabled = false; // Disable script when finished
     }
 
     public void DropInAnim()

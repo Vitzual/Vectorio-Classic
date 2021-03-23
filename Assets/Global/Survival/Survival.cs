@@ -666,7 +666,7 @@ public class Survival : MonoBehaviour
     // Go to the position of the last hit object
     public void MoveToLastHit()
     {
-        MainCamera.transform.position = lastHit;
+        MainCamera.transform.position = new Vector3(lastHit.x, lastHit.y, MainCamera.transform.position.z);
     }
 
     // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud

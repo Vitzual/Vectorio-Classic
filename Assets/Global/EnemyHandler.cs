@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
@@ -8,7 +7,7 @@ public class EnemyHandler : MonoBehaviour
     public AudioSource BuildingGoDeadSound;
     public Survival survival;
 
-    // Contains all active coins in scene
+    // Contains all active enemies in the scene
     [System.Serializable]
     public class ActiveEnemies
     {

@@ -9,13 +9,12 @@ public class CollectorAI: TileClass
 {
     // Declare local object variables
     public int amount;
-    // public int rotation;
     public bool enhanced;
-    // public GameObject Gold;
-    // private Vector3 Destination;
-    //private GoldAI GoldScript;
     private Survival SRVSC;
     public LayerMask TileLayer;
+
+    public float sizeTracker = 1f;
+    public bool sizeGrowing = false;
 
     // On start, invoke repeating SendGold() method
     private void Start()
@@ -23,33 +22,28 @@ public class CollectorAI: TileClass
         RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Resource"));
         if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
 
-        // Get destination
-        /*
-        if (transform.localEulerAngles.z >= 270f)
-        {
-            Destination = new Vector3(transform.position.x - 5, transform.position.y, 0);
-            rotation = 4;
-        }
-        else if (transform.localEulerAngles.z >= 180f)
-        {
-            Destination = new Vector3(transform.position.x , transform.position.y + 5, 0);
-            rotation = 1;
-        }
-        else if (transform.localEulerAngles.z >= 90f)
-        {
-            Destination = new Vector3(transform.position.x + 5, transform.position.y, 0);
-            rotation = 2;
-        }
-        else
-        {
-            Destination = new Vector3(transform.position.x, transform.position.y - 5, 0);
-            rotation = 3;
-        }
-        */
-
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        //GoldScript = GameObject.Find("Manager").GetComponent<GoldAI>();
         InvokeRepeating("SendGold", 0f, 1f);
+    }
+
+    private void Update()
+    {
+        if (enhanced)
+        {
+            transform.localScale = new Vector2(sizeTracker, sizeTracker);
+            if (sizeGrowing)
+            {
+                sizeTracker += 0.0008f;
+                if (sizeTracker >= 1.04f)
+                    sizeGrowing = false;
+            }
+            else
+            {
+                sizeTracker -= 0.0008f;
+                if (sizeTracker <= 1.0f)
+                    sizeGrowing = true;
+            }
+        }
     }
 
     // Send gold
@@ -71,12 +65,16 @@ public class CollectorAI: TileClass
     public void enhanceCollector()
     {
         enhanced = true;
+        gameObject.GetComponent<AnimateThenStop>().enabled = true;
     }
 
     // Deenhance collector
     public void deenhanceCollector()
     {
         enhanced = false;
+        sizeTracker = 1f;
+        transform.localScale = new Vector2(1, 1);
+        sizeGrowing = false;
     }
 
     // Kill defense

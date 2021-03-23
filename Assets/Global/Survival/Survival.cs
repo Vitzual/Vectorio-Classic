@@ -139,6 +139,7 @@ public class Survival : MonoBehaviour
 
     // The radius of the selected building
     public GameObject SelectedRadius;
+    public GameObject SquareRadius;
 
     // The building you currently have selected
     private Transform SelectedObj;
@@ -638,6 +639,7 @@ public class Survival : MonoBehaviour
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
             SelectedRadius.SetActive(false);
+            SquareRadius.SetActive(false);
 
             // Set color
             // ColorUtility.TryParseHtmlString("#444444", out CameraColor);
@@ -1232,9 +1234,16 @@ public class Survival : MonoBehaviour
             float range = SelectedObj.GetComponent<TurretClass>().range * 2 + Research.bonus_range;
             SelectedRadius.transform.localScale = new Vector3(range, 1, range);
             SelectedRadius.SetActive(true);
+            SquareRadius.SetActive(false);
         }
+        else if (SelectedObj.name == "Enhancer" || SelectedObj.name == "Engineer")
+        {
+            SquareRadius.SetActive(true);
+            SelectedRadius.SetActive(false);
+        } 
         else
         {
+            SquareRadius.SetActive(false);
             SelectedRadius.SetActive(false);
         }
 

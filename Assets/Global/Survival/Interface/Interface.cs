@@ -48,6 +48,7 @@ public class Interface : MonoBehaviour
     public ModalWindowManager ResearchUnlockedWindow;
     public ModalWindowManager EnergizerUnlockedWindow;
     public ModalWindowManager EndOfEarlyAccessWindow;
+    public NotificationManager AutosaveComplete;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
@@ -66,6 +67,11 @@ public class Interface : MonoBehaviour
         ResearchOpen = false;
         BuildingOpen = false;
         BossInfoOpen = false;
+    }
+
+    public void DisplayAutosave()
+    {
+        AutosaveComplete.OpenNotification();
     }
 
     public void EnableWarning()

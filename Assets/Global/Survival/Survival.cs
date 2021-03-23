@@ -34,9 +34,13 @@ public class Survival : MonoBehaviour
     // Camera zoom object
     public CameraScroll cameraScroll;
 
+    public int AutoSaveInterval = 300;
+    public bool firstAuto = true;
+
     // Music audio source
     public AudioSource music;
     public AudioClip placementSound;
+    public AudioClip pipetteSound;
 
     // Tutorial Elements (Survival Exclusive)
     public GameObject TutorialOverlay;
@@ -300,6 +304,9 @@ public class Survival : MonoBehaviour
 
         // Update bosses
         Spawner.updateBosses();
+
+        // Start auto saving
+        InvokeRepeating("AutoSave", 0f, AutoSaveInterval);
     }
 
     // Gets called once every frame
@@ -557,7 +564,11 @@ public class Survival : MonoBehaviour
 
             // Set the selected object to the collider if not null
             if (rayHit.collider != null)
+            {
                 SelectObject(rayHit.collider.transform);
+                if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
+                AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
+            }
         }
 
         // Rotates object if no menus open
@@ -1258,6 +1269,15 @@ public class Survival : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void AutoSave()
+    {
+        if (!firstAuto)
+        {
+            Save();
+            UI.DisplayAutosave();
+        } else firstAuto = false;
     }
 
     // Sends all data to the save script

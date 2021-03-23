@@ -265,9 +265,6 @@ public class Survival : MonoBehaviour
                 Debug.Log("Save file contains obsolete defense data!");
             }
 
-            // Update bosses
-            Spawner.updateBosses();
-
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
@@ -299,6 +296,9 @@ public class Survival : MonoBehaviour
             music.Stop();
             Time.timeScale = 0f;
         }
+
+        // Update bosses
+        Spawner.updateBosses();
     }
 
     // Gets called once every frame

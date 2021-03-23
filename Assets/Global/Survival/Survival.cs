@@ -1103,6 +1103,11 @@ public class Survival : MonoBehaviour
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
         SwitchObj();
+        if (UI.BuildingOpen)
+        {
+            UI.BuildingOpen = false;
+            UI.SetOverlayStatus("Survival Menu", false);
+        }
     }
 
     // Changes the stored object for hotbar changing

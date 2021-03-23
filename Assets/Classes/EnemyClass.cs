@@ -34,7 +34,7 @@ public abstract class EnemyClass : MonoBehaviour
     protected int attackTimeout;
 
     // Start method
-    private void Start()
+    protected void Start()
     {
         GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, this, moveSpeed, damage, rayLength);
     }
@@ -63,7 +63,7 @@ public abstract class EnemyClass : MonoBehaviour
     }
 
     // Kill entity
-    public void KillEntity()
+    public virtual void KillEntity()
     {
         // If menu scene, re instantiate the object
         if (SceneManager.GetActiveScene().name == "Menu") {
@@ -116,7 +116,7 @@ public abstract class EnemyClass : MonoBehaviour
     }
 
     // Apply damage to entity
-    public void DamageEntity(int dmgRecieved)
+    public virtual void DamageEntity(int dmgRecieved)
     {
         // Apply damage and double if entity is poisoned
         if (is_poisoned) health -= dmgRecieved * 2;

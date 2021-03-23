@@ -56,6 +56,7 @@ public class Interface : MonoBehaviour
     public ButtonManagerBasicIcon[] hotbarButtons;
     public GameObject WarningButton;
     public int ActiveWarnings = 0;
+    public GameObject BossBar;
 
     // Start is called before the first frame update
     private void Start()
@@ -316,5 +317,10 @@ public class Interface : MonoBehaviour
         ResearchOpen = false;
         SetOverlayStatus("Research UI", false);
         Time.timeScale = 1f;
+    }
+
+    public GameObject GetBossBar()
+    {
+        return BossBar;
     }
 }

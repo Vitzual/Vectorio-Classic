@@ -482,9 +482,9 @@ public class Survival : MonoBehaviour
                                 UI.ShowingInfo = false;
                                 SelectedRadius.SetActive(false);
 
-                                TutorialEnemies[0] = Instantiate(enemies[0], new Vector3(5, 75), Quaternion.Euler(new Vector3(0, 0, 0)));
-                                TutorialEnemies[1] = Instantiate(enemies[0], new Vector3(10, 96), Quaternion.Euler(new Vector3(0, 0, 0)));
-                                TutorialEnemies[2] = Instantiate(enemies[0], new Vector3(-5, 80), Quaternion.Euler(new Vector3(0, 0, 0)));
+                                TutorialEnemies[0] = Instantiate(enemies[0], new Vector3(5, 85), Quaternion.Euler(new Vector3(0, 0, 0)));
+                                TutorialEnemies[1] = Instantiate(enemies[0], new Vector3(10, 95), Quaternion.Euler(new Vector3(0, 0, 0)));
+                                TutorialEnemies[2] = Instantiate(enemies[0], new Vector3(-5, 90), Quaternion.Euler(new Vector3(0, 0, 0)));
 
                                 tutorialNumber = 5;
                                 TutorialHolder.SetActive(false);

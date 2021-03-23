@@ -142,7 +142,7 @@ public class WaveSpawner : MonoBehaviour
 
         // Check if the warning should be displayed or not
         if (htrack <= 10000 && htrack >= 9000 && bossesDefeated == 0) {
-            if (!bossWarning.activeInHierarchy) { bossWarning.SetActive(true); }
+            if (!bossWarning.activeInHierarchy && !bossSpawned) { bossWarning.SetActive(true); }
         } else if (bossWarning.activeInHierarchy) { bossWarning.SetActive(false); }
 
         // Display end screen

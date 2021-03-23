@@ -12,6 +12,7 @@ public class Interface : MonoBehaviour
     // Interace Elements
     public Canvas IngameCanvas;
     public GameObject ResourcePopup;
+    public GameObject PipettePopup;
     public GameObject ResearchOverlay;
     public GameObject EngineerOverlay;
     public Transform EngineerList;
@@ -76,6 +77,12 @@ public class Interface : MonoBehaviour
         GameObject ResourceObject = Instantiate(ResourcePopup, new Vector3(position.x, position.y + 2.5f, position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
         ResourceObject.transform.parent = IngameCanvas.transform;
         ResourceObject.GetComponent<Popup>().SetPopup(amount, name);
+    }
+
+    public void CreatePippeteSquare(Vector3 position)
+    {
+        GameObject ResourceObject = Instantiate(PipettePopup, new Vector3(position.x, position.y, position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+        ResourceObject.transform.parent = IngameCanvas.transform;
     }
 
     public void DisplayAutosave()

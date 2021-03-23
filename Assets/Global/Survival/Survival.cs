@@ -573,9 +573,10 @@ public class Survival : MonoBehaviour
             // Set the selected object to the collider if not null
             if (rayHit.collider != null)
             {
-                SelectObject(rayHit.collider.transform);
+                SelectObject(tech.FindTechBuilding(rayHit.collider.GetComponent<TileClass>().getID()));
                 if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
                 AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
+                UI.CreatePippeteSquare(rayHit.collider.transform.position);
             }
         }
 

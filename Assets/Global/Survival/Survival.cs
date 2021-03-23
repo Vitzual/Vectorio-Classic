@@ -382,7 +382,6 @@ public class Survival : MonoBehaviour
 
                     // Play placement sound
                     float audioScale = cameraScroll.getZoom() / 1400f;
-                    Debug.Log(audioScale);
                     AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
                 }
             }

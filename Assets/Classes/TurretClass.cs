@@ -181,6 +181,13 @@ public abstract class TurretClass : TileClass
             float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
             if (distance.x > 0) targetAngle += 180;
 
+            // Correct for if target is directly above or below the turret
+            if (distance.x == 0)
+            {
+                if (distance.y > 0) targetAngle = 0;
+                else targetAngle = 180;
+            }
+
             // Calculate the difference between the target angle and the current angle
             float difference = targetAngle - (Gun.rotation.eulerAngles.z);
 

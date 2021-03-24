@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2009550350632877460}
-  - component: {fileID: -8929576187833352347}
+  - component: {fileID: 3548474578539437131}
   - component: {fileID: 4042011882087631518}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
@@ -117,7 +117,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8929576187833352347
+--- !u!114 &3548474578539437131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,10 +126,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 892923713960991008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc7d0a7cd929634eb8dde62851124fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d584706bd4e19b4f9c2cce19623cdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 8342469565711734033, guid: 64e5c3350a7dc4d4987f41d293137c3d, type: 3}
+  Effect: {fileID: 8342469565711734033, guid: 6b34d1157536f9f49bf747e1a2b6d74e, type: 3}
   maxhp: 15
   health: 15
   heat: 45
@@ -142,6 +142,12 @@ MonoBehaviour:
   isEngineered: 0
   amount: 1
   enhanced: 0
+  popup: {fileID: 5542316865307318698, guid: 1c8883e88ecc1e24e803ff4c25634afe, type: 3}
+  rPopup: {fileID: 4259469596875681493, guid: 1c8883e88ecc1e24e803ff4c25634afe, type: 3}
+  animPlaying: 0
+  isFirstAnim: 1
+  sizeTracker: 1
+  sizeGrowing: 1
 --- !u!114 &4042011882087631518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animEnabled: 1
   animSize: 1.5
+  animOriginal: 1
 --- !u!61 &8672284101732978617
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,34 +5,48 @@ public class IridiumAI: TileClass
     // Declare local object variables
     public int amount;
     public bool enhanced;
-    private GameObject SRVSC;
+    private Survival SRVSC;
+
+    // Popup variables
+    public Transform popup;
+    public ResourcePopup rPopup;
+    public bool animPlaying = false;
+    public bool isFirstAnim = true;
 
     public float sizeTracker = 1f;
-    public bool sizeGrowing = false;
+    public bool sizeGrowing = true;
 
-    // On start, invoke repeating SendGold() method
+    // On start, invoke repeating SendIridium() method
     private void Start()
     {
-        SRVSC = GameObject.Find("Survival");
-        InvokeRepeating("SendIridium", 0f, 10f);
+        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        InvokeRepeating("SendIridium", 0f, 8f);
+        popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        rPopup = popup.GetComponent<ResourcePopup>();
+        popup.parent = SRVSC.UI.IngameCanvas.transform;
+        rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
     }
 
     private void Update()
     {
-        if (enhanced)
+        if (animPlaying)
         {
             transform.localScale = new Vector2(sizeTracker, sizeTracker);
             if (sizeGrowing)
             {
-                sizeTracker += 0.0008f;
-                if (sizeTracker >= 1.04f)
+                sizeTracker += 0.02f;
+                if (sizeTracker >= 1.1f)
                     sizeGrowing = false;
             }
             else
             {
-                sizeTracker -= 0.0008f;
+                sizeTracker -= 0.01f;
                 if (sizeTracker <= 1.0f)
+                {
+                    animPlaying = false;
                     sizeGrowing = true;
+                    sizeTracker = 1f;
+                }
             }
         }
     }
@@ -40,14 +54,15 @@ public class IridiumAI: TileClass
     // Send gold
     private void SendIridium()
     {
-        if (enhanced) SRVSC.GetComponent<Survival>().AddIridium(amount * 4);
-        else SRVSC.GetComponent<Survival>().AddIridium(amount);
-    }
-
-    // Increase gold
-    public void doubleAmount()
-    {
-        amount = amount * 2;
+        if (!isFirstAnim)
+        {
+            int add = amount + Research.bonus_gold;
+            if (enhanced) add *= 4;
+            SRVSC.AddIridium(add);
+            rPopup.ResetPopup("+ " + add);
+            animPlaying = true;
+        }
+        else isFirstAnim = false;
     }
 
     // Enhance collector

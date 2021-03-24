@@ -19,9 +19,6 @@ public class CollectorAI: TileClass
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Resource"));
-        if (resourceCheck.collider != null && resourceCheck.collider.name == "Goldtile") doubleAmount();
-
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         InvokeRepeating("SendGold", 0f, 1f);
     }
@@ -49,23 +46,14 @@ public class CollectorAI: TileClass
     // Send gold
     private void SendGold()
     {
-        // ConveyorScript.SetEntranceStatus(true);
-        // GameObject Object = Instantiate(Gold, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-        if (enhanced) SRVSC.AddGold(amount * 2);
-        else SRVSC.AddGold(amount);
-    }
-
-    // Increase gold
-    public void doubleAmount()
-    {
-        amount = amount * 2;
+        if (enhanced) SRVSC.AddGold((amount + Research.bonus_gold) * 4);
+        else SRVSC.AddGold(amount + Research.bonus_gold);
     }
 
     // Enhance collector
     public void enhanceCollector()
     {
         enhanced = true;
-        gameObject.GetComponent<AnimateThenStop>().enabled = true;
     }
 
     // Deenhance collector

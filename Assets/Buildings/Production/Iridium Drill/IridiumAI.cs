@@ -7,11 +7,34 @@ public class IridiumAI: TileClass
     public bool enhanced;
     private GameObject SRVSC;
 
+    public float sizeTracker = 1f;
+    public bool sizeGrowing = false;
+
     // On start, invoke repeating SendGold() method
     private void Start()
     {
         SRVSC = GameObject.Find("Survival");
         InvokeRepeating("SendIridium", 0f, 10f);
+    }
+
+    private void Update()
+    {
+        if (enhanced)
+        {
+            transform.localScale = new Vector2(sizeTracker, sizeTracker);
+            if (sizeGrowing)
+            {
+                sizeTracker += 0.0008f;
+                if (sizeTracker >= 1.04f)
+                    sizeGrowing = false;
+            }
+            else
+            {
+                sizeTracker -= 0.0008f;
+                if (sizeTracker <= 1.0f)
+                    sizeGrowing = true;
+            }
+        }
     }
 
     // Send gold
@@ -37,6 +60,9 @@ public class IridiumAI: TileClass
     public void deenhanceCollector()
     {
         enhanced = false;
+        sizeTracker = 1f;
+        transform.localScale = new Vector2(1, 1);
+        sizeGrowing = false;
     }
 
     // Kill defense

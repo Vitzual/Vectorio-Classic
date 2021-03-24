@@ -202,9 +202,14 @@ public class WaveSpawner : MonoBehaviour
 
     public void decreaseHeat(int a)
     {
-        htrack -= a;
-        heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
-        heatAmount.text = htrack.ToString();
+        if (a < 0)
+            increaseHeat(-a);
+        else
+        {
+            htrack -= a;
+            heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
+            heatAmount.text = htrack.ToString();
+        }
     }
 
     public void displayBossInfo()

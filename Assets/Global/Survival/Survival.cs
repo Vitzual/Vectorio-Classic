@@ -980,6 +980,12 @@ public class Survival : MonoBehaviour
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.GetComponent<TileClass>().SetHealth(a[i, 1]);
             obj.name = building.name;
+            if (building.name != "Energizer") obj.GetComponent<AnimateThenStop>().animEnabled = false;
+
+            // Resource offset
+            if (building.name == "Collector") StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
+            else if (building.name == "Essence Drill") StartCoroutine(obj.GetComponent<EssenceAI>().OffsetStart());
+            else if (building.name == "Iridium Mine") StartCoroutine(obj.GetComponent<IridiumAI>().OffsetStart());
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CollectorAI: TileClass
 {
@@ -10,21 +11,31 @@ public class CollectorAI: TileClass
     // Popup variables
     public Transform popup;
     public ResourcePopup rPopup;
-    public bool animPlaying = false;
-    public bool isFirstAnim = true;
+    private bool animPlaying = false;
+    private bool isFirstAnim = true;
 
-    public float sizeTracker = 1f;
-    public bool sizeGrowing = true;
+    private bool isOffset = false;
+    private float sizeTracker = 1f;
+    private bool sizeGrowing = true;
 
     // On start, invoke repeating SendGold() method
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        InvokeRepeating("SendGold", 0f, 5f);
+        if (!isOffset) InvokeRepeating("SendGold", 0f, 5f);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
         popup.parent = SRVSC.UI.IngameCanvas.transform;
         rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
+    }
+
+    public IEnumerator OffsetStart()
+    {
+        isOffset = true;
+        isFirstAnim = false;
+        CancelInvoke("SendGold");
+        yield return new WaitForSeconds(Random.Range(0f, 5f));
+        if (this != null) InvokeRepeating("SendGold", 0f, 5f);
     }
 
     private void Update()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyLocater : MonoBehaviour
 {
-    private int checkTime = 20;
+    private int checkTime = 100;
     private int checkTracker = 0;
     private Collider2D[] colliders;
     public LayerMask BuildingLayer;
@@ -13,11 +13,14 @@ public class EnemyLocater : MonoBehaviour
     void Update()
     {
         if (checkTime == checkTracker)
-        {
-            colliders = Physics2D.OverlapCircleAll(transform.position, 2000, BuildingLayer);
-            checkTracker = 0;
-        }
+            ScanForBuilings();
         else checkTracker++;
+    }
+
+    public void ScanForBuilings()
+    {
+        colliders = Physics2D.OverlapCircleAll(transform.position, 2000, BuildingLayer);
+        checkTracker = 0;
     }
 
     public Transform requestTarget(Vector3 position, Transform PreferredTarget)
@@ -25,6 +28,11 @@ public class EnemyLocater : MonoBehaviour
         Transform result = null;
         float closest = float.PositiveInfinity;
         bool isTarget = false;
+
+        if (colliders == null)
+        {
+            ScanForBuilings();
+        }
 
         foreach (Collider2D collider in colliders)
         {

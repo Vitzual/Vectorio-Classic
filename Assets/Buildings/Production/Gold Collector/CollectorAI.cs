@@ -20,7 +20,7 @@ public class CollectorAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        InvokeRepeating("SendGold", 0f, 2f);
+        InvokeRepeating("SendGold", 0f, 5f);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
         popup.parent = SRVSC.UI.IngameCanvas.transform;

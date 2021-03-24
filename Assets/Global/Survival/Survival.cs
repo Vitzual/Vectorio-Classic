@@ -1293,6 +1293,7 @@ public class Survival : MonoBehaviour
     {
         if (!firstAuto) {
             UI.DisplayAutosave();
+            Save();
         } else firstAuto = false;
     }
 
@@ -1341,7 +1342,6 @@ public class Survival : MonoBehaviour
             {
                 try
                 {
-                    Debug.Log(allObjects[i].name);
                     data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
                     data[length, 1] = allObjects[i].GetComponent<TileClass>().GetHealth();
                     data[length, 2] = (int)allObjects[i].position.x;

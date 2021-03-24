@@ -1292,12 +1292,12 @@ public class Survival : MonoBehaviour
     public void AutoSave()
     {
         if (!firstAuto) {
-            if (Save()) UI.DisplayAutosave();
+            UI.DisplayAutosave();
         } else firstAuto = false;
     }
 
     // Sends all data to the save script
-    public bool Save()
+    public void Save()
     {
         if (!Spawner.bossSpawned)
         {
@@ -1308,15 +1308,11 @@ public class Survival : MonoBehaviour
             UI.SaveButton.buttonText = "SAVED";
             UI.SaveButton.GetComponent<CanvasGroup>().interactable = false;
             UI.SaveButton.UpdateUI();
-
-            return true;
         }
         else
         {
             UI.SaveButton.buttonText = "DISABLED";
             UI.SaveButton.UpdateUI();
-
-            return false;
         }
     }
 

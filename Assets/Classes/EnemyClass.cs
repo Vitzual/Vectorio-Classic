@@ -30,13 +30,16 @@ public abstract class EnemyClass : MonoBehaviour
 
     // Enemy vars
     public Transform PreferredTarget = null;
-    protected GameObject target;
+    protected Transform target;
     protected int attackTimeout;
+
+    private EnemyLocater scanner;
 
     // Start method
     protected void Start()
     {
         GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, this, moveSpeed, damage, rayLength);
+        scanner = GameObject.Find("Enemy Scanner").GetComponent<EnemyLocater>();
     }
 
     // Keeps an object oriented to it's target at all times
@@ -48,7 +51,7 @@ public abstract class EnemyClass : MonoBehaviour
         {
             target = FindNearestDefence();
         }
-        if (target != null)
+        else
         {
             // Get target position relative to this entity
             Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
@@ -210,38 +213,9 @@ public abstract class EnemyClass : MonoBehaviour
         is_poisoned = false;
     }
 
-    protected GameObject FindNearestDefence()
+    protected Transform FindNearestDefence()
     {
-        var colliders = Physics2D.OverlapCircleAll(
-            this.gameObject.transform.position, 
-            2000, 
-            1 << LayerMask.NameToLayer("Building"));
-        GameObject result = null;
-        float closest = float.PositiveInfinity;
-
-        bool isTarget = false;
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (PreferredTarget != null && isTarget && collider.name != PreferredTarget.name)
-                continue;
-
-            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
-
-            if (PreferredTarget != null && !isTarget && collider.name == PreferredTarget.name)
-            {
-                result = collider.gameObject;
-                closest = distance;
-                isTarget = true;
-                continue;
-            }
-
-            if (distance < closest) {
-                result = collider.gameObject;
-                closest = distance;
-            }
-        }
-        return result;
+        return scanner.requestTarget(transform.position, PreferredTarget);
     }
 
     public int GetID() { return ID; }

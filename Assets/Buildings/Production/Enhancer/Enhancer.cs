@@ -52,6 +52,14 @@ public class Enhancer : TileClass
             {
                 colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
             }
+            else if (colliders[i].name.Contains("Essence Drill"))
+            {
+                colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
+            }
+            else if (colliders[i].name.Contains("Iridium Mine"))
+            {
+                colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
+            }
         }
 
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);

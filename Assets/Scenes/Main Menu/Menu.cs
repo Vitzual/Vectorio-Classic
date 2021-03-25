@@ -24,6 +24,21 @@ public class Menu : MonoBehaviour
         settings.LoadSettings();
     }
 
+    public void PlayAudio(Transform button)
+    {
+        Debug.Log("Playing Audio " + settings.GetSound());
+        AudioSource sfx = button.GetComponent<AudioSource>();
+        float volume = settings.GetSound();
+        if (volume == 0) sfx.volume = 0;
+        else
+        {
+            volume -= 0.4f;
+            if (volume < 0.2f) sfx.volume = 0.2f;
+            else sfx.volume = volume;
+        }
+        sfx.Play();
+    }
+
     public void Update()
     {
         if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))

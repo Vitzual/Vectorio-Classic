@@ -13059,12 +13059,12 @@ PrefabInstance:
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
       propertyPath: sliderEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
       propertyPath: sliderEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
@@ -13094,7 +13094,7 @@ PrefabInstance:
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
       propertyPath: sliderEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetMusic
+      value: SetSound
       objectReference: {fileID: 0}
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
@@ -13104,7 +13104,7 @@ PrefabInstance:
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
       propertyPath: sliderEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 314160229033003886, guid: 96c4df673b42c474499c766f1755e112,
         type: 3}
@@ -31277,6 +31277,9 @@ MonoBehaviour:
   glowing: {fileID: 6820254364344622186}
   ui: {fileID: 0}
   glowMode: 2
+  cursorTexture: {fileID: 0}
+  cursorMode: 0
+  hotSpot: {x: 0, y: 0}
 --- !u!224 &1964463266 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9124031967910417163, guid: 96c4df673b42c474499c766f1755e112,
@@ -34200,7 +34203,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Early Access v0.1.3
+  m_text: 'Early Access v0.1.4
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -37007,12 +37012,12 @@ MonoBehaviour:
   hoverEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8364880450686116894}
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 7436254289897810051}
+        m_MethodName: PlayAudio
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 7494899064870063941}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

@@ -7,7 +7,7 @@ public class ChillerBullet : BulletClass
     public void Start()
     {
         HitEffect = Effect;
-        StartCoroutine(SetLifetime(.5f));
+        StartCoroutine(SetLifetime(.8f));
     }
 
     public override void collide()

@@ -263,14 +263,8 @@ public class Survival : MonoBehaviour
             // Attempt to place saved buildings
             float soundHolder = manager.GetComponent<Settings>().GetSound();
             manager.GetComponent<Settings>().SetSound(0);
-            try
-            {
+
                 PlaceSavedBuildings(data.Locations);
-            }
-            catch
-            {
-                Debug.Log("Save file contains obsolete defense data!");
-            }
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -980,7 +974,7 @@ public class Survival : MonoBehaviour
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.GetComponent<TileClass>().SetHealth(a[i, 1]);
             obj.name = building.name;
-            if (building.name != "Energizer") obj.GetComponent<AnimateThenStop>().animEnabled = false;
+            try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
             if (building.name == "Collector") StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
@@ -1292,6 +1286,7 @@ public class Survival : MonoBehaviour
     // Loads the menu scene
     public void Quit()
     {
+        Destroy(difficulties.gameObject);
         SceneManager.LoadScene("Menu");
     }
 

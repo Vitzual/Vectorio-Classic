@@ -8,6 +8,10 @@ public abstract class TurretClass : TileClass
     private EnemyBulletHandler enemyHandler;
     private bool isEnemy = false;
 
+    private LayerMask EnemyLayer;
+
+    private bool scanThisFrame;
+
     // Weapon variables
     public int range;
     public float rotationSpeed;
@@ -49,13 +53,20 @@ public abstract class TurretClass : TileClass
     // Let's see if this shit works amiright my dude
     private void Start()
     {
-        if (animationEnabled) animHolder = animTracker;
+        scanThisFrame = Random.Range(0, 2) > 0;
+
         if (transform.name.Contains("Enemy"))
         {
+            EnemyLayer = 1 << LayerMask.NameToLayer("Building");
             enemyHandler = GameObject.Find("Enemy Bullet Handler").GetComponent<EnemyBulletHandler>();
             isEnemy = true;
         }
-        else bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+        else
+        {
+            EnemyLayer = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense");
+            bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+        }
+        if (animationEnabled) animHolder = animTracker;
         cameraScript = GameObject.Find("Camera").GetComponent<CameraScroll>();
     }
 
@@ -93,13 +104,11 @@ public abstract class TurretClass : TileClass
 
     protected GameObject FindNearestEnemy()
     {
-        var layermask1 = 1 << LayerMask.NameToLayer("Enemy");
-        var layermask2 = 1 << LayerMask.NameToLayer("Enemy Defense");
-        var finalmask = layermask1 | layermask2; 
+        scanThisFrame = false;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position, 
-            range + Research.bonus_range, finalmask);
+            range + Research.bonus_range, EnemyLayer);
 
         GameObject result = null;
         float closest = float.PositiveInfinity;
@@ -117,10 +126,12 @@ public abstract class TurretClass : TileClass
 
     protected GameObject FindNearestPlayer()
     {
+        scanThisFrame = false;
+
         var colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position,
             range + Research.bonus_range,
-            1 << LayerMask.NameToLayer("Building"));
+            EnemyLayer);
         GameObject result = null;
         float closest = float.PositiveInfinity;
 
@@ -138,26 +149,34 @@ public abstract class TurretClass : TileClass
 
     protected void RotateTowardsPlayer()
     {
-        if (!hasTarget)
-            target = FindNearestPlayer();
-        if (target != null)
+        if (scanThisFrame || target != null)
         {
-            // Temporary fix to the enemy turret rotation logic
-            // Uses targetting logic from RotationHandler() but just applies rotation towards target 
-            Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-            Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
-            float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
-            if (distance.x > 0) targetAngle += 180;
-            Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+            if (!hasTarget)
+                target = FindNearestPlayer();
+            if (target != null)
+            {
+                // Temporary fix to the enemy turret rotation logic
+                // Uses targetting logic from RotationHandler() but just applies rotation towards target 
+                Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+                Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
+                float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
+                if (distance.x > 0) targetAngle += 180;
+                Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+            }
         }
+        else scanThisFrame = true;
     }
 
     protected void RotateTowardNearestEnemy() 
     {
-        if (!hasTarget)
-            target = FindNearestEnemy();
-        if (target != null)
-            RotationHandler();
+        if (scanThisFrame || target != null)
+        {
+            if (!hasTarget)
+                target = FindNearestEnemy();
+            if (target != null)
+                RotationHandler();
+        }
+        else scanThisFrame = true;
     }
 
     protected void RotationHandler()

@@ -31,7 +31,8 @@ public class Difficulties : MonoBehaviour
 
     public void Start()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        if (SceneManager.GetActiveScene().name == "Menu")
+            DontDestroyOnLoad(transform.gameObject);
     }
 
     public int[] GetGold()

@@ -5,7 +5,7 @@ public class RocketLauncherAI : TurretClass
     // Targetting system
     void Update()
     {
-        target = FindNearestEnemy();
+        //target = FindNearestEnemy();
 
         if (target != null)
         {            

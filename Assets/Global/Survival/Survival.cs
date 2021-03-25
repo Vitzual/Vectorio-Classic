@@ -447,7 +447,12 @@ public class Survival : MonoBehaviour
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
                 TileClass ObjectComponent = SelectedObj.GetComponent<TileClass>();
-                if (ObjectComponent.GetCost() <= gold && PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower && Spawner.htrack + ObjectComponent.GetHeat() < Spawner.maxHeat)
+
+                bool validHeat = false;
+                if (ObjectComponent.GetHeat() <= 0) validHeat = true;
+                else if (Spawner.htrack < Spawner.maxHeat) validHeat = true;
+
+                if (ObjectComponent.GetCost() <= gold && PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower && validHeat)
                 {
                     // Remove gold from player once confirmed
                     RemoveGold(ObjectComponent.GetCost());

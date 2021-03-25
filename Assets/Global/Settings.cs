@@ -10,6 +10,21 @@ public class Settings : MonoBehaviour
     public Interface ui;
     public int glowMode = 2;
 
+    // Cursor vars
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
+
+    void OnMouseEnter()
+    {
+        Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+    }
+
+    void OnMouseExit()
+    {
+        Cursor.SetCursor(null, Vector2.zero, cursorMode);
+    }
+
     public void SaveSettings()
     {
         // Save user settings

@@ -98,7 +98,14 @@ public class Interface : MonoBehaviour
         BigWaveIncoming.UpdateUI();
         BigWaveIncoming.OpenNotification();
         AudioSource sfx = BigWaveIncoming.GetComponent<AudioSource>();
-        sfx.volume = GameObject.Find("Manager").GetComponent<Settings>().GetSound();
+        float volume = GameObject.Find("Manager").GetComponent<Settings>().GetSound();
+        if (volume == 0) sfx.volume = 0;
+        else
+        {
+            volume -= 0.4f;
+            if (volume < 0.2f) sfx.volume = 0.2f;
+            else sfx.volume = volume;
+        }
         sfx.Play();
     }
 

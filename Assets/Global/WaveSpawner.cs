@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using TMPro;
+using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -14,13 +15,26 @@ public class WaveSpawner : MonoBehaviour
     public int SpawnRegion = 1000;
     public int htrack = 0;
     public int maxHeat = 10000;
-    public int totalSpawned = 0;
-    public bool groupSpawned = false;
     public GameObject[] borders;
     public bool loadingSave = true;
     public bool bossSpawned = false;
     public bool firstDisplay = true;
     public int bossesDefeated = 0;
+
+    // Big attack thing
+    public int attackEvery = 120;
+    public int attackTracker = 110;
+
+    [System.Serializable]
+    public class Attacks
+    {
+        public string name;
+        public Transform groupObject;
+        public int minHeat;
+        public int maxHeat;
+        public int setTracker;
+    }
+    public Attacks[] attacks;
 
     // UI Elements
     public GameObject bossWarning;
@@ -46,8 +60,6 @@ public class WaveSpawner : MonoBehaviour
         public int minHeat;
         public int maxHeat;
         public int procChance;
-        public int groupSpawnEvery;
-        public int groupSpawnTracker;
     }
 
     public Enemies[] enemy;
@@ -60,11 +72,25 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemies()
     {
+        // If boss active, don't spawn anything
         if (bossSpawned) return;
-        groupSpawned = false;
+
+        // Check if it's time for a group spawn
+        bool groupSpawn = false;
+        if (htrack >= 1000 && !bossWarning.activeInHierarchy) 
+        {
+            if (attackTracker >= attackEvery)
+            {
+                groupSpawn = true;
+                attackTracker = 0;
+            }
+            else attackTracker++;
+        }
+
+        // Iterate through and spawn all enemies
         for (int a=0; a<enemy.Length; a++)
         {
-            if ((htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat))
+            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat)
             {
                 int chance = ((htrack - enemy[a].minHeat) / 1000) + 1;
                 if (chance >= 10) chance = 10;
@@ -75,11 +101,58 @@ public class WaveSpawner : MonoBehaviour
                 }
             }
         }
+
+        // Large spawns
+        if (groupSpawn)
+        {
+            Vector2 spawnPos;
+            float rotation;
+            string spawnInfo;
+            switch(Random.Range(1, 5))
+            {
+                case 1:
+                    spawnPos = new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
+                    rotation = 90f;
+                    spawnInfo = "A large attack is coming from the West!";
+                    break;
+                case 2:
+                    spawnPos = new Vector2(-SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
+                    spawnInfo = "A large attack is coming from the East!";
+                    rotation = 270f;
+                    break;
+                case 3:
+                    spawnPos = new Vector2(Random.Range(-SpawnRegion, SpawnRegion), SpawnRegion);
+                    spawnInfo = "A large attack is coming from the North!";
+                    rotation = 0f;
+                    break;
+                case 4:
+                    spawnPos = new Vector2(Random.Range(-SpawnRegion, SpawnRegion), -SpawnRegion);
+                    spawnInfo = "A large attack is coming from the South!";
+                    rotation = 180f;
+                    break;
+                default:
+                    spawnPos = new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
+                    spawnInfo = "A large attack is coming from the West!";
+                    rotation = 90f;
+                    break;
+            }
+
+            // Iterate through and spawn all enemies
+            for (int a = 0; a < attacks.Length; a++)
+            {
+                if (htrack >= attacks[a].minHeat && htrack <= attacks[a].maxHeat)
+                {
+                    Instantiate(attacks[a].groupObject, spawnPos, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                    attackEvery = attacks[a].setTracker;
+                    survival.UI.DisplayGroupComing(spawnInfo);
+                    return;
+                }
+            }
+        }
     }
 
     void SpawnEnemy(int index)
     {
-        totalSpawned += 1;
         Transform holder;
         switch(Random.Range(0, 4))
         {
@@ -105,25 +178,6 @@ public class WaveSpawner : MonoBehaviour
         holderScript = holder.GetComponent<EnemyClass>();
         holderScript.SetHealth((int)(holderScript.GetHealth() * difficulties.GetEnemyHP()));
         holderScript.SetDamage((int)(holderScript.GetDamage() * difficulties.GetEnemyDMG()));
-
-        // If group spawning is enabled, check if it's time to spawn a group
-        if (enemy[index].groupSpawnEvery != 0)
-        {
-            if (enemy[index].groupSpawnEvery == 1)
-            {
-                if (!groupSpawned)
-                {
-                    groupSpawned = true;
-                    enemy[index].groupSpawnEvery = enemy[index].groupSpawnTracker;
-                    Transform groupHolder;
-                    for (int i = 0; i < 20; i++)
-                    {
-                        groupHolder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-15, 15) + holder.transform.position.x, Random.Range(-15, 15) + holder.transform.position.y), Quaternion.Euler(new Vector3(0, 0, 0)));
-                        groupHolder.name = enemy[index].enemyObject.name;
-                    }
-                }
-            } else enemy[index].groupSpawnEvery--;
-        }
     }
 
     public void increaseHeat(int a)

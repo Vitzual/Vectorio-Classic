@@ -53,6 +53,7 @@ public class Interface : MonoBehaviour
     public ModalWindowManager EnergizerUnlockedWindow;
     public ModalWindowManager EndOfEarlyAccessWindow;
     public NotificationManager AutosaveComplete;
+    public NotificationManager BigWaveIncoming;
     public ProgressBar PowerUsageBar;
     public ProgressBar[] UpgradeProgressBars;
     public TextMeshProUGUI UpgradeProgressName;
@@ -89,6 +90,16 @@ public class Interface : MonoBehaviour
     public void DisplayAutosave()
     {
         AutosaveComplete.OpenNotification();
+    }
+
+    public void DisplayGroupComing(string a)
+    {
+        BigWaveIncoming.description = a;
+        BigWaveIncoming.UpdateUI();
+        BigWaveIncoming.OpenNotification();
+        AudioSource sfx = BigWaveIncoming.GetComponent<AudioSource>();
+        sfx.volume = GameObject.Find("Manager").GetComponent<Settings>().GetSound();
+        sfx.Play();
     }
 
     public void EnableWarning()

@@ -113,11 +113,11 @@ public class WaveSpawner : MonoBehaviour
                 case 1:
                     spawnPos = new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
                     rotation = 90f;
-                    spawnInfo = "A large attack is coming from the West!";
+                    spawnInfo = "A large attack is coming from the East!";
                     break;
                 case 2:
                     spawnPos = new Vector2(-SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
-                    spawnInfo = "A large attack is coming from the East!";
+                    spawnInfo = "A large attack is coming from the West!";
                     rotation = 270f;
                     break;
                 case 3:
@@ -132,7 +132,7 @@ public class WaveSpawner : MonoBehaviour
                     break;
                 default:
                     spawnPos = new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion));
-                    spawnInfo = "A large attack is coming from the West!";
+                    spawnInfo = "A large attack is coming from the East!";
                     rotation = 90f;
                     break;
             }

@@ -113,7 +113,8 @@ public class Settings : MonoBehaviour
 
     public void SetResolution(int a)
     {
-        if (resolution.index != a-1) resolution.index = a-1;
+        resolution.index = a-1;
+        resolution.UpdateUI();
         if (a == 1) Screen.SetResolution(1280, 720, Screen.fullScreen);
         else if (a == 2) Screen.SetResolution(1280, 800, Screen.fullScreen);
         else if (a == 3) Screen.SetResolution(1366, 768, Screen.fullScreen);

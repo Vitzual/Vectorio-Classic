@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using MK.Glow.Legacy;
+using Michsky.UI.ModernUIPack;
 
 public class Settings : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class Settings : MonoBehaviour
     public MKGlowLite glowing;
     public Interface ui;
     public int glowMode = 2;
+
+    // UI Elements (get set on start)
+    public HorizontalSelector resolution;
+    public HorizontalSelector shaders;
+    public HorizontalSelector screenmode;
+    public SliderManager soundSlider;
+    public SliderManager musicSlider;
 
     // Cursor vars
     public Texture2D cursorTexture;
@@ -41,7 +49,7 @@ public class Settings : MonoBehaviour
             SetSound(1f);
             SetScreenmode(true);
             SetShaderMode(3);
-            SetResolution(8);
+            SetResolution(7);
             return;
         }
 
@@ -49,10 +57,27 @@ public class Settings : MonoBehaviour
         catch { soundVolume = 1f; }
 
         SetMusic(settings.volume);
+        SetSound(settings.sound);
         SetScreenmode(settings.fullscreen);
         SetShaderMode(settings.glowMode);
 
-        Screen.SetResolution(settings.width, settings.height, Screen.fullScreen);
+        musicSlider.mainSlider.value = settings.volume;
+        soundSlider.mainSlider.value = settings.sound;
+        shaders.index = settings.glowMode - 1;
+
+        if (settings.fullscreen) screenmode.index = 0;
+        else screenmode.index = 1;
+
+        if (settings.width == 1280 && settings.height == 720) SetResolution(1);
+        else if (settings.width == 1280 && settings.height == 800) SetResolution(2);
+        else if (settings.width == 1366 && settings.height == 768) SetResolution(3);
+        else if (settings.width == 1440 && settings.height == 900) SetResolution(4);
+        else if (settings.width == 1600 && settings.height == 900) SetResolution(5);
+        else if (settings.width == 1680 && settings.height == 1050) SetResolution(6);
+        else if (settings.width == 1920 && settings.height == 1080) SetResolution(7);
+        else if (settings.width == 2560 && settings.height == 1440) SetResolution(8);
+        else SetResolution(7);
+
     }
 
     public void EnableControls()
@@ -88,6 +113,7 @@ public class Settings : MonoBehaviour
 
     public void SetResolution(int a)
     {
+        if (resolution.index != a-1) resolution.index = a-1;
         if (a == 1) Screen.SetResolution(1280, 720, Screen.fullScreen);
         else if (a == 2) Screen.SetResolution(1280, 800, Screen.fullScreen);
         else if (a == 3) Screen.SetResolution(1366, 768, Screen.fullScreen);

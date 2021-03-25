@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour
 
     public void PlayAudio(Transform button)
     {
-        Debug.Log("Playing Audio " + settings.GetSound());
+        Debug.Log(button.name);
         AudioSource sfx = button.GetComponent<AudioSource>();
         float volume = settings.GetSound();
         if (volume == 0) sfx.volume = 0;

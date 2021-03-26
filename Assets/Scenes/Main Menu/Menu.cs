@@ -7,19 +7,22 @@ using TMPro;
 
 public class Menu : MonoBehaviour
 {
+    public static int MAX_SAVES = 10;
+
     public GameObject MainMenu;
     public GameObject SaveButtons;
     public GameObject MenuButtons;
     public GameObject NewGame;
+    public GameObject NewSaveGame;
+    public ModalWindowManager ConfirmDelete;
     public Settings settings;
     public bool SaveSelected = false;
     public bool NewSelected = false;
     public bool SettingsOpen = false;
     public int savesOnRecord = 0;
+    public int lookingAtSave = -1;
 
     public Transform saveList;
-    public Transform saveButton;
-    public Transform newSaveButton;
 
     public void Start()
     {
@@ -27,17 +30,19 @@ public class Menu : MonoBehaviour
         Application.targetFrameRate = 300;
 
         settings.LoadSettings();
-        
-        Transform holder;
+        UpdateSaves();
+    }
 
-        for (int i = 1; i <= 50; i++)
+    public void UpdateSaves()
+    {
+        Transform holder;
+        bool availableSave = false;
+
+        for (int i = 1; i <= MAX_SAVES; i++)
         {
             if (SaveSystem.CheckForSave(i))
             {
-                Debug.Log("Attempting to place save");
-
-                holder = Instantiate(saveButton);
-                holder.parent = saveList;
+                holder = saveList.Find("Save " + i).GetComponent<Transform>();
 
                 string[] strs = SaveSystem.GetSaveStrings(i);
                 holder.GetComponent<ButtonManagerBasic>().buttonText = strs[0];
@@ -45,12 +50,30 @@ public class Menu : MonoBehaviour
                 holder.Find("Heat").GetComponent<TextMeshProUGUI>().text = strs[2];
                 holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = strs[3];
                 holder.GetComponent<ButtonManagerBasic>().UpdateUI();
+                holder.gameObject.SetActive(true);
             }
-            else Debug.Log("Couldn't find a save");
+            else availableSave = true;
         }
 
-        holder = Instantiate(newSaveButton);
-        holder.parent = saveList;
+        if (!availableSave) NewSaveGame.SetActive(false);
+    }
+
+    public void OpenDeleteSaveMenu(int a)
+    {
+        lookingAtSave = a;
+        ConfirmDelete.OpenWindow();
+    }
+
+    public void DeleteSave()
+    {
+        SaveSystem.DeleteGame(lookingAtSave);
+        ConfirmDelete.CloseWindow();
+    }
+
+    public void CancelDeleteSave()
+    {
+        lookingAtSave = -1;
+        ConfirmDelete.CloseWindow();
     }
 
     public void PlayAudio(Transform button)
@@ -137,42 +160,23 @@ public class Menu : MonoBehaviour
         SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         SaveSelected = true;
-
-        // See what saves are on record
-        for (int i=1; i<6; i++)
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            string SavePath = Application.persistentDataPath + "/save_" + i + ".vectorio";
-
-            if (File.Exists(SavePath))
-            {
-                SaveButtons.transform.Find("Save " + i).GetComponent<ButtonManager>().buttonText = "Save " + i;
-                SaveButtons.transform.Find("Save " + i).GetComponent<ButtonManager>().UpdateUI();
-            }
-        }
-    }
-
-    public void ResetButton(int a)
-    {
-        string SavePath = Application.persistentDataPath + "/save_" + a + ".vectorio";
-        BinaryFormatter formatter = new BinaryFormatter();
-
-        if (File.Exists(SavePath))
-        {
-            File.Delete(SavePath);
-
-        }
+        UpdateSaves();
     }
 
     public void NewSave()
     {
-
+        for (int i = 1; i <= MAX_SAVES; i++)
+            if (!SaveSystem.CheckForSave(i))
+            {
+                SelectSave(i);
+                return;
+            }
+        Debug.Log("No available save slots");
     }
 
 
     public void SelectSave(int a)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
         string SavePath = Application.persistentDataPath + "/save_" + a + ".vectorio";
 
         if (File.Exists(SavePath))

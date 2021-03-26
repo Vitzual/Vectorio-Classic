@@ -9,7 +9,6 @@ public static class SaveSystem
 
     public static bool CheckForSave(int a)
     {
-        Debug.Log("Checking for save at " + Application.persistentDataPath + "/save_" + a + ".vectorio");
         return File.Exists(Application.persistentDataPath + "/save_" + a+".vectorio");
     }
 
@@ -24,21 +23,31 @@ public static class SaveSystem
         
         // Return string data
         string[] saveInfo = new string[4];
-        try
-        {
+        if(data.name != null) 
+        { 
             saveInfo[0] = data.name;
             saveInfo[1] = data.mode;
             saveInfo[2] = data.heatt.ToString();
             saveInfo[3] = data.time.ToString();
         } 
-        catch
+        else
         {
             saveInfo[0] = "SAVE " + a;
             saveInfo[1] = "CUSTOM";
-            saveInfo[2] = "UNKNOWN (OLD SAVE)";
+            saveInfo[2] = "???";
             saveInfo[3] = "0:00";
         }
+
+        Debug.Log(saveInfo[0] + " " + saveInfo[1]);
         return saveInfo;
+    }
+
+    public static void DeleteGame(int a)
+    {
+        if (File.Exists(Application.persistentDataPath + "/save_" + a + ".vectorio"))
+        {
+            File.Delete(Application.persistentDataPath + "/save_" + a + ".vectorio");
+        }
     }
 
     public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, Difficulties data_5, string name = "UNNAMED SAVE", string mode = "CUSTOM", int time = 0, int heatt = 0)

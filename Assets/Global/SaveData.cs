@@ -30,8 +30,12 @@ public class SaveData
     public int[] essenceSpawn;
     public int[] iridiumSpawn;
     public int enemyBases;
+    public string name;
+    public string mode;
+    public int time;
+    public int heatt;
 
-    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty) 
+    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty, string name = "UNNAMED SAVE", string mode = "CUSTOM", int time = 0, int heatt = 0) 
     {
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
@@ -56,5 +60,9 @@ public class SaveData
         essenceSpawn = difficulty.GetEssence();
         iridiumSpawn = difficulty.GetIridium();
         enemyBases = difficulty.GetBases();
-}
+        this.name = name;
+        this.mode = mode;
+        this.time = time;
+        this.heatt = heatt;
+    }
 }

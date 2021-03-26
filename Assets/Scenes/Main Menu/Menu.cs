@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using Michsky.UI.ModernUIPack;
+using TMPro;
 
 public class Menu : MonoBehaviour
 {
@@ -15,6 +15,11 @@ public class Menu : MonoBehaviour
     public bool SaveSelected = false;
     public bool NewSelected = false;
     public bool SettingsOpen = false;
+    public int savesOnRecord = 0;
+
+    public Transform saveList;
+    public Transform saveButton;
+    public Transform newSaveButton;
 
     public void Start()
     {
@@ -22,6 +27,30 @@ public class Menu : MonoBehaviour
         Application.targetFrameRate = 300;
 
         settings.LoadSettings();
+        
+        Transform holder;
+
+        for (int i = 1; i <= 50; i++)
+        {
+            if (SaveSystem.CheckForSave(i))
+            {
+                Debug.Log("Attempting to place save");
+
+                holder = Instantiate(saveButton);
+                holder.parent = saveList;
+
+                string[] strs = SaveSystem.GetSaveStrings(i);
+                holder.GetComponent<ButtonManagerBasic>().buttonText = strs[0];
+                holder.Find("Difficulty").GetComponent<TextMeshProUGUI>().text = strs[1];
+                holder.Find("Heat").GetComponent<TextMeshProUGUI>().text = strs[2];
+                holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = strs[3];
+                holder.GetComponent<ButtonManagerBasic>().UpdateUI();
+            }
+            else Debug.Log("Couldn't find a save");
+        }
+
+        holder = Instantiate(newSaveButton);
+        holder.parent = saveList;
     }
 
     public void PlayAudio(Transform button)
@@ -134,6 +163,12 @@ public class Menu : MonoBehaviour
 
         }
     }
+
+    public void NewSave()
+    {
+
+    }
+
 
     public void SelectSave(int a)
     {

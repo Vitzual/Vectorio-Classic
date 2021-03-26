@@ -50,7 +50,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, Difficulties data_5, string name = "UNNAMED SAVE", string mode = "CUSTOM", int time = 0, int heatt = 0)
+    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, Difficulties data_5, int time = 0, int heatt = 0)
     {
         string SavePath = Application.persistentDataPath + "/location.save";
         BinaryFormatter formatter = new BinaryFormatter();
@@ -71,7 +71,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveData data = new SaveData(data_1, data_2, data_3, data_4, data_5, name, mode, time, heatt);
+        SaveData data = new SaveData(data_1, data_2, data_3, data_4, data_5, time, heatt);
 
         formatter.Serialize(stream, data);
         stream.Close();

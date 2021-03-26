@@ -34,6 +34,7 @@ public class Survival : MonoBehaviour
     // Camera zoom object
     public CameraScroll cameraScroll;
 
+    public int Playtime = 0;
     public int AutoSaveInterval = 300;
     public bool firstAuto = true;
 
@@ -215,12 +216,26 @@ public class Survival : MonoBehaviour
             difficulties.SetEssence(data.essenceSpawn);
             difficulties.SetIridium(data.iridiumSpawn);
             difficulties.SetBases(data.enemyBases);
+
+            try
+            {
+                difficulties.SetSaveName(data.name);
+                difficulties.SetModeName(data.mode);
+            }
+            catch
+            {
+                difficulties.SetSaveName("UNNAMED SAVE");
+                difficulties.SetSaveName("CUSTOM");
+            }
         }
         catch
         {
             Debug.Log("Difficulty settings could not be loaded!");
             difficulties.SetDifficulty(holder);
         }
+
+        try { Playtime = data.time; }
+        catch { Debug.Log("Save file does not contain time play tracking"); }
 
         // Get default stats
         gold = difficulties.GetStartingGold();
@@ -301,6 +316,7 @@ public class Survival : MonoBehaviour
 
         // Start auto saving
         InvokeRepeating("AutoSave", 0f, AutoSaveInterval);
+        InvokeRepeating("IncreaseTime", 0f, 1f);
     }
 
     // Gets called once every frame
@@ -715,6 +731,11 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = 1f;
         }
+    }
+
+    public void IncreaseTime()
+    {
+        Playtime++;
     }
 
     // Updates the gold storage
@@ -1309,7 +1330,7 @@ public class Survival : MonoBehaviour
         if (!Spawner.bossSpawned)
         {
             Debug.Log("Attempting to save data");
-            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties);
+            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties, Playtime, Spawner.htrack);
             Debug.Log("Data was saved successfully");
 
             UI.SaveButton.buttonText = "SAVED";

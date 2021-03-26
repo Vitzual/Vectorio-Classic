@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class Difficulties : MonoBehaviour
 {
     public int difficultyID;
+    public string savename = "UNNAMED SAVE";
+    public string modename = "CUSTOM";
 
     [System.Serializable]
     public class GameDifficulties
@@ -33,6 +35,16 @@ public class Difficulties : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Menu")
             DontDestroyOnLoad(transform.gameObject);
+    }
+
+    public void SetSaveName(string a)
+    {
+        savename = a;
+    }
+
+    public void SetModeName(string a)
+    {
+        modename = a;
     }
 
     public int[] GetGold()

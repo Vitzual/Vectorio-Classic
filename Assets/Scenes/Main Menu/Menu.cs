@@ -12,13 +12,18 @@ public class Menu : MonoBehaviour
     public GameObject MainMenu;
     public GameObject SaveButtons;
     public GameObject MenuButtons;
+    public GameObject GameButtons;
     public GameObject NewGame;
     public GameObject NewSaveGame;
+    public GameObject NameNewSave;
+    public TextMeshProUGUI SaveName;
+    public TMP_InputField SaveBox;
     public ModalWindowManager ConfirmDelete;
     public Settings settings;
     public bool SaveSelected = false;
     public bool NewSelected = false;
     public bool SettingsOpen = false;
+    public bool GameOpen = false;
     public int savesOnRecord = 0;
     public int lookingAtSave = -1;
 
@@ -26,6 +31,8 @@ public class Menu : MonoBehaviour
 
     public void Start()
     {
+        SaveBox.characterLimit = 13;
+
         Time.timeScale = 1f;
         Application.targetFrameRate = 300;
 
@@ -52,7 +59,11 @@ public class Menu : MonoBehaviour
                 holder.GetComponent<ButtonManagerBasic>().UpdateUI();
                 holder.gameObject.SetActive(true);
             }
-            else availableSave = true;
+            else
+            {
+                saveList.Find("Save " + i).GetComponent<Transform>().gameObject.SetActive(false);
+                availableSave = true;
+            }
         }
 
         if (!availableSave) NewSaveGame.SetActive(false);
@@ -68,6 +79,7 @@ public class Menu : MonoBehaviour
     {
         SaveSystem.DeleteGame(lookingAtSave);
         ConfirmDelete.CloseWindow();
+        UpdateSaves();
     }
 
     public void CancelDeleteSave()
@@ -93,17 +105,34 @@ public class Menu : MonoBehaviour
 
     public void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
+        if (Input.GetKeyDown(KeyCode.Escape) && NameNewSave.activeInHierarchy)
         {
-            MenuButtons.GetComponent<CanvasGroup>().alpha = 1f;
-            MenuButtons.GetComponent<CanvasGroup>().interactable = true;
-            MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            NameNewSave.SetActive(false);
+        }
+        else if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
+        {
+            GameButtons.GetComponent<CanvasGroup>().alpha = 1f;
+            GameButtons.GetComponent<CanvasGroup>().interactable = true;
+            GameButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
             SaveButtons.GetComponent<CanvasGroup>().alpha = 0;
             SaveButtons.GetComponent<CanvasGroup>().interactable = false;
             SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
             SaveSelected = false;
+            GameOpen = true;
+        }
+        else if ((Input.GetKeyDown(KeyCode.Escape) && GameOpen))
+        {
+            MenuButtons.GetComponent<CanvasGroup>().alpha = 1f;
+            MenuButtons.GetComponent<CanvasGroup>().interactable = true;
+            MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+            GameButtons.GetComponent<CanvasGroup>().alpha = 0;
+            GameButtons.GetComponent<CanvasGroup>().interactable = false;
+            GameButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            GameOpen = false;
         }
         else if ((Input.GetKeyDown(KeyCode.Escape) && NewSelected))
         {
@@ -151,16 +180,43 @@ public class Menu : MonoBehaviour
 
     public void PlayButton()
     {
-        MenuButtons.GetComponent<CanvasGroup>().alpha = 0;
-        MenuButtons.GetComponent<CanvasGroup>().interactable = false;
-        MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GameButtons.GetComponent<CanvasGroup>().alpha = 0;
+        GameButtons.GetComponent<CanvasGroup>().interactable = false;
+        GameButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         SaveButtons.GetComponent<CanvasGroup>().alpha = 1f;
         SaveButtons.GetComponent<CanvasGroup>().interactable = true;
         SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
+        GameOpen = false;
         SaveSelected = true;
         UpdateSaves();
+    }
+
+    public void GameButton()
+    {
+        MenuButtons.GetComponent<CanvasGroup>().alpha = 0;
+        MenuButtons.GetComponent<CanvasGroup>().interactable = false;
+        MenuButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        GameButtons.GetComponent<CanvasGroup>().alpha = 1f;
+        GameButtons.GetComponent<CanvasGroup>().interactable = true;
+        GameButtons.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        SaveSelected = false;
+        GameOpen = true;
+    }
+
+    public void SetName()
+    {
+        GameObject.Find("Difficulty").GetComponent<Difficulties>().SetSaveName(SaveName.text);
+        NameNewSave.SetActive(false);
+    }
+
+    public void SelectSaveNumber(int i)
+    {
+        lookingAtSave = i;
+        SelectSave();
     }
 
     public void NewSave()
@@ -168,25 +224,25 @@ public class Menu : MonoBehaviour
         for (int i = 1; i <= MAX_SAVES; i++)
             if (!SaveSystem.CheckForSave(i))
             {
-                SelectSave(i);
+                lookingAtSave = i;
+                NameNewSave.SetActive(true);
                 return;
             }
         Debug.Log("No available save slots");
     }
 
-
-    public void SelectSave(int a)
+    public void SelectSave()
     {
-        string SavePath = Application.persistentDataPath + "/save_" + a + ".vectorio";
+        string SavePath = Application.persistentDataPath + "/save_" + lookingAtSave + ".vectorio";
 
         if (File.Exists(SavePath))
         {
-            SetGameSave(a);
+            SetGameSave(lookingAtSave);
             SceneManager.LoadScene("Survival");
         }
         else
         {
-            SetGameSave(a);
+            SetGameSave(lookingAtSave);
 
             NewGame.GetComponent<CanvasGroup>().alpha = 1f;
             NewGame.GetComponent<CanvasGroup>().interactable = true;
@@ -206,7 +262,15 @@ public class Menu : MonoBehaviour
 
     public void StartNewGame(int a)
     {
-        GameObject.Find("Difficulty").GetComponent<Difficulties>().SetDifficulty(a);
+        Difficulties dd = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+
+        if (a == 0) dd.SetModeName("CUSTOM");
+        else if (a == 1) dd.SetModeName("EASY");
+        else if (a == 2) dd.SetModeName("NORMAL");
+        else if (a == 3) dd.SetModeName("HARD");
+        else if (a == 4) dd.SetModeName("NIGHTMARE");
+
+        dd.SetDifficulty(a);
         SceneManager.LoadScene("Survival");
     }
 

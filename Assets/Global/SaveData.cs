@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class SaveData
 {
     //public int[][] Buildings;
@@ -35,7 +31,7 @@ public class SaveData
     public int time;
     public int heatt;
 
-    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty, string name = "UNNAMED SAVE", string mode = "CUSTOM", int time = 0, int heatt = 0) 
+    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty, int time = 0, int heatt = 0) 
     {
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
@@ -60,8 +56,8 @@ public class SaveData
         essenceSpawn = difficulty.GetEssence();
         iridiumSpawn = difficulty.GetIridium();
         enemyBases = difficulty.GetBases();
-        this.name = name;
-        this.mode = mode;
+        name = difficulty.savename;
+        mode = difficulty.modename;
         this.time = time;
         this.heatt = heatt;
     }

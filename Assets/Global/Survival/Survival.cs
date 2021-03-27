@@ -226,6 +226,17 @@ public class Survival : MonoBehaviour
 
             try
             {
+                difficulties.SetGroupSpawns(data.groupSpawnEvery);
+                if (difficulties.GetGroupSpawns() == 0) difficulties.SetGroupSpawns(300);
+            }
+            catch
+            {
+                Debug.Log("File does not contain group spawning");
+                difficulties.SetGroupSpawns(300);
+            }
+
+            try
+            {
                 difficulties.SetSaveName(data.name);
                 difficulties.SetModeName(data.mode);
             }
@@ -254,6 +265,9 @@ public class Survival : MonoBehaviour
             AvailablePower += difficulties.GetStartingPower();
         additionalCost = difficulties.GetAdditionalCost();
         UI.GoldAmount.text = gold.ToString();
+
+        // Set group spawn
+        Spawner.SetSpawnAmount(difficulties.GetGroupSpawns());
 
         // Set power usage
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -1354,7 +1368,7 @@ public class Survival : MonoBehaviour
         if (!Spawner.bossSpawned)
         {
             Debug.Log("Attempting to save data");
-            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties, Playtime, Spawner.htrack);
+            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties, Playtime, Spawner.htrack, difficulties.GetGroupSpawns());
             Debug.Log("Data was saved successfully");
 
             UI.SaveButton.buttonText = "SAVED";

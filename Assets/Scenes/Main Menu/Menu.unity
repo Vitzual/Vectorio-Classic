@@ -4364,7 +4364,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The default game setup. Enemies will start to pose a threat to your base
     if you aren't careful. Power and resources are limited, so planning ahead is
-    essential when moving into the later portions of the game.
+    essential when moving into later portions of the game. Some enemy groups will
+    spawn.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -5179,12 +5180,12 @@ MonoBehaviour:
   hoverEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 264415993}
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 7436254289897810051}
+        m_MethodName: PlayAudio
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 264415992}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9105,11 +9106,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10,000 Starting Gold
+  m_text: '5,000 Starting Storage
 
-    5,000 Starting Power
+    4,000 Starting Power
 
-    Enemy Intensive Map'
+    Enemy Intensive
+    Map'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fa328c1ae3ffb6b4583cf371153b0be6, type: 2}
   m_sharedMaterial: {fileID: 21918420405216288, guid: fa328c1ae3ffb6b4583cf371153b0be6,
@@ -19625,7 +19627,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: A very challenging setup for more experienced players. Very little resources
     and power to work with, and enemies have been slightly buffed. Engineering is
-    recommended for the late game.
+    recommended for the late game. Tons of enemy groups will spawn.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -24934,12 +24936,12 @@ MonoBehaviour:
   hoverEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1474948647}
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 7436254289897810051}
+        m_MethodName: PlayAudio
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1474948646}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -25813,9 +25815,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1532320535}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1532320537
 MonoBehaviour:
@@ -27395,7 +27397,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Recommend for players who are new to the game. Very laid back experience
     where the enemies will never pose a serious threat to your base. Lots of resources
-    and power to play around with.
+    and power to play around with. Not many enemy groups to deal with.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -30261,9 +30263,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10,000 Starting Gold
+  m_text: '8,000 Starting Gold
 
-    5,000 Starting Power
+    4,500 Starting Power
 
     Desolate Map'
   m_isRightToLeft: 0
@@ -33649,12 +33651,12 @@ MonoBehaviour:
   hoverEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1863188436}
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 7436254289897810051}
+        m_MethodName: PlayAudio
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1863188435}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -38664,12 +38666,12 @@ MonoBehaviour:
   hoverEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2110004161}
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 7436254289897810051}
+        m_MethodName: PlayAudio
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2110004160}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -43253,12 +43255,12 @@ PrefabInstance:
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
       propertyPath: difficulties.Array.data[3].startingGold
-      value: 10000
+      value: 8000
       objectReference: {fileID: 0}
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
       propertyPath: difficulties.Array.data[4].startingGold
-      value: 10000
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
@@ -43273,7 +43275,7 @@ PrefabInstance:
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
       propertyPath: difficulties.Array.data[3].startingPower
-      value: 5000
+      value: 4500
       objectReference: {fileID: 0}
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
@@ -43283,12 +43285,32 @@ PrefabInstance:
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
       propertyPath: difficulties.Array.data[4].startingPower
-      value: 5000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}
       propertyPath: difficulties.Array.data[4].goldSpawnNoise
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
+        type: 3}
+      propertyPath: difficulties.Array.data[1].groupSpawnEvery
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
+        type: 3}
+      propertyPath: difficulties.Array.data[2].groupSpawnEvery
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
+        type: 3}
+      propertyPath: difficulties.Array.data[3].groupSpawnEvery
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
+        type: 3}
+      propertyPath: difficulties.Array.data[4].groupSpawnEvery
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3679794302005238033, guid: e86f0433badd12c46bed362040d9edf4,
         type: 3}

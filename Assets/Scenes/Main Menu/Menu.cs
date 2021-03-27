@@ -64,7 +64,15 @@ public class Menu : MonoBehaviour
                     int hours = System.TimeSpan.FromSeconds(time).Hours;
                     int minutes = System.TimeSpan.FromSeconds(time).Minutes;
                     int seconds = System.TimeSpan.FromSeconds(time).Seconds;
-                    holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = hours + ":" + minutes + ":" + seconds;
+
+                    string mstring;
+                    string sstring;
+                    if (minutes <= 9) mstring = "0" + minutes;
+                    else mstring = minutes.ToString();
+                    if (seconds <= 9) sstring = "0" + seconds;
+                    else sstring = seconds.ToString();
+ 
+                    holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = hours + ":" + mstring + ":" + sstring;
                 }
                 catch
                 {
@@ -105,7 +113,6 @@ public class Menu : MonoBehaviour
 
     public void PlayAudio(Transform button)
     {
-        Debug.Log(button.name);
         AudioSource sfx = button.GetComponent<AudioSource>();
         float volume = settings.GetSound();
         if (volume == 0) sfx.volume = 0;

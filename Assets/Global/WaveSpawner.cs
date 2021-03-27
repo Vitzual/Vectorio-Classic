@@ -22,8 +22,8 @@ public class WaveSpawner : MonoBehaviour
     public int bossesDefeated = 0;
 
     // Big attack thing
-    public int attackEvery = 120;
-    public int attackTracker = 110;
+    public int attackEvery = 60;
+    public int attackTracker = 50;
 
     [System.Serializable]
     public class Attacks
@@ -32,7 +32,6 @@ public class WaveSpawner : MonoBehaviour
         public Transform groupObject;
         public int minHeat;
         public int maxHeat;
-        public int setTracker;
     }
     public Attacks[] attacks;
 
@@ -68,6 +67,11 @@ public class WaveSpawner : MonoBehaviour
     {
         difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
         InvokeRepeating("SpawnEnemies", 0f, 1f);
+    }
+
+    public void SetSpawnAmount(int a)
+    {
+        attackEvery = a;
     }
 
     private void SpawnEnemies()
@@ -143,7 +147,6 @@ public class WaveSpawner : MonoBehaviour
                 if (htrack >= attacks[a].minHeat && htrack <= attacks[a].maxHeat)
                 {
                     Instantiate(attacks[a].groupObject, spawnPos, Quaternion.Euler(new Vector3(0, 0, rotation)));
-                    attackEvery = attacks[a].setTracker;
                     survival.UI.DisplayGroupComing(spawnInfo);
                     return;
                 }

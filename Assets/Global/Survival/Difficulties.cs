@@ -27,6 +27,7 @@ public class Difficulties : MonoBehaviour
         public float additionalPlacementCost;
         public float additionalEnemyHP;
         public float additionalEnemyDMG;
+        public int groupSpawnEvery;
     }
 
     public GameDifficulties[] difficulties;
@@ -175,4 +176,13 @@ public class Difficulties : MonoBehaviour
         return difficulties[difficultyID].additionalPlacementCost;
     }
 
+    public void SetGroupSpawns(int a)
+    {
+        difficulties[difficultyID].groupSpawnEvery = a;
+    }
+
+    public int GetGroupSpawns()
+    {
+        return difficulties[difficultyID].groupSpawnEvery;
+    }
 }

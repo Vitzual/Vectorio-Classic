@@ -30,8 +30,9 @@ public class SaveData
     public string mode;
     public int time;
     public int heatt;
+    public int groupSpawnEvery;
 
-    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty, int time = 0, int heatt = 0) 
+    public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, Difficulties difficulty, int time = 0, int heatt = 0, int groupSpawnEvery = 300) 
     {
         //Buildings = data.GetSaveData();
         WorldSeed = data.seed;
@@ -60,5 +61,6 @@ public class SaveData
         mode = difficulty.modename;
         this.time = time;
         this.heatt = heatt;
+        this.groupSpawnEvery = groupSpawnEvery;
     }
 }

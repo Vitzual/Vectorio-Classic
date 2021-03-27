@@ -6,8 +6,6 @@ public class Notify : MonoBehaviour
 {
     public bool isFlashing = false;
     public Image bg;
-    public AudioSource sound;
-    public Settings volume;
 
     public void startFlash()
     {
@@ -16,12 +14,11 @@ public class Notify : MonoBehaviour
 
     public IEnumerator flash()
     {
-        sound.volume = volume.GetSound();
-        sound.Play();
         isFlashing = true;
-        bg.color = new Color(1, 0, 0, bg.color.a);
+        float alphaHolder = bg.color.a;
+        bg.color = new Color(1, 0, 0, 0.7f);
         yield return new WaitForSeconds(1);
-        bg.color = new Color(1, 1, 1, bg.color.a);
+        bg.color = new Color(1, 1, 1, alphaHolder);
         isFlashing = false;
     }
 }

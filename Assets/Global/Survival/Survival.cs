@@ -77,6 +77,8 @@ public class Survival : MonoBehaviour
     public int PowerConsumption = 0;
     public int AvailablePower = 0;
 
+    public Notify[] elements;
+
     // Resource UI popups
     public GameObject popup;
 
@@ -249,7 +251,7 @@ public class Survival : MonoBehaviour
             catch
             {
                 difficulties.SetSaveName("OLD SAVE");
-                difficulties.SetSaveName("CUSTOM");
+                difficulties.SetModeName("CUSTOM");
             }
         }
         catch
@@ -259,7 +261,7 @@ public class Survival : MonoBehaviour
         }
 
         try { Playtime = data.time; }
-        catch { Debug.Log("Save file does not contain time play tracking"); }
+        catch { Debug.Log("Save file does not contain time play tracking"); Playtime = 0; }
 
         // Get default stats
         gold = difficulties.GetStartingGold();
@@ -561,6 +563,12 @@ public class Survival : MonoBehaviour
                     // Play placement sound
                     float audioScale = cameraScroll.getZoom() / 1400f;
                     AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
+                }
+                else
+                {
+                    if (!(ObjectComponent.GetCost() <= gold)) elements[0].startFlash();
+                    else if (!(PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower)) elements[1].startFlash();
+                    else if (!validHeat) elements[2].startFlash();
                 }
             }
             else if (rayHit.collider != null)
@@ -1376,7 +1384,7 @@ public class Survival : MonoBehaviour
         if (!Spawner.bossSpawned)
         {
             Debug.Log("Attempting to save data");
-            SaveSystem.SaveGame(this, tech, Spawner.GetComponent<WaveSpawner>(), rsrch, difficulties, Playtime, Spawner.htrack, difficulties.GetGroupSpawns());
+            SaveSystem.SaveGame(this, tech, Spawner, rsrch, difficulties, Playtime, Spawner.htrack, difficulties.GetGroupSpawns());
             Debug.Log("Data was saved successfully");
 
             UI.SaveButton.buttonText = "SAVED";

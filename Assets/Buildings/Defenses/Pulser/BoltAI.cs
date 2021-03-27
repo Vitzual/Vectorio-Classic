@@ -32,7 +32,9 @@ public class BoltAI : TurretClass
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
+        srv.decreasePowerConsumption(power);
+        srv.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

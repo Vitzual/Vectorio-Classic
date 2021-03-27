@@ -33,7 +33,7 @@ public static class SaveSystem
         else
         {
             saveInfo[0] = "SAVE " + a;
-            saveInfo[1] = "CUSTOM";
+            saveInfo[1] = "OLD SAVE";
             saveInfo[2] = "???";
             saveInfo[3] = "0:00";
         }

@@ -95,6 +95,7 @@ public class CollectorAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
+        SRVSC.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

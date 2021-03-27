@@ -10,6 +10,7 @@
 // Import required libraries
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Survival : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class Survival : MonoBehaviour
 
     // Camera zoom object
     public CameraScroll cameraScroll;
+
+    public List<Transform> buildings;
 
     public int Playtime = 0;
     public int AutoSaveInterval = 300;
@@ -114,7 +117,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform GoldStorage;        // ID = 25
     [SerializeField] private Transform EssenceStorage;     // ID = 26
     [SerializeField] private Transform IridiumStorage;     // ID = 27
-    //[SerializeField] private Transform ArtilleryObj;     // ID = 27
+    //[SerializeField] private Transform ArtilleryObj;     // ID = 28
+    
 
     [SerializeField] private Transform EnemyTurretDual;    // ID = 201
     [SerializeField] private Transform EnemyTurretSMG;     // ID = 200
@@ -224,7 +228,7 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                difficulties.SetSaveName("UNNAMED SAVE");
+                difficulties.SetSaveName("OLD SAVE");
                 difficulties.SetSaveName("CUSTOM");
             }
         }
@@ -1211,6 +1215,23 @@ public class Survival : MonoBehaviour
         }
         catch { SelectedObj = holder; }
     }
+
+    // Coming soon to a Vectorio near you
+    public void SelectTurret(int a)
+    {
+
+    }
+
+    public void SelectBuilding(int a)
+    {
+
+    }
+
+    public void SelectSpecial(int a)
+    {
+
+    }
+
 
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)

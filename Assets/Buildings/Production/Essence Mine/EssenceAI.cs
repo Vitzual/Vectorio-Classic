@@ -94,7 +94,8 @@ public class EssenceAI: TileClass
     // Kill defense
     public override void DestroyTile()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        SRVSC.decreasePowerConsumption(power);
+        SRVSC.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

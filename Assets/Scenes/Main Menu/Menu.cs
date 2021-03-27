@@ -55,7 +55,21 @@ public class Menu : MonoBehaviour
                 holder.GetComponent<ButtonManagerBasic>().buttonText = strs[0];
                 holder.Find("Difficulty").GetComponent<TextMeshProUGUI>().text = strs[1];
                 holder.Find("Heat").GetComponent<TextMeshProUGUI>().text = strs[2];
-                holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = strs[3];
+
+                // Calculate and set timer
+                try
+                {
+                    int time = int.Parse(strs[3]);
+                    int hours = System.TimeSpan.FromSeconds(time).Hours;
+                    int minutes = System.TimeSpan.FromSeconds(time).Minutes;
+                    int seconds = System.TimeSpan.FromSeconds(time).Seconds;
+                    holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = hours + ":" + minutes + ":" + seconds;
+                }
+                catch
+                {
+                    holder.Find("Timer").GetComponent<TextMeshProUGUI>().text = "0:00:00";
+                }
+
                 holder.GetComponent<ButtonManagerBasic>().UpdateUI();
                 holder.gameObject.SetActive(true);
             }

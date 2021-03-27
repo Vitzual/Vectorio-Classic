@@ -1,26 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyLocater : MonoBehaviour
 {
-    private int checkTime = 100;
-    private int checkTracker = 0;
-    private Collider2D[] colliders;
-    public LayerMask BuildingLayer;
+    public Survival srv;
+    public bool isMenu = false;
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        if (checkTime == checkTracker)
-            ScanForBuilings();
-        else checkTracker++;
-    }
-
-    public void ScanForBuilings()
-    {
-        colliders = Physics2D.OverlapCircleAll(transform.position, 2000, BuildingLayer);
-        checkTracker = 0;
+        if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
     }
 
     public Transform requestTarget(Vector3 position, Transform PreferredTarget)
@@ -29,30 +17,27 @@ public class EnemyLocater : MonoBehaviour
         float closest = float.PositiveInfinity;
         bool isTarget = false;
 
-        if (colliders == null)
-        {
-            ScanForBuilings();
-        }
+        if (isMenu || srv.buildings == null) return null;
 
-        foreach (Collider2D collider in colliders)
+        foreach (Transform collider in srv.buildings)
         {
             if (collider == null) continue;
 
             if (PreferredTarget != null && isTarget && collider.name != PreferredTarget.name)
                 continue;
 
-            float distance = (collider.transform.position - position).sqrMagnitude;
+            float distance = (collider.position - position).sqrMagnitude;
 
             if (PreferredTarget != null && !isTarget && collider.name == PreferredTarget.name)
             {
-                result = collider.transform;
+                result = collider;
                 closest = distance;
                 isTarget = true;
                 continue;
             }
 
             if (distance < closest) {
-                result = collider.transform;
+                result = collider;
                 closest = distance;
             }
         }

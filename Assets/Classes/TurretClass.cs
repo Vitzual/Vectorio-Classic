@@ -9,7 +9,6 @@ public abstract class TurretClass : TileClass
     private bool isEnemy = false;
 
     private LayerMask EnemyLayer;
-
     private bool scanThisFrame;
 
     // Weapon variables

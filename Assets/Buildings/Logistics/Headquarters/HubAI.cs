@@ -31,5 +31,9 @@ public class HubAI : TileClass
         Instantiate(BigBoom, gameObject.transform.position, gameObject.transform.rotation);
         survival.SetActive(false);
         gameObject.SetActive(false);
+
+        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
+        srv.decreasePowerConsumption(power);
+        srv.buildings.Remove(transform);
     }
 }

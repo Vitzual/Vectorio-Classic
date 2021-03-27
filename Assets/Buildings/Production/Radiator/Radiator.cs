@@ -1,17 +1,7 @@
 ﻿using UnityEngine;
 
-public class Cooler : TileClass
+public class Radiator : TileClass
 {
-    // Internal placement variables
-    public Transform rotator;
-    public float speed;
-
-    // Update is called once per frame
-    void Start()
-    {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
-    }
-
     // Kill defense
     public override void DestroyTile()
     {

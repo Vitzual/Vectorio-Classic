@@ -325,33 +325,40 @@ namespace Michsky.UI.ModernUIPack
 
         public void UpdateUI()
         {
-            label.text = itemList[index].itemTitle;
-
-            if (enableIndicators == true)
+            try
             {
-                foreach (Transform child in indicatorParent)
-                    GameObject.Destroy(child.gameObject);
+                label.text = itemList[index].itemTitle;
 
-                for (int i = 0; i < itemList.Count; ++i)
+                if (enableIndicators == true)
                 {
-                    GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                    go.transform.SetParent(indicatorParent, false);
-                    go.name = itemList[i].itemTitle;
-                    Transform onObj = go.transform.Find("On");
-                    Transform offObj = go.transform.Find("Off");
+                    foreach (Transform child in indicatorParent)
+                        GameObject.Destroy(child.gameObject);
 
-                    if (i == index)
+                    for (int i = 0; i < itemList.Count; ++i)
                     {
-                        onObj.gameObject.SetActive(true);
-                        offObj.gameObject.SetActive(false);
-                    }
+                        GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                        go.transform.SetParent(indicatorParent, false);
+                        go.name = itemList[i].itemTitle;
+                        Transform onObj = go.transform.Find("On");
+                        Transform offObj = go.transform.Find("Off");
 
-                    else
-                    {
-                        onObj.gameObject.SetActive(false);
-                        offObj.gameObject.SetActive(true);
+                        if (i == index)
+                        {
+                            onObj.gameObject.SetActive(true);
+                            offObj.gameObject.SetActive(false);
+                        }
+
+                        else
+                        {
+                            onObj.gameObject.SetActive(false);
+                            offObj.gameObject.SetActive(true);
+                        }
                     }
                 }
+            }
+            catch
+            {
+                Debug.Log("Could not update UI!");
             }
         }
     }

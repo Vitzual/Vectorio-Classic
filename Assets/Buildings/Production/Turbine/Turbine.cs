@@ -2,12 +2,16 @@
 
 public class Turbine : TileClass
 {
-    public Transform rotator;
     public Survival SRV;
     public int amount;
 
-    public void Start()
+    // Internal placement variables
+    public Transform rotator;
+    public float speed;
+
+    private void Start()
     {
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
         SRV.increaseAvailablePower(amount);
     }
@@ -21,7 +25,8 @@ public class Turbine : TileClass
     // Kill defense
     public override void DestroyTile()
     {
-        SRV.decreaseAvailablePower(amount);
+        SRV.decreasePowerConsumption(power);
+        SRV.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);

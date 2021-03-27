@@ -20,10 +20,12 @@ public class Technology : MonoBehaviour
     [System.Serializable]
     public class Unlockables
     {
+        public string name;
         public Transform Unlock;
         public ButtonManagerBasicIcon InventoryButton;
         public int HeatNeeded;
         public bool Unlocked = false;
+        public string type;
     }
     public Unlockables[] UnlockTier;
 

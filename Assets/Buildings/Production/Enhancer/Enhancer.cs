@@ -5,21 +5,20 @@ public class Enhancer : TileClass
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;
-    public Transform rotator;
     public int IncreaseAmount;
     public Collider2D[] colliders;
 
+    // Internal placement variables
+    public Transform rotator;
+    public float speed;
+
     private void Start()
     {
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         if (SceneManager.GetActiveScene().name != "Menu")
             InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        rotator.Rotate(Vector3.forward, 50f * Time.deltaTime);
-    }
 
     // Check for collectors
     private void CheckAdjacentTiles()
@@ -62,7 +61,9 @@ public class Enhancer : TileClass
             }
         }
 
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
+        srv.decreasePowerConsumption(power);
+        srv.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

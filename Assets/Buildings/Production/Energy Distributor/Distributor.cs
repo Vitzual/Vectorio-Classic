@@ -4,13 +4,16 @@ public class Distributor : TileClass
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;
-    public Transform rotator;
     public Collider2D[] colliders;
 
+    // Internal placement variables
+    public Transform rotator;
+    public float speed;
+
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        rotator.Rotate(Vector3.forward, 50f * Time.deltaTime);
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 
     // Kill defense
@@ -32,7 +35,9 @@ public class Distributor : TileClass
                 }
             }
         }
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
+        srv.decreasePowerConsumption(power);
+        srv.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);

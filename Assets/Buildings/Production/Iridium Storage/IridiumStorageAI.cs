@@ -6,14 +6,17 @@ public class IridiumStorageAI: TileClass
     public int amount;
     public float grow;
     public bool growEnd;
-    public Transform rotator;
     public Transform symbol;
     private Survival SRVSC;
 
-    // On start, invoke repeating SendGold() method
-    private void Start()
+    // Internal placement variables
+    public Transform rotator;
+    public float speed;
+
+    // Update is called once per frame
+    void Start()
     {
-        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         SRVSC.iridiumStorage += amount;
         SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
     }
@@ -41,6 +44,7 @@ public class IridiumStorageAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
+        SRVSC.buildings.Remove(transform);
         SRVSC.UpdateGoldStorage(amount);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);

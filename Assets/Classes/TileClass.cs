@@ -33,6 +33,11 @@ public abstract class TileClass : MonoBehaviour
     private void Start()
     {
         difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+        if (!transform.name.Contains("Enemy"))
+        {
+            GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+            Debug.Log(transform.name);
+        }
     }
 
     // Engineer variables

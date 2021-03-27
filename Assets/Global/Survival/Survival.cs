@@ -182,10 +182,16 @@ public class Survival : MonoBehaviour
     protected float distance = 10;
     public Transform[] hotbar = new Transform[9];
 
+    bool isMenu = false;
+
     private void Start()
     {
         // Make sure it's not the menu
-        if (SceneManager.GetActiveScene().name == "Menu") enabled = false;
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            isMenu = true;
+            return;
+        }
 
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
@@ -343,6 +349,8 @@ public class Survival : MonoBehaviour
     // Gets called once every frame
     private void Update()
     {
+        if (isMenu) return;
+
         // Iterates through the tutorial sequence if enabled
         if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4)
         {

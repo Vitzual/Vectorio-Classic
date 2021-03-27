@@ -22,6 +22,7 @@ public class EssenceAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        SRVSC.buildings.Add(transform);
         if (!isOffset) InvokeRepeating("SendEssence", 0f, 8f);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();

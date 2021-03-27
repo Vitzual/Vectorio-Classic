@@ -13,6 +13,7 @@ public class Distributor : TileClass
     // Update is called once per frame
     void Start()
     {
+        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 

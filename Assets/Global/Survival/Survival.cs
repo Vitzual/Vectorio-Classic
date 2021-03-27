@@ -184,6 +184,9 @@ public class Survival : MonoBehaviour
 
     private void Start()
     {
+        // Make sure it's not the menu
+        if (SceneManager.GetActiveScene().name == "Menu") enabled = false;
+
         // Assign default variables
         Selected = GetComponent<SpriteRenderer>();
         CameraColor = new Color();

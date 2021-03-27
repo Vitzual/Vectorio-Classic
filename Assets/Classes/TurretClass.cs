@@ -53,6 +53,7 @@ public abstract class TurretClass : TileClass
     private void Start()
     {
         scanThisFrame = Random.Range(0, 2) > 0;
+        if (!transform.name.Contains("Enemy")) GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
 
         if (transform.name.Contains("Enemy"))
         {

@@ -15,6 +15,7 @@ public class Enhancer : TileClass
     private void Start()
     {
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
         if (SceneManager.GetActiveScene().name != "Menu")
             InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
     }

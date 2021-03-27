@@ -21,6 +21,7 @@ public class Engineer : TileClass
     // Called when awoken
     private void Start()
     {
+        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
         UI = GameObject.Find("Survival").GetComponent<Interface>();
     }
 

@@ -16,6 +16,7 @@ public class Menu : MonoBehaviour
     public GameObject NewGame;
     public GameObject NewSaveGame;
     public GameObject NameNewSave;
+    public GameObject LoadingSave;
     public TextMeshProUGUI SaveName;
     public TMP_InputField SaveBox;
     public ModalWindowManager ConfirmDelete;
@@ -276,6 +277,7 @@ public class Menu : MonoBehaviour
 
     public void StartNewGame(int a)
     {
+        LoadingSave.SetActive(true);
         Difficulties dd = GameObject.Find("Difficulty").GetComponent<Difficulties>();
 
         if (a == 0) dd.SetModeName("CUSTOM");

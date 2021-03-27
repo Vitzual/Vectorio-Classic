@@ -13,6 +13,7 @@ public class Turbine : TileClass
     {
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
+        SRV.buildings.Add(transform);
         SRV.increaseAvailablePower(amount);
     }
 

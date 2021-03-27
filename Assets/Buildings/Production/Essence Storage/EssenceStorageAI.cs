@@ -10,6 +10,7 @@ public class EssenceStorageAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        SRVSC.buildings.Add(transform);
         SRVSC.essenceStorage += amount;
         SRVSC.UI.EssenceStorage.text = SRVSC.essenceStorage + " MAX";
     }

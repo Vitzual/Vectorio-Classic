@@ -10,6 +10,7 @@ public class GoldStorageAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
+        SRVSC.buildings.Add(transform);
         SRVSC.goldStorage += amount;
         SRVSC.UI.GoldStorage.text = SRVSC.goldStorage + " MAX";
     }

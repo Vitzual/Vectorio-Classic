@@ -2,6 +2,11 @@
 
 public class Radiator : TileClass
 {
+    public void Start()
+    {
+        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+    }
+
     // Kill defense
     public override void DestroyTile()
     {

@@ -8,6 +8,7 @@ public class Solar : TileClass
     public void Start()
     {
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
+        SRV.buildings.Add(transform);
         SRV.increaseAvailablePower(amount);
     }
 

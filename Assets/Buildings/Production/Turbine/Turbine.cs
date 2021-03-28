@@ -27,6 +27,7 @@ public class Turbine : TileClass
     public override void DestroyTile()
     {
         SRV.decreasePowerConsumption(power);
+        SRV.decreaseAvailablePower(amount);
         TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));

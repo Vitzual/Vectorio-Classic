@@ -53,7 +53,6 @@ public abstract class TurretClass : TileClass
     private void Start()
     {
         scanThisFrame = Random.Range(0, 2) > 0;
-        if (!transform.name.Contains("Enemy")) GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
 
         if (transform.name.Contains("Enemy"))
         {
@@ -63,6 +62,7 @@ public abstract class TurretClass : TileClass
         }
         else
         {
+            TurretHandler.buildings.Add(transform);
             EnemyLayer = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense");
             bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
         }

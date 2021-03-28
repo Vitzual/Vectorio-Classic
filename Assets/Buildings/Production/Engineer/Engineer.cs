@@ -17,11 +17,11 @@ public class Engineer : TileClass
 
     // Internal placement variables
     public List<Transform> availableBuildings = new List<Transform>();
-
+    
     // Called when awoken
     private void Start()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
         UI = GameObject.Find("Survival").GetComponent<Interface>();
     }
 
@@ -103,7 +103,7 @@ public class Engineer : TileClass
     {
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        srv.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

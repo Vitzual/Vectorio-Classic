@@ -13,7 +13,7 @@ public class Turbine : TileClass
     {
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
-        SRV.buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
         SRV.increaseAvailablePower(amount);
     }
 
@@ -27,7 +27,7 @@ public class Turbine : TileClass
     public override void DestroyTile()
     {
         SRV.decreasePowerConsumption(power);
-        SRV.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);

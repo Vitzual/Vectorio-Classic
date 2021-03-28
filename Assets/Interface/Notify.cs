@@ -16,7 +16,7 @@ public class Notify : MonoBehaviour
     {
         isFlashing = true;
         float alphaHolder = bg.color.a;
-        bg.color = new Color(1, 0, 0, 0.7f);
+        bg.color = new Color(1, 0, 0, 0.5f);
         yield return new WaitForSeconds(1);
         bg.color = new Color(1, 1, 1, alphaHolder);
         isFlashing = false;

@@ -260,6 +260,7 @@ public class Menu : MonoBehaviour
         if (File.Exists(SavePath))
         {
             SetGameSave(lookingAtSave);
+            LoadingSave.SetActive(true);
             SceneManager.LoadScene("Survival");
         }
         else
@@ -284,7 +285,6 @@ public class Menu : MonoBehaviour
 
     public void StartNewGame(int a)
     {
-        LoadingSave.SetActive(true);
         Difficulties dd = GameObject.Find("Difficulty").GetComponent<Difficulties>();
 
         if (a == 0) dd.SetModeName("CUSTOM");
@@ -294,6 +294,7 @@ public class Menu : MonoBehaviour
         else if (a == 4) dd.SetModeName("NIGHTMARE");
 
         dd.SetDifficulty(a);
+        LoadingSave.SetActive(true);
         SceneManager.LoadScene("Survival");
     }
 

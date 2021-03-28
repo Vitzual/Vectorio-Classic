@@ -13,7 +13,7 @@ public class Distributor : TileClass
     // Update is called once per frame
     void Start()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 
@@ -38,7 +38,7 @@ public class Distributor : TileClass
         }
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        srv.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);

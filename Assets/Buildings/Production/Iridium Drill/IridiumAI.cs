@@ -22,7 +22,7 @@ public class IridiumAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        SRVSC.buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
         if (!isOffset) InvokeRepeating("SendIridium", 0f, 12f);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
@@ -96,7 +96,7 @@ public class IridiumAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        SRVSC.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -16,7 +16,7 @@ public class WallAI : TileClass
 
     public void Start()
     {
-        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
 
         RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -93,7 +93,7 @@ public class WallAI : TileClass
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        srv.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

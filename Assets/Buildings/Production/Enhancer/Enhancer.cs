@@ -15,7 +15,7 @@ public class Enhancer : TileClass
     private void Start()
     {
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
-        GameObject.Find("Survival").GetComponent<Survival>().buildings.Add(transform);
+        TurretHandler.buildings.Add(transform);
         if (SceneManager.GetActiveScene().name != "Menu")
             InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
     }
@@ -64,7 +64,7 @@ public class Enhancer : TileClass
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        srv.buildings.Remove(transform);
+        TurretHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

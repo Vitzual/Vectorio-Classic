@@ -35,8 +35,6 @@ public class Survival : MonoBehaviour
     // Camera zoom object
     public CameraScroll cameraScroll;
 
-    public List<Transform> buildings;
-
     public int Playtime = 0;
     public int AutoSaveInterval = 300;
     public bool firstAuto = true;

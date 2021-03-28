@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
@@ -39,31 +40,33 @@ public class EnemyHandler : MonoBehaviour
     public void Update()
     {
         for (int i = 0; i < Enemies.Count; i++)
+        {
             try
             {
-                Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-                if (Enemies[i].RayLength == 0)
-                {
-                    continue;
-                }
-                else if (Enemies[i].Tracker == 3)
-                {
-                    Enemies[i].Tracker = 1;
-                    RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
-                    if (hit.collider != null)
-                        if (OnHit(i, hit.collider.transform)) { i--; continue; }
-                }
-                else
-                {
-                    Enemies[i].Tracker += 1;
-                    continue;
-                }
+            Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
+            if (Enemies[i].RayLength == 0)
+            {
+                continue;
+            }
+            else if (Enemies[i].Tracker == 3)
+            {
+                Enemies[i].Tracker = 1;
+                RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
+                if (hit.collider != null)
+                    if (OnHit(i, hit.collider.transform)) { i--; continue; }
+            }
+            else
+            {
+                Enemies[i].Tracker += 1;
+                continue;
+            }
             }
             catch
             {
                 Enemies.RemoveAt(i);
                 i--;
             }
+        }
     }
 
     // Registers an enemy to then be handled by the controller 
@@ -75,7 +78,11 @@ public class EnemyHandler : MonoBehaviour
     // Called when a hit is detected in the updater 
     public bool OnHit(int enemyID, Transform other)
     {
-        if (!other.GetComponent<TileClass>().DamageTile(Enemies[enemyID].Damage))
+        Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
+
+        other.GetComponent<TileClass>().DamageTile(Enemies[enemyID].Damage);
+
+        if (other != null && other.GetComponent<TileClass>().health > 0)
         {
             Enemies[enemyID].ObjectClass.KillEntity();
             Enemies.RemoveAt(enemyID);
@@ -83,7 +90,7 @@ public class EnemyHandler : MonoBehaviour
             return true;
         }
         BuildingGoDeadSound.Play();
-        survival.SetLastHit(other.position);
+        survival.SetLastHit(pos);
         return false;
     }
 }

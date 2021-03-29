@@ -497,7 +497,11 @@ public class Survival : MonoBehaviour
                 if (ObjectComponent.GetHeat() <= 0) validHeat = true;
                 else if (Spawner.htrack < Spawner.maxHeat) validHeat = true;
 
-                if (ObjectComponent.GetCost() <= gold && PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower && validHeat)
+                bool validPower = false;
+                if (ObjectComponent.getConsumption() <= 0) validPower = true;
+                else if (PowerConsumption < AvailablePower) validPower = true;
+
+                if (ObjectComponent.GetCost() <= gold && validPower && validHeat)
                 {
                     // Remove gold from player once confirmed
                     RemoveGold(ObjectComponent.GetCost());

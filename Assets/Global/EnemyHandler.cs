@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +35,13 @@ public class EnemyHandler : MonoBehaviour
     public List<ActiveEnemies> Enemies;
 
     public LayerMask BuildingLayer;
+    public bool isMenu = false;
+
+    public void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
+    }
+
 
     // Handles enemy movement every frame
     public void Update()
@@ -78,6 +85,13 @@ public class EnemyHandler : MonoBehaviour
     // Called when a hit is detected in the updater 
     public bool OnHit(int enemyID, Transform other)
     {
+        if (isMenu)
+        {
+            Enemies[enemyID].ObjectClass.KillEntity();
+            Enemies.RemoveAt(enemyID);
+            return true;
+        }
+
         Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
 
         other.GetComponent<TileClass>().DamageTile(Enemies[enemyID].Damage);

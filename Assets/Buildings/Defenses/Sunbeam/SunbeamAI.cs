@@ -6,15 +6,34 @@ public class SunbeamAI : TurretClass
     public Transform rotator1;
     public Transform rotator2;
 
+    // Enemy handler thing
+    private EnemyHandler enemies;
+
     // Targetting system
     void Update()
     {
-        // Handles rotation
-        rotator1.Rotate(Vector3.forward, 50f * Time.deltaTime);
-        rotator2.Rotate(-Vector3.forward, 50f * Time.deltaTime);
+        // If animation is playing, wait
+        if (animPlaying)
+        {
+            PlayAnim();
+            return;
+        }
 
+        // Sunbeams contain custom rotation hanlding as they require a large range input
         if (isRotating)
-            RotateTowardNearestEnemy();
+        {
+            if (scanThisFrame || target != null)
+            {
+                if (!hasTarget)
+                {
+                    if (enemies == null) enemies = GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>();
+                    else enemies.findClosest(transform.position);
+                }
+                if (target != null)
+                    RotationHandler();
+            }
+            else scanThisFrame = true;
+        }
 
         // If a target exists, shoot at it
         if (target != null && !isRotating)

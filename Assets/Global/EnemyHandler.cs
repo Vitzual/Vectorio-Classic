@@ -107,4 +107,20 @@ public class EnemyHandler : MonoBehaviour
         survival.SetLastHit(pos);
         return false;
     }
+
+    public Transform findClosest(Vector3 pos)
+    {
+        Transform result = null;
+        float closest = float.PositiveInfinity;
+        foreach (ActiveEnemies enemy in Enemies)
+        {
+            float distance = (enemy.Object.position - pos).sqrMagnitude;
+            if (distance < closest)
+            {
+                result = enemy.Object;
+                closest = distance;
+            }
+        }
+        return result;
+    }
 }

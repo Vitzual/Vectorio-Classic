@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Dronehub : TileClass
 {
+    // Side panels 
+    Transform leftPanel;
+    Transform rightPanel;
+
     // Start is called before the first frame update
     void Start()
     {

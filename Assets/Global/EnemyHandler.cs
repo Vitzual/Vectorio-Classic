@@ -114,7 +114,7 @@ public class EnemyHandler : MonoBehaviour
         float closest = float.PositiveInfinity;
         foreach (ActiveEnemies enemy in Enemies)
         {
-            float distance = (enemy.Object.position - pos).sqrMagnitude;
+            float distance = Vector2.Distance(enemy.Object.position, pos);
             if (distance < closest)
             {
                 result = enemy.Object;

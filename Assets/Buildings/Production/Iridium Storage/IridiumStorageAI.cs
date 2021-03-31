@@ -30,13 +30,13 @@ public class IridiumStorageAI: TileClass
         if (growEnd)
         {
             grow += 0.001f;
-            if (grow >= 1f)
+            if (grow >= 0.25f)
                 growEnd = false;
         } 
         else
         {
             grow -= 0.001f;
-            if (grow <= 0.8f)
+            if (grow <= 0.2f)
                 growEnd = true;
         }
     }

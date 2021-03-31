@@ -53,17 +53,18 @@ MonoBehaviour:
   Effect: {fileID: 5498526772546205255, guid: 96e51e4807d8dfe4a9381fae5c18e4e4, type: 3}
   maxhp: 10
   health: 10
-  heat: 60
+  heat: 45
   cost: 12000
-  power: 55
+  power: 40
   ID: 6
   description: Low accuracy turret that sprays tons of low damaging bullets.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
+  scanThisFrame: 0
   range: 45
   rotationSpeed: 120
-  bulletDamage: 1
+  bulletDamage: 2
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 80
@@ -76,6 +77,11 @@ MonoBehaviour:
   hasAudio: 1
   target: {fileID: 0}
   isRotating: 1
+  gunShotParticles: 0
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0

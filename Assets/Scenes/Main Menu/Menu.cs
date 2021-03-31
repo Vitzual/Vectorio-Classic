@@ -90,6 +90,7 @@ public class Menu : MonoBehaviour
         }
 
         if (!availableSave) NewSaveGame.SetActive(false);
+        else NewSaveGame.SetActive(true);
     }
 
     public void OpenDeleteSaveMenu(int a)

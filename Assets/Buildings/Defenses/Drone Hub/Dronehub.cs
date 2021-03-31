@@ -5,13 +5,51 @@ using UnityEngine;
 public class Dronehub : TileClass
 {
     // Side panels 
-    Transform leftPanel;
-    Transform rightPanel;
+    public Transform leftPanel;
+    public Transform rightPanel;
+
+    // Animation variables
+    public bool isAnimating;
+    public float animSpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    public void Update()
+    {
         
+    }
+
+    public void PlayAnim()
+    {
+        leftPanel.transform.position -= leftPanel.transform.right * animSpeed * Time.deltaTime;
+        rightPanel.transform.position += rightPanel.transform.right * animSpeed * Time.deltaTime;
+
+        // Set the anim after finished
+        if (leftPanel.transform.localPosition.x <= -1)
+        {
+            leftPanel.transform.localPosition = new Vector3(-1f, 0, 0);
+            rightPanel.transform.localPosition = new Vector3(1f, 0, 0);
+
+            isAnimating = false;
+            animSpeed = -1f;
+        }
+        else if (leftPanel.transform.localPosition.x >= 0)
+        {
+            leftPanel.transform.localPosition = new Vector3(0, 0, 0);
+            rightPanel.transform.localPosition = new Vector3(0, 0, 0);
+
+            isAnimating = false;
+            animSpeed = 1f;
+        }
+    }
+
+    public void SpawnDrone()
+    {
+
     }
 
     // Kill defense

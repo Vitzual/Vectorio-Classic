@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RotationHandler : MonoBehaviour
 {
+    public bool isEnabled = true;
+
     // Contains all active enemies in the scene
     [System.Serializable]
     public class ActiveRotators
@@ -25,6 +27,8 @@ public class RotationHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isEnabled) return;
+
         for(int i=0; i<Rotators.Count; i++)
         {
             if (Rotators[i].rotator != null)

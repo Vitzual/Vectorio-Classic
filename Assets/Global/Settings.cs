@@ -23,6 +23,16 @@ public class Settings : MonoBehaviour
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
 
+    public void DisableRotatingObjects()
+    {
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = false;
+    }
+
+    public void EnableRotatingObjects()
+    {
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = true;
+    }
+
     void OnMouseEnter()
     {
         Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);

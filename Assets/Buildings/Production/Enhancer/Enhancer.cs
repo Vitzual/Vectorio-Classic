@@ -14,7 +14,11 @@ public class Enhancer : TileClass
 
     private void Start()
     {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+        try
+        {
+            GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+        }
+        catch { }
         TurretHandler.buildings.Add(transform);
         if (SceneManager.GetActiveScene().name != "Menu")
             InvokeRepeating("CheckAdjacentTiles", 0f, 1f);

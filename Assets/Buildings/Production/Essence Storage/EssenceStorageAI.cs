@@ -10,7 +10,7 @@ public class EssenceStorageAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        TurretHandler.buildings.Add(transform);
+        BuildingHandler.buildings.Add(transform);
         SRVSC.essenceStorage += amount;
         SRVSC.UI.EssenceStorage.text = SRVSC.essenceStorage + " MAX";
     }
@@ -19,7 +19,7 @@ public class EssenceStorageAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
         SRVSC.UpdateEssenceStorage(amount);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);

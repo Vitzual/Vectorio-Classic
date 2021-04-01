@@ -82,6 +82,11 @@ public abstract class TileClass : MonoBehaviour
             DestroyTile();
             return true;
         }
+
+        // Add to damaged buildings list
+        if (!BuildingHandler.damagedBuildings.Contains(transform))
+            BuildingHandler.damagedBuildings.Add(transform);
+
         return false;
     }
 

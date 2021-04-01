@@ -4,7 +4,7 @@ public class Radiator : TileClass
 {
     public void Start()
     {
-        TurretHandler.buildings.Add(transform);
+        BuildingHandler.buildings.Add(transform);
     }
 
     // Kill defense
@@ -13,7 +13,7 @@ public class Radiator : TileClass
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

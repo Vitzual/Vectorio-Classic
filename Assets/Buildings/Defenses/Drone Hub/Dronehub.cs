@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Dronehub : TileClass
 {
+    // Drone logic registerar script
+    public DroneManager droneManager;
+
+    // Hold drone type
+    public Transform droneType;
+
     // Side panels 
     public Transform leftPanel;
     public Transform rightPanel;
@@ -49,6 +55,8 @@ public class Dronehub : TileClass
 
     public void SpawnDrone()
     {
+        var holder = Instantiate(droneType, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        holder.name = droneType.name;
 
     }
 
@@ -57,7 +65,7 @@ public class Dronehub : TileClass
     {
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

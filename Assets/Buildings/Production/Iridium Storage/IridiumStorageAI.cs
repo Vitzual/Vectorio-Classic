@@ -16,7 +16,7 @@ public class IridiumStorageAI: TileClass
     // Update is called once per frame
     void Start()
     {
-        TurretHandler.buildings.Add(transform);
+        BuildingHandler.buildings.Add(transform);
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         SRVSC.iridiumStorage += amount;
         SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
@@ -45,7 +45,7 @@ public class IridiumStorageAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
         SRVSC.UpdateGoldStorage(amount);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);

@@ -10,7 +10,7 @@ public class GoldStorageAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        TurretHandler.buildings.Add(transform);
+        BuildingHandler.buildings.Add(transform);
         SRVSC.goldStorage += amount;
         SRVSC.UI.GoldStorage.text = SRVSC.goldStorage + " MAX";
     }
@@ -19,7 +19,7 @@ public class GoldStorageAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
         SRVSC.UpdateGoldStorage(amount);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);

@@ -10,7 +10,7 @@ public class HubAI : TileClass
     // On start, assign weapon variables
     void Start()
     {
-        TurretHandler.buildings.Add(transform);
+        BuildingHandler.buildings.Add(transform);
 
         health = 100;
         maxhp = 100;
@@ -36,6 +36,6 @@ public class HubAI : TileClass
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        TurretHandler.buildings.Remove(transform);
+        BuildingHandler.buildings.Remove(transform);
     }
 }

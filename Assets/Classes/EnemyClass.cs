@@ -129,6 +129,7 @@ public abstract class EnemyClass : MonoBehaviour
         if (health <= 0)
         {
              KillEntity();
+             return;
         } 
         else if (!effectImmunity)
         {

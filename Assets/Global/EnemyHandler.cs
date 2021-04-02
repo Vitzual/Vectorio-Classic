@@ -13,14 +13,15 @@ public class EnemyHandler : MonoBehaviour
     public class ActiveEnemies
     {
         // Constructor
-        public ActiveEnemies(Transform Object, EnemyClass ObjectClass, float Speed, int Damage, float RayLength, int Tracker)
+        public ActiveEnemies(Transform Object, float Speed, int Damage, float RayLength, int Tracker)
         {
             this.Object = Object;
             this.Speed = Speed;
             this.Tracker = Tracker;
             this.Damage = Damage;
             this.RayLength = RayLength;
-            this.ObjectClass = ObjectClass;
+
+            ObjectClass = Object.GetComponent<EnemyClass>();
         }
 
         // Class variables
@@ -50,23 +51,24 @@ public class EnemyHandler : MonoBehaviour
         {
             try
             {
-            Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-            if (Enemies[i].RayLength == 0)
-            {
-                continue;
-            }
-            else if (Enemies[i].Tracker == 3)
-            {
-                Enemies[i].Tracker = 1;
-                RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
-                if (hit.collider != null)
-                    if (OnHit(i, hit.collider.transform)) { i--; continue; }
-            }
-            else
-            {
-                Enemies[i].Tracker += 1;
-                continue;
-            }
+                if (Enemies[i].ObjectClass.target == null) Enemies[i].ObjectClass.FindNearestDefence();
+                Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
+                if (Enemies[i].RayLength == 0)
+                {
+                    continue;
+                }
+                else if (Enemies[i].Tracker == 3)
+                {
+                    Enemies[i].Tracker = 1;
+                    RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
+                    if (hit.collider != null)
+                        if (OnHit(i, hit.collider.transform)) { i--; continue; }
+                }
+                else
+                {
+                    Enemies[i].Tracker += 1;
+                    continue;
+                }
             }
             catch
             {
@@ -77,9 +79,9 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(Transform Object, EnemyClass Script, float Speed, int Damage, float RayLength)
+    public void RegisterEnemy(Transform Object, float Speed, int Damage, float RayLength)
     {
-        Enemies.Add(new ActiveEnemies(Object, Script, Speed, Damage, RayLength, 1));
+        Enemies.Add(new ActiveEnemies(Object, Speed, Damage, RayLength, 1));
     }
 
     // Called when a hit is detected in the updater 

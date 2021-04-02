@@ -8,7 +8,5 @@ public class ShurikenAI : EnemyClass
     private void Update()
     {
         body.Rotate(0, 0, -300 * Time.deltaTime);
-        base.Update();
     }
-    
 }

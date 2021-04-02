@@ -30,7 +30,7 @@ public abstract class EnemyClass : MonoBehaviour
 
     // Enemy vars
     public Transform PreferredTarget = null;
-    protected Transform target;
+    public Transform target;
     protected int attackTimeout;
 
     private EnemyLocater scanner;
@@ -38,31 +38,8 @@ public abstract class EnemyClass : MonoBehaviour
     // Start method
     protected void Start()
     {
-        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, this, moveSpeed, damage, rayLength);
+        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, moveSpeed, damage, rayLength);
         scanner = GameObject.Find("Enemy Scanner").GetComponent<EnemyLocater>();
-    }
-
-    // Keeps an object oriented to it's target at all times
-    // Movement is handled in the controller script
-    protected void Update()
-    {
-        // Find closest enemy 
-        if (target == null)
-        {
-            target = FindNearestDefence();
-        }
-        else
-        {
-            // Get target position relative to this entity
-            Vector2 TargetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-
-            // Get the direction towards that unit from this entity
-            Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
-
-            // Get the angle between the target and this transform
-            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            transform.eulerAngles = new Vector3(0, 0, angle);
-        }
     }
 
     // Kill entity
@@ -214,9 +191,19 @@ public abstract class EnemyClass : MonoBehaviour
         is_poisoned = false;
     }
 
-    protected Transform FindNearestDefence()
+    public void FindNearestDefence()
     {
-        return scanner.requestTarget(transform.position, PreferredTarget);
+        // Request a target
+        target = scanner.requestTarget(transform.position, PreferredTarget);
+        
+        // Get target position relative to this entity
+        Vector2 TargetPosition = new Vector2(target.position.x, target.position.y);
+
+        // Get the direction towards that unit from this entity
+        Vector2 lookDirection = TargetPosition - new Vector2(transform.position.x, transform.position.y);
+
+        // Get the angle between the target and this transform
+        transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
     }
 
     public int GetID() { return ID; }

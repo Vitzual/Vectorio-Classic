@@ -38,7 +38,6 @@ public static class SaveSystem
             saveInfo[3] = "0:00";
         }
 
-        Debug.Log(saveInfo[0] + " " + saveInfo[1]);
         return saveInfo;
     }
 

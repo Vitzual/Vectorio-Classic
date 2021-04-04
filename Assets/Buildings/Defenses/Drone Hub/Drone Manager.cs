@@ -17,16 +17,20 @@ public class DroneManager : MonoBehaviour
             this.fixAmount = fixAmount;
             this.fixTime = fixTime;
 
+            targetClass = body.GetComponent<TileClass>();
             isFixing = false;
             isAnimating = false;
+            isMoving = false;
         }
 
+        public TileClass targetClass;
         public Transform body;
         public Transform target;
         public float droneSpeed;
         public float droneHealth;
         public float fixAmount;
         public float fixTime;
+        public bool isMoving;
         public bool isFixing;
         public bool isAnimating;
     }
@@ -39,9 +43,12 @@ public class DroneManager : MonoBehaviour
         {
             if (drone.target != null)
             {
-
+                
             }
-            else findTarget(drone.body.position);
+            else
+            {
+                findTarget(drone.body.position);
+            }
         }
     }
 

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Dronehub : TileClass
 {
-    // Drone logic registerar script
+    // Drone logic registrar script
     public DroneManager droneManager;
+
+    // Drone variables
+    public bool droneActive = false;
+    public int checkDrone = 0;
 
     // Hold drone type
     public Transform droneType;
@@ -21,12 +25,20 @@ public class Dronehub : TileClass
     // Start is called before the first frame update
     void Start()
     {
-
+        checkDrone = Random.Range(0, 100);
     }
 
     public void Update()
     {
-        
+        if (checkDrone == 100)
+        {
+            // Check if drone active, if not, spawn it
+
+            checkDrone = 0;
+        }
+        else checkDrone++;
+
+        if (isAnimating) PlayAnim();
     }
 
     public void PlayAnim()

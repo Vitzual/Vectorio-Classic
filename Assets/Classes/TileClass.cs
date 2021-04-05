@@ -14,6 +14,7 @@ public abstract class TileClass : MonoBehaviour
     public int cost = 1;
     public int power = 1;
     public int ID = 0;
+    public bool isBig = false;
     [TextArea] public string description = "No description provided.";
 
     // Engineer mods

@@ -24,6 +24,7 @@ public class SunbeamAI : TurretClass
         {
             if (scanThisFrame || target != null)
             {
+                scanThisFrame = false;
                 if (!hasTarget)
                 {
                     if (enemies == null) enemies = GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>();

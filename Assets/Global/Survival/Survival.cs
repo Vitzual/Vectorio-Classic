@@ -938,7 +938,7 @@ public class Survival : MonoBehaviour
     // Checks if a unit can be placed
     public bool CheckPlacement(Transform obj)
     {
-        if (obj != null && (obj.name == "Rocket Pod" || obj.name == "Turbine" || obj.name == "Sunbeam"))
+        if (obj != null && obj.GetComponent<TileClass>().isBig)
         {
             // Check for wires and adjust accordingly 
             RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -1017,7 +1017,7 @@ public class Survival : MonoBehaviour
             float y = a[i, 3];
             Vector2 position;
 
-            if (building.name == "Rocket Pod" || building.name == "Turbine" || building.name == "Sunbeam")
+            if (building.GetComponent<TileClass>().isBig)
             {
                 // Check the x coordinate
                 if (x >= 0)
@@ -1321,7 +1321,7 @@ public class Survival : MonoBehaviour
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly
-        if (SelectedObj.name == "Rocket Pod" || SelectedObj.name == "Turbine" || SelectedObj.name == "Sunbeam")
+        if (SelectedObj.GetComponent<TileClass>().isBig)
         {
             largerUnit = true;
             if (SelectedObj.name != "Turbine")

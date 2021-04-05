@@ -21,6 +21,7 @@ public class DroneManager : MonoBehaviour
             isFixing = false;
             isAnimating = false;
             isMoving = false;
+            finderCheck = Random.Range(0,10);
         }
 
         public TileClass targetClass;
@@ -33,6 +34,7 @@ public class DroneManager : MonoBehaviour
         public bool isMoving;
         public bool isFixing;
         public bool isAnimating;
+        public int finderCheck;
     }
     List<FixerDrones> fixerDrones;
 
@@ -43,12 +45,14 @@ public class DroneManager : MonoBehaviour
         {
             if (drone.target != null)
             {
-                
+
             }
-            else
+            else if (drone.finderCheck == 10)
             {
-                findTarget(drone.body.position);
+                drone.finderCheck = 0;
+                findFixerTarget(drone.body.position);
             }
+            else drone.finderCheck++;
         }
     }
 
@@ -57,7 +61,7 @@ public class DroneManager : MonoBehaviour
         fixerDrones.Add(new FixerDrones(body, droneSpeed, droneHealth, fixAmount, fixTime));
     }
 
-    protected void findTarget(Vector3 pos)
+    protected void findFixerTarget(Vector3 pos)
     {
 
     }

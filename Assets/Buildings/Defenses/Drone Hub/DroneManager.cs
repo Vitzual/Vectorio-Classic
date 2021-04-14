@@ -41,6 +41,7 @@ public class DroneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        return;
         foreach(FixerDrones drone in fixerDrones)
         {
             if (drone.target != null)

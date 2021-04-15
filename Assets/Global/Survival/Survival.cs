@@ -91,35 +91,19 @@ public class Survival : MonoBehaviour
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
 
-    // Object placements
+    // Objects that have additional mechanics in Survival
     [SerializeField] private Transform HubObj;             // No ID
     [SerializeField] private Transform TurretObj;          // ID = 0
     [SerializeField] private Transform WallObj;            // ID = 1
     [SerializeField] private Transform CollectorObj;       // ID = 2
-    // [SerializeField] private Transform ShotgunObj;      // ID = 3
-    // [SerializeField] private Transform SniperObj;       // ID = 4
-    // [SerializeField] private Transform EnhancerObj;     // ID = 5
-    // [SerializeField] private Transform SMGObj;          // ID = 6
-    // [SerializeField] private Transform BoltObj;         // ID = 7
-    // [SerializeField] private Transform ChillerObj;      // ID = 8
-    // [SerializeField] private Transform RocketObj;       // ID = 9
     [SerializeField] private Transform EssenceObj;         // ID = 10
-    // [SerializeField] private Transform TurbineObj;      // ID = 11
-    // [SerializeField] private Transform TeslaObj;        // ID = 12
     [SerializeField] private Transform PowerObj;           // ID = 13
-    //[SerializeField] private Transform FlamethrowerObj;  // ID = 14
-    //[SerializeField] private Transform MinigunObj;       // ID = 15
     [SerializeField] private Transform EngineerObj;        // ID = 16
-    //[SerializeField] private Transform SunbeamObj;       // ID = 20
-    //[SerializeField] private Transform AreaCoolerObj;    // ID = 22
     [SerializeField] private Transform Iridium;            // ID = 23
-    //[SerializeField] private Transform Solar;            // ID = 24
     [SerializeField] private Transform GoldStorage;        // ID = 25
     [SerializeField] private Transform EssenceStorage;     // ID = 26
     [SerializeField] private Transform IridiumStorage;     // ID = 27
-    //[SerializeField] private Transform ArtilleryObj;     // ID = 28
     
-
     [SerializeField] private Transform EnemyTurretDual;    // ID = 201
     [SerializeField] private Transform EnemyTurretSMG;     // ID = 200
     [SerializeField] private Transform EnemyTurretRanger;  // ID = 202

@@ -94,7 +94,7 @@ public class Research : MonoBehaviour
         }
         else if (type.ToLower() == "damage") bonus_damage += 2; // Increases damage of all defenses by 2
         else if (type.ToLower() == "health") bonus_health += 5; // Increases health of all buildings by 5
-        else if (type.ToLower() == "gold") bonus_gold += 5; // Increases output of all resources by 1
+        else if (type.ToLower() == "gold") bonus_gold += 5; // Increases output of all resources by 5
         else if (type.ToLower() == "burning") bonus_burning += 5; // Adds 3 seconds of burning (5% proc chance)
         else if (type.ToLower() == "freezing") bonus_freezing += 10; // Adds 10 seconds of freezing (5% proc chance)
         else if (type.ToLower() == "poisoning") bonus_poisoning += 3; // Adds 3 seconds of poisoning (5% proc chance)

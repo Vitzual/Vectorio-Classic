@@ -28,6 +28,11 @@ public class Research : MonoBehaviour
     public bool ResearchLocked;
     public int SelectedResearch = 0;
 
+    // Movement stuff
+    protected Vector2 movement;
+    public float moveSpeed = 60000f;
+    public ScrollRect overlay;
+
     // Data source scripts
     public Survival SurvivalCS;
 
@@ -46,6 +51,30 @@ public class Research : MonoBehaviour
 
     // Research tracking
     public Researchable[] Researchables;
+
+    // Movement tracking
+    public void Update()
+    {
+        // Check if space pressed
+        if (Input.GetKeyDown(KeyCode.Space))
+            overlay.normalizedPosition = new Vector2(0, 0);
+
+        // Get directional movement
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            moveSpeed = 400000f;
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            moveSpeed = 60000f;
+        else if (Input.GetKeyDown(KeyCode.LeftControl))
+            moveSpeed = 30000f;
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+            moveSpeed = 60000f;
+
+        overlay.velocity = -movement * moveSpeed * Time.fixedDeltaTime;
+    }
+
 
     // On button click
     public void ResearchTreeButton(int number)

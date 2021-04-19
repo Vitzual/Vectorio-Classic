@@ -46,7 +46,7 @@ public class Dronehub : TileClass
             case 0:
                 activeDrone = Instantiate(fixerDrone, transform.position, Quaternion.identity);
                 activeDrone.name = fixerDrone.name;
-                droneManager.registerFixerDrone(activeDrone, 2, 10, 1, 10);
+                //droneManager.registerFixerDrone(activeDrone, 2, 10, 1, 10);
                 break;
             case 1:
                 activeDrone = Instantiate(resourceDrone, transform.position, Quaternion.identity);
@@ -66,7 +66,7 @@ public class Dronehub : TileClass
             default:
                 activeDrone = Instantiate(fixerDrone, transform.position, Quaternion.identity);
                 activeDrone.name = fixerDrone.name;
-                droneManager.registerFixerDrone(activeDrone, 2, 10, 1, 10);
+                //droneManager.registerFixerDrone(activeDrone, 2, 10, 1, 10);
                 break;
         }
     }

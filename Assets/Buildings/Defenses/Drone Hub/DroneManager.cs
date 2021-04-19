@@ -6,64 +6,59 @@ using UnityEngine;
 
 public class DroneManager : MonoBehaviour
 {
+    // ----------------------------------------------------------------------------------- //
+    // CONSTRUCTION DRONE CLASS
+    // Scans through the building queue list and tries to find a building to place
+    // If at any point during flight the target becomes null, drone will return to it's port
+    // ----------------------------------------------------------------------------------- //
+
     [System.Serializable]
-    public class FixerDrones
+    public class ConstructionDrone
     {
-        public FixerDrones(Transform body, float droneSpeed, float droneHealth, float fixAmount, float fixTime)
+        public ConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, float droneSpeed)
         {
             this.body = body;
+            this.targetPos = targetPos;
+            this.targetBuilding = targetBuilding;
             this.droneSpeed = droneSpeed;
-            this.droneHealth = droneHealth;
-            this.fixAmount = fixAmount;
-            this.fixTime = fixTime;
 
-            targetClass = body.GetComponent<TileClass>();
-            isFixing = false;
             isAnimating = false;
             isMoving = false;
-            finderCheck = Random.Range(0,10);
+            finderCheck = Random.Range(0, 10);
         }
 
-        public TileClass targetClass;
         public Transform body;
-        public Transform target;
+        public Transform targetPos;
+        public Transform targetBuilding;
         public float droneSpeed;
-        public float droneHealth;
-        public float fixAmount;
-        public float fixTime;
         public bool isMoving;
-        public bool isFixing;
         public bool isAnimating;
         public int finderCheck;
     }
-    List<FixerDrones> fixerDrones;
+    List<ConstructionDrone> constructionDrones;
 
     // Update is called once per frame
     void Update()
     {
-        return;
-        foreach(FixerDrones drone in fixerDrones)
+        foreach(ConstructionDrone drone in constructionDrones)
         {
-            if (drone.target != null)
+            if (drone.isAnimating)
+            {
+                if (drone.body.localScale.x < 1f)
+                {
+                    drone.body.localScale = new Vector2(drone.body.localScale.x + 0.1f, drone.body.localScale.y + 0.1f);
+                }
+                else drone.isAnimating = false;
+            }
+            else
             {
 
             }
-            else if (drone.finderCheck == 10)
-            {
-                drone.finderCheck = 0;
-                findFixerTarget(drone.body.position);
-            }
-            else drone.finderCheck++;
         }
     }
 
-    public void registerFixerDrone(Transform body, float droneSpeed, float droneHealth, float fixAmount, float fixTime)
+    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding)
     {
-        fixerDrones.Add(new FixerDrones(body, droneSpeed, droneHealth, fixAmount, fixTime));
-    }
-
-    protected void findFixerTarget(Vector3 pos)
-    {
-
+        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, 1f));
     }
 }

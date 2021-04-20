@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class HubAI : TileClass
 {
@@ -6,11 +7,16 @@ public class HubAI : TileClass
     public GameObject EndScreen;
     public GameObject BigBoom;
     public GameObject survival;
+    public List<Transform> drones;
+    public DroneManager droneManager;
 
     // On start, assign weapon variables
     void Start()
     {
         BuildingHandler.buildings.Add(transform);
+
+        foreach (Transform drone in drones)
+            droneManager.registerAvailableDrone(drone.GetChild(0), drone, 1, new Transform[] { drone.GetChild(1), drone.GetChild(2) });
 
         health = 100;
         maxhp = 100;

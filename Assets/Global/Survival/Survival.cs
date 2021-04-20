@@ -35,6 +35,9 @@ public class Survival : MonoBehaviour
     // Camera zoom object
     public CameraScroll cameraScroll;
 
+    // EnemyHandler object
+    public DroneManager droneManager;
+
     public int Playtime = 0;
     public int AutoSaveInterval = 300;
     public bool firstAuto = true;
@@ -491,9 +494,8 @@ public class Survival : MonoBehaviour
                     RemoveGold(ObjectComponent.GetCost());
 
                     // If it is a wall, dont use rotation
-                    if (SelectedObj.name == "Wall")
-                        LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                    else LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, rotation)));
+                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                    droneManager.queueBuilding(SelectedObj, LastObj);
 
                     // Create a UI resource popup thing idk lmaooo
                     UI.CreateResourcePopup("- " + ObjectComponent.GetCost(), "Gold", LastObj.position);
@@ -542,13 +544,12 @@ public class Survival : MonoBehaviour
 
                     // Set component values
                     LastObj.name = SelectedObj.name;
-                    LastObj.GetComponent<TileClass>().IncreaseHealth();
                     increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
                     Spawner.increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
 
                     // Play placement sound
-                    float audioScale = cameraScroll.getZoom() / 1400f;
-                    AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
+                    // float audioScale = cameraScroll.getZoom() / 1400f;
+                    // AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
                 }
                 else
                 {
@@ -616,17 +617,6 @@ public class Survival : MonoBehaviour
                 AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
                 UI.CreatePippeteSquare(rayHit.collider.transform.position);
             }
-        }
-
-        // Rotates object if no menus open
-        if (Input.GetKeyDown(KeyCode.R) && !UI.BuildingOpen && !UI.MenuOpen && !UI.EngineerOpen && SelectedObj != null)
-        {
-            rotation = rotation -= 90f;
-            if (rotation == -360f)
-            {
-                rotation = 0;
-            }
-            Selected.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
         }
 
         // Opens the building menu if E is pressed.

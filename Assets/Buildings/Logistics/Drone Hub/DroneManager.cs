@@ -24,7 +24,7 @@ public class DroneManager : MonoBehaviour
             this.plates = plates;
 
             targetPos = target.position;
-            droneSpeed = 15f;
+            droneSpeed = 25f;
 
             platesOpening = true;
             platesClosing = false;
@@ -126,31 +126,30 @@ public class DroneManager : MonoBehaviour
                 // Open the plates
                 if (drone.platesOpening)
                 {
-                    drone.plates[0].Translate(Vector3.left * Time.deltaTime);
-                    drone.plates[1].Translate(Vector3.right * Time.deltaTime);
+                    drone.plates[0].Translate(Vector3.left * Time.deltaTime * 2f);
+                    drone.plates[1].Translate(Vector3.right * Time.deltaTime * 2f);
 
                     if (!drone.droneReturning && drone.body.localScale.x <= 1f)
                     {
-                        drone.body.localScale += new Vector3(0.01f, 0.01f, 0f);
+                        drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
                     }
 
                     if (drone.plates[1].localPosition.x >= 2)
                     {
                         drone.platesOpening = false;
-                        drone.platesClosing = true;
                     }
 
-                    if (!drone.droneReturning) return;
+                    if (!drone.droneReturning) continue;
                 }
                 // Close the plates
                 else if (drone.platesClosing)
                 {
-                    drone.plates[0].Translate(Vector3.right * Time.deltaTime);
-                    drone.plates[1].Translate(Vector3.left * Time.deltaTime);
+                    drone.plates[0].Translate(Vector3.right * Time.deltaTime * 2f);
+                    drone.plates[1].Translate(Vector3.left * Time.deltaTime * 2f);
 
                     if (drone.droneReturning && drone.body.localScale.x >= 0.8f)
                     {
-                        drone.body.localScale -= new Vector3(0.01f, 0.01f, 0f);
+                        drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
                     }
 
                     if (drone.plates[1].localPosition.x <= 0)
@@ -176,8 +175,6 @@ public class DroneManager : MonoBehaviour
                 {
                     drone.body.position = Vector2.MoveTowards(drone.body.position, drone.targetPos, drone.droneSpeed * Time.deltaTime);
 
-                    if (drone.droneReturning && Vector2.Distance(drone.body.position, drone.targetPos) < 10f && drone.platesOpening == false) drone.platesOpening = true;
-
                     if (Vector2.Distance(drone.body.position, drone.targetPos) < 0.1f)
                     {
                         // If target is not the port, place the building
@@ -195,14 +192,13 @@ public class DroneManager : MonoBehaviour
                             // Set drone target back to parent
                             drone.targetPos = drone.spawnPosition.position;
                             drone.target = drone.spawnPosition;
-                            Vector2 lookDirection = drone.targetPos - new Vector2(transform.position.x, transform.position.y);
+                            Vector2 lookDirection = new Vector2(drone.spawnPosition.position.x, drone.spawnPosition.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
                             drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
                             drone.droneReturning = true;
                         }
                         else
                         {
                             // Reset drone so it's ready to go again
-                            drone.platesOpening = true;
                             drone.platesClosing = true;
                         }
                     }
@@ -232,6 +228,14 @@ public class DroneManager : MonoBehaviour
         {
             for (int b = 0; b < availableDrones.Count; b++)
             {
+                // Check if all drones still exist
+                if (availableDrones[b].body == null)
+                {
+                    availableDrones.Remove(availableDrones[b]);
+                    continue;
+                }
+
+                // Check if there's a drone available to build
                 if (availableDrones[b].droneType == 1)
                 {
                     float distance = Vector2.Distance(availableDrones[b].body.position, buildingQueue[a].buildingPos.position);

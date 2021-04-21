@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5767218208579133241}
   - component: {fileID: 1075203941701220971}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment RS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,9 +184,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 12
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -270,7 +270,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f06b576ecde40104793ae0f09f6205e1, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3240315256273102134}
   - component: {fileID: 4710055909122468536}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment LS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,9 +348,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 11
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -372,7 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5628721945482800216}
   - component: {fileID: 1278694378824438189}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment LS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,9 +430,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 11
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -584,7 +584,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f06b576ecde40104793ae0f09f6205e1, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -622,7 +622,7 @@ Transform:
   m_GameObject: {fileID: 5628938638249383938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.8102}
   m_Children:
   - {fileID: 2206026822972368564}
   - {fileID: 5182088401563656292}
@@ -667,7 +667,11 @@ MonoBehaviour:
   EndScreen: {fileID: 0}
   BigBoom: {fileID: 4909203151659004837, guid: 7179437a71502864491ca81e43eafacb, type: 3}
   survival: {fileID: 0}
-  drones: []
+  drones:
+  - {fileID: 213639999556803075}
+  - {fileID: 5083977523194982931}
+  - {fileID: 4561245348650789897}
+  - {fileID: 3915253726852083502}
   droneManager: {fileID: 0}
 --- !u!212 &5628938638249383939
 SpriteRenderer:
@@ -982,7 +986,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f06b576ecde40104793ae0f09f6205e1, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1002,7 +1006,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8289581150143912529}
   - component: {fileID: 2384434608587101358}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment RS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1060,9 +1064,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 12
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1084,7 +1088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1455566175975398763}
   - component: {fileID: 6274420229178507607}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment RS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1142,9 +1146,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 12
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1984,7 +1988,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1.88
+      value: 1.11
       mode: 0
       spread: 0
       speed:
@@ -6140,7 +6144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4945689485672269130}
   - component: {fileID: 1419533700854537435}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment LS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6198,9 +6202,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 11
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6222,7 +6226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3925339132707073627}
   - component: {fileID: 1017235122848573957}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment RS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6280,9 +6284,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 12
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6338,7 +6342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7483824076929737705}
   - component: {fileID: 1847540830323231520}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hub Deployment LS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6396,9 +6400,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 397323149
-  m_SortingLayer: 3
-  m_SortingOrder: 11
+  m_SortingLayerID: 50330467
+  m_SortingLayer: 10
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6482,7 +6486,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f06b576ecde40104793ae0f09f6205e1, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

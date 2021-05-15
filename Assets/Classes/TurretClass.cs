@@ -19,6 +19,7 @@ public abstract class TurretClass : TileClass
     public int bulletAmount = 1;
     public float bulletSpeed = 80;
     public float bulletSpread = 1;
+    public bool targetLock = true;
     public float fireRate;
     public Transform[] FirePoints;
     public Transform Gun;

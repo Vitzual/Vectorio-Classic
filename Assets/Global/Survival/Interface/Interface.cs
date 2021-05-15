@@ -64,6 +64,13 @@ public class Interface : MonoBehaviour
     public int ActiveWarnings = 0;
     public GameObject BossBar;
 
+    // Selected UI elements
+    public Transform gold;
+    public Transform essence;
+    public Transform iridium;
+    public Transform heat;
+    public Transform power;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -304,13 +311,19 @@ public class Interface : MonoBehaviour
 
     public void ShowSelectedInfo(Transform a)
     {
-        Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 1;
-        Transform b = Overlay.transform.Find("Selected");
-        b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-        b.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetCost().ToString();
-        b.transform.Find("Heat").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().GetHeat().ToString();
-        b.transform.Find("Power").GetComponent<TextMeshProUGUI>().text = a.GetComponent<TileClass>().getConsumption().ToString();
-        b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
+        if(!main.BuildingStats.activeSelf)
+            main.BuildingStats.SetActive(true);
+
+        string goldUI = a.GetComponent<TileClass>().GetCost().ToString();
+        string powerUI = a.GetComponent<TileClass>().getConsumption().ToString();
+        string heatUI = a.GetComponent<TileClass>().GetHeat().ToString();
+
+        gold.GetChild(0).GetComponent<TextMeshProUGUI>().text = goldUI;
+        gold.GetChild(1).GetComponent<TextMeshProUGUI>().text = goldUI;
+        power.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerUI;
+        power.GetChild(1).GetComponent<TextMeshProUGUI>().text = powerUI;
+        heat.GetChild(0).GetComponent<TextMeshProUGUI>().text = heatUI;
+        heat.GetChild(1).GetComponent<TextMeshProUGUI>().text = heatUI;
     }
 
     public void SetSelectedHotbar(int index)

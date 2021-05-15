@@ -38,6 +38,7 @@ public class Survival : MonoBehaviour
     // EnemyHandler object
     public DroneManager droneManager;
 
+    // Save stats
     public int Playtime = 0;
     public int AutoSaveInterval = 300;
     public bool firstAuto = true;
@@ -46,16 +47,6 @@ public class Survival : MonoBehaviour
     public AudioSource music;
     public AudioClip placementSound;
     public AudioClip pipetteSound;
-
-    // Tutorial Elements (Survival Exclusive)
-    public GameObject TutorialOverlay;
-    public GameObject TutorialSlides;
-    public GameObject[] Slides;
-    public bool showingTutorial = false;
-    public int tutorialNumber = 0;
-    public int tutorialCollectors = 0;
-    public Transform[] TutorialEnemies = new Transform[3];
-    public GameObject TutorialHolder;
 
     // layers
     public LayerMask EnemyLayer;
@@ -77,10 +68,10 @@ public class Survival : MonoBehaviour
     public int iridiumStorage = 0;
     public int PowerConsumption = 0;
     public int AvailablePower = 0;
-
     public Notify[] elements;
 
     // Resource UI popups
+    public GameObject BuildingStats;
     public GameObject popup;
 
     // Add additional cost
@@ -137,6 +128,9 @@ public class Survival : MonoBehaviour
     public GameObject SelectedRadius;
     public GameObject SquareRadius;
 
+    // The ghost building when placing an object
+    public Transform GhostBuilding;
+
     // The building you currently have selected
     private Transform SelectedObj;
 
@@ -170,6 +164,9 @@ public class Survival : MonoBehaviour
     public Transform[] hotbar = new Transform[9];
 
     bool isMenu = false;
+
+    // Holds a list of all ghost objects 
+    public List<Vector2> ghostBuildings;
 
     private void Start()
     {
@@ -292,8 +289,7 @@ public class Survival : MonoBehaviour
             // Attempt to place saved buildings
             float soundHolder = manager.GetComponent<Settings>().GetSound();
             manager.GetComponent<Settings>().SetSound(0);
-
-                PlaceSavedBuildings(data.Locations);
+            PlaceSavedBuildings(data.Locations);
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -319,10 +315,6 @@ public class Survival : MonoBehaviour
             Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
             seed = Random.Range(1000000, 10000000);
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
-
-            // Show tutorial UI
-            TutorialOverlay.SetActive(true);
-            showingTutorial = true;
         }
 
         // Update bosses
@@ -337,70 +329,6 @@ public class Survival : MonoBehaviour
     private void Update()
     {
         if (isMenu) return;
-
-        // Iterates through the tutorial sequence if enabled
-        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4)
-        {
-            if (tutorialNumber == 5 && (TutorialEnemies[0] != null || TutorialEnemies[1] != null || TutorialEnemies[2] != null))
-            {
-                return;
-            }
-            else if (tutorialNumber == 5)
-            {
-                Slides[4].SetActive(false);
-                Slides[5].SetActive(true);
-            }
-
-            // Main slide (1)
-            if (Input.GetKeyDown(KeyCode.Escape) && tutorialNumber == 0)
-            {
-                TutorialOverlay.SetActive(false);
-                showingTutorial = false;
-            }
-
-            // Second slide - Welcome to Vectorio!
-            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 0)
-            {
-                Slides[0].SetActive(false);
-                Slides[1].SetActive(true);
-                tutorialNumber = 1;
-            }
-
-            // Third slide - Place gold mines
-            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 1)
-            {
-                Slides[1].SetActive(false);
-                Slides[2].SetActive(true);
-                tutorialNumber = 2;
-            }
-
-            // Fourth side - Heat 
-            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 3)
-            {
-                Slides[3].SetActive(false);
-                Slides[4].SetActive(true);
-                tutorialNumber = 4;
-                TutorialHolder.SetActive(true);
-            }
-
-            // Fourth side - Heat 
-            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 5)
-            {
-                Slides[5].SetActive(false);
-                Slides[6].SetActive(true);
-                tutorialNumber = 6;
-            }
-
-            // Fourth side - Heat 
-            else if (Input.GetKeyDown(KeyCode.Space) && tutorialNumber == 6)
-            {
-                TutorialOverlay.SetActive(false);
-                showingTutorial = false;
-            }
-
-            return;
-        }
-
 
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -417,33 +345,12 @@ public class Survival : MonoBehaviour
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen&& Input.mousePosition.y >= 200)
         {
-            if (showingTutorial)
-            {
-                if (tutorialNumber == 2)
-                {
-                    if (SelectedObj != CollectorObj)
-                    {
-                        return;
-                    }
-                }
-                else if (tutorialNumber == 4)
-                {
-                    if (SelectedObj == TurretObj)
-                    {
-                        if (!(transform.position.x == -20 && transform.position.y == 35) &&
-                            !(transform.position.x == 0 && transform.position.y == 35) &&
-                            !(transform.position.x == 20 && transform.position.y == 35)) { return; }
-                    }
-                    else return;
-                }
-            }
-
+            // Check for ghost variant
+            foreach(Vector2 building in ghostBuildings)
+                if (new Vector2(transform.position.x,transform.position.y) == building) return;
 
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
-
-            // Raycast tile to see if there is an enemy occupying the tile
-            RaycastHit2D enemyHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, EnemyLayer);
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -461,7 +368,7 @@ public class Survival : MonoBehaviour
                 if (aocbHit.collider == null) return;
 
             // Check if placement is within AOC
-            if (ValidTile && enemyHit.collider == null && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
+            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
                 if (SelectedObj == CollectorObj)
                 {
@@ -493,59 +400,19 @@ public class Survival : MonoBehaviour
                     // Remove gold from player once confirmed
                     RemoveGold(ObjectComponent.GetCost());
 
-                    // If it is a wall, dont use rotation
-                    LastObj = Instantiate(SelectedObj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                    // Place the building and register as a ghost variant and queue it in the drone network
+                    LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                    LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+                    LastObj.name = "Ghost "+ SelectedObj.name;
                     droneManager.queueBuilding(SelectedObj, LastObj);
+                    ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
 
                     // Create a UI resource popup thing idk lmaooo
                     UI.CreateResourcePopup("- " + ObjectComponent.GetCost(), "Gold", LastObj.position);
 
-                    // Tutorial only
-                    if (showingTutorial)
-                    {
-                        if (tutorialNumber == 2)
-                        {
-                            Debug.Log(tutorialCollectors);
-                            tutorialCollectors++;
-                            if (tutorialCollectors == 5)
-                            {
-                                Slides[2].SetActive(false);
-                                Slides[3].SetActive(true);
-                                tutorialNumber = 3;
-                                tutorialCollectors = 0;
-                            }
-                        }
-                        else if (tutorialNumber == 4 && tutorialCollectors != 3)
-                        {
-                            tutorialCollectors++;
-                            if (tutorialCollectors == 3)
-                            {
-                                UI.Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
-                                Selected.sprite = null;
-                                SelectedObj = null;
-                                rotation = 0;
-                                UI.DisableActiveInfo();
-                                UI.ShowingInfo = false;
-                                SelectedRadius.SetActive(false);
-
-                                TutorialEnemies[0] = Instantiate(enemies[0], new Vector3(5, 85), Quaternion.Euler(new Vector3(0, 0, 0)));
-                                TutorialEnemies[1] = Instantiate(enemies[0], new Vector3(10, 95), Quaternion.Euler(new Vector3(0, 0, 0)));
-                                TutorialEnemies[2] = Instantiate(enemies[0], new Vector3(-5, 90), Quaternion.Euler(new Vector3(0, 0, 0)));
-
-                                tutorialNumber = 5;
-                                TutorialHolder.SetActive(false);
-                            }
-                        }
-                    }
-
-                    // Instantiate the price floating thing
-                    // GameObject PriceHolder = Instantiate(popup, new Vector3(LastObj.position.x, LastObj.position.y + 5f, LastObj.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
-                    // PriceHolder.GetComponent<Popup>().SetPopup("- " + ObjectComponent.GetCost());
-
                     // Set component values
-                    LastObj.name = SelectedObj.name;
-                    increasePowerConsumption(LastObj.GetComponent<TileClass>().getConsumption());
-                    Spawner.increaseHeat(LastObj.GetComponent<TileClass>().GetHeat());
+                    increasePowerConsumption(SelectedObj.GetComponent<TileClass>().getConsumption());
+                    Spawner.increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
 
                     // Play placement sound
                     // float audioScale = cameraScroll.getZoom() / 1400f;
@@ -567,14 +434,6 @@ public class Survival : MonoBehaviour
                     SelectedOverlay.SetActive(true);
                     SelectedOverlay.transform.position = rayHit.collider.transform.position;
                     PromptOverlay.alpha = 1;
-
-                    // Check to see if the object is an engineer
-                    if (rayHit.collider.name == "Engineer")
-                    {
-                        EngineerHolder = rayHit.collider.transform;
-                        rayHit.collider.GetComponent<Engineer>().CheckAdjacentTiles();
-                        UI.OpenEngineer(EngineerHolder.GetComponent<Engineer>().applyingModifications);
-                    }
                 }
             }
         }
@@ -680,12 +539,12 @@ public class Survival : MonoBehaviour
         // If escape pressed and selected object isn't null, unselect it
         else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
         {
-            UI.Overlay.transform.Find("Selected").GetComponent<CanvasGroup>().alpha = 0;
             Selected.sprite = null;
             SelectedObj = null;
             rotation = 0;
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
+            BuildingStats.SetActive(false);
             SelectedRadius.SetActive(false);
             SquareRadius.SetActive(false);
 
@@ -1206,8 +1065,6 @@ public class Survival : MonoBehaviour
     // Select object on hotbar
     public void SelectHotbar(int index)
     {
-        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4) return;
-
         Transform holder = SelectedObj;
         try
         {
@@ -1245,8 +1102,6 @@ public class Survival : MonoBehaviour
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
     {
-        if (showingTutorial && tutorialNumber != 2 && tutorialNumber != 4) return;
-
         // Disable selected overlay
         UI.ShowingInfo = false;
         PromptOverlay.alpha = 0;
@@ -1298,8 +1153,7 @@ public class Survival : MonoBehaviour
         if (SelectedObj.GetComponent<TileClass>().isBig)
         {
             largerUnit = true;
-            if (SelectedObj.name != "Turbine")
-                transform.localScale = new Vector2(2, 2);
+            transform.localScale = new Vector2(2, 2);
         }
         else
         {

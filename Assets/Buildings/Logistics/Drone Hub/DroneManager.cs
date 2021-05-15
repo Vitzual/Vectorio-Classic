@@ -25,6 +25,7 @@ public class DroneManager : MonoBehaviour
 
             targetPos = target.position;
             droneSpeed = 25f;
+            droneType = 1;
 
             platesOpening = true;
             platesClosing = false;
@@ -42,6 +43,7 @@ public class DroneManager : MonoBehaviour
         public Transform[] plates;
         public float droneSpeed;
         public int distanceToMove;
+        public int droneType;
 
         // Animation factors
         public bool platesOpening;
@@ -102,6 +104,9 @@ public class DroneManager : MonoBehaviour
     public CameraScroll cameraScroll;
     public AudioClip placementSound;
 
+    // Survival
+    public Survival survival;
+
     // Update is called once per frame
     void Update()
     {
@@ -123,52 +128,10 @@ public class DroneManager : MonoBehaviour
             }
             else
             {
-                // Open the plates
-                if (drone.platesOpening)
-                {
-                    drone.plates[0].Translate(Vector3.left * Time.deltaTime * 2f);
-                    drone.plates[1].Translate(Vector3.right * Time.deltaTime * 2f);
-
-                    if (!drone.droneReturning && drone.body.localScale.x <= 1f)
-                    {
-                        drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
-                    }
-
-                    if (drone.plates[1].localPosition.x >= 2)
-                    {
-                        drone.platesOpening = false;
-                    }
-
-                    if (!drone.droneReturning) continue;
-                }
-                // Close the plates
-                else if (drone.platesClosing)
-                {
-                    drone.plates[0].Translate(Vector3.right * Time.deltaTime * 2f);
-                    drone.plates[1].Translate(Vector3.left * Time.deltaTime * 2f);
-
-                    if (drone.droneReturning && drone.body.localScale.x >= 0.8f)
-                    {
-                        drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
-                    }
-
-                    if (drone.plates[1].localPosition.x <= 0)
-                    {
-                        drone.plates[0].localPosition = new Vector2(0, 0);
-                        drone.plates[1].localPosition = new Vector2(0, 0);
-                        drone.platesClosing = false;
-
-                        if (drone.droneReturning)
-                        {
-                            // Reset drone so it's ready to go again
-                            registerAvailableDrone(drone.body, drone.spawnPosition, 1, drone.plates);
-                            drone.body.position = drone.spawnPosition.position;
-                            drone.body.localScale = new Vector2(0.8f, 0.8f);
-                            constructionDrones.Remove(drone);
-                            i--;
-                        }
-                    }
-                }
+                // Update plates
+                if (UpdatePlates(drone))
+                    if (drone.droneReturning) i--;
+                    else continue;
 
                 // Move drone forward towards target if not null.
                 if (drone.target != null)
@@ -180,9 +143,11 @@ public class DroneManager : MonoBehaviour
                         // If target is not the port, place the building
                         if (drone.target != drone.spawnPosition)
                         {
+                            // Create the new building and remove the ghost version
                             var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
                             LastObj.name = drone.targetBuilding.name;
                             LastObj.GetComponent<TileClass>().IncreaseHealth();
+                            survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
                             Destroy(drone.target.gameObject);
 
                             // Play audio
@@ -190,16 +155,12 @@ public class DroneManager : MonoBehaviour
                             AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
 
                             // Set drone target back to parent
-                            drone.targetPos = drone.spawnPosition.position;
-                            drone.target = drone.spawnPosition;
-                            Vector2 lookDirection = new Vector2(drone.spawnPosition.position.x, drone.spawnPosition.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
-                            drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
-                            drone.droneReturning = true;
+                            returnToParent(drone);
                         }
                         else
                         {
                             // Reset drone so it's ready to go again
-                            drone.platesClosing = true;
+                            if (!drone.platesClosing) resetDrone(drone);
                         }
                     }
                 }
@@ -209,7 +170,7 @@ public class DroneManager : MonoBehaviour
                 {
                     drone.targetPos = drone.spawnPosition.position;
                     drone.target = drone.spawnPosition;
-
+                    
                     Vector2 lookDirection = drone.targetPos - new Vector2(transform.position.x, transform.position.y);
                     drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
 
@@ -257,6 +218,97 @@ public class DroneManager : MonoBehaviour
             availableDrones.Remove(availableDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
         }
+    }
+
+    // Reset the drone after it's task is complete
+    public void resetDrone(ConstructionDrone drone)
+    {
+        drone.platesClosing = true;
+
+        // Make drone appear below all panels
+        int tracker = 0;
+        foreach (Transform child in drone.body)
+        {
+            child.GetComponent<SpriteRenderer>().sortingOrder = tracker;
+            tracker++;
+        }
+    }
+
+    // Set the drone to return back to the parent
+    public void returnToParent(ConstructionDrone drone)
+    {
+        drone.targetPos = drone.spawnPosition.position;
+        drone.target = drone.spawnPosition;
+        Vector2 lookDirection = new Vector2(drone.spawnPosition.position.x, drone.spawnPosition.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+        drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+        drone.droneReturning = true;
+    }
+
+    // Update the positioning and layering of the drones plates
+    public bool UpdatePlates(ConstructionDrone drone)
+    {
+        // Open the plates
+        if (drone.platesOpening)
+        {
+            drone.plates[0].Translate(Vector3.left * Time.deltaTime * 1.5f);
+            drone.plates[1].Translate(Vector3.right * Time.deltaTime * 1.5f);
+
+            if (!drone.droneReturning && drone.body.localScale.x <= 1f)
+            {
+                drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
+            }
+
+            if (drone.plates[1].localPosition.x >= 2)
+            {
+                drone.platesOpening = false;
+
+                // Make drone appear above all panels
+                int tracker = 21;
+                foreach(Transform child in drone.body)
+                {
+                    child.GetComponent<SpriteRenderer>().sortingOrder = tracker;
+                    tracker++;
+                }
+            }
+
+            if (!drone.droneReturning) return true;
+        }
+
+        // Close the plates
+        else if (drone.platesClosing)
+        {
+            drone.plates[0].Translate(Vector3.right * Time.deltaTime * 1.5f);
+            drone.plates[1].Translate(Vector3.left * Time.deltaTime * 1.5f);
+
+            if (drone.droneReturning && drone.body.localScale.x >= 0.8f)
+            {
+                drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
+            }
+
+            if (drone.plates[1].localPosition.x <= 0)
+            {
+                drone.plates[0].localPosition = new Vector2(0, 0);
+                drone.plates[1].localPosition = new Vector2(0, 0);
+                drone.platesClosing = false;
+
+                if (drone.droneReturning)
+                {
+                    // Reset drone so it's ready to go again
+                    registerAvailableDrone(drone.body, drone.spawnPosition, drone.droneType, drone.plates);
+                    drone.body.position = drone.spawnPosition.position;
+                    drone.body.localScale = new Vector2(0.8f, 0.8f);
+
+                    // Remove the drone
+                    switch (drone.droneType)
+                    {
+                        case 1:
+                            constructionDrones.Remove(drone);
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // Register an active construction drone

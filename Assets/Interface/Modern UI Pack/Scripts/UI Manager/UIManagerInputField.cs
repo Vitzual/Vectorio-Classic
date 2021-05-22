@@ -70,7 +70,7 @@ namespace Michsky.UI.ModernUIPack
                 TextMeshProUGUI currentText = texts[i].GetComponent<TextMeshProUGUI>();
                 currentText.color = new Color(UIManagerAsset.inputFieldColor.r, UIManagerAsset.inputFieldColor.g, UIManagerAsset.inputFieldColor.b, currentText.color.a);
                 currentText.font = UIManagerAsset.inputFieldFont;
-                currentText.fontSize = UIManagerAsset.inputFieldFontSize;
+                // currentText.fontSize = UIManagerAsset.inputFieldFontSize;
             }
         }
     }

@@ -84,8 +84,8 @@ namespace Michsky.UI.ModernUIPack
             {
                 TextMeshProUGUI currentText = texts[i].GetComponent<TextMeshProUGUI>();
                 currentText.color = new Color(UIManagerAsset.selectorColor.r, UIManagerAsset.selectorColor.g, UIManagerAsset.selectorColor.b, currentText.color.a);
-                currentText.font = UIManagerAsset.selectorFont;
-                currentText.fontSize = UIManagerAsset.hSelectorFontSize;
+                // currentText.font = UIManagerAsset.selectorFont;
+                // currentText.fontSize = UIManagerAsset.hSelectorFontSize;
             }
 
             if (hSelector != null)

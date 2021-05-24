@@ -20,8 +20,8 @@ public class Distributor : TileClass
     // Kill defense
     public override void DestroyTile()
     {
+        // Destroy buildings in the area
         var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
-        transform.Find("AOCB").gameObject.SetActive(false);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
@@ -36,6 +36,23 @@ public class Distributor : TileClass
                 }
             }
         }
+
+        // Destroy ghost buildings in the area
+        DroneManager droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
+        colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Ghost"));
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            try
+            {
+                droneManager.dequeueBuilding(colliders[i].transform);
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        transform.Find("AOCB").gameObject.SetActive(false);
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
         BuildingHandler.buildings.Remove(transform);

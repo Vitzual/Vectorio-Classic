@@ -15,7 +15,7 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class ConstructionDrone
     {
-        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone)
+        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone, int gold, int power, int heat)
         {
             this.body = body;
             this.target = target;
@@ -23,6 +23,10 @@ public class DroneManager : MonoBehaviour
             this.spawnPosition = spawnPosition;
             this.plates = plates;
             this.isHubDrone = isHubDrone;
+
+            goldCost = gold;
+            powerCost = power;
+            heatCost = heat;
 
             targetPos = target.position;
             droneSpeed = 25f;
@@ -35,6 +39,10 @@ public class DroneManager : MonoBehaviour
             Vector2 lookDirection = targetPos - new Vector2(body.position.x, body.position.y);
             body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
         }
+
+        public int goldCost;
+        public int powerCost;
+        public int heatCost;
 
         public Transform body;
         public Transform target;
@@ -91,14 +99,20 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class BuildingQueue
     {
-        public BuildingQueue(Transform building, Transform buildingPos)
+        public BuildingQueue(Transform building, Transform buildingPos, int gold, int power, int heat)
         {
             this.building = building;
             this.buildingPos = buildingPos;
+            goldCost = gold;
+            powerCost = power;
+            heatCost = heat;
         }
 
         public Transform building;
         public Transform buildingPos;
+        public int goldCost;
+        public int powerCost;
+        public int heatCost;
     }
     public List<BuildingQueue> buildingQueue;
 
@@ -217,7 +231,7 @@ public class DroneManager : MonoBehaviour
         {
             int a = available[0];
             int b = available[1];
-            registerConstructionDrone(availableDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableDrones[b].port, availableDrones[b].plates, availableDrones[b].isHubDrone);
+            registerConstructionDrone(availableDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableDrones[b].port, availableDrones[b].plates, availableDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost);
             availableDrones.Remove(availableDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
             survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count);
@@ -305,6 +319,7 @@ public class DroneManager : MonoBehaviour
                 {
                     // Reset drone so it's ready to go again
                     registerAvailableDrone(drone.body, drone.spawnPosition, drone.droneType, drone.plates, drone.isHubDrone);
+                    survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count - 1);
                     drone.body.position = drone.spawnPosition.position;
                     if (!drone.isHubDrone) drone.body.localScale = new Vector2(0.8f, 0.8f);
                     else drone.body.localScale = new Vector2(1.2f, 1.2f);
@@ -323,22 +338,21 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active construction drone
-    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone)
+    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat)
     {
-        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone));
+        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat));
     }
 
     // Register an available drone
     public void registerAvailableDrone(Transform body, Transform port, int droneType, Transform[] plates, bool isHubDrone)
     {
         availableDrones.Add(new AvailableDrones(body, port, droneType, plates, isHubDrone));
-        survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count - 1);
     }
 
     // Queue a building to be placed
-    public void queueBuilding(Transform building, Transform ghostBuilding)
+    public void queueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
     {
-        buildingQueue.Add(new BuildingQueue(building, ghostBuilding));
+        buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat));
     }
 
     // Remove a queued building
@@ -349,7 +363,11 @@ public class DroneManager : MonoBehaviour
         {
             if (buildingQueue[i].buildingPos.position == ghost.position)
             {
+                survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
+                survival.AddGold(buildingQueue[i].goldCost);
+                survival.decreasePowerConsumption(buildingQueue[i].powerCost);
+                survival.Spawner.decreaseHeat(buildingQueue[i].heatCost);
                 buildingQueue.RemoveAt(i);
                 return;
             }
@@ -360,10 +378,20 @@ public class DroneManager : MonoBehaviour
         {
             if (constructionDrones[i].targetPos == new Vector2(ghost.position.x, ghost.position.y))
             {
+                survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
+                survival.AddGold(constructionDrones[i].goldCost);
+                survival.decreasePowerConsumption(constructionDrones[i].powerCost);
+                survival.Spawner.decreaseHeat(constructionDrones[i].heatCost);
                 returnToParent(constructionDrones[i]);
                 return;
             }
         }
+    }
+
+    // Forces a UI update
+    public void forceUI()
+    {
+        survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count);
     }
 }

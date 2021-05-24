@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -132,10 +133,11 @@ MonoBehaviour:
   Effect: {fileID: 8342469565711734033, guid: 4e90331f6e377bb419d9ba9ac0e50379, type: 3}
   maxhp: 25
   health: 25
-  heat: 15
+  heat: 10
   cost: 400
   power: 8
   ID: 2
+  isBig: 0
   description: Extracts gold from the ground. Can only be placed on a gold node.
   EngineerModifications: []
   AppliedModification: 
@@ -144,10 +146,6 @@ MonoBehaviour:
   enhanced: 0
   popup: {fileID: 5542316865307318698, guid: c78887f75bdc7db46825029668c37dd7, type: 3}
   rPopup: {fileID: 4259469596875681493, guid: c78887f75bdc7db46825029668c37dd7, type: 3}
-  animPlaying: 0
-  isFirstAnim: 1
-  sizeTracker: 1
-  sizeGrowing: 0
 --- !u!114 &2412374506016095676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +233,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -316,6 +315,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

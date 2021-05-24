@@ -131,7 +131,7 @@ public class Survival : MonoBehaviour
     public Transform GhostBuilding;
 
     // The building you currently have selected
-    private Transform SelectedObj;
+    public Transform SelectedObj;
 
     // The hotbar building you last hovered over
     public Transform HoveredObj;
@@ -314,7 +314,7 @@ public class Survival : MonoBehaviour
         }
 
         // Check if user left clicks
-        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen&& Input.mousePosition.y >= 200)
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
         {
             // Check for ghost variant
             foreach(Vector2 building in ghostBuildings)
@@ -375,7 +375,7 @@ public class Survival : MonoBehaviour
                     LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
                     LastObj.name = "Ghost "+ SelectedObj.name;
-                    droneManager.queueBuilding(SelectedObj, LastObj);
+                    droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
                     ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
 
                     // Create a UI resource popup thing idk lmaooo
@@ -1054,7 +1054,7 @@ public class Survival : MonoBehaviour
             SwitchObj();
             UI.SetSelectedHotbar(index);
         }
-        catch { SelectedObj = holder; }
+        catch { Debug.Log("Error selecting object at index " + index); SelectedObj = holder; }
     }
 
 
@@ -1127,7 +1127,7 @@ public class Survival : MonoBehaviour
         UI.ShowSelectedInfo(SelectedObj);
 
         // Set radius dimensions if selected object is defense
-        if (SelectedObj.tag == "Defense" && SelectedObj.name != "Wall")
+        if (SelectedObj.tag == "Defense" && SelectedObj.name != "Wall" && SelectedObj.name != "Drone Hub")
         {
             float range = SelectedObj.GetComponent<TurretClass>().range * 2 + Research.bonus_range;
             SelectedRadius.transform.localScale = new Vector3(range, 1, range);

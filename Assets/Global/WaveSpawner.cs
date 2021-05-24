@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
     public int bossesDefeated = 0;
 
     // Big attack thing
-    public int attackEvery = 60;
+    public int attackEvery = 300;
     public int attackTracker = 50;
 
     [System.Serializable]
@@ -81,6 +81,9 @@ public class WaveSpawner : MonoBehaviour
         healthMulti = Difficulties.enemyHealthMulti / 100;
         damageMulti = Difficulties.enemyDamageMulti / 100;
         speedMulti = Difficulties.enemySpeedMulti / 100;
+
+        attackEvery = attackEvery - (int)(Difficulties.enemyAmountMulti / 3);
+        Debug.Log(attackEvery);
     }
 
     public void SetSpawnAmount(int a)

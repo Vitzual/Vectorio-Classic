@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
 
     public void Start()
     {
-        WorldName.characterLimit = 24;
+        WorldName.characterLimit = 12;
         WorldSeed.characterLimit = 10;
 
         Time.timeScale = 1f;
@@ -282,7 +282,7 @@ public class Menu : MonoBehaviour
 
     public void SelectSave()
     {
-        string SavePath = Application.persistentDataPath + "/save_" + lookingAtSave + ".vectorio";
+        string SavePath = Application.persistentDataPath + "/alpha_save_" + lookingAtSave + ".vectorio";
 
         SetGameSave(lookingAtSave);
 
@@ -326,6 +326,7 @@ public class Menu : MonoBehaviour
     {
         Difficulties.world = WorldName.text;
         Difficulties.seed = WorldSeed.text;
+        Difficulties.mode = "ALPHA SAVE";
         Difficulties.goldMulti = GoldMulti.mainSlider.value;
         Difficulties.essenceMulti = EssenceMulti.mainSlider.value;
         Difficulties.iridiumMulti = IridiumMulti.mainSlider.value;
@@ -346,7 +347,7 @@ public class Menu : MonoBehaviour
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/location.save";
         FileStream stream = new FileStream(path, FileMode.Create);
-        formatter.Serialize(stream, "/save_"+a+".vectorio");
+        formatter.Serialize(stream, "/alpha_save_" + a+".vectorio");
         stream.Close();
     }
 }

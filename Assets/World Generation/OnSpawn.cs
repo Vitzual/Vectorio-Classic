@@ -83,7 +83,7 @@ public class OnSpawn : MonoBehaviour
         GenEssence();
         GenIridium();
 
-        if (defOverride || (!save && Difficulties.enemyOutposts)) { GenBases(); GenHives(); }
+        if (defOverride || (!save && Difficulties.enemyOutposts)) { GenBases(); }
     }
 
     // Enemy Base Generation
@@ -91,12 +91,11 @@ public class OnSpawn : MonoBehaviour
     {
         int x;
         int y;
-        int max = maxBases;
         int att = 0;
 
         bool valid = false;
 
-        for (int i = 0; i < max; i++)
+        for (int i = 0; i < maxBases; i++)
         {
             while (!valid)
             {
@@ -105,7 +104,7 @@ public class OnSpawn : MonoBehaviour
 
                 if (x > 100 || x < -100 || y > 100 || y < -100)
                 {
-                    var colliders = Physics2D.OverlapBoxAll(new Vector2(x, y), new Vector2(500, 500), 0, 1 << LayerMask.NameToLayer("Enemy"));
+                    var colliders = Physics2D.OverlapBoxAll(new Vector2(x, y), new Vector2(100, 100), 0, 1 << LayerMask.NameToLayer("Enemy"));
                     if (colliders.Length == 0)
                     {
                         // Generate base

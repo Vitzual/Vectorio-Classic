@@ -71,6 +71,10 @@ public class Interface : MonoBehaviour
     public Transform heat;
     public Transform power;
 
+    // Drones
+    public ProgressBar dronesBar;
+    public TextMeshProUGUI dronesText;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -79,6 +83,14 @@ public class Interface : MonoBehaviour
         ResearchOpen = false;
         BuildingOpen = false;
         BossInfoOpen = false;
+    }
+
+    public void updateDronesUI(int a, int b)
+    {
+        dronesBar.currentPercent = a;
+        dronesBar.maxValue = b;
+        dronesBar.UpdateUI();
+        dronesText.text = a + "/" + b;
     }
 
     public void CreateResourcePopup(string amount, string name, Vector3 position)

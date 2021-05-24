@@ -49,6 +49,7 @@ public class Survival : MonoBehaviour
     public AudioClip pipetteSound;
 
     // layers
+    public LayerMask GhostLayer;
     public LayerMask EnemyLayer;
     public LayerMask AOCBLayer;
 
@@ -415,6 +416,11 @@ public class Survival : MonoBehaviour
 
                 // Create a UI resource popup thing idk lmaooo
                 UI.CreateResourcePopup("+ " + amount, "Gold", rayHit.collider.transform.position);
+            }
+            else
+            {
+                RaycastHit2D rayGhost = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
+                if (rayGhost.collider != null) droneManager.dequeueBuilding(rayGhost.collider.transform);
             }
         }
 

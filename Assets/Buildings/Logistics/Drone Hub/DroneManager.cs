@@ -15,13 +15,14 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class ConstructionDrone
     {
-        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates)
+        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone)
         {
             this.body = body;
             this.target = target;
             this.targetBuilding = targetBuilding;
             this.spawnPosition = spawnPosition;
             this.plates = plates;
+            this.isHubDrone = isHubDrone;
 
             targetPos = target.position;
             droneSpeed = 25f;
@@ -44,6 +45,7 @@ public class DroneManager : MonoBehaviour
         public float droneSpeed;
         public int distanceToMove;
         public int droneType;
+        public bool isHubDrone;
 
         // Animation factors
         public bool platesOpening;
@@ -62,18 +64,20 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class AvailableDrones
     {
-        public AvailableDrones(Transform body, Transform port, int droneType, Transform[] plates)
+        public AvailableDrones(Transform body, Transform port, int droneType, Transform[] plates, bool isHubDrone)
         {
             this.body = body;
             this.port = port;
             this.droneType = droneType;
             this.plates = plates;
+            this.isHubDrone = isHubDrone;
         }
 
         public Transform[] plates;
         public Transform body;
         public Transform port;
         public int droneType;
+        public bool isHubDrone;
     }
     public List<AvailableDrones> availableDrones;
 
@@ -213,7 +217,7 @@ public class DroneManager : MonoBehaviour
         {
             int a = available[0];
             int b = available[1];
-            registerConstructionDrone(availableDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableDrones[b].port, availableDrones[b].plates);
+            registerConstructionDrone(availableDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableDrones[b].port, availableDrones[b].plates, availableDrones[b].isHubDrone);
             availableDrones.Remove(availableDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
         }
@@ -252,9 +256,12 @@ public class DroneManager : MonoBehaviour
             drone.plates[0].Translate(Vector3.left * Time.deltaTime * 1.5f);
             drone.plates[1].Translate(Vector3.right * Time.deltaTime * 1.5f);
 
-            if (!drone.droneReturning && drone.body.localScale.x <= 1f)
+            if (!drone.droneReturning)
             {
-                drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
+                if (drone.isHubDrone && drone.body.localScale.x <= 1.4f)
+                    drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
+                else if (drone.body.localScale.x <= 1f)
+                    drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
             }
 
             if (drone.plates[1].localPosition.x >= 2)
@@ -279,9 +286,12 @@ public class DroneManager : MonoBehaviour
             drone.plates[0].Translate(Vector3.right * Time.deltaTime * 1.5f);
             drone.plates[1].Translate(Vector3.left * Time.deltaTime * 1.5f);
 
-            if (drone.droneReturning && drone.body.localScale.x >= 0.8f)
+            if (drone.droneReturning)
             {
-                drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
+                if (drone.isHubDrone && drone.body.localScale.x >= 1.2f)
+                    drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
+                else if (drone.body.localScale.x >= 0.8f)
+                    drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
             }
 
             if (drone.plates[1].localPosition.x <= 0)
@@ -293,9 +303,10 @@ public class DroneManager : MonoBehaviour
                 if (drone.droneReturning)
                 {
                     // Reset drone so it's ready to go again
-                    registerAvailableDrone(drone.body, drone.spawnPosition, drone.droneType, drone.plates);
+                    registerAvailableDrone(drone.body, drone.spawnPosition, drone.droneType, drone.plates, drone.isHubDrone);
                     drone.body.position = drone.spawnPosition.position;
-                    drone.body.localScale = new Vector2(0.8f, 0.8f);
+                    if (!drone.isHubDrone) drone.body.localScale = new Vector2(0.8f, 0.8f);
+                    else drone.body.localScale = new Vector2(1.2f, 1.2f);
 
                     // Remove the drone
                     switch (drone.droneType)
@@ -311,20 +322,48 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active construction drone
-    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates)
+    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone)
     {
-        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates));
+        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone));
+        survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count - 1);
     }
 
     // Register an available drone
-    public void registerAvailableDrone(Transform body, Transform port, int droneType, Transform[] plates)
+    public void registerAvailableDrone(Transform body, Transform port, int droneType, Transform[] plates, bool isHubDrone)
     {
-        availableDrones.Add(new AvailableDrones(body, port, droneType, plates));
+        availableDrones.Add(new AvailableDrones(body, port, droneType, plates, isHubDrone));
+        survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count - 1);
     }
 
     // Queue a building to be placed
     public void queueBuilding(Transform building, Transform ghostBuilding)
     {
         buildingQueue.Add(new BuildingQueue(building, ghostBuilding));
+    }
+
+    // Remove a queued building
+    public void dequeueBuilding(Transform ghost)
+    {
+        // Check the building queue
+        for (int i = 0; i < buildingQueue.Count; i++)
+        {
+            if (buildingQueue[i].buildingPos.position == ghost.position)
+            {
+                Destroy(ghost.gameObject);
+                buildingQueue.RemoveAt(i);
+                return;
+            }
+        }
+
+        // Check active drone targets
+        for (int i = 0; i < constructionDrones.Count; i++)
+        {
+            if (constructionDrones[i].targetPos == new Vector2(ghost.position.x, ghost.position.y))
+            {
+                Destroy(ghost.gameObject);
+                returnToParent(constructionDrones[i]);
+                return;
+            }
+        }
     }
 }

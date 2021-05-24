@@ -35,7 +35,7 @@ public class Dronehub : TileClass
                 activeDrone.name = constructorDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableDrone(activeDrone, transform, droneType, new Transform[] { leftPanel, rightPanel });
+                droneManager.registerAvailableDrone(activeDrone, transform, droneType, new Transform[] { leftPanel, rightPanel }, false);
                 break;
         }
     }

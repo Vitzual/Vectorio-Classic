@@ -69,6 +69,7 @@ public class Survival : MonoBehaviour
     public int iridiumStorage = 0;
     public int PowerConsumption = 0;
     public int AvailablePower = 0;
+    public static bool Blackout = false;
     public Notify[] elements;
 
     // Resource UI popups
@@ -138,9 +139,6 @@ public class Survival : MonoBehaviour
     // Stores information about previously selected object
     private Transform LastObj;
 
-    // The rotation of the selected object
-    private float rotation = 0f;
-
     // If the object selected is 2x2 instead of 1x1
     public bool largerUnit = false;
 
@@ -193,88 +191,98 @@ public class Survival : MonoBehaviour
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
 
-        // Check to see if there's a difficulty saved
-        try
+        if (data != null)
         {
-            // Set world data
-            Difficulties.world = data.WorldName;
-            Difficulties.mode = data.WorldMode;
-            Difficulties.seed = data.WorldSeed;
-            Difficulties.version = data.WorldVersion;
 
-            // Set resources
-            Difficulties.goldMulti = data.GoldAmount;
-            Difficulties.essenceMulti = data.EssenceAmount;
-            Difficulties.iridiumMulti = data.IridiumAmount;
+            // Check to see if there's a difficulty saved
+            try
+            {
+                // Set world data
+                Difficulties.world = data.WorldName;
+                Difficulties.mode = data.WorldMode;
+                Difficulties.seed = data.WorldSeed;
+                Difficulties.version = data.WorldVersion;
 
-            // Set enemies
-            Difficulties.enemyAmountMulti = data.EnemyAmountMulti;
-            Difficulties.enemyHealthMulti = data.EnemyHealthMulti;
-            Difficulties.enemyDamageMulti = data.EnemyDamageMulti;
-            Difficulties.enemyWaves = data.EnemyGroups;
-            Difficulties.enemyOutposts = data.EnemyOutposts;
-            Difficulties.enemyGuardians = data.EnemyGuaridans;
-        }
-        catch
-        {
-            Debug.Log("Save file contains obsolete data!");
-        }
+                // Set resources
+                Difficulties.goldMulti = data.GoldAmount;
+                Difficulties.essenceMulti = data.EssenceAmount;
+                Difficulties.iridiumMulti = data.IridiumAmount;
 
-        try { Playtime = data.time; }
-        catch { Debug.Log("Save file does not contain time play tracking"); Playtime = 0; }
+                // Set enemies
+                Difficulties.enemyAmountMulti = data.EnemyAmountMulti;
+                Difficulties.enemyHealthMulti = data.EnemyHealthMulti;
+                Difficulties.enemyDamageMulti = data.EnemyDamageMulti;
+                Difficulties.enemyWaves = data.EnemyGroups;
+                Difficulties.enemyOutposts = data.EnemyOutposts;
+                Difficulties.enemyGuardians = data.EnemyGuaridans;
+            }
+            catch
+            {
+                Debug.Log("Save file contains obsolete data!");
+            }
 
-        // Set power usage
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-        // Load settings
-        manager.GetComponent<Settings>().LoadSettings();
-
-        // Attempt to load save data 
-        try
-        {
-            // Set resource amounts
-            gold = data.Gold;
-            essence = data.Essence;
-            iridium = data.Iridium;
-            UI.GoldAmount.text = gold.ToString();
-            UI.EssenceAmount.text = essence.ToString();
-            UI.IridiumAmount.text = iridium.ToString();
-
-            // Force tech tree update
-            tech.loadSaveData(data.UnlockLevel);
-
-            // Generate world data
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
-
-            // Attempt to place saved buildings
-            float soundHolder = manager.GetComponent<Settings>().GetSound();
-            manager.GetComponent<Settings>().SetSound(0);
-            PlaceSavedBuildings(data.Locations);
+            try { Playtime = data.time; }
+            catch { Debug.Log("Save file does not contain time play tracking"); Playtime = 0; }
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
-            // Get research save data
-            rsrch.SetResearchData(data.ResearchedTiers);
+            // Load settings
+            manager.GetComponent<Settings>().LoadSettings();
 
-            // Place saved enemies 
+            // Attempt to load save data 
             try
             {
-                PlaceSavedEnemies(data.Enemies);
+                // Set resource amounts
+                gold = data.Gold;
+                essence = data.Essence;
+                iridium = data.Iridium;
+                UI.GoldAmount.text = gold.ToString();
+                UI.EssenceAmount.text = essence.ToString();
+                UI.IridiumAmount.text = iridium.ToString();
+
+                // Force tech tree update
+                tech.loadSaveData(data.UnlockLevel);
+
+                // Generate world data
+                GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
+
+                // Attempt to place saved buildings
+                float soundHolder = manager.GetComponent<Settings>().GetSound();
+                manager.GetComponent<Settings>().SetSound(0);
+                PlaceSavedBuildings(data.Locations);
+
+                // Set power usage
+                UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
+                UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+
+                // Get research save data
+                rsrch.SetResearchData(data.ResearchedTiers);
+
+                // Place saved enemies 
+                try
+                {
+                    PlaceSavedEnemies(data.Enemies);
+                }
+                catch
+                {
+                    Debug.Log("Save file contains obsolete enemy data!");
+                }
+                manager.GetComponent<Settings>().SetSound(soundHolder);
             }
-            catch
+            catch (System.Exception e)
             {
-                Debug.Log("Save file contains obsolete enemy data!");
+                // New save
+                Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
+                GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
             }
-            manager.GetComponent<Settings>().SetSound(soundHolder);
+
         }
-        catch (System.Exception e)
+        else
         {
-            // New save
-            Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
+            Debug.LogError("Save data could not be loaded. Overriding to default state.");
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Random.Range(0, 1000000000).ToString(), false, true);
         }
 
         // Update bosses
@@ -506,7 +514,6 @@ public class Survival : MonoBehaviour
         {
             Selected.sprite = null;
             SelectedObj = null;
-            rotation = 0;
             UI.DisableActiveInfo();
             UI.ShowingInfo = false;
             BuildingStats.SetActive(false);

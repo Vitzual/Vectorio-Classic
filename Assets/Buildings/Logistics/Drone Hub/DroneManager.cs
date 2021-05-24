@@ -220,6 +220,7 @@ public class DroneManager : MonoBehaviour
             registerConstructionDrone(availableDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableDrones[b].port, availableDrones[b].plates, availableDrones[b].isHubDrone);
             availableDrones.Remove(availableDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
+            survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count);
         }
     }
 
@@ -325,7 +326,6 @@ public class DroneManager : MonoBehaviour
     public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone)
     {
         constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone));
-        survival.UI.updateDronesUI(availableDrones.Count, availableDrones.Count + constructionDrones.Count - 1);
     }
 
     // Register an available drone

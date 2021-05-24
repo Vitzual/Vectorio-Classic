@@ -47,39 +47,43 @@ public class OnSpawn : MonoBehaviour
     public GameObject[] EnemyBases;
     public int maxBases;
 
-    public void GenerateWorldData(string a, bool save)
+    public void GenerateWorldData(string a, bool save, bool defOverride = false)
     {
         Debug.Log("Generating world data with seed " + a);
 
         // Sets the seed - This method is deprecated but works so who cares amiright?
         #pragma warning disable CS0618
-        Random.seed = a.GetHashCode();
+        try { Random.seed = a.GetHashCode(); }
+        catch { Random.seed = Random.Range(0, 1000000000); }
         #pragma warning restore CS0618
 
-        if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
-        if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
-        if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
+        if (!defOverride)
+        {
+            if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
+            if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
+            if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
 
-        GoldSpawnAmount = (int) (GoldSpawnAmount * (Difficulties.goldMulti/100));
-        GoldVeinSize = (int)(GoldVeinSize * (Difficulties.goldMulti / 100));
-        GoldVeinNoise = (int)(GoldVeinNoise * (Difficulties.goldMulti / 100));
+            GoldSpawnAmount = (int)(GoldSpawnAmount * (Difficulties.goldMulti / 100));
+            GoldVeinSize = (int)(GoldVeinSize * (Difficulties.goldMulti / 100));
+            GoldVeinNoise = (int)(GoldVeinNoise * (Difficulties.goldMulti / 100));
 
-        EssenceSpawnAmount = (int)(EssenceSpawnAmount * (Difficulties.essenceMulti / 100));
-        EssenceVeinSize = (int)(EssenceVeinSize * (Difficulties.essenceMulti / 100));
-        EssenceVeinNoise = (int)(EssenceVeinNoise * (Difficulties.essenceMulti / 100));
+            EssenceSpawnAmount = (int)(EssenceSpawnAmount * (Difficulties.essenceMulti / 100));
+            EssenceVeinSize = (int)(EssenceVeinSize * (Difficulties.essenceMulti / 100));
+            EssenceVeinNoise = (int)(EssenceVeinNoise * (Difficulties.essenceMulti / 100));
 
-        IridiumSpawnAmount = (int)(IridiumSpawnAmount * (Difficulties.iridiumMulti / 100));
-        IridiumVeinSize = (int)(IridiumVeinSize * (Difficulties.iridiumMulti / 100));
-        IridiumVeinNoise = (int)(IridiumVeinNoise * (Difficulties.iridiumMulti / 100));
+            IridiumSpawnAmount = (int)(IridiumSpawnAmount * (Difficulties.iridiumMulti / 100));
+            IridiumVeinSize = (int)(IridiumVeinSize * (Difficulties.iridiumMulti / 100));
+            IridiumVeinNoise = (int)(IridiumVeinNoise * (Difficulties.iridiumMulti / 100));
 
-        SpawnerSpawnAmount = (int)(SpawnerSpawnAmount * (Difficulties.enemyAmountMulti / 100));
-        maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
+            SpawnerSpawnAmount = (int)(SpawnerSpawnAmount * (Difficulties.enemyAmountMulti / 100));
+            maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
+        }
 
         GenGold();
         GenEssence();
         GenIridium();
 
-        if (!save && Difficulties.enemyOutposts) { GenBases(); GenHives(); }
+        if (defOverride || (!save && Difficulties.enemyOutposts)) { GenBases(); GenHives(); }
     }
 
     // Enemy Base Generation
@@ -192,7 +196,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 10 || x + a <= -10) && (y + b >= 10 || y - b <= 10))
+                    if (checkCoords(x + a, y + b, GoldMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
                     {
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
@@ -236,7 +240,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
+                    if (checkCoords(x + a, y + b, EssenceMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
                     {
                         temp = Instantiate(EssenceOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = EssenceOre.name;
@@ -280,7 +284,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
+                    if (checkCoords(x + a, y + b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
                     {
                         temp = Instantiate(IridiumOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = IridiumOre.name;
@@ -296,7 +300,11 @@ public class OnSpawn : MonoBehaviour
 
     public bool checkCoords(int x, int y, int minDistance)
     {
-        if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= minDistance) && x <= 750 && x >= -745 && y >= -745 && y <= 750) return true;
-        else return false;
+        if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= -minDistance) && x <= 750 && x >= -745 && y >= -745 && y <= 750) return true;
+        else
+        {
+            Debug.Log("Failed on coords " + x + " " + y);
+            return false;
+        }
     }
 }

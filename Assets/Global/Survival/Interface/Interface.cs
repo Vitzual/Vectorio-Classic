@@ -350,7 +350,9 @@ public class Interface : MonoBehaviour
         {
             if (main.hotbar[i] != null)
             {
-                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + main.hotbar[i].name);
+                if (main.hotbar[i].name == "Gold Storage")
+                    hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Gold Storage Small");
+                else hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + main.hotbar[i].name);
             }
             else
             {

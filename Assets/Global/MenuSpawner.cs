@@ -34,6 +34,7 @@ public class MenuSpawner : MonoBehaviour
         transform.position += transform.right * 15;
         var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         holder.name = _enemy.name;
+
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = OGP;
     }

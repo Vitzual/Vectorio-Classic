@@ -115,9 +115,6 @@ public class Survival : MonoBehaviour
     // Enemy list
     public Transform[] enemies;
 
-    // The seed the word is set to
-    public int seed;
-
     // The square that appears around buildings when clicked
     public GameObject SelectedOverlay;
 
@@ -195,69 +192,35 @@ public class Survival : MonoBehaviour
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
 
-        // Get difficulty object
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
-        int holder = difficulties.GetDifficulty();
-
         // Check to see if there's a difficulty saved
         try
         {
-            difficulties.SetDifficulty(0);
-            difficulties.SetStartingGold(data.startingGold);
-            difficulties.SetStartingPower(data.startingPower);
-            difficulties.SetAdditionalCost(data.additionalCost);
-            difficulties.SetEnemyHP(data.enemyHP);
-            difficulties.SetEnemyDMG(data.enemyDMG);
-            difficulties.SetDefenseHP(data.defenseHP);
-            difficulties.SetGold(data.goldSpawn);
-            difficulties.SetEssence(data.essenceSpawn);
-            difficulties.SetIridium(data.iridiumSpawn);
-            difficulties.SetBases(data.enemyBases);
+            // Set world data
+            Difficulties.world = data.WorldName;
+            Difficulties.mode = data.WorldMode;
+            Difficulties.seed = data.WorldSeed;
+            Difficulties.version = data.WorldVersion;
 
-            try
-            {
-                difficulties.SetGroupSpawns(data.groupSpawnEvery);
-                if (difficulties.GetGroupSpawns() == 0) difficulties.SetGroupSpawns(300);
-            }
-            catch
-            {
-                Debug.Log("File does not contain group spawning");
-                difficulties.SetGroupSpawns(300);
-            }
+            // Set resources
+            Difficulties.goldMulti = data.GoldAmount;
+            Difficulties.essenceMulti = data.EssenceAmount;
+            Difficulties.iridiumMulti = data.IridiumAmount;
 
-            try
-            {
-                difficulties.SetSaveName(data.name);
-                difficulties.SetModeName(data.mode);
-            }
-            catch
-            {
-                difficulties.SetSaveName("OLD SAVE");
-                difficulties.SetModeName("CUSTOM");
-            }
+            // Set enemies
+            Difficulties.enemyAmountMulti = data.EnemyAmountMulti;
+            Difficulties.enemyHealthMulti = data.EnemyHealthMulti;
+            Difficulties.enemyDamageMulti = data.EnemyDamageMulti;
+            Difficulties.enemyWaves = data.EnemyGroups;
+            Difficulties.enemyOutposts = data.EnemyOutposts;
+            Difficulties.enemyGuardians = data.EnemyGuaridans;
         }
         catch
         {
-            Debug.Log("Difficulty settings could not be loaded!");
-            difficulties.SetDifficulty(holder);
+            Debug.Log("Save file contains obsolete data!");
         }
 
         try { Playtime = data.time; }
         catch { Debug.Log("Save file does not contain time play tracking"); Playtime = 0; }
-
-        // Get default stats
-        gold = difficulties.GetStartingGold();
-        goldStorage = gold * 4;
-        UI.GoldStorage.text = goldStorage + " MAX";
-        if (AvailablePower == 0)
-            AvailablePower = difficulties.GetStartingPower();
-        else
-            AvailablePower += difficulties.GetStartingPower();
-        additionalCost = difficulties.GetAdditionalCost();
-        UI.GoldAmount.text = gold.ToString();
-
-        // Set group spawn
-        Spawner.SetSpawnAmount(difficulties.GetGroupSpawns());
 
         // Set power usage
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -277,14 +240,11 @@ public class Survival : MonoBehaviour
             UI.EssenceAmount.text = essence.ToString();
             UI.IridiumAmount.text = iridium.ToString();
 
-            // Update unlock level and research
-            seed = data.WorldSeed;
-
             // Force tech tree update
             tech.loadSaveData(data.UnlockLevel);
 
             // Generate world data
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, true);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
 
             // Attempt to place saved buildings
             float soundHolder = manager.GetComponent<Settings>().GetSound();
@@ -313,8 +273,7 @@ public class Survival : MonoBehaviour
         {
             // New save
             Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
-            seed = Random.Range(1000000, 10000000);
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(seed, false);
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
         }
 
         // Update bosses
@@ -1082,22 +1041,6 @@ public class Survival : MonoBehaviour
         catch { SelectedObj = holder; }
     }
 
-    // Coming soon to a Vectorio near you
-    public void SelectTurret(int a)
-    {
-
-    }
-
-    public void SelectBuilding(int a)
-    {
-
-    }
-
-    public void SelectSpecial(int a)
-    {
-
-    }
-
 
     // Changes the object that the player has selected (pass null to deselect)
     public void SelectObject(Transform obj)
@@ -1214,7 +1157,7 @@ public class Survival : MonoBehaviour
         if (!Spawner.bossSpawned)
         {
             Debug.Log("Attempting to save data");
-            SaveSystem.SaveGame(this, tech, Spawner, rsrch, difficulties, Playtime, Spawner.htrack, difficulties.GetGroupSpawns());
+            SaveSystem.SaveGame(this, tech, Spawner, rsrch, Playtime, Spawner.htrack);
             Debug.Log("Data was saved successfully");
 
             UI.SaveButton.buttonText = "SAVED";

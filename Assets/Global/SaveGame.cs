@@ -22,20 +22,21 @@ public static class SaveSystem
         stream.Close();
         
         // Return string data
-        string[] saveInfo = new string[4];
-        if(data.name != null) 
-        { 
-            saveInfo[0] = data.name;
-            saveInfo[1] = data.mode;
+        string[] saveInfo = new string[5];
+        try {
+            saveInfo[0] = data.WorldName;
+            saveInfo[1] = data.WorldMode;
             saveInfo[2] = data.heatt.ToString();
             saveInfo[3] = data.time.ToString();
+            saveInfo[4] = data.WorldSeed;
         } 
-        else
+        catch
         {
             saveInfo[0] = "SAVE " + a;
             saveInfo[1] = "OLD SAVE";
             saveInfo[2] = "???";
             saveInfo[3] = "0:00";
+            saveInfo[4] = "v0.1";
         }
 
         return saveInfo;
@@ -49,7 +50,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, Difficulties data_5, int time = 0, int heatt = 0, int groupSpawnEvery = 300)
+    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, int time = 0, int heatt = 0)
     {
         string SavePath = Application.persistentDataPath + "/location.save";
         BinaryFormatter formatter = new BinaryFormatter();
@@ -70,7 +71,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveData data = new SaveData(data_1, data_2, data_3, data_4, data_5, time, heatt, groupSpawnEvery);
+        SaveData data = new SaveData(data_1, data_2, data_3, data_4, time, heatt);
 
         formatter.Serialize(stream, data);
         stream.Close();

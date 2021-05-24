@@ -11,7 +11,6 @@ public class OnSpawn : MonoBehaviour
     public int WorldSeed;
 
     // Difficulty class
-    private Difficulties difficulties;
     public GameObject DefaultOre;
 
     // Gold ore placements
@@ -20,6 +19,7 @@ public class OnSpawn : MonoBehaviour
     public int GoldSpawnAmount;
     public int GoldVeinSize;
     public int GoldVeinNoise;
+    public int GoldMinDistance;
 
     // Essence ore placements
     public GameObject EssenceOre;
@@ -27,6 +27,7 @@ public class OnSpawn : MonoBehaviour
     public int EssenceSpawnAmount;
     public int EssenceVeinSize;
     public int EssenceVeinNoise;
+    public int EssenceMinDistance;
 
     // Iridium ore placements
     public GameObject IridiumOre;
@@ -34,6 +35,7 @@ public class OnSpawn : MonoBehaviour
     public int IridiumSpawnAmount;
     public int IridiumVeinSize;
     public int IridiumVeinNoise;
+    public int IridiumMinDistance;
 
     // Enemy spawner thing
     public GameObject Hive;
@@ -45,43 +47,39 @@ public class OnSpawn : MonoBehaviour
     public GameObject[] EnemyBases;
     public int maxBases;
 
-    public void Start()
-    {
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
-    }
-
-    public void GenerateWorldData(int a, bool save)
+    public void GenerateWorldData(string a, bool save)
     {
         Debug.Log("Generating world data with seed " + a);
 
         // Sets the seed - This method is deprecated but works so who cares amiright?
         #pragma warning disable CS0618
-        Random.seed = a;
+        Random.seed = a.GetHashCode();
         #pragma warning restore CS0618
 
-        // Set the difficulty data
-        int[] goldInfo = difficulties.GetGold();
-        int[] essenceInfo = difficulties.GetEssence();
-        int[] iridiumInfo = difficulties.GetIridium();
+        if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
+        if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
+        if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
 
-        GoldSpawnAmount = goldInfo[0];
-        GoldVeinSize = goldInfo[1];
-        GoldVeinNoise = goldInfo[2];
+        GoldSpawnAmount = (int) (GoldSpawnAmount * (Difficulties.goldMulti/100));
+        GoldVeinSize = (int)(GoldVeinSize * (Difficulties.goldMulti / 100));
+        GoldVeinNoise = (int)(GoldVeinNoise * (Difficulties.goldMulti / 100));
 
-        EssenceSpawnAmount = essenceInfo[0];
-        EssenceVeinSize = essenceInfo[1];
-        EssenceVeinNoise = essenceInfo[2];
+        EssenceSpawnAmount = (int)(EssenceSpawnAmount * (Difficulties.essenceMulti / 100));
+        EssenceVeinSize = (int)(EssenceVeinSize * (Difficulties.essenceMulti / 100));
+        EssenceVeinNoise = (int)(EssenceVeinNoise * (Difficulties.essenceMulti / 100));
 
-        IridiumSpawnAmount = iridiumInfo[0];
-        IridiumVeinSize = iridiumInfo[1];
-        IridiumVeinNoise = iridiumInfo[2];
+        IridiumSpawnAmount = (int)(IridiumSpawnAmount * (Difficulties.iridiumMulti / 100));
+        IridiumVeinSize = (int)(IridiumVeinSize * (Difficulties.iridiumMulti / 100));
+        IridiumVeinNoise = (int)(IridiumVeinNoise * (Difficulties.iridiumMulti / 100));
 
-        maxBases = difficulties.GetBases();
+        SpawnerSpawnAmount = (int)(SpawnerSpawnAmount * (Difficulties.enemyAmountMulti / 100));
+        maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
 
         GenGold();
         GenEssence();
         GenIridium();
-        if (!save) { GenHives(); GenBases(); }
+
+        if (!save && Difficulties.enemyOutposts) { GenBases(); GenHives(); }
     }
 
     // Enemy Base Generation
@@ -94,36 +92,35 @@ public class OnSpawn : MonoBehaviour
 
         bool valid = false;
 
-        for (int i = 0; i < EnemyBases.Length; i++)
+        for (int i = 0; i < max; i++)
         {
             while (!valid)
             {
-                x = Random.Range(-BaseRegionSize, BaseRegionSize) * 10;
-                y = Random.Range(-BaseRegionSize, BaseRegionSize) * 10;
+                x = Random.Range(-BaseRegionSize, BaseRegionSize) * 5;
+                y = Random.Range(-BaseRegionSize, BaseRegionSize) * 5;
 
-                if ((x > 100 || x < -100) && (y > 100 || y < -100))
+                if (x > 100 || x < -100 || y > 100 || y < -100)
                 {
                     var colliders = Physics2D.OverlapBoxAll(new Vector2(x, y), new Vector2(500, 500), 0, 1 << LayerMask.NameToLayer("Enemy"));
                     if (colliders.Length == 0)
                     {
                         // Generate base
-                        float rotation = Random.Range(1, 5) * 90f;
-                        var temp = Instantiate(EnemyBases[i], new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
-                        temp.name = EnemyBases[i].name;
+                        GameObject enemyBase = EnemyBases[Random.Range(0, EnemyBases.Length)];
+                        var temp = Instantiate(enemyBase, new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+                        temp.name = enemyBase.name;
 
                         valid = true;
                     }
                 }
 
                 att++;
-                if (att > max)
+                if (att > 10)
                     valid = true;
             }
             att = 0;
             valid = false;
         }
     }
- 
 
     // Enemy Hive Generation
     private void GenHives()
@@ -142,14 +139,17 @@ public class OnSpawn : MonoBehaviour
                 x = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
                 y = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
 
-                RaycastHit2D a = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, HiveLayer);
-                RaycastHit2D b = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-                if (a.collider == null && b.collider == null)
+                if (x > 100 || x < -100 || y > 100 || y < -100)
                 {
-                    valid = true;
-                    var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.identity);
-                    temp.name = Hive.name;
+                    RaycastHit2D a = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, HiveLayer);
+                    RaycastHit2D b = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
+
+                    if (a.collider == null && b.collider == null)
+                    {
+                        valid = true;
+                        var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.identity);
+                        temp.name = Hive.name;
+                    }
                 }
 
                 att++;
@@ -164,8 +164,6 @@ public class OnSpawn : MonoBehaviour
     // Gold Generation
     private void GenGold()
     {
-        int something = 0;
-
         int x;
         int y;
         int a;
@@ -176,7 +174,9 @@ public class OnSpawn : MonoBehaviour
             x = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
             y = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
 
-            if ((x >= 15 + GoldVeinSize || x <= -15 - GoldVeinSize) && (y >= 15 + GoldVeinSize || y <= -15 - GoldVeinSize))
+            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
+
+            if (rayCheck.collider == null && checkCoords(x, y, GoldMinDistance))
             {
                 var temp = Instantiate(GoldOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = GoldOre.name;
@@ -192,9 +192,8 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 10 || x + a <= -10) && (y + b >= 10 || y - b <= 10))
+                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 10 || x + a <= -10) && (y + b >= 10 || y - b <= 10))
                     {
-                        something++;
                         temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
                     }
@@ -205,7 +204,6 @@ public class OnSpawn : MonoBehaviour
                 i--;
             }
         }
-        Debug.Log("Spawned " + something + " nodes total");
     }
 
     private void GenEssence()
@@ -220,7 +218,9 @@ public class OnSpawn : MonoBehaviour
             x = Random.Range(-EssenceRegionSize, EssenceRegionSize) * 5;
             y = Random.Range(-EssenceRegionSize, EssenceRegionSize) * 5;
 
-            if ((x >= 35 + EssenceVeinSize || x <= -35 - EssenceVeinSize) && (y >= 35 + EssenceVeinSize || y <= -35 - EssenceVeinSize))
+            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
+
+            if (rayCheck.collider == null && checkCoords(x, y, EssenceMinDistance))
             {
                 var temp = Instantiate(EssenceOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = EssenceOre.name;
@@ -236,7 +236,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
+                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
                         temp = Instantiate(EssenceOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = EssenceOre.name;
@@ -262,7 +262,9 @@ public class OnSpawn : MonoBehaviour
             x = Random.Range(-IridiumRegionSize, IridiumRegionSize) * 5;
             y = Random.Range(-IridiumRegionSize, IridiumRegionSize) * 5;
 
-            if ((x >= 55 + IridiumVeinSize || x <= -55 - IridiumVeinSize) && (y >= 55 + IridiumVeinSize || y <= -55 - IridiumVeinSize))
+            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
+
+            if (rayCheck.collider == null && checkCoords(x, y, IridiumMinDistance))
             {
                 var temp = Instantiate(IridiumOre, new Vector3(x, y, -1), Quaternion.identity);
                 temp.name = IridiumOre.name;
@@ -278,7 +280,7 @@ public class OnSpawn : MonoBehaviour
                     RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
                     RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
 
-                    if ((d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
+                    if (checkCoords(a, b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null && (x + a >= 15 || x + a <= -15) && (y + b >= 15 || y - b <= 15))
                     {
                         temp = Instantiate(IridiumOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
                         temp.name = IridiumOre.name;
@@ -290,5 +292,11 @@ public class OnSpawn : MonoBehaviour
                 i--;
             }
         }
+    }
+
+    public bool checkCoords(int x, int y, int minDistance)
+    {
+        if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= minDistance) && x <= 750 && x >= -745 && y >= -745 && y <= 750) return true;
+        else return false;
     }
 }

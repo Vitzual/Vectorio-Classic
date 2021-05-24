@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class WaveSpawner : MonoBehaviour
 {
     // Spawner elements
-    private Difficulties difficulties;
     public Survival survival;
     public Technology technology;
     public ProgressBar heatUI;
@@ -65,7 +64,6 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
         InvokeRepeating("SpawnEnemies", 0f, 1f);
     }
 
@@ -81,14 +79,17 @@ public class WaveSpawner : MonoBehaviour
 
         // Check if it's time for a group spawn
         bool groupSpawn = false;
-        if (htrack >= 1000 && !bossWarning.activeInHierarchy) 
+        if (Difficulties.enemyWaves)
         {
-            if (attackTracker >= attackEvery)
+            if (htrack >= 1000 && !bossWarning.activeInHierarchy)
             {
-                groupSpawn = true;
-                attackTracker = 0;
+                if (attackTracker >= attackEvery)
+                {
+                    groupSpawn = true;
+                    attackTracker = 0;
+                }
+                else attackTracker++;
             }
-            else attackTracker++;
         }
 
         // Iterate through and spawn all enemies
@@ -179,8 +180,8 @@ public class WaveSpawner : MonoBehaviour
 
         EnemyClass holderScript;
         holderScript = holder.GetComponent<EnemyClass>();
-        holderScript.SetHealth((int)(holderScript.GetHealth() * difficulties.GetEnemyHP()));
-        holderScript.SetDamage((int)(holderScript.GetDamage() * difficulties.GetEnemyDMG()));
+        holderScript.SetHealth((int)(holderScript.GetHealth() * Difficulties.enemyHealthMulti));
+        holderScript.SetDamage((int)(holderScript.GetDamage() * Difficulties.enemyDamageMulti));
     }
 
     public void increaseHeat(int a)

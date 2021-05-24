@@ -116,35 +116,42 @@ public abstract class TileClass : MonoBehaviour
     {
         return ID;
     }
+
     public void setConsumption(int a)
     {
         power = a;
     }
+
     public int getConsumption()
     {
         return power;
     }
+
     public string GetDescription()
     {
         return description;
     }
+
     public float GetPercentage()
     {
         return (health / maxhp) * 100;
     }
+
     public int GetCost()
     {
-        return (int)(cost * GameObject.Find("Difficulty").GetComponent<Difficulties>().GetAdditionalCost());
+        // Set additional costs via multiplier 
+        return cost;
     }
+
     public int GetHeat()
     {
         if (heatStack.Count == 0)
             heatStack.Push(heat);
         return heatStack.Peek();
     }
+
     public int GetHealth() { return (int) health; }
     public void SetHealth(int a) { health = (float) a; }
-    public void IncreaseHealth() { health = health * GameObject.Find("Difficulty").GetComponent<Difficulties>().GetDefenseHP(); }
     public void setEngineered(bool a)
     {
         isEngineered = a;

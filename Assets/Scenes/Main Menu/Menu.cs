@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,16 +10,15 @@ public class Menu : MonoBehaviour
 {
     public static int MAX_SAVES = 10;
 
+    // Menu stuff
     public GameObject MainMenu;
     public GameObject SaveButtons;
     public GameObject MenuButtons;
     public GameObject GameButtons;
     public GameObject NewGame;
     public GameObject NewSaveGame;
-    public GameObject NameNewSave;
     public GameObject LoadingSave;
     public TextMeshProUGUI SaveName;
-    public TMP_InputField SaveBox;
     public ModalWindowManager ConfirmDelete;
     public Settings settings;
     public bool SaveSelected = false;
@@ -27,12 +27,25 @@ public class Menu : MonoBehaviour
     public bool GameOpen = false;
     public int savesOnRecord = 0;
     public int lookingAtSave = -1;
-
     public Transform saveList;
+
+    // Difficulty variables
+    public TMP_InputField WorldName;
+    public TMP_InputField WorldSeed;
+    public SliderManager GoldMulti;
+    public SliderManager EssenceMulti;
+    public SliderManager IridiumMulti;
+    public SliderManager EnemiesAmount;
+    public SliderManager EnemiesHealth;
+    public SliderManager EnemiesDamage;
+    public Toggle EnemyOutposts;
+    public Toggle EnemyGroups;
+    public Toggle EnemyGuardians;
 
     public void Start()
     {
-        SaveBox.characterLimit = 13;
+        WorldName.characterLimit = 24;
+        WorldSeed.characterLimit = 10;
 
         Time.timeScale = 1f;
         Application.targetFrameRate = 300;
@@ -128,11 +141,7 @@ public class Menu : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && NameNewSave.activeInHierarchy)
-        {
-            NameNewSave.SetActive(false);
-        }
-        else if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
+        if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
         {
             GameButtons.GetComponent<CanvasGroup>().alpha = 1f;
             GameButtons.GetComponent<CanvasGroup>().interactable = true;
@@ -230,12 +239,6 @@ public class Menu : MonoBehaviour
         GameOpen = true;
     }
 
-    public void SetName()
-    {
-        GameObject.Find("Difficulty").GetComponent<Difficulties>().SetSaveName(SaveName.text);
-        NameNewSave.SetActive(false);
-    }
-
     public void SelectSaveNumber(int i)
     {
         lookingAtSave = i;
@@ -248,7 +251,7 @@ public class Menu : MonoBehaviour
             if (!SaveSystem.CheckForSave(i))
             {
                 lookingAtSave = i;
-                NameNewSave.SetActive(true);
+                SelectSave();
                 return;
             }
         Debug.Log("No available save slots");
@@ -258,16 +261,15 @@ public class Menu : MonoBehaviour
     {
         string SavePath = Application.persistentDataPath + "/save_" + lookingAtSave + ".vectorio";
 
+        SetGameSave(lookingAtSave);
+
         if (File.Exists(SavePath))
         {
-            SetGameSave(lookingAtSave);
             LoadingSave.SetActive(true);
             SceneManager.LoadScene("Survival");
         }
         else
         {
-            SetGameSave(lookingAtSave);
-
             NewGame.GetComponent<CanvasGroup>().alpha = 1f;
             NewGame.GetComponent<CanvasGroup>().interactable = true;
             NewGame.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -284,17 +286,20 @@ public class Menu : MonoBehaviour
 
     }
 
-    public void StartNewGame(int a)
+    public void StartNewGame()
     {
-        Difficulties dd = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+        Difficulties.world = WorldName.text;
+        Difficulties.seed = WorldSeed.text;
+        Difficulties.goldMulti = GoldMulti.mainSlider.value;
+        Difficulties.essenceMulti = EssenceMulti.mainSlider.value;
+        Difficulties.iridiumMulti = IridiumMulti.mainSlider.value;
+        Difficulties.enemyAmountMulti = EnemiesAmount.mainSlider.value;
+        Difficulties.enemyHealthMulti = EnemiesHealth.mainSlider.value;
+        Difficulties.enemyDamageMulti = EnemiesDamage.mainSlider.value;
+        Difficulties.enemyOutposts = EnemyOutposts.isOn;
+        Difficulties.enemyWaves = EnemyGroups.isOn;
+        Difficulties.enemyGuardians = EnemyGuardians.isOn;
 
-        if (a == 0) dd.SetModeName("CUSTOM");
-        else if (a == 1) dd.SetModeName("EASY");
-        else if (a == 2) dd.SetModeName("NORMAL");
-        else if (a == 3) dd.SetModeName("HARD");
-        else if (a == 4) dd.SetModeName("NIGHTMARE");
-
-        dd.SetDifficulty(a);
         LoadingSave.SetActive(true);
         SceneManager.LoadScene("Survival");
     }

@@ -47,33 +47,51 @@ public class EnemyHandler : MonoBehaviour
     // Handles enemy movement every frame
     public void Update()
     {
-        for (int i = 0; i < Enemies.Count; i++)
+        if (isMenu)
         {
-            try
+            for (int i = 0; i < Enemies.Count; i++)
             {
-                if (Enemies[i].ObjectClass.target == null) Enemies[i].ObjectClass.FindNearestDefence();
-                Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-                if (Enemies[i].RayLength == 0)
+                try
                 {
-                    continue;
+                    Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
                 }
-                else if (Enemies[i].Tracker == 3)
+                catch
                 {
-                    Enemies[i].Tracker = 1;
-                    RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
-                    if (hit.collider != null)
-                        if (OnHit(i, hit.collider.transform)) { i--; continue; }
-                }
-                else
-                {
-                    Enemies[i].Tracker += 1;
-                    continue;
+                    Enemies.RemoveAt(i);
+                    i--;
                 }
             }
-            catch
+        }
+        else
+        {
+            for (int i = 0; i < Enemies.Count; i++)
             {
-                Enemies.RemoveAt(i);
-                i--;
+                try
+                {
+                    if (Enemies[i].ObjectClass.target == null) Enemies[i].ObjectClass.FindNearestDefence();
+                    Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
+                    if (Enemies[i].RayLength == 0)
+                    {
+                        continue;
+                    }
+                    else if (Enemies[i].Tracker == 3)
+                    {
+                        Enemies[i].Tracker = 1;
+                        RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
+                        if (hit.collider != null)
+                            if (OnHit(i, hit.collider.transform)) { i--; continue; }
+                    }
+                    else
+                    {
+                        Enemies[i].Tracker += 1;
+                        continue;
+                    }
+                }
+                catch
+                {
+                    Enemies.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

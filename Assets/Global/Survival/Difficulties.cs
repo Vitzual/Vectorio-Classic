@@ -18,6 +18,7 @@ public class Difficulties : MonoBehaviour
     public static float enemyAmountMulti;
     public static float enemyHealthMulti;
     public static float enemyDamageMulti;
+    public static float enemySpeedMulti;
     public static bool enemyOutposts;
     public static bool enemyWaves;
     public static bool enemyGuardians;

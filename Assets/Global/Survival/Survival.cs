@@ -166,6 +166,8 @@ public class Survival : MonoBehaviour
 
     private void Start()
     {
+        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
+
         // Make sure it's not the menu
         if (SceneManager.GetActiveScene().name == "Menu")
         {
@@ -212,6 +214,7 @@ public class Survival : MonoBehaviour
                 Difficulties.enemyAmountMulti = data.EnemyAmountMulti;
                 Difficulties.enemyHealthMulti = data.EnemyHealthMulti;
                 Difficulties.enemyDamageMulti = data.EnemyDamageMulti;
+                Difficulties.enemySpeedMulti = data.EnemySpeedMulti;
                 Difficulties.enemyWaves = data.EnemyGroups;
                 Difficulties.enemyOutposts = data.EnemyOutposts;
                 Difficulties.enemyGuardians = data.EnemyGuaridans;
@@ -281,8 +284,8 @@ public class Survival : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Save data could not be loaded. Overriding to default state.");
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Random.Range(0, 1000000000).ToString(), false, true);
+            Debug.LogError("Save data could not be loaded");
+            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
         }
 
         // Update bosses

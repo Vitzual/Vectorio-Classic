@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Michsky.UI.ModernUIPack;
 using TMPro;
+using System.Collections.Generic;
 
 public class Menu : MonoBehaviour
 {
@@ -42,6 +43,23 @@ public class Menu : MonoBehaviour
     public Toggle EnemyGroups;
     public Toggle EnemyGuardians;
 
+    [System.Serializable]
+    public class PresetDifficulties
+    {
+        public string presetName;
+        public float goldMulti;
+        public float essenceMulti;
+        public float iridiumMulti;
+        public float enemyAmountMulti;
+        public float enemyHealthMulti;
+        public float enemyDamageMulti;
+        public float enemySpeedMulti;
+        public bool enemyOutposts;
+        public bool enemyWaves;
+        public bool enemyGuardians;
+    }
+    public List<PresetDifficulties> difficulties;
+
     public void Start()
     {
         WorldName.characterLimit = 24;
@@ -52,6 +70,11 @@ public class Menu : MonoBehaviour
 
         settings.LoadSettings();
         UpdateSaves();
+    }
+
+    public void RandomSeed()
+    {
+        WorldSeed.text = Random.Range(10000, 99999).ToString() + Random.Range(10000, 99999).ToString();
     }
 
     public void UpdateSaves()
@@ -286,6 +309,19 @@ public class Menu : MonoBehaviour
 
     }
 
+    public void SetDifficulty(int ID)
+    {
+        GoldMulti.mainSlider.value = difficulties[ID].goldMulti;
+        EssenceMulti.mainSlider.value = difficulties[ID].essenceMulti;
+        IridiumMulti.mainSlider.value = difficulties[ID].iridiumMulti;
+        EnemiesAmount.mainSlider.value = difficulties[ID].enemyAmountMulti;
+        EnemiesHealth.mainSlider.value = difficulties[ID].enemyHealthMulti;
+        EnemiesDamage.mainSlider.value = difficulties[ID].enemyDamageMulti;
+        EnemyOutposts.isOn = difficulties[ID].enemyOutposts;
+        EnemyGroups.isOn = difficulties[ID].enemyWaves;
+        EnemyGuardians.isOn = difficulties[ID].enemyGuardians;
+    }
+
     public void StartNewGame()
     {
         Difficulties.world = WorldName.text;
@@ -296,6 +332,7 @@ public class Menu : MonoBehaviour
         Difficulties.enemyAmountMulti = EnemiesAmount.mainSlider.value;
         Difficulties.enemyHealthMulti = EnemiesHealth.mainSlider.value;
         Difficulties.enemyDamageMulti = EnemiesDamage.mainSlider.value;
+        Difficulties.enemySpeedMulti = 1f;
         Difficulties.enemyOutposts = EnemyOutposts.isOn;
         Difficulties.enemyWaves = EnemyGroups.isOn;
         Difficulties.enemyGuardians = EnemyGuardians.isOn;

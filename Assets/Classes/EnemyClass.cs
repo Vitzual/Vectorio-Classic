@@ -211,4 +211,6 @@ public abstract class EnemyClass : MonoBehaviour
     public void SetHealth(int a) { health = a; }
     public int GetDamage() { return damage; }
     public void SetDamage(int a) { damage = a; }
+    public float GetSpeed() { return moveSpeed; }
+    public void SetSpeed(float a) { moveSpeed = a; }
 }

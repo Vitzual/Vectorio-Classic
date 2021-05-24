@@ -62,9 +62,25 @@ public class WaveSpawner : MonoBehaviour
 
     public Enemies[] enemy;
 
+    public float amountMulti = 1;
+    public float healthMulti = 1;
+    public float damageMulti = 1;
+    public float speedMulti = 1;
+    
+
     private void Start()
     {
         InvokeRepeating("SpawnEnemies", 0f, 1f);
+
+        if (Difficulties.enemyAmountMulti > 500) Difficulties.enemyAmountMulti = 500;
+        if (Difficulties.enemyHealthMulti > 250) Difficulties.enemyHealthMulti = 250;
+        if (Difficulties.enemyDamageMulti > 250) Difficulties.enemyDamageMulti = 250;
+        if (Difficulties.enemySpeedMulti > 250) Difficulties.enemySpeedMulti = 250;
+
+        amountMulti = Difficulties.enemyAmountMulti / 100;
+        healthMulti = Difficulties.enemyHealthMulti / 100;
+        damageMulti = Difficulties.enemyDamageMulti / 100;
+        speedMulti = Difficulties.enemySpeedMulti / 100;
     }
 
     public void SetSpawnAmount(int a)
@@ -157,31 +173,36 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy(int index)
     {
-        Transform holder;
-        switch(Random.Range(0, 4))
+        for (int i = 0; i < amountMulti; i++)
         {
-            case 0:
-                holder = Instantiate(enemy[index].enemyObject, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
-                break;
-            case 1:
-                holder = Instantiate(enemy[index].enemyObject, new Vector2(-SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
-                break;
-            case 2:
-                holder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
-                break;
-            case 3:
-                holder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
-                break;
-            default:
-                holder = Instantiate(enemy[index].enemyObject, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
-                break;
-        }
-        holder.name = enemy[index].enemyObject.name;
+            Transform holder;
+            switch (Random.Range(0, 4))
+            {
+                case 0:
+                    holder = Instantiate(enemy[index].enemyObject, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    break;
+                case 1:
+                    holder = Instantiate(enemy[index].enemyObject, new Vector2(-SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    break;
+                case 2:
+                    holder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    break;
+                case 3:
+                    holder = Instantiate(enemy[index].enemyObject, new Vector2(Random.Range(-SpawnRegion, SpawnRegion), -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    break;
+                default:
+                    holder = Instantiate(enemy[index].enemyObject, new Vector2(SpawnRegion, Random.Range(-SpawnRegion, SpawnRegion)), Quaternion.Euler(new Vector3(0, 0, 0)));
+                    break;
+            }
+            holder.name = enemy[index].enemyObject.name;
 
-        EnemyClass holderScript;
-        holderScript = holder.GetComponent<EnemyClass>();
-        holderScript.SetHealth((int)(holderScript.GetHealth() * Difficulties.enemyHealthMulti));
-        holderScript.SetDamage((int)(holderScript.GetDamage() * Difficulties.enemyDamageMulti));
+            EnemyClass holderScript;
+            holderScript = holder.GetComponent<EnemyClass>();
+
+            holderScript.SetHealth((int)(holderScript.GetHealth() * healthMulti));
+            holderScript.SetDamage((int)(holderScript.GetDamage() * damageMulti));
+            //holderScript.SetSpeed(holderScript.GetSpeed() * speedMulti);
+        }
     }
 
     public void increaseHeat(int a)
@@ -191,6 +212,14 @@ public class WaveSpawner : MonoBehaviour
         heatAmount.text = htrack.ToString();
         technology.UpdateUnlock(htrack);
 
+        // Display alpha screen
+        if (htrack >= 10000 && firstDisplay)
+        {
+            GameObject.Find("Survival").GetComponent<Interface>().OpenAlphaWindow();
+            firstDisplay = false;
+        }
+
+        /*
         if (bossesDefeated == 0 && htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[0].bossObject, new Vector2(0, SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -231,6 +260,7 @@ public class WaveSpawner : MonoBehaviour
                 borders[1].SetActive(false);
             }
         }
+        */
     }
 
     public void updateBosses()

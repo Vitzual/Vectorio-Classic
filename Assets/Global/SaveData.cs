@@ -20,6 +20,7 @@ public class SaveData
     public float EnemyAmountMulti;
     public float EnemyHealthMulti;
     public float EnemyDamageMulti;
+    public float EnemySpeedMulti;
     public float GoldAmount;
     public float EssenceAmount;
     public float IridiumAmount;
@@ -50,6 +51,7 @@ public class SaveData
         EnemyAmountMulti = Difficulties.enemyAmountMulti;
         EnemyHealthMulti = Difficulties.enemyHealthMulti;
         EnemyDamageMulti = Difficulties.enemyDamageMulti;
+        EnemySpeedMulti = Difficulties.enemySpeedMulti;
         GoldAmount = Difficulties.goldMulti;
         EssenceAmount = Difficulties.essenceMulti;
         IridiumAmount = Difficulties.iridiumMulti;

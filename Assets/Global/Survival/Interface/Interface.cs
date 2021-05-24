@@ -52,6 +52,7 @@ public class Interface : MonoBehaviour
     public ModalWindowManager ResearchUnlockedWindow;
     public ModalWindowManager EnergizerUnlockedWindow;
     public ModalWindowManager EndOfEarlyAccessWindow;
+    public ModalWindowManager EndOfAlphaWindow;
     public NotificationManager AutosaveComplete;
     public NotificationManager BigWaveIncoming;
     public ProgressBar PowerUsageBar;
@@ -146,6 +147,13 @@ public class Interface : MonoBehaviour
     public void OpenEndWindow()
     {
         EndOfEarlyAccessWindow.OpenWindow();
+        Time.timeScale = 0f;
+        EndScreenOpen = true;
+    }
+
+    public void OpenAlphaWindow()
+    {
+        EndOfAlphaWindow.OpenWindow();
         Time.timeScale = 0f;
         EndScreenOpen = true;
     }

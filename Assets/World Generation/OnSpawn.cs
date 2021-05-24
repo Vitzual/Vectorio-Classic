@@ -151,7 +151,7 @@ public class OnSpawn : MonoBehaviour
                     if (a.collider == null && b.collider == null)
                     {
                         valid = true;
-                        var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.identity);
+                        var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.Euler(0, 0, 0));
                         temp.name = Hive.name;
                     }
                 }
@@ -301,10 +301,6 @@ public class OnSpawn : MonoBehaviour
     public bool checkCoords(int x, int y, int minDistance)
     {
         if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= -minDistance) && x <= 750 && x >= -745 && y >= -745 && y <= 750) return true;
-        else
-        {
-            Debug.Log("Failed on coords " + x + " " + y);
-            return false;
-        }
+        else return false;
     }
 }

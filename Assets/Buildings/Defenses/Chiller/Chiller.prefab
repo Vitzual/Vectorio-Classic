@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -93,6 +94,7 @@ GameObject:
   - component: {fileID: -8608446681562890158}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: 2427496693388507814}
   - component: {fileID: 3707281681242850645}
   m_Layer: 8
   m_Name: Chiller
@@ -138,10 +140,12 @@ MonoBehaviour:
   cost: 60000
   power: 120
   ID: 8
+  isBig: 0
   description: Strong defense that lowers heat output by 10.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
+  scanThisFrame: 0
   range: 90
   rotationSpeed: 70
   bulletDamage: 20
@@ -149,6 +153,7 @@ MonoBehaviour:
   bulletAmount: 1
   bulletSpeed: 80
   bulletSpread: 3
+  targetLock: 1
   fireRate: 0.2
   FirePoints:
   - {fileID: 3069989843565101140}
@@ -157,6 +162,8 @@ MonoBehaviour:
   hasAudio: 1
   target: {fileID: 0}
   isRotating: 1
+  targets: []
+  targettingMode: 1
   gunShotParticles: 0
   shotParticle: {fileID: 0}
   animationEnabled: 1
@@ -177,6 +184,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -238,6 +246,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &2427496693388507814
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 45
 --- !u!114 &3707281681242850645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +326,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -383,6 +408,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -464,6 +490,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public abstract class EnemyClass : MonoBehaviour
 {
+    // Enemy handler script
+    public EnemyHandler enemyScript;
+    
     // Enemy ID
     public int ID;
     
@@ -38,8 +41,30 @@ public abstract class EnemyClass : MonoBehaviour
     // Start method
     protected void Start()
     {
-        GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>().RegisterEnemy(transform, moveSpeed, damage, rayLength);
+        enemyScript = GameObject.Find("Enemy Handler").GetComponent<EnemyHandler>();
+        enemyScript.RegisterEnemy(transform, moveSpeed, damage);
         scanner = GameObject.Find("Enemy Scanner").GetComponent<EnemyLocater>();
+    }
+
+    // Gets called when entering another defenses range or hitting the defense all together
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (Vector3.Distance(collider.transform.position, transform.position) >= 10 && collider.tag == "Defense")
+        {
+            collider.GetComponent<TurretClass>().AddAvailableEnemy(transform);
+        }
+        else if (collider.tag == "Defense" || collider.tag == "Building")
+        {
+            int ID = enemyScript.RequestID(transform);
+            if (ID != -1) enemyScript.OnHit(ID, collider.transform);
+        }
+    }
+
+    // Gets called when entering another defenses range or hitting the defense all together
+    public void OnTriggerLeave2D(Collider2D collider)
+    {
+        if (Vector3.Distance(collider.transform.position, transform.position) >= 10)
+            collider.GetComponent<TurretClass>().RemoveAvailableEnemy(transform);
     }
 
     // Kill entity

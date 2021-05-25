@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -93,6 +94,7 @@ GameObject:
   - component: {fileID: 7257695650761451215}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: 8646574273394845543}
   - component: {fileID: 5030241480079116743}
   m_Layer: 8
   m_Name: Ranger
@@ -140,6 +142,7 @@ MonoBehaviour:
   cost: 3500
   power: 35
   ID: 4
+  isBig: 0
   description: Fires long-range high-velocity projectiles that deal massive damage.
   EngineerModifications: []
   AppliedModification: 
@@ -152,6 +155,7 @@ MonoBehaviour:
   bulletAmount: 1
   bulletSpeed: 100
   bulletSpread: 0
+  targetLock: 1
   fireRate: 2
   FirePoints:
   - {fileID: 1714094987215728718}
@@ -160,6 +164,8 @@ MonoBehaviour:
   hasAudio: 1
   target: {fileID: 0}
   isRotating: 1
+  targets: []
+  targettingMode: 1
   gunShotParticles: 1
   shotParticle: {fileID: 3534197822200428421, guid: 551b66376bf476a4faf68bfcf81778f0,
     type: 3}
@@ -181,6 +187,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -242,6 +249,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &8646574273394845543
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 40
 --- !u!114 &5030241480079116743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +326,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -384,6 +408,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -465,6 +490,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -576,6 +602,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -658,6 +685,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

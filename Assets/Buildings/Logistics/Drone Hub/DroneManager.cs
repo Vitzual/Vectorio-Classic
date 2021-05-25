@@ -161,29 +161,8 @@ public class DroneManager : MonoBehaviour
                         // If target is not the port, place the building
                         if (drone.target != drone.spawnPosition)
                         {
-
-                            // Check if adequate resources for a drone to be deployed
-                            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) { returnToParent(drone); continue; }
-                            if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0) { returnToParent(drone); continue; }
-                            if (drone.goldCost > survival.gold && drone.goldCost > 0) { returnToParent(drone); continue; }
-
-                            // Set component values
-                            survival.increasePowerConsumption(drone.powerCost);
-                            survival.Spawner.increaseHeat(drone.heatCost);
-                            survival.RemoveGold(drone.goldCost);
-
-                            // Create the new building and remove the ghost version
-                            var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
-                            LastObj.name = drone.targetBuilding.name;
-                            survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
-                            Destroy(drone.target.gameObject);
-
-                            // Create a UI resource popup thing idk lmaooo
-                            survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
-
-                            // Play audio
-                            float audioScale = cameraScroll.getZoom() / 1400f;
-                            AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
+                            // Attempt to place a building
+                            if (!placeBuilding(drone)) continue;
 
                             // Set drone target back to parent
                             returnToParent(drone);
@@ -355,6 +334,38 @@ public class DroneManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    // Attempt to place a building
+    public bool placeBuilding(ConstructionDrone drone)
+    {
+        // Check if adequate resources for a drone to be deployed
+        if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) { returnToParent(drone); return false; }
+        if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0) { returnToParent(drone); return false; }
+        if (drone.goldCost > survival.gold && drone.goldCost > 0) { returnToParent(drone); return false; }
+
+        // Set component values
+        survival.increasePowerConsumption(drone.powerCost);
+        survival.Spawner.increaseHeat(drone.heatCost);
+        survival.RemoveGold(drone.goldCost);
+
+        // Create the new building and remove the ghost version
+        var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
+        LastObj.name = drone.targetBuilding.name;
+        survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
+        Destroy(drone.target.gameObject);
+
+        // Create a UI resource popup thing idk lmaooo
+        survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
+
+        // Play audio
+        float audioScale = cameraScroll.getZoom() / 1400f;
+        AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
+
+        // Check for nearby enemy buildings
+
+
+        return true;
     }
 
     // Register an active construction drone

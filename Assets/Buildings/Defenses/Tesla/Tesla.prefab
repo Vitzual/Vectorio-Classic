@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2048516651047028956}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: -7778936089646482729}
   - component: {fileID: -4469380767562847511}
   m_Layer: 8
   m_Name: Tesla
@@ -57,6 +58,7 @@ MonoBehaviour:
   cost: 120000
   power: 450
   ID: 12
+  isBig: 0
   description: Fires a barrage of lightning that deals electric damage to enemies.
   EngineerModifications: []
   AppliedModification: 
@@ -69,6 +71,7 @@ MonoBehaviour:
   bulletAmount: 3
   bulletSpeed: 80
   bulletSpread: 15
+  targetLock: 1
   fireRate: 0.1
   FirePoints:
   - {fileID: 3069989843565101140}
@@ -77,6 +80,8 @@ MonoBehaviour:
   hasAudio: 0
   target: {fileID: 0}
   isRotating: 1
+  targets: []
+  targettingMode: 1
   gunShotParticles: 0
   shotParticle: {fileID: 0}
   animationEnabled: 0
@@ -97,6 +102,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -158,6 +164,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &-7778936089646482729
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 40
 --- !u!114 &-4469380767562847511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +241,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -300,6 +323,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -382,6 +406,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -463,6 +488,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

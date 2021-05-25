@@ -8,8 +8,7 @@ public class EnemyTurretAI : TurretClass
     void Update()
     {
         // If a target exists, shoot at it
-        if (target == null)
-            RotateTowardsPlayer();
+        RotationHandler();
 
         // If a target exists, shoot at it
         if (target != null)

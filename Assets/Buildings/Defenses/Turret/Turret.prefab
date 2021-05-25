@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 3702351155716561428}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: 4514026479247561692}
   - component: {fileID: 6394988898322714690}
   m_Layer: 8
   m_Name: Turret
@@ -351,6 +352,8 @@ MonoBehaviour:
   hasAudio: 1
   target: {fileID: 0}
   isRotating: 1
+  targets: []
+  targettingMode: 1
   gunShotParticles: 1
   shotParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
@@ -435,6 +438,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &4514026479247561692
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 25
 --- !u!114 &6394988898322714690
 MonoBehaviour:
   m_ObjectHideFlags: 0

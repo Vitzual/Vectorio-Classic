@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,6 +95,7 @@ GameObject:
   - component: {fileID: 7184227371150341994}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
+  - component: {fileID: -1492994372838756852}
   - component: {fileID: 3026492365356427618}
   m_Layer: 8
   m_Name: Shotgunner
@@ -139,10 +141,12 @@ MonoBehaviour:
   cost: 750
   power: 15
   ID: 3
+  isBig: 0
   description: Fires multiple projectiles at once to eliminate large groups of enemies.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
+  scanThisFrame: 0
   range: 40
   rotationSpeed: 60
   bulletDamage: 1
@@ -150,6 +154,7 @@ MonoBehaviour:
   bulletAmount: 6
   bulletSpeed: 80
   bulletSpread: 15
+  targetLock: 1
   fireRate: 0.75
   FirePoints:
   - {fileID: 3069989843565101140}
@@ -158,6 +163,8 @@ MonoBehaviour:
   hasAudio: 1
   target: {fileID: 0}
   isRotating: 1
+  targets: []
+  targettingMode: 1
   gunShotParticles: 1
   shotParticle: {fileID: 5935417771904588832, guid: 078d87907f6578145b62ae1aa0058c72,
     type: 3}
@@ -179,6 +186,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -240,6 +248,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &-1492994372838756852
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 20
 --- !u!114 &3026492365356427618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +325,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -382,6 +407,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -463,6 +489,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

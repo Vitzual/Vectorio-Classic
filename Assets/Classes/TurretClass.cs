@@ -8,7 +8,6 @@ public abstract class TurretClass : TileClass
     private EnemyBulletHandler enemyHandler;
     private bool isEnemy = false;
 
-    private LayerMask EnemyLayer;
     public bool scanThisFrame;
 
     // Weapon variables
@@ -31,10 +30,17 @@ public abstract class TurretClass : TileClass
     protected float nextFire = 0;
     protected float timePassed = 0;
     protected bool hasTarget = false;
-    public GameObject target = null;
+    public Transform target = null;
     protected float enemyAngle;
     protected float gunRotation;
     public bool isRotating = true;
+
+    // 1 = Closest 
+    // 2 = Strongest
+    // 3 = Weakest
+    // 4 = Furthest
+    public List<Transform> targets;
+    public int targettingMode = 1;
 
     protected CameraScroll cameraScript;
 
@@ -57,18 +63,39 @@ public abstract class TurretClass : TileClass
 
         if (transform.name.Contains("Enemy"))
         {
-            EnemyLayer = 1 << LayerMask.NameToLayer("Building");
             enemyHandler = GameObject.Find("Enemy Bullet Handler").GetComponent<EnemyBulletHandler>();
             isEnemy = true;
+            forceUpdate();
+            if (target == null) enabled = false;
         }
         else
         {
             BuildingHandler.buildings.Add(transform);
-            EnemyLayer = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense");
             bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
         }
+
         if (animationEnabled) animHolder = animTracker;
         cameraScript = GameObject.Find("Camera").GetComponent<CameraScroll>();
+    }
+
+    public void forceUpdate()
+    {
+        var colliders = Physics2D.OverlapCircleAll(
+            this.gameObject.transform.position,
+            range + Research.bonus_range,
+            1 << LayerMask.NameToLayer("Building"));
+
+        float closest = float.PositiveInfinity;
+
+        foreach (Collider2D collider in colliders)
+        {
+            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+            if (distance < closest)
+            {
+                target = collider.transform;
+                closest = distance;
+            }
+        }
     }
 
     public void PlayAnim()
@@ -100,96 +127,50 @@ public abstract class TurretClass : TileClass
     public void PlayAudio()
     {
         float audioScale = cameraScript.getZoom() / 1400f;
-        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), this.gameObject.transform.position, Settings.soundVolume - audioScale);
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
-    protected GameObject FindNearestEnemy()
+    protected Transform FindTarget()
     {
-        scanThisFrame = false;
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(
-            this.gameObject.transform.position, 
-            range + Research.bonus_range, EnemyLayer);
-
-        GameObject result = null;
+        Transform result = null;
         float closest = float.PositiveInfinity;
 
-        foreach (Collider2D collider in colliders)
+        for (int i = 0; i < targets.Count; i++ )
         {
-            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
-            if (distance < closest) {
-                result = collider.gameObject;
-                closest = distance;
+            if (targets[i] == null)
+            {
+                targets.RemoveAt(i);
+                i--;
+                continue;
             }
-        }
-        return result;
-    }
 
-    protected GameObject FindNearestPlayer()
-    {
-        scanThisFrame = false;
-
-        var colliders = Physics2D.OverlapCircleAll(
-            this.gameObject.transform.position,
-            range + Research.bonus_range,
-            EnemyLayer);
-        GameObject result = null;
-        float closest = float.PositiveInfinity;
-
-        foreach (Collider2D collider in colliders)
-        {
-            float distance = (collider.transform.position - this.transform.position).sqrMagnitude;
+            float distance = (targets[i].position - transform.position).sqrMagnitude;
             if (distance < closest)
             {
-                result = collider.gameObject;
+                result = targets[i];
                 closest = distance;
             }
         }
+
         return result;
     }
 
-    protected void RotateTowardsPlayer()
+    public void AddAvailableEnemy(Transform enemy)
     {
-        if (scanThisFrame || target != null)
-        {
-            if (!hasTarget)
-                target = FindNearestPlayer();
-            if (target != null)
-            {
-                // Temporary fix to the enemy turret rotation logic
-                // Uses targetting logic from RotationHandler() but just applies rotation towards target 
-                Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-                Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
-                float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
-                if (distance.x > 0) targetAngle += 180;
-                Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
-            }
-        }
-        else scanThisFrame = true;
+        targets.Add(enemy);
     }
 
-    protected void RotateTowardNearestEnemy() 
+    public void RemoveAvailableEnemy(Transform enemy)
     {
-        if (scanThisFrame || target != null)
-        {
-            if (!hasTarget)
-                target = FindNearestEnemy();
-            if (target != null)
-                RotationHandler();
-        }
-        else scanThisFrame = true;
+        targets.Remove(enemy);
     }
 
     protected void RotationHandler()
     {
-        // If a target exists, shoot at it
         if (target != null)
         {
             // Set turret to rotating state
             isRotating = true;
-
-            // Flag hasTarget
-            hasTarget = true;
 
             // Get target position relative to this entity
             Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
@@ -247,6 +228,7 @@ public abstract class TurretClass : TileClass
                 isRotating = false;
             }
         }
+        else target = FindTarget();
     }
 
     // Attempts to fire a bullet and returns true if fired

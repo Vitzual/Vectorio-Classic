@@ -6,7 +6,7 @@ public class SMGAI : TurretClass
     void Update()
     {
         if (isRotating)
-            RotateTowardNearestEnemy();
+            RotationHandler();
 
         // If a target exists, shoot at it
         if (target != null && !isRotating)

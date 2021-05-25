@@ -13,7 +13,7 @@ public class ChillerAI : TurretClass
         }
 
         if (isRotating)
-            RotateTowardNearestEnemy();
+            RotationHandler();
 
         // If a target exists, shoot at it
         if (target != null && !isRotating)

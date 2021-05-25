@@ -13,13 +13,11 @@ public class EnemyHandler : MonoBehaviour
     public class ActiveEnemies
     {
         // Constructor
-        public ActiveEnemies(Transform Object, float Speed, int Damage, float RayLength, int Tracker)
+        public ActiveEnemies(Transform Object, float Speed, int Damage)
         {
             this.Object = Object;
             this.Speed = Speed;
-            this.Tracker = Tracker;
             this.Damage = Damage;
-            this.RayLength = RayLength;
 
             ObjectClass = Object.GetComponent<EnemyClass>();
         }
@@ -27,9 +25,7 @@ public class EnemyHandler : MonoBehaviour
         // Class variables
         public Transform Object { get; set; }
         public float Speed { get; set; }
-        public int Tracker { get; set; }
         public int Damage { get; set; }
-        public float RayLength { get; set; }
         public EnemyClass ObjectClass { get; set; }
 
     }
@@ -70,22 +66,6 @@ public class EnemyHandler : MonoBehaviour
                 {
                     if (Enemies[i].ObjectClass.target == null) Enemies[i].ObjectClass.FindNearestDefence();
                     Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-                    if (Enemies[i].RayLength == 0)
-                    {
-                        continue;
-                    }
-                    else if (Enemies[i].Tracker == 3)
-                    {
-                        Enemies[i].Tracker = 1;
-                        RaycastHit2D hit = Physics2D.Raycast(Enemies[i].Object.position, Enemies[i].Object.up, Enemies[i].RayLength, BuildingLayer);
-                        if (hit.collider != null)
-                            if (OnHit(i, hit.collider.transform)) { i--; continue; }
-                    }
-                    else
-                    {
-                        Enemies[i].Tracker += 1;
-                        continue;
-                    }
                 }
                 catch
                 {
@@ -97,19 +77,27 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(Transform Object, float Speed, int Damage, float RayLength)
+    public void RegisterEnemy(Transform Object, float Speed, int Damage)
     {
-        Enemies.Add(new ActiveEnemies(Object, Speed, Damage, RayLength, 1));
+        Enemies.Add(new ActiveEnemies(Object, Speed, Damage));
+    }
+
+    // Request information about an enemy using the transform attached
+    public int RequestID(Transform obj)
+    {
+        for (int i = 0; i < Enemies.Count; i++)
+            if (Enemies[i].Object == obj) return i;
+        return -1;
     }
 
     // Called when a hit is detected in the updater 
-    public bool OnHit(int enemyID, Transform other)
+    public void OnHit(int enemyID, Transform other)
     {
         if (isMenu)
         {
             Enemies[enemyID].ObjectClass.KillEntity();
             Enemies.RemoveAt(enemyID);
-            return true;
+            return;
         }
 
         Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
@@ -121,11 +109,11 @@ public class EnemyHandler : MonoBehaviour
             Enemies[enemyID].ObjectClass.KillEntity();
             Enemies.RemoveAt(enemyID);
 
-            return true;
+            return;
         }
         BuildingGoDeadSound.Play();
         survival.SetLastHit(pos);
-        return false;
+        return;
     }
 
     public Transform findClosest(Vector3 pos)

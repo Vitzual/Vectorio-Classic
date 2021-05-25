@@ -5,7 +5,8 @@ public class VoidAI : TurretClass
     // Targetting system
     void Update()
     {
-        RotateTowardNearestEnemy();
+        if (isRotating && target != null)
+            RotationHandler();
 
         // If a target exists, shoot at it
         if (target != null)

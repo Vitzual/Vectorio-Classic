@@ -358,43 +358,14 @@ public class Survival : MonoBehaviour
                 }
                 TileClass ObjectComponent = SelectedObj.GetComponent<TileClass>();
 
-                bool validHeat = false;
-                if (ObjectComponent.GetHeat() <= 0) validHeat = true;
-                else if (Spawner.htrack < Spawner.maxHeat) validHeat = true;
+                // Place the building and register as a ghost variant and queue it in the drone network
+                LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+                LastObj.name = "Ghost "+ SelectedObj.name;
+                droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
+                ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
 
-                bool validPower = false;
-                if (ObjectComponent.getConsumption() <= 0) validPower = true;
-                else if (PowerConsumption < AvailablePower) validPower = true;
 
-                if (ObjectComponent.GetCost() <= gold && validPower && validHeat)
-                {
-                    // Remove gold from player once confirmed
-                    RemoveGold(ObjectComponent.GetCost());
-
-                    // Place the building and register as a ghost variant and queue it in the drone network
-                    LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                    LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-                    LastObj.name = "Ghost "+ SelectedObj.name;
-                    droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
-                    ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
-
-                    // Create a UI resource popup thing idk lmaooo
-                    UI.CreateResourcePopup("- " + ObjectComponent.GetCost(), "Gold", LastObj.position);
-
-                    // Set component values
-                    increasePowerConsumption(SelectedObj.GetComponent<TileClass>().getConsumption());
-                    Spawner.increaseHeat(SelectedObj.GetComponent<TileClass>().GetHeat());
-
-                    // Play placement sound
-                    // float audioScale = cameraScroll.getZoom() / 1400f;
-                    // AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
-                }
-                else
-                {
-                    if (!(ObjectComponent.GetCost() <= gold)) elements[0].startFlash();
-                    else if (!(PowerConsumption + ObjectComponent.getConsumption() <= AvailablePower)) elements[1].startFlash();
-                    else if (!validHeat) elements[2].startFlash();
-                }
             }
             else if (rayHit.collider != null)
             {

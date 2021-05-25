@@ -161,11 +161,25 @@ public class DroneManager : MonoBehaviour
                         // If target is not the port, place the building
                         if (drone.target != drone.spawnPosition)
                         {
+
+                            // Check if adequate resources for a drone to be deployed
+                            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) { returnToParent(drone); continue; }
+                            if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0) { returnToParent(drone); continue; }
+                            if (drone.goldCost > survival.gold && drone.goldCost > 0) { returnToParent(drone); continue; }
+
+                            // Set component values
+                            survival.increasePowerConsumption(drone.powerCost);
+                            survival.Spawner.increaseHeat(drone.heatCost);
+                            survival.RemoveGold(drone.goldCost);
+
                             // Create the new building and remove the ghost version
                             var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
                             LastObj.name = drone.targetBuilding.name;
                             survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
                             Destroy(drone.target.gameObject);
+
+                            // Create a UI resource popup thing idk lmaooo
+                            survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
 
                             // Play audio
                             float audioScale = cameraScroll.getZoom() / 1400f;
@@ -202,8 +216,14 @@ public class DroneManager : MonoBehaviour
     {
         float closest = Mathf.Infinity;
         int[] available = new int[] { -1, -1 };
+
         for (int a = 0; a < buildingQueue.Count; a++)
         {
+            // Check if adequate resources for a drone to be deployed
+            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
+            if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
+            if (buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0) continue;
+  
             for (int b = 0; b < availableDrones.Count; b++)
             {
                 // Check if all drones still exist
@@ -365,9 +385,6 @@ public class DroneManager : MonoBehaviour
             {
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
-                survival.AddGold(buildingQueue[i].goldCost);
-                survival.decreasePowerConsumption(buildingQueue[i].powerCost);
-                survival.Spawner.decreaseHeat(buildingQueue[i].heatCost);
                 buildingQueue.RemoveAt(i);
                 return;
             }
@@ -380,9 +397,6 @@ public class DroneManager : MonoBehaviour
             {
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
-                survival.AddGold(constructionDrones[i].goldCost);
-                survival.decreasePowerConsumption(constructionDrones[i].powerCost);
-                survival.Spawner.decreaseHeat(constructionDrones[i].heatCost);
                 returnToParent(constructionDrones[i]);
                 return;
             }

@@ -49,10 +49,22 @@ public abstract class EnemyClass : MonoBehaviour
     // Gets called when entering another defenses range or hitting the defense all together
     public void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.tag == "Defense" && collider.name != "Wall" && collider.name != "Drone Hub")
+        {
+            collider.gameObject.GetComponent<TurretClass>().target = transform;
+            collider.gameObject.GetComponent<TurretClass>().enabled = true;
+        }
+
         if (Vector3.Distance(collider.transform.position, transform.position) >= 10 && collider.tag == "Defense")
         {
-            collider.GetComponent<TurretClass>().AddAvailableEnemy(transform);
+            TurretClass holder = collider.GetComponent<TurretClass>();
+            if (!holder.enabled) 
+            {
+                holder.enabled = true;
+                holder.forceTarget(transform);
+            }
         }
+
         else if (collider.tag == "Defense" || collider.tag == "Building")
         {
             int ID = enemyScript.RequestID(transform);
@@ -64,7 +76,10 @@ public abstract class EnemyClass : MonoBehaviour
     public void OnTriggerLeave2D(Collider2D collider)
     {
         if (Vector3.Distance(collider.transform.position, transform.position) >= 10)
-            collider.GetComponent<TurretClass>().RemoveAvailableEnemy(transform);
+        {
+            TurretClass holder = collider.GetComponent<TurretClass>();
+            if (holder.enabled) holder.removeTarget(transform);
+        }
     }
 
     // Kill entity

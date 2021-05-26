@@ -111,6 +111,7 @@ public class EnemyHandler : MonoBehaviour
 
             return;
         }
+
         BuildingGoDeadSound.Play();
         survival.SetLastHit(pos);
         return;

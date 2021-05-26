@@ -19,7 +19,7 @@ public class SunbeamAI : TurretClass
             return;
         }
 
-        // Sunbeams contain custom rotation hanlding as they require a large range input
+        /* Sunbeams contain custom rotation hanlding as they require a large range input
         if (isRotating)
         {
             if (scanThisFrame || target != null)
@@ -34,7 +34,7 @@ public class SunbeamAI : TurretClass
                     RotationHandler();
             }
             else scanThisFrame = true;
-        }
+        }*/
 
         // If a target exists, shoot at it
         if (target != null && !isRotating)

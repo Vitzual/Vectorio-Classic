@@ -7,8 +7,7 @@ public abstract class TurretClass : TileClass
     private BulletHandler bulletHandler;
     private EnemyBulletHandler enemyHandler;
     private bool isEnemy = false;
-
-    public bool scanThisFrame;
+    public LayerMask layer;
 
     // Weapon variables
     public int range;
@@ -56,35 +55,51 @@ public abstract class TurretClass : TileClass
     private int animHolder;
     public float animMovement = 4f;
 
-    // Let's see if this shit works amiright my dude
+    // Initial start sets layers and handlers
     private void Start()
     {
-        scanThisFrame = Random.Range(0, 2) > 0;
-
         if (transform.name.Contains("Enemy"))
         {
             enemyHandler = GameObject.Find("Enemy Bullet Handler").GetComponent<EnemyBulletHandler>();
+            layer = 1 << LayerMask.NameToLayer("Building");
             isEnemy = true;
-            forceUpdate();
-            if (target == null) enabled = false;
         }
         else
         {
             BuildingHandler.buildings.Add(transform);
             bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+            layer = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense");
         }
 
         if (animationEnabled) animHolder = animTracker;
         cameraScript = GameObject.Find("Camera").GetComponent<CameraScroll>();
+
+        forceUpdate();
+    }
+
+    public void forceTarget(Transform enemy)
+    {
+        target = enemy;
+        RotationHandler();
+    }
+
+    public void removeTarget(Transform enemy)
+    {
+        if (target == enemy) target = null;
     }
 
     public void forceUpdate()
     {
-        var colliders = Physics2D.OverlapCircleAll(
-            this.gameObject.transform.position,
-            range + Research.bonus_range,
-            1 << LayerMask.NameToLayer("Building"));
+        if (layer == -1)
+        {
+            Debug.Log(transform.name + ": No layer to force an overlap circle on!");
+            enabled = false;
+            return;
+        }
 
+        target = null;
+
+        var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, range + Research.bonus_range, layer);
         float closest = float.PositiveInfinity;
 
         foreach (Collider2D collider in colliders)
@@ -96,6 +111,9 @@ public abstract class TurretClass : TileClass
                 closest = distance;
             }
         }
+
+        if (target == null) enabled = false;
+        else RotationHandler();
     }
 
     public void PlayAnim()
@@ -128,41 +146,6 @@ public abstract class TurretClass : TileClass
     {
         float audioScale = cameraScript.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
-    }
-
-    protected Transform FindTarget()
-    {
-        Transform result = null;
-        float closest = float.PositiveInfinity;
-
-        for (int i = 0; i < targets.Count; i++ )
-        {
-            if (targets[i] == null)
-            {
-                targets.RemoveAt(i);
-                i--;
-                continue;
-            }
-
-            float distance = (targets[i].position - transform.position).sqrMagnitude;
-            if (distance < closest)
-            {
-                result = targets[i];
-                closest = distance;
-            }
-        }
-
-        return result;
-    }
-
-    public void AddAvailableEnemy(Transform enemy)
-    {
-        targets.Add(enemy);
-    }
-
-    public void RemoveAvailableEnemy(Transform enemy)
-    {
-        targets.Remove(enemy);
     }
 
     protected void RotationHandler()
@@ -228,7 +211,7 @@ public abstract class TurretClass : TileClass
                 isRotating = false;
             }
         }
-        else target = FindTarget();
+        else { isRotating = false; forceUpdate(); }
     }
 
     // Attempts to fire a bullet and returns true if fired

@@ -51,6 +51,7 @@ public class Survival : MonoBehaviour
     // layers
     public LayerMask GhostLayer;
     public LayerMask EnemyLayer;
+    public LayerMask EnemyBuildingLayer;
     public LayerMask AOCBLayer;
 
     // Area of control border
@@ -156,6 +157,8 @@ public class Survival : MonoBehaviour
     [SerializeField] private LayerMask TileLayer;
     [SerializeField] private LayerMask UILayer;
     private Vector2 MousePos;
+    private Vector3 LastPos;
+    private bool isObjectNull;
     protected float distance = 10;
     public Transform[] hotbar = new Transform[9];
 
@@ -192,6 +195,9 @@ public class Survival : MonoBehaviour
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
+
+        // Load settings
+        manager.GetComponent<Settings>().LoadSettings();
 
         if (data != null)
         {
@@ -230,9 +236,6 @@ public class Survival : MonoBehaviour
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-            // Load settings
-            manager.GetComponent<Settings>().LoadSettings();
 
             // Attempt to load save data 
             try
@@ -304,8 +307,12 @@ public class Survival : MonoBehaviour
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        // Check if the selected object is null
+        if (SelectedObj == null) isObjectNull = true;
+        else isObjectNull = false;
+
         // Check if object selected
-        if (SelectedObj != null)
+        if (!isObjectNull)
         {
             // Check unit size and make flash
             CheckSize();
@@ -316,6 +323,11 @@ public class Survival : MonoBehaviour
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
         {
+            // Stops spam calculations
+            if (!isObjectNull && LastPos != transform.position)
+                LastPos = transform.position;
+            else return;
+
             // Check for ghost variant
             foreach(Vector2 building in ghostBuildings)
                 if (new Vector2(transform.position.x,transform.position.y) == building) return;
@@ -324,13 +336,14 @@ public class Survival : MonoBehaviour
             bool ValidTile = CheckPlacement(SelectedObj);
 
             // Raycast tile to see if there is already a tile placed
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+            Transform RayTarget = CheckRaycast(rayHit);
 
             // Raycast tile to see if it is within the AOCB
             RaycastHit2D aocbHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, AOCBLayer);
 
             // Check the AOCB
-            if (SelectedObj != null && SelectedObj.name == "Energizer")
+            if (!isObjectNull && SelectedObj.name == "Energizer")
             {
                 var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(60, 60), 0, 1 << LayerMask.NameToLayer("AOCB"));
                 if (colliders.Length == 0) return;
@@ -339,7 +352,7 @@ public class Survival : MonoBehaviour
                 if (aocbHit.collider == null) return;
 
             // Check if placement is within AOC
-            if (ValidTile && rayHit.collider == null && SelectedObj != null && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
+            if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
                 if (SelectedObj == CollectorObj)
                 {
@@ -367,14 +380,14 @@ public class Survival : MonoBehaviour
 
 
             }
-            else if (rayHit.collider != null)
+            else if (RayTarget != null)
             {
-                if (rayHit.collider.name != "Hub" && SelectedObj == null)
+                if (RayTarget.name != "Hub" && isObjectNull)
                 {
-                    UI.ShowTileInfo(rayHit.collider);
+                    UI.ShowTileInfo(RayTarget);
                     UI.ShowingInfo = true;
                     SelectedOverlay.SetActive(true);
-                    SelectedOverlay.transform.position = rayHit.collider.transform.position;
+                    SelectedOverlay.transform.position = RayTarget.position;
                     PromptOverlay.alpha = 1;
                 }
             }
@@ -484,7 +497,7 @@ public class Survival : MonoBehaviour
         }
 
         // If escape pressed and selected object isn't null, unselect it
-        else if (Input.GetKeyDown(KeyCode.Escape) && SelectedObj != null)
+        else if (Input.GetKeyDown(KeyCode.Escape) && !isObjectNull)
         {
             Selected.sprite = null;
             SelectedObj = null;
@@ -729,6 +742,13 @@ public class Survival : MonoBehaviour
             else return true;
         }
         return true;
+    }
+
+    public Transform CheckRaycast(RaycastHit2D[] ray)
+    {
+        foreach (RaycastHit2D hit in ray)
+            if (hit.collider is BoxCollider2D) return hit.collider.transform;
+        return null;
     }
 
     // If object removed is a wall, update surrounding walls
@@ -1011,6 +1031,8 @@ public class Survival : MonoBehaviour
     // Select object on hotbar
     public void SelectHotbar(int index)
     {
+        if (UI.MenuOpen || UI.SettingsOpen || UI.ControlsOpen) return;
+
         Transform holder = SelectedObj;
         try
         {

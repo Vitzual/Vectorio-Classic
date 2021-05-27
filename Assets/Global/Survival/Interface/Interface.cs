@@ -316,7 +316,7 @@ public class Interface : MonoBehaviour
         }
     }
 
-    public void ShowTileInfo(Collider2D a)
+    public void ShowTileInfo(Transform a)
     {
         // TODO: Fix this bullshit
         Transform b = Overlay.transform.Find("Prompt");

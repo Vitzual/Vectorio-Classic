@@ -137,9 +137,10 @@ public class DroneManager : MonoBehaviour
         {
             ConstructionDrone drone = constructionDrones[i];
 
-            // If the drone becomes null (parent is removed), remove drone
+            // If the drone becomes null (parent is removed), remove drone and add back building to available buildings
             if (drone.body == null)
             {
+                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
                 constructionDrones.Remove(drone);
                 i--;
                 return;

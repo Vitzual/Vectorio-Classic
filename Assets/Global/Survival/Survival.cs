@@ -329,8 +329,8 @@ public class Survival : MonoBehaviour
             else return;
 
             // Check for ghost variant
-            foreach(Vector2 building in ghostBuildings)
-                if (new Vector2(transform.position.x,transform.position.y) == building) return;
+            RaycastHit2D rayGhost = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
+            if (rayGhost.collider != null) return;
 
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
@@ -397,12 +397,13 @@ public class Survival : MonoBehaviour
         else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.EngineerOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            Transform RayTarget = CheckRaycast(rayHit);
 
             // Raycast tile to see if there is already a tile placed
-            if (rayHit.collider != null && rayHit.collider.name != "Hub")
+            if (RayTarget != null && RayTarget.name != "Hub")
             {
-                TileClass rayScript = rayHit.collider.gameObject.GetComponent<TileClass>();
+                TileClass rayScript = RayTarget.GetComponent<TileClass>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
@@ -410,7 +411,7 @@ public class Survival : MonoBehaviour
                 rayScript.DestroyTile();
 
                 // Create a UI resource popup thing idk lmaooo
-                UI.CreateResourcePopup("+ " + amount, "Gold", rayHit.collider.transform.position);
+                UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
             }
             else
             {

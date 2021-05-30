@@ -23,7 +23,7 @@ public class IridiumAI: TileClass
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
-        if (!isOffset) InvokeRepeating("SendIridium", 0f, 12f);
+        if (!isOffset) InvokeRepeating("SendIridium", 0f, Research.research_iridium_time);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
         popup.parent = SRVSC.UI.IngameCanvas.transform;
@@ -35,8 +35,8 @@ public class IridiumAI: TileClass
         isOffset = true;
         isFirstAnim = false;
         CancelInvoke("SendIridium");
-        yield return new WaitForSeconds(Random.Range(0f, 12f));
-        if (this != null) InvokeRepeating("SendIridium", 0f, 12f);
+        yield return new WaitForSeconds(Random.Range(0f, Research.research_iridium_time));
+        if (this != null) InvokeRepeating("SendIridium", 0f, Research.research_iridium_time);
     }
 
     private void Update()

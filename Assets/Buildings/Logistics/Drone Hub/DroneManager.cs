@@ -29,7 +29,7 @@ public class DroneManager : MonoBehaviour
             heatCost = heat;
 
             targetPos = target.position;
-            droneSpeed = 25f;
+            droneSpeed = Research.research_construction_speed;
             droneType = 1;
 
             platesOpening = true;

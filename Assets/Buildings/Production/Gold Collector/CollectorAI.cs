@@ -23,7 +23,7 @@ public class CollectorAI: TileClass
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
-        if (!isOffset) InvokeRepeating("SendGold", 0f, 5f);
+        if (!isOffset) InvokeRepeating("SendGold", 0f, Research.research_gold_time);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
         popup.parent = SRVSC.UI.IngameCanvas.transform;
@@ -35,8 +35,8 @@ public class CollectorAI: TileClass
         isOffset = true;
         isFirstAnim = false;
         CancelInvoke("SendGold");
-        yield return new WaitForSeconds(Random.Range(0f, 5f));
-        if (this != null) InvokeRepeating("SendGold", 0f, 5f);
+        yield return new WaitForSeconds(Random.Range(0f, Research.research_gold_time));
+        if (this != null) InvokeRepeating("SendGold", 0f, Research.research_gold_time);
     }
 
     private void Update()

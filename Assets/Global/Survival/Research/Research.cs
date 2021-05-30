@@ -12,18 +12,23 @@ public class Research : MonoBehaviour
     public static int research_poisoning = 0;
     public static int research_shield = 0;
     public static int research_health = 0;
+    public static int research_wall_health = 0;
     public static int research_pierce = 0;
     public static float research_range = 0;
     public static float research_firerate = 0;
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
     public static int research_gold_yield = 1;
+    public static int research_gold_storage = 0;
     public static float research_essence_time = 8f;
     public static int research_essence_yield = 1;
-    public static float research_iridium_time = 15f;
+    public static int research_essence_storage = 0;
+    public static float research_iridium_time = 12f;
     public static int research_iridium_yield = 1;
+    public static int research_iridium_storage = 0;
     public static float research_construction_speed = 25f;
     public static float research_combat_speed = 20f;
+    public static bool research_explosive_storages = false;
 
     // Research UI stuff
     public static int LabsAvailable = 0;
@@ -85,9 +90,9 @@ public class Research : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            SurvivalCS.AddGold(100);
-            SurvivalCS.AddEssence(100);
-            SurvivalCS.AddIridium(100);
+            SurvivalCS.AddGold(10000);
+            SurvivalCS.AddEssence(10000);
+            SurvivalCS.AddIridium(10000);
         }
     }
 
@@ -119,23 +124,95 @@ public class Research : MonoBehaviour
         // Assign type
         string type = research.ResearchType;
 
-        // Still have to add hub & auto repair tool thing
-        if (type.ToLower() == "damage") research_damage += 5; // Increases damage of all defenses by 2
-        else if (type.ToLower() == "health") research_health += 10; // Increases health of all buildings by 5
-        else if (type.ToLower() == "gold yield") research_gold_yield += 1; // Increases output of all resources by 5
-        else if (type.ToLower() == "essence yield") research_essence_yield += 1; // Increases output of all resources by 5
-        else if (type.ToLower() == "iridium yield") research_iridium_yield += 1; // Increases output of all resources by 5
-        else if (type.ToLower() == "gold time") research_gold_time -= 1f; // Increases output of all resources by 5
-        else if (type.ToLower() == "essence time") research_essence_time -= 1f; // Increases output of all resources by 5
-        else if (type.ToLower() == "iridium time") research_essence_time -= 1f; // Increases output of all resources by 5
-        else if (type.ToLower() == "burning") research_burning += 5; // Adds 3 seconds of burning (5% proc chance)
-        else if (type.ToLower() == "freezing") research_freezing += 10; // Adds 10 seconds of freezing (5% proc chance)
-        else if (type.ToLower() == "poisoning") research_poisoning += 3; // Adds 3 seconds of poisoning (5% proc chance)
-        else if (type.ToLower() == "shield") research_shield += 1; // Adds defensive shield to all buildings
-        else if (type.ToLower() == "pierce") research_pierce += 1; // Add piercing shots to bullets
-        else if (type.ToLower() == "range") research_range += 5f; // Increase range by 5 units (1x1 tile)
-        else if (type.ToLower() == "firerate") research_firerate += 0.1f; // Decrease shoot cooldown by 0.1s
-        else { Debug.Log("The research type supplied is invalid."); }
+
+        // Apply the research
+        switch (type)
+        {
+            case "disrupt":
+                SurvivalCS.Spawner.maxHeat = 25000;
+                SurvivalCS.Spawner.maxHeatAmount.text = 25000 + " MAX";
+                SurvivalCS.Spawner.increaseHeat(0);
+                break;
+            case "damage":
+                research_damage += 5;
+                break;
+            case "health":
+                research_health += 10;
+                research_wall_health += 50;
+                break;
+            case "range":
+                research_range += 5f;
+                break;
+            case "firerate":
+                research_firerate += 0.1f;
+                break;
+            case "pierce":
+                research_pierce += 1;
+                break;
+            case "gold yield":
+                research_gold_yield += 1;
+                break;
+            case "gold time":
+                research_gold_time -= 1f;
+                CollectorAI[] allGoldCollectors = FindObjectsOfType<CollectorAI>();
+                foreach (CollectorAI collector in allGoldCollectors)
+                    collector.OffsetStart();
+                break;
+            case "gold storage":
+                research_gold_storage += 500;
+                GoldStorageAI[] allGoldStorage = FindObjectsOfType<GoldStorageAI>();
+                SurvivalCS.goldStorage += allGoldStorage.Length * 500;
+                break;
+            case "essence yield":
+                research_essence_yield += 1;
+                break;
+            case "essence time":
+                research_essence_time -= 1f;
+                EssenceAI[] allEssenceCollectors = FindObjectsOfType<EssenceAI>();
+                foreach (EssenceAI collector in allEssenceCollectors)
+                    collector.OffsetStart();
+                break;
+            case "essence storage":
+                research_essence_storage += 250;
+                EssenceStorageAI[] allEssenceStorages = FindObjectsOfType<EssenceStorageAI>();
+                SurvivalCS.essenceStorage += allEssenceStorages.Length * 250;
+                break;
+            case "iridium yield":
+                research_iridium_yield += 1;
+                break;
+            case "iridium time":
+                research_iridium_time -= 1f;
+                IridiumAI[] allIridiumCollectors = FindObjectsOfType<IridiumAI>();
+                foreach (IridiumAI collector in allIridiumCollectors)
+                    collector.OffsetStart();
+                break;
+            case "iridium storage":
+                research_iridium_storage += 100;
+                IridiumStorageAI[] allIridiumStorages = FindObjectsOfType<IridiumStorageAI>();
+                SurvivalCS.iridiumStorage += allIridiumStorages.Length * 100;
+                break;
+            case "burning":
+                research_burning += 5;
+                break;
+            case "freezing":
+                research_freezing += 10;
+                break;
+            case "poisoning":
+                research_poisoning += 3;
+                break;
+            case "explosive storages":
+                research_explosive_storages = true;
+                break;
+            case "construction speed":
+                research_construction_speed += 5f;
+                break;
+            case "combat speed":
+                research_combat_speed += 5f;
+                break;
+            default:
+                Debug.Log("The research type supplied was invalid");
+                return;
+        }
 
         // Set research boolean
         research.IsResearched = true;

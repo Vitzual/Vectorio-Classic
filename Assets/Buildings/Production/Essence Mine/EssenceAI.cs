@@ -23,7 +23,7 @@ public class EssenceAI: TileClass
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
-        if (!isOffset) InvokeRepeating("SendEssence", 0f, 8f);
+        if (!isOffset) InvokeRepeating("SendEssence", 0f, Research.research_essence_time);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
         popup.parent = SRVSC.UI.IngameCanvas.transform;
@@ -35,8 +35,8 @@ public class EssenceAI: TileClass
         isOffset = true;
         isFirstAnim = false;
         CancelInvoke("SendEssence");
-        yield return new WaitForSeconds(Random.Range(0f, 8f));
-        if (this != null) InvokeRepeating("SendEssence", 0f, 8f);
+        yield return new WaitForSeconds(Random.Range(0f, Research.research_essence_time));
+        if (this != null) InvokeRepeating("SendEssence", 0f, Research.research_essence_time);
     }
 
     private void Update()

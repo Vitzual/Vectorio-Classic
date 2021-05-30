@@ -18,7 +18,7 @@ public class IridiumStorageAI: TileClass
     {
         BuildingHandler.buildings.Add(transform);
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
-        SRVSC.iridiumStorage += amount;
+        SRVSC.iridiumStorage += amount + Research.research_iridium_storage;
         SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
     }
 
@@ -44,9 +44,19 @@ public class IridiumStorageAI: TileClass
     // Kill defense
     public override void DestroyTile()
     {
+        if (Research.research_explosive_storages)
+        {
+            var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 20f, 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense"));
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.tag == "Enemy") collider.GetComponent<EnemyClass>().KillEntity();
+                else if (collider.tag == "Enemy Defense") collider.GetComponent<TileClass>().DestroyTile();
+            }
+        }
+
         SRVSC.decreasePowerConsumption(power);
         BuildingHandler.buildings.Remove(transform);
-        SRVSC.UpdateGoldStorage(amount);
+        SRVSC.UpdateIridiumStorage(amount + Research.research_iridium_storage);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

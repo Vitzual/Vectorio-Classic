@@ -265,7 +265,7 @@ public class Research : MonoBehaviour
                 break;
             default:
                 Debug.Log("The research type supplied was invalid");
-                return;
+                break;
         }
 
         // Set research boolean

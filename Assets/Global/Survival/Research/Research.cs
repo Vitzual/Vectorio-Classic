@@ -139,30 +139,45 @@ public class Research : MonoBehaviour
 
         // Set research boolean
         research.IsResearched = true;
-        SetResearchButtonColor(research, "green");
+        UpdateAllButtons();
     }
 
     public void SetResearchButtonColor(Researchable research, string color)
     {
         var colors = research.ResearchButton.colors;
+        Color colorHolder;
         if (color == "red")
         {
-            colors.normalColor = new Color(154, 53, 53, 0.8f);
-            colors.highlightedColor = new Color(190, 62, 62, 0.8f);
-            colors.pressedColor = new Color(221, 64, 64, 0.8f);
+            Debug.Log("I got called red!");
+            ColorUtility.TryParseHtmlString("#A6232399", out colorHolder);
+            colors.normalColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#BC181899", out colorHolder);
+            colors.highlightedColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#F31D1D99", out colorHolder);
+            colors.pressedColor = colorHolder;
         }
         else if (color == "green")
         {
-            colors.normalColor = new Color(53, 154, 73, 0.8f);
-            colors.highlightedColor = new Color(62, 190, 73, 0.8f);
-            colors.pressedColor = new Color(64, 221, 97, 0.8f);
+            Debug.Log("I got called green!");
+            ColorUtility.TryParseHtmlString("#259F3B99", out colorHolder);
+            colors.normalColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#24B93F99", out colorHolder);
+            colors.highlightedColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#1FD13F99", out colorHolder);
+            colors.pressedColor = colorHolder;
         }
         else
         {
-            colors.normalColor = new Color(34, 34, 34, 0.8f);
-            colors.highlightedColor = new Color(51, 50, 50, 0.8f);
-            colors.pressedColor = new Color(156, 153, 153, 0.8f);
+            Debug.Log("I got called normal!");
+            ColorUtility.TryParseHtmlString("#22222299", out colorHolder);
+            colors.normalColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#33323299", out colorHolder);
+            colors.highlightedColor = colorHolder;
+            ColorUtility.TryParseHtmlString("#9C999999", out colorHolder);
+            colors.pressedColor = colorHolder;
         }
+
+        research.ResearchButton.colors = colors;
     }
 
     public void UpdateAllButtons()
@@ -172,11 +187,9 @@ public class Research : MonoBehaviour
             if (research.IsResearched) SetResearchButtonColor(research, "green");
             else
             {
-                foreach (int j in research.RequiredResearch)
-                {
-                    if (!Researchables[j].IsResearched) { SetResearchButtonColor(research, "red"); return; }
-                }
                 SetResearchButtonColor(research, "default");
+                foreach (int j in research.RequiredResearch)
+                    if (!Researchables[j].IsResearched) SetResearchButtonColor(research, "red");
             }
         }
     }

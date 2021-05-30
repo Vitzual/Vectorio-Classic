@@ -68,7 +68,7 @@ public class IridiumAI: TileClass
     {
         if (!isFirstAnim)
         {
-            int add = amount + Research.bonus_gold;
+            int add = amount + Research.research_iridium_yield;
             if (enhanced) add *= 4;
             SRVSC.AddIridium(add);
             rPopup.ResetPopup("+ " + add);

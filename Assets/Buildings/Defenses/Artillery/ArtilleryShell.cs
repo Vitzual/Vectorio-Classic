@@ -17,7 +17,7 @@ public class ArtilleryShell : BulletClass
     public override void collide()
     {
         // Apply splash damage
-        var colliders = Physics2D.OverlapCircleAll(this.gameObject.transform.position, splashSize + Research.bonus_range, enemyLayer | enemyBuildingLayer);
+        var colliders = Physics2D.OverlapCircleAll(this.gameObject.transform.position, splashSize + Research.research_range, enemyLayer | enemyBuildingLayer);
         foreach (Collider2D collider in colliders)
             switch (collider.name)
             {

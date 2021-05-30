@@ -366,7 +366,7 @@ public class DroneManager : MonoBehaviour
         // Check for nearby enemy buildings
         var colliders = Physics2D.OverlapCircleAll(
             this.gameObject.transform.position,
-            100 + Research.bonus_range,
+            100 + Research.research_range,
             1 << LayerMask.NameToLayer("Enemy Defense"));
 
         foreach (Collider2D enemyTurret in colliders)

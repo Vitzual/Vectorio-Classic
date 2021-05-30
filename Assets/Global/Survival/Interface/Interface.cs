@@ -380,7 +380,7 @@ public class Interface : MonoBehaviour
     // Opens research overlay and pauses game
     public void OpenResearchOverlay()
     {
-        if (!Research.research_unlocked) return;
+        if (!Research.ResearchUnlocked) return;
         ResearchOpen = true;
         SetOverlayStatus("Research UI", true);
         Time.timeScale = 0f;
@@ -389,7 +389,7 @@ public class Interface : MonoBehaviour
     // Closes research overlay and unpauses game
     public void CloseResearchOverlay()
     {
-        if (!Research.research_unlocked) return;
+        if (!Research.ResearchUnlocked) return;
         ResearchOpen = false;
         SetOverlayStatus("Research UI", false);
         Time.timeScale = 1f;

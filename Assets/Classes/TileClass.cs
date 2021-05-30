@@ -78,7 +78,7 @@ public abstract class TileClass : MonoBehaviour
     public bool DamageTile(int dmgRecieved)
     {
         health -= dmgRecieved;
-        if (health + Research.bonus_health <= 0)
+        if (health + Research.research_health <= 0)
         {
             DestroyTile();
             return true;

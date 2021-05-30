@@ -151,38 +151,38 @@ public abstract class EnemyClass : MonoBehaviour
         else if (!effectImmunity)
         {
             // Check to see if burning has been unlocked and if it should be applied
-            if (!is_burning && Research.bonus_burning > 0)
+            if (!is_burning && Research.research_burning > 0)
             {
                 if (Random.Range(0, 20) == 10)
                 {
                     is_burning = true;
                     burning_effect = Instantiate(Resources.Load<Transform>("Effects/Fire"), transform.position, transform.rotation);
                     burning_effect.parent = transform;
-                    StartCoroutine(ApplyBurning(Research.bonus_burning));
+                    StartCoroutine(ApplyBurning(Research.research_burning));
                 }
             }
 
             // Check to see if freezing has been unlocked and if it should be applied
-            if (!is_frozen && Research.bonus_freezing > 0)
+            if (!is_frozen && Research.research_freezing > 0)
             {
                 if (Random.Range(0, 20) == 10)
                 {
                     is_frozen = true;
                     freezing_effect = Instantiate(Resources.Load<Transform>("Effects/Ice"), transform.position, transform.rotation);
                     freezing_effect.parent = transform;
-                    StartCoroutine(ApplyFreezing(Research.bonus_freezing));
+                    StartCoroutine(ApplyFreezing(Research.research_freezing));
                 }
             }
 
             // Check to see if poisoning has been unlocked and if it should be applied
-            if (!is_poisoned && Research.bonus_poisoning > 0)
+            if (!is_poisoned && Research.research_poisoning > 0)
             {
                 if (Random.Range(0, 20) == 10)
                 {
                     is_poisoned = true;
                     poison_effect = Instantiate(Resources.Load<Transform>("Effects/Poison"), transform.position, transform.rotation);
                     poison_effect.parent = transform;
-                    StartCoroutine(ApplyPoisoning(Research.bonus_poisoning));
+                    StartCoroutine(ApplyPoisoning(Research.research_poisoning));
                 }
             }
         }

@@ -68,7 +68,7 @@ public class EssenceAI: TileClass
     {
         if (!isFirstAnim)
         {
-            int add = amount + Research.bonus_gold;
+            int add = amount + Research.research_gold_yield;
             if (enhanced) add *= 4;
             SRVSC.AddEssence(add);
             rPopup.ResetPopup("+ " + add);

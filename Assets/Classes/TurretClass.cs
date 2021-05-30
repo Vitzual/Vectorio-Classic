@@ -99,7 +99,7 @@ public abstract class TurretClass : TileClass
 
         target = null;
 
-        var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, range + Research.bonus_range, layer);
+        var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, range + Research.research_range, layer);
         float closest = float.PositiveInfinity;
 
         foreach (Collider2D collider in colliders)
@@ -229,8 +229,8 @@ public abstract class TurretClass : TileClass
             {
                 CreateBullet(prefab, pos, multiplier);
             }
-            if (fireRate - Research.bonus_firerate <= 0.03f) nextFire = 0.03f;
-            else nextFire = fireRate - Research.bonus_firerate;
+            if (fireRate - Research.research_firerate <= 0.03f) nextFire = 0.03f;
+            else nextFire = fireRate - Research.research_firerate;
             return true;
         }
     }
@@ -248,9 +248,9 @@ public abstract class TurretClass : TileClass
         bullet.transform.Rotate(0f, 0f, Random.Range(-bulletSpread, bulletSpread));
 
         // Register the bullet
-        float speed = Random.Range(bulletSpeed - 10, bulletSpeed + 10) * Research.bonus_bulletspeed;
-        int pierces = bulletPierces + Research.bonus_pierce;
-        int damage = bulletDamage + Research.bonus_damage;
+        float speed = Random.Range(bulletSpeed - 10, bulletSpeed + 10) * Research.research_bulletspeed;
+        int pierces = bulletPierces + Research.research_pierce;
+        int damage = bulletDamage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
         if (isEnemy)

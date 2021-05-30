@@ -193,14 +193,6 @@ public class Technology : MonoBehaviour
         for (int i = 0; i < UnlockTier.Length; i++)
             if (UnlockTier[i].Unlock == a)
                 UnlockTier[i].Unlocked = true;
-
-        // If essence object, unlock research
-        if (a == main.GetEssenceObj())
-        {
-            UI.ResearchButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
-            UI.ResearchButton.UpdateUI();
-            Research.research_unlocked = true;
-        }
     }
 
     public void closeUnlockTree()

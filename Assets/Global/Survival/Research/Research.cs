@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Michsky.UI.ModernUIPack;
 using TMPro;
 
 public class Research : MonoBehaviour
@@ -31,8 +32,15 @@ public class Research : MonoBehaviour
     public static bool research_explosive_storages = false;
 
     // Research UI stuff
+    public Researchable Researching;
+    public GameObject ResearchBackground;
+    public ProgressBar ResearchBar;
     public static int LabsAvailable = 0;
     public static bool ResearchUnlocked = true;
+    public static bool ResearchActive = false;
+    public int goldNeeded = 0;
+    public int goldTracked = 0;
+    public float researchSpeed = 1f;
 
     // Movement stuff
     protected Vector2 movement;
@@ -54,6 +62,7 @@ public class Research : MonoBehaviour
         public int IridiumRequired; // The cost of the research
         public Button ResearchButton; // The button object associated with this research
         public bool IsResearched; // If this researchable is researched
+        public TextMeshProUGUI goldText;
     }
 
     // Research tracking
@@ -64,6 +73,7 @@ public class Research : MonoBehaviour
     {
         UpdateAllButtons();
         UpdateAllPrices();
+        ResearchBackground.SetActive(false);
     }
 
     // Movement tracking
@@ -96,11 +106,50 @@ public class Research : MonoBehaviour
         }
     }
 
+    public void SetResearchUI(Transform research, bool status)
+    {
+        if (status)
+        {
+            ResearchBar.currentPercent = (float)goldTracked / (float)goldNeeded * 100;
+            ResearchBar.UpdateUI();
+            ResearchBackground.transform.SetParent(research);
+            ResearchBackground.transform.position = research.position;
+            ResearchBackground.SetActive(true);
+        }
+        else ResearchBackground.SetActive(false);
+    }
+
+    public void UpdateResearch()
+    {
+        if (SurvivalCS.gold >= 1)
+        {
+            SurvivalCS.RemoveGold(1);
+            goldTracked += 1;
+            if (goldTracked >= goldNeeded)
+            {
+                Researching.goldText.text = "x0";
+                SetResearchUI(Researchables[0].ResearchButton.transform, false);
+                ApplyResearch(Researching);
+                CancelInvoke("UpdateResearch");
+            }
+            else 
+            {
+                Researching.GoldRequired -= 1;
+                Researching.goldText.text = "x" + Researching.GoldRequired;
+                ResearchBar.currentPercent = (float)goldTracked / (float)goldNeeded * 100; 
+                ResearchBar.UpdateUI(); 
+            }
+        }
+    }
+
     // On button click
     public void ResearchTreeButton(int number)
     {
         // Get research data ands tore in temp var
         Researchable research = Researchables[number];
+
+        // Check if being research
+        if (research == Researching) return;
 
         // Check if already researched
         if (research.IsResearched) return;
@@ -109,13 +158,19 @@ public class Research : MonoBehaviour
         foreach (int j in research.RequiredResearch)
             if (!Researchables[j].IsResearched) return;
 
-        // Check resources
-        if (SurvivalCS.gold < research.GoldRequired) return;
-        if (SurvivalCS.essence < research.EssenceRequired) return;
-        if (SurvivalCS.iridium < research.IridiumRequired) return;
+        // Set resource tracking
+        goldNeeded = research.GoldRequired;
+        goldTracked = 0;
 
         // If all checks passed, apply research
-        ApplyResearch(research);
+        Researching = research;
+        SetResearchUI(research.ResearchButton.transform, true);
+        ResearchActive = true;
+
+        // Start research updating
+        researchSpeed = 1f / LabsAvailable;
+        CancelInvoke("UpdateResearch");
+        InvokeRepeating("UpdateResearch", 1f, researchSpeed);
     }
 
     // Increases a research variable (automatically gets applied to all buildings)
@@ -123,7 +178,6 @@ public class Research : MonoBehaviour
     {
         // Assign type
         string type = research.ResearchType;
-
 
         // Apply the research
         switch (type)
@@ -274,7 +328,10 @@ public class Research : MonoBehaviour
     public void UpdateAllPrices()
     {
         foreach (Researchable research in Researchables)
-            research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = "x" + research.GoldRequired;
+        {
+            research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
+            research.goldText.text = "x" + research.GoldRequired;
+        }
     }
 
     // Save research values when saving data

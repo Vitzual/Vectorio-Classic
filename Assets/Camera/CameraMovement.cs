@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
     protected new Rigidbody2D camera;
     protected Vector2 movement;
     protected Vector2 mousePos;
+    public Interface UI;
 
     // Booleans variables
     bool LegalMovement = true;
@@ -19,6 +20,9 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
+        // Check if research open
+        if (UI.ResearchOpen) return;
+
         // Get directional movement
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");

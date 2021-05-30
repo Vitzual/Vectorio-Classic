@@ -383,7 +383,6 @@ public class Interface : MonoBehaviour
         if (!Research.ResearchUnlocked) return;
         ResearchOpen = true;
         SetOverlayStatus("Research UI", true);
-        Time.timeScale = 0f;
     }
 
     // Closes research overlay and unpauses game
@@ -392,7 +391,6 @@ public class Interface : MonoBehaviour
         if (!Research.ResearchUnlocked) return;
         ResearchOpen = false;
         SetOverlayStatus("Research UI", false);
-        Time.timeScale = 1f;
     }
 
     public GameObject GetBossBar()

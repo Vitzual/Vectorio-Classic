@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 165687244735643869}
-  - component: {fileID: 3131838950740126988}
+  - component: {fileID: -41544247508494358}
   - component: {fileID: 8832148300364434872}
   - component: {fileID: 1740312508442694215}
   m_Layer: 8
@@ -44,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3131838950740126988
+--- !u!114 &-41544247508494358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,25 +53,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711705259399207453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ee98faf6ea6f345b57314cd5f1d66f, type: 3}
+  m_Script: {fileID: 11500000, guid: 32e22cce41c66d5438e7e0875403a698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8688325068622682748, guid: a4449e3492a89b647806b6f6ac0282a3, type: 3}
-  maxhp: 10
-  health: 10
-  heat: 40
-  cost: 25000
+  maxhp: 150
+  health: 150
+  heat: 0
+  cost: 0
   power: 0
-  ID: 11
+  ID: 4178221
   isBig: 1
-  description: Increases your maximum power by 500w.
+  description: Converts resources into science. Multiple labs increases the research
+    speed of new techs.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  SRV: {fileID: 0}
-  amount: 500
-  rotator: {fileID: 0}
-  speed: 80
 --- !u!114 &8832148300364434872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +179,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8250f7a04d1174e4dbaedeec6144b73c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -264,7 +261,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d9177a372b02d4a49b69f5e78e089174, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -346,7 +343,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: da6e872ff449c454b85d29fad2cb8e09, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -428,7 +425,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 807d05ef0e17a124aaa7131b26d781c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -510,7 +507,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 886506fbc97ea4d48b224cea906427ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -592,7 +589,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4dd4e3d089bd0fa47a758d0c535f8378, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -674,7 +671,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: bef700506325b3a41b9e0b7c99e3cd8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

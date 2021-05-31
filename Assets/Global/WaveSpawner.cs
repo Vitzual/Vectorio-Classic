@@ -82,6 +82,11 @@ public class WaveSpawner : MonoBehaviour
         damageMulti = Difficulties.enemyDamageMulti / 100;
         speedMulti = Difficulties.enemySpeedMulti / 100;
 
+        if (amountMulti <= 0) amountMulti = 1;
+        if (healthMulti <= 0) healthMulti = 1;
+        if (damageMulti <= 0) damageMulti = 1;
+        if (speedMulti <= 0) speedMulti = 1;
+
         attackEvery = attackEvery - (int)(Difficulties.enemyAmountMulti / 3);
         Debug.Log(attackEvery);
     }
@@ -110,11 +115,11 @@ public class WaveSpawner : MonoBehaviour
                 else attackTracker++;
             }
         }
-
+        
         // Iterate through and spawn all enemies
         for (int a=0; a<enemy.Length; a++)
         {
-            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat)
+            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat && enemy[a].minHeat < maxHeat)
             {
                 int chance = ((htrack - enemy[a].minHeat) / 1000) + 1;
                 if (chance >= 10) chance = 10;
@@ -211,12 +216,21 @@ public class WaveSpawner : MonoBehaviour
     public void increaseHeat(int a)
     {
         htrack += a;
-        heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
-        heatAmount.text = htrack.ToString();
+        if (htrack > maxHeat)
+        {
+            heatUI.currentPercent = 100f;
+            heatAmount.text = maxHeat.ToString();
+        }
+        else
+        {
+            updateBorders();
+            heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
+            heatAmount.text = htrack.ToString();
+        }
         technology.UpdateUnlock(htrack);
 
         // Display alpha screen
-        if (htrack >= 10000 && firstDisplay)
+        if (htrack >= 25000 && firstDisplay)
         {
             GameObject.Find("Survival").GetComponent<Interface>().OpenAlphaWindow();
             firstDisplay = false;
@@ -264,6 +278,27 @@ public class WaveSpawner : MonoBehaviour
             }
         }
         */
+    }
+
+    public void updateBorders()
+    {
+        if (htrack >= 25000)
+        {
+            borders[2].SetActive(true);
+            borders[1].SetActive(false);
+        }
+        else if (htrack >= 10000)
+        {
+
+            borders[2].SetActive(false);
+            borders[1].SetActive(true);
+            borders[0].SetActive(false);
+        }
+        else
+        {
+            borders[0].SetActive(true);
+            borders[1].SetActive(false);
+        }
     }
 
     public void updateBosses()

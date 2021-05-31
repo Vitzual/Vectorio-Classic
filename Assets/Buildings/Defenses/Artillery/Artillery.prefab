@@ -54,18 +54,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8688325068622682748, guid: a4449e3492a89b647806b6f6ac0282a3, type: 3}
-  maxhp: 300
-  health: 300
-  heat: 250
-  cost: 100000
+  maxhp: 500
+  health: 500
+  heat: 450
+  cost: 500000
   power: 150
   ID: 28
-  isBig: 0
+  isBig: 1
   description: Fires massive artillery shells that deal huge splash damage on impact.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  scanThisFrame: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   range: 500
   rotationSpeed: 60
   bulletDamage: 200
@@ -128,7 +130,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -268,7 +270,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 179dba852adcb1a47b251dafcbd3b1d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -350,7 +352,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9ecb543328195fe42a5bb057aa226dc8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -432,7 +434,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 3543c8af5a09bdc458031e95984634b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -544,7 +546,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 3b6af151afb84414ba1ee183c91f8d4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -626,7 +628,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5830d7131d9f2b3469589136041c43a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -708,7 +710,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: be05467625670704bacb45183b196be3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

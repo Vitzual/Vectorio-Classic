@@ -109,7 +109,23 @@ public class Technology : MonoBehaviour
         // If both fail, return null
         return null;
     }
-    
+
+    public Transform FindTechBuildingWithName(string a)
+    {
+        // Checks the unlock list to see if the building exists
+        for (int i = 0; i < unlocked.Count; i++)
+            if (unlocked[i].name == a)
+                return unlocked[i];
+
+        // Backup check if the first iteration loop fails
+        for (int i = 0; i < UnlockTier.Length; i++)
+            if (UnlockTier[i].Unlock.name == a)
+                return UnlockTier[i].Unlock;
+
+        // If both fail, return null
+        return null;
+    }
+
     // Gets called when checking if something should be unlocked
     public void UpdateUnlock(int a)
     {
@@ -160,7 +176,7 @@ public class Technology : MonoBehaviour
         UI.UOL.titleText = a.transform.name.ToUpper();
         UI.UOL.descriptionText = c;
         UI.UOL.UpdateUI();
-        if (a.name == "Essence Drill") UI.showResearchUnlock();
+        if (a.name == "Research Lab") UI.showResearchUnlock();
         else if (a.name == "Energizer") UI.showEnergizerUnlock();
         else
         {

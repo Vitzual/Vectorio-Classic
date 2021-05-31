@@ -40,11 +40,13 @@ public class Distributor : TileClass
         // Destroy ghost buildings in the area
         DroneManager droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Ghost"));
+        bool holder;
         for (int i = 0; i < colliders.Length; i++)
         {
             try
             {
-                droneManager.dequeueBuilding(colliders[i].transform);
+                holder = droneManager.dequeueBuilding(colliders[i].transform);
+                if (!holder) Destroy(colliders[i].transform.gameObject);
             }
             catch
             {

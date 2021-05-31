@@ -9,9 +9,10 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform Object, float Speed, int Tracker, int Piercing, int Damage)
+        public ActiveBullets(Transform Object, Transform Target, float Speed, int Tracker, int Piercing, int Damage)
         {
             this.Object = Object;
+            this.Target = Target;
             this.Speed = Speed;
             this.Tracker = Tracker;
             this.Piercing = Piercing;
@@ -20,6 +21,7 @@ public class BulletHandler : MonoBehaviour
 
         // Class variables
         public Transform Object { get; set; }
+        public Transform Target { get; set; }
         public float Speed { get; set; }
         public int Tracker { get; set; }
         public int Piercing { get; set; }
@@ -67,9 +69,9 @@ public class BulletHandler : MonoBehaviour
     }
 
     // Registers a bullet to be handled by the updater in this script
-    public void RegisterBullet(Transform bullet, float speed, int pierces, int damage)
+    public void RegisterBullet(Transform bullet, Transform target, float speed, int pierces, int damage)
     {
-        Bullets.Add(new ActiveBullets(bullet, speed, 1, pierces, damage));
+        Bullets.Add(new ActiveBullets(bullet, target, speed, 1, pierces, damage));
     }
 
     // Called when a hit is detected in the updater 

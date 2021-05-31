@@ -45,7 +45,7 @@ public class Engineer : TileClass
 
         // Start the timer
         applyingModifications = true;
-        UI.OpenEngineer(true);
+        //UI.OpenEngineer(true);
         do
         {
             UI.SetEngineerTimer(localTime + " SECONDS REMAINING...");

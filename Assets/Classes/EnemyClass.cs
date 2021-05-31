@@ -49,23 +49,20 @@ public abstract class EnemyClass : MonoBehaviour
     // Gets called when entering another defenses range or hitting the defense all together
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Defense" && collider.name != "Wall" && collider.name != "Drone Hub")
-        {
-            collider.gameObject.GetComponent<TurretClass>().target = transform;
-            collider.gameObject.GetComponent<TurretClass>().enabled = true;
-        }
-
         if (Vector3.Distance(collider.transform.position, transform.position) >= 10 && collider.tag == "Defense")
         {
-            TurretClass holder = collider.GetComponent<TurretClass>();
-            if (!holder.enabled) 
+            if (collider.name != "Wall" && collider.name != "Drone Port")
             {
-                holder.enabled = true;
-                holder.forceTarget(transform);
+                TurretClass holder = collider.GetComponent<TurretClass>();
+                if (!holder.enabled)
+                {
+                    holder.enabled = true;
+                    holder.forceTarget(transform);
+                }
             }
         }
 
-        else if (collider.tag == "Defense" || collider.tag == "Building")
+        else if (collider.tag == "Defense" || collider.tag == "Building" || collider.tag == "Hub" || collider.tag == "Production")
         {
             int ID = enemyScript.RequestID(transform);
             if (ID != -1) enemyScript.OnHit(ID, collider.transform);
@@ -75,11 +72,8 @@ public abstract class EnemyClass : MonoBehaviour
     // Gets called when entering another defenses range or hitting the defense all together
     public void OnTriggerLeave2D(Collider2D collider)
     {
-        if (Vector3.Distance(collider.transform.position, transform.position) >= 10)
-        {
-            TurretClass holder = collider.GetComponent<TurretClass>();
-            if (holder.enabled) holder.removeTarget(transform);
-        }
+        TurretClass holder = collider.GetComponent<TurretClass>();
+        if (holder.enabled) holder.removeTarget(transform);
     }
 
     // Kill entity
@@ -97,9 +91,8 @@ public abstract class EnemyClass : MonoBehaviour
             {
                 var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Building"));
                 for (int i = 0; i < colliders.Length; i++)
-                {
-                    colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
-                }
+                    if (Vector3.Distance(colliders[i].transform.position, transform.position) < 10)
+                        colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
             }
 
             // If spawns on death, itterate through and spawn enemies

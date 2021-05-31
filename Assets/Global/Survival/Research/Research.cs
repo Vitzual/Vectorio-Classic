@@ -19,16 +19,16 @@ public class Research : MonoBehaviour
     public static float research_firerate = 0;
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
-    public static int research_gold_yield = 1;
+    public static int research_gold_yield = 0;
     public static int research_gold_storage = 0;
     public static float research_essence_time = 8f;
-    public static int research_essence_yield = 1;
+    public static int research_essence_yield = 0;
     public static int research_essence_storage = 0;
     public static float research_iridium_time = 12f;
-    public static int research_iridium_yield = 1;
+    public static int research_iridium_yield = 0;
     public static int research_iridium_storage = 0;
-    public static float research_construction_speed = 25f;
-    public static float research_combat_speed = 20f;
+    public static float research_construction_speed = 35f;
+    public static float research_combat_speed = 25f;
     public static bool research_explosive_storages = false;
 
     // Research UI stuff
@@ -36,7 +36,7 @@ public class Research : MonoBehaviour
     public GameObject ResearchBackground;
     public ProgressBar ResearchBar;
     public static int LabsAvailable = 0;
-    public static bool ResearchUnlocked = true;
+    public static bool ResearchUnlocked = false;
     public static bool ResearchActive = false;
     public int goldNeeded = 0;
     public int goldTracked = 0;
@@ -106,6 +106,12 @@ public class Research : MonoBehaviour
         }
     }
 
+    public void UpdateAvailable()
+    {
+        CancelInvoke("UpdateResearch");
+        InvokeRepeating("UpdateResearch", 1f, researchSpeed);
+    }
+
     public void SetResearchUI(Transform research, bool status)
     {
         if (status)
@@ -148,6 +154,9 @@ public class Research : MonoBehaviour
         // Get research data ands tore in temp var
         Researchable research = Researchables[number];
 
+        // Check if at least one research lab available
+        if (LabsAvailable < 1) return;
+
         // Check if being research
         if (research == Researching) return;
 
@@ -164,6 +173,7 @@ public class Research : MonoBehaviour
 
         // If all checks passed, apply research
         Researching = research;
+        research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
         SetResearchUI(research.ResearchButton.transform, true);
         ResearchActive = true;
 
@@ -204,7 +214,7 @@ public class Research : MonoBehaviour
                 research_pierce += 1;
                 break;
             case "gold yield":
-                research_gold_yield += 1;
+                research_gold_yield += 5;
                 break;
             case "gold time":
                 research_gold_time -= 1f;
@@ -218,7 +228,7 @@ public class Research : MonoBehaviour
                 SurvivalCS.goldStorage += allGoldStorage.Length * 500;
                 break;
             case "essence yield":
-                research_essence_yield += 1;
+                research_essence_yield += 5;
                 break;
             case "essence time":
                 research_essence_time -= 1f;
@@ -232,7 +242,7 @@ public class Research : MonoBehaviour
                 SurvivalCS.essenceStorage += allEssenceStorages.Length * 250;
                 break;
             case "iridium yield":
-                research_iridium_yield += 1;
+                research_iridium_yield += 5;
                 break;
             case "iridium time":
                 research_iridium_time -= 1f;
@@ -279,7 +289,6 @@ public class Research : MonoBehaviour
         Color colorHolder;
         if (color == "red")
         {
-            Debug.Log("I got called red!");
             ColorUtility.TryParseHtmlString("#A6232399", out colorHolder);
             colors.normalColor = colorHolder;
             ColorUtility.TryParseHtmlString("#BC181899", out colorHolder);
@@ -289,7 +298,6 @@ public class Research : MonoBehaviour
         }
         else if (color == "green")
         {
-            Debug.Log("I got called green!");
             ColorUtility.TryParseHtmlString("#259F3B99", out colorHolder);
             colors.normalColor = colorHolder;
             ColorUtility.TryParseHtmlString("#24B93F99", out colorHolder);
@@ -299,7 +307,6 @@ public class Research : MonoBehaviour
         }
         else
         {
-            Debug.Log("I got called normal!");
             ColorUtility.TryParseHtmlString("#22222299", out colorHolder);
             colors.normalColor = colorHolder;
             ColorUtility.TryParseHtmlString("#33323299", out colorHolder);
@@ -351,7 +358,7 @@ public class Research : MonoBehaviour
         {
             // Sets the stored research value if true
             for (int i = 0; i < data.Length; i++)
-                if (data[i]) ApplyResearch(Researchables[i]);
+                if (data[i]) { ResearchUnlocked = true; ApplyResearch(Researchables[i]); };
         } 
         catch
         {

@@ -163,9 +163,7 @@ public class DroneManager : MonoBehaviour
                         if (drone.target != drone.spawnPosition)
                         {
                             // Attempt to place a building
-                            if (!placeBuilding(drone)) continue;
-
-                            // Set drone target back to parent
+                            placeBuilding(drone);
                             returnToParent(drone);
                         }
                         else
@@ -199,6 +197,10 @@ public class DroneManager : MonoBehaviour
 
         for (int a = 0; a < buildingQueue.Count; a++)
         {
+            // Check if building queue still available
+            if (buildingQueue[a].buildingPos == null)
+                buildingQueue.Remove(buildingQueue[a]);
+
             // Check if adequate resources for a drone to be deployed
             if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
             if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
@@ -268,15 +270,15 @@ public class DroneManager : MonoBehaviour
         // Open the plates
         if (drone.platesOpening)
         {
-            drone.plates[0].Translate(Vector3.left * Time.deltaTime * 1.5f);
-            drone.plates[1].Translate(Vector3.right * Time.deltaTime * 1.5f);
+            drone.plates[0].Translate(Vector3.left * Time.deltaTime * 4f);
+            drone.plates[1].Translate(Vector3.right * Time.deltaTime * 4f);
 
             if (!drone.droneReturning)
             {
                 if (drone.isHubDrone && drone.body.localScale.x <= 1.4f)
-                    drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
+                    drone.body.localScale += new Vector3(0.002f, 0.002f, 0f);
                 else if (drone.body.localScale.x <= 1f)
-                    drone.body.localScale += new Vector3(0.001f, 0.001f, 0f);
+                    drone.body.localScale += new Vector3(0.002f, 0.002f, 0f);
             }
 
             if (drone.plates[1].localPosition.x >= 2)
@@ -298,15 +300,15 @@ public class DroneManager : MonoBehaviour
         // Close the plates
         else if (drone.platesClosing)
         {
-            drone.plates[0].Translate(Vector3.right * Time.deltaTime * 1.5f);
-            drone.plates[1].Translate(Vector3.left * Time.deltaTime * 1.5f);
+            drone.plates[0].Translate(Vector3.right * Time.deltaTime * 4f);
+            drone.plates[1].Translate(Vector3.left * Time.deltaTime * 4f);
 
             if (drone.droneReturning)
             {
                 if (drone.isHubDrone && drone.body.localScale.x >= 1.2f)
-                    drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
+                    drone.body.localScale -= new Vector3(0.002f, 0.002f, 0f);
                 else if (drone.body.localScale.x >= 0.8f)
-                    drone.body.localScale -= new Vector3(0.001f, 0.001f, 0f);
+                    drone.body.localScale -= new Vector3(0.002f, 0.002f, 0f);
             }
 
             if (drone.plates[1].localPosition.x <= 0)
@@ -338,12 +340,24 @@ public class DroneManager : MonoBehaviour
     }
 
     // Attempt to place a building
-    public bool placeBuilding(ConstructionDrone drone)
+    public void placeBuilding(ConstructionDrone drone)
     {
         // Check if adequate resources for a drone to be deployed
-        if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) { returnToParent(drone); return false; }
-        if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0) { returnToParent(drone); return false; }
-        if (drone.goldCost > survival.gold && drone.goldCost > 0) { returnToParent(drone); return false; }
+        if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) 
+        { 
+            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+            return; 
+        }
+        if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0)
+        {
+            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+            return;
+        }
+        if (drone.goldCost > survival.gold && drone.goldCost > 0)
+        {
+            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+            return;
+        }
 
         // Set component values
         survival.increasePowerConsumption(drone.powerCost);
@@ -374,7 +388,7 @@ public class DroneManager : MonoBehaviour
             enemyTurret.gameObject.GetComponent<TurretClass>().enabled = true;
         }
 
-        return true;
+        return;
     }
 
     // Register an active construction drone
@@ -396,7 +410,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Remove a queued building
-    public void dequeueBuilding(Transform ghost)
+    public bool dequeueBuilding(Transform ghost)
     {
         // Check the building queue
         for (int i = 0; i < buildingQueue.Count; i++)
@@ -406,7 +420,7 @@ public class DroneManager : MonoBehaviour
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
                 buildingQueue.RemoveAt(i);
-                return;
+                return true;
             }
         }
 
@@ -418,9 +432,11 @@ public class DroneManager : MonoBehaviour
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
                 returnToParent(constructionDrones[i]);
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     // Forces a UI update

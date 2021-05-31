@@ -32,7 +32,7 @@ public class Interface : MonoBehaviour
     public bool ResearchOpen;
     public bool SettingsOpen;
     public bool ControlsOpen;
-    public bool EngineerOpen;
+    public bool DroneOpen;
     public bool BossInfoOpen;
     public bool ShowingInfo;
     public bool UOLOpen;
@@ -64,6 +64,7 @@ public class Interface : MonoBehaviour
     public GameObject WarningButton;
     public int ActiveWarnings = 0;
     public GameObject BossBar;
+    public GameObject dronePortUI;
 
     // Selected UI elements
     public Transform gold;
@@ -182,18 +183,17 @@ public class Interface : MonoBehaviour
     }
 
     // Activates an engineers UI panel
-    public void OpenEngineer(bool isActive)
+    public void OpenDronePort()
     {
-        EngineerCooldownOverlay.SetActive(isActive);
-        EngineerOverlay.SetActive(true);
-        EngineerOpen = true;
+        dronePortUI.SetActive(true);
+        DroneOpen = true;
     }
 
     // Deactivates an engineers UI panel
-    public void CloseEngineer()
+    public void CloseDronePort()
     {
-        EngineerOverlay.SetActive(false);
-        EngineerOpen = false;
+        dronePortUI.SetActive(false);
+        DroneOpen = false;
     }
 
     // Enables the research overlay
@@ -201,6 +201,7 @@ public class Interface : MonoBehaviour
     {
         UOLOpen = true;
         ResearchUnlockedWindow.OpenWindow();
+        Research.ResearchUnlocked = true;
     }
 
     // Enables the research overlay
@@ -247,8 +248,8 @@ public class Interface : MonoBehaviour
             CloseResearchOverlay();
             main.SetHoverObject(null);
         }
-        if (EngineerOpen)
-            CloseEngineer();
+        if (DroneOpen)
+            CloseDronePort();
 
         // Toggle menu
         if (!BuildingOpen)

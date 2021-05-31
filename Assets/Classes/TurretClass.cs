@@ -256,6 +256,6 @@ public abstract class TurretClass : TileClass
         if (isEnemy)
             enemyHandler.RegisterBullet(bullet.transform, bullet.GetComponent<EnemyBullet>(), speed, pierces, damage);
         else
-            bulletHandler.RegisterBullet(bullet.transform, speed, pierces, damage);
+            bulletHandler.RegisterBullet(bullet.transform, target, speed, pierces, damage);
     }
 }

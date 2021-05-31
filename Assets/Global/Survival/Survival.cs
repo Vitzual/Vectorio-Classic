@@ -152,6 +152,8 @@ public class Survival : MonoBehaviour
     // The AOC border game object;
     public Transform AOC_Object;
 
+    public static Transform lastDronePort;
+
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
     [SerializeField] private LayerMask TileLayer;
@@ -321,16 +323,15 @@ public class Survival : MonoBehaviour
         }
 
         // Check if user left clicks
-        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.EngineerOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
+        if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.DroneOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
         {
             // Stops spam calculations
-            if (!isObjectNull && LastPos != transform.position)
-                LastPos = transform.position;
-            else return;
-
-            // Check for ghost variant
-            RaycastHit2D rayGhost = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
-            if (rayGhost.collider != null) return;
+            if (!isObjectNull)
+            {
+                if (LastPos != transform.position)
+                    LastPos = transform.position;
+                else return;
+            }
 
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
@@ -374,7 +375,8 @@ public class Survival : MonoBehaviour
                 // Place the building and register as a ghost variant and queue it in the drone network
                 LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                 LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
-                LastObj.name = "Ghost "+ SelectedObj.name;
+                if (largerUnit) LastObj.GetComponent<BoxCollider2D>().size = new Vector2(10f, 10f);
+                LastObj.name = SelectedObj.name;
                 droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
                 ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
 
@@ -382,7 +384,12 @@ public class Survival : MonoBehaviour
             }
             else if (RayTarget != null)
             {
-                if (RayTarget.name != "Hub" && isObjectNull)
+                if (RayTarget.name == "Drone Port" && isObjectNull)
+                {
+                    lastDronePort = RayTarget.transform;
+                    UI.OpenDronePort();
+                }
+                else if (RayTarget.name != "Hub" && isObjectNull)
                 {
                     UI.ShowTileInfo(RayTarget);
                     UI.ShowingInfo = true;
@@ -394,7 +401,7 @@ public class Survival : MonoBehaviour
         }
 
         // If user right clicks, remove object
-        else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.EngineerOpen)
+        else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.DroneOpen)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -416,7 +423,12 @@ public class Survival : MonoBehaviour
             else
             {
                 RaycastHit2D rayGhost = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
-                if (rayGhost.collider != null) droneManager.dequeueBuilding(rayGhost.collider.transform);
+                bool holder;
+                if (rayGhost.collider != null)
+                {
+                    holder = droneManager.dequeueBuilding(rayGhost.collider.transform);
+                    if (!holder) Destroy(rayGhost.collider.gameObject);
+                }
             }
         }
 
@@ -424,15 +436,15 @@ public class Survival : MonoBehaviour
         CheckNumberInput();
 
         // Pipette a building
-        if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.EngineerOpen && !UI.UOLOpen)
+        if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.DroneOpen && !UI.UOLOpen)
         {
             // Attempt a raycast on the tile survival is in
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | GhostLayer);
 
             // Set the selected object to the collider if not null
             if (rayHit.collider != null)
             {
-                SelectObject(tech.FindTechBuilding(rayHit.collider.GetComponent<TileClass>().getID()));
+                SelectObject(tech.FindTechBuildingWithName(rayHit.collider.name));
                 if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
                 AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
                 UI.CreatePippeteSquare(rayHit.collider.transform.position);
@@ -449,8 +461,8 @@ public class Survival : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false && UI.UOLOpen == false)
         {
             UI.closeResearchUnlock();
-            if (UI.EngineerOpen)
-                UI.CloseEngineer();
+            if (UI.DroneOpen)
+                UI.CloseDronePort();
             UI.OpenResearchOverlay();
         }
 
@@ -480,9 +492,9 @@ public class Survival : MonoBehaviour
         }
 
         // If escape pressed and engineer open, close it
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.EngineerOpen == true)
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.DroneOpen == true)
         {
-            UI.CloseEngineer();
+            UI.CloseDronePort();
         }
 
         // If escape pressed and building menu open, close it
@@ -731,16 +743,34 @@ public class Survival : MonoBehaviour
     // Checks if a unit can be placed
     public bool CheckPlacement(Transform obj)
     {
-        if (obj != null && obj.GetComponent<TileClass>().isBig)
+        if (obj != null)
         {
-            // Check for wires and adjust accordingly 
-            RaycastHit2D a = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-            RaycastHit2D b = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer);
-            RaycastHit2D c = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-            RaycastHit2D d = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
+            // Check for ghost variant
+            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
+            if (rayHit.collider != null) return false;
+            if (largerUnit)
+            {
+                rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, GhostLayer);
+                if (rayHit.collider != null) return false;
+                rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, GhostLayer);
+                if (rayHit.collider != null) return false;
+                rayHit = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, GhostLayer);
+                if (rayHit.collider != null) return false;
+            }
 
-            if (a.collider != null || b.collider != null || c.collider != null || d.collider != null) return false;
-            else return true;
+            // Check for and adjust accordingly 
+            RaycastHit2D[] rayHits;
+            rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+            if (CheckRaycast(rayHits) != null) return false;
+            if (largerUnit)
+            {
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                if (CheckRaycast(rayHits) != null) return false;
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                if (CheckRaycast(rayHits) != null) return false;
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                if (CheckRaycast(rayHits) != null) return false;
+            }
         }
         return true;
     }
@@ -1103,16 +1133,8 @@ public class Survival : MonoBehaviour
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly
-        if (SelectedObj.GetComponent<TileClass>().isBig)
-        {
-            largerUnit = true;
-            transform.localScale = new Vector2(2, 2);
-        }
-        else
-        {
-            largerUnit = false;
-            transform.localScale = new Vector2(1, 1);
-        }
+        if (SelectedObj.GetComponent<TileClass>().isBig) largerUnit = true;
+        else largerUnit = false;
 
         // Disable any active info not relative to selected object
         UI.DisableActiveInfo();

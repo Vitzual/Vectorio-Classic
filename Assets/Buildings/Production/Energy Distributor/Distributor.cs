@@ -7,6 +7,7 @@ public class Distributor : TileClass
     public Collider2D[] colliders;
 
     // Internal placement variables
+    public Transform AOCB;
     public Transform rotator;
     public float speed;
 
@@ -28,7 +29,7 @@ public class Distributor : TileClass
             {
                 try
                 {
-                    colliders[i].GetComponent<TileClass>().UpdatePower();
+                    colliders[i].GetComponent<TileClass>().UpdatePower(AOCB);
                 }
                 catch
                 {

@@ -68,10 +68,13 @@ public abstract class TileClass : MonoBehaviour
     }
 
     // Update power
-    public void UpdatePower()
+    public void UpdatePower(Transform sender)
     {
-        RaycastHit2D aocbHit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("AOCB"));
-        if (aocbHit.collider == null) DestroyTile();
+        RaycastHit2D[] aocbHit = Physics2D.RaycastAll(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("AOCB"));
+        Debug.Log(aocbHit.Length);
+        foreach (RaycastHit2D ray in aocbHit)
+            if (ray.collider.transform != null && ray.collider.transform != sender) return;
+        DestroyTile();
     }
 
     // Apply damage to entity

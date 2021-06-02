@@ -76,12 +76,14 @@ public class Research : MonoBehaviour
         ResearchBackground.SetActive(false);
     }
 
-    // Movement tracking
+    // Movement trackingoverlay.normalizedPosition = new Vector2(0, 1);
     public void Update()
     {
+        // Check if research open
+        if (!SurvivalCS.UI.ResearchOpen) return;
+
         // Check if space pressed
-        if (Input.GetKeyDown(KeyCode.Space))
-            overlay.normalizedPosition = new Vector2(0, 0);
+        if (Input.GetKeyDown(KeyCode.Space)) ScreenSet();
 
         // Get directional movement
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -97,13 +99,11 @@ public class Research : MonoBehaviour
             moveSpeed = 60000f;
 
         overlay.velocity = -movement * moveSpeed * Time.fixedDeltaTime;
+    }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            SurvivalCS.AddGold(10000);
-            SurvivalCS.AddEssence(10000);
-            SurvivalCS.AddIridium(10000);
-        }
+    public void ScreenSet()
+    {
+        overlay.normalizedPosition = new Vector2(0, 1);
     }
 
     public void UpdateAvailable()
@@ -217,7 +217,7 @@ public class Research : MonoBehaviour
                 research_gold_yield += 5;
                 break;
             case "gold time":
-                research_gold_time -= 1f;
+                research_gold_time -= 1;
                 CollectorAI[] allGoldCollectors = FindObjectsOfType<CollectorAI>();
                 foreach (CollectorAI collector in allGoldCollectors)
                     collector.OffsetStart();
@@ -225,7 +225,7 @@ public class Research : MonoBehaviour
             case "gold storage":
                 research_gold_storage += 500;
                 GoldStorageAI[] allGoldStorage = FindObjectsOfType<GoldStorageAI>();
-                SurvivalCS.goldStorage += allGoldStorage.Length * 500;
+                SurvivalCS.UpdateGoldStorage(-allGoldStorage.Length * 500);
                 break;
             case "essence yield":
                 research_essence_yield += 5;

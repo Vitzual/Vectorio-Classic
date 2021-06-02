@@ -305,6 +305,7 @@ public class Survival : MonoBehaviour
     private void Update()
     {
         if (isMenu) return;
+        if (UI.SettingsOpen) return;
 
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -325,13 +326,14 @@ public class Survival : MonoBehaviour
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.DroneOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
         {
-            // Stops spam calculations
+            /* Stops spam calculations
             if (!isObjectNull)
             {
                 if (LastPos != transform.position)
                     LastPos = transform.position;
                 else return;
             }
+            */
 
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);

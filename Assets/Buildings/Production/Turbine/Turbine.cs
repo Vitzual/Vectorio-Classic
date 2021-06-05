@@ -11,16 +11,10 @@ public class Turbine : TileClass
 
     private void Start()
     {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, 150f);
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
         SRV.increaseAvailablePower(amount);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        rotator.Rotate(Vector3.forward, 150f * Time.deltaTime);
     }
 
     // Kill defense

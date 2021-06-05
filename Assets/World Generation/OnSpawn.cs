@@ -102,7 +102,7 @@ public class OnSpawn : MonoBehaviour
                 x = Random.Range(-BaseRegionSize, BaseRegionSize) * 5;
                 y = Random.Range(-BaseRegionSize, BaseRegionSize) * 5;
 
-                if (x > 100 || x < -100 || y > 100 || y < -100)
+                if (x > 150 || x < -150 || y > 150 || y < -150)
                 {
                     var colliders = Physics2D.OverlapBoxAll(new Vector2(x, y), new Vector2(100, 100), 0, 1 << LayerMask.NameToLayer("Enemy"));
                     if (colliders.Length == 0)

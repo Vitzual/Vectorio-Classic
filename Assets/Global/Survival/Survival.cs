@@ -256,6 +256,9 @@ public class Survival : MonoBehaviour
                 // Generate world data
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
 
+                // Get research save data
+                rsrch.SetResearchData(data.ResearchedTiers);
+
                 // Attempt to place saved buildings
                 float soundHolder = manager.GetComponent<Settings>().GetSound();
                 manager.GetComponent<Settings>().SetSound(0);
@@ -264,9 +267,6 @@ public class Survival : MonoBehaviour
                 // Set power usage
                 UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
                 UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-                // Get research save data
-                rsrch.SetResearchData(data.ResearchedTiers);
 
                 // Place saved enemies 
                 try

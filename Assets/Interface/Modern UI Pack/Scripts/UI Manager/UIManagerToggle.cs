@@ -66,12 +66,12 @@ namespace Michsky.UI.ModernUIPack
                 border.color = UIManagerAsset.toggleBorderColor;
                 background.color = UIManagerAsset.toggleBackgroundColor;
                 check.color = UIManagerAsset.toggleCheckColor;
-                onLabel.color = new Color(UIManagerAsset.toggleTextColor.r, UIManagerAsset.toggleTextColor.g, UIManagerAsset.toggleTextColor.b, onLabel.color.a);
-                onLabel.font = UIManagerAsset.toggleFont;
-                onLabel.fontSize = UIManagerAsset.toggleFontSize;
-                offLabel.color = new Color(UIManagerAsset.toggleTextColor.r, UIManagerAsset.toggleTextColor.g, UIManagerAsset.toggleTextColor.b, offLabel.color.a);
-                offLabel.font = UIManagerAsset.toggleFont;
-                offLabel.fontSize = UIManagerAsset.toggleFontSize;
+                //onLabel.color = new Color(UIManagerAsset.toggleTextColor.r, UIManagerAsset.toggleTextColor.g, UIManagerAsset.toggleTextColor.b, onLabel.color.a);
+                //onLabel.font = UIManagerAsset.toggleFont;
+                //onLabel.fontSize = UIManagerAsset.toggleFontSize;
+                //offLabel.color = new Color(UIManagerAsset.toggleTextColor.r, UIManagerAsset.toggleTextColor.g, UIManagerAsset.toggleTextColor.b, offLabel.color.a);
+                //offLabel.font = UIManagerAsset.toggleFont;
+                //offLabel.fontSize = UIManagerAsset.toggleFontSize;
             }
 
             catch { }

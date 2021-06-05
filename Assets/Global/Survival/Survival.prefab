@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -4787702860788770654}
   - component: {fileID: -2330448280664924150}
   - component: {fileID: 5620137559107493224}
-  - component: {fileID: 581920495478843619}
   - component: {fileID: -6338715430864200996}
   m_Layer: 0
   m_Name: Survival
@@ -49,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 0}
   UI: {fileID: 0}
-  UnlockLvl: 0
+  loadingSave: 0
+  UnlockAmount: 0
   UnlocksLeft: 1
   UnlockTier: []
   unlocked: []
@@ -66,7 +66,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 0}
+  IngameCanvas: {fileID: 0}
+  ResourcePopup: {fileID: 0}
+  PipettePopup: {fileID: 0}
   ResearchOverlay: {fileID: 0}
+  EngineerOverlay: {fileID: 0}
+  EngineerList: {fileID: 0}
+  EngineerCooldownOverlay: {fileID: 0}
+  EngineerCooldown: {fileID: 0}
+  EngineerIcon: {fileID: 0}
+  EngineerTitle: {fileID: 0}
+  EngineerDescription: {fileID: 0}
+  EngineerTime: {fileID: 0}
+  EngineerChance: {fileID: 0}
+  EngineerCost: {fileID: 0}
+  InfoPanels: []
   HotbarUI:
   - {fileID: 0}
   Overlay: {fileID: 0}
@@ -74,22 +88,47 @@ MonoBehaviour:
   BuildingOpen: 0
   ResearchOpen: 0
   SettingsOpen: 0
+  ControlsOpen: 0
+  DroneOpen: 0
+  BossInfoOpen: 0
   ShowingInfo: 0
+  UOLOpen: 0
+  EndScreenOpen: 0
   GoldAmount: {fileID: 0}
   EssenceAmount: {fileID: 0}
   IridiumAmount: {fileID: 0}
+  GoldStorage: {fileID: 0}
+  EssenceStorage: {fileID: 0}
+  IridiumStorage: {fileID: 0}
   PowerUsage: {fileID: 0}
   AvailablePower: {fileID: 0}
   GPS: {fileID: 0}
   EPS: {fileID: 0}
   IPS: {fileID: 0}
   UOL: {fileID: 0}
+  ResearchUnlockedWindow: {fileID: 0}
+  EnergizerUnlockedWindow: {fileID: 0}
+  EndOfEarlyAccessWindow: {fileID: 0}
+  EndOfAlphaWindow: {fileID: 0}
+  AutosaveComplete: {fileID: 0}
+  BigWaveIncoming: {fileID: 0}
   PowerUsageBar: {fileID: 0}
   UpgradeProgressBars: []
   UpgradeProgressName: {fileID: 0}
   SaveButton: {fileID: 0}
   ResearchButton: {fileID: 0}
   hotbarButtons: []
+  WarningButton: {fileID: 0}
+  ActiveWarnings: 0
+  BossBar: {fileID: 0}
+  dronePortUI: {fileID: 0}
+  gold: {fileID: 0}
+  essence: {fileID: 0}
+  iridium: {fileID: 0}
+  heat: {fileID: 0}
+  power: {fileID: 0}
+  dronesBar: {fileID: 0}
+  dronesText: {fileID: 0}
 --- !u!114 &5620137559107493224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,11 +141,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543d9cbdce8268c4784eb2bf1bc7f35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   tech: {fileID: 0}
   UI: {fileID: 0}
   rsrch: {fileID: 0}
-  GoldScript: {fileID: 0}
+  Spawner: {fileID: 0}
+  cameraScroll: {fileID: 0}
+  droneManager: {fileID: 0}
+  Playtime: 0
+  AutoSaveInterval: 300
+  firstAuto: 1
+  music: {fileID: 0}
+  placementSound: {fileID: 0}
+  pipetteSound: {fileID: 0}
+  GhostLayer:
+    serializedVersion: 2
+    m_Bits: 0
   EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  EnemyBuildingLayer:
     serializedVersion: 2
     m_Bits: 0
   AOCBLayer:
@@ -117,53 +171,45 @@ MonoBehaviour:
   gold: 10000
   essence: 0
   iridium: 0
+  goldStorage: 1000
+  essenceStorage: 1000
+  iridiumStorage: 0
   PowerConsumption: 0
   AvailablePower: 5000
-  GPS: 0
-  EPS: 0
-  IPS: 0
-  GPSP: 0
-  EPSP: 0
-  IPSP: 0
+  elements: []
+  BuildingStats: {fileID: 0}
+  popup: {fileID: 0}
+  additionalCost: 1
   HubObj: {fileID: 5628938638249383948, guid: d4f5265620f10a748a88759a975e86b0, type: 3}
   TurretObj: {fileID: 7459549504340388867, guid: 965d88ca79ad6ac4f938aea8d6a43058,
     type: 3}
   WallObj: {fileID: 7564576898396080589, guid: b45565eef60fc6c4fba5ffe1841691d7, type: 3}
   CollectorObj: {fileID: 2009550350632877460, guid: 5f5d88a9394ba5446b895a5be9d7b379,
     type: 3}
-  ShotgunObj: {fileID: 7459549504340388867, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93,
-    type: 3}
-  SniperObj: {fileID: 7459549504340388867, guid: 95110c1fbb72d024392973c39db4354f,
-    type: 3}
-  EnhancerObj: {fileID: 165687244735643869, guid: fe3f6df815283f446b6238148eafc397,
-    type: 3}
-  SMGObj: {fileID: 7459549504340388867, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
-  BoltObj: {fileID: 2528225824149251387, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
-  ChillerObj: {fileID: 7459549504340388867, guid: e238797f53eae4649a89e947e9a7124b,
-    type: 3}
-  RocketObj: {fileID: 7459549504340388867, guid: 6b7d04abb0d603a4cb51ef740d0afa9a,
-    type: 3}
   EssenceObj: {fileID: 2009550350632877460, guid: c2eebc8be4acd174696c700b44eadce2,
     type: 3}
-  TurbineObj: {fileID: 165687244735643869, guid: 981b14a184b67e24ab424c98bd63904a,
-    type: 3}
-  TeslaObj: {fileID: 0}
   PowerObj: {fileID: 0}
-  FlamethrowerObj: {fileID: 0}
-  MinigunObj: {fileID: 0}
   EngineerObj: {fileID: 0}
-  TurretMK2: {fileID: 0}
-  ShotgunMK2: {fileID: 0}
-  SniperMK2: {fileID: 0}
-  SunbeamObj: {fileID: 0}
-  TurretMK3: {fileID: 0}
-  AreaCoolerObj: {fileID: 0}
+  Iridium: {fileID: 0}
+  GoldStorage: {fileID: 0}
+  EssenceStorage: {fileID: 0}
+  IridiumStorage: {fileID: 0}
+  EnemyTurretDual: {fileID: 0}
+  EnemyTurretSMG: {fileID: 0}
+  EnemyTurretRanger: {fileID: 0}
+  EnemyStaticWall: {fileID: 0}
+  EnemyStaticMine: {fileID: 0}
+  lastHit: {x: 0, y: 0, z: 0}
+  EngineerHolder: {fileID: 0}
+  EngineerModID: 0
+  EngineerName: Default
   enemies: []
-  seed: 0
-  Spawner: {fileID: 0}
   SelectedOverlay: {fileID: 0}
   PromptOverlay: {fileID: 0}
   SelectedRadius: {fileID: 0}
+  SquareRadius: {fileID: 0}
+  GhostBuilding: {fileID: 0}
+  SelectedObj: {fileID: 0}
   HoveredObj: {fileID: 0}
   largerUnit: 0
   AOC_Level: 1
@@ -187,27 +233,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!50 &581920495478843619
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7221066091301988531}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  ghostBuildings: []
 --- !u!212 &-6338715430864200996
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -223,6 +249,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

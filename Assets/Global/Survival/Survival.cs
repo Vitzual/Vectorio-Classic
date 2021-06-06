@@ -874,9 +874,7 @@ public class Survival : MonoBehaviour
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
-            if (building.name == "Collector") StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
-            else if (building.name == "Essence Drill") StartCoroutine(obj.GetComponent<EssenceAI>().OffsetStart());
-            else if (building.name == "Iridium Mine") StartCoroutine(obj.GetComponent<IridiumAI>().OffsetStart());
+            if (building.name.Contains("Collector")) StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
 
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());

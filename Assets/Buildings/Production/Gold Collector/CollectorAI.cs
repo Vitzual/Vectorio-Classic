@@ -4,89 +4,127 @@ using UnityEngine;
 public class CollectorAI: TileClass
 {
     // Declare local object variables
-    public int amount;
+    public int collectorType;
+    public int collected;
     public bool enhanced;
-    private Survival SRVSC;
-
-    // Popup variables
-    public Transform popup;
-    public ResourcePopup rPopup;
-    private bool animPlaying = false;
     private bool isFirstAnim = true;
-
     private bool isOffset = false;
-    private float sizeTracker = 1f;
-    private bool sizeGrowing = true;
+    public AnimateThenStop animator;
 
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
 
-        if (Research.research_gold_time >= 1 && !isOffset)
-            InvokeRepeating("SendGold", 0f, Research.research_gold_time);
-        else if (!isOffset) InvokeRepeating("SendGold", 0f, 5f);
-
-        popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-        rPopup = popup.GetComponent<ResourcePopup>();
-        popup.parent = SRVSC.UI.IngameCanvas.transform;
-        rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
+        switch (collectorType) {
+            case 1:
+                if (Research.research_gold_time >= 1 && !isOffset)
+                    InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
+                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 5f);
+                return;
+            case 2:
+                if (Research.research_essence_time >= 1 && !isOffset)
+                    InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
+                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 8f);
+                return;
+            case 3:
+                if (Research.research_iridium_time >= 1 && !isOffset)
+                    InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);
+                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 15f);
+                return;
+        }
+        
+    
+    //popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        //rPopup = popup.GetComponent<ResourcePopup>();
+        //popup.parent = SRVSC.UI.IngameCanvas.transform;
+        //rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
     }
 
     public IEnumerator OffsetStart()
     {
         isOffset = true;
         isFirstAnim = false;
-        CancelInvoke("SendGold");
-        if (Research.research_gold_time >= 1)
-        {
-            yield return new WaitForSeconds(Random.Range(0f, Research.research_gold_time));
-            if (this != null) InvokeRepeating("SendGold", 0f, Research.research_gold_time);
-        }
-        else
-        {
-            yield return new WaitForSeconds(Random.Range(0f, 5f));
-            if (this != null) InvokeRepeating("SendGold", 0f, 5f);
-        }
-    }
 
-    private void Update()
-    {
-        if (animPlaying)
+        switch (collectorType)
         {
-            transform.localScale = new Vector2(sizeTracker, sizeTracker);
-            if (sizeGrowing)
-            {
-                sizeTracker += 0.02f;
-                if (sizeTracker >= 1.1f)
-                    sizeGrowing = false;
-            }
-            else
-            {
-                sizeTracker -= 0.01f;
-                if (sizeTracker <= 1.0f)
+            case 1:
+                CancelInvoke("IncreaseGold");
+                if (Research.research_gold_time >= 1)
                 {
-                    animPlaying = false;
-                    sizeGrowing = true;
-                    sizeTracker = 1f;
+                    yield return new WaitForSeconds(Random.Range(0f, Research.research_gold_time));
+                    if (this != null) InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
                 }
-            }
+                else
+                {
+                    yield return new WaitForSeconds(Random.Range(0f, 5f));
+                    if (this != null) InvokeRepeating("IncreaseGold", 0f, 5f);
+                }
+                break;
+            case 2:
+                CancelInvoke("IncreaseEssence");
+                if (Research.research_essence_time >= 1)
+                {
+                    yield return new WaitForSeconds(Random.Range(0f, Research.research_essence_time));
+                    if (this != null) InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(Random.Range(0f, 8f));
+                    if (this != null) InvokeRepeating("IncreaseEssence", 0f, 8f);
+                }
+                break;
+            case 3:
+                CancelInvoke("IncreaseIridium");
+                if (Research.research_iridium_time >= 1)
+                {
+                    yield return new WaitForSeconds(Random.Range(0f, Research.research_iridium_time));
+                    if (this != null) InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(Random.Range(0f, 15f));
+                    if (this != null) InvokeRepeating("IncreaseIridium", 0f, 15f);
+                }
+                break;
         }
+
     }
 
     // Send gold
-    private void SendGold()
+    private void IncreaseGold()
     {
-        if (!isFirstAnim)
-        {
-            int add = amount + Research.research_gold_yield;
-            if (enhanced) add *= 4;
-            SRVSC.AddGold(add);
-            rPopup.ResetPopup("+ " + add);
-            animPlaying = true;
-        }
+        if (!isFirstAnim && collected <= 1000)
+            collected += Research.research_gold_yield;
         else isFirstAnim = false;
+    }
+
+    // Send essence
+    private void IncreaseEssence()
+    {
+        if (!isFirstAnim && collected <= 1000)
+            collected += Research.research_essence_yield;
+        else isFirstAnim = false;
+    }
+
+    // Send iridium
+    private void IncreaseIridium()
+    {
+        if (!isFirstAnim && collected <= 1000)
+            collected += Research.research_iridium_yield;
+        else isFirstAnim = false;
+    }
+
+    public int GrabResources()
+    {
+        // Set animation
+        animator.enabled = true;
+        animator.resetAnim();
+
+        // Set values
+        int holder = collected;
+        collected = 0;
+        return holder;
     }
 
     // Enhance collector
@@ -99,17 +137,14 @@ public class CollectorAI: TileClass
     public void deenhanceCollector()
     {
         enhanced = false;
-        sizeTracker = 1f;
-        transform.localScale = new Vector2(1, 1);
-        sizeGrowing = false;
     }
 
     // Kill defense
     public override void DestroyTile()
     {
-        SRVSC.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
+        BuildingHandler.buildings.Remove(transform);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

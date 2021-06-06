@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2009550350632877460}
-  - component: {fileID: 3016635981037244203}
+  - component: {fileID: 4953692872447313682}
   - component: {fileID: 5055573868470089305}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3016635981037244203
+--- !u!114 &4953692872447313682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 892923713960991008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368390fa0d8f347438d52a60cc8b58ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cac2fc948c4acb4898b8a721b43cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: bc641b1dfc8701447987e6b63852e0bc, type: 3}
@@ -55,16 +55,12 @@ MonoBehaviour:
   cost: 150000
   power: 50
   ID: 27
+  isBig: 0
   description: Stabalizes iridium so that it can be used in engineer modifications.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  amount: 10
-  grow: 1
-  growEnd: 0
-  symbol: {fileID: 6303425622329680680}
-  rotator: {fileID: 8493811268692989673}
-  speed: 60
+  type: 3
 --- !u!114 &5055573868470089305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +148,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -174,7 +171,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 4b29ca68ddbae7244af153020806eefd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -233,6 +230,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -255,7 +253,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 20c99b3e2c5662e41bb2537cf5d6802b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -347,6 +345,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -369,7 +368,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 4eab1c6f200af17429cbcea5fb66c110, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -428,6 +427,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -450,7 +450,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 825a6ab209d3def4788c3e2cf377d4d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -509,6 +509,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -531,7 +532,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 12a37cd1f0779a346873c2485e6d1b26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

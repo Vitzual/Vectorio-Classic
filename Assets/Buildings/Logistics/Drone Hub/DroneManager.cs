@@ -90,6 +90,39 @@ public class DroneManager : MonoBehaviour
     public List<AvailableDrones> availableDrones;
 
 
+    // ----------------------------------------------------------------------------------- //
+    // RESOURCE DRONE CLASS
+    // These drones automatically go to collectors and remove the gold inside, then transport
+    // the gold to an available storage. If no collectors, the loop will be skipped!
+    // ----------------------------------------------------------------------------------- //
+
+
+    [System.Serializable]
+    public class ResourceDrone
+    {
+        public ResourceDrone(Transform body, Transform port, int droneType, Transform[] plates, bool isHubDrone, Transform target, int goldCollected, int targetsLeft)
+        {
+            this.body = body;
+            this.port = port;
+            this.droneType = droneType;
+            this.plates = plates;
+            this.isHubDrone = isHubDrone;
+            this.target = target;
+            this.goldCollected = goldCollected;
+            this.targetsLeft = targetsLeft;
+        }
+
+        public Transform[] plates;
+        public Transform body;
+        public Transform port;
+        public Transform target;
+        public int droneType;
+        public int goldCollected;
+        public int targetsLeft;
+        public bool isHubDrone;
+    }
+    public List<ResourceDrone> resourceDrone;
+
 
     // ----------------------------------------------------------------------------------- //
     // BUILDING QUEUE LIST
@@ -115,6 +148,50 @@ public class DroneManager : MonoBehaviour
         public int heatCost;
     }
     public List<BuildingQueue> buildingQueue;
+
+
+    // ----------------------------------------------------------------------------------- //
+    // COLLECTOR LIST
+    // Holds the position of the building that needs to be placed, and which building it is
+    // ----------------------------------------------------------------------------------- //
+
+    [System.Serializable]
+    public class CollectorList
+    {
+        public CollectorList(Transform building, CollectorAI script, int type)
+        {
+            this.building = building;
+            this.script = script;
+            this.type = type;
+        }
+
+        public Transform building;
+        public CollectorAI script;
+        public int type;
+    }
+    public List<CollectorList> collectorList;
+
+
+    // ----------------------------------------------------------------------------------- //
+    // STORAGE LIST
+    // Holds the position of the building that needs to be placed, and which building it is
+    // ----------------------------------------------------------------------------------- //
+
+    [System.Serializable]
+    public class StorageList
+    {
+        public StorageList(Transform building, CollectorAI script, int type)
+        {
+            this.building = building;
+            this.script = script;
+            this.type = type;
+        }
+
+        public Transform building;
+        public CollectorAI script;
+        public int type;
+    }
+    public List<StorageList> storageList;
 
 
 
@@ -186,6 +263,12 @@ public class DroneManager : MonoBehaviour
                     drone.droneReturning = true;
                 }
             }
+        }
+
+        // Handles the resource drone logic
+        for (int i = 0; i < resourceDrone.Count; i++)
+        {
+            ResourceDrone drone = resourceDrone[i];
         }
     }
 

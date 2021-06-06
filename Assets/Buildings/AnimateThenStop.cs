@@ -19,6 +19,13 @@ public class AnimateThenStop : MonoBehaviour
             enabled = false; // Disable script when finished
     }
 
+    public void resetAnim()
+    {
+        animSize = 1.2f;
+        animTracker = 0.001f;
+        animOriginal = 1f;
+    }
+
     public void DropInAnim()
     {
         transform.localScale = new Vector2(animSize, animSize);

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2009550350632877460}
-  - component: {fileID: 7496084906837844568}
+  - component: {fileID: -564327915410191998}
   - component: {fileID: 2943742430474877030}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
@@ -39,7 +39,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7496084906837844568
+--- !u!114 &-564327915410191998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 892923713960991008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548002e6785f3964fa9189a1d36cef6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cac2fc948c4acb4898b8a721b43cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 650dcaa5634fd244ba3e984d99428cd1, type: 3}
@@ -58,11 +58,12 @@ MonoBehaviour:
   cost: 10000
   power: 3
   ID: 26
+  isBig: 0
   description: Holds essence in a liquid cooling tank to then be used in research.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  amount: 500
+  type: 2
 --- !u!114 &2943742430474877030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -172,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 196c352bc34fadd489c6b11cdce79787, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -231,6 +233,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -253,7 +256,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: bff613cc1fd1a9140adb3a7f3afa1893, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -312,6 +315,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -334,7 +338,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 9cd4f6a288e205e40a0832cf27e939a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -393,6 +397,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -415,7 +420,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 214b2231978955b48aaaccac225ec850, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -474,6 +479,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -496,7 +502,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b43daf7145acc2146ac6dcec8acf4833, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -555,6 +561,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -577,7 +584,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3ea9c3d18ad55c8408eb1cf6f30dc179, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

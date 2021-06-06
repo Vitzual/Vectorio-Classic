@@ -19,16 +19,20 @@ public class Research : MonoBehaviour
     public static float research_firerate = 0;
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
-    public static int research_gold_yield = 0;
+    public static int research_gold_yield = 50;
     public static int research_gold_storage = 0;
     public static float research_essence_time = 8f;
-    public static int research_essence_yield = 0;
+    public static int research_essence_yield = 25;
     public static int research_essence_storage = 0;
     public static float research_iridium_time = 12f;
-    public static int research_iridium_yield = 0;
+    public static int research_iridium_yield = 10;
     public static int research_iridium_storage = 0;
     public static float research_construction_speed = 35f;
-    public static float research_combat_speed = 25f;
+    public static int research_construction_placements = 1;
+    public static float research_resource_speed = 25f;
+    public static int research_resource_collections = 5;
+    public static float research_combat_speed = 20f;
+    public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;
 
     // Research UI stuff
@@ -223,37 +227,49 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "gold storage":
+                int totalGold = 0;
                 research_gold_storage += 500;
-                GoldStorageAI[] allGoldStorage = FindObjectsOfType<GoldStorageAI>();
-                SurvivalCS.UpdateGoldStorage(-allGoldStorage.Length * 500);
+                StorageAI[] allGoldStorage = FindObjectsOfType<StorageAI>();
+                foreach (StorageAI storage in allGoldStorage)
+                    if (storage.type == 1) totalGold += research_gold_storage;
+                SurvivalCS.goldStorage = totalGold;
+                SurvivalCS.UI.GoldStorage.text = SurvivalCS.goldStorage + " MAX";
                 break;
             case "essence yield":
                 research_essence_yield += 5;
                 break;
             case "essence time":
                 research_essence_time -= 1f;
-                EssenceAI[] allEssenceCollectors = FindObjectsOfType<EssenceAI>();
-                foreach (EssenceAI collector in allEssenceCollectors)
+                CollectorAI[] allEssenceCollectors = FindObjectsOfType<CollectorAI>();
+                foreach (CollectorAI collector in allEssenceCollectors)
                     collector.OffsetStart();
                 break;
             case "essence storage":
+                int totalEssence = 0;
                 research_essence_storage += 250;
-                EssenceStorageAI[] allEssenceStorages = FindObjectsOfType<EssenceStorageAI>();
-                SurvivalCS.essenceStorage += allEssenceStorages.Length * 250;
+                StorageAI[] allEssenceStorage = FindObjectsOfType<StorageAI>();
+                foreach (StorageAI storage in allEssenceStorage)
+                    if (storage.type == 2) totalEssence += research_essence_storage;
+                SurvivalCS.essenceStorage = totalEssence;
+                SurvivalCS.UI.EssenceStorage.text = SurvivalCS.essenceStorage + " MAX";
                 break;
             case "iridium yield":
                 research_iridium_yield += 5;
                 break;
             case "iridium time":
                 research_iridium_time -= 1f;
-                IridiumAI[] allIridiumCollectors = FindObjectsOfType<IridiumAI>();
-                foreach (IridiumAI collector in allIridiumCollectors)
+                CollectorAI[] allIridiumCollectors = FindObjectsOfType<CollectorAI>();
+                foreach (CollectorAI collector in allIridiumCollectors)
                     collector.OffsetStart();
                 break;
             case "iridium storage":
+                int totalIridium = 0;
                 research_iridium_storage += 100;
-                IridiumStorageAI[] allIridiumStorages = FindObjectsOfType<IridiumStorageAI>();
-                SurvivalCS.iridiumStorage += allIridiumStorages.Length * 100;
+                StorageAI[] allIridiumStorage = FindObjectsOfType<StorageAI>();
+                foreach (StorageAI storage in allIridiumStorage)
+                    if (storage.type == 3) totalIridium += research_iridium_storage;
+                SurvivalCS.iridiumStorage = totalIridium;
+                SurvivalCS.UI.IridiumStorage.text = SurvivalCS.iridiumStorage + " MAX";
                 break;
             case "burning":
                 research_burning += 5;

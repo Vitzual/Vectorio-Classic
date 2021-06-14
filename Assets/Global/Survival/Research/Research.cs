@@ -20,13 +20,13 @@ public class Research : MonoBehaviour
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
     public static int research_gold_yield = 50;
-    public static int research_gold_storage = 0;
+    public static int research_gold_storage = 1000;
     public static float research_essence_time = 8f;
     public static int research_essence_yield = 25;
-    public static int research_essence_storage = 0;
+    public static int research_essence_storage = 500;
     public static float research_iridium_time = 12f;
     public static int research_iridium_yield = 10;
-    public static int research_iridium_storage = 0;
+    public static int research_iridium_storage = 100;
     public static float research_construction_speed = 35f;
     public static int research_construction_placements = 1;
     public static float research_resource_speed = 25f;

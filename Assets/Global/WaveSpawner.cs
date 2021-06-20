@@ -24,6 +24,10 @@ public class WaveSpawner : MonoBehaviour
     public int attackEvery = 300;
     public int attackTracker = 50;
 
+    // Scan through tracker
+    public int startingIndex = 0;
+    public int lastIndex = 9;
+
     [System.Serializable]
     public class Attacks
     {
@@ -35,15 +39,14 @@ public class WaveSpawner : MonoBehaviour
     public Attacks[] attacks;
 
     // UI Elements
-    public GameObject bossWarning;
     public ModalWindowManager bossInfo;
     public ModalWindowManager bossDestroyed;
 
     [System.Serializable]
     public class Bosses
     {
-        public Transform bossObject;
         public string name;
+        public Transform bossObject;
         [TextArea] public string description;
         [TextArea] public string destroyedInfo;
         public bool isDefeated;
@@ -105,7 +108,7 @@ public class WaveSpawner : MonoBehaviour
         bool groupSpawn = false;
         if (Difficulties.enemyWaves)
         {
-            if (htrack >= 1000 && !bossWarning.activeInHierarchy)
+            if (htrack >= 1000)
             {
                 if (attackTracker >= attackEvery)
                 {
@@ -117,7 +120,7 @@ public class WaveSpawner : MonoBehaviour
         }
         
         // Iterate through and spawn all enemies
-        for (int a=0; a<enemy.Length; a++)
+        for (int a=startingIndex; a<lastIndex; a++)
         {
             if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat && enemy[a].minHeat < maxHeat)
             {
@@ -243,52 +246,32 @@ public class WaveSpawner : MonoBehaviour
             holder.name = bosses[0].bossObject.name;
             bossSpawned = true;
         }
-
-        // Check if the warning should be displayed or not
-        if (htrack <= 10000 && htrack >= 9000 && bossesDefeated == 0) {
-            if (!bossWarning.activeInHierarchy && !bossSpawned) { bossWarning.SetActive(true); }
-        } else if (bossWarning.activeInHierarchy) { bossWarning.SetActive(false); }
-
-        // Display end screen
-        if (htrack >= 20000 && firstDisplay)
-        {
-            GameObject.Find("Survival").GetComponent<Interface>().OpenEndWindow();
-            maxHeat = 30000;
-            firstDisplay = false;
-        }
-
-        if (!bossSpawned)
-        {
-            if (htrack >= 20000)
-            {
-                borders[2].SetActive(true);
-                borders[1].SetActive(false);
-            }
-            else if (htrack >= 10000)
-            {
-
-                borders[2].SetActive(false);
-                borders[1].SetActive(true);
-                borders[0].SetActive(false);
-            }
-            else
-            {
-                borders[0].SetActive(true);
-                borders[1].SetActive(false);
-            }
-        }
         */
     }
 
     public void updateBorders()
     {
-        if (htrack >= 25000)
+        if (htrack >= 50000 && bosses[2].isDefeated)
         {
+            startingIndex = 27;
+            lastIndex = 36;
+
+            borders[3].SetActive(true);
+            borders[2].SetActive(false);
+        }
+        else if (htrack >= 25000 && bosses[1].isDefeated)
+        {
+            startingIndex = 18;
+            lastIndex = 27;
+
+            borders[3].SetActive(false);
             borders[2].SetActive(true);
             borders[1].SetActive(false);
         }
-        else if (htrack >= 10000)
+        else if (htrack >= 10000 && bosses[0].isDefeated)
         {
+            startingIndex = 9;
+            lastIndex = 18;
 
             borders[2].SetActive(false);
             borders[1].SetActive(true);
@@ -296,6 +279,9 @@ public class WaveSpawner : MonoBehaviour
         }
         else
         {
+            startingIndex = 0;
+            lastIndex = 9;
+
             borders[0].SetActive(true);
             borders[1].SetActive(false);
         }

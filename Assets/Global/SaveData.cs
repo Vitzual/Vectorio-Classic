@@ -4,6 +4,7 @@ public class SaveData
     //public int[][] Buildings;
     public int[,] Locations;
     public float[,] Enemies;
+    public int[] hotbar;
     public int PowerUsage;
     public int PowerAvailable;
     public int Gold;
@@ -37,6 +38,7 @@ public class SaveData
     public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, int time = 0, int heatt = 0) 
     {
         //Buildings = data.GetSaveData();
+        hotbar = data.GetHotbarData();
         Locations = data.GetLocationData();
         Enemies = data.GetEnemyData();
         PowerUsage = data.PowerConsumption;

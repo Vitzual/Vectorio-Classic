@@ -278,6 +278,17 @@ public class Survival : MonoBehaviour
                 {
                     Debug.Log("Save file contains obsolete enemy data!");
                 }
+
+                // Update hotbar with saved ID's
+                try
+                {
+                    SetHotbarData(data.hotbar);
+                }
+                catch
+                {
+                    Debug.Log("Save file does not contain hotbar data!");
+                }
+
                 manager.GetComponent<Settings>().SetSound(soundHolder);
             }
             catch (System.Exception e)
@@ -1208,6 +1219,26 @@ public class Survival : MonoBehaviour
     {
         Save();
         Quit();
+    }
+
+    // Returns the ID's of all buildings on the hotbar
+    public int[] GetHotbarData()
+    {
+        int[] hotbarIDs = new int[9];
+        for(int i = 0; i < hotbar.Length; i++)
+        {
+            if (hotbar[i] != null)
+                hotbarIDs[i] = hotbar[i].GetComponent<TileClass>().ID;
+            else hotbarIDs[i] = -1;
+        }
+        return hotbarIDs;
+    }
+
+    // Set hotbar data from the ID's on the save file
+    public void SetHotbarData(int[] data)
+    {
+        for (int i = 0; i < hotbar.Length; i++)
+            if (data[i] != -1) SetHotbarSlot(i, GetBuildingWithID(data[i]));
     }
 
     // Returns all building locations when saving

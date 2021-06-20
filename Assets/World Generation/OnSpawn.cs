@@ -13,34 +13,32 @@ public class OnSpawn : MonoBehaviour
     // Difficulty class
     public GameObject DefaultOre;
 
+    // Border size
+    public float BorderSize = 750;
+
     // Gold ore placements
     public GameObject GoldOre;
-    public int GoldRegionSize;
-    public int GoldSpawnAmount;
-    public int GoldVeinSize;
-    public int GoldVeinNoise;
+    public int GoldSpawnSize;
+    public int GoldSpawnScale;
+    public int GoldSpawnOffset;
+    public float GoldSpawnThreshold;
     public int GoldMinDistance;
 
     // Essence ore placements
     public GameObject EssenceOre;
-    public int EssenceRegionSize;
-    public int EssenceSpawnAmount;
-    public int EssenceVeinSize;
-    public int EssenceVeinNoise;
+    public int EssenceSpawnSize;
+    public int EssenceSpawnScale;
+    public int EssenceSpawnOffset;
+    public float EssenceSpawnThreshold;
     public int EssenceMinDistance;
 
     // Iridium ore placements
     public GameObject IridiumOre;
-    public int IridiumRegionSize;
-    public int IridiumSpawnAmount;
-    public int IridiumVeinSize;
-    public int IridiumVeinNoise;
+    public int IridiumSpawnSize;
+    public int IridiumSpawnScale;
+    public int IridiumSpawnOffset;
+    public float IridiumSpawnThreshold;
     public int IridiumMinDistance;
-
-    // Enemy spawner thing
-    public GameObject Hive;
-    public int SpawnerRegionSize;
-    public int SpawnerSpawnAmount;
 
     // Enemy base spawning 
     public int BaseRegionSize;
@@ -51,38 +49,42 @@ public class OnSpawn : MonoBehaviour
     {
         Debug.Log("Generating world data with seed " + a);
 
-        // Sets the seed - This method is deprecated but works so who cares amiright?
+        // Sets the seed - This method is deprecated but idc 
         #pragma warning disable CS0618
         try { Random.seed = a.GetHashCode(); }
         catch { Random.seed = Random.Range(0, 1000000000); }
         #pragma warning restore CS0618
 
+        // Offset the perlin noise generation based on the seed provided
+        GoldSpawnOffset += Random.Range(0, 10000);
+        EssenceSpawnOffset += Random.Range(10000, 20000);
+        IridiumSpawnOffset += Random.Range(20000, 30000);
+
+        // If def set to override, skip difficulty setting and use default values
         if (!defOverride)
         {
             if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
             if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
             if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
 
-            GoldSpawnAmount = (int)(GoldSpawnAmount * (Difficulties.goldMulti / 100));
-            GoldVeinSize = (int)(GoldVeinSize * (Difficulties.goldMulti / 100));
-            GoldVeinNoise = (int)(GoldVeinNoise * (Difficulties.goldMulti / 100));
+            GoldSpawnScale -= (int)(Difficulties.goldMulti / 100);
+            GoldSpawnThreshold -= Difficulties.goldMulti / 2500;
 
-            EssenceSpawnAmount = (int)(EssenceSpawnAmount * (Difficulties.essenceMulti / 100));
-            EssenceVeinSize = (int)(EssenceVeinSize * (Difficulties.essenceMulti / 100));
-            EssenceVeinNoise = (int)(EssenceVeinNoise * (Difficulties.essenceMulti / 100));
+            EssenceSpawnScale -= (int)(Difficulties.essenceMulti / 100);
+            EssenceSpawnThreshold -= Difficulties.essenceMulti / 2500;
 
-            IridiumSpawnAmount = (int)(IridiumSpawnAmount * (Difficulties.iridiumMulti / 100));
-            IridiumVeinSize = (int)(IridiumVeinSize * (Difficulties.iridiumMulti / 100));
-            IridiumVeinNoise = (int)(IridiumVeinNoise * (Difficulties.iridiumMulti / 100));
+            IridiumSpawnScale -= (int)(Difficulties.iridiumMulti / 100);
+            IridiumSpawnThreshold -= Difficulties.iridiumMulti / 2500;
 
-            SpawnerSpawnAmount = (int)(SpawnerSpawnAmount * (Difficulties.enemyAmountMulti / 100));
             maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
         }
 
+        // Gen the world
         GenGold();
         GenEssence();
         GenIridium();
 
+        // Gen bases ONLY if a fresh save is being loaded
         if (defOverride || (!save && Difficulties.enemyOutposts)) { GenBases(); }
     }
 
@@ -125,181 +127,115 @@ public class OnSpawn : MonoBehaviour
         }
     }
 
-    // Enemy Hive Generation
-    private void GenHives()
-    {
-        int x;
-        int y;
-        int max = 10;
-        int att = 0;
-
-        bool valid = false;
-
-        for (int i = 0; i < SpawnerSpawnAmount; i++)
-        {
-            while (!valid)
-            {
-                x = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
-                y = Random.Range(-SpawnerRegionSize, SpawnerRegionSize) * 5;
-
-                if (x > 100 || x < -100 || y > 100 || y < -100)
-                {
-                    RaycastHit2D a = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, HiveLayer);
-                    RaycastHit2D b = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-                    if (a.collider == null && b.collider == null)
-                    {
-                        valid = true;
-                        var temp = Instantiate(Hive, new Vector3(x, y, -1), Quaternion.Euler(0, 0, 0));
-                        temp.name = Hive.name;
-                    }
-                }
-
-                att++;
-                if (att >= max)
-                    valid = true;
-            }
-            att = 0;
-            valid = false;
-        }
-    }
-
     // Gold Generation
     private void GenGold()
     {
-        int x;
-        int y;
-        int a;
-        int b;
+        int totalSpawned = 0;
+        float spawnOffset = (GoldSpawnSize * 5f) / 2;
 
-        for (int i = 0; i < GoldSpawnAmount; i++)
+        for (int x = 0; x < GoldSpawnSize; x++)
         {
-            x = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
-            y = Random.Range(-GoldRegionSize, GoldRegionSize) * 5;
-
-            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-            if (rayCheck.collider == null && checkCoords(x, y, GoldMinDistance))
+            for (int y = 0; y < GoldSpawnSize; y++)
             {
-                var temp = Instantiate(GoldOre, new Vector3(x, y, -1), Quaternion.identity);
-                temp.name = GoldOre.name;
+                float xCoord = ((float)x / GoldSpawnSize * GoldSpawnScale) + GoldSpawnOffset;
+                float yCoord = ((float)y / GoldSpawnSize * GoldSpawnScale) + GoldSpawnOffset;
+                float value = Mathf.PerlinNoise(xCoord, yCoord);
 
-                for (int c = 0; c < GoldVeinNoise; c++)
+                if (value >= GoldSpawnThreshold)
                 {
-                    a = Random.Range(-GoldVeinSize, GoldVeinSize) * 5;
-                    b = Random.Range(-GoldVeinSize, GoldVeinSize) * 5;
+                    totalSpawned++;
 
-                    RaycastHit2D d = Physics2D.Raycast(new Vector2(x + a + 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D e = Physics2D.Raycast(new Vector2(x + a - 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D f = Physics2D.Raycast(new Vector2(x + a, y + b + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
+                    float xPos = (x * 5f) - spawnOffset;
+                    float yPos = (y * 5f) - spawnOffset;
 
-                    if (checkCoords(x + a, y + b, GoldMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
+                    if (!checkCoords(xPos, yPos, GoldMinDistance)) continue;
+
+                    RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(xPos, yPos), Vector2.zero, Mathf.Infinity, TileLayer);
+                    if (rayCheck.collider == null)
                     {
-                        temp = Instantiate(GoldOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
+                        var temp = Instantiate(GoldOre, new Vector3(xPos, yPos, -1), Quaternion.identity);
                         temp.name = GoldOre.name;
                     }
                 }
-            } 
-            else
-            {
-                i--;
             }
         }
+
+        Debug.Log("Spawned " + totalSpawned + " gold nodes");
     }
 
     private void GenEssence()
     {
-        int x;
-        int y;
-        int a;
-        int b;
+        int totalSpawned = 0;
+        float spawnOffset = (EssenceSpawnSize * 5f) / 2;
 
-        for (int i = 0; i < EssenceSpawnAmount; i++)
+        for (int x = 0; x < EssenceSpawnSize; x++)
         {
-            x = Random.Range(-EssenceRegionSize, EssenceRegionSize) * 5;
-            y = Random.Range(-EssenceRegionSize, EssenceRegionSize) * 5;
-
-            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-            if (rayCheck.collider == null && checkCoords(x, y, EssenceMinDistance))
+            for (int y = 0; y < EssenceSpawnSize; y++)
             {
-                var temp = Instantiate(EssenceOre, new Vector3(x, y, -1), Quaternion.identity);
-                temp.name = EssenceOre.name;
+                float xCoord = ((float)x / EssenceSpawnSize * EssenceSpawnScale) + EssenceSpawnOffset;
+                float yCoord = ((float)y / EssenceSpawnSize * EssenceSpawnScale) + EssenceSpawnOffset;
+                float value = Mathf.PerlinNoise(xCoord, yCoord);
 
-                for (int c = 0; c < EssenceVeinNoise; c++)
+                if (value >= EssenceSpawnThreshold)
                 {
-                    a = Random.Range(-EssenceVeinSize, EssenceVeinSize) * 5;
-                    b = Random.Range(-EssenceVeinSize, EssenceVeinSize) * 5;
+                    totalSpawned++;
 
-                    RaycastHit2D d = Physics2D.Raycast(new Vector2(x + a + 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D e = Physics2D.Raycast(new Vector2(x + a - 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D f = Physics2D.Raycast(new Vector2(x + a, y + b + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
+                    float xPos = (x * 5f) - spawnOffset;
+                    float yPos = (y * 5f) - spawnOffset;
 
-                    if (checkCoords(x + a, y + b, EssenceMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
+                    if (!checkCoords(xPos, yPos, EssenceMinDistance)) continue;
+
+                    RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(xPos, yPos), Vector2.zero, Mathf.Infinity, TileLayer);
+                    if (rayCheck.collider == null)
                     {
-                        temp = Instantiate(EssenceOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
+                        var temp = Instantiate(EssenceOre, new Vector3(xPos, yPos, -1), Quaternion.identity);
                         temp.name = EssenceOre.name;
                     }
                 }
             }
-            else
-            {
-                i--;
-            }
         }
+
+        Debug.Log("Spawned " + totalSpawned + " essence nodes");
     }
 
     private void GenIridium()
     {
-        int x;
-        int y;
-        int a;
-        int b;
+        int totalSpawned = 0;
+        float spawnOffset = (IridiumSpawnSize * 5f) / 2;
 
-        for (int i = 0; i < IridiumSpawnAmount; i++)
+        for (int x = 0; x < IridiumSpawnSize; x++)
         {
-            x = Random.Range(-IridiumRegionSize, IridiumRegionSize) * 5;
-            y = Random.Range(-IridiumRegionSize, IridiumRegionSize) * 5;
-
-            RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(x, y), Vector2.zero, Mathf.Infinity, TileLayer);
-
-            if (rayCheck.collider == null && checkCoords(x, y, IridiumMinDistance))
+            for (int y = 0; y < IridiumSpawnSize; y++)
             {
-                var temp = Instantiate(IridiumOre, new Vector3(x, y, -1), Quaternion.identity);
-                temp.name = IridiumOre.name;
+                float xCoord = ((float)x / IridiumSpawnSize * IridiumSpawnScale) + IridiumSpawnOffset;
+                float yCoord = ((float)y / IridiumSpawnSize * IridiumSpawnScale) + IridiumSpawnOffset;
+                float value = Mathf.PerlinNoise(xCoord, yCoord);
 
-                for (int c = 0; c < IridiumVeinNoise; c++)
+                if (value >= IridiumSpawnThreshold)
                 {
-                    a = Random.Range(-IridiumVeinSize, IridiumVeinSize) * 5;
-                    b = Random.Range(-IridiumVeinSize, IridiumVeinSize) * 5;
+                    totalSpawned++;
 
-                    RaycastHit2D d = Physics2D.Raycast(new Vector2(x + a + 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D e = Physics2D.Raycast(new Vector2(x + a - 5f, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D f = Physics2D.Raycast(new Vector2(x + a, y + b + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D g = Physics2D.Raycast(new Vector2(x + a, y + b - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-                    RaycastHit2D h = Physics2D.Raycast(new Vector2(x + a, y + b), Vector2.zero, Mathf.Infinity, TileLayer);
+                    float xPos = (x * 5f) - spawnOffset;
+                    float yPos = (y * 5f) - spawnOffset;
 
-                    if (checkCoords(x + a, y + b, IridiumMinDistance) && (d.collider != null || e.collider != null || f.collider != null || g.collider != null) && h.collider == null)
+                    if (!checkCoords(xPos, yPos, IridiumMinDistance)) continue;
+
+                    RaycastHit2D rayCheck = Physics2D.Raycast(new Vector2(xPos, yPos), Vector2.zero, Mathf.Infinity, TileLayer);
+                    if (rayCheck.collider == null)
                     {
-                        temp = Instantiate(IridiumOre, new Vector3(x + a, y + b, -1), Quaternion.identity);
+                        var temp = Instantiate(IridiumOre, new Vector3(xPos, yPos, -1), Quaternion.identity);
                         temp.name = IridiumOre.name;
                     }
                 }
             }
-            else
-            {
-                i--;
-            }
         }
+
+        Debug.Log("Spawned " + totalSpawned + " iridium nodes");
     }
 
-    public bool checkCoords(int x, int y, int minDistance)
+    public bool checkCoords(float x, float y, int minDistance)
     {
-        if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= -minDistance) && x <= 750 && x >= -745 && y >= -745 && y <= 750) return true;
+        if ((x >= minDistance || x <= -minDistance || y >= minDistance || y <= -minDistance) && x <= BorderSize && x >= -BorderSize+5 && y >= -BorderSize+5 && y <= BorderSize) return true;
         else return false;
     }
 }

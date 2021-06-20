@@ -93,6 +93,7 @@ public class Survival : MonoBehaviour
     [SerializeField] private Transform TurretObj;          // ID = 0
     [SerializeField] private Transform WallObj;            // ID = 1
     [SerializeField] private Transform CollectorObj;       // ID = 2
+    [SerializeField] private Transform DroneObj;
     [SerializeField] private Transform EssenceObj;         // ID = 10
     [SerializeField] private Transform PowerObj;           // ID = 13
     [SerializeField] private Transform EngineerObj;        // ID = 16
@@ -193,7 +194,7 @@ public class Survival : MonoBehaviour
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
         tech.unlocked.Add(WallObj);
-        tech.unlocked.Add(GoldStorage);
+        tech.unlocked.Add(DroneObj);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -1055,7 +1056,7 @@ public class Survival : MonoBehaviour
         hotbar[0] = TurretObj;
         hotbar[1] = WallObj;
         hotbar[2] = CollectorObj;
-        hotbar[3] = GoldStorage;
+        hotbar[3] = DroneObj;
         UI.UpdateHotbar();
     }
 

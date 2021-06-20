@@ -15,6 +15,7 @@ public class CollectorAI: TileClass
     private void Start()
     {
         BuildingHandler.buildings.Add(transform);
+        //DroneManager.
 
         switch (collectorType) {
             case 1:
@@ -35,7 +36,7 @@ public class CollectorAI: TileClass
         }
         
     
-    //popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        //popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         //rPopup = popup.GetComponent<ResourcePopup>();
         //popup.parent = SRVSC.UI.IngameCanvas.transform;
         //rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));

@@ -16,7 +16,7 @@ public class HubAI : TileClass
         BuildingHandler.buildings.Add(transform);
 
         foreach (Transform drone in drones)
-            droneManager.registerAvailableDrone(drone.GetChild(0), drone, 1, new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true);
+            droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true);
 
         health = 100;
         maxhp = 100;

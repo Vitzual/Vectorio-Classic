@@ -30,7 +30,7 @@ public class Dronehub : TileClass
     void Start()
     {
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        changeDroneType(1);
+        changeDroneType(2);
     }
 
     // Change the drone type
@@ -44,7 +44,7 @@ public class Dronehub : TileClass
                 activeDrone.name = constructorDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableDrone(activeDrone, transform, droneType, new Transform[] { leftPanel, rightPanel }, false);
+                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
                 droneManager.forceUI();
                 break;
             case 2:
@@ -52,14 +52,14 @@ public class Dronehub : TileClass
                 activeDrone.name = resourceDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableDrone(activeDrone, transform, droneType, new Transform[] { leftPanel, rightPanel }, false);
+                droneManager.registerAvailableResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
                 break;
             case 3:
                 activeDrone = Instantiate(combatDrone, transform.position, Quaternion.identity);
                 activeDrone.name = combatDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableDrone(activeDrone, transform, droneType, new Transform[] { leftPanel, rightPanel }, false);
+                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
                 break;
         }
     }

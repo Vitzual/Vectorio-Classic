@@ -151,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: eb151544d6cf2a04aa90e14303640371, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -397,7 +397,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 8bb07d600498f1b48835927c037f1be6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 3437550930469308349}
   - component: {fileID: 4825834539823410990}
   m_Layer: 8
-  m_Name: Drone Hub
+  m_Name: Drone Port
   m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,7 +467,7 @@ MonoBehaviour:
   maxhp: 50
   health: 50
   heat: 30
-  cost: 10000
+  cost: 5
   power: 50
   ID: 124314
   isBig: 0
@@ -481,6 +481,10 @@ MonoBehaviour:
   droneType: 1
   activeDrone: {fileID: 0}
   constructorDrone: {fileID: 8602418881959610668, guid: 4d5dea192be36ab44ba075731ab29756,
+    type: 3}
+  resourceDrone: {fileID: 8602418881959610668, guid: 1a6e616a6ed11394d929af0e1f36128e,
+    type: 3}
+  combatDrone: {fileID: 8602418881959610668, guid: 87c7239e60e60d649a9ec53a0ec95e61,
     type: 3}
   leftPanel: {fileID: 400359186113548949}
   rightPanel: {fileID: 8437684921361694069}

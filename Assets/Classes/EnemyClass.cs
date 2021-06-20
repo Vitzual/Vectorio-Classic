@@ -18,14 +18,15 @@ public abstract class EnemyClass : MonoBehaviour
     public bool is_frozen = false;
     public bool is_poisoned = false;
 
+
     // Enemy stats
     public int health;
     public int damage;
     public float moveSpeed;
-    public int attackSpeed;
     public int explosiveRadius;
     public int explosiveDamage;
     public float rayLength;
+    public bool isChaos;
     public bool effectImmunity = false;
     public GameObject[] spawnOnDeath;
     public int[] amountToSpawn;
@@ -131,6 +132,9 @@ public abstract class EnemyClass : MonoBehaviour
     // Apply damage to entity
     public virtual void DamageEntity(int dmgRecieved)
     {
+        // Check if entity is a chaos enemy
+        if (isChaos) moveSpeed += 1f;
+
         // Apply damage and double if entity is poisoned
         if (is_poisoned) health -= dmgRecieved * 2;
         else health -= dmgRecieved;

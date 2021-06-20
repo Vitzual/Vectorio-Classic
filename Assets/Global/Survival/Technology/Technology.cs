@@ -22,10 +22,10 @@ public class Technology : MonoBehaviour
     {
         public string name;
         public Transform Unlock;
-        public ButtonManagerBasicIcon InventoryButton;
         public int HeatNeeded;
         public bool Unlocked = false;
         public string type;
+        public ButtonManagerBasicIcon InventoryButton;
     }
     public Unlockables[] UnlockTier;
 
@@ -39,6 +39,14 @@ public class Technology : MonoBehaviour
 
         // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
+
+        // Assign inventory buttons
+
+    }
+
+    public void assignInventory()
+    {
+
     }
 
     // Sets the unlock tree back to the level that was saved

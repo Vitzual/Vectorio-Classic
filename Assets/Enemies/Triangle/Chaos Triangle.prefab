@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8d1a22d792af62748b49c2f63beefec0, type: 2}
+  - {fileID: 2100000, guid: e12dbd2f28f0bbe4d9f4702e7bb38f2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60dce33cebad3764493852b7aece4dc1, type: 2}
+  - {fileID: 2100000, guid: 608e2c5bfc447eb45a307bc9c984c33f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 8193120133564745201}
   - component: {fileID: 3978784711699600577}
   m_Layer: 9
-  m_Name: Trail (1)
+  m_Name: Trail 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +215,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e0e00db5f7398d44becf75151a8f82c, type: 2}
+  - {fileID: 2100000, guid: 608e2c5bfc447eb45a307bc9c984c33f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 305485568438813150}
   - component: {fileID: 6683446556380213497}
   m_Layer: 9
-  m_Name: Rampage Triangle
+  m_Name: Chaos Triangle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6065519297016329530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.34, z: 0}
+  m_LocalPosition: {x: 0, y: 8.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3591490237912463258}
@@ -353,21 +353,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 0}
-  ID: 151345
+  ID: 12412
   is_burning: 0
   is_frozen: 0
   is_poisoned: 0
-  health: 2
-  damage: 1
-  moveSpeed: 7
-  attackSpeed: 10
+  health: 150
+  damage: 100
+  moveSpeed: 10
   explosiveRadius: 0
   explosiveDamage: 0
   rayLength: 1
+  isChaos: 1
   effectImmunity: 0
   spawnOnDeath: []
   amountToSpawn: 
-  Effect: {fileID: 7050970385817730975, guid: 488f4063d72db284cb7dc12462e1bce7, type: 3}
+  Effect: {fileID: 7050970385817730975, guid: 456c3ddb543381c43a43c841be2b2547, type: 3}
   PreferredTarget: {fileID: 0}
   target: {fileID: 0}
 --- !u!212 &6065519297016329531
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 2085222584601635800}
   - component: {fileID: 9163429834004994211}
   m_Layer: 9
-  m_Name: Trail
+  m_Name: Trail 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,7 +509,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9f29760c8dc386848bc867a0dd141a56, type: 2}
+  - {fileID: 2100000, guid: e12dbd2f28f0bbe4d9f4702e7bb38f2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -529,7 +529,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -983228703
   m_SortingLayer: 6
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Time: 3.3
   m_Parameters:
     serializedVersion: 3

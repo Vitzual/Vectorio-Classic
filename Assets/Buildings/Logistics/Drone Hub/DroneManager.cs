@@ -70,34 +70,40 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class ResourceDrone
     {
-        public ResourceDrone(Transform body, Transform port, Transform[] plates, Transform target)
+        public ResourceDrone(Transform body, Transform port, Transform[] plates)
         {
             this.body = body;
             this.port = port;
             this.plates = plates;
-            this.target = target;
 
             goldCollected = 0;
             targetsLeft = Research.research_resource_amount;
-            targetScript = target.GetComponent<CollectorAI>();
             platesOpening = true;
             platesClosing = false;
-            droneReturning = false;
+            check = true;
+            targetType = 1;
+
+            visitedCollectors = new List<CollectorAI>();
+            availableCollectors = new List<CollectorAI>();
+            availableStorages = new List<StorageAI>();
         }
 
         public Transform[] plates;
-        public List<Transform> collected;
+        public List<CollectorAI> visitedCollectors;
+        public List<CollectorAI> availableCollectors;
+        public List<StorageAI> availableStorages;
         public Transform body;
         public Transform port;
         public Transform target;
         public CollectorAI targetScript;
         public int goldCollected;
         public int targetsLeft;
+        public int targetType;
+        public bool check;
 
         // Animation factors
         public bool platesOpening;
         public bool platesClosing;
-        public bool droneReturning;
     }
     public List<ResourceDrone> resourceDrone;
 
@@ -128,29 +134,6 @@ public class DroneManager : MonoBehaviour
 
 
     // ----------------------------------------------------------------------------------- //
-    // AVAILABLE RESOURCE DRONE CLASS
-    // These are stagnant drones that are ready to be activated
-    // When registering an active drone, simply assign the variables using the internal values
-    // ----------------------------------------------------------------------------------- //
-
-    [System.Serializable]
-    public class AvailableResourceDrones
-    {
-        public AvailableResourceDrones(Transform body, Transform port, Transform[] plates)
-        {
-            this.body = body;
-            this.port = port;
-            this.plates = plates;
-        }
-
-        public Transform[] plates;
-        public Transform body;
-        public Transform port;
-    }
-    public List<AvailableResourceDrones> availableResourceDrones;
-
-
-    // ----------------------------------------------------------------------------------- //
     // BUILDING QUEUE LIST
     // Holds the position of the building that needs to be placed, and which building it is
     // ----------------------------------------------------------------------------------- //
@@ -175,66 +158,19 @@ public class DroneManager : MonoBehaviour
     }
     public List<BuildingQueue> buildingQueue;
 
-
-    // ----------------------------------------------------------------------------------- //
-    // COLLECTOR LIST
-    // Holds the position of the building that needs to be placed, and which building it is
-    // ----------------------------------------------------------------------------------- //
-
-    [System.Serializable]
-    public class CollectorList
-    {
-        public CollectorList(Transform building, CollectorAI script, int type)
-        {
-            this.building = building;
-            this.script = script;
-            this.type = type;
-
-            hasDrone = false;
-        }
-
-        public Transform building;
-        public CollectorAI script;
-        public int type;
-        public bool hasDrone;
-    }
-    public List<CollectorList> collectorList;
-
-
-    // ----------------------------------------------------------------------------------- //
-    // STORAGE LIST
-    // Holds the position of the building that needs to be placed, and which building it is
-    // ----------------------------------------------------------------------------------- //
-
-    [System.Serializable]
-    public class StorageList
-    {
-        public StorageList(Transform building, CollectorAI script, int type)
-        {
-            this.building = building;
-            this.script = script;
-            this.type = type;
-        }
-
-        public Transform building;
-        public CollectorAI script;
-        public int type;
-    }
-    public List<StorageList> storageList;
-
     // Camera zoom object
     public CameraScroll cameraScroll;
     public AudioClip placementSound;
 
     // Survival
     public Survival survival;
+    public LayerMask layer;
 
     // Update is called once per frame
     void Update()
     {
         // Check available drones
         checkConstructionDrones();
-        checkResourceDrones();
 
         // Handles the construction drone logic
         for (int i = 0; i < constructionDrones.Count; i++)
@@ -247,7 +183,7 @@ public class DroneManager : MonoBehaviour
                 queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
                 constructionDrones.Remove(drone);
                 i--;
-                return;
+                continue;
             }
             else
             {
@@ -302,14 +238,14 @@ public class DroneManager : MonoBehaviour
             {
                 resourceDrone.Remove(drone);
                 i--;
-                return;
+                continue;
             }
+
+            // Run through drone movement and collision detection
             else
             {
-                // Update plates
-                if (UpdateResourcePlates(drone))
-                    if (drone.droneReturning) i--;
-                    else continue;
+                // Update plates, if true continue (plates still opening)
+                if (UpdateResourcePlates(drone)) continue;
 
                 // Move towards target
                 if (drone.target != null)
@@ -318,28 +254,145 @@ public class DroneManager : MonoBehaviour
 
                     if (Vector2.Distance(drone.body.position, drone.target.position) < 0.1f)
                     {
-                        // If target is not the port, place the building
-                        if (drone.target != drone.port)
-                        {
-                            // Add gold to collected and choose next target
-                            drone.goldCollected += drone.targetScript.GrabResources();
-                            drone.collected.Add(drone.target);
-                            drone.targetsLeft -= 1;
 
-                            // Find next target. If none, return to port.
-                            if (drone.targetsLeft == 0 || !findResourceCollector(drone))
-                                returnResourceToParent(drone);
-                        }
-                        else
+                        // Check what the current target is
+                        switch (drone.targetType)
                         {
-                            // Reset drone so it's ready to go again
-                            if (!drone.platesClosing) resetResourceDrone(drone);
+                            // Collector target reached
+                            case 1:
+
+                                // Add gold to drone and mark off collector
+                                drone.goldCollected += drone.targetScript.GrabResources();
+                                drone.visitedCollectors.Add(drone.targetScript);
+                                drone.targetsLeft -= 1;
+
+                                // Attempt to find another collector
+                                bool validCollectorTarget = false;
+                                if (drone.targetsLeft > 0)
+                                    validCollectorTarget = findResourceTarget(drone);
+
+                                // If no valid collector found, locate storage
+                                if (!validCollectorTarget)
+                                {
+                                    bool validStorageTarget = findStorageTarget(drone);
+                                    if (!validStorageTarget) returnResourceToParent(drone);
+                                }
+
+                                break;
+
+                            // Storage target reached
+                            case 2:
+
+                                // Add gold
+                                survival.AddGold(drone.goldCollected);
+
+                                // Create resource popup
+                                survival.UI.CreateResourcePopup("+ " + drone.goldCollected, "Gold", drone.target.position);
+
+                                // Animate building
+                                AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
+                                animScript.resetAnim();
+                                animScript.animEnabled = true;
+                                animScript.enabled = true;
+
+                                // Set drone to return to parent
+                                returnResourceToParent(drone);
+
+                                break;
+
+                            // Port target reached (reset drone)
+                            case 3:
+                                resetResourceDrone(drone);
+                                break;
                         }
                     }
                 }
-
+                else
+                {
+                    if (!findResourceTarget(drone))
+                        if (drone.goldCollected <= 0 || !findStorageTarget(drone))
+                            returnResourceToParent(drone);
+                }
             }
         }
+    }
+
+    public void setupResourceDrone(ResourceDrone drone)
+    {
+        var colliders = Physics2D.OverlapCircleAll(drone.port.transform.position, Research.research_resource_range, layer);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<CollectorAI>());
+            else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<StorageAI>());
+        }
+    }
+
+    public void updateResourceDrones(Transform building)
+    {
+        var colliders = Physics2D.OverlapCircleAll(building.position, Research.research_resource_range, layer);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.name.Contains("Drone Port"))
+            {
+                ResourceDrone drone = collider.GetComponent<Dronehub>().getDrone();
+                if (drone.port != null)
+                {
+                    if (building.name.Contains("Collector")) drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
+                    else if (building.name.Contains("Storage")) drone.availableStorages.Add(building.GetComponent<StorageAI>());
+                }
+            }
+        }
+    }
+
+    public bool findResourceTarget(ResourceDrone drone)
+    {
+        CollectorAI holder = null;
+        int mostResources = -1;
+
+        for(int i = 0; i < drone.availableCollectors.Count; i++)   
+        {
+            CollectorAI collector = drone.availableCollectors[i];
+            if (collector == null)
+            {
+                drone.availableCollectors.Remove(collector);
+                continue;
+            }
+            else if (!drone.visitedCollectors.Contains(collector) && collector.collected > mostResources) 
+            {
+                holder = collector;
+                mostResources = collector.collected;
+                drone.target = collector.getPosition();
+                Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+                drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+                drone.targetScript = collector;
+                drone.targetType = 1;
+            }
+        }
+
+        if (holder != null) return true;
+        else return false;
+    }
+
+    public bool findStorageTarget(ResourceDrone drone)
+    {
+        for(int i = 0; i < drone.availableStorages.Count; i++)
+        {
+            StorageAI storage = drone.availableStorages[i];
+            if (storage == null)
+            {
+                drone.availableStorages.Remove(storage);
+                continue;
+            }
+            else if (storage.goldInside < storage.getStorageAmount())
+            {
+                drone.target = storage.getPosition();
+                Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+                drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+                drone.targetType = 2;
+                return true;
+            }
+        }
+        return false;
     }
 
     // Scans through the building queue and assigns a drone if there's a task for it
@@ -389,18 +442,6 @@ public class DroneManager : MonoBehaviour
         }
     }
 
-    // Scans through the collector list and assigns a drone if there's one available
-    public void checkResourceDrones()
-    {
-        foreach (CollectorList collector in collectorList)
-        {
-            if (!collector.hasDrone)
-            {
-                // thing here logic
-            }
-        }
-    }
-
     // Reset the drone after it's task is complete
     public void resetConstructionDrone(ConstructionDrone drone)
     {
@@ -418,7 +459,6 @@ public class DroneManager : MonoBehaviour
     // Reset the drone after it's task is complete
     public void resetResourceDrone(ResourceDrone drone)
     {
-        survival.AddGold(drone.goldCollected);
         drone.platesClosing = true;
 
         // Make drone appear below all panels
@@ -443,32 +483,14 @@ public class DroneManager : MonoBehaviour
     // Set the drone to return back to the parent
     public void returnResourceToParent(ResourceDrone drone)
     {
-        drone.target = drone.port;
-        Vector2 lookDirection = new Vector2(drone.port.position.x, drone.port.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
-        drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
-        drone.droneReturning = true;
-    }
-
-    // Finds a new target for a resource drone
-    public bool findResourceCollector(ResourceDrone drone)
-    {
-        Transform bestTarget = null;
-        float closestDistanceSqr = Mathf.Infinity;
-
-        foreach (CollectorList collector in collectorList)
+        if (drone.body != null)
         {
-            if (collector.hasDrone && !drone.collected.Contains(collector.building)) continue;
-            Vector3 directionToTarget = collector.building.position - drone.body.position;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = collector.building;
-            }
+            drone.target = drone.port;
+            Vector2 lookDirection = new Vector2(drone.port.position.x, drone.port.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+            drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+            drone.targetType = 3;
         }
-
-        drone.target = bestTarget;
-        return drone.target != null;
+        else resourceDrone.Remove(drone);
     }
 
     // Update the positioning and layering of the drones plates
@@ -549,17 +571,24 @@ public class DroneManager : MonoBehaviour
     // Update the positioning and layering of the drones plates
     public bool UpdateResourcePlates(ResourceDrone drone)
     {
+        // Check on the first run that there are valid targets
+        if (drone.check)
+            if (drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
+                drone.check = false;
+            else return true;
+
         // Open the plates
         if (drone.platesOpening)
         {
             drone.plates[0].Translate(Vector3.left * Time.deltaTime * 4f);
             drone.plates[1].Translate(Vector3.right * Time.deltaTime * 4f);
 
-            if (!drone.droneReturning && drone.body.localScale.x <= 1f)
+            if (drone.body.localScale.x <= 1f)
                 drone.body.localScale += new Vector3(0.002f, 0.002f, 0f);
 
             if (drone.plates[1].localPosition.x >= 2)
             {
+                // Set port opening to false
                 drone.platesOpening = false;
 
                 // Make drone appear above all panels
@@ -570,8 +599,7 @@ public class DroneManager : MonoBehaviour
                     tracker++;
                 }
             }
-
-            if (!drone.droneReturning) return true;
+            else return true;
         }
 
         // Close the plates
@@ -580,26 +608,36 @@ public class DroneManager : MonoBehaviour
             drone.plates[0].Translate(Vector3.right * Time.deltaTime * 4f);
             drone.plates[1].Translate(Vector3.left * Time.deltaTime * 4f);
 
-            if (drone.droneReturning && drone.body.localScale.x >= 0.8f)
+            if (drone.body.localScale.x >= 0.8f)
                 drone.body.localScale -= new Vector3(0.002f, 0.002f, 0f);
-            
+
             if (drone.plates[1].localPosition.x <= 0)
             {
                 drone.plates[0].localPosition = new Vector2(0, 0);
                 drone.plates[1].localPosition = new Vector2(0, 0);
                 drone.platesClosing = false;
 
-                if (drone.droneReturning)
-                {
-                    // Reset drone so it's ready to go again
-                    registerAvailableResourceDrone(drone.body, drone.port, drone.plates);
-                    drone.body.position = drone.port.position;
-                    drone.body.localScale = new Vector2(0.8f, 0.8f);
-                    resourceDrone.Remove(drone);
-                }
+                // Reset drone so it's ready to go again
+                clearResourceDrone(drone);
             }
+            else return true;
         }
         return false;
+    }
+
+    public void clearResourceDrone(ResourceDrone drone)
+    {
+        drone.goldCollected = 0;
+        drone.targetType = 1;
+        drone.targetsLeft = Research.research_resource_amount;
+        drone.platesOpening = true;
+        drone.platesClosing = false;
+        drone.body.position = drone.port.position;
+        drone.body.localScale = new Vector2(0.8f, 0.8f);
+        drone.visitedCollectors = new List<CollectorAI>();
+        drone.target = null;
+        drone.targetScript = null;
+        drone.check = true;
     }
 
     // Attempt to place a building
@@ -655,15 +693,12 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active resource drone
-    public void registerResourceDrone(Transform body, Transform port, Transform[] plates, Transform target)
+    public ResourceDrone registerResourceDrone(Transform body, Transform port, Transform[] plates)
     {
-        resourceDrone.Add(new ResourceDrone(body, port, plates, target));
-    }
-
-    // Register an available resource drone
-    public void registerAvailableResourceDrone(Transform body, Transform port, Transform[] plates)
-    {
-        availableResourceDrones.Add(new AvailableResourceDrones(body, port, plates));
+        ResourceDrone drone = new ResourceDrone(body, port, plates);
+        setupResourceDrone(drone);
+        resourceDrone.Add(drone);
+        return drone;
     }
 
     // Register an active construction drone
@@ -676,18 +711,6 @@ public class DroneManager : MonoBehaviour
     public void registerAvailableConstructionDrone(Transform body, Transform port, Transform[] plates, bool isHubDrone)
     {
         availableConstructionDrones.Add(new AvailableConstructionDrones(body, port, plates, isHubDrone));
-    }
-
-    // Register an available collector
-    public void registerCollector(Transform building, CollectorAI script, int type)
-    {
-        collectorList.Add(new CollectorList(building, script, type));
-    }
-
-    // Register an available collector
-    public void registerStorage(Transform building, CollectorAI script, int type)
-    {
-        storageList.Add(new StorageList(building, script, type));
     }
 
     // Queue a building to be placed

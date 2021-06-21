@@ -34,12 +34,8 @@ public class CollectorAI: TileClass
                 else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 15f);
                 return;
         }
-        
-    
-        //popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-        //rPopup = popup.GetComponent<ResourcePopup>();
-        //popup.parent = SRVSC.UI.IngameCanvas.transform;
-        //rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
+
+        GameObject.Find("Drone Handler").GetComponent<DroneManager>().updateResourceDrones(transform);
     }
 
     public IEnumerator OffsetStart()
@@ -119,8 +115,9 @@ public class CollectorAI: TileClass
     public int GrabResources()
     {
         // Set animation
-        animator.enabled = true;
         animator.resetAnim();
+        animator.animEnabled = true;
+        animator.enabled = true;
 
         // Set values
         int holder = collected;
@@ -138,6 +135,11 @@ public class CollectorAI: TileClass
     public void deenhanceCollector()
     {
         enhanced = false;
+    }
+
+    public Transform getPosition()
+    {
+        return transform;
     }
 
     // Kill defense

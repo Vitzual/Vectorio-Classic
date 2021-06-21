@@ -4,6 +4,7 @@ public class StorageAI: TileClass
 {
     // Declare local object variables
     public int type;
+    public int goldInside = 0;
     private Survival SRVSC;
 
     // On start, invoke repeating SendGold() method
@@ -26,6 +27,28 @@ public class StorageAI: TileClass
                 SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
                 return;
         }
+
+        GameObject.Find("Drone Handler").GetComponent<DroneManager>().updateResourceDrones(transform);
+    }
+
+    public int getStorageAmount()
+    {
+        switch (type)
+        {
+            case 1:
+                return Research.research_gold_storage;
+            case 2:
+                return Research.research_essence_storage;
+            case 3:
+                return Research.research_iridium_storage;
+            default:
+                return Research.research_gold_storage;
+        }
+    }
+
+    public Transform getPosition()
+    {
+        return transform;
     }
 
     // Kill defense
@@ -45,13 +68,13 @@ public class StorageAI: TileClass
         {
             case 1:
                 SRVSC.UpdateGoldStorage(Research.research_gold_storage);
-                return;
+                break;
             case 2:
                 SRVSC.UpdateEssenceStorage(Research.research_gold_storage);
-                return;
+                break;
             case 3:
                 SRVSC.UpdateIridiumStorage(Research.research_gold_storage);
-                return;
+                break;
         }
 
         SRVSC.decreasePowerConsumption(power);

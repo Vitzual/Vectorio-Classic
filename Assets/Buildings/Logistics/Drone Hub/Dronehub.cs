@@ -22,6 +22,10 @@ public class Dronehub : TileClass
     public Transform leftPanel;
     public Transform rightPanel;
 
+    // Script holder
+    public bool resourcePort = false;
+    public DroneManager.ResourceDrone resourceScript;
+
     // Animation variables
     public bool isAnimating;
     public float animSpeed = 1f;
@@ -31,6 +35,12 @@ public class Dronehub : TileClass
     {
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         changeDroneType(2);
+    }
+
+    public DroneManager.ResourceDrone getDrone()
+    {
+        if (resourcePort) return resourceScript;
+        else return null;
     }
 
     // Change the drone type
@@ -46,13 +56,15 @@ public class Dronehub : TileClass
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
                 droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
                 droneManager.forceUI();
+                resourcePort = false;
                 break;
             case 2:
                 activeDrone = Instantiate(resourceDrone, transform.position, Quaternion.identity);
                 activeDrone.name = resourceDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
+                resourceScript = droneManager.registerResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
+                resourcePort = true;
                 break;
             case 3:
                 activeDrone = Instantiate(combatDrone, transform.position, Quaternion.identity);
@@ -60,6 +72,7 @@ public class Dronehub : TileClass
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
                 droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
+                resourcePort = false;
                 break;
         }
     }

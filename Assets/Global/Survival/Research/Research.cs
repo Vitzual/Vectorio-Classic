@@ -32,6 +32,7 @@ public class Research : MonoBehaviour
     public static float research_resource_speed = 25f;
     public static int research_resource_collections = 5;
     public static int research_resource_amount = 3;
+    public static float research_resource_range = 100f;
     public static float research_combat_speed = 20f;
     public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;

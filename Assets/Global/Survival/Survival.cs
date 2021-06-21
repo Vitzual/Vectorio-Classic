@@ -193,6 +193,7 @@ public class Survival : MonoBehaviour
         PopulateHotbar();
         tech.unlocked.Add(TurretObj);
         tech.unlocked.Add(CollectorObj);
+        tech.unlocked.Add(GoldStorage);
         tech.unlocked.Add(WallObj);
         tech.unlocked.Add(DroneObj);
 

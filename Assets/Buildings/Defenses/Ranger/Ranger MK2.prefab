@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -68,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5c194c1a48e75164aa19cc832c29d365, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -139,23 +140,42 @@ MonoBehaviour:
   health: 50
   heat: 90
   cost: 25000
-  level: 1
   power: 110
   ID: 19
+  isBig: 0
   description: 'Fires long range high velocity projectiles
 
     that deal massive
     damage upon impact.'
-  bulletOffset: 0
-  fireRate: 0.15
-  bulletForce: 240
-  bulletSpread: 0
-  bulletAmount: 1
-  rotationSpeed: 1.6
+  EngineerModifications: []
+  AppliedModification: 
+  isEngineered: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   range: 120
-  Point: {fileID: 1714094987215728718}
-  Gun: {fileID: 2216999686500034025}
+  rotationSpeed: 1.6
+  bulletDamage: 1
+  bulletPierces: 1
+  bulletAmount: 1
+  bulletSpeed: 80
+  bulletSpread: 0
+  targetLock: 1
+  fireRate: 0.15
+  FirePoints:
+  - {fileID: 1714094987215728718}
+  Gun: {fileID: 7464498898754835155}
   Bullet: {fileID: 3293027712645128820, guid: a385a167a5c9a6a4d9ebe65993829728, type: 3}
+  hasAudio: 0
+  target: {fileID: 0}
+  isRotating: 1
+  targets: []
+  targettingMode: 1
+  gunShotParticles: 0
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,6 +191,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -193,7 +214,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -278,6 +299,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -300,7 +322,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 401709222438bbb4ea8c81a0d58beb39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,6 +381,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -381,7 +404,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8b4a153debaf27a408f34935c83ea6ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -440,6 +463,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -462,7 +486,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 91d51acee27a08f4b835d9476a47e9a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -551,6 +575,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -573,7 +598,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 1ecbea443466e474ca76e94ba3e2681c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -632,6 +657,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -654,7 +680,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 899112be83887bb4c838235468b922ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -715,6 +741,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -737,7 +764,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 6736396b71b94c542a1de8a9e7d3ae43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -817,6 +844,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -839,7 +867,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2aaaee17eed017843b1f2afd103a76f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

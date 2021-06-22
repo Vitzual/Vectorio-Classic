@@ -3,10 +3,13 @@
 public class RipperAI : TurretClass
 {
     public Transform rotator;
+    private bool firstAwake = true;
 
     // Update is called once per frame
-    void Start()
+    private void Awake()
     {
+        if (!firstAwake) return;
+        firstAwake = false;
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, 50f);
     }
 

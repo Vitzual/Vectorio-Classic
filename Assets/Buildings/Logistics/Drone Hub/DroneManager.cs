@@ -1,8 +1,7 @@
 ﻿// This script handles all active drones each frame
-
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DroneManager : MonoBehaviour
 {
@@ -165,6 +164,7 @@ public class DroneManager : MonoBehaviour
     // Survival
     public Survival survival;
     public LayerMask layer;
+    public bool isMenu = false;
 
     // Update is called once per frame
     void Update()
@@ -346,6 +346,17 @@ public class DroneManager : MonoBehaviour
 
     public bool findResourceTarget(ResourceDrone drone)
     {
+        if (isMenu)
+        {
+            CollectorAI randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
+            drone.target = randomizer.getPosition();
+            Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+            drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+            drone.targetScript = randomizer;
+            drone.targetType = 1;
+            return true;
+        }
+
         CollectorAI holder = null;
         int mostResources = -1;
 
@@ -375,12 +386,15 @@ public class DroneManager : MonoBehaviour
 
     public bool findStorageTarget(ResourceDrone drone)
     {
-        for(int i = 0; i < drone.availableStorages.Count; i++)
+        int total = drone.availableStorages.Count;
+        for(int i = 0; i < total; i++)
         {
-            StorageAI storage = drone.availableStorages[i];
+            StorageAI storage = drone.availableStorages[Random.Range(0, total)];
             if (storage == null)
             {
                 drone.availableStorages.Remove(storage);
+                total -= 1;
+                i--;
                 continue;
             }
             else if (storage.goldInside < storage.getStorageAmount())
@@ -459,6 +473,12 @@ public class DroneManager : MonoBehaviour
     // Reset the drone after it's task is complete
     public void resetResourceDrone(ResourceDrone drone)
     {
+        if (isMenu)
+        {
+            clearResourceDrone(drone);
+            return;
+        }
+
         drone.platesClosing = true;
 
         // Make drone appear below all panels
@@ -571,6 +591,12 @@ public class DroneManager : MonoBehaviour
     // Update the positioning and layering of the drones plates
     public bool UpdateResourcePlates(ResourceDrone drone)
     {
+        if (isMenu)
+        {
+            drone.platesOpening = false;
+            return false;
+        }
+
         // Check on the first run that there are valid targets
         if (drone.check)
             if (drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)

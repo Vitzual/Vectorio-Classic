@@ -9,11 +9,15 @@ public class CollectorAI: TileClass
     public bool enhanced;
     private bool isFirstAnim = true;
     private bool isOffset = false;
+    public bool isMenu = false;
     public AnimateThenStop animator;
 
     // On start, invoke repeating SendGold() method
     private void Start()
     {
+        animator = GetComponent<AnimateThenStop>();
+        if (isMenu) return;
+
         BuildingHandler.buildings.Add(transform);
         //DroneManager.
 

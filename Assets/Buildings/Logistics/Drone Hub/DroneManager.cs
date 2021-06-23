@@ -75,12 +75,13 @@ public class DroneManager : MonoBehaviour
             this.port = port;
             this.plates = plates;
 
-            goldCollected = 0;
+            collected = 0;
             targetsLeft = Research.research_resource_amount;
             platesOpening = true;
             platesClosing = false;
             check = true;
             targetType = 1;
+            storagesAvailable = true;
 
             visitedCollectors = new List<CollectorAI>();
             availableCollectors = new List<CollectorAI>();
@@ -88,6 +89,7 @@ public class DroneManager : MonoBehaviour
         }
 
         public Transform[] plates;
+        public bool storagesAvailable;
         public List<CollectorAI> visitedCollectors;
         public List<CollectorAI> availableCollectors;
         public List<StorageAI> availableStorages;
@@ -95,7 +97,7 @@ public class DroneManager : MonoBehaviour
         public Transform port;
         public Transform target;
         public CollectorAI targetScript;
-        public int goldCollected;
+        public int collected;
         public int targetsLeft;
         public int targetType;
         public bool check;
@@ -262,7 +264,7 @@ public class DroneManager : MonoBehaviour
                             case 1:
 
                                 // Add gold to drone and mark off collector
-                                drone.goldCollected += drone.targetScript.GrabResources();
+                                drone.collected += drone.targetScript.GrabResources();
                                 drone.visitedCollectors.Add(drone.targetScript);
                                 drone.targetsLeft -= 1;
 
@@ -283,11 +285,8 @@ public class DroneManager : MonoBehaviour
                             // Storage target reached
                             case 2:
 
-                                // Add gold
-                                survival.AddGold(drone.goldCollected);
-
-                                // Create resource popup
-                                survival.UI.CreateResourcePopup("+ " + drone.goldCollected, "Gold", drone.target.position);
+                                // See how much gold the storage can hold
+                                drone.collected = drone.target.GetComponent<StorageAI>().addResources(drone.collected);
 
                                 // Animate building
                                 AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
@@ -295,8 +294,9 @@ public class DroneManager : MonoBehaviour
                                 animScript.animEnabled = true;
                                 animScript.enabled = true;
 
-                                // Set drone to return to parent
-                                returnResourceToParent(drone);
+                                // Set drone to return to parent or look for anoter storage
+                                if (drone.collected <= 0) returnResourceToParent(drone);
+                                else if(!findStorageTarget(drone)) returnResourceToParent(drone);
 
                                 break;
 
@@ -310,7 +310,7 @@ public class DroneManager : MonoBehaviour
                 else
                 {
                     if (!findResourceTarget(drone))
-                        if (drone.goldCollected <= 0 || !findStorageTarget(drone))
+                        if (drone.collected <= 0 || !findStorageTarget(drone))
                             returnResourceToParent(drone);
                 }
             }
@@ -327,18 +327,32 @@ public class DroneManager : MonoBehaviour
         }
     }
 
+    public void forceUpdateResourceDrones()
+    {
+        for (int i = 0; i < resourceDrone.Count; i++)
+            if (!resourceDrone[i].storagesAvailable)
+                resourceDrone[i].storagesAvailable = true;
+    }
+
     public void updateResourceDrones(Transform building)
     {
         var colliders = Physics2D.OverlapCircleAll(building.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
         {
-            if (collider.name.Contains("Drone Port"))
+            if (collider.name == "Drone Port")
             {
-                ResourceDrone drone = collider.GetComponent<Dronehub>().getDrone();
-                if (drone.port != null)
+                foreach(ResourceDrone drone in resourceDrone)
                 {
-                    if (building.name.Contains("Collector")) drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
-                    else if (building.name.Contains("Storage")) drone.availableStorages.Add(building.GetComponent<StorageAI>());
+                    if (drone.port == collider.transform)
+                    {
+                        if (building.name.Contains("Collector")) drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
+                        else if (building.name.Contains("Storage"))
+                        {
+                            drone.availableStorages.Add(building.GetComponent<StorageAI>());
+                            drone.storagesAvailable = true;
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -386,10 +400,17 @@ public class DroneManager : MonoBehaviour
 
     public bool findStorageTarget(ResourceDrone drone)
     {
+        // Keep track of closest target
+        float closest = Mathf.Infinity;
         int total = drone.availableStorages.Count;
-        for(int i = 0; i < total; i++)
+        int index = -1;
+
+        // Loop through all available storages
+        StorageAI storage;
+        for (int i = 0; i < total; i++)
         {
-            StorageAI storage = drone.availableStorages[Random.Range(0, total)];
+            // Check if storage is null
+            storage = drone.availableStorages[i];
             if (storage == null)
             {
                 drone.availableStorages.Remove(storage);
@@ -397,16 +418,34 @@ public class DroneManager : MonoBehaviour
                 i--;
                 continue;
             }
-            else if (storage.goldInside < storage.getStorageAmount())
+
+            // If storage is not full, grab it's distance from the drones current position 
+            else if (!storage.isFull)
             {
-                drone.target = storage.getPosition();
-                Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
-                drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
-                drone.targetType = 2;
-                return true;
+                // If storage is not full, grab it's distance from the drones current position 
+                float distance = Vector2.Distance(storage.getPosition().position, drone.body.transform.position);
+                if (distance < closest)
+                {
+                    index = i;
+                    closest = distance;
+                }
             }
         }
-        return false;
+
+        // Set drone target if a storage is available, or go home.
+        if (index != -1)
+        {
+            drone.target = drone.availableStorages[index].getPosition();
+            Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
+            drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+            drone.targetType = 2;
+            return true;
+        }
+        else
+        {
+            drone.storagesAvailable = false;
+            return false;
+        }
     }
 
     // Scans through the building queue and assigns a drone if there's a task for it
@@ -599,7 +638,7 @@ public class DroneManager : MonoBehaviour
 
         // Check on the first run that there are valid targets
         if (drone.check)
-            if (drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
+            if (drone.storagesAvailable && drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
                 drone.check = false;
             else return true;
 
@@ -653,7 +692,7 @@ public class DroneManager : MonoBehaviour
 
     public void clearResourceDrone(ResourceDrone drone)
     {
-        drone.goldCollected = 0;
+        drone.collected = 0;
         drone.targetType = 1;
         drone.targetsLeft = Research.research_resource_amount;
         drone.platesOpening = true;

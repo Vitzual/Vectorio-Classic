@@ -20,7 +20,7 @@ public class Research : MonoBehaviour
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
     public static int research_gold_yield = 50;
-    public static int research_gold_storage = 1000;
+    public static int research_gold_storage = 2500;
     public static float research_essence_time = 8f;
     public static int research_essence_yield = 25;
     public static int research_essence_storage = 500;
@@ -32,7 +32,7 @@ public class Research : MonoBehaviour
     public static float research_resource_speed = 25f;
     public static int research_resource_collections = 5;
     public static int research_resource_amount = 3;
-    public static float research_resource_range = 100f;
+    public static float research_resource_range = 50f;
     public static float research_combat_speed = 20f;
     public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;
@@ -229,13 +229,7 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "gold storage":
-                int totalGold = 0;
-                research_gold_storage += 500;
-                StorageAI[] allGoldStorage = FindObjectsOfType<StorageAI>();
-                foreach (StorageAI storage in allGoldStorage)
-                    if (storage.type == 1) totalGold += research_gold_storage;
-                SurvivalCS.goldStorage = totalGold;
-                SurvivalCS.UI.GoldStorage.text = SurvivalCS.goldStorage + " MAX";
+                research_gold_storage += 2500;
                 break;
             case "essence yield":
                 research_essence_yield += 5;
@@ -247,13 +241,7 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "essence storage":
-                int totalEssence = 0;
-                research_essence_storage += 250;
-                StorageAI[] allEssenceStorage = FindObjectsOfType<StorageAI>();
-                foreach (StorageAI storage in allEssenceStorage)
-                    if (storage.type == 2) totalEssence += research_essence_storage;
-                SurvivalCS.essenceStorage = totalEssence;
-                SurvivalCS.UI.EssenceStorage.text = SurvivalCS.essenceStorage + " MAX";
+                research_essence_storage += 500;
                 break;
             case "iridium yield":
                 research_iridium_yield += 5;
@@ -265,13 +253,7 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "iridium storage":
-                int totalIridium = 0;
                 research_iridium_storage += 100;
-                StorageAI[] allIridiumStorage = FindObjectsOfType<StorageAI>();
-                foreach (StorageAI storage in allIridiumStorage)
-                    if (storage.type == 3) totalIridium += research_iridium_storage;
-                SurvivalCS.iridiumStorage = totalIridium;
-                SurvivalCS.UI.IridiumStorage.text = SurvivalCS.iridiumStorage + " MAX";
                 break;
             case "burning":
                 research_burning += 5;

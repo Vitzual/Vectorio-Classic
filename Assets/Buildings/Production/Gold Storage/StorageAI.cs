@@ -4,14 +4,22 @@ public class StorageAI: TileClass
 {
     // Declare local object variables
     public int type;
-    public int goldInside = 0;
+    public int amount = 0;
+    public GameObject icon;
+    public bool isFull = false;
     private Survival SRVSC;
+    private DroneManager droneManager;
 
     // On start, invoke repeating SendGold() method
     private void Start()
     {
+        // Default values
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         BuildingHandler.buildings.Add(transform);
+        droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
+        droneManager.updateResourceDrones(transform);
+
+        // Add the storage
         switch (type)
         {
             case 1:
@@ -27,22 +35,80 @@ public class StorageAI: TileClass
                 SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
                 return;
         }
-
-        GameObject.Find("Drone Handler").GetComponent<DroneManager>().updateResourceDrones(transform);
     }
 
-    public int getStorageAmount()
+    public void enableIcon()
     {
-        switch (type)
+        icon.SetActive(true);
+    }
+
+    public void disableIcon()
+    {
+        icon.SetActive(false);
+    }
+
+    public void takeResources(int input)
+    {
+        droneManager.forceUpdateResourceDrones();
+        amount -= input;
+        isFull = false;
+        disableIcon();
+    }
+
+    public void sendResources(int input)
+    {
+        switch(type)
         {
             case 1:
-                return Research.research_gold_storage;
+                SRVSC.AddGold(input);
+                SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
+                return;
             case 2:
-                return Research.research_essence_storage;
+                SRVSC.AddEssence(input);
+                SRVSC.UI.CreateResourcePopup("+ " + input, "Essence", transform.position);
+                return;
             case 3:
-                return Research.research_iridium_storage;
+                SRVSC.AddIridium(input);
+                SRVSC.UI.CreateResourcePopup("+ " + input, "Iridium", transform.position);
+                return;
             default:
-                return Research.research_gold_storage;
+                SRVSC.AddGold(input);
+                SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
+                return;
+        }
+    }
+
+    public int addResources(int input)
+    {
+        // Get the correct storage value
+        int storage = Research.research_gold_storage;
+        if (type == 2) storage = Research.research_essence_storage;
+        else if (type == 3) storage = Research.research_iridium_storage;
+
+        // Determine if icon should be enabled
+        // Return the amount not put in storage
+        int holder = amount + input;
+        if (holder > storage)
+        {
+            sendResources(storage - amount);
+            enableIcon();
+            amount = storage;
+            isFull = true;
+            return holder - storage;
+        }
+        else if (holder == storage)
+        {
+            sendResources(input);
+            amount = holder;
+            enableIcon();
+            isFull = true;
+            return 0;
+        }
+        else
+        {
+            sendResources(input);
+            amount = holder;
+            return 0;
         }
     }
 
@@ -67,13 +133,13 @@ public class StorageAI: TileClass
         switch (type)
         {
             case 1:
-                SRVSC.UpdateGoldStorage(Research.research_gold_storage);
+                SRVSC.UpdateGoldStorage(amount);
                 break;
             case 2:
-                SRVSC.UpdateEssenceStorage(Research.research_gold_storage);
+                SRVSC.UpdateEssenceStorage(amount);
                 break;
             case 3:
-                SRVSC.UpdateIridiumStorage(Research.research_gold_storage);
+                SRVSC.UpdateIridiumStorage(amount);
                 break;
         }
 

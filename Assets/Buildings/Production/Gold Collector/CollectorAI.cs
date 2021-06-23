@@ -25,17 +25,17 @@ public class CollectorAI: TileClass
             case 1:
                 if (Research.research_gold_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
-                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 5f);
+                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 1f);
                 return;
             case 2:
                 if (Research.research_essence_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
-                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 8f);
+                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 1f);
                 return;
             case 3:
                 if (Research.research_iridium_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);
-                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 15f);
+                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 1f);
                 return;
         }
 

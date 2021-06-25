@@ -36,6 +36,7 @@ public class Research : MonoBehaviour
     public static float research_combat_speed = 20f;
     public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;
+    public static int research_research_speed = 1;
 
     // Research UI stuff
     public Researchable Researching;
@@ -44,8 +45,14 @@ public class Research : MonoBehaviour
     public static int LabsAvailable = 0;
     public static bool ResearchUnlocked = false;
     public static bool ResearchActive = false;
+    public int resourcesNeeded = 0;
+    public int resourcesTracked = 0;
     public int goldNeeded = 0;
     public int goldTracked = 0;
+    public int essenceNeeded = 0;
+    public int essenceTracked = 0;
+    public int iridiumNeeded = 0;
+    public int iridiumTracked = 0;
     public float researchSpeed = 1f;
 
     // Movement stuff
@@ -66,9 +73,14 @@ public class Research : MonoBehaviour
         public int GoldRequired; // The cost of the research
         public int EssenceRequired; // The cost of the research
         public int IridiumRequired; // The cost of the research
+        public bool needsGold; // Bool that tracks if gold is required
+        public bool needsEssence; // Bool that tracks if essence is required
+        public bool needsIridium; // Bool that tracks if iridium is required
         public Button ResearchButton; // The button object associated with this research
         public bool IsResearched; // If this researchable is researched
         public TextMeshProUGUI goldText;
+        public TextMeshProUGUI essenceText;
+        public TextMeshProUGUI iridiumText;
     }
 
     // Research tracking
@@ -131,26 +143,60 @@ public class Research : MonoBehaviour
         else ResearchBackground.SetActive(false);
     }
 
+    public void UpdateResource(int type)
+    {
+        switch (type)
+        {
+            case 1:
+                SurvivalCS.RemoveGold(research_research_speed);
+                goldTracked += research_research_speed;
+                resourcesTracked += research_research_speed;
+                if (goldTracked >= goldNeeded)
+                {
+                    Researching.needsGold = false;
+                    if (Researching.goldText != null) Researching.goldText.text = "x0";
+                }
+                break;
+            case 2:
+                SurvivalCS.RemoveEssence(research_research_speed);
+                essenceTracked += research_research_speed;
+                resourcesTracked += research_research_speed;
+                if (essenceTracked >= essenceNeeded)
+                {
+                    Researching.needsEssence = false;
+                    if (Researching.essenceText != null) Researching.essenceText.text = "x0";
+                }
+                break;
+            case 3:
+                SurvivalCS.RemoveIridium(research_research_speed);
+                iridiumTracked += research_research_speed;
+                resourcesTracked += research_research_speed;
+                if (iridiumTracked >= iridiumNeeded)
+                {
+                    Researching.needsIridium = false;
+                    if (Researching.iridiumText != null) Researching.iridiumText.text = "x0";
+                }
+                break;
+        }
+    }
+
     public void UpdateResearch()
     {
-        if (SurvivalCS.gold >= 1)
+        // Update all resources
+        if (Researching.needsGold && SurvivalCS.gold >= research_research_speed) UpdateResource(1);
+        if (Researching.needsEssence && SurvivalCS.essence >= research_research_speed) UpdateResource(2);
+        if (Researching.needsIridium && SurvivalCS.iridium >= research_research_speed) UpdateResource(3);
+
+        // Update the UI elements
+        ResearchBar.currentPercent = (float)resourcesTracked / (float)resourcesNeeded * 100;
+        ResearchBar.UpdateUI();
+
+        // Check if resources still left
+        if (!Researching.needsGold && !Researching.needsEssence && !Researching.needsIridium)
         {
-            SurvivalCS.RemoveGold(1);
-            goldTracked += 1;
-            if (goldTracked >= goldNeeded)
-            {
-                Researching.goldText.text = "x0";
-                SetResearchUI(Researchables[0].ResearchButton.transform, false);
-                ApplyResearch(Researching);
-                CancelInvoke("UpdateResearch");
-            }
-            else 
-            {
-                Researching.GoldRequired -= 1;
-                Researching.goldText.text = "x" + Researching.GoldRequired;
-                ResearchBar.currentPercent = (float)goldTracked / (float)goldNeeded * 100; 
-                ResearchBar.UpdateUI(); 
-            }
+            SetResearchUI(Researchables[0].ResearchButton.transform, false);
+            ApplyResearch(Researching);
+            CancelInvoke("UpdateResearch");
         }
     }
 
@@ -174,12 +220,41 @@ public class Research : MonoBehaviour
             if (!Researchables[j].IsResearched) return;
 
         // Set resource tracking
+        resourcesNeeded = research.GoldRequired + research.EssenceRequired + research.IridiumRequired;
+        resourcesTracked = 0;
+
+        // Set gold tracking
+        if (research.GoldRequired > 0)
+        {
+            research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
+            research.needsGold = true;
+        }
+        else research.needsGold = false;
         goldNeeded = research.GoldRequired;
         goldTracked = 0;
 
+        // Set essence tracking
+        if (research.GoldRequired > 0)
+        {
+            research.essenceText = research.ResearchButton.transform.Find("Essence Amount").GetComponent<TextMeshProUGUI>();
+            research.needsEssence = true;
+        }
+        else research.needsEssence = false;
+        essenceNeeded = research.EssenceRequired;
+        essenceTracked = 0;
+
+        // Set iridium tracking
+        if (research.GoldRequired > 0)
+        {
+            research.iridiumText = research.ResearchButton.transform.Find("Iridium Amount").GetComponent<TextMeshProUGUI>();
+            research.needsIridium = true;
+        }
+        else research.needsIridium = false;
+        iridiumNeeded = research.IridiumRequired;
+        iridiumTracked = 0;
+
         // If all checks passed, apply research
         Researching = research;
-        research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
         SetResearchUI(research.ResearchButton.transform, true);
         ResearchActive = true;
 
@@ -338,6 +413,10 @@ public class Research : MonoBehaviour
         {
             research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
             research.goldText.text = "x" + research.GoldRequired;
+            research.essenceText = research.ResearchButton.transform.Find("Essence Amount").GetComponent<TextMeshProUGUI>();
+            research.essenceText.text = "x" + research.EssenceRequired;
+            research.iridiumText = research.ResearchButton.transform.Find("Iridium Amount").GetComponent<TextMeshProUGUI>();
+            research.iridiumText.text = "x" + research.IridiumRequired;
         }
     }
 

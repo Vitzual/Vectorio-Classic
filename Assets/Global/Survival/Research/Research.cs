@@ -413,10 +413,16 @@ public class Research : MonoBehaviour
         {
             research.goldText = research.ResearchButton.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>();
             research.goldText.text = "x" + research.GoldRequired;
-            research.essenceText = research.ResearchButton.transform.Find("Essence Amount").GetComponent<TextMeshProUGUI>();
-            research.essenceText.text = "x" + research.EssenceRequired;
-            research.iridiumText = research.ResearchButton.transform.Find("Iridium Amount").GetComponent<TextMeshProUGUI>();
-            research.iridiumText.text = "x" + research.IridiumRequired;
+            if (research.EssenceRequired > 0)
+            {
+                research.essenceText = research.ResearchButton.transform.Find("Essence Amount").GetComponent<TextMeshProUGUI>();
+                research.essenceText.text = "x" + research.EssenceRequired;
+            }
+            if (research.IridiumRequired > 0)
+            {
+                research.iridiumText = research.ResearchButton.transform.Find("Iridium Amount").GetComponent<TextMeshProUGUI>();
+                research.iridiumText.text = "x" + research.IridiumRequired;
+            }
         }
     }
 

@@ -11,7 +11,7 @@ public class Technology : MonoBehaviour
 
     // Interface script
     public Interface UI;
-
+    public ButtonManagerBasicIcon rButton;
     public bool loadingSave = false;
 
     // Unlock variables 
@@ -39,14 +39,6 @@ public class Technology : MonoBehaviour
 
         // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
-
-        // Assign inventory buttons
-
-    }
-
-    public void assignInventory()
-    {
-
     }
 
     // Sets the unlock tree back to the level that was saved
@@ -184,7 +176,11 @@ public class Technology : MonoBehaviour
         UI.UOL.titleText = a.transform.name.ToUpper();
         UI.UOL.descriptionText = c;
         UI.UOL.UpdateUI();
-        if (a.name == "Research Lab") UI.showResearchUnlock();
+        if (a.name == "Research Lab")
+        {
+            UI.showResearchUnlock();
+            rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
+        }
         else if (a.name == "Energizer") UI.showEnergizerUnlock();
         else
         {

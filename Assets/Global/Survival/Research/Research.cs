@@ -34,6 +34,8 @@ public class Research : MonoBehaviour
     public static int research_resource_amount = 3;
     public static float research_resource_range = 50f;
     public static float research_combat_speed = 20f;
+    public static float research_fixer_speed = 25f;
+    public static int research_fixer_amount = 50;
     public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;
     public static int research_research_speed = 1;
@@ -348,8 +350,17 @@ public class Research : MonoBehaviour
             case "combat speed":
                 research_combat_speed += 5f;
                 break;
+            case "fixer speed":
+                research_fixer_speed += 5f;
+                break;
+            case "resource speed":
+                research_resource_speed += 5f;
+                break;
+            case "resource targets":
+                research_resource_amount += 1;
+                break;
             default:
-                Debug.Log("The research type supplied was invalid");
+                Debug.Log("The research type " + type + " is invalid.");
                 break;
         }
 

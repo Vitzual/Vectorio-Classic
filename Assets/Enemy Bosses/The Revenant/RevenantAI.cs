@@ -4,6 +4,9 @@ using Michsky.UI.ModernUIPack;
 
 public class RevenantAI : BossClass
 {
+    public Transform[] rotators;
+    public float[] rotatorSpeeds;
+
     // Dropships will destroy any building they touch
     // Additional logic requires a Rigibody component be attached to this unit
     public void OnCollisionEnter2D(Collision2D collision)

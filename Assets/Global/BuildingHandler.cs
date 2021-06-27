@@ -5,7 +5,7 @@ public class BuildingHandler : MonoBehaviour
 {
     public static List<Transform> buildings = new List<Transform>();
     public static List<Transform> damagedBuildings = new List<Transform>();
-    public static List<Transform> storages = new List<Transform>();
+    public static List<StorageAI> storages = new List<StorageAI>();
 
     // 1 = gold, 2 = essence, 3 = iridium
     public static void removeStorageResources(int amount, int type)
@@ -19,7 +19,7 @@ public class BuildingHandler : MonoBehaviour
             }
             else
             {
-                StorageAI storageScript = storages[i].GetComponent<StorageAI>();
+                StorageAI storageScript = storages[i];
                 if (storageScript.type == type)
                 {
                     amount = storageScript.takeResources(amount);

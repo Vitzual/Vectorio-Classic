@@ -10,6 +10,7 @@ public class CameraScroll : MonoBehaviour
     private bool gridActive = true;
     public GameObject grid;
     public Interface UI;
+    public Tutorial tutorial;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class CameraScroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tutorial.disableMoving) return;
         if (UI.BuildingOpen) return;
 
         float scrollData;

@@ -11,6 +11,7 @@ public class CollectorAI: TileClass
     private bool isOffset = false;
     public bool isMenu = false;
     public AnimateThenStop animator;
+    private DroneManager droneManager;
 
     // On start, invoke repeating SendGold() method
     private void Start()
@@ -19,7 +20,8 @@ public class CollectorAI: TileClass
         if (isMenu) return;
 
         BuildingHandler.buildings.Add(transform);
-        //DroneManager.
+        droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
+        droneManager.updateResourceDrones(transform);
 
         switch (collectorType) {
             case 1:
@@ -38,8 +40,6 @@ public class CollectorAI: TileClass
                 else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 1f);
                 return;
         }
-
-        GameObject.Find("Drone Handler").GetComponent<DroneManager>().updateResourceDrones(transform);
     }
 
     public IEnumerator OffsetStart()

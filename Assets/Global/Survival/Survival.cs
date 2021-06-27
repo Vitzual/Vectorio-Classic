@@ -23,6 +23,8 @@ public class Survival : MonoBehaviour
     // Interface script
     public Interface UI;
 
+    public Tutorial tutorial;
+
     // Difficulties script
     private Difficulties difficulties;
 
@@ -151,6 +153,11 @@ public class Survival : MonoBehaviour
     public Transform AOC_Object;
 
     public Transform lastDronePort;
+    public GameObject Locked1;
+    public GameObject Locked2;
+    public GameObject Drone1;
+    public GameObject Drone2;
+    public GameObject TutorialHeader;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -250,6 +257,7 @@ public class Survival : MonoBehaviour
                 UI.GoldAmount.text = gold.ToString();
                 UI.EssenceAmount.text = essence.ToString();
                 UI.IridiumAmount.text = iridium.ToString();
+                TutorialHeader.SetActive(false);
 
                 // Force tech tree update
                 tech.loadSaveData(data.UnlockLevel);
@@ -294,13 +302,16 @@ public class Survival : MonoBehaviour
             catch (System.Exception e)
             {
                 // New save
+                tutorial.enableTutorial();
                 Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
             }
 
         }
         else
-        {
+
+        {   // New save
+            tutorial.enableTutorial();
             Debug.LogError("Save data could not be loaded");
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
         }
@@ -369,6 +380,9 @@ public class Survival : MonoBehaviour
             // Check if placement is within AOC
             if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
+                if (tutorial.disableBuilding) return;
+                else if (tutorial.freeBuilding && droneManager.constructionDrones.Count > 0) return;
+
                 if (SelectedObj == CollectorObj)
                 {
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
@@ -393,13 +407,23 @@ public class Survival : MonoBehaviour
                 LastObj.name = SelectedObj.name;
                 droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
                 ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
-
-
             }
             else if (RayTarget != null)
             {
                 if (RayTarget.name == "Drone Port" && isObjectNull)
                 {
+                    if (tutorial.tutorialSlide == 4) tutorial.nextSlide();
+
+                    if (Research.research_fixer_drones)
+                    {
+                        Locked1.SetActive(false);
+                        Drone1.SetActive(true);
+                    }
+                    if (Research.research_combat_drones)
+                    {
+                        Locked2.SetActive(false);
+                        Drone2.SetActive(true);
+                    }
                     lastDronePort = RayTarget.transform;
                     UI.OpenDronePort();
                 }
@@ -417,6 +441,8 @@ public class Survival : MonoBehaviour
         // If user right clicks, remove object
         else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.DroneOpen)
         {
+            if (tutorial.tutorialStarted) return;
+
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
             Transform RayTarget = CheckRaycast(rayHit);
@@ -449,6 +475,8 @@ public class Survival : MonoBehaviour
         // Check hotbar thing        
         CheckNumberInput();
 
+        if (tutorial.disableMenus) return;
+
         // Pipette a building
         if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.DroneOpen && !UI.UOLOpen)
         {
@@ -468,12 +496,14 @@ public class Survival : MonoBehaviour
         // Opens the building menu if E is pressed.
         if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false && UI.UOLOpen == false)
         {
+            if (tutorial.tutorialSlide == 8) tutorial.nextSlide();
             UI.OpenSurvivalMenu();
         }
 
         // If T pressed, open research menu
         else if (Input.GetKeyDown(KeyCode.T) && UI.MenuOpen == false && UI.ResearchOpen == false && UI.UOLOpen == false)
         {
+            if (tutorial.tutorialSlide == 6) tutorial.nextSlide();
             UI.closeResearchUnlock();
             if (UI.DroneOpen)
                 UI.CloseDronePort();
@@ -508,6 +538,7 @@ public class Survival : MonoBehaviour
         // If escape pressed and engineer open, close it
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) && UI.DroneOpen == true)
         {
+            if (tutorial.tutorialSlide == 6) tutorial.nextSlide();
             UI.CloseDronePort();
         }
 
@@ -599,6 +630,7 @@ public class Survival : MonoBehaviour
     public void SetDronePort(int type)
     {
         lastDronePort.GetComponent<Dronehub>().changeDroneType(type);
+        UI.OpenDronePort();
     }
 
     // Updates the gold storage
@@ -690,6 +722,8 @@ public class Survival : MonoBehaviour
     // Checks if for numeric input
     public void CheckNumberInput()
     {
+        if (tutorial.disableBuilding) return;
+
         if (SettingHotbar)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1130,6 +1164,7 @@ public class Survival : MonoBehaviour
     // Changes the stored object for hotbar changing
     public void SetChosenObj(Transform obj)
     {
+        if (tutorial.tutorialSlide == 9 && obj != null && obj.name == "Gold Storage") tutorial.nextSlide();
         SelectObject(obj);
         if (!tech.checkIfUnlocked(obj))
         {

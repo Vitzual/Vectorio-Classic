@@ -3,6 +3,7 @@
 public class CameraMovement : MonoBehaviour
 {
     // Declare variables
+    public Tutorial tutorial;
     public float maxRange = 750f;
     protected float moveSpeed = 150f;
     protected new Rigidbody2D camera;
@@ -21,6 +22,7 @@ public class CameraMovement : MonoBehaviour
     private void Update()
     {
         // Check if research open
+        if (tutorial.disableMoving) return;
         if (UI.ResearchOpen) return;
 
         // Get directional movement

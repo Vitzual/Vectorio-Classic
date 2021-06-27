@@ -166,6 +166,7 @@ public class DroneManager : MonoBehaviour
     // Camera zoom object
     public CameraScroll cameraScroll;
     public AudioClip placementSound;
+    public Tutorial tutorial;
 
     // Survival
     public Survival survival;
@@ -266,25 +267,28 @@ public class DroneManager : MonoBehaviour
                         {
                             // Collector target reached
                             case 1:
-
+                                int holder;
                                 switch(drone.targetScript.collectorType)
                                 {
                                     case 1:
+                                        holder = drone.collectedGold;
                                         drone.collectedGold += drone.targetScript.GrabResources();
                                         break;
                                     case 2:
+                                        holder = drone.collectedGold;
                                         drone.collectedEssence += drone.targetScript.GrabResources();
                                         break;
                                     case 3:
+                                        holder = drone.collectedGold;
                                         drone.collectedIridium += drone.targetScript.GrabResources();
                                         break;
                                     default:
+                                        holder = drone.collectedGold;
                                         drone.collectedGold += drone.targetScript.GrabResources();
                                         break;
                                 }
-
                                 drone.visitedCollectors.Add(drone.targetScript);
-                                drone.targetsLeft -= 1;
+                                if (holder != drone.collectedGold) drone.targetsLeft -= 1;
 
                                 // Attempt to find another collector
                                 bool validCollectorTarget = false;
@@ -365,7 +369,10 @@ public class DroneManager : MonoBehaviour
                 {
                     if (drone.port == collider.transform)
                     {
-                        if (building.name.Contains("Collector")) drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
+                        if (building.name.Contains("Collector"))
+                        {
+                            drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
+                        }
                         else if (building.name.Contains("Storage"))
                         {
                             drone.availableStorages.Add(building.GetComponent<StorageAI>());
@@ -485,10 +492,13 @@ public class DroneManager : MonoBehaviour
                 buildingQueue.Remove(buildingQueue[a]);
 
             // Check if adequate resources for a drone to be deployed
-            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
-            if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
-            if (buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0) continue;
-  
+            if (!tutorial.freeBuilding)
+            {
+                if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
+                if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
+                if ((buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0)) continue;
+            }
+
             for (int b = 0; b < availableConstructionDrones.Count; b++)
             {
                 // Check if all drones still exist
@@ -662,7 +672,7 @@ public class DroneManager : MonoBehaviour
 
         // Check on the first run that there are valid targets
         if (drone.check)
-            if (drone.storagesAvailable && drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
+            if (survival.gold < survival.goldStorage && drone.storagesAvailable && drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
                 drone.check = false;
             else return true;
 
@@ -735,32 +745,43 @@ public class DroneManager : MonoBehaviour
     public void placeBuilding(ConstructionDrone drone)
     {
         // Check if adequate resources for a drone to be deployed
-        if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0) 
-        { 
-            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-            return; 
-        }
-        if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0)
+        if (!tutorial.freeBuilding)
         {
-            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-            return;
-        }
-        if (drone.goldCost > survival.gold && drone.goldCost > 0)
-        {
-            queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-            return;
-        }
+            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0)
+            {
+                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                return;
+            }
+            if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0)
+            {
+                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                return;
+            }
+            if (drone.goldCost > survival.gold && drone.goldCost > 0)
+            {
+                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                return;
+            }
 
-        // Set component values
+            // Set component values
+            survival.RemoveGold(drone.goldCost);
+        }
         survival.increasePowerConsumption(drone.powerCost);
         survival.Spawner.increaseHeat(drone.heatCost);
-        survival.RemoveGold(drone.goldCost);
 
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
         survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
+
+        if (tutorial.tutorialStarted)
+        {
+            if (LastObj.name == "Drone Port" && tutorial.tutorialSlide == 3) tutorial.nextSlide();
+            else if (LastObj.name == "Gold Collector" && tutorial.tutorialSlide == 7) tutorial.nextSlide();
+            else if (LastObj.name == "Gold Storage" && tutorial.tutorialSlide == 10) tutorial.nextSlide();
+            else if (LastObj.name == "Turret" && tutorial.tutorialSlide == 13) tutorial.nextSlide();
+        }
 
         // Create a UI resource popup thing idk lmaooo
         survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);

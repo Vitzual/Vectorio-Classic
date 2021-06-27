@@ -8,6 +8,7 @@ public class Interface : MonoBehaviour
 {
     // Survival script
     public Survival main;
+    public DroneManager drone;
 
     // Interace Elements
     public Canvas IngameCanvas;
@@ -64,6 +65,8 @@ public class Interface : MonoBehaviour
     public int ActiveWarnings = 0;
     public GameObject BossBar;
     public GameObject dronePortUI;
+    public TextMeshProUGUI builderDronesActive;
+    public TextMeshProUGUI resourceDronesActive;
 
     // Selected UI elements
     public Transform gold;
@@ -206,6 +209,8 @@ public class Interface : MonoBehaviour
     // Activates an engineers UI panel
     public void OpenDronePort()
     {
+        builderDronesActive.text = drone.constructionDrones.Count + drone.availableConstructionDrones.Count + " Currently Active";
+        resourceDronesActive.text = drone.resourceDrone.Count + " Currently Active";
         dronePortUI.SetActive(true);
         DroneOpen = true;
     }

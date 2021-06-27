@@ -47,7 +47,6 @@ public class WaveSpawner : MonoBehaviour
     {
         public string name;
         public Transform bossObject;
-        [TextArea] public string description;
         [TextArea] public string destroyedInfo;
         public bool isDefeated;
     }
@@ -246,20 +245,25 @@ public class WaveSpawner : MonoBehaviour
         technology.UpdateUnlock(htrack);
 
         // Display alpha screen
-        if (htrack >= 25000 && firstDisplay)
+        if (htrack >= 80000 && firstDisplay)
         {
-            GameObject.Find("Survival").GetComponent<Interface>().OpenAlphaWindow();
+            GameObject.Find("Survival").GetComponent<Interface>().OpenEndWindow();
             firstDisplay = false;
         }
 
-        /*
-        if (bossesDefeated == 0 && htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
+        if (bossesDefeated == 2 && htrack >= 50000) maxHeat = 80000;
+        else if (bossesDefeated == 1 && htrack >= 25000 && !bosses[1].isDefeated && !bossSpawned && !loadingSave)
+        {
+            Transform holder = Instantiate(bosses[1].bossObject, new Vector2(0, -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
+            holder.name = bosses[0].bossObject.name;
+            bossSpawned = true;
+        }
+        else if (bossesDefeated == 0 && htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[0].bossObject, new Vector2(0, SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
             holder.name = bosses[0].bossObject.name;
             bossSpawned = true;
         }
-        */
     }
 
     public void updateBorders()
@@ -335,16 +339,6 @@ public class WaveSpawner : MonoBehaviour
             heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
             heatAmount.text = htrack.ToString();
         }
-    }
-
-    public void displayBossInfo()
-    {
-        bossInfo.titleText = bosses[bossesDefeated].name;
-        bossInfo.descriptionText = bosses[bossesDefeated].description;
-        bossInfo.UpdateUI();
-        bossInfo.OpenWindow();
-        survival.UI.BossInfoOpen = true;
-        Time.timeScale = 0f;
     }
 
     public void displayBossDestroyed()

@@ -38,7 +38,11 @@ public class Research : MonoBehaviour
     public static int research_fixer_amount = 50;
     public static int research_combat_targets = 10;
     public static bool research_explosive_storages = false;
+    public static bool research_explosive_defenses = false;
+    public static bool research_explosive_collectors = false;
     public static int research_research_speed = 1;
+    public static bool research_fixer_drones = false;
+    public static bool research_combat_drones = false;
 
     // Research UI stuff
     public Researchable Researching;
@@ -275,17 +279,12 @@ public class Research : MonoBehaviour
         // Apply the research
         switch (type)
         {
-            case "disrupt":
-                SurvivalCS.Spawner.maxHeat = 25000;
-                SurvivalCS.Spawner.maxHeatAmount.text = 25000 + " MAX";
-                SurvivalCS.Spawner.increaseHeat(0);
-                break;
             case "damage":
                 research_damage += 5;
                 break;
             case "health":
-                research_health += 10;
-                research_wall_health += 50;
+                research_health += 50;
+                research_wall_health += 150;
                 break;
             case "range":
                 research_range += 5f;
@@ -343,6 +342,18 @@ public class Research : MonoBehaviour
                 break;
             case "explosive storages":
                 research_explosive_storages = true;
+                break;
+            case "explosive defenses":
+                research_explosive_defenses = true;
+                break;
+            case "explosive collectors":
+                research_explosive_collectors = true;
+                break;
+            case "fixer drones":
+                research_fixer_drones = true;
+                break;
+            case "combat drones":
+                research_combat_drones = true;
                 break;
             case "construction speed":
                 research_construction_speed += 5f;

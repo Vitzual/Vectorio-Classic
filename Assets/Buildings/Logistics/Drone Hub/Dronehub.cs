@@ -34,7 +34,7 @@ public class Dronehub : TileClass
     void Start()
     {
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        changeDroneType(2);
+        changeDroneType(1);
     }
 
     public DroneManager.ResourceDrone getDrone()
@@ -46,7 +46,12 @@ public class Dronehub : TileClass
     // Change the drone type
     public void changeDroneType(int a)
     {
+        if (droneType == a) return;
+
         droneType = a;
+        leftPanel.localPosition = new Vector2(0, 0);
+        rightPanel.localPosition = new Vector2(0, 0);
+
         switch (droneType)
         {
             case 1:
@@ -60,6 +65,7 @@ public class Dronehub : TileClass
                 resourcePort = false;
                 break;
             case 2:
+                if (droneManager.tutorial.tutorialSlide == 5) droneManager.tutorial.nextSlide();
                 if (activeDrone != null) Destroy(activeDrone.gameObject);
                 activeDrone = Instantiate(resourceDrone, transform.position, Quaternion.identity);
                 activeDrone.name = resourceDrone.name;

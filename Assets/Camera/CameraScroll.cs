@@ -9,6 +9,7 @@ public class CameraScroll : MonoBehaviour
     private float zoomSpeed = 40;
     private bool gridActive = true;
     public GameObject grid;
+    public Interface UI;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,8 @@ public class CameraScroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UI.BuildingOpen) return;
+
         float scrollData;
         scrollData = Input.GetAxis("Mouse ScrollWheel");
 

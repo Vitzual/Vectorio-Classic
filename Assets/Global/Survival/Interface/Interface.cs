@@ -24,7 +24,6 @@ public class Interface : MonoBehaviour
     public TextMeshProUGUI EngineerTime;
     public TextMeshProUGUI EngineerChance;
     public TextMeshProUGUI EngineerCost;
-    public Transform[] InfoPanels;
     public Transform[] HotbarUI;
     public Canvas Overlay;
     public bool MenuOpen;
@@ -72,6 +71,28 @@ public class Interface : MonoBehaviour
     public Transform iridium;
     public Transform heat;
     public Transform power;
+
+    // Engineer mods
+    [System.Serializable]
+    public class InfoPanelClass
+    {
+        public TextMeshProUGUI title;
+        public TextMeshProUGUI description;
+        public Image icon;
+        public TextMeshProUGUI cost;
+        public TextMeshProUGUI heat;
+        public TextMeshProUGUI power;
+        public TextMeshProUGUI health;
+        public TextMeshProUGUI damage;
+        public TextMeshProUGUI range;
+        public TextMeshProUGUI firerate;
+        public TextMeshProUGUI pierce;
+        public TextMeshProUGUI rotation;
+        public TextMeshProUGUI engineer;
+        public ButtonManagerBasic hotbarButton;
+        public ButtonManagerBasic engineerButton;
+    }
+    public InfoPanelClass[] InfoPanels;
 
     // Drones
     public ProgressBar dronesBar;
@@ -244,10 +265,7 @@ public class Interface : MonoBehaviour
     {
         // Check if other menus open, if so, close them
         if (ResearchOpen)
-        {
             CloseResearchOverlay();
-            main.SetHoverObject(null);
-        }
         if (DroneOpen)
             CloseDronePort();
 
@@ -284,36 +302,85 @@ public class Interface : MonoBehaviour
     }
 
     // plz dont ask me how this works :(
-    public void UpdateInventoryInfo(Transform obj)
+    public void UpdateInfoPanel(Transform obj)
     {
-        foreach (Transform panel in InfoPanels)
+        // If null, not unlocked
+        if (obj == null) return;
+
+        // Get unlockable
+        Technology.Unlockables unlockable = main.tech.FindUnlockable(obj);
+        string type;
+
+        if (unlockable == null)
         {
-            if (panel.parent.parent.GetComponent<CanvasGroup>().alpha == 1f)
-            {
-                if (obj == null)
+            if (obj.name == "Turret" || obj.name == "Wall") type = "Defense";
+            else if (obj.name == "Drone Port" || obj.name == "Gold Collector" || obj.name == "Gold Storage") type = "Logistics";
+            else return;
+        }
+        else type = unlockable.Type;
+
+        // Get some good shit
+        TileClass tileInfo = obj.GetComponent<TileClass>();
+
+        // Iterate through
+        switch (type)
+        {
+            case "Defense":
+                TurretClass turret = obj.GetComponent<TurretClass>();
+                InfoPanels[0].title.text = obj.name.ToUpper();
+                InfoPanels[0].description.text = tileInfo.description;
+                InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[0].cost.text = tileInfo.cost.ToString();
+                InfoPanels[0].heat.text = tileInfo.heat.ToString();
+                InfoPanels[0].power.text = tileInfo.power.ToString();
+                InfoPanels[0].health.text = tileInfo.health + "hp";
+                if (obj.name != "Wall")
                 {
-                    panel.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Undiscovered");
-                    panel.Find("Name").GetComponent<TextMeshProUGUI>().text = "???";
-                    panel.Find("Description").GetComponent<TextMeshProUGUI>().text = "???";
-                    panel.Find("Gold").GetComponent<TextMeshProUGUI>().text = "???";
-                    panel.Find("Heat").GetComponent<TextMeshProUGUI>().text = "???";
-                    panel.Find("Power").GetComponent<TextMeshProUGUI>().text = "???";
-                    break;
+                    InfoPanels[0].damage.text = turret.bulletDamage + "/ps";
+                    InfoPanels[0].range.text = (turret.range / 5) + " tiles";
+                    InfoPanels[0].firerate.text = turret.fireRate + "s";
+                    InfoPanels[0].pierce.text = turret.bulletPierces + "/ps";
+                    InfoPanels[0].rotation.text = turret.rotationSpeed + "v";
                 }
                 else
                 {
-                    panel.Find("Icon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                    if (obj.name.Contains("Storage"))
-                        panel.Find("Name").GetComponent<TextMeshProUGUI>().text = "STORAGE";
-                    else
-                        panel.Find("Name").GetComponent<TextMeshProUGUI>().text = obj.name.ToUpper();
-                    panel.Find("Description").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetDescription();
-                    panel.Find("Gold").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetCost().ToString();
-                    panel.Find("Heat").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().GetHeat().ToString();
-                    panel.Find("Power").GetComponent<TextMeshProUGUI>().text = obj.GetComponent<TileClass>().getConsumption().ToString();
-                    break;
+                    InfoPanels[0].damage.text = "-";
+                    InfoPanels[0].range.text = "-";
+                    InfoPanels[0].firerate.text = "-";
+                    InfoPanels[0].pierce.text = "-";
+                    InfoPanels[0].rotation.text = "-";
                 }
-            }
+                return;
+            case "Logistics":
+                InfoPanels[1].title.text = obj.name.ToUpper();
+                InfoPanels[1].description.text = tileInfo.description;
+                InfoPanels[1].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[1].cost.text = tileInfo.cost.ToString();
+                InfoPanels[1].heat.text = tileInfo.heat.ToString();
+                InfoPanels[1].power.text = tileInfo.power.ToString();
+                InfoPanels[1].health.text = tileInfo.health + "hp";
+                return;
+            case "Power":
+                InfoPanels[2].title.text = obj.name.ToUpper();
+                InfoPanels[2].description.text = tileInfo.description;
+                InfoPanels[2].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[2].cost.text = tileInfo.cost.ToString();
+                InfoPanels[2].heat.text = tileInfo.heat.ToString();
+                InfoPanels[2].power.text = tileInfo.power.ToString();
+                InfoPanels[2].health.text = tileInfo.health + "hp";
+                return;
+            case "Heat":
+                InfoPanels[3].title.text = obj.name.ToUpper();
+                InfoPanels[3].description.text = tileInfo.description;
+                InfoPanels[3].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[3].cost.text = tileInfo.cost.ToString();
+                InfoPanels[3].heat.text = tileInfo.heat.ToString();
+                InfoPanels[3].power.text = tileInfo.power.ToString();
+                InfoPanels[3].health.text = tileInfo.health + "hp";
+                return;
+            default:
+                Debug.Log("Could not find a valid info panel");
+                return;
         }
     }
 

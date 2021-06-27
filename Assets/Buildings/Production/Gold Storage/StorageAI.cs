@@ -47,12 +47,25 @@ public class StorageAI: TileClass
         icon.SetActive(false);
     }
 
-    public void takeResources(int input)
+    public int takeResources(int input)
     {
+        int leftOver = 0;
         droneManager.forceUpdateResourceDrones();
-        amount -= input;
+
+        if (amount >= input)
+        {
+            amount -= input;
+            leftOver = 0;
+        }
+        else
+        {
+            leftOver = input - amount;
+            amount = 0;
+        }     
+        
         isFull = false;
         disableIcon();
+        return leftOver;
     }
 
     public void sendResources(int input)

@@ -50,6 +50,7 @@ public class Dronehub : TileClass
         switch (droneType)
         {
             case 1:
+                if (activeDrone != null) Destroy(activeDrone.gameObject);
                 activeDrone = Instantiate(constructorDrone, transform.position, Quaternion.identity);
                 activeDrone.name = constructorDrone.name;
                 activeDrone.parent = transform;
@@ -59,6 +60,7 @@ public class Dronehub : TileClass
                 resourcePort = false;
                 break;
             case 2:
+                if (activeDrone != null) Destroy(activeDrone.gameObject);
                 activeDrone = Instantiate(resourceDrone, transform.position, Quaternion.identity);
                 activeDrone.name = resourceDrone.name;
                 activeDrone.parent = transform;
@@ -67,6 +69,7 @@ public class Dronehub : TileClass
                 resourcePort = true;
                 break;
             case 3:
+                if (activeDrone != null) Destroy(activeDrone.gameObject);
                 activeDrone = Instantiate(combatDrone, transform.position, Quaternion.identity);
                 activeDrone.name = combatDrone.name;
                 activeDrone.parent = transform;

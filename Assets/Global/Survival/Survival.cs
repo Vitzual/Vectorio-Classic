@@ -116,9 +116,6 @@ public class Survival : MonoBehaviour
     public int EngineerModID = 0;
     public string EngineerName = "Default";
 
-    // Enemy list
-    public Transform[] enemies;
-
     // The square that appears around buildings when clicked
     public GameObject SelectedOverlay;
 
@@ -153,7 +150,7 @@ public class Survival : MonoBehaviour
     // The AOC border game object;
     public Transform AOC_Object;
 
-    public static Transform lastDronePort;
+    public Transform lastDronePort;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -166,6 +163,8 @@ public class Survival : MonoBehaviour
     public Transform[] hotbar = new Transform[9];
 
     bool isMenu = false;
+    public bool SettingHotbar = false;
+    public int panelType = 0;
 
     // Holds a list of all ghost objects 
     public List<Vector2> ghostBuildings;
@@ -597,6 +596,11 @@ public class Survival : MonoBehaviour
         Playtime++;
     }
 
+    public void SetDronePort(int type)
+    {
+        lastDronePort.GetComponent<Dronehub>().changeDroneType(type);
+    }
+
     // Updates the gold storage
     public void UpdateGoldStorage(int amount)
     {
@@ -675,10 +679,18 @@ public class Survival : MonoBehaviour
         else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
     }
 
+    public void SetHorbar(int number)
+    {
+        SettingHotbar = true;
+        panelType = number;
+        UI.InfoPanels[panelType].hotbarButton.buttonText = "PRESS 1-9 TO SET";
+        UI.InfoPanels[panelType].hotbarButton.UpdateUI();
+    }
+
     // Checks if for numeric input
     public void CheckNumberInput()
     {
-        if (UI.BuildingOpen)
+        if (SettingHotbar)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -716,42 +728,46 @@ public class Survival : MonoBehaviour
             {
                 SetHotbarSlot(8, HoveredObj);
             }
+            return;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        else
         {
-            SelectHotbar(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SelectHotbar(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SelectHotbar(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SelectHotbar(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SelectHotbar(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            SelectHotbar(5);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            SelectHotbar(6);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            SelectHotbar(7);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            SelectHotbar(8);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SelectHotbar(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SelectHotbar(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SelectHotbar(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SelectHotbar(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                SelectHotbar(4);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                SelectHotbar(5);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                SelectHotbar(6);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                SelectHotbar(7);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                SelectHotbar(8);
+            }
         }
     }
 
@@ -994,6 +1010,7 @@ public class Survival : MonoBehaviour
     public void RemoveGold(int a)
     {
         gold -= a;
+        BuildingHandler.removeStorageResources(a, 1);
         UI.GoldAmount.text = gold.ToString();
     }
 
@@ -1010,6 +1027,7 @@ public class Survival : MonoBehaviour
     public void RemoveEssence(int a)
     {
         essence -= a;
+        BuildingHandler.removeStorageResources(a, 2);
         UI.EssenceAmount.text = essence.ToString();
     }
 
@@ -1026,6 +1044,7 @@ public class Survival : MonoBehaviour
     public void RemoveIridium(int a)
     {
         iridium -= a;
+        BuildingHandler.removeStorageResources(a, 3);
         UI.IridiumAmount.text = iridium.ToString();
     }
 
@@ -1106,24 +1125,20 @@ public class Survival : MonoBehaviour
         SelectedObj = obj;
         if (obj != null && !tech.checkIfUnlocked(obj)) return;
         SwitchObj();
-        if (UI.BuildingOpen)
-        {
-            UI.BuildingOpen = false;
-            UI.SetOverlayStatus("Survival Menu", false);
-        }
     }
 
     // Changes the stored object for hotbar changing
-    public void SetHoverObject(Transform obj)
+    public void SetChosenObj(Transform obj)
     {
+        SelectObject(obj);
         if (!tech.checkIfUnlocked(obj))
         {
             // Change to some default shit
-            UI.UpdateInventoryInfo(null);
+            UI.UpdateInfoPanel(null);
             return;
         }
         // Change to some good shit oh fyck ya
-        UI.UpdateInventoryInfo(obj);
+        UI.UpdateInfoPanel(obj);
         HoveredObj = obj;
     }
 
@@ -1132,6 +1147,9 @@ public class Survival : MonoBehaviour
     // Changes the object stored in a hotbar slot
     public void SetHotbarSlot(int slot, Transform obj)
     {
+        SettingHotbar = false;
+        UI.InfoPanels[panelType].hotbarButton.buttonText = "ASSIGN TO HOTBAR";
+        UI.InfoPanels[panelType].hotbarButton.UpdateUI();
         if (!tech.checkIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
         hotbar[slot] = obj;
@@ -1321,7 +1339,7 @@ public class Survival : MonoBehaviour
     {
         for (int i = 0; i < a.GetLength(0); i++)
         {
-            Transform enemy = GetEnemyWithID((int)a[i, 0]);
+            Transform enemy = Spawner.GetEnemyWithID((int)a[i, 0]);
             if (enemy == null) continue;
 
             float x = a[i, 2];
@@ -1335,19 +1353,6 @@ public class Survival : MonoBehaviour
 
             //Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
-    }
-
-    // Returns a buildings ID if unlocked
-    public Transform GetEnemyWithID(int a)
-    {
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            if (enemies[i].GetComponent<EnemyClass>().GetID() == a)
-            {
-                return enemies[i];
-            }
-        }
-        return null;
     }
 
     public Transform GetEssenceObj()

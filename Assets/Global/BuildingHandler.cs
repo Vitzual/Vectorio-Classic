@@ -5,6 +5,29 @@ public class BuildingHandler : MonoBehaviour
 {
     public static List<Transform> buildings = new List<Transform>();
     public static List<Transform> damagedBuildings = new List<Transform>();
+    public static List<Transform> storages = new List<Transform>();
+
+    // 1 = gold, 2 = essence, 3 = iridium
+    public static void removeStorageResources(int amount, int type)
+    {
+        for (int i = 0; i < storages.Count; i++)
+        {
+            if (storages[i] == null)
+            {
+                storages.RemoveAt(i);
+                i--;
+            }
+            else
+            {
+                StorageAI storageScript = storages[i].GetComponent<StorageAI>();
+                if (storageScript.type == type)
+                {
+                    amount = storageScript.takeResources(amount);
+                    if (amount <= 0) return;
+                }
+            }
+        }
+    }
 
     public Transform getClosestDamagedBuilding(Vector2 pos)
     {

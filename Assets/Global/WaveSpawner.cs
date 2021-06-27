@@ -94,6 +94,19 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log(attackEvery);
     }
 
+    // Returns a buildings ID if unlocked
+    public Transform GetEnemyWithID(int a)
+    {
+        for (int i = 0; i < enemy.Length; i++)
+        {
+            if (enemy[i].enemyObject.GetComponent<EnemyClass>().GetID() == a)
+            {
+                return enemy[i].enemyObject;
+            }
+        }
+        return null;
+    }
+
     public void SetSpawnAmount(int a)
     {
         attackEvery = a;

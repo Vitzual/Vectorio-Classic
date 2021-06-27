@@ -20,12 +20,13 @@ public class Technology : MonoBehaviour
     [System.Serializable]
     public class Unlockables
     {
-        public string name;
-        public Transform Unlock;
+        public string Name;
+        public Transform Building;
         public int HeatNeeded;
         public bool Unlocked = false;
-        public string type;
-        public ButtonManagerBasicIcon InventoryButton;
+        public string Type;
+        public Image InvIcon;
+        public TextMeshProUGUI InvName;
     }
     public Unlockables[] UnlockTier;
 
@@ -39,6 +40,14 @@ public class Technology : MonoBehaviour
 
         // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
+    }
+
+    public Unlockables FindUnlockable(Transform building)
+    {
+        foreach (Unlockables unlockable in UnlockTier)
+            if (unlockable.Building == building)
+                return unlockable;
+        return null;
     }
 
     // Sets the unlock tree back to the level that was saved
@@ -65,11 +74,11 @@ public class Technology : MonoBehaviour
             if (indexOfLowestHeat != -1)
             {
                 // Adds the unlock transform to the unlocked list
-                addUnlocked(UnlockTier[indexOfLowestHeat].Unlock);
+                addUnlocked(UnlockTier[indexOfLowestHeat].Building);
 
                 // Updates the inventory button of the unlock
-                UnlockTier[indexOfLowestHeat].InventoryButton.buttonIcon = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Unlock.name);
-                UnlockTier[indexOfLowestHeat].InventoryButton.UpdateUI();
+                UnlockTier[indexOfLowestHeat].InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Building.name);
+                UnlockTier[indexOfLowestHeat].InvName.text = UnlockTier[indexOfLowestHeat].Building.name.ToUpper();
 
                 // Increment unlock counter
                 unlockedCount++;
@@ -103,8 +112,8 @@ public class Technology : MonoBehaviour
 
         // Backup check if the first iteration loop fails
         for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Unlock.GetComponent<TileClass>().getID() == a)
-                return UnlockTier[i].Unlock;
+            if (UnlockTier[i].Building.GetComponent<TileClass>().getID() == a)
+                return UnlockTier[i].Building;
 
         // If both fail, return null
         return null;
@@ -119,8 +128,8 @@ public class Technology : MonoBehaviour
 
         // Backup check if the first iteration loop fails
         for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Unlock.name == a)
-                return UnlockTier[i].Unlock;
+            if (UnlockTier[i].Building.name == a)
+                return UnlockTier[i].Building;
 
         // If both fail, return null
         return null;
@@ -135,7 +144,7 @@ public class Technology : MonoBehaviour
             {
                 if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded <= a)
                 {
-                    UnlockDefense(UnlockTier[i].Unlock, UnlockTier[i].InventoryButton, UnlockTier[i].Unlock.GetComponent<TileClass>().GetDescription());
+                    UnlockDefense(i);
                     StartNextUnlock();
                 }
             }
@@ -161,32 +170,45 @@ public class Technology : MonoBehaviour
             closeUnlockTree();
         else {
             c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].HeatNeeded.ToString();
-            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].Unlock.name.ToString().ToUpper();
-            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Unlock.name.ToString());
+            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].Building.name.ToString().ToUpper();
+            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Building.name.ToString());
         }
     }
 
     // Unlocks a defense and displays to screen
-    public void UnlockDefense(Transform a, ButtonManagerBasicIcon b, string c)
+    public void UnlockDefense(int index)
     {
-        addUnlocked(a);
+        // Increment update count
+        Unlockables unlock = UnlockTier[index];
         UnlockAmount++;
-        b.normalIcon.sprite = Resources.Load<Sprite>("Sprites/" + a.transform.name);
-        UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + a.transform.name);
-        UI.UOL.titleText = a.transform.name.ToUpper();
-        UI.UOL.descriptionText = c;
+
+        // Add the building to the unlock list
+        addUnlocked(unlock.Building);
+
+        // Set button icon and text
+        unlock.InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
+        unlock.InvName.text = unlock.Building.name.ToUpper();
+
+        // Set the UOL
+        UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
+        UI.UOL.titleText = unlock.Building.name.ToUpper();
+        UI.UOL.descriptionText = unlock.Building.GetComponent<TileClass>().description;
         UI.UOL.UpdateUI();
-        if (a.name == "Research Lab")
+
+        // Check if building is RL or E
+        if (unlock.Building.name == "Research Lab")
         {
             UI.showResearchUnlock();
             rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
         }
-        else if (a.name == "Energizer") UI.showEnergizerUnlock();
+        else if (unlock.Building.name == "Energizer") UI.showEnergizerUnlock();
         else
         {
             UI.UOL.OpenWindow();
             UI.UOLOpen = true;
         }
+
+        // Set timescale
         Time.timeScale = 0f;
     }
 
@@ -211,7 +233,7 @@ public class Technology : MonoBehaviour
 
         // Find the object in the array list
         for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Unlock == a)
+            if (UnlockTier[i].Building == a)
                 UnlockTier[i].Unlocked = true;
     }
 

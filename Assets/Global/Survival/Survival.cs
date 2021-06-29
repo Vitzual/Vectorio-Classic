@@ -157,7 +157,6 @@ public class Survival : MonoBehaviour
     public GameObject Locked2;
     public GameObject Drone1;
     public GameObject Drone2;
-    public GameObject TutorialHeader;
 
     // Internal placement variables
     [SerializeField] private LayerMask ResourceLayer;
@@ -257,7 +256,6 @@ public class Survival : MonoBehaviour
                 UI.GoldAmount.text = gold.ToString();
                 UI.EssenceAmount.text = essence.ToString();
                 UI.IridiumAmount.text = iridium.ToString();
-                TutorialHeader.SetActive(false);
 
                 // Force tech tree update
                 tech.loadSaveData(data.UnlockLevel);
@@ -301,16 +299,14 @@ public class Survival : MonoBehaviour
             }
             catch (System.Exception e)
             {
-                // New save
-                tutorial.enableTutorial();
                 Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
             }
 
         }
         else
-
-        {   // New save
+        {
+            // New save
             tutorial.enableTutorial();
             Debug.LogError("Save data could not be loaded");
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
@@ -337,11 +333,13 @@ public class Survival : MonoBehaviour
         if (SelectedObj == null) isObjectNull = true;
         else isObjectNull = false;
 
+        // Update tile spacing
+        CenterTransform();
+
         // Check if object selected
         if (!isObjectNull)
         {
             // Check unit size and make flash
-            CheckSize();
             AdjustAlphaValue();
             if (AOCB.activeSelf) AOCB.transform.position = new Vector3(transform.position.x, transform.position.y, 5);
         }
@@ -454,7 +452,7 @@ public class Survival : MonoBehaviour
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
                 int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
-                AddGold(amount);
+                AddGold(amount, true);
                 rayScript.DestroyTile();
 
                 // Create a UI resource popup thing idk lmaooo
@@ -481,15 +479,18 @@ public class Survival : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.DroneOpen && !UI.UOLOpen)
         {
             // Attempt a raycast on the tile survival is in
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | GhostLayer);
+            RaycastHit2D[] rayHits = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | GhostLayer);
 
             // Set the selected object to the collider if not null
-            if (rayHit.collider != null)
+            foreach (RaycastHit2D rayHit in rayHits)
             {
-                SelectObject(tech.FindTechBuildingWithName(rayHit.collider.name));
-                if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
-                AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
-                UI.CreatePippeteSquare(rayHit.collider.transform.position);
+                if (rayHit.collider.transform.position == transform.position)
+                {
+                    SelectObject(tech.FindTechBuildingWithName(rayHit.collider.name));
+                    if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
+                    AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
+                    UI.CreatePippeteSquare(rayHit.collider.transform.position);
+                }
             }
         }
 
@@ -636,9 +637,12 @@ public class Survival : MonoBehaviour
     // Updates the gold storage
     public void UpdateGoldStorage(int amount)
     {
-        goldStorage -= amount;
+        gold -= amount;
+        goldStorage -= Research.research_gold_storage;
+
         if (gold > goldStorage)
             gold = goldStorage;
+
         UI.GoldStorage.text = goldStorage + " MAX";
         UI.GoldAmount.text = gold.ToString();
     }
@@ -646,9 +650,12 @@ public class Survival : MonoBehaviour
     // Updates the essence storage
     public void UpdateEssenceStorage(int amount)
     {
-        essenceStorage -= amount;
+        essence -= amount;
+        essenceStorage -= Research.research_essence_storage;
+
         if (essence > essenceStorage)
             essence = essenceStorage;
+
         UI.EssenceStorage.text = essenceStorage + " MAX";
         UI.EssenceAmount.text = essence.ToString();
     }
@@ -656,9 +663,12 @@ public class Survival : MonoBehaviour
     // Updates the iridium storage
     public void UpdateIridiumStorage(int amount)
     {
-        iridiumStorage -= amount;
+        iridium -= amount;
+        iridiumStorage -= Research.research_iridium_storage;
+
         if (iridium > iridiumStorage)
             iridium = iridiumStorage;
+
         UI.IridiumStorage.text = iridiumStorage + " MAX";
         UI.IridiumAmount.text = iridium.ToString();
     }
@@ -705,9 +715,9 @@ public class Survival : MonoBehaviour
     }
 
     // Checks unit size
-    private void CheckSize()
+    private void CenterTransform()
     {
-        if (!largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
+        if (isObjectNull || !largerUnit) transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5), 5 * Mathf.Round(MousePos.y / 5));
         else transform.position = new Vector2(5 * Mathf.Round(MousePos.x / 5) - 2.5f, 5 * Mathf.Round(MousePos.y / 5) + 2.5f);
     }
 
@@ -903,6 +913,8 @@ public class Survival : MonoBehaviour
     // Place building loaded from a save file
     public void PlaceSavedBuildings(int[,] a)
     {
+        bool metadata = true;
+        
         for (int i = 0; i < a.GetLength(0); i++)
         {
             Transform building = GetBuildingWithID(a[i, 0]);
@@ -937,8 +949,36 @@ public class Survival : MonoBehaviour
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
-            if (building.name.Contains("Collector")) StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
+            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
 
+            // Attempt to apply metadata for storages
+            else if (metadata && obj.name.Contains("Storage"))
+            {
+                try { int holder = obj.GetComponent<StorageAI>().addResources(a[i, 5], true); }
+                catch
+                {
+                    metadata = false;
+                    Debug.Log("Save does not contain metadata support. Save the game again to update the save structure automatically.");
+                }
+            }
+
+            // Attempt to apply metadata for drone ports
+            else if (metadata && obj.name == "Drone Port")
+            {
+                try 
+                {
+                    Dronehub drone = obj.GetComponent<Dronehub>();
+                    drone.droneType = a[i, 5];
+                    drone.offsetStart = true;
+                }
+                catch
+                {
+                    metadata = false;
+                    Debug.Log("Save does not contain metadata support. Save the game again to update the save structure automatically.");
+                }
+            }
+
+            // Set survival
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
 
@@ -1032,12 +1072,28 @@ public class Survival : MonoBehaviour
     }
 
     // Add x gold to player
-    public void AddGold(int a)
+    public void AddGold(int a, bool addToStorages = false)
     {
         if (a + gold >= goldStorage)
             gold = goldStorage;
         else gold += a;
         UI.GoldAmount.text = gold.ToString();
+
+        // This will force input resources into the storages
+        if (addToStorages)
+        {
+            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            {
+                if (BuildingHandler.storages[i].icon == null)
+                {
+                    BuildingHandler.storages.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                a = BuildingHandler.storages[i].addResources(a, true);
+                if (a == 0) return;
+            }
+        }
     }
 
     // Remove x gold from player
@@ -1164,17 +1220,21 @@ public class Survival : MonoBehaviour
     // Changes the stored object for hotbar changing
     public void SetChosenObj(Transform obj)
     {
+        // Tutorial related, ignore
         if (tutorial.tutorialSlide == 9 && obj != null && obj.name == "Gold Storage") tutorial.nextSlide();
-        SelectObject(obj);
-        if (!tech.checkIfUnlocked(obj))
+
+        // Check if the object is unlocked
+        if (obj != null && !tech.checkIfUnlocked(obj))
         {
-            // Change to some default shit
             UI.UpdateInfoPanel(null);
             return;
         }
-        // Change to some good shit oh fyck ya
-        UI.UpdateInfoPanel(obj);
-        HoveredObj = obj;
+        else
+        {
+            SelectObject(obj);
+            UI.UpdateInfoPanel(obj);
+            HoveredObj = obj;
+        }
     }
 
     // THIS IS THE CULPRIT 
@@ -1219,8 +1279,16 @@ public class Survival : MonoBehaviour
         else if (SelectedObj.name == "Enhancer" || SelectedObj.name == "Engineer")
         {
             SquareRadius.SetActive(true);
+            SquareRadius.transform.localScale = new Vector3(15, 15, 15);
             SelectedRadius.SetActive(false);
         } 
+        else if (SelectedObj.name == "Drone Port")
+        {
+            float rng = (Research.research_resource_range * 2) + 5f;
+            SquareRadius.SetActive(true);
+            SquareRadius.transform.localScale = new Vector3(rng, rng, rng);
+            SelectedRadius.SetActive(false);
+        }
         else
         {
             SquareRadius.SetActive(false);
@@ -1306,7 +1374,7 @@ public class Survival : MonoBehaviour
             if (allObjects[i].tag == "Defense" || allObjects[i].tag == "Production" || allObjects[i].tag == "Enemy Defense") length += 1;
         }
 
-        int[,] data = new int[length, 5];
+        int[,] data = new int[length, 6];
         length = 0;
         for (int i = 0; i < allObjects.Length; i++)
         {
@@ -1314,14 +1382,28 @@ public class Survival : MonoBehaviour
             {
                 try
                 {
+                    // ID of the building to save
                     data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
+
+                    // Health of the building being saved
                     data[length, 1] = allObjects[i].GetComponent<TileClass>().GetHealth();
+
+                    // Coordinates of the building
                     data[length, 2] = (int)allObjects[i].position.x;
                     data[length, 3] = (int)allObjects[i].position.y;
+
+                    // Engineering applied to the building
                     if (allObjects[i].GetComponent<TileClass>().AppliedModification.Count > 0)
                         data[length, 4] = allObjects[i].GetComponent<TileClass>().AppliedModification[0];
                     else
                         data[length, 4] = -1; // No engineer modifications on this unit
+
+                    // Meta data that should be saved 
+                    if (allObjects[i].name == "Drone Port") data[length, 5] = allObjects[i].GetComponent<Dronehub>().droneType;
+                    else if (allObjects[i].name.Contains("Storage")) data[length, 5] = allObjects[i].GetComponent<StorageAI>().amount;
+                    else data[length, 5] = -1; // No meta data to apply
+
+                    // Increment length
                     length += 1;
                 }
                 catch

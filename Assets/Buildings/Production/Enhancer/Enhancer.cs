@@ -40,18 +40,12 @@ public class Enhancer : TileClass
         var colliders = Physics2D.OverlapBoxAll(this.gameObject.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].name.Contains("Collector"))
+            try
             {
-                colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
+                if (colliders[i].name.Contains("Collector"))
+                    colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
             }
-            else if (colliders[i].name.Contains("Essence Drill"))
-            {
-                colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
-            }
-            else if (colliders[i].name.Contains("Iridium Mine"))
-            {
-                colliders[i].GetComponent<CollectorAI>().deenhanceCollector();
-            }
+            catch { continue; }
         }
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();

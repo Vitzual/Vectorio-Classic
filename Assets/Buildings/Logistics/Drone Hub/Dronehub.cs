@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class Dronehub : TileClass
 {
@@ -10,7 +9,8 @@ public class Dronehub : TileClass
     // Drone variables
     public bool droneActive = false;
     public int checkDrone = 0;
-    public int droneType;
+    public int droneType = 1;
+    public bool offsetStart = false;
 
     // Hold drone type
     public Transform activeDrone;
@@ -33,8 +33,18 @@ public class Dronehub : TileClass
     // Start is called before the first frame update
     void Start()
     {
+        // Offsetting the start will make sure all ports are divided up equally
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        changeDroneType(1);
+        if (droneManager.isMenu) { changeDroneType(2); return; }
+        
+        if (offsetStart) { StartCoroutine(StartOffset()); }
+        else changeDroneType(droneType, false);
+    }
+
+    public IEnumerator StartOffset()
+    {
+        yield return new WaitForSeconds(Random.Range(0f, 5f));
+        changeDroneType(droneType, false);
     }
 
     public DroneManager.ResourceDrone getDrone()
@@ -44,9 +54,9 @@ public class Dronehub : TileClass
     }
 
     // Change the drone type
-    public void changeDroneType(int a)
+    public void changeDroneType(int a, bool check = true)
     {
-        if (droneType == a) return;
+        if (check && droneType == a) return;
 
         droneType = a;
         leftPanel.localPosition = new Vector2(0, 0);
@@ -63,9 +73,10 @@ public class Dronehub : TileClass
                 droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
                 droneManager.forceUI();
                 resourcePort = false;
+                droneManager.forceCheckAvailableDrones();
                 break;
             case 2:
-                if (droneManager.tutorial.tutorialSlide == 5) droneManager.tutorial.nextSlide();
+                if (!droneManager.isMenu && droneManager.tutorial.tutorialSlide == 5) droneManager.tutorial.nextSlide();
                 if (activeDrone != null) Destroy(activeDrone.gameObject);
                 activeDrone = Instantiate(resourceDrone, transform.position, Quaternion.identity);
                 activeDrone.name = resourceDrone.name;

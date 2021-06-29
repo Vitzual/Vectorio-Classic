@@ -47,8 +47,10 @@ public class WaveSpawner : MonoBehaviour
     {
         public string name;
         public Transform bossObject;
-        [TextArea] public string destroyedInfo;
         public bool isDefeated;
+        public bool BossScreenShown = false;
+        public ModalWindowManager BossScreen;
+        public ModalWindowManager BossDefeatedScreen;
     }
     public Bosses[] bosses;
 
@@ -90,7 +92,6 @@ public class WaveSpawner : MonoBehaviour
         if (speedMulti <= 0) speedMulti = 1;
 
         attackEvery = attackEvery - (int)(Difficulties.enemyAmountMulti / 3);
-        Debug.Log(attackEvery);
     }
 
     // Returns a buildings ID if unlocked
@@ -113,9 +114,6 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        // If boss active, don't spawn anything
-        if (bossSpawned) return;
-
         // Check if it's time for a group spawn
         bool groupSpawn = false;
         if (Difficulties.enemyWaves)
@@ -251,7 +249,27 @@ public class WaveSpawner : MonoBehaviour
             firstDisplay = false;
         }
 
-        if (bossesDefeated == 2 && htrack >= 50000) maxHeat = 80000;
+        // Check for warning 
+        if (!bosses[0].isDefeated && htrack >= 9000 && !bosses[0].BossScreenShown)
+        {
+            bosses[0].BossScreenShown = true;
+            bosses[0].BossScreen.OpenWindow();
+            Time.timeScale = 0f;
+        }
+        else if (!bosses[1].isDefeated && htrack >= 24000 && !bosses[1].BossScreenShown)
+        {
+            bosses[1].BossScreenShown = true;
+            bosses[1].BossScreen.OpenWindow();
+            Time.timeScale = 0f;
+        }
+
+        // Check for guardian spawning
+        if (bossesDefeated == 2 && htrack >= 50000) 
+        { 
+            maxHeat = 80000;
+            startingIndex = 27;
+            lastIndex = 36;
+        }
         else if (bossesDefeated == 1 && htrack >= 25000 && !bosses[1].isDefeated && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[1].bossObject, new Vector2(0, -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -315,7 +333,7 @@ public class WaveSpawner : MonoBehaviour
     public void defeatBoss(int a)
     {
         // Show info
-        if (!loadingSave) displayBossDestroyed();
+        if (!loadingSave) displayBossDestroyed(a);
 
         // Set new values
         bosses[a].isDefeated = true;
@@ -341,12 +359,9 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    public void displayBossDestroyed()
+    public void displayBossDestroyed(int a)
     {
-        bossDestroyed.titleText = bosses[bossesDefeated].name;
-        bossDestroyed.descriptionText = bosses[bossesDefeated].destroyedInfo;
-        bossDestroyed.UpdateUI();
-        bossDestroyed.OpenWindow();
+        bosses[a].BossDefeatedScreen.OpenWindow();
         survival.UI.BossInfoOpen = true;
         Time.timeScale = 0f;
     }

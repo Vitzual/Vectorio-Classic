@@ -182,9 +182,6 @@ public class Technology : MonoBehaviour
         Unlockables unlock = UnlockTier[index];
         UnlockAmount++;
 
-        // Add the building to the unlock list
-        addUnlocked(unlock.Building);
-
         // Set button icon and text
         unlock.InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
         unlock.InvName.text = unlock.Building.name.ToUpper();
@@ -195,18 +192,8 @@ public class Technology : MonoBehaviour
         UI.UOL.descriptionText = unlock.Building.GetComponent<TileClass>().description;
         UI.UOL.UpdateUI();
 
-        // Check if building is RL or E
-        if (unlock.Building.name == "Research Lab")
-        {
-            UI.showResearchUnlock();
-            rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
-        }
-        else if (unlock.Building.name == "Energizer") UI.showEnergizerUnlock();
-        else
-        {
-            UI.UOL.OpenWindow();
-            UI.UOLOpen = true;
-        }
+        // Add the building to the unlock list
+        addUnlocked(unlock.Building);
 
         // Set timescale
         Time.timeScale = 0f;
@@ -229,6 +216,25 @@ public class Technology : MonoBehaviour
     // Add a new object to unlock list
     public void addUnlocked(Transform a)
     {
+        // Check if building is RL or E
+        if (a.name == "Research Lab")
+        {
+            if (!loadingSave) UI.showResearchUnlock();
+            rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
+            Research.ResearchUnlocked = true;
+        }
+        else if (!loadingSave && a.name == "Energizer")
+        {
+            UI.showEnergizerUnlock();
+            UI.UOLOpen = true;
+        }
+        else if (!loadingSave)
+        {
+            UI.UOL.OpenWindow();
+            UI.UOLOpen = true;
+        }
+
+        // Add the unlock to the list
         unlocked.Add(a);
 
         // Find the object in the array list

@@ -9,14 +9,14 @@ public static class SaveSystem
 
     public static bool CheckForSave(int a)
     {
-        return File.Exists(Application.persistentDataPath + "/alpha_save_" + a+".vectorio");
+        return File.Exists(Application.persistentDataPath + "/experimental_save_" + a+".vectorio");
     }
 
     public static string[] GetSaveStrings(int a)
     {
         // Loads the save data and returns the name
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/alpha_save_" + a+".vectorio";
+        string path = Application.persistentDataPath + "/experimental_save_" + a+".vectorio";
         FileStream stream = new FileStream(path, FileMode.Open);
         SaveData data = formatter.Deserialize(stream) as SaveData;
         stream.Close();
@@ -36,7 +36,7 @@ public static class SaveSystem
             saveInfo[1] = "OLD SAVE";
             saveInfo[2] = "???";
             saveInfo[3] = "0:00";
-            saveInfo[4] = "v0.1";
+            saveInfo[4] = "v0.2";
         }
 
         return saveInfo;
@@ -44,9 +44,9 @@ public static class SaveSystem
 
     public static void DeleteGame(int a)
     {
-        if (File.Exists(Application.persistentDataPath + "/alpha_save_" + a + ".vectorio"))
+        if (File.Exists(Application.persistentDataPath + "/experimental_save_" + a + ".vectorio"))
         {
-            File.Delete(Application.persistentDataPath + "/alpha_save_" + a + ".vectorio");
+            File.Delete(Application.persistentDataPath + "/experimental_save_" + a + ".vectorio");
         }
     }
 
@@ -65,7 +65,7 @@ public static class SaveSystem
         else
         {
             Debug.Log("Save location could not be found, defaulting to save 1");
-            SaveLocation = "/alpha_save_1.vectorio";
+            SaveLocation = "/experimental_save_1.vectorio";
         }
 
         string path = Application.persistentDataPath + SaveLocation;
@@ -95,7 +95,7 @@ public static class SaveSystem
         else
         {
             Debug.Log("Save location could not be found, defaulting to save 1");
-            SaveLocation = "/alpha_save_1.vectorio";
+            SaveLocation = "/experimental_save_1.vectorio";
         }
 
         string path = Application.persistentDataPath + SaveLocation;

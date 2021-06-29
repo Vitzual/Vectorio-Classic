@@ -20,7 +20,7 @@ public class Research : MonoBehaviour
     public static float research_bulletspeed = 1;
     public static float research_gold_time = 5f;
     public static int research_gold_yield = 50;
-    public static int research_gold_storage = 2500;
+    public static int research_gold_storage = 1000;
     public static float research_essence_time = 8f;
     public static int research_essence_yield = 25;
     public static int research_essence_storage = 500;
@@ -162,6 +162,7 @@ public class Research : MonoBehaviour
                     Researching.needsGold = false;
                     if (Researching.goldText != null) Researching.goldText.text = "x0";
                 }
+                else if (Researching.goldText != null) Researching.goldText.text = "x" + (goldNeeded - goldTracked);
                 break;
             case 2:
                 SurvivalCS.RemoveEssence(research_research_speed);
@@ -172,6 +173,7 @@ public class Research : MonoBehaviour
                     Researching.needsEssence = false;
                     if (Researching.essenceText != null) Researching.essenceText.text = "x0";
                 }
+                else if (Researching.essenceText != null) Researching.essenceText.text = "x" + (essenceNeeded - essenceTracked);
                 break;
             case 3:
                 SurvivalCS.RemoveIridium(research_research_speed);
@@ -182,6 +184,7 @@ public class Research : MonoBehaviour
                     Researching.needsIridium = false;
                     if (Researching.iridiumText != null) Researching.iridiumText.text = "x0";
                 }
+                else if (Researching.iridiumText != null) Researching.iridiumText.text = "x" + (iridiumNeeded - iridiumTracked);
                 break;
         }
     }
@@ -240,7 +243,7 @@ public class Research : MonoBehaviour
         goldTracked = 0;
 
         // Set essence tracking
-        if (research.GoldRequired > 0)
+        if (research.EssenceRequired > 0)
         {
             research.essenceText = research.ResearchButton.transform.Find("Essence Amount").GetComponent<TextMeshProUGUI>();
             research.needsEssence = true;
@@ -250,7 +253,7 @@ public class Research : MonoBehaviour
         essenceTracked = 0;
 
         // Set iridium tracking
-        if (research.GoldRequired > 0)
+        if (research.IridiumRequired > 0)
         {
             research.iridiumText = research.ResearchButton.transform.Find("Iridium Amount").GetComponent<TextMeshProUGUI>();
             research.needsIridium = true;
@@ -267,7 +270,7 @@ public class Research : MonoBehaviour
         // Start research updating
         researchSpeed = 1f / LabsAvailable;
         CancelInvoke("UpdateResearch");
-        InvokeRepeating("UpdateResearch", 1f, researchSpeed);
+        InvokeRepeating("UpdateResearch", 1f, 0.01f);
     }
 
     // Increases a research variable (automatically gets applied to all buildings)

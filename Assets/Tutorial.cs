@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
+    public GameObject holdera;
     public GameObject[] tutorialSlides;
     public bool tutorialStarted = false;
     public int tutorialSlide = 1;
@@ -16,13 +17,19 @@ public class Tutorial : MonoBehaviour
 
     public void enableTutorial()
     {
+        holdera.SetActive(true);
+        tutorialSlides[0].SetActive(true);
         freeBuilding = false;
-
         tutorialStarted = true;
         disableBuilding = true;
         disableMoving = true;
         disableMenus = true;
         spaceToContinue = true;
+    }
+
+    private void Start()
+    {
+        holdera.SetActive(false);
     }
 
     // Update is called once per frame

@@ -92,19 +92,18 @@ public class StorageAI: TileClass
         }
     }
 
-    public int addResources(int input)
+    public int addResources(int input, bool fromSave = false)
     {
         // Get the correct storage value
         int storage = Research.research_gold_storage;
         if (type == 2) storage = Research.research_essence_storage;
         else if (type == 3) storage = Research.research_iridium_storage;
-
         // Determine if icon should be enabled
         // Return the amount not put in storage
         int holder = amount + input;
         if (holder > storage)
         {
-            sendResources(storage - amount);
+            if (!fromSave) sendResources(storage - amount);
             enableIcon();
             amount = storage;
             isFull = true;
@@ -112,7 +111,7 @@ public class StorageAI: TileClass
         }
         else if (holder == storage)
         {
-            sendResources(input);
+            if (!fromSave) sendResources(input);
             amount = holder;
             enableIcon();
             isFull = true;
@@ -120,7 +119,7 @@ public class StorageAI: TileClass
         }
         else
         {
-            sendResources(input);
+            if (!fromSave) sendResources(input);
             amount = holder;
             return 0;
         }

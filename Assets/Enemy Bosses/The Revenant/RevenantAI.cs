@@ -4,18 +4,32 @@ using Michsky.UI.ModernUIPack;
 
 public class RevenantAI : BossClass
 {
-    public Transform[] rotators;
-    public float[] rotatorSpeeds;
+    public float minDist;
 
-    // Dropships will destroy any building they touch
-    // Additional logic requires a Rigibody component be attached to this unit
-    public void OnCollisionEnter2D(Collision2D collision)
+    // Gets called when entering another defenses range or hitting the defense all together
+    public new void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Building"))
+        if (Vector3.Distance(collider.transform.position, transform.position) >= minDist && collider.tag == "Defense")
         {
-            GameObject.Find("BuildingGoDeadSound").GetComponent<AudioSource>().Play();
-            GameObject.Find("Survival").GetComponent<Survival>().SetLastHit(collision.collider.transform.position);
-            collision.collider.GetComponent<TileClass>().DestroyTile();
+            Debug.Log(collider.name + " " + Vector3.Distance(collider.transform.position, transform.position));
+            if (collider.name != "Wall" && collider.name != "Drone Port")
+            {
+                TurretClass holder = collider.GetComponent<TurretClass>();
+                if (!holder.enabled) holder.enabled = true;
+                holder.forceTarget(transform);
+            }
         }
+        else 
+        {
+            if (!collider.name.ToLower().Contains("bullet"))
+            {
+                try
+                {
+                    Debug.Log(collider.name + " X");
+                    collider.GetComponent<TileClass>().DestroyTile();
+                }
+                catch{ return; }
+            }
+        } 
     }
 }

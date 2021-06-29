@@ -28,6 +28,7 @@ public class DroneManager : MonoBehaviour
             heatCost = heat;
 
             targetPos = target.position;
+            targetPosHolder = targetPos;
             droneType = 1;
 
             platesOpening = true;
@@ -45,6 +46,7 @@ public class DroneManager : MonoBehaviour
         public Transform body;
         public Transform target;
         public Vector2 targetPos;
+        public Vector2 targetPosHolder;
         public Transform targetBuilding;
         public Transform spawnPosition;
         public Transform[] plates;
@@ -187,7 +189,7 @@ public class DroneManager : MonoBehaviour
             // If the drone becomes null (parent is removed), remove drone and add back building to available buildings
             if (drone.body == null)
             {
-                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                if (!drone.droneReturning) queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
                 constructionDrones.Remove(drone);
                 i--;
                 continue;
@@ -496,7 +498,7 @@ public class DroneManager : MonoBehaviour
             {
                 if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
                 if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
-                if ((buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0)) continue;
+                if (buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0) continue;
             }
 
             for (int b = 0; b < availableConstructionDrones.Count; b++)
@@ -804,6 +806,18 @@ public class DroneManager : MonoBehaviour
         return;
     }
 
+    public void forceCheckAvailableDrones()
+    {
+        for (int i = 0; i < availableConstructionDrones.Count; i++)
+        {
+            if (availableConstructionDrones[i].body == null)
+            {
+                availableConstructionDrones.RemoveAt(i);
+                i--;
+            }
+        }
+    }
+
     // Register an active resource drone
     public ResourceDrone registerResourceDrone(Transform body, Transform port, Transform[] plates)
     {
@@ -864,6 +878,6 @@ public class DroneManager : MonoBehaviour
     // Forces a UI update
     public void forceUI()
     {
-        survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
+        if (!isMenu) survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
     }
 }

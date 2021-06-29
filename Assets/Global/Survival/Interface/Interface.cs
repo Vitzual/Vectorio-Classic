@@ -63,7 +63,7 @@ public class Interface : MonoBehaviour
     public ButtonManagerBasicIcon[] hotbarButtons;
     public GameObject WarningButton;
     public int ActiveWarnings = 0;
-    public GameObject BossBar;
+    public GameObject[] BossBar;
     public GameObject dronePortUI;
     public TextMeshProUGUI builderDronesActive;
     public TextMeshProUGUI resourceDronesActive;
@@ -233,7 +233,6 @@ public class Interface : MonoBehaviour
     // Enables the research overlay
     public void showEnergizerUnlock()
     {
-        UOLOpen = true;
         EnergizerUnlockedWindow.OpenWindow();
     }
 
@@ -466,8 +465,8 @@ public class Interface : MonoBehaviour
         SetOverlayStatus("Research UI", false);
     }
 
-    public GameObject GetBossBar()
+    public GameObject GetBossBar(int a)
     {
-        return BossBar;
+        return BossBar[a];
     }
 }

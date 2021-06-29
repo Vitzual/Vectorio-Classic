@@ -1155,9 +1155,9 @@ GameObject:
   - component: {fileID: 6065519297016329532}
   - component: {fileID: 2907053516596343936}
   - component: {fileID: 6065519297016329531}
-  - component: {fileID: 6585524150390319789}
   - component: {fileID: 3218542028071005407}
   - component: {fileID: -7988941651565123245}
+  - component: {fileID: 5700968648607597238}
   m_Layer: 9
   m_Name: The Kraken
   m_TagString: Enemy
@@ -1221,24 +1221,10 @@ MonoBehaviour:
   PreferredTarget: {fileID: 5628938638249383948, guid: d4f5265620f10a748a88759a975e86b0,
     type: 3}
   target: {fileID: 0}
-  bossTitle: THE REVENANT
+  bossTitle: THE KRAKEN
+  bossID: 1
   bossBar: {fileID: 7878608535542948334, guid: d713cd7772548c54f8d967394c4332ee, type: 3}
-  rotators:
-  - {fileID: 7709887880555632588}
-  - {fileID: 3739982209143768981}
-  - {fileID: 8171500620598818166}
-  - {fileID: 7796031237802416396}
-  - {fileID: 5296293743783528290}
-  - {fileID: 3819676019921894104}
-  - {fileID: 7985983064952827351}
-  rotatorSpeeds:
-  - 7
-  - 15
-  - 30
-  - 40
-  - 25
-  - 20
-  - 5
+  minDist: 60
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1290,41 +1276,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &6585524150390319789
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 19.220097, y: 7.210886}
-      - {x: -0.25850344, y: 20.475477}
-      - {x: -19.790527, y: 6.3065767}
-      - {x: -29.094894, y: -11.93792}
-      - {x: -24.798492, y: -29.437092}
-      - {x: -12.204999, y: -37.401016}
-      - {x: 0.29422593, y: -38.658276}
-      - {x: 13.43677, y: -37.089714}
-      - {x: 24.60019, y: -28.778748}
-      - {x: 29.123909, y: -11.364834}
 --- !u!50 &3218542028071005407
 Rigidbody2D:
   serializedVersion: 4
@@ -1333,7 +1284,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6065519297016329530}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1442,6 +1393,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!60 &5700968648607597238
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 31.25912, y: -2.1562462}
+      - {x: -0.12885547, y: 20.653004}
+      - {x: -30.736454, y: -2.635497}
+      - {x: -23.755524, y: -29.766443}
+      - {x: -12.538809, y: -36.49495}
+      - {x: -3.8927805, y: -38.485966}
+      - {x: 4.0580306, y: -38.485962}
+      - {x: 13.148022, y: -36.59346}
+      - {x: 23.920773, y: -28.609694}
 --- !u!1 &6251190261458897627
 GameObject:
   m_ObjectHideFlags: 0

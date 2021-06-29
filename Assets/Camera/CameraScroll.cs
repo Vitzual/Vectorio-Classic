@@ -23,8 +23,9 @@ public class CameraScroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tutorial.disableMoving) return;
         if (UI.BuildingOpen) return;
+        else if (UI.ResearchOpen) return;
+        else if (tutorial.disableMoving) return;
 
         float scrollData;
         scrollData = Input.GetAxis("Mouse ScrollWheel");

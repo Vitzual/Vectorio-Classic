@@ -270,7 +270,7 @@ public class Research : MonoBehaviour
         // Start research updating
         researchSpeed = 1f / LabsAvailable;
         CancelInvoke("UpdateResearch");
-        InvokeRepeating("UpdateResearch", 1f, 0.01f);
+        InvokeRepeating("UpdateResearch", 1f, researchSpeed);
     }
 
     // Increases a research variable (automatically gets applied to all buildings)
@@ -372,6 +372,9 @@ public class Research : MonoBehaviour
                 break;
             case "resource targets":
                 research_resource_amount += 1;
+                break;
+            case "research":
+                research_research_speed += 1;
                 break;
             default:
                 Debug.Log("The research type " + type + " is invalid.");

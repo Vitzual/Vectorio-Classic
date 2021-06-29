@@ -60,7 +60,6 @@ public class WaveSpawner : MonoBehaviour
         public string name;
         public Transform enemyObject;
         public int minHeat;
-        public int maxHeat;
         public int procChance;
     }
 
@@ -128,11 +127,12 @@ public class WaveSpawner : MonoBehaviour
                 else attackTracker++;
             }
         }
-        
+
         // Iterate through and spawn all enemies
-        for (int a=startingIndex; a<lastIndex; a++)
+        if (3 >= Random.Range(0, enemy[startingIndex].procChance)) SpawnEnemy(startingIndex);
+        for (int a=startingIndex+1; a<lastIndex; a++)
         {
-            if (htrack >= enemy[a].minHeat && htrack <= enemy[a].maxHeat && enemy[a].minHeat < maxHeat)
+            if (htrack >= enemy[a].minHeat)
             {
                 int chance = ((htrack - enemy[a].minHeat) / 1000) + 1;
                 if (chance >= 10) chance = 10;
@@ -250,33 +250,33 @@ public class WaveSpawner : MonoBehaviour
         }
 
         // Check for warning 
-        if (!bosses[0].isDefeated && htrack >= 9000 && !bosses[0].BossScreenShown)
-        {
-            bosses[0].BossScreenShown = true;
-            bosses[0].BossScreen.OpenWindow();
-            Time.timeScale = 0f;
-        }
-        else if (!bosses[1].isDefeated && htrack >= 24000 && !bosses[1].BossScreenShown)
+        if (!bosses[1].isDefeated && htrack >= 24000 && !bosses[1].BossScreenShown)
         {
             bosses[1].BossScreenShown = true;
             bosses[1].BossScreen.OpenWindow();
             Time.timeScale = 0f;
         }
+        else if (!bosses[0].isDefeated && htrack >= 9000 && !bosses[0].BossScreenShown)
+        {
+            bosses[0].BossScreenShown = true;
+            bosses[0].BossScreen.OpenWindow();
+            Time.timeScale = 0f;
+        }
 
         // Check for guardian spawning
-        if (bossesDefeated == 2 && htrack >= 50000) 
+        if (htrack >= 50000) 
         { 
             maxHeat = 80000;
             startingIndex = 27;
             lastIndex = 36;
         }
-        else if (bossesDefeated == 1 && htrack >= 25000 && !bosses[1].isDefeated && !bossSpawned && !loadingSave)
+        else if (htrack >= 25000 && !bosses[1].isDefeated && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[1].bossObject, new Vector2(0, -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
             holder.name = bosses[0].bossObject.name;
             bossSpawned = true;
         }
-        else if (bossesDefeated == 0 && htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
+        else if (htrack >= 10000 && !bosses[0].isDefeated && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[0].bossObject, new Vector2(0, SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
             holder.name = bosses[0].bossObject.name;
@@ -339,8 +339,11 @@ public class WaveSpawner : MonoBehaviour
         bosses[a].isDefeated = true;
         bossesDefeated += 1;
         bossSpawned = false;
-        if (maxHeat + 10000 > 30000) maxHeat = 30000;
-        else maxHeat += 10000;
+
+        // Set new max heat
+        if (a == 0) maxHeat = 25000;
+        else if (a == 1) maxHeat = 50000;
+        else if (a == 2) maxHeat = 80000;
         maxHeatAmount.text = maxHeat + " MAX";
 
         // Updates the border

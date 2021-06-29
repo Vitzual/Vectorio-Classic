@@ -122,6 +122,7 @@ public abstract class EnemyClass : MonoBehaviour
 
             // Check if the entity is a boss unit
             if (transform.name == "The Revenant") GameObject.Find("Spawner").GetComponent<WaveSpawner>().defeatBoss(0);
+            else if (transform.name == "The Kraken") GameObject.Find("Spawner").GetComponent<WaveSpawner>().defeatBoss(1);
 
             // Instantiate death effect and destroy self
             Instantiate(Effect, transform.position, Quaternion.identity);

@@ -80,6 +80,9 @@ public class DroneManager : MonoBehaviour
             collectedGold = 0;
             collectedEssence = 0;
             collectedIridium = 0;
+            visitedGold = false;
+            visitedEssence = false;
+            visitedIridium = false;
             targetsLeft = Research.research_resource_amount;
             platesOpening = true;
             platesClosing = false;
@@ -102,8 +105,11 @@ public class DroneManager : MonoBehaviour
         public Transform target;
         public CollectorAI targetScript;
         public int collectedGold;
+        public bool visitedGold;
         public int collectedEssence;
+        public bool visitedEssence;
         public int collectedIridium;
+        public bool visitedIridium;
         public int targetsLeft;
         public int targetType;
         public bool check;
@@ -273,24 +279,31 @@ public class DroneManager : MonoBehaviour
                                 switch(drone.targetScript.collectorType)
                                 {
                                     case 1:
+                                        drone.visitedGold = true;
                                         holder = drone.collectedGold;
                                         drone.collectedGold += drone.targetScript.GrabResources();
+                                        if (holder != drone.collectedGold) drone.targetsLeft -= 1;
                                         break;
                                     case 2:
-                                        holder = drone.collectedGold;
+                                        drone.visitedEssence = true;
+                                        holder = drone.collectedEssence;
                                         drone.collectedEssence += drone.targetScript.GrabResources();
+                                        if(holder != drone.collectedEssence) drone.targetsLeft -= 1;
                                         break;
                                     case 3:
-                                        holder = drone.collectedGold;
+                                        drone.visitedIridium = true;
+                                        holder = drone.collectedIridium;
                                         drone.collectedIridium += drone.targetScript.GrabResources();
+                                        if(holder != drone.collectedIridium) drone.targetsLeft -= 1;
                                         break;
                                     default:
+                                        drone.visitedGold = true;
                                         holder = drone.collectedGold;
                                         drone.collectedGold += drone.targetScript.GrabResources();
+                                        if(holder != drone.collectedGold) drone.targetsLeft -= 1;
                                         break;
                                 }
                                 drone.visitedCollectors.Add(drone.targetScript);
-                                if (holder != drone.collectedGold) drone.targetsLeft -= 1;
 
                                 // Attempt to find another collector
                                 bool validCollectorTarget = false;
@@ -311,8 +324,8 @@ public class DroneManager : MonoBehaviour
 
                                 // See how much gold the storage can hold
                                 if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<StorageAI>().addResources(drone.collectedGold);
-                                else if (drone.collectedGold > 1) drone.collectedEssence = drone.target.GetComponent<StorageAI>().addResources(drone.collectedEssence);
-                                else if (drone.collectedGold > 2) drone.collectedIridium = drone.target.GetComponent<StorageAI>().addResources(drone.collectedIridium);
+                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<StorageAI>().addResources(drone.collectedEssence);
+                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<StorageAI>().addResources(drone.collectedIridium);
 
                                 // Animate building
                                 AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
@@ -320,8 +333,13 @@ public class DroneManager : MonoBehaviour
                                 animScript.animEnabled = true;
                                 animScript.enabled = true;
 
+                                // Set values
+                                if (drone.visitedGold && drone.collectedGold <= 0) drone.visitedGold = false;
+                                if (drone.visitedEssence && drone.collectedEssence <= 0) drone.visitedEssence = false;
+                                if (drone.visitedIridium && drone.collectedIridium <= 0) drone.visitedIridium = false;
+
                                 // Set drone to return to parent or look for anoter storage
-                                if (drone.collectedGold <= 0 && drone.collectedEssence <= 0 && drone.collectedIridium <= 0) returnResourceToParent(drone);
+                                if (!drone.visitedGold && !drone.visitedEssence && !drone.visitedIridium) returnResourceToParent(drone);
                                 else if(!findStorageTarget(drone)) returnResourceToParent(drone);
 
                                 break;
@@ -391,6 +409,7 @@ public class DroneManager : MonoBehaviour
     {
         if (isMenu)
         {
+            if (drone.availableCollectors.Count == 0) return false;
             CollectorAI randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
             drone.target = randomizer.getPosition();
             Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
@@ -435,9 +454,9 @@ public class DroneManager : MonoBehaviour
         int index = -1;
         int type = 1;
 
-        if (drone.collectedGold > 0) type = 1;
-        else if (drone.collectedEssence > 0) type = 2;
-        else if (drone.collectedIridium > 0) type = 3;
+        if (drone.visitedGold) type = 1;
+        else if (drone.visitedEssence) type = 2;
+        else if (drone.visitedIridium) type = 3;
 
         // Loop through all available storages
         StorageAI storage;

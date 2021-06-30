@@ -5,61 +5,61 @@ using TMPro;
 
 public class Research : MonoBehaviour
 {
-
     // Research variables
-    public static int research_damage = 0;
-    public static int research_burning = 0;
-    public static int research_freezing = 0;
-    public static int research_poisoning = 0;
-    public static int research_shield = 0;
-    public static int research_health = 0;
-    public static int research_wall_health = 0;
-    public static int research_pierce = 0;
-    public static float research_range = 0;
-    public static float research_firerate = 0;
-    public static float research_bulletspeed = 1;
-    public static float research_gold_time = 5f;
-    public static int research_gold_yield = 50;
-    public static int research_gold_storage = 1000;
-    public static float research_essence_time = 8f;
-    public static int research_essence_yield = 25;
-    public static int research_essence_storage = 500;
-    public static float research_iridium_time = 12f;
-    public static int research_iridium_yield = 10;
-    public static int research_iridium_storage = 100;
-    public static float research_construction_speed = 35f;
-    public static int research_construction_placements = 1;
-    public static float research_resource_speed = 25f;
-    public static int research_resource_collections = 5;
-    public static int research_resource_amount = 3;
-    public static float research_resource_range = 50f;
-    public static float research_combat_speed = 20f;
-    public static float research_fixer_speed = 25f;
-    public static int research_fixer_amount = 50;
-    public static int research_combat_targets = 10;
-    public static bool research_explosive_storages = false;
-    public static bool research_explosive_defenses = false;
-    public static bool research_explosive_collectors = false;
-    public static int research_research_speed = 1;
-    public static bool research_fixer_drones = false;
-    public static bool research_combat_drones = false;
+    public static int research_damage;
+    public static int research_burning;
+    public static int research_freezing;
+    public static int research_poisoning;
+    public static int research_shield;
+    public static int research_health;
+    public static int research_wall_health;
+    public static int research_pierce;
+    public static float research_range;
+    public static float research_firerate;
+    public static float research_bulletspeed;
+    public static float research_gold_time;
+    public static int research_gold_yield;
+    public static int research_gold_storage;
+    public static float research_essence_time;
+    public static int research_essence_yield;
+    public static int research_essence_storage;
+    public static float research_iridium_time;
+    public static int research_iridium_yield;
+    public static int research_iridium_storage;
+    public static float research_construction_speed;
+    public static int research_construction_placements;
+    public static float research_resource_speed;
+    public static int research_resource_collections;
+    public static int research_resource_amount;
+    public static float research_resource_range;
+    public static float research_combat_speed;
+    public static float research_fixer_speed;
+    public static int research_fixer_amount;
+    public static int research_combat_targets;
+    public static bool research_explosive_storages;
+    public static bool research_explosive_defenses;
+    public static bool research_explosive_collectors;
+    public static int research_research_speed;
+    public static bool research_fixer_drones;
+    public static bool research_combat_drones;
 
     // Research UI stuff
     public Researchable Researching;
     public GameObject ResearchBackground;
     public ProgressBar ResearchBar;
-    public static int LabsAvailable = 0;
-    public static bool ResearchUnlocked = false;
-    public static bool ResearchActive = false;
-    public int resourcesNeeded = 0;
-    public int resourcesTracked = 0;
-    public int goldNeeded = 0;
-    public int goldTracked = 0;
-    public int essenceNeeded = 0;
-    public int essenceTracked = 0;
-    public int iridiumNeeded = 0;
-    public int iridiumTracked = 0;
-    public float researchSpeed = 1f;
+    public static int LabsAvailable;
+    public static bool ResearchUnlocked;
+    public static bool ResearchActive;
+    public int resourcesNeeded;
+    public int resourcesTracked;
+    public int goldNeeded;
+    public int goldTracked;
+    public int essenceNeeded;
+    public int essenceTracked;
+    public int iridiumNeeded;
+    public int iridiumTracked;
+    public float researchSpeed;
+    public bool isMenu;
 
     // Movement stuff
     protected Vector2 movement;
@@ -95,6 +95,8 @@ public class Research : MonoBehaviour
     // On start
     public void Start()
     {
+        ResetResearchData();
+        if (isMenu) return;
         UpdateAllButtons();
         UpdateAllPrices();
         ResearchBackground.SetActive(false);
@@ -104,7 +106,7 @@ public class Research : MonoBehaviour
     public void Update()
     {
         // Check if research open
-        if (!SurvivalCS.UI.ResearchOpen) return;
+        if (isMenu || !SurvivalCS.UI.ResearchOpen) return;
 
         // Check if space pressed
         if (Input.GetKeyDown(KeyCode.Space)) ScreenSet();
@@ -308,7 +310,16 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "gold storage":
+
+                // Update variables and set main gold storage to 0
                 research_gold_storage += 2500;
+                SurvivalCS.goldStorage = 0;
+
+                // Iterates through storages and adds back the proper amount
+                for (int i = 0; i < BuildingHandler.storages.Count; i++)
+                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 1)
+                        SurvivalCS.goldStorage += research_gold_storage;
+
                 break;
             case "essence yield":
                 research_essence_yield += 5;
@@ -320,7 +331,16 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "essence storage":
+
+                // Update variables and set main gold storage to 0
                 research_essence_storage += 500;
+                SurvivalCS.essenceStorage = 0;
+
+                // Iterates through storages and adds back the proper amount
+                for (int i = 0; i < BuildingHandler.storages.Count; i++)
+                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 2)
+                        SurvivalCS.essenceStorage += research_essence_storage;
+
                 break;
             case "iridium yield":
                 research_iridium_yield += 5;
@@ -332,7 +352,16 @@ public class Research : MonoBehaviour
                     collector.OffsetStart();
                 break;
             case "iridium storage":
+
+                // Update variables and set main gold storage to 0
                 research_iridium_storage += 100;
+                SurvivalCS.iridiumStorage = 0;
+
+                // Iterates through storages and adds back the proper amount
+                for (int i = 0; i < BuildingHandler.storages.Count; i++)
+                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 2)
+                        SurvivalCS.iridiumStorage += research_iridium_storage;
+
                 break;
             case "burning":
                 research_burning += 5;
@@ -471,12 +500,66 @@ public class Research : MonoBehaviour
         {
             // Sets the stored research value if true
             for (int i = 0; i < data.Length; i++)
-                if (data[i]) { ResearchUnlocked = true; ApplyResearch(Researchables[i]); };
+                if (data[i]) { ApplyResearch(Researchables[i]); };
         } 
         catch
         {
             // Debugs to console that the research data does not match the current versions research structure
             Debug.Log("Mismatch in save data to research data. Skipping itteration.");
         }
+    }
+
+    // Set research values when loading data
+    public void ResetResearchData()
+    {
+        LabsAvailable = 0;
+        ResearchUnlocked = false;
+        ResearchActive = false;
+        resourcesNeeded = 0;
+        resourcesTracked = 0;
+        goldNeeded = 0;
+        goldTracked = 0;
+        essenceNeeded = 0;
+        essenceTracked = 0;
+        iridiumNeeded = 0;
+        iridiumTracked = 0;
+        researchSpeed = 1f;
+
+        research_damage = 0;
+        research_burning = 0;
+        research_freezing = 0;
+        research_poisoning = 0;
+        research_shield = 0;
+        research_health = 0;
+        research_wall_health = 0;
+        research_pierce = 0;
+        research_range = 0;
+        research_firerate = 0;
+        research_bulletspeed = 1;
+        research_gold_time = 5f;
+        research_gold_yield = 50;
+        research_gold_storage = 1000;
+        research_essence_time = 8f;
+        research_essence_yield = 25;
+        research_essence_storage = 500;
+        research_iridium_time = 12f;
+        research_iridium_yield = 10;
+        research_iridium_storage = 100;
+        research_construction_speed = 35f;
+        research_construction_placements = 1;
+        research_resource_speed = 25f;
+        research_resource_collections = 5;
+        research_resource_amount = 3;
+        research_resource_range = 50f;
+        research_combat_speed = 20f;
+        research_fixer_speed = 25f;
+        research_fixer_amount = 50;
+        research_combat_targets = 10;
+        research_explosive_storages = false;
+        research_explosive_defenses = false;
+        research_explosive_collectors = false;
+        research_research_speed = 1;
+        research_fixer_drones = false;
+        research_combat_drones = false;
     }
 }

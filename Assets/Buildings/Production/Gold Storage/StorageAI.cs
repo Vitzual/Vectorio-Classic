@@ -138,7 +138,7 @@ public class StorageAI: TileClass
             var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 20f, 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense"));
             foreach (Collider2D collider in colliders)
             {
-                if (collider.tag == "Enemy") collider.GetComponent<EnemyClass>().KillEntity();
+                if (collider.tag == "Enemy" && !collider.name.Contains("The")) collider.GetComponent<EnemyClass>().KillEntity();
                 else if (collider.tag == "Enemy Defense") collider.GetComponent<TileClass>().DestroyTile();
             }
         }

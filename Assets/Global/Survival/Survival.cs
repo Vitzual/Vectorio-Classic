@@ -324,7 +324,7 @@ public class Survival : MonoBehaviour
     private void Update()
     {
         if (isMenu) return;
-        if (UI.SettingsOpen) return;
+        if (UI.MenuOpen || UI.SettingsOpen) { CheckSettings(); return; }
 
         // Get mouse position and round to middle grid coordinate
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -347,33 +347,12 @@ public class Survival : MonoBehaviour
         // Check if user left clicks
         if (Input.GetButton("Fire1") && !UI.BuildingOpen && !UI.ResearchOpen && !UI.DroneOpen && !UI.BossInfoOpen && !UI.UOLOpen && Input.mousePosition.y >= 200)
         {
-            /* Stops spam calculations
-            if (!isObjectNull)
-            {
-                if (LastPos != transform.position)
-                    LastPos = transform.position;
-                else return;
-            }
-            */
-
             // Check if valid placement
             bool ValidTile = CheckPlacement(SelectedObj);
 
             // Raycast tile to see if there is already a tile placed
             RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
             Transform RayTarget = CheckRaycast(rayHit);
-
-            // Raycast tile to see if it is within the AOCB
-            RaycastHit2D aocbHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, AOCBLayer);
-
-            // Check the AOCB
-            if (!isObjectNull && SelectedObj.name == "Energizer")
-            {
-                var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(60, 60), 0, 1 << LayerMask.NameToLayer("AOCB"));
-                if (colliders.Length == 0) return;
-            }
-            else if (SelectedObj != null)
-                if (aocbHit.collider == null) return;
 
             // Check if placement is within AOC
             if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
@@ -476,7 +455,7 @@ public class Survival : MonoBehaviour
         if (tutorial.disableMenus) return;
 
         // Pipette a building
-        if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.MenuOpen && !UI.DroneOpen && !UI.UOLOpen)
+        if (Input.GetKeyDown(KeyCode.Mouse2) && !UI.BuildingOpen && !UI.DroneOpen && !UI.UOLOpen)
         {
             // Attempt a raycast on the tile survival is in
             RaycastHit2D[] rayHits = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer | GhostLayer);
@@ -484,7 +463,7 @@ public class Survival : MonoBehaviour
             // Set the selected object to the collider if not null
             foreach (RaycastHit2D rayHit in rayHits)
             {
-                if (rayHit.collider.transform.position == transform.position)
+                if (Vector3.Distance(rayHit.collider.transform.position, transform.position) < 5)
                 {
                     SelectObject(tech.FindTechBuildingWithName(rayHit.collider.name));
                     if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
@@ -495,7 +474,7 @@ public class Survival : MonoBehaviour
         }
 
         // Opens the building menu if E is pressed.
-        if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false && UI.UOLOpen == false)
+        if (Input.GetKeyDown(KeyCode.E) && UI.BuildingOpen == false && UI.UOLOpen == false && !UI.SettingsOpen)
         {
             if (tutorial.tutorialSlide == 8) tutorial.nextSlide();
             UI.OpenSurvivalMenu();
@@ -580,8 +559,18 @@ public class Survival : MonoBehaviour
             SelectedOverlay.SetActive(false);
         }
 
+        else CheckSettings();
+    }
+
+    public void IncreaseTime()
+    {
+        Playtime++;
+    }
+
+    public void CheckSettings()
+    {
         // If escape pressed and menu not open, open it
-        else if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false && UI.UOLOpen == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && UI.MenuOpen == false && UI.SettingsOpen == false && UI.UOLOpen == false)
         {
             UI.SaveButton.GetComponent<CanvasGroup>().interactable = true;
             UI.SaveButton.buttonText = "SAVE";
@@ -621,11 +610,6 @@ public class Survival : MonoBehaviour
 
             Time.timeScale = 1f;
         }
-    }
-
-    public void IncreaseTime()
-    {
-        Playtime++;
     }
 
     public void SetDronePort(int type)
@@ -818,32 +802,40 @@ public class Survival : MonoBehaviour
     // Checks if a unit can be placed
     public bool CheckPlacement(Transform obj)
     {
-        if (obj != null)
+        if (!isObjectNull)
         {
-            // Check for ghost variant
-            RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, GhostLayer);
-            if (rayHit.collider != null) return false;
-            if (largerUnit)
+            // Check the AOCB
+            if (SelectedObj.name == "Energizer")
             {
-                rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, GhostLayer);
-                if (rayHit.collider != null) return false;
-                rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, GhostLayer);
-                if (rayHit.collider != null) return false;
-                rayHit = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, GhostLayer);
-                if (rayHit.collider != null) return false;
+                var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(60, 60), 0, AOCBLayer);
+                if (colliders.Length == 0) return false;
+            }
+            else
+            {
+                RaycastHit2D rayHit = Physics2D.Raycast(MousePos, Vector2.zero, Mathf.Infinity, AOCBLayer);
+                if (rayHit.collider == null) return false;
+                if (largerUnit)
+                {
+                    rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, AOCBLayer);
+                    if (rayHit.collider == null) return false;
+                    rayHit = Physics2D.Raycast(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, AOCBLayer);
+                    if (rayHit.collider == null) return false;
+                    rayHit = Physics2D.Raycast(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, AOCBLayer);
+                    if (rayHit.collider == null) return false;
+                }
             }
 
             // Check for and adjust accordingly 
             RaycastHit2D[] rayHits;
-            rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+            rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer | GhostLayer);
             if (CheckRaycast(rayHits) != null) return false;
             if (largerUnit)
             {
-                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer | GhostLayer);
                 if (CheckRaycast(rayHits) != null) return false;
-                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer | GhostLayer);
                 if (CheckRaycast(rayHits) != null) return false;
-                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer);
+                rayHits = Physics2D.RaycastAll(new Vector2(MousePos.x - 5f, MousePos.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer | EnemyBuildingLayer | GhostLayer);
                 if (CheckRaycast(rayHits) != null) return false;
             }
         }

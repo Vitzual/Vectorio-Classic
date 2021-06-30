@@ -87,15 +87,6 @@ public abstract class EnemyClass : MonoBehaviour
         }
         else
         {
-            // If has explosive damage, apply it to surrounding tiles
-            if (explosiveRadius > 0 && explosiveDamage > 0)
-            {
-                var colliders = Physics2D.OverlapCircleAll(transform.position, explosiveRadius, 1 << LayerMask.NameToLayer("Building"));
-                for (int i = 0; i < colliders.Length; i++)
-                    if (Vector3.Distance(colliders[i].transform.position, transform.position) < 10)
-                        colliders[i].GetComponent<TileClass>().DamageTile(explosiveDamage);
-            }
-
             // If spawns on death, itterate through and spawn enemies
             if (spawnOnDeath.Length > 0)
             {

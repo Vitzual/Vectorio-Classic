@@ -105,7 +105,7 @@ public class BulletHandler : MonoBehaviour
         {
             BulletClass bds = Bullets[bulletID].Object.GetComponent<BulletClass>();
             if (bds.IsParticleChangeable())
-                if (other.name.Contains("Dark"))
+                if (other.name.Contains("Dark") || other.name == "The Kraken")
                     bds.SetHitEffect("DarkParticle");
                 else if (other.name.Contains("Phantom"))
                     bds.SetHitEffect("PhantomParticle");

@@ -34,6 +34,7 @@ public class SaveData
     public string WorldVersion;
     public int time;
     public int heatt;
+    public int bossesDefeated;
 
     public SaveData (Survival data, Technology unlock, WaveSpawner heat, Research research, int time = 0, int heatt = 0) 
     {
@@ -66,5 +67,6 @@ public class SaveData
         WorldVersion = Difficulties.version;
         this.time = time;
         this.heatt = heatt;
+        this.bossesDefeated = heat.bossesDefeated;
     }
 }

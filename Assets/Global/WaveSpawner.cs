@@ -263,18 +263,19 @@ public class WaveSpawner : MonoBehaviour
         }
 
         // Check for guardian spawning
-        if (htrack >= 50000) 
+        if (!bosses[2].isDefeated && htrack >= 50000) 
         { 
             maxHeat = 80000;
             startingIndex = 27;
             lastIndex = 36;
             bosses[2].isDefeated = true;
-            bossesDefeated += 1;
+            bossesDefeated = 3;
+            maxHeatAmount.text = maxHeat + " MAX";
         }
         else if (!bosses[1].isDefeated && htrack >= 25000 && !bossSpawned && !loadingSave)
         {
             Transform holder = Instantiate(bosses[1].bossObject, new Vector2(0, -SpawnRegion), Quaternion.Euler(new Vector3(0, 0, 0)));
-            holder.name = bosses[0].bossObject.name;
+            holder.name = bosses[1].bossObject.name;
             bossSpawned = true;
         }
         else if (!bosses[0].isDefeated && htrack >= 10000 && !bossSpawned && !loadingSave)
@@ -323,11 +324,15 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    public void updateBosses()
+    public void updateBosses(int a)
     {
-        if (htrack >= 50000) defeatBoss(2);
-        if (htrack >= 25000) defeatBoss(1);
-        if (htrack >= 10000) defeatBoss(0);
+        try { for (int i = 0; i < a; i++) defeatBoss(i); }
+        catch
+        {
+            if (htrack >= 50000) defeatBoss(2);
+            if (htrack >= 25000) defeatBoss(1);
+            if (htrack >= 10000) defeatBoss(0);
+        }
         loadingSave = false;
     }
 
@@ -338,7 +343,7 @@ public class WaveSpawner : MonoBehaviour
 
         // Set new values
         bosses[a].isDefeated = true;
-        bossesDefeated += 1;
+        bossesDefeated = a+1;
         bossSpawned = false;
 
         // Set new max heat
@@ -346,6 +351,8 @@ public class WaveSpawner : MonoBehaviour
         else if (a == 1) maxHeat = 50000;
         else if (a == 2) maxHeat = 80000;
         maxHeatAmount.text = maxHeat + " MAX";
+        heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
+        heatAmount.text = htrack.ToString();
 
         // Set border
         updateBorders(a+1);

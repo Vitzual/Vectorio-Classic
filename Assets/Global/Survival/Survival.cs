@@ -299,6 +299,7 @@ public class Survival : MonoBehaviour
             }
             catch (System.Exception e)
             {
+                Spawner.loadingSave = false;
                 Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
             }
@@ -308,12 +309,13 @@ public class Survival : MonoBehaviour
         {
             // New save
             tutorial.enableTutorial();
+            Spawner.loadingSave = false;
             Debug.LogError("Save data could not be loaded");
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
         }
 
         // Update bosses
-        Spawner.updateBosses();
+        Spawner.updateBosses(data.bossesDefeated);
 
         // Start auto saving
         InvokeRepeating("AutoSave", 0f, AutoSaveInterval);

@@ -17,9 +17,9 @@ public class EnemyLocater : MonoBehaviour
         float closest = float.PositiveInfinity;
         bool isTarget = false;
 
-        if (isMenu || BuildingHandler.buildings == null) return null;
+        if (isMenu || BuildingHandler.activeBuildings == null) return null;
 
-        foreach (Transform collider in BuildingHandler.buildings)
+        foreach (Transform collider in BuildingHandler.activeBuildings)
         {
             if (collider == null) continue;
 

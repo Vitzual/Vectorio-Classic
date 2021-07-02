@@ -15,7 +15,6 @@ public class StorageAI: TileClass
     {
         // Default values
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        BuildingHandler.buildings.Add(transform);
         BuildingHandler.storages.Add(this);
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         droneManager.updateResourceDrones(transform);
@@ -157,7 +156,7 @@ public class StorageAI: TileClass
         }
 
         SRVSC.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

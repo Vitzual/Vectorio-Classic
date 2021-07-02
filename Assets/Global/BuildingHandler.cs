@@ -1,15 +1,53 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BuildingHandler : MonoBehaviour
 {
-    public static List<Transform> buildings = new List<Transform>();
+    public static Technology tech;
+    public static bool isMenu = false;
+    public static List<Transform> activeBuildings = new List<Transform>();
     public static List<Transform> damagedBuildings = new List<Transform>();
     public static List<StorageAI> storages = new List<StorageAI>();
+    public static Dictionary<string, int> buildingAmount = new Dictionary<string, int>();
+
+    public void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
+        else tech = GameObject.Find("Survival").GetComponent<Technology>();
+    }
+
+    public static void addBuilding(Transform building)
+    {
+        activeBuildings.Add(building);
+        if (isMenu) return;
+
+        if (buildingAmount.ContainsKey(building.name))
+            buildingAmount[building.name] += 1;
+        else buildingAmount.Add(building.name, 1);
+
+        tech.UpdateUnlock("Place");
+    }
+
+    public static void removeBuilding(Transform building)
+    {
+        try
+        {
+            activeBuildings.Remove(building);
+            if (isMenu) return;
+
+            if (buildingAmount.ContainsKey(building.name))
+                buildingAmount[building.name] -= 1;
+            else buildingAmount.Add(building.name, 0);
+        }
+        catch { Debug.LogError("Issue while removing building " + building.name);}
+    }
 
     // 1 = gold, 2 = essence, 3 = iridium
     public static void removeStorageResources(int amount, int type)
     {
+        if (isMenu) return;
+
         for (int i = 0; i < storages.Count; i++)
         {
             if (storages[i] == null)

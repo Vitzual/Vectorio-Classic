@@ -793,6 +793,7 @@ public class DroneManager : MonoBehaviour
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
+        BuildingHandler.addBuilding(LastObj);
         survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
 

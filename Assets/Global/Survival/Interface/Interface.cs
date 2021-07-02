@@ -312,7 +312,7 @@ public class Interface : MonoBehaviour
         if (obj == null) return;
 
         // Get unlockable
-        Technology.Unlockables unlockable = main.tech.FindUnlockable(obj);
+        Technology.Unlockable unlockable = main.tech.GetUnlockableWithBuilding(obj);
         string type;
 
         if (unlockable == null)
@@ -321,7 +321,7 @@ public class Interface : MonoBehaviour
             else if (obj.name == "Drone Port" || obj.name == "Gold Collector" || obj.name == "Gold Storage") type = "Logistics";
             else return;
         }
-        else type = unlockable.Type;
+        else type = unlockable.InvType;
 
         // Get some good shit
         TileClass tileInfo = obj.GetComponent<TileClass>();

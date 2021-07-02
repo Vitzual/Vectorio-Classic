@@ -11,8 +11,7 @@ public class SaveData
     public int Essence;
     public int Iridium;
     public int HeatUsage;
-    public int UnlockLevel;
-    public bool UnlocksLeft;
+    public int[] UnlockIDs;
     public int RLevel;
     public bool[] ResearchedTiers;
     public int Difficulty;
@@ -48,8 +47,7 @@ public class SaveData
         Essence = data.essence;
         Iridium = data.iridium; 
         HeatUsage = heat.htrack;
-        UnlockLevel = unlock.UnlockAmount;
-        UnlocksLeft = unlock.UnlocksLeft;
+        UnlockIDs = unlock.GetSaveData();
         ResearchedTiers = research.GetResearchData();
         EnemyAmountMulti = Difficulties.enemyAmountMulti;
         EnemyHealthMulti = Difficulties.enemyHealthMulti;

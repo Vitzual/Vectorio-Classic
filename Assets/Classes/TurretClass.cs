@@ -66,7 +66,6 @@ public abstract class TurretClass : TileClass
         }
         else
         {
-            BuildingHandler.buildings.Add(transform);
             bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
             layer = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense");
         }

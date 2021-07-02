@@ -34,7 +34,7 @@ public class ShotgunAI : TurretClass
     {
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

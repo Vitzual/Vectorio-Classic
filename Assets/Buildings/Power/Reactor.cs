@@ -8,7 +8,6 @@ public class Reactor : TileClass
     private void Start()
     {
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
-        BuildingHandler.buildings.Add(transform);
         SRV.increaseAvailablePower(amount);
     }
 
@@ -17,7 +16,7 @@ public class Reactor : TileClass
     {
         SRV.decreasePowerConsumption(power);
         SRV.decreaseAvailablePower(amount);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);

@@ -18,7 +18,6 @@ public class WallAI : TileClass
     {
         // Set holder variables
         RaycastHit2D[] rayHits;
-        BuildingHandler.buildings.Add(transform);
 
         // Check for walls on the right
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -55,7 +54,7 @@ public class WallAI : TileClass
     {
         // Set holder variables
         RaycastHit2D[] rayHits;
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
 
         // Check for walls on the right
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);

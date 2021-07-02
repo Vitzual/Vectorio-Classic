@@ -13,7 +13,7 @@ public class HubAI : TileClass
     // On start, assign weapon variables
     void Start()
     {
-        BuildingHandler.buildings.Add(transform);
+        BuildingHandler.addBuilding(transform);
 
         foreach (Transform drone in drones)
             droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true);
@@ -42,6 +42,6 @@ public class HubAI : TileClass
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
     }
 }

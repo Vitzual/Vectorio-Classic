@@ -9,7 +9,6 @@ public class Cooler : TileClass
     // Update is called once per frame
     void Start()
     {
-        BuildingHandler.buildings.Add(transform);
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 
@@ -19,7 +18,7 @@ public class Cooler : TileClass
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

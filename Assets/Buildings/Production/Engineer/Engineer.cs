@@ -21,7 +21,6 @@ public class Engineer : TileClass
     // Called when awoken
     private void Start()
     {
-        BuildingHandler.buildings.Add(transform);
         UI = GameObject.Find("Survival").GetComponent<Interface>();
     }
 
@@ -103,7 +102,7 @@ public class Engineer : TileClass
     {
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

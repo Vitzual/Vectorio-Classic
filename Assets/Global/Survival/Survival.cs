@@ -236,11 +236,11 @@ public class Survival : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Save file contains obsolete data!");
+                Debug.Log("Save file contains obsolete data! This may cause errors while attempting to load this save...");
             }
 
             try { Playtime = data.time; }
-            catch { Debug.Log("Save file does not contain time play tracking"); Playtime = 0; }
+            catch { Debug.Log("Save file does not contain new time tracking data!"); Playtime = 0; }
 
             // Set power usage
             UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
@@ -258,7 +258,8 @@ public class Survival : MonoBehaviour
                 UI.IridiumAmount.text = iridium.ToString();
 
                 // Force tech tree update
-                tech.loadSaveData(data.UnlockLevel);
+                try { tech.LoadSaveData(data.UnlockIDs); }
+                catch { Debug.Log("Save file does not contain new unlock data!"); }
 
                 // Generate world data
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
@@ -271,6 +272,16 @@ public class Survival : MonoBehaviour
                 manager.GetComponent<Settings>().SetSound(0);
                 PlaceSavedBuildings(data.Locations);
 
+                // Update bosses
+                try
+                {
+                    Spawner.updateBosses(data.bossesDefeated);
+                }
+                catch
+                {
+                    Debug.Log("Save file does not contain new Guardian data!");
+                }
+
                 // Set power usage
                 UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
                 UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
@@ -282,7 +293,7 @@ public class Survival : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.Log("Save file contains obsolete enemy data!");
+                    Debug.Log("Save file does not contain new enemy data!");
                 }
 
                 // Update hotbar with saved ID's
@@ -292,7 +303,7 @@ public class Survival : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.Log("Save file does not contain hotbar data!");
+                    Debug.Log("Save file does not contain new hotbar data!");
                 }
 
                 manager.GetComponent<Settings>().SetSound(soundHolder);
@@ -300,7 +311,7 @@ public class Survival : MonoBehaviour
             catch (System.Exception e)
             {
                 Spawner.loadingSave = false;
-                Debug.Log("No save data was found, or the save data found was corrupt.\nStacktrace: " + e.Message + "\n" + e.StackTrace);
+                Debug.Log("The save data found was corrupt.\n\nStacktrace: " + e.Message + "\n" + e.StackTrace);
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
             }
 
@@ -310,12 +321,9 @@ public class Survival : MonoBehaviour
             // New save
             tutorial.enableTutorial();
             Spawner.loadingSave = false;
-            Debug.LogError("Save data could not be loaded");
+            Debug.LogError("No save data found. Starting new save.");
             GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
         }
-
-        // Update bosses
-        Spawner.updateBosses(data.bossesDefeated);
 
         // Start auto saving
         InvokeRepeating("AutoSave", 0f, AutoSaveInterval);
@@ -940,6 +948,7 @@ public class Survival : MonoBehaviour
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.GetComponent<TileClass>().SetHealth(a[i, 1]);
             obj.name = building.name;
+            BuildingHandler.addBuilding(obj);
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
@@ -1055,6 +1064,8 @@ public class Survival : MonoBehaviour
         PowerConsumption += a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
         UI.PowerUsage.text = PowerConsumption.ToString();
+
+        tech.UpdateUnlock("Power");
     }
 
     // Decrease power consumption by x amount
@@ -1207,7 +1218,7 @@ public class Survival : MonoBehaviour
         SelectedOverlay.SetActive(false);
 
         SelectedObj = obj;
-        if (obj != null && !tech.checkIfUnlocked(obj)) return;
+        if (obj != null && !tech.CheckIfUnlocked(obj)) return;
         SwitchObj();
     }
 
@@ -1218,7 +1229,7 @@ public class Survival : MonoBehaviour
         if (tutorial.tutorialSlide == 9 && obj != null && obj.name == "Gold Storage") tutorial.nextSlide();
 
         // Check if the object is unlocked
-        if (obj != null && !tech.checkIfUnlocked(obj))
+        if (obj != null && !tech.CheckIfUnlocked(obj))
         {
             UI.UpdateInfoPanel(null);
             return;
@@ -1239,7 +1250,7 @@ public class Survival : MonoBehaviour
         SettingHotbar = false;
         UI.InfoPanels[panelType].hotbarButton.buttonText = "ASSIGN TO HOTBAR";
         UI.InfoPanels[panelType].hotbarButton.UpdateUI();
-        if (!tech.checkIfUnlocked(obj)) return;
+        if (!tech.CheckIfUnlocked(obj)) return;
         if (slot < 0 || slot > hotbar.Length) return;
         hotbar[slot] = obj;
         UI.UpdateHotbar();

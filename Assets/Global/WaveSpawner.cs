@@ -239,7 +239,7 @@ public class WaveSpawner : MonoBehaviour
             heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
             heatAmount.text = htrack.ToString();
         }
-        technology.UpdateUnlock(htrack);
+        technology.UpdateUnlock("Heat");
 
         // Display alpha screen
         if (htrack >= 80000 && firstDisplay)

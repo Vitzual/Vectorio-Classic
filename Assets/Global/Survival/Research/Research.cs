@@ -60,6 +60,7 @@ public class Research : MonoBehaviour
     public int iridiumTracked;
     public float researchSpeed;
     public bool isMenu;
+    public static int amountResearched;
 
     // Movement stuff
     protected Vector2 movement;
@@ -68,6 +69,7 @@ public class Research : MonoBehaviour
 
     // Data source scripts
     public Survival SurvivalCS;
+    public Technology TechnologyCS;
 
     // Research array class
     [System.Serializable]
@@ -280,6 +282,8 @@ public class Research : MonoBehaviour
     {
         // Assign type
         string type = research.ResearchType;
+        amountResearched += 1;
+        TechnologyCS.UpdateUnlock("Research");
 
         // Apply the research
         switch (type)

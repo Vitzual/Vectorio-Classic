@@ -15,90 +15,125 @@ public class Technology : MonoBehaviour
     public bool loadingSave = false;
 
     // Unlock variables 
+    // 
+    // x1 = UnlockValue1
+    // x2 = UnlockValue2
+    //
+    // Heat = Reach x1 heat value
+    // Power = Reach x1 power value
+    // Place = Place x1 amount of building with ID x2
+    // Research = Research x1 amount of techs 
+
     public int UnlockAmount = 0;
     public bool UnlocksLeft = true;
     [System.Serializable]
-    public class Unlockables
+    public class Unlockable
     {
         public string Name;
         public Transform Building;
-        public int HeatNeeded;
+        public string UnlockType;
+        public int UnlockValue1;
+        public int UnlockValue2;
+        public int UnlockID;
         public bool Unlocked = false;
-        public string Type;
+        public string InvType;
+        public string InvUnlockDesc;
         public Image InvIcon;
         public TextMeshProUGUI InvName;
+        public ProgressBar InvBar;
     }
-    public Unlockables[] UnlockTier;
+    public Unlockable[] Unlocks;
+
+    public List<int> HeatUnlocks;
+    public List<int> PowerUnlocks;
+    public List<int> PlaceUnlocks;
+    public List<int> ResearchUnlocks;
 
     // Create unlocked list
     public List<Transform> unlocked = new List<Transform>();
 
     private void Start()
     {
-        // Assign Survival script
+        // Get scripts
         main = gameObject.GetComponent<Survival>();
-
-        // Assign Interface script
         UI = gameObject.GetComponent<Interface>();
+
+        // Go through and assign list types to lower calculation time on updates
+        for(int i = 0; i < Unlocks.Length; i++)
+        {
+            if (Unlocks[i].UnlockType == "Heat") HeatUnlocks.Add(i);
+            else if (Unlocks[i].UnlockType == "Power") PowerUnlocks.Add(i);
+            else if (Unlocks[i].UnlockType == "Place") PlaceUnlocks.Add(i);
+            else if (Unlocks[i].UnlockType == "Research") ResearchUnlocks.Add(i);
+        }
     }
 
-    public Unlockables FindUnlockable(Transform building)
+    public void UpdateUnlock(string unlockType)
     {
-        foreach (Unlockables unlockable in UnlockTier)
-            if (unlockable.Building == building)
-                return unlockable;
+        switch(unlockType)
+        {
+            case "Heat":
+                foreach (int index in HeatUnlocks)
+                    if (main.Spawner.htrack >= Unlocks[index].UnlockValue1)
+                        UnlockDefense(Unlocks[index]);
+                return;
+            case "Power":
+                foreach (int index in PowerUnlocks)
+                    if (main.PowerConsumption >= Unlocks[index].UnlockValue1)
+                        UnlockDefense(Unlocks[index]);
+                return;
+            case "Place":
+                foreach (int index in PlaceUnlocks)
+                {
+                    Transform building = FindTechBuilding(Unlocks[index].UnlockValue1);
+                    if (building != null) {
+                        if (BuildingHandler.buildingAmount.ContainsKey(building.name)
+                            && BuildingHandler.buildingAmount[name] >= Unlocks[index].UnlockValue2)
+                            UnlockDefense(Unlocks[index]);
+                    }
+                }
+                return;
+            case "Research":
+                foreach (int index in ResearchUnlocks)
+                    if (Unlocks[index].UnlockValue1 >= Research.amountResearched)
+                        UnlockDefense(Unlocks[index]);
+                return;
+            default:
+                Debug.LogError("Unlock type " + unlockType + " is not valid!");
+                return;
+        }
+    }
+
+    public Unlockable GetUnlockableWithBuilding(Transform building)
+    {
+        foreach (Unlockable unlock in Unlocks)
+            if (unlock.Building == building)
+                return unlock;
         return null;
     }
 
-    // Sets the unlock tree back to the level that was saved
-    public void loadSaveData(int unlockAmount)
+    public Unlockable GetUnlockableWithID(int ID)
     {
-        loadingSave = true;
-        UnlockAmount = unlockAmount;
-
-        // Unlock set amount of tech https://www.youtube.com/watch?v=vVrjh-1CTtQ
-        int unlockedCount = 0;
-        while (unlockedCount < unlockAmount)
-        {
-            int lowestHeat = int.MaxValue;
-            int indexOfLowestHeat = -1;
-            for (int i = 0; i < UnlockTier.Length; i++)
-            {
-                if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
-                {
-                    lowestHeat = UnlockTier[i].HeatNeeded;
-                    indexOfLowestHeat = i;
-                }
-            }
-
-            if (indexOfLowestHeat != -1)
-            {
-                // Adds the unlock transform to the unlocked list
-                addUnlocked(UnlockTier[indexOfLowestHeat].Building);
-
-                // Updates the inventory button of the unlock
-                UnlockTier[indexOfLowestHeat].InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Building.name);
-                UnlockTier[indexOfLowestHeat].InvName.text = UnlockTier[indexOfLowestHeat].Building.name.ToUpper();
-
-                // Increment unlock counter
-                unlockedCount++;
-            }
-            else
-            {
-                closeUnlockTree();
-                return;
-            }
-        }
-
-        // Start next unlock
-        loadingSave = false;
-        StartNextUnlock();
+        foreach (Unlockable unlock in Unlocks)
+            if (unlock.UnlockID == ID)
+                return unlock;
+        return null;
     }
 
-    // Set unlock level
-    public void SetUnlock(int a)
+    public int[] GetSaveData()
     {
-        UnlockAmount = a;
+        int[] unlockList = new int[Unlocks.Length];
+        for (int i = 0; i < unlockList.Length; i++)
+            if (Unlocks[i].Unlocked) unlockList[i] = Unlocks[i].UnlockID;
+        return unlockList;
+    }
+
+    public void LoadSaveData(int[] unlockList)
+    {
+        loadingSave = true;
+        for (int i = 0; i < unlockList.Length; i++)
+            UnlockDefense(GetUnlockableWithID(unlockList[i]));
+        loadingSave = false;
     }
 
     // Iterates through all buildings in the tree, and returns the correct ID
@@ -111,9 +146,9 @@ public class Technology : MonoBehaviour
                 return unlocked[i];
 
         // Backup check if the first iteration loop fails
-        for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Building.GetComponent<TileClass>().getID() == a)
-                return UnlockTier[i].Building;
+        for (int i = 0; i < Unlocks.Length; i++)
+            if (Unlocks[i].Building.GetComponent<TileClass>().getID() == a)
+                return Unlocks[i].Building;
 
         // If both fail, return null
         return null;
@@ -127,60 +162,19 @@ public class Technology : MonoBehaviour
                 return unlocked[i];
 
         // Backup check if the first iteration loop fails
-        for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Building.name == a)
-                return UnlockTier[i].Building;
+        for (int i = 0; i < Unlocks.Length; i++)
+            if (Unlocks[i].Building.name == a)
+                return Unlocks[i].Building;
 
         // If both fail, return null
         return null;
     }
 
-    // Gets called when checking if something should be unlocked
-    public void UpdateUnlock(int a)
-    {
-        if (UnlocksLeft)
-        {
-            for (int i = 0; i < UnlockTier.Length; i++)
-            {
-                if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded <= a)
-                {
-                    UnlockDefense(i);
-                    StartNextUnlock();
-                }
-            }
-        }
-    }
-
-    // Starts the next unlock 
-    public void StartNextUnlock()
-    {
-        Transform c = UI.Overlay.transform.Find("Upgrade");
-
-        int lowestHeat = int.MaxValue;
-        int indexOfLowestHeat = -1;
-
-        for (int i = 0; i < UnlockTier.Length; i++)
-            if (!UnlockTier[i].Unlocked && UnlockTier[i].HeatNeeded < lowestHeat)
-            {
-                lowestHeat = UnlockTier[i].HeatNeeded;
-                indexOfLowestHeat = i;
-            }
-
-        if (indexOfLowestHeat == -1)
-            closeUnlockTree();
-        else {
-            c.Find("Amount").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].HeatNeeded.ToString();
-            c.Find("Name").GetComponent<TextMeshProUGUI>().text = UnlockTier[indexOfLowestHeat].Building.name.ToString().ToUpper();
-            c.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + UnlockTier[indexOfLowestHeat].Building.name.ToString());
-        }
-    }
-
     // Unlocks a defense and displays to screen
-    public void UnlockDefense(int index)
+    public void UnlockDefense(Unlockable unlock)
     {
         // Increment update count
-        Unlockables unlock = UnlockTier[index];
-        UnlockAmount++;
+        if (unlock == null) return;
 
         // Set button icon and text
         unlock.InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
@@ -193,14 +187,14 @@ public class Technology : MonoBehaviour
         UI.UOL.UpdateUI();
 
         // Add the building to the unlock list
-        addUnlocked(unlock.Building);
+        AddUnlocked(unlock.Building);
 
         // Set timescale
         Time.timeScale = 0f;
     }
 
     // Checks if a building is unlocked
-    public bool checkIfUnlocked(Transform a)
+    public bool CheckIfUnlocked(Transform a)
     {
         for (int i = 0; i < unlocked.Count; i++)
         {
@@ -214,7 +208,7 @@ public class Technology : MonoBehaviour
     }
 
     // Add a new object to unlock list
-    public void addUnlocked(Transform a)
+    public void AddUnlocked(Transform a)
     {
         // Check if building is RL or E
         if (a.name == "Research Lab")
@@ -238,16 +232,16 @@ public class Technology : MonoBehaviour
         unlocked.Add(a);
 
         // Find the object in the array list
-        for (int i = 0; i < UnlockTier.Length; i++)
-            if (UnlockTier[i].Building == a)
-                UnlockTier[i].Unlocked = true;
+        for (int i = 0; i < Unlocks.Length; i++)
+            if (Unlocks[i].Building == a)
+                Unlocks[i].Unlocked = true;
     }
 
-    public void closeUnlockTree()
+    public void CloseUnlockTree()
     {
         UnlocksLeft = false;
         UI.Overlay.transform.Find("Upgrade").gameObject.SetActive(false);
-        UnlockAmount = UnlockTier.Length;
+        UnlockAmount = Unlocks.Length;
         return;
     }
 }

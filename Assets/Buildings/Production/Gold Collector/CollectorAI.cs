@@ -19,7 +19,6 @@ public class CollectorAI: TileClass
         animator = GetComponent<AnimateThenStop>();
         if (isMenu) return;
 
-        BuildingHandler.buildings.Add(transform);
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         droneManager.updateResourceDrones(transform);
 
@@ -151,7 +150,7 @@ public class CollectorAI: TileClass
     {
         GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

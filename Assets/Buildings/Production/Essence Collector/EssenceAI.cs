@@ -22,7 +22,6 @@ public class EssenceAI: TileClass
     private void Start()
     {
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        BuildingHandler.buildings.Add(transform);
         if (!isOffset) InvokeRepeating("SendEssence", 0f, Research.research_essence_time);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
@@ -96,7 +95,7 @@ public class EssenceAI: TileClass
     public override void DestroyTile()
     {
         SRVSC.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

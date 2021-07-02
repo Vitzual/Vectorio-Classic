@@ -19,7 +19,6 @@ public class Enhancer : TileClass
             GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
         }
         catch { }
-        BuildingHandler.buildings.Add(transform);
         if (SceneManager.GetActiveScene().name != "Menu")
             InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
     }
@@ -50,7 +49,7 @@ public class Enhancer : TileClass
 
         Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
         srv.decreasePowerConsumption(power);
-        BuildingHandler.buildings.Remove(transform);
+        BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
         Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);

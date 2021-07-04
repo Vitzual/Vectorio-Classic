@@ -11,6 +11,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
 
 public class Survival : MonoBehaviour
 {
@@ -259,7 +260,7 @@ public class Survival : MonoBehaviour
 
                 // Force tech tree update
                 try { tech.LoadSaveData(data.UnlockIDs); }
-                catch { Debug.Log("Save file does not contain new unlock data!"); }
+                catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
 
                 // Generate world data
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);

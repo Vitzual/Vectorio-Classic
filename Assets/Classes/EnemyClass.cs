@@ -115,6 +115,8 @@ public abstract class EnemyClass : MonoBehaviour
             if (transform.name == "The Revenant") GameObject.Find("Spawner").GetComponent<WaveSpawner>().defeatBoss(0);
             else if (transform.name == "The Kraken") GameObject.Find("Spawner").GetComponent<WaveSpawner>().defeatBoss(1);
 
+            GameObject.Find("Survival").GetComponent<Technology>().UpdateUnlock("Destroy", ID);
+
             // Instantiate death effect and destroy self
             Instantiate(Effect, transform.position, Quaternion.identity);
             Destroy(gameObject);

@@ -20,12 +20,15 @@ public class EnemyHandler : MonoBehaviour
             this.Damage = Damage;
 
             ObjectClass = Object.GetComponent<EnemyClass>();
+            if (ObjectClass != null) EnemyID = ObjectClass.ID;
+            else EnemyID = -2; // Will not update other techs
         }
 
         // Class variables
         public Transform Object { get; set; }
         public float Speed { get; set; }
         public int Damage { get; set; }
+        public int EnemyID { get; set; }
         public EnemyClass ObjectClass { get; set; }
 
     }

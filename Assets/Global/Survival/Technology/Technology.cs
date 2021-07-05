@@ -4,8 +4,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
-using UnityEditor.Events;
-using UnityEngine.Events;
 
 public class Technology : MonoBehaviour
 {
@@ -112,10 +110,11 @@ public class Technology : MonoBehaviour
             }
 
             // Set all variables grabbed 
+            Transform building = Unlocks[i].Building;
+            Unlocks[i].InvButton.onClick.AddListener(delegate { main.SetChosenObj(building); });
             Unlocks[i].InvName.text = Unlocks[i].Building.name.ToUpper();
-            UnityEventTools.AddObjectPersistentListener(Unlocks[i].InvButton.onClick, main.SetChosenObj, Unlocks[i].Building);
             Unlocks[i].ProgressDesc.text = Unlocks[i].UnlockDesc;
-            Unlocks[i].ProgressText.text = "0/" + Unlocks[i].AmountOptionalID;
+            Unlocks[i].ProgressText.text = "0/" + Unlocks[i].AmountRequirement;
             Unlocks[i].ProgressIcon.sprite = Unlocks[i].UnlockIcon;
 
             // Add unlock to proper unlock list
@@ -153,8 +152,8 @@ public class Technology : MonoBehaviour
                     if (building != null) {
                         if (BuildingHandler.buildingAmount.ContainsKey(building.name))
                         {
-                            if (BuildingHandler.buildingAmount[name] >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
-                            UpdateUnlockUI(Unlocks[index], BuildingHandler.buildingAmount[name]);
+                            if (BuildingHandler.buildingAmount[building.name] >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
+                            UpdateUnlockUI(Unlocks[index], BuildingHandler.buildingAmount[building.name]);
                         }
                     }
                 }
@@ -229,7 +228,7 @@ public class Technology : MonoBehaviour
         GenerateTree();
         loadingSave = true;
         for (int i = 0; i < unlockList.Length; i++)
-        {
+        { 
             Unlockable unlock = GetUnlockableWithID(unlockList[i]);
             UnlockDefense(unlock);
             UpdateUnlockUI(unlock, -1, true);
@@ -282,16 +281,19 @@ public class Technology : MonoBehaviour
         unlock.InvName.text = unlock.Building.name.ToUpper();
 
         // Set the UOL
-        UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
-        UI.UOL.titleText = unlock.Building.name.ToUpper();
-        UI.UOL.descriptionText = unlock.Building.GetComponent<TileClass>().description;
-        UI.UOL.UpdateUI();
+        if (!loadingSave)
+        {
+            UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
+            UI.UOL.titleText = unlock.Building.name.ToUpper();
+            UI.UOL.descriptionText = unlock.Building.GetComponent<TileClass>().description;
+            UI.UOL.UpdateUI();
+        }
 
         // Add the building to the unlock list
         AddUnlocked(unlock.Building);
 
         // Set timescale
-        Time.timeScale = 0f;
+        if (!loadingSave) Time.timeScale = 0f;
     }
 
     // Checks if a building is unlocked

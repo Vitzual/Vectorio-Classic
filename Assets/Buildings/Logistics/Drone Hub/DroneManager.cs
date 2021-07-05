@@ -14,7 +14,7 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class ConstructionDrone
     {
-        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone, int gold, int power, int heat)
+        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone, int gold, int power, int heat, bool freeBuilding = false)
         {
             this.body = body;
             this.target = target;
@@ -26,6 +26,7 @@ public class DroneManager : MonoBehaviour
             goldCost = gold;
             powerCost = power;
             heatCost = heat;
+            this.freeBuilding = freeBuilding;
 
             targetPos = target.position;
             targetPosHolder = targetPos;
@@ -42,6 +43,7 @@ public class DroneManager : MonoBehaviour
         public int goldCost;
         public int powerCost;
         public int heatCost;
+        public bool freeBuilding;
 
         public Transform body;
         public Transform target;
@@ -154,13 +156,14 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class BuildingQueue
     {
-        public BuildingQueue(Transform building, Transform buildingPos, int gold, int power, int heat)
+        public BuildingQueue(Transform building, Transform buildingPos, int gold, int power, int heat, bool isFree = false)
         {
             this.building = building;
             this.buildingPos = buildingPos;
             goldCost = gold;
             powerCost = power;
             heatCost = heat;
+            freeBuilding = isFree;
         }
 
         public Transform building;
@@ -168,6 +171,7 @@ public class DroneManager : MonoBehaviour
         public int goldCost;
         public int powerCost;
         public int heatCost;
+        public bool freeBuilding;
     }
     public List<BuildingQueue> buildingQueue;
 
@@ -513,7 +517,7 @@ public class DroneManager : MonoBehaviour
                 buildingQueue.Remove(buildingQueue[a]);
 
             // Check if adequate resources for a drone to be deployed
-            if (!tutorial.freeBuilding)
+            if (!buildingQueue[a].freeBuilding)
             {
                 if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
                 if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
@@ -543,7 +547,7 @@ public class DroneManager : MonoBehaviour
         {
             int a = available[0];
             int b = available[1];
-            registerConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, availableConstructionDrones[b].plates, availableConstructionDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost);
+            registerConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, availableConstructionDrones[b].plates, availableConstructionDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost, buildingQueue[a].freeBuilding);
             availableConstructionDrones.Remove(availableConstructionDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
             survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
@@ -766,7 +770,7 @@ public class DroneManager : MonoBehaviour
     public void placeBuilding(ConstructionDrone drone)
     {
         // Check if adequate resources for a drone to be deployed
-        if (!tutorial.freeBuilding)
+        if (!drone.freeBuilding)
         {
             if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0)
             {
@@ -848,9 +852,9 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active construction drone
-    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat)
+    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat, bool freeBuilding = false)
     {
-        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat));
+        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat, freeBuilding));
     }
 
     // Register an available construction drone
@@ -862,7 +866,13 @@ public class DroneManager : MonoBehaviour
     // Queue a building to be placed
     public void queueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
     {
-        buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat));
+        if (building.name == "Drone Port" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+            buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
+        if (building.name == "Gold Storage" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+            buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
+        if (building.name == "Gold Collector" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+            buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
+        else buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, false));
     }
 
     // Remove a queued building

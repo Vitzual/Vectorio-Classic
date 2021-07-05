@@ -12,14 +12,11 @@ public class Tutorial : MonoBehaviour
     public bool disableMoving = false;
     public bool disableMenus = false;
     public bool spaceToContinue = false;
-    
-    public bool freeBuilding = false;
 
     public void enableTutorial()
     {
         holdera.SetActive(true);
         tutorialSlides[0].SetActive(true);
-        freeBuilding = false;
         tutorialStarted = true;
         disableBuilding = true;
         disableMoving = true;
@@ -50,7 +47,6 @@ public class Tutorial : MonoBehaviour
 
         if (tutorialSlide == 16)
         {
-            freeBuilding = false;
             tutorialStarted = false;
             disableBuilding = false;
             disableMoving = false;
@@ -68,39 +64,31 @@ public class Tutorial : MonoBehaviour
                 disableBuilding = false;
                 disableMoving = false;
                 spaceToContinue = false;
-                freeBuilding = true;
                 break;
             case 4:
-                freeBuilding = false;
                 disableBuilding = true;
                 disableMoving = false;
                 disableMenus = false;
                 break;
             case 7:
                 disableBuilding = false;
-                freeBuilding = true;
                 break;
             case 8:
                 disableBuilding = true;
-                freeBuilding = false;
                 break;
             case 10:
                 disableBuilding = false;
-                freeBuilding = true;
                 break;
             case 11:
                 disableBuilding = true;
-                freeBuilding = false;
                 spaceToContinue = true;
                 break;
             case 13:
                 disableBuilding = false;
-                freeBuilding = true;
                 spaceToContinue = false;
                 break;
             case 14:
                 disableBuilding = true;
-                freeBuilding = false;
                 spaceToContinue = true;
                 break;
         }

@@ -196,7 +196,7 @@ public class Interface : MonoBehaviour
         if (UOL.isOn) UOL.CloseWindow();
         if (ResearchUnlockedWindow.isOn) ResearchUnlockedWindow.CloseWindow();
         if (EnergizerUnlockedWindow.isOn) EnergizerUnlockedWindow.CloseWindow();
-        if (Time.timeScale != 1.0f)
+        if (Time.timeScale != 1f)
             Time.timeScale = 1f;
     }
 
@@ -317,7 +317,7 @@ public class Interface : MonoBehaviour
 
         if (unlockable == null)
         {
-            if (obj.name == "Turret" || obj.name == "Wall") type = "Defense";
+            if (obj.name == "Turret" || obj.name == "Wall") type = "Defenses";
             else if (obj.name == "Drone Port" || obj.name == "Gold Collector" || obj.name == "Gold Storage") type = "Logistics";
             else return;
         }
@@ -329,7 +329,7 @@ public class Interface : MonoBehaviour
         // Iterate through
         switch (type)
         {
-            case "Defense":
+            case "Defenses":
                 TurretClass turret = obj.GetComponent<TurretClass>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.description;

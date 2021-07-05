@@ -369,7 +369,6 @@ public class Survival : MonoBehaviour
             if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
             {
                 if (tutorial.disableBuilding) return;
-                else if (tutorial.freeBuilding && droneManager.constructionDrones.Count > 0) return;
 
                 if (SelectedObj == CollectorObj)
                 {
@@ -907,11 +906,6 @@ public class Survival : MonoBehaviour
         return AOC_Size;
     }
 
-    // Set the games playback speed
-    public void SetGameSpeed(int a)
-    {
-        Time.timeScale = a;
-    }
 
     // Place building loaded from a save file
     public void PlaceSavedBuildings(int[,] a)

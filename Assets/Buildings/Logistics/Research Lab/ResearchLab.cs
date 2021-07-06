@@ -9,13 +9,8 @@ public class ResearchLab : TileClass
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void ModifyResearch()
     {
         Research.LabsAvailable -= 1;
-        GameObject.Find("Research").GetComponent<Research>().UpdateAvailable();
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));
-        Destroy(gameObject);
     }
 }

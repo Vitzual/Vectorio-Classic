@@ -41,33 +41,6 @@ public class EnemyWallAI : TileClass
         }
     }
 
-    public override void DestroyTile()
-    {
-        RaycastHit2D a = Physics2D.Raycast(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D b = Physics2D.Raycast(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D c = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        RaycastHit2D d = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
-        if (a.collider != null && a.collider.name.Contains("Enemy Wall"))
-        {
-            a.collider.GetComponent<EnemyWallAI>().UpdateSprite(-1);
-        }
-        if (b.collider != null && b.collider.name.Contains("Enemy Wall"))
-        {
-            b.collider.GetComponent<EnemyWallAI>().UpdateSprite(-3);
-        }
-        if (c.collider != null && c.collider.name.Contains("Enemy Wall"))
-        {
-            c.collider.GetComponent<EnemyWallAI>().UpdateSprite(-2);
-        }
-        if (d.collider != null && d.collider.name.Contains("Enemy Wall"))
-        {
-            d.collider.GetComponent<EnemyWallAI>().UpdateSprite(-4);
-        }
-
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
-
     public int CheckTotal()
     {
         return top + right + bottom + left;

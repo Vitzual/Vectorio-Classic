@@ -50,11 +50,10 @@ public class WallAI : TileClass
         otherWallScript.UpdateSprite(otherWallID);
     }
 
-    public override void DestroyTile()
+    public override void UpdateWalls()
     {
         // Set holder variables
         RaycastHit2D[] rayHits;
-        BuildingHandler.removeBuilding(transform);
 
         // Check for walls on the right
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
@@ -79,12 +78,6 @@ public class WallAI : TileClass
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(0, -4, rayHit.collider.GetComponent<WallAI>());
-
-        // Update other scripts
-        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
-        srv.decreasePowerConsumption(power);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 
     public int CheckTotal()

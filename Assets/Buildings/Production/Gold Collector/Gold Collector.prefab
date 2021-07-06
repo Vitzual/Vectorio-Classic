@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2412374506016095676}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
-  m_Name: Collector
+  m_Name: Gold Collector
   m_TagString: Production
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 4e90331f6e377bb419d9ba9ac0e50379, type: 3}
+  tileType: Collector
   maxhp: 25
   health: 25
   heat: 10
@@ -145,6 +146,7 @@ MonoBehaviour:
   collectorType: 1
   collected: 0
   enhanced: 0
+  isMenu: 0
   animator: {fileID: 2412374506016095676}
 --- !u!114 &2412374506016095676
 MonoBehaviour:

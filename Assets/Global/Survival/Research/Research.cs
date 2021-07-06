@@ -409,6 +409,9 @@ public class Research : MonoBehaviour
             case "research":
                 research_research_speed += 1;
                 break;
+            case "piercing":
+                research_pierce += 1;
+                break;
             default:
                 Debug.Log("The research type " + type + " is invalid.");
                 break;

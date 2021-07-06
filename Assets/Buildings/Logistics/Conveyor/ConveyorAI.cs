@@ -375,11 +375,4 @@ public class ConveyorAI : TileClass
     public Vector3 GetExitLocation() { return ExitDestination; }
     public void IncreaseNearby(int a) { Nearby += a; }
     public int GetNearbyAmount() { return Nearby; }
-
-    public override void DestroyTile()
-    {
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

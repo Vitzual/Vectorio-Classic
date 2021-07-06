@@ -25,11 +25,4 @@ public class MiniTurretAI : TurretClass
             hasTarget = false;
         }
     }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

@@ -1,7 +1,6 @@
 ﻿// This script handles all active drones each frame
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DroneManager : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class ConstructionDrone
     {
-        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone, int gold, int power, int heat, bool freeBuilding = false)
+        public ConstructionDrone(Transform body, Transform target, Transform targetBuilding, Transform spawnPosition, Transform[] plates, bool isHubDrone, int gold, int power, int heat, SpriteRenderer buildingIcon, bool freeBuilding = false)
         {
             this.body = body;
             this.target = target;
@@ -22,6 +21,8 @@ public class DroneManager : MonoBehaviour
             this.spawnPosition = spawnPosition;
             this.plates = plates;
             this.isHubDrone = isHubDrone;
+            this.buildingIcon = buildingIcon;
+            buildingIcon.sprite = Resources.Load<Sprite>("Sprites/" + targetBuilding.name);
 
             goldCost = gold;
             powerCost = power;
@@ -45,6 +46,7 @@ public class DroneManager : MonoBehaviour
         public int heatCost;
         public bool freeBuilding;
 
+        public SpriteRenderer buildingIcon;
         public Transform body;
         public Transform target;
         public Vector2 targetPos;
@@ -132,18 +134,20 @@ public class DroneManager : MonoBehaviour
     [System.Serializable]
     public class AvailableConstructionDrones
     {
-        public AvailableConstructionDrones(Transform body, Transform port, Transform[] plates, bool isHubDrone)
+        public AvailableConstructionDrones(Transform body, Transform port, Transform[] plates, SpriteRenderer buildingIcon, bool isHubDrone)
         {
             this.body = body;
             this.port = port;
             this.plates = plates;
             this.isHubDrone = isHubDrone;
+            this.buildingIcon = buildingIcon;
         }
 
         public Transform[] plates;
         public Transform body;
         public Transform port;
         public bool isHubDrone;
+        public SpriteRenderer buildingIcon;
     }
     public List<AvailableConstructionDrones> availableConstructionDrones;
 
@@ -185,6 +189,8 @@ public class DroneManager : MonoBehaviour
     public LayerMask layer;
     public bool isMenu = false;
 
+    public Sprite transparent;
+
     // Update is called once per frame
     void Update()
     {
@@ -199,7 +205,13 @@ public class DroneManager : MonoBehaviour
             // If the drone becomes null (parent is removed), remove drone and add back building to available buildings
             if (drone.body == null)
             {
+                // Update resource values
+                revertResources(drone.goldCost, drone.powerCost, drone.heatCost);
+
+                // Queue the building if not yet placed
                 if (!drone.droneReturning) queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                
+                // Remove from active pool and do not add back to inactive
                 constructionDrones.Remove(drone);
                 i--;
                 continue;
@@ -545,11 +557,23 @@ public class DroneManager : MonoBehaviour
         // Deploy drone if one found (closest)
         if (available[0] != -1)
         {
+            // Grab the index values
             int a = available[0];
             int b = available[1];
-            registerConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, availableConstructionDrones[b].plates, availableConstructionDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost, buildingQueue[a].freeBuilding);
+
+            // Update resource values
+            if(!buildingQueue[a].freeBuilding) applyResources(buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost);
+
+            // Register the construction drone
+            registerConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, 
+                availableConstructionDrones[b].plates, availableConstructionDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, 
+                buildingQueue[a].heatCost, availableConstructionDrones[b].buildingIcon, buildingQueue[a].freeBuilding);
+
+            // Remove index from the pool
             availableConstructionDrones.Remove(availableConstructionDrones[b]);
             buildingQueue.Remove(buildingQueue[a]);
+
+            // Update the UI
             survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
         }
     }
@@ -667,7 +691,8 @@ public class DroneManager : MonoBehaviour
                 if (drone.droneReturning)
                 {
                     // Reset drone so it's ready to go again
-                    registerAvailableConstructionDrone(drone.body, drone.spawnPosition, drone.plates, drone.isHubDrone);
+                    drone.buildingIcon.sprite = transparent;
+                    registerAvailableConstructionDrone(drone.body, drone.spawnPosition, drone.plates, drone.isHubDrone, drone.buildingIcon);
                     survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count - 1);
                     drone.body.position = drone.spawnPosition.position;
                     if (!drone.isHubDrone) drone.body.localScale = new Vector2(0.8f, 0.8f);
@@ -769,37 +794,13 @@ public class DroneManager : MonoBehaviour
     // Attempt to place a building
     public void placeBuilding(ConstructionDrone drone)
     {
-        // Check if adequate resources for a drone to be deployed
-        if (!drone.freeBuilding)
-        {
-            if (survival.Spawner.htrack >= survival.Spawner.maxHeat && drone.heatCost > 0)
-            {
-                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-                return;
-            }
-            if (survival.PowerConsumption >= survival.AvailablePower && drone.powerCost > 0)
-            {
-                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-                return;
-            }
-            if (drone.goldCost > survival.gold && drone.goldCost > 0)
-            {
-                queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
-                return;
-            }
-
-            // Set component values
-            survival.RemoveGold(drone.goldCost);
-        }
-        survival.increasePowerConsumption(drone.powerCost);
-        survival.Spawner.increaseHeat(drone.heatCost);
-
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
         BuildingHandler.addBuilding(LastObj);
         survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
+        drone.buildingIcon.sprite = transparent;
 
         if (tutorial.tutorialStarted)
         {
@@ -810,7 +811,8 @@ public class DroneManager : MonoBehaviour
         }
 
         // Create a UI resource popup thing idk lmaooo
-        survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
+        if (!drone.freeBuilding)
+            survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
 
         // Play audio
         float audioScale = cameraScroll.getZoom() / 1400f;
@@ -852,26 +854,45 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active construction drone
-    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat, bool freeBuilding = false)
+    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat, SpriteRenderer buildingIcon, bool freeBuilding = false)
     {
-        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat, freeBuilding));
+        constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat, buildingIcon, freeBuilding));
     }
 
     // Register an available construction drone
-    public void registerAvailableConstructionDrone(Transform body, Transform port, Transform[] plates, bool isHubDrone)
+    public void registerAvailableConstructionDrone(Transform body, Transform port, Transform[] plates, bool isHubDrone, SpriteRenderer buildingIcon)
     {
-        availableConstructionDrones.Add(new AvailableConstructionDrones(body, port, plates, isHubDrone));
+        availableConstructionDrones.Add(new AvailableConstructionDrones(body, port, plates, buildingIcon, isHubDrone));
     }
 
     // Queue a building to be placed
     public void queueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
     {
-        if (building.name == "Drone Port" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+        // Checks to see if a drone port should be counted as free or not
+        if (building.name == "Drone Port" && constructionDrones.Count == 0 && 
+            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
+            BuildingHandler.buildingAmount[building.name] == 0))
+
+            // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
-        if (building.name == "Gold Storage" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+
+        // Checks to see if a gold storage should be counted as free or not
+        else if (building.name == "Gold Storage" && constructionDrones.Count == 0 && 
+            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
+            BuildingHandler.buildingAmount[building.name] == 0))
+
+            // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
-        if (building.name == "Gold Collector" && (!BuildingHandler.buildingAmount.ContainsKey(building.name) || BuildingHandler.buildingAmount[building.name] == 0))
+
+        // Checks to see if a gold collector should be counted as free or not
+        else if (building.name == "Gold Collector" && constructionDrones.Count == 0 && 
+            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
+            BuildingHandler.buildingAmount[building.name] == 0))
+
+            // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
+
+        // Queues a building as the system normally would
         else buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, false));
     }
 
@@ -909,5 +930,19 @@ public class DroneManager : MonoBehaviour
     public void forceUI()
     {
         if (!isMenu) survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
+    }
+
+    public void applyResources(int gold, int power, int heat)
+    {
+        survival.RemoveGold(gold);
+        survival.increasePowerConsumption(power);
+        survival.Spawner.increaseHeat(heat);
+    }
+
+    public void revertResources(int gold, int power, int heat)
+    {
+        survival.AddGold(gold);
+        survival.decreaseAvailablePower(power);
+        survival.Spawner.decreaseHeat(heat);
     }
 }

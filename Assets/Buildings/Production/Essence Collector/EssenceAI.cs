@@ -90,14 +90,4 @@ public class EssenceAI: TileClass
         transform.localScale = new Vector2(1, 1);
         sizeGrowing = false;
     }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        SRVSC.decreasePowerConsumption(power);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

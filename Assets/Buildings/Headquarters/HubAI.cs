@@ -16,14 +16,16 @@ public class HubAI : TileClass
         BuildingHandler.addBuilding(transform);
 
         foreach (Transform drone in drones)
-            droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true);
+            droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, 
+                new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true, 
+                drone.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>());
 
         health = 100;
         maxhp = 100;
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void EndGame()
     {
         // Take control away from player
         GameObject.Find("Main Camera").GetComponent<CameraMovement>().enabled = false;

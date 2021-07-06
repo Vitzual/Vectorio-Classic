@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4042011882087631518}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
-  m_Name: Iridium Mine
+  m_Name: Iridium Collector
   m_TagString: Production
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8342469565711734033, guid: 6b34d1157536f9f49bf747e1a2b6d74e, type: 3}
+  tileType: Collector
   maxhp: 15
   health: 15
   heat: 45
@@ -145,6 +146,7 @@ MonoBehaviour:
   collectorType: 3
   collected: 0
   enhanced: 0
+  isMenu: 0
   animator: {fileID: 4042011882087631518}
 --- !u!114 &4042011882087631518
 MonoBehaviour:

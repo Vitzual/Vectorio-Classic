@@ -12,13 +12,8 @@ public class Reactor : TileClass
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void UpdatePower()
     {
-        SRV.decreasePowerConsumption(power);
         SRV.decreaseAvailablePower(amount);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.Euler(90f, 0f, 0f));
-        Destroy(gameObject);
     }
 }

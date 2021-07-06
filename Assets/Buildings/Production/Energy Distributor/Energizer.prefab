@@ -31,7 +31,7 @@ Transform:
   - {fileID: 7821607765504681055}
   - {fileID: 6230124583028875738}
   m_Father: {fileID: 165687244735643869}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1711705259399207453
 GameObject:
@@ -62,11 +62,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6774896206830100350}
   - {fileID: 3088888388936270030}
   - {fileID: 5216431952424366105}
   - {fileID: 7148509686931173026}
   - {fileID: 2910927284574648286}
-  - {fileID: 6774896206830100350}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 8688325068622682748, guid: a4449e3492a89b647806b6f6ac0282a3, type: 3}
+  tileType: Energizer
   maxhp: 10
   health: 10
   heat: 20
@@ -156,7 +157,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 165687244735643869}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3049411695425578066
 SpriteRenderer:
@@ -484,7 +485,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 165687244735643869}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6062574971706893741
 SpriteRenderer:
@@ -567,7 +568,7 @@ Transform:
   m_Children:
   - {fileID: 3482100034128951107}
   m_Father: {fileID: 165687244735643869}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4010355503045041650
 SpriteRenderer:
@@ -717,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 3033085084435392314, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3033085084435392318, guid: 85aaab71c1b6fda4f9a37cab0136f4d9,
         type: 3}

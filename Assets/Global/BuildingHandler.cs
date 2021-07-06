@@ -14,7 +14,17 @@ public class BuildingHandler : MonoBehaviour
     public void Start()
     {
         if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
-        else tech = GameObject.Find("Survival").GetComponent<Technology>();
+        else
+        {
+            tech = GameObject.Find("Survival").GetComponent<Technology>();
+            isMenu = false;
+        }
+
+        // Reset all lists (this doesn't happe on scene change)
+        activeBuildings = new List<Transform>();
+        damagedBuildings = new List<Transform>();
+        storages = new List<StorageAI>();
+        buildingAmount = new Dictionary<string, int>();
     }
 
     public static void addBuilding(Transform building)
@@ -28,6 +38,7 @@ public class BuildingHandler : MonoBehaviour
 
         tech.UpdateUnlock("Place");
     }
+
 
     public static void removeBuilding(Transform building)
     {

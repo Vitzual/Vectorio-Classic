@@ -129,7 +129,7 @@ public class Interface : MonoBehaviour
     public void CreatePippeteSquare(Vector3 position)
     {
         GameObject ResourceObject = Instantiate(PipettePopup, new Vector3(position.x, position.y, position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
-        ResourceObject.transform.parent = IngameCanvas.transform;
+        ResourceObject.transform.SetParent(IngameCanvas.transform);
     }
 
     public void DisplayAutosave()

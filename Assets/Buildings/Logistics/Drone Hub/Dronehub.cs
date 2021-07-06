@@ -29,6 +29,7 @@ public class Dronehub : TileClass
     // Animation variables
     public bool isAnimating;
     public float animSpeed = 1f;
+    public SpriteRenderer buildingIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +71,7 @@ public class Dronehub : TileClass
                 activeDrone.name = constructorDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
+                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false, activeDrone.GetChild(0).GetComponent<SpriteRenderer>());
                 droneManager.forceUI();
                 resourcePort = false;
                 droneManager.forceCheckAvailableDrones();
@@ -86,25 +87,9 @@ public class Dronehub : TileClass
                 resourcePort = true;
                 break;
             case 3:
-                if (activeDrone != null) Destroy(activeDrone.gameObject);
-                activeDrone = Instantiate(combatDrone, transform.position, Quaternion.identity);
-                activeDrone.name = combatDrone.name;
-                activeDrone.parent = transform;
-                activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false);
+                Debug.Log("No drone type 3");
                 resourcePort = false;
                 break;
         }
-    }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
-        srv.decreasePowerConsumption(power);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }

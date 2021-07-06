@@ -12,13 +12,8 @@ public class Solar : TileClass
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void UpdatePower()
     {
-        SRV.decreasePowerConsumption(power);
         SRV.decreaseAvailablePower(amount);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }

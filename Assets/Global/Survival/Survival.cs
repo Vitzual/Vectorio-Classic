@@ -428,8 +428,6 @@ public class Survival : MonoBehaviour
         // If user right clicks, remove object
         else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.DroneOpen)
         {
-            if (tutorial.tutorialStarted) return;
-
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
             Transform RayTarget = CheckRaycast(rayHit);
@@ -440,12 +438,17 @@ public class Survival : MonoBehaviour
                 TileClass rayScript = RayTarget.GetComponent<TileClass>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
-                int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
-                AddGold(amount, true);
-                rayScript.DestroyTile();
 
-                // Create a UI resource popup thing idk lmaooo
-                UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
+                // Check if tile is an essential resource and the amount is not less then 2
+                if ((RayTarget.name == "Drone Port" || RayTarget.name == "Gold Collector" || RayTarget.name == "Gold Storage") &&
+                    BuildingHandler.buildingAmount.ContainsKey(RayTarget.name) && BuildingHandler.buildingAmount[RayTarget.name] > 1)
+                {
+                    int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
+                    AddGold(amount, true);
+                    UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
+                    rayScript.DestroyTile(true);
+                }
+                else rayScript.DestroyTile(false);
             }
             else
             {
@@ -476,7 +479,6 @@ public class Survival : MonoBehaviour
                 if (Vector3.Distance(rayHit.collider.transform.position, transform.position) < 5)
                 {
                     SelectObject(tech.FindTechBuildingWithName(rayHit.collider.name));
-                    if (rayHit.collider.name != "Energizer") rayHit.collider.GetComponent<AnimateThenStop>().enabled = true;
                     AudioSource.PlayClipAtPoint(pipetteSound, rayHit.collider.transform.position, Settings.soundVolume);
                     UI.CreatePippeteSquare(rayHit.collider.transform.position);
                 }
@@ -631,40 +633,25 @@ public class Survival : MonoBehaviour
     // Updates the gold storage
     public void UpdateGoldStorage(int amount)
     {
-        gold -= amount;
+        RemoveGold(amount);
         goldStorage -= Research.research_gold_storage;
-
-        if (gold > goldStorage)
-            gold = goldStorage;
-
         UI.GoldStorage.text = goldStorage + " MAX";
-        UI.GoldAmount.text = gold.ToString();
     }
 
     // Updates the essence storage
     public void UpdateEssenceStorage(int amount)
     {
-        essence -= amount;
+        RemoveEssence(amount);
         essenceStorage -= Research.research_essence_storage;
-
-        if (essence > essenceStorage)
-            essence = essenceStorage;
-
         UI.EssenceStorage.text = essenceStorage + " MAX";
-        UI.EssenceAmount.text = essence.ToString();
     }
 
     // Updates the iridium storage
     public void UpdateIridiumStorage(int amount)
     {
-        iridium -= amount;
+        RemoveIridium(amount);
         iridiumStorage -= Research.research_iridium_storage;
-
-        if (iridium > iridiumStorage)
-            iridium = iridiumStorage;
-
         UI.IridiumStorage.text = iridiumStorage + " MAX";
-        UI.IridiumAmount.text = iridium.ToString();
     }
 
     // Set the last object that was hit
@@ -1100,6 +1087,7 @@ public class Survival : MonoBehaviour
     public void RemoveGold(int a)
     {
         gold -= a;
+        if (gold < 0) gold = 0;
         BuildingHandler.removeStorageResources(a, 1);
         UI.GoldAmount.text = gold.ToString();
     }
@@ -1117,6 +1105,7 @@ public class Survival : MonoBehaviour
     public void RemoveEssence(int a)
     {
         essence -= a;
+        if (essence < 0) essence = 0;
         BuildingHandler.removeStorageResources(a, 2);
         UI.EssenceAmount.text = essence.ToString();
     }
@@ -1134,6 +1123,7 @@ public class Survival : MonoBehaviour
     public void RemoveIridium(int a)
     {
         iridium -= a;
+        if (iridium < 0) iridium = 0;
         BuildingHandler.removeStorageResources(a, 3);
         UI.IridiumAmount.text = iridium.ToString();
     }

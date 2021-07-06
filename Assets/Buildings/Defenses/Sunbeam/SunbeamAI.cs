@@ -51,15 +51,4 @@ public class SunbeamAI : TurretClass
             hasTarget = false;
         }
     }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
-        srv.decreasePowerConsumption(power);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

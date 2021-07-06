@@ -130,7 +130,7 @@ public class StorageAI: TileClass
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void UpdateStorage()
     {
         if (Research.research_explosive_storages)
         {
@@ -138,7 +138,6 @@ public class StorageAI: TileClass
             foreach (Collider2D collider in colliders)
             {
                 if (collider.tag == "Enemy" && !collider.name.Contains("The")) collider.GetComponent<EnemyClass>().KillEntity();
-                else if (collider.tag == "Enemy Defense") collider.GetComponent<TileClass>().DestroyTile();
             }
         }
 
@@ -154,11 +153,5 @@ public class StorageAI: TileClass
                 SRVSC.UpdateIridiumStorage(amount);
                 break;
         }
-
-        SRVSC.decreasePowerConsumption(power);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }

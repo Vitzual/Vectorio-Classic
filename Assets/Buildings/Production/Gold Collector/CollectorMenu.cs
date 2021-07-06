@@ -61,11 +61,4 @@ public class CollectorMenu: TileClass
             GoldScript.RegisterNewCoin(Object.transform, Destination, ConveyorScript, ConveyorScript.GetEntranceLocation(), 1);
         }
     }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

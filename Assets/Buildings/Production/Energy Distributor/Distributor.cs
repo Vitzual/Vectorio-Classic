@@ -17,25 +17,13 @@ public class Distributor : TileClass
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 
-    // Kill defense
-    public override void DestroyTile()
+    public override void UpdateEnergizer()
     {
-        // Destroy buildings in the area
+        // Check if there is still an AOCB tile under each building
         var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
-        {
             if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
-            {
-                try
-                {
-                    colliders[i].GetComponent<TileClass>().UpdatePower(AOCB);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-        }
+                colliders[i].GetComponent<TileClass>().UpdatePower(transform.GetChild(0));
 
         // Destroy ghost buildings in the area
         DroneManager droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
@@ -54,12 +42,6 @@ public class Distributor : TileClass
             }
         }
 
-        transform.Find("AOCB").gameObject.SetActive(false);
-        Survival srv = GameObject.Find("Survival").GetComponent<Survival>();
-        srv.decreasePowerConsumption(power);
-        BuildingHandler.removeBuilding(transform);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, transform.rotation * Quaternion.Euler(90f, 0f, 0f));
-        Destroy(gameObject);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

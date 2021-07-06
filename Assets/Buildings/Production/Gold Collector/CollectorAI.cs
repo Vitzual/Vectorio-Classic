@@ -144,14 +144,4 @@ public class CollectorAI: TileClass
     {
         return transform;
     }
-
-    // Kill defense
-    public override void DestroyTile()
-    {
-        GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
-        BuildingHandler.removeBuilding(transform);
-        Instantiate(Effect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
 }

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class TileClass : MonoBehaviour
+public class TileClass : MonoBehaviour
 {
     // Tile class variables
     [SerializeField]
     protected ParticleSystem Effect;
-    protected Difficulties difficulties;
+    public string tileType = "Default";
     public float maxhp = 1;
     public float health = 1;
     public int heat = 1;
@@ -31,11 +31,6 @@ public abstract class TileClass : MonoBehaviour
     }
     public EngineerMods[] EngineerModifications;
 
-    private void Start()
-    {
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
-    }
-
     // Engineer variables
     public List<int> AppliedModification = new List<int>();
 
@@ -44,9 +39,62 @@ public abstract class TileClass : MonoBehaviour
 
     // Create empty applyModification() method
     public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain a modification with ID " + modID); }
+    public virtual void UpdateWalls() { Debug.Log(transform.name + " is not a wall!"); }
+    public virtual void UpdateStorage() { Debug.Log(transform.name + " is not a storage!"); }
+    public virtual void UpdatePower() { Debug.Log(transform.name + " does not produce power!"); }
+    public virtual void UpdateEnergizer() { Debug.Log(transform.name + " is not an energizer!"); }
+    public virtual void UpdateEnhancer() { Debug.Log(transform.name + " is not an enhancer!"); }
+    public virtual void EndGame() { Debug.Log(transform.name + " is not allowed to end the game!"); }
+    public virtual void ModifyResearch() { Debug.Log(transform.name + " is not allowed to modify research!"); }
 
     // Abstract methods
-    public abstract void DestroyTile();
+    public void DestroyTile(bool takeResources)
+    {
+        switch (tileType)
+        {
+            // If the building is of type storage, decrease storage capacity
+            case "Storage":
+                UpdateStorage();    
+                break;
+
+            // If the building is of type power, decrease available power
+            case "Power":
+                UpdatePower();
+                break;
+
+            // If the building is of type energizer, destroy buildings in the area
+            case "Energizer":
+                UpdateEnergizer();
+                break;
+
+            // If the building is of type wall, update nearby walls
+            case "Wall":
+                UpdateWalls();
+                break;
+
+            // If the building is of type enhancer, update the enhancer
+            case "Enhancer":
+                UpdateEnhancer();
+                break;
+
+            // If the building is the hub, end the game
+            case "Hub":
+                EndGame();
+                break;
+        }
+
+        // If take resources set true, remove heat and power
+        if (takeResources)
+        {
+            GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
+            GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
+        }
+
+        // Remove building from the building handler
+        BuildingHandler.removeBuilding(transform);
+        Instantiate(Effect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
     // Returns the modification time of a unit
     public int GetModificationTime(int modID)
@@ -73,7 +121,7 @@ public abstract class TileClass : MonoBehaviour
         RaycastHit2D[] aocbHit = Physics2D.RaycastAll(transform.position, Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("AOCB"));
         foreach (RaycastHit2D ray in aocbHit)
             if (ray.collider.transform != null && ray.collider.transform != sender) return;
-        DestroyTile();
+        DestroyTile(true);
     }
 
     // Apply damage to entity
@@ -82,7 +130,7 @@ public abstract class TileClass : MonoBehaviour
         health -= dmgRecieved;
         if (health + Research.research_health <= 0)
         {
-            DestroyTile();
+            DestroyTile(true);
             return true;
         }
 

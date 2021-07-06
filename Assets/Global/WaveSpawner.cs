@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using TMPro;
-using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -326,9 +325,15 @@ public class WaveSpawner : MonoBehaviour
 
     public void updateBosses(int a)
     {
-        try { for (int i = 0; i < a; i++) defeatBoss(i); }
+        try 
+        {
+            Debug.Log(a + " bosse(s) defeated. Setting to save.");
+            for (int i = 0; i < a; i++) defeatBoss(i);
+        }
         catch
         {
+            Debug.Log("Save does not contain boss tracking data");
+
             if (htrack >= 50000) defeatBoss(2);
             if (htrack >= 25000) defeatBoss(1);
             if (htrack >= 10000) defeatBoss(0);
@@ -340,6 +345,9 @@ public class WaveSpawner : MonoBehaviour
     {
         // Show info
         if (!loadingSave) { displayBossDestroyed(a); }
+
+        // Update tech tree
+        technology.UpdateUnlock("Boss", a);
 
         // Set new values
         bosses[a].isDefeated = true;

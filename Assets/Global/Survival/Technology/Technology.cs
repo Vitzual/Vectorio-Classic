@@ -64,6 +64,7 @@ public class Technology : MonoBehaviour
     public List<int> PlaceUnlocks;
     public List<int> ResearchUnlocks;
     public List<int> DestroyUnlocks;
+    public List<int> BossUnlocks;
 
     // Create unlocked list
     public List<Transform> unlocked = new List<Transform>();
@@ -123,6 +124,7 @@ public class Technology : MonoBehaviour
             else if (Unlocks[i].UnlockType == "Place") PlaceUnlocks.Add(i);
             else if (Unlocks[i].UnlockType == "Research") ResearchUnlocks.Add(i);
             else if (Unlocks[i].UnlockType == "Destroy") DestroyUnlocks.Add(i);
+            else if (Unlocks[i].UnlockType == "Boss") BossUnlocks.Add(i);
         }
     }
 
@@ -147,7 +149,7 @@ public class Technology : MonoBehaviour
             case "Place":
                 foreach (int index in PlaceUnlocks)
                 {
-                    if (Unlocks[index].Unlocked) return;
+                    if (Unlocks[index].Unlocked) continue;
                     Transform building = FindTechBuilding(Unlocks[index].AmountOptionalID);
                     if (building != null) {
                         if (BuildingHandler.buildingAmount.ContainsKey(building.name))
@@ -177,6 +179,17 @@ public class Technology : MonoBehaviour
                     }
                 }
                 return;
+            case "Boss":
+                foreach(int index in BossUnlocks)
+                {
+                    if (!Unlocks[index].Unlocked && Unlocks[index].AmountOptionalID == arg)
+                    {
+                        Unlocks[index].AmountTracked = 1;
+                        UnlockDefense(Unlocks[index]);
+                        UpdateUnlockUI(Unlocks[index], Unlocks[index].AmountTracked);
+                    }
+                }
+                return;
             default:
                 Debug.LogError("Unlock type " + unlockType + " is not valid!");
                 return;
@@ -185,7 +198,7 @@ public class Technology : MonoBehaviour
 
     public void UpdateUnlockUI(Unlockable unlock, int amount, bool loading = false)
     {
-        if (unlock.AmountRequirement == amount || loading)
+        if (loading || unlock.AmountRequirement == amount)
         {
             unlock.Progress.gameObject.SetActive(false);
             unlock.InvName.fontSize = 30;
@@ -230,6 +243,7 @@ public class Technology : MonoBehaviour
         for (int i = 0; i < unlockList.Length; i++)
         { 
             Unlockable unlock = GetUnlockableWithID(unlockList[i]);
+            if (unlock == null) continue;
             UnlockDefense(unlock);
             UpdateUnlockUI(unlock, -1, true);
         }

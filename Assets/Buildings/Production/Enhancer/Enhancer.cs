@@ -34,7 +34,7 @@ public class Enhancer : TileClass
     }
 
     // Kill defense
-    public override void DestroyTile()
+    public override void UpdateEnhancer()
     {
         var colliders = Physics2D.OverlapBoxAll(this.gameObject.transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)

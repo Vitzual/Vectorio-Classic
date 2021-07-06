@@ -26,7 +26,7 @@ public class RevenantAI : BossClass
                 try
                 {
                     Debug.Log(collider.name + " X");
-                    collider.GetComponent<TileClass>().DestroyTile();
+                    collider.GetComponent<TileClass>().DestroyTile(true);
                 }
                 catch{ return; }
             }

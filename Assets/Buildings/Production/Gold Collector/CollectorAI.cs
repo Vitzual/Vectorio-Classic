@@ -26,17 +26,17 @@ public class CollectorAI: TileClass
             case 1:
                 if (Research.research_gold_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
-                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 1f);
+                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 2f);
                 return;
             case 2:
                 if (Research.research_essence_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
-                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 1f);
+                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 2f);
                 return;
             case 3:
                 if (Research.research_iridium_time >= 1 && !isOffset)
                     InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);
-                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 1f);
+                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 2f);
                 return;
         }
     }
@@ -50,7 +50,7 @@ public class CollectorAI: TileClass
         {
             case 1:
                 CancelInvoke("IncreaseGold");
-                if (Research.research_gold_time >= 1)
+                if (Research.research_gold_time >= 0.5f)
                 {
                     yield return new WaitForSeconds(Random.Range(0f, Research.research_gold_time));
                     if (this != null) InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
@@ -58,12 +58,12 @@ public class CollectorAI: TileClass
                 else
                 {
                     yield return new WaitForSeconds(Random.Range(0f, 5f));
-                    if (this != null) InvokeRepeating("IncreaseGold", 0f, 5f);
+                    if (this != null) InvokeRepeating("IncreaseGold", 0f, 2f);
                 }
                 break;
             case 2:
                 CancelInvoke("IncreaseEssence");
-                if (Research.research_essence_time >= 1)
+                if (Research.research_essence_time >= 0.5f)
                 {
                     yield return new WaitForSeconds(Random.Range(0f, Research.research_essence_time));
                     if (this != null) InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
@@ -76,7 +76,7 @@ public class CollectorAI: TileClass
                 break;
             case 3:
                 CancelInvoke("IncreaseIridium");
-                if (Research.research_iridium_time >= 1)
+                if (Research.research_iridium_time >= 0.5f)
                 {
                     yield return new WaitForSeconds(Random.Range(0f, Research.research_iridium_time));
                     if (this != null) InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);

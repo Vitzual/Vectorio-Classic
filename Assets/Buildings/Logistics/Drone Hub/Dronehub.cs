@@ -6,6 +6,10 @@ public class Dronehub : TileClass
     // Drone logic registrar script
     public DroneManager droneManager;
 
+    // Lights
+    public GameObject BlueLight;
+    public GameObject YellowLight;
+
     // Drone variables
     public bool droneActive = false;
     public int checkDrone = 0;
@@ -75,6 +79,8 @@ public class Dronehub : TileClass
                 droneManager.forceUI();
                 resourcePort = false;
                 droneManager.forceCheckAvailableDrones();
+                BlueLight.SetActive(true);
+                YellowLight.SetActive(false);
                 break;
             case 2:
                 if (!droneManager.isMenu && droneManager.tutorial.tutorialSlide == 5) droneManager.tutorial.nextSlide();
@@ -85,6 +91,8 @@ public class Dronehub : TileClass
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
                 resourceScript = droneManager.registerResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
                 resourcePort = true;
+                BlueLight.SetActive(false);
+                YellowLight.SetActive(true);
                 break;
             case 3:
                 Debug.Log("No drone type 3");

@@ -366,7 +366,7 @@ public class Survival : MonoBehaviour
             Transform RayTarget = CheckRaycast(rayHit);
 
             // Check if placement is within AOC
-            if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size+5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size+5)
+            if (ValidTile && RayTarget == null && !isObjectNull && transform.position.x <= AOC_Size && transform.position.x >= -AOC_Size + 5 && transform.position.y <= AOC_Size && transform.position.y >= -AOC_Size + 5)
             {
                 if (tutorial.disableBuilding) return;
 
@@ -426,7 +426,7 @@ public class Survival : MonoBehaviour
         }
 
         // If user right clicks, remove object
-        else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.DroneOpen)
+        else if (Input.GetButton("Fire2") && !UI.BuildingOpen && !UI.DroneOpen && !tutorial.disableBuilding)
         {
             //Overlay.transform.Find("Hovering Stats").GetComponent<CanvasGroup>().alpha = 0;
             RaycastHit2D[] rayHit = Physics2D.RaycastAll(MousePos, Vector2.zero, Mathf.Infinity, TileLayer);
@@ -441,14 +441,17 @@ public class Survival : MonoBehaviour
 
                 // Check if tile is an essential resource and the amount is not less then 2
                 if ((RayTarget.name == "Drone Port" || RayTarget.name == "Gold Collector" || RayTarget.name == "Gold Storage") &&
-                    BuildingHandler.buildingAmount.ContainsKey(RayTarget.name) && BuildingHandler.buildingAmount[RayTarget.name] > 1)
+                    (!BuildingHandler.buildingAmount.ContainsKey(RayTarget.name) || BuildingHandler.buildingAmount[RayTarget.name] <= 1))
+                {
+                    rayScript.DestroyTile(false);
+                }
+                else
                 {
                     int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
                     AddGold(amount, true);
                     UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
                     rayScript.DestroyTile(true);
                 }
-                else rayScript.DestroyTile(false);
             }
             else
             {

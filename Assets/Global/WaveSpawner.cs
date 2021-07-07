@@ -325,7 +325,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void updateBosses(int a)
     {
-        try 
+        try
         {
             Debug.Log(a + " bosse(s) defeated. Setting to save.");
             for (int i = 0; i < a; i++) defeatBoss(i);
@@ -333,11 +333,12 @@ public class WaveSpawner : MonoBehaviour
         catch
         {
             Debug.Log("Save does not contain boss tracking data");
-
-            if (htrack >= 50000) defeatBoss(2);
-            if (htrack >= 25000) defeatBoss(1);
-            if (htrack >= 10000) defeatBoss(0);
         }
+
+        // Backup for older saves (temp)
+        if (!bosses[0].isDefeated && htrack >= 10000) defeatBoss(0);
+        if (!bosses[1].isDefeated && htrack >= 25000) defeatBoss(1);
+        if (!bosses[2].isDefeated && htrack >= 50000) defeatBoss(2);
         loadingSave = false;
     }
 
@@ -355,9 +356,9 @@ public class WaveSpawner : MonoBehaviour
         bossSpawned = false;
 
         // Set new max heat
-        if (a == 0) maxHeat = 25000;
-        else if (a == 1) maxHeat = 50000;
-        else if (a == 2) maxHeat = 80000;
+        if (a == 0 && maxHeat < 25000) maxHeat = 25000;
+        else if (a == 1 && maxHeat < 50000) maxHeat = 50000;
+        else if (a == 2 && maxHeat < 80000) maxHeat = 80000;
         maxHeatAmount.text = maxHeat + " MAX";
         heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
         heatAmount.text = htrack.ToString();

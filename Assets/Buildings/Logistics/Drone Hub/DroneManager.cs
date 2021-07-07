@@ -916,6 +916,8 @@ public class DroneManager : MonoBehaviour
         {
             if (constructionDrones[i].targetPos == new Vector2(ghost.position.x, ghost.position.y))
             {
+                revertResources(constructionDrones[i].goldCost, constructionDrones[i].powerCost, constructionDrones[i].heatCost);
+
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
                 returnConstructionToParent(constructionDrones[i]);
@@ -942,7 +944,7 @@ public class DroneManager : MonoBehaviour
     public void revertResources(int gold, int power, int heat)
     {
         survival.AddGold(gold);
-        survival.decreaseAvailablePower(power);
+        survival.decreasePowerConsumption(power);
         survival.Spawner.decreaseHeat(heat);
     }
 }

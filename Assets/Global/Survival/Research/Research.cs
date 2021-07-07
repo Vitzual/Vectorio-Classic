@@ -308,7 +308,7 @@ public class Research : MonoBehaviour
                 research_gold_yield += 5;
                 break;
             case "gold time":
-                research_gold_time -= 1;
+                research_gold_time -= 0.5f;
                 CollectorAI[] allGoldCollectors = FindObjectsOfType<CollectorAI>();
                 foreach (CollectorAI collector in allGoldCollectors)
                     collector.OffsetStart();
@@ -543,8 +543,8 @@ public class Research : MonoBehaviour
         research_range = 0;
         research_firerate = 0;
         research_bulletspeed = 1;
-        research_gold_time = 5f;
-        research_gold_yield = 50;
+        research_gold_time = 2f;
+        research_gold_yield = 20;
         research_gold_storage = 1000;
         research_essence_time = 8f;
         research_essence_yield = 25;

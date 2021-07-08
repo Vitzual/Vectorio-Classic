@@ -47,7 +47,15 @@ public class OnSpawn : MonoBehaviour
 
     public void GenerateWorldData(string a, bool save, bool defOverride = false)
     {
-        Debug.Log("Generating world data with seed " + a);
+        try
+        {
+            Debug.Log("Generating world data with seed " + a);
+        }
+        catch
+        {
+            Debug.Log("Could not set seed properly");
+            Random.seed = Random.Range(0, 1000000000);
+        }
 
         // Sets the seed - This method is deprecated but idc 
         #pragma warning disable CS0618
@@ -61,23 +69,27 @@ public class OnSpawn : MonoBehaviour
         IridiumSpawnOffset += Random.Range(20000, 30000);
 
         // If def set to override, skip difficulty setting and use default values
-        if (!defOverride)
+        try
         {
-            if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
-            if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
-            if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
+            if (!defOverride)
+            {
+                if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
+                if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
+                if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
 
-            GoldSpawnScale -= (int)(Difficulties.goldMulti / 100);
-            GoldSpawnThreshold -= Difficulties.goldMulti / 2500;
+                GoldSpawnScale -= (int)(Difficulties.goldMulti / 100);
+                GoldSpawnThreshold -= Difficulties.goldMulti / 2500;
 
-            EssenceSpawnScale -= (int)(Difficulties.essenceMulti / 100);
-            EssenceSpawnThreshold -= Difficulties.essenceMulti / 2500;
+                EssenceSpawnScale -= (int)(Difficulties.essenceMulti / 100);
+                EssenceSpawnThreshold -= Difficulties.essenceMulti / 2500;
 
-            IridiumSpawnScale -= (int)(Difficulties.iridiumMulti / 100);
-            IridiumSpawnThreshold -= Difficulties.iridiumMulti / 2500;
+                IridiumSpawnScale -= (int)(Difficulties.iridiumMulti / 100);
+                IridiumSpawnThreshold -= Difficulties.iridiumMulti / 2500;
 
-            maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
+                maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
+            }
         }
+        catch { Debug.Log("Could not set difficulty data"); }
 
         // Gen the world
         GenGold();

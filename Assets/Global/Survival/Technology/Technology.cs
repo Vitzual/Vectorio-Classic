@@ -163,7 +163,7 @@ public class Technology : MonoBehaviour
             case "Research":
                 foreach (int index in ResearchUnlocks)
                 {
-                    if (!Unlocks[index].Unlocked && Unlocks[index].AmountRequirement >= Research.amountResearched) UnlockDefense(Unlocks[index]);
+                    if (!Unlocks[index].Unlocked && Research.amountResearched >= Unlocks[index].AmountRequirement ) UnlockDefense(Unlocks[index]);
                     UpdateUnlockUI(Unlocks[index], Research.amountResearched);
                 }
                 return;

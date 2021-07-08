@@ -128,8 +128,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         // Iterate through and spawn all enemies
-        if (3 >= Random.Range(0, enemy[startingIndex].procChance)) SpawnEnemy(startingIndex);
-        for (int a=startingIndex+1; a<lastIndex; a++)
+        for (int a=startingIndex; a<lastIndex; a++)
         {
             if (htrack >= enemy[a].minHeat)
             {
@@ -225,9 +224,18 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    public void checkHeat()
+    {
+        if (htrack >= 50000 && bosses[2].isDefeated) updateBorders(3);
+        else if (htrack >= 25000 && bosses[1].isDefeated) updateBorders(2);
+        else if (htrack >= 10000 && bosses[0].isDefeated) updateBorders(1);
+        else updateBorders(0);
+    }
+
     public void increaseHeat(int a)
     {
         htrack += a;
+        checkHeat();
         if (htrack > maxHeat)
         {
             heatUI.currentPercent = 100f;
@@ -287,39 +295,51 @@ public class WaveSpawner : MonoBehaviour
 
     public void updateBorders(int a)
     {
+        setIndex(a);
         if (a == 3)
         {
-            startingIndex = 27;
-            lastIndex = 36;
-
             borders[3].SetActive(true);
             borders[2].SetActive(false);
         }
         else if (a == 2)
         {
-            startingIndex = 18;
-            lastIndex = 27;
-
             borders[3].SetActive(false);
             borders[2].SetActive(true);
             borders[1].SetActive(false);
         }
         else if (a == 1)
         {
-            startingIndex = 9;
-            lastIndex = 18;
-
             borders[2].SetActive(false);
             borders[1].SetActive(true);
             borders[0].SetActive(false);
         }
         else
         {
-            startingIndex = 0;
-            lastIndex = 9;
-
             borders[0].SetActive(true);
             borders[1].SetActive(false);
+        }
+    }
+
+    public void setIndex(int type)
+    {
+        switch(type)
+        {
+            case 0:
+                startingIndex = 0;
+                lastIndex = 9;
+                return;
+            case 1:
+                startingIndex = 9;
+                lastIndex = 18;
+                return;
+            case 2:
+                startingIndex = 18;
+                lastIndex = 27;
+                return;
+            case 3:
+                startingIndex = 27;
+                lastIndex = 36;
+                return;
         }
     }
 
@@ -339,6 +359,7 @@ public class WaveSpawner : MonoBehaviour
         if (!bosses[0].isDefeated && htrack >= 10000) defeatBoss(0);
         if (!bosses[1].isDefeated && htrack >= 25000) defeatBoss(1);
         if (!bosses[2].isDefeated && htrack >= 50000) defeatBoss(2);
+        increaseHeat(0);
         loadingSave = false;
     }
 
@@ -373,6 +394,8 @@ public class WaveSpawner : MonoBehaviour
             increaseHeat(-a);
         else
         {
+            checkHeat();
+
             htrack -= a;
             heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
             heatAmount.text = htrack.ToString();

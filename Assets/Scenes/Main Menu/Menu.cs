@@ -12,19 +12,22 @@ public class Menu : MonoBehaviour
     public static int MAX_SAVES = 10;
 
     // Menu stuff
-    public GameObject MainMenu;
     public GameObject SaveButtons;
     public GameObject MenuButtons;
     public GameObject GameButtons;
     public GameObject NewGame;
     public GameObject NewSaveGame;
     public GameObject LoadingSave;
+    public GameObject PatreonObj;
+    public CanvasGroup Title;
+    public CanvasGroup Subtitle;
     public TextMeshProUGUI SaveName;
     public ModalWindowManager ConfirmDelete;
     public Settings settings;
     public bool SaveSelected = false;
     public bool NewSelected = false;
     public bool SettingsOpen = false;
+    public bool PatreonOpen = false;
     public bool GameOpen = false;
     public int savesOnRecord = 0;
     public int lookingAtSave = -1;
@@ -164,7 +167,8 @@ public class Menu : MonoBehaviour
 
     public void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
+        if ((Input.GetKeyDown(KeyCode.Escape) && PatreonOpen)) DisablePatreon();
+        else if ((Input.GetKeyDown(KeyCode.Escape) && SaveSelected))
         {
             GameButtons.GetComponent<CanvasGroup>().alpha = 1f;
             GameButtons.GetComponent<CanvasGroup>().interactable = true;
@@ -203,13 +207,43 @@ public class Menu : MonoBehaviour
 
             NewSelected = false;
 
-            transform.Find("Title").GetComponent<CanvasGroup>().alpha = 1f;
-            transform.Find("Subtitle").GetComponent<CanvasGroup>().alpha = 1f;
+            Title.alpha = 1f;
+            Subtitle.alpha = 1f;
         }
         else if ((Input.GetKeyDown(KeyCode.Escape) && SettingsOpen))
         {
             settings.DisableMenu();
             SettingsOpen = false;
+        }
+    }
+
+    public void EnablePatreon()
+    {
+        PatreonOpen = true;
+        SaveButtons.SetActive(false);
+        MenuButtons.SetActive(false);
+        GameButtons.SetActive(false);
+        NewGame.SetActive(false);
+        NewSaveGame.SetActive(false);
+        PatreonObj.SetActive(true);
+        Title.alpha = 0f;
+        Subtitle.alpha = 0f;
+    }
+
+    public void DisablePatreon()
+    {
+        PatreonOpen = false;
+        SaveButtons.SetActive(true);
+        MenuButtons.SetActive(true);
+        GameButtons.SetActive(true);
+        NewGame.SetActive(true);
+        NewSaveGame.SetActive(true);
+        PatreonObj.SetActive(false);
+
+        if (!NewSelected)
+        {
+            Title.alpha = 1f;
+            Subtitle.alpha = 1f;
         }
     }
 
@@ -221,6 +255,16 @@ public class Menu : MonoBehaviour
     public void OpenRedditURL()
     {
         Application.OpenURL("https://www.reddit.com/r/Vectorio/");
+    }
+
+    public void OpenPatreonURL()
+    {
+        Application.OpenURL("https://www.patreon.com/vectorio");
+    }
+
+    public void OpenSoundcloudURL()
+    {
+        Application.OpenURL("https://soundcloud.com/airglowsounds");
     }
 
     public void SetSettingsState(bool a)
@@ -282,7 +326,7 @@ public class Menu : MonoBehaviour
 
     public void SelectSave()
     {
-        string SavePath = Application.persistentDataPath + "/experimental_save_" + lookingAtSave + ".vectorio";
+        string SavePath = Application.persistentDataPath + "/world_" + lookingAtSave + ".save";
 
         SetGameSave(lookingAtSave);
 
@@ -303,8 +347,8 @@ public class Menu : MonoBehaviour
             SaveButtons.GetComponent<CanvasGroup>().blocksRaycasts = false;
             SaveSelected = false;
 
-            transform.Find("Title").GetComponent<CanvasGroup>().alpha = 0f;
-            transform.Find("Subtitle").GetComponent<CanvasGroup>().alpha = 0f;
+            Title.alpha = 0f;
+            Subtitle.alpha = 0f;
         }
 
     }
@@ -326,7 +370,7 @@ public class Menu : MonoBehaviour
     {
         Difficulties.world = WorldName.text;
         Difficulties.seed = WorldSeed.text;
-        Difficulties.mode = "EXPERIMENTAL";
+        Difficulties.mode = "Version 0.2";
         Difficulties.goldMulti = GoldMulti.mainSlider.value;
         Difficulties.essenceMulti = EssenceMulti.mainSlider.value;
         Difficulties.iridiumMulti = IridiumMulti.mainSlider.value;
@@ -345,9 +389,9 @@ public class Menu : MonoBehaviour
     public void SetGameSave(int a)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/location.save";
+        string path = Application.persistentDataPath + "/location.vectorio";
         FileStream stream = new FileStream(path, FileMode.Create);
-        formatter.Serialize(stream, "/experimental_save_" + a+".vectorio");
+        formatter.Serialize(stream, "/world_" + a+".save");
         stream.Close();
     }
 }

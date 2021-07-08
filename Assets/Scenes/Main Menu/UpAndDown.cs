@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpAndDown : MonoBehaviour
 {
-    private float rotation = 3;
+    private float rotation = 2;
     private int amountToRotate = 0;
     private Vector3 scaleChange;
     private Vector3 originalSize;

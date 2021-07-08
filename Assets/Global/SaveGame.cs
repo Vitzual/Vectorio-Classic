@@ -9,14 +9,14 @@ public static class SaveSystem
 
     public static bool CheckForSave(int a)
     {
-        return File.Exists(Application.persistentDataPath + "/experimental_save_" + a+".vectorio");
+        return File.Exists(Application.persistentDataPath + "/world_" + a+".save");
     }
 
     public static string[] GetSaveStrings(int a)
     {
         // Loads the save data and returns the name
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/experimental_save_" + a+".vectorio";
+        string path = Application.persistentDataPath + "/world_" + a+ ".save";
         FileStream stream = new FileStream(path, FileMode.Open);
         SaveData data = formatter.Deserialize(stream) as SaveData;
         stream.Close();
@@ -44,28 +44,33 @@ public static class SaveSystem
 
     public static void DeleteGame(int a)
     {
-        if (File.Exists(Application.persistentDataPath + "/experimental_save_" + a + ".vectorio"))
+        if (File.Exists(Application.persistentDataPath + "/world_" + a + ".save"))
         {
-            File.Delete(Application.persistentDataPath + "/experimental_save_" + a + ".vectorio");
+            File.Delete(Application.persistentDataPath + "/world_" + a + ".save");
         }
     }
 
     public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, int time = 0, int heatt = 0)
     {
-        string SavePath = Application.persistentDataPath + "/location.save";
+        string SavePath = Application.persistentDataPath + "/location.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
 
         if (File.Exists(SavePath))
         {
             FileStream a = new FileStream(SavePath, FileMode.Open);
             SaveLocation = formatter.Deserialize(a) as string;
-            Debug.Log("Found save location: "+SaveLocation);
+            if (!SaveLocation.Contains("world"))
+            {
+                Debug.Log("Save location is invalid!");
+                SaveLocation = "/world_1.save";
+            }
+            else Debug.Log("Found save location: " + SaveLocation);
             a.Close();
         }
         else
         {
             Debug.Log("Save location could not be found, defaulting to save 1");
-            SaveLocation = "/experimental_save_1.vectorio";
+            SaveLocation = "/world_1.save";
         }
 
         string path = Application.persistentDataPath + SaveLocation;
@@ -82,20 +87,25 @@ public static class SaveSystem
     public static SaveData LoadGame()
     {
 
-        string SavePath = Application.persistentDataPath + "/location.save";
+        string SavePath = Application.persistentDataPath + "/location.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
 
         if (File.Exists(SavePath))
         {
             FileStream a = new FileStream(SavePath, FileMode.Open);
             SaveLocation = formatter.Deserialize(a) as string;
-            Debug.Log("Found save location: " + SaveLocation);
+            if (!SaveLocation.Contains("world"))
+            {
+                Debug.Log("Save location is invalid!");
+                SaveLocation = "/world_1.save";
+            }
+            else Debug.Log("Found save location: " + SaveLocation);
             a.Close();
         }
         else
         {
             Debug.Log("Save location could not be found, defaulting to save 1");
-            SaveLocation = "/experimental_save_1.vectorio";
+            SaveLocation = "/world_1.save";
         }
 
         string path = Application.persistentDataPath + SaveLocation;
@@ -119,7 +129,7 @@ public static class SaveSystem
 
     public static void SaveSettings(int width, int height, float volume, float sound, bool fullscreen, int glowMode)
     {
-        string path = Application.persistentDataPath + "/settings.save";
+        string path = Application.persistentDataPath + "/settings.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -133,7 +143,7 @@ public static class SaveSystem
 
     public static SettingsData LoadSettings()
     {
-        string path = Application.persistentDataPath + "/settings.save";
+        string path = Application.persistentDataPath + "/settings.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
         if (File.Exists(path))
         {

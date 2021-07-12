@@ -250,14 +250,6 @@ public class Survival : MonoBehaviour
             // Attempt to load save data 
             try
             {
-                // Set resource amounts
-                gold = data.Gold;
-                essence = data.Essence;
-                iridium = data.Iridium;
-                UI.GoldAmount.text = gold.ToString();
-                UI.EssenceAmount.text = essence.ToString();
-                UI.IridiumAmount.text = iridium.ToString();
-
                 // Force tech tree update
                 try { tech.LoadSaveData(data.UnlockIDs); }
                 catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
@@ -271,7 +263,7 @@ public class Survival : MonoBehaviour
                 // Attempt to place saved buildings
                 float soundHolder = manager.GetComponent<Settings>().GetSound();
                 manager.GetComponent<Settings>().SetSound(0);
-                PlaceSavedBuildings(data.Locations);
+                PlaceSavedBuildings(data);
 
                 // Update bosses
                 try
@@ -329,6 +321,8 @@ public class Survival : MonoBehaviour
         // Start auto saving
         InvokeRepeating("AutoSave", 0f, AutoSaveInterval);
         InvokeRepeating("IncreaseTime", 0f, 1f);
+        increaseAvailablePower(0);
+        increasePowerConsumption(0);
     }
 
     // Gets called once every frame
@@ -898,10 +892,11 @@ public class Survival : MonoBehaviour
 
 
     // Place building loaded from a save file
-    public void PlaceSavedBuildings(int[,] a)
+    public void PlaceSavedBuildings(SaveData data)
     {
         bool metadata = true;
-        
+        int[,] a = data.Locations;
+
         for (int i = 0; i < a.GetLength(0); i++)
         {
             Transform building = GetBuildingWithID(a[i, 0]);
@@ -942,11 +937,30 @@ public class Survival : MonoBehaviour
             // Attempt to apply metadata for storages
             else if (metadata && obj.name.Contains("Storage"))
             {
-                try { int holder = obj.GetComponent<StorageAI>().addResources(a[i, 5], true); }
+                try 
+                {
+                    // Attempt to grab the attached script
+                    StorageAI storage = obj.GetComponent<StorageAI>();
+                    int holder = storage.addResources(a[i, 5], true);
+
+                    // Add resources depedent on collector type
+                    if (storage.type == 1) AddGold(a[i, 5], false, true);
+                    else if (storage.type == 2) AddEssence(a[i, 5], false, true);
+                    else if(storage.type == 3) AddIridium(a[i, 5], false, true);
+                }
                 catch
                 {
+                    // No meta data
                     metadata = false;
                     Debug.Log("Save does not contain metadata support. Save the game again to update the save structure automatically.");
+
+                    // Reset values and add what is saved on record. Do note this can cause offsets between storages and internal values
+                    gold = 0;
+                    essence = 0;
+                    iridium = 0;
+                    AddGold(data.Gold);
+                    AddEssence(data.Essence);
+                    AddIridium(data.Iridium);
                 }
             }
 
@@ -1026,7 +1040,9 @@ public class Survival : MonoBehaviour
     {
         AvailablePower += a;
         UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
+        if (AvailablePower >= 1000000) UI.AvailablePower.text = string.Concat(AvailablePower / 100000, "M") + " MAX";
+        else if (AvailablePower >= 10000) UI.AvailablePower.text = string.Concat(AvailablePower / 1000, "K") + " MAX";
+        else UI.AvailablePower.text = AvailablePower + " MAX";
     }
 
     // Decreases available power by x amount
@@ -1062,9 +1078,10 @@ public class Survival : MonoBehaviour
     }
 
     // Add x gold to player
-    public void AddGold(int a, bool addToStorages = false)
+    public void AddGold(int a, bool addToStorages = false, bool fromSave = false)
     {
-        if (a + gold >= goldStorage)
+        Debug.Log(a);
+        if (!fromSave && a + gold >= goldStorage)
             gold = goldStorage;
         else gold += a;
         UI.GoldAmount.text = gold.ToString();
@@ -1080,8 +1097,11 @@ public class Survival : MonoBehaviour
                     i--;
                     continue;
                 }
-                a = BuildingHandler.storages[i].addResources(a, true);
-                if (a == 0) return;
+                else if (BuildingHandler.storages[i].type == 1)
+                {
+                    a = BuildingHandler.storages[i].addResources(a, true);
+                    if (a == 0) return;
+                }
             }
         }
     }
@@ -1096,12 +1116,31 @@ public class Survival : MonoBehaviour
     }
 
     // Add x essence to player
-    public void AddEssence(int a)
+    public void AddEssence(int a, bool addToStorages = false, bool fromSave = false)
     {
-        if (a + essence >= essenceStorage)
+        if (!fromSave && a + essence >= essenceStorage)
             essence = essenceStorage;
         else essence += a;
         UI.EssenceAmount.text = essence.ToString();
+
+        // This will force input resources into the storages
+        if (addToStorages)
+        {
+            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            {
+                if (BuildingHandler.storages[i].icon == null)
+                {
+                    BuildingHandler.storages.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                else if (BuildingHandler.storages[i].type == 2)
+                {
+                    a = BuildingHandler.storages[i].addResources(a, true);
+                    if (a == 0) return;
+                }
+            }
+        }
     }
 
     // Remove x essence from player
@@ -1114,12 +1153,31 @@ public class Survival : MonoBehaviour
     }
 
     // Add x iridium to player
-    public void AddIridium(int a)
+    public void AddIridium(int a, bool addToStorages = false, bool fromSave = false)
     {
-        if (a + iridium >= iridiumStorage)
+        if (!fromSave && a + iridium >= iridiumStorage)
             iridium = iridiumStorage;
         else iridium += a;
         UI.IridiumAmount.text = iridium.ToString();
+
+        // This will force input resources into the storages
+        if (addToStorages)
+        {
+            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            {
+                if (BuildingHandler.storages[i].icon == null)
+                {
+                    BuildingHandler.storages.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                else if (BuildingHandler.storages[i].type == 3)
+                {
+                    a = BuildingHandler.storages[i].addResources(a, true);
+                    if (a == 0) return;
+                }
+            }
+        }
     }
 
     // Remove x essence from player

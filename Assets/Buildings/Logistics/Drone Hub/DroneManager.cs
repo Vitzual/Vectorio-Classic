@@ -943,7 +943,7 @@ public class DroneManager : MonoBehaviour
 
     public void revertResources(int gold, int power, int heat)
     {
-        survival.AddGold(gold);
+        survival.AddGold(gold, true);
         survival.decreasePowerConsumption(power);
         survival.Spawner.decreaseHeat(heat);
     }

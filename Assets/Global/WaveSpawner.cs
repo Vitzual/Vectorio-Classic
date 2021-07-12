@@ -90,6 +90,8 @@ public class WaveSpawner : MonoBehaviour
         if (speedMulti <= 0) speedMulti = 1;
 
         attackEvery = attackEvery - (int)(Difficulties.enemyAmountMulti / 3);
+
+        setMaxHeatUI();
     }
 
     // Returns a buildings ID if unlocked
@@ -232,6 +234,13 @@ public class WaveSpawner : MonoBehaviour
         else updateBorders(0);
     }
 
+    public void setMaxHeatUI()
+    {
+        if (maxHeat >= 1000000) maxHeatAmount.text = string.Concat(maxHeat / 100000, "M") + " BOSS";
+        else if (maxHeat >= 10000) maxHeatAmount.text = string.Concat(maxHeat / 1000, "K") + " BOSS";
+        else maxHeatAmount.text = maxHeatAmount.ToString() + " BOSS";
+    }
+
     public void increaseHeat(int a)
     {
         htrack += a;
@@ -277,7 +286,7 @@ public class WaveSpawner : MonoBehaviour
             lastIndex = 36;
             bosses[2].isDefeated = true;
             bossesDefeated = 3;
-            maxHeatAmount.text = maxHeat + " MAX";
+            setMaxHeatUI();
         }
         else if (!bosses[1].isDefeated && htrack >= 25000 && !bossSpawned && !loadingSave)
         {
@@ -380,7 +389,7 @@ public class WaveSpawner : MonoBehaviour
         if (a == 0 && maxHeat < 25000) maxHeat = 25000;
         else if (a == 1 && maxHeat < 50000) maxHeat = 50000;
         else if (a == 2 && maxHeat < 80000) maxHeat = 80000;
-        maxHeatAmount.text = maxHeat + " MAX";
+        setMaxHeatUI();
         heatUI.currentPercent = ((float)htrack / maxHeat) * 100f;
         heatAmount.text = htrack.ToString();
 

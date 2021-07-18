@@ -6,7 +6,7 @@ Looking to help contribute to the games development? Take a look at the instruct
 **How to start making contributions**
 1) Contact @Vitzual#0001 on Discord.
 2) Clone the repo from the link below.
-3) Download Unity version `2019.4.17f1`
+3) Download Unity version `2020.3.2f1`
 4) Make changes / add new ideas.
 5) Upload files to your own branch!
 

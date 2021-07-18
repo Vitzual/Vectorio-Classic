@@ -134,21 +134,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 1786671999786839518, guid: 57aa66dd719190e4b8cef84bb2139fad, type: 3}
+  tileType: Default
   maxhp: 15
   health: 15
-  heat: -10
+  heat: -20
   cost: 60000
   power: 120
   ID: 8
   isBig: 0
-  description: Strong defense that lowers heat output by 10.
+  description: Strong defense that lowers heat output by 20.
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  scanThisFrame: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   range: 90
   rotationSpeed: 70
-  bulletDamage: 20
+  bulletDamage: 25
   bulletPierces: 3
   bulletAmount: 1
   bulletSpeed: 80
@@ -207,7 +210,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

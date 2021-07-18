@@ -1080,7 +1080,6 @@ public class Survival : MonoBehaviour
     // Add x gold to player
     public void AddGold(int a, bool addToStorages = false, bool fromSave = false)
     {
-        Debug.Log(a);
         if (!fromSave && a + gold >= goldStorage)
             gold = goldStorage;
         else gold += a;

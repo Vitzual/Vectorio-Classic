@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 5498526772546205255, guid: 96e51e4807d8dfe4a9381fae5c18e4e4, type: 3}
+  tileType: Default
   maxhp: 120
   health: 120
   heat: 200
@@ -63,10 +64,12 @@ MonoBehaviour:
   EngineerModifications: []
   AppliedModification: 
   isEngineered: 0
-  scanThisFrame: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   range: 70
   rotationSpeed: 110
-  bulletDamage: 100
+  bulletDamage: 60
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 80
@@ -129,7 +132,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -268,7 +271,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: f678fea97f5bfba42826b8600b318663, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -350,7 +353,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8f7ac41937c3d4a48aa642fbe7204731, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -466,7 +469,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 5ac6de0458f00be479cfbc3df71f1383, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -548,7 +551,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 14e7780b7b7d25842a48119d5b71faad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

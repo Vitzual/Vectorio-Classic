@@ -1,0 +1,393 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4281189382426257539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7015101587557265586}
+  - component: {fileID: -1399018605490003274}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7015101587557265586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281189382426257539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1399018605490003274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281189382426257539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b5b4143c796fe4695cf465c8e8334f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  survival: {fileID: 0}
+  heatUI: {fileID: 0}
+  heatAmount: {fileID: 0}
+  htrack: 0
+  enemy:
+  - name: Triangle (50-199)
+    enemyObject: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+      type: 3}
+    chance: 25
+    minHeat: 50
+    maxHeat: 199
+    amount: 1
+  - name: Triangle (200-299)
+    enemyObject: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+      type: 3}
+    chance: 25
+    minHeat: 200
+    maxHeat: 299
+    amount: 2
+  - name: Triangle (300-499)
+    enemyObject: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+      type: 3}
+    chance: 25
+    minHeat: 300
+    maxHeat: 499
+    amount: 3
+  - name: Triangle (500-999)
+    enemyObject: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+      type: 3}
+    chance: 25
+    minHeat: 500
+    maxHeat: 999
+    amount: 4
+  - name: Triangle (1000-1999)
+    enemyObject: {fileID: 6065519297016329532, guid: f4b27d00eb3b6b74696f64cc2cc038dd,
+      type: 3}
+    chance: 25
+    minHeat: 1000
+    maxHeat: 1999
+    amount: 5
+  - name: Bomber (300-499)
+    enemyObject: {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2,
+      type: 3}
+    chance: 20
+    minHeat: 300
+    maxHeat: 499
+    amount: 1
+  - name: Bomber (500-799)
+    enemyObject: {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2,
+      type: 3}
+    chance: 20
+    minHeat: 500
+    maxHeat: 799
+    amount: 2
+  - name: Bomber (800-1199)
+    enemyObject: {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2,
+      type: 3}
+    chance: 20
+    minHeat: 800
+    maxHeat: 1199
+    amount: 3
+  - name: Bomber (1200-2199)
+    enemyObject: {fileID: 6065519297016329532, guid: c5062e25ae4afcf449ff427b3e4adaa2,
+      type: 3}
+    chance: 20
+    minHeat: 1200
+    maxHeat: 2199
+    amount: 5
+  - name: Shuriken (800-1199)
+    enemyObject: {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1,
+      type: 3}
+    chance: 30
+    minHeat: 800
+    maxHeat: 1199
+    amount: 1
+  - name: Shuriken (1200-1399)
+    enemyObject: {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1,
+      type: 3}
+    chance: 30
+    minHeat: 1200
+    maxHeat: 1399
+    amount: 2
+  - name: Shuriken (1400-1799)
+    enemyObject: {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1,
+      type: 3}
+    chance: 30
+    minHeat: 1400
+    maxHeat: 1799
+    amount: 3
+  - name: Shuriken (1800-2399)
+    enemyObject: {fileID: 6065519297016329532, guid: fbeffe26a85265e4894267bcfcfd97b1,
+      type: 3}
+    chance: 30
+    minHeat: 1800
+    maxHeat: 2399
+    amount: 5
+  - name: Carrier (1000-1499)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4,
+      type: 3}
+    chance: 10
+    minHeat: 1000
+    maxHeat: 1499
+    amount: 1
+  - name: Carrier (1500-1999)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4,
+      type: 3}
+    chance: 20
+    minHeat: 1500
+    maxHeat: 1999
+    amount: 1
+  - name: Carrier (2000-6199)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c8ac2b64731ede429966803cf1d71e4,
+      type: 3}
+    chance: 20
+    minHeat: 2000
+    maxHeat: 6199
+    amount: 2
+  - name: Triangle MK2 (1400-1799)
+    enemyObject: {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc,
+      type: 3}
+    chance: 20
+    minHeat: 1400
+    maxHeat: 1799
+    amount: 1
+  - name: Triangle MK2 (1800-2199)
+    enemyObject: {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc,
+      type: 3}
+    chance: 20
+    minHeat: 1800
+    maxHeat: 2199
+    amount: 4
+  - name: Triangle MK2 (2200-6399)
+    enemyObject: {fileID: 6065519297016329532, guid: 7d4b4d7414ccf7a44bea29b6900d38dc,
+      type: 3}
+    chance: 50
+    minHeat: 2200
+    maxHeat: 6399
+    amount: 6
+  - name: Bomber MK2 (2000-2599)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7,
+      type: 3}
+    chance: 40
+    minHeat: 2000
+    maxHeat: 2599
+    amount: 2
+  - name: Bomber MK2 (2600-2999)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7,
+      type: 3}
+    chance: 50
+    minHeat: 2600
+    maxHeat: 2999
+    amount: 3
+  - name: Bomber MK2 (3000-7199)
+    enemyObject: {fileID: 6065519297016329532, guid: 6c2d52d5018f2de409d5d0a82b3deda7,
+      type: 3}
+    chance: 50
+    minHeat: 3000
+    maxHeat: 7199
+    amount: 4
+  - name: Shuriken MK2 (2200-2799)
+    enemyObject: {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2,
+      type: 3}
+    chance: 20
+    minHeat: 2200
+    maxHeat: 2799
+    amount: 2
+  - name: Shuriken MK2 (2800-3199)
+    enemyObject: {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2,
+      type: 3}
+    chance: 40
+    minHeat: 2800
+    maxHeat: 3199
+    amount: 3
+  - name: Shuriken MK2 (3200-7799)
+    enemyObject: {fileID: 6065519297016329532, guid: b6dbb3fe09f01a949976f06b742d75d2,
+      type: 3}
+    chance: 50
+    minHeat: 3200
+    maxHeat: 7799
+    amount: 4
+  - name: Dark Triangle (4000-4999)
+    enemyObject: {fileID: 6065519297016329532, guid: dcb2a9dca3130894ca18fddf87c5a6f8,
+      type: 3}
+    chance: 10
+    minHeat: 4000
+    maxHeat: 4999
+    amount: 1
+  - name: Dark Triangle (5000-5999)
+    enemyObject: {fileID: 6065519297016329532, guid: dcb2a9dca3130894ca18fddf87c5a6f8,
+      type: 3}
+    chance: 20
+    minHeat: 5000
+    maxHeat: 5999
+    amount: 2
+  - name: Dark Triangle (6000+)
+    enemyObject: {fileID: 6065519297016329532, guid: dcb2a9dca3130894ca18fddf87c5a6f8,
+      type: 3}
+    chance: 30
+    minHeat: 6000
+    maxHeat: 10000
+    amount: 3
+  - name: Dark Bomber (4400-5399)
+    enemyObject: {fileID: 6065519297016329532, guid: 86a14823f54eb524abc7611ba626ca99,
+      type: 3}
+    chance: 10
+    minHeat: 4400
+    maxHeat: 5399
+    amount: 1
+  - name: Dark Bomber (5400-6399)
+    enemyObject: {fileID: 6065519297016329532, guid: 86a14823f54eb524abc7611ba626ca99,
+      type: 3}
+    chance: 20
+    minHeat: 5400
+    maxHeat: 6399
+    amount: 2
+  - name: Dark Bomber (6400+)
+    enemyObject: {fileID: 6065519297016329532, guid: 86a14823f54eb524abc7611ba626ca99,
+      type: 3}
+    chance: 30
+    minHeat: 6400
+    maxHeat: 10000
+    amount: 3
+  - name: Dark Shuriken (4800-5799)
+    enemyObject: {fileID: 6065519297016329532, guid: e57ec123ab14d1341ad2ddc9a22232bd,
+      type: 3}
+    chance: 10
+    minHeat: 4800
+    maxHeat: 5799
+    amount: 1
+  - name: Dark Shuriken (5800-6799)
+    enemyObject: {fileID: 6065519297016329532, guid: e57ec123ab14d1341ad2ddc9a22232bd,
+      type: 3}
+    chance: 20
+    minHeat: 5800
+    maxHeat: 6799
+    amount: 2
+  - name: Dark Shuriken (6800+)
+    enemyObject: {fileID: 6065519297016329532, guid: e57ec123ab14d1341ad2ddc9a22232bd,
+      type: 3}
+    chance: 30
+    minHeat: 6800
+    maxHeat: 10000
+    amount: 3
+  - name: Dark Bomber MK2 (5200-6199)
+    enemyObject: {fileID: 6065519297016329532, guid: e256f5ce0b4c32d4eb230de6b3fa1889,
+      type: 3}
+    chance: 10
+    minHeat: 5200
+    maxHeat: 6199
+    amount: 1
+  - name: Dark Bomber MK2 (6200-7199)
+    enemyObject: {fileID: 6065519297016329532, guid: e256f5ce0b4c32d4eb230de6b3fa1889,
+      type: 3}
+    chance: 20
+    minHeat: 6200
+    maxHeat: 7199
+    amount: 2
+  - name: Dark Bomber MK2 (7200+)
+    enemyObject: {fileID: 6065519297016329532, guid: e256f5ce0b4c32d4eb230de6b3fa1889,
+      type: 3}
+    chance: 30
+    minHeat: 7200
+    maxHeat: 10000
+    amount: 3
+  - name: Dark Shuriken MK2 (5800-6799)
+    enemyObject: {fileID: 6065519297016329532, guid: f2b4c901297b4114ca14deb67a95ccb7,
+      type: 3}
+    chance: 10
+    minHeat: 5800
+    maxHeat: 6799
+    amount: 1
+  - name: Dark Shuriken MK2 (6800-7799)
+    enemyObject: {fileID: 6065519297016329532, guid: f2b4c901297b4114ca14deb67a95ccb7,
+      type: 3}
+    chance: 20
+    minHeat: 6800
+    maxHeat: 7799
+    amount: 2
+  - name: Dark Shuriken MK2 (7800+)
+    enemyObject: {fileID: 6065519297016329532, guid: f2b4c901297b4114ca14deb67a95ccb7,
+      type: 3}
+    chance: 30
+    minHeat: 7800
+    maxHeat: 10000
+    amount: 3
+  - name: Dark Carrier MK2 (6200-7199)
+    enemyObject: {fileID: 6065519297016329532, guid: bd514402c26c34244870ae236ef14dc5,
+      type: 3}
+    chance: 10
+    minHeat: 6200
+    maxHeat: 7199
+    amount: 1
+  - name: Dark Carrier MK2 (7200-8199)
+    enemyObject: {fileID: 6065519297016329532, guid: bd514402c26c34244870ae236ef14dc5,
+      type: 3}
+    chance: 20
+    minHeat: 7200
+    maxHeat: 8199
+    amount: 1
+  - name: Dark Carrier MK2 (8200+)
+    enemyObject: {fileID: 6065519297016329532, guid: bd514402c26c34244870ae236ef14dc5,
+      type: 3}
+    chance: 30
+    minHeat: 8200
+    maxHeat: 10000
+    amount: 2
+  - name: Dropship (5000-5999)
+    enemyObject: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+      type: 3}
+    chance: 5
+    minHeat: 5000
+    maxHeat: 5999
+    amount: 1
+  - name: Dropship (6000-6999)
+    enemyObject: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+      type: 3}
+    chance: 10
+    minHeat: 6000
+    maxHeat: 6999
+    amount: 1
+  - name: Dropship (7000-7999)
+    enemyObject: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+      type: 3}
+    chance: 15
+    minHeat: 7000
+    maxHeat: 7999
+    amount: 1
+  - name: Dropship (8000-8999)
+    enemyObject: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+      type: 3}
+    chance: 20
+    minHeat: 8000
+    maxHeat: 8999
+    amount: 1
+  - name: Dropship (9000-9999)
+    enemyObject: {fileID: 6065519297016329532, guid: 28683fe33a2b14b47af343ea5ce83634,
+      type: 3}
+    chance: 25
+    minHeat: 9000
+    maxHeat: 9999
+    amount: 1
+  - name: Dark Dropship (10000)
+    enemyObject: {fileID: 6065519297016329532, guid: e540792b38146094e9f14cff0843606a,
+      type: 3}
+    chance: 10
+    minHeat: 10000
+    maxHeat: 10000
+    amount: 1

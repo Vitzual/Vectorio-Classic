@@ -1,0 +1,1127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3558295034991975783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3558295034991975777}
+  - component: {fileID: 3558295034991975782}
+  m_Layer: 0
+  m_Name: Research
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3558295034991975777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558295034991975783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 619.1592, y: 307.22614, z: -279.4733}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3558295034991975782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558295034991975783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0937c3fbe8d5f94f816a694984e9713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Researching:
+    Research: 
+    ResearchType: 
+    RequiredResearch: 
+    GoldRequired: 0
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  ResearchBackground: {fileID: 0}
+  ResearchBar: {fileID: 0}
+  resourcesNeeded: 0
+  resourcesTracked: 0
+  goldNeeded: 0
+  goldTracked: 0
+  essenceNeeded: 0
+  essenceTracked: 0
+  iridiumNeeded: 0
+  iridiumTracked: 0
+  researchSpeed: 1
+  isMenu: 0
+  moveSpeed: 60000
+  overlay: {fileID: 0}
+  SurvivalCS: {fileID: 0}
+  TechnologyCS: {fileID: 0}
+  Researchables:
+  - Research: '[0] Gold Drilling I'
+    ResearchType: gold time
+    RequiredResearch: 
+    GoldRequired: 50
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[1] Increased Damage I'
+    ResearchType: damage
+    RequiredResearch: 
+    GoldRequired: 150
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[2] Construction Speed I'
+    ResearchType: construction speed
+    RequiredResearch: 
+    GoldRequired: 350
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[3] Gold Yield I'
+    ResearchType: gold yield
+    RequiredResearch: 00000000
+    GoldRequired: 200
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[4] Gold Storage I'
+    ResearchType: gold storage
+    RequiredResearch: 00000000
+    GoldRequired: 250
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[5] Increased Firerate I'
+    ResearchType: firerate
+    RequiredResearch: 01000000
+    GoldRequired: 500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[6] Increased Defense I'
+    ResearchType: defense
+    RequiredResearch: 01000000
+    GoldRequired: 400
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[7] Increased Range I'
+    ResearchType: range
+    RequiredResearch: 01000000
+    GoldRequired: 600
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[8] Resource Speed I'
+    ResearchType: resource speed
+    RequiredResearch: 02000000
+    GoldRequired: 650
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[9] Building Capacity I'
+    ResearchType: building capacity
+    RequiredResearch: 02000000
+    GoldRequired: 400
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[10] Gold Yield II'
+    ResearchType: gold yield
+    RequiredResearch: 03000000
+    GoldRequired: 1250
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[11] Gold Drilling II'
+    ResearchType: gold time
+    RequiredResearch: 04000000
+    GoldRequired: 1500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[12] Collector Storage I'
+    ResearchType: gold collector storage
+    RequiredResearch: 04000000
+    GoldRequired: 950
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[13] Heated Bullets'
+    ResearchType: burning
+    RequiredResearch: 05000000
+    GoldRequired: 1750
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[14] Frozen Bullets'
+    ResearchType: freezing
+    RequiredResearch: 06000000
+    GoldRequired: 2500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[15] Toxic Bullets'
+    ResearchType: poisoning
+    RequiredResearch: 07000000
+    GoldRequired: 1500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[16] Resource Speed II'
+    ResearchType: resource speed
+    RequiredResearch: 08000000
+    GoldRequired: 3000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[17] Construction Speed II'
+    ResearchType: construction speed
+    RequiredResearch: 08000000
+    GoldRequired: 4000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[18] Resource Capacity'
+    ResearchType: resource capacity
+    RequiredResearch: 0800000009000000
+    GoldRequired: 3500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[19] Gold Yield III'
+    ResearchType: gold yield
+    RequiredResearch: 0a0000000b000000
+    GoldRequired: 8500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[20] Gold Drilling III'
+    ResearchType: gold time
+    RequiredResearch: 0b000000
+    GoldRequired: 12500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[21] Gold Storage II'
+    ResearchType: reinforced drones
+    RequiredResearch: 0c000000
+    GoldRequired: 7500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[22] Explosive Storages'
+    ResearchType: explosive storages
+    RequiredResearch: 0d000000
+    GoldRequired: 9500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[23] Increased Defense II'
+    ResearchType: defense
+    RequiredResearch: 0e0000000f000000
+    GoldRequired: 13500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[24] Building Speed III'
+    ResearchType: construction speed
+    RequiredResearch: 1000000011000000
+    GoldRequired: 25000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[25] Resource Targets I'
+    ResearchType: resource targets
+    RequiredResearch: 12000000
+    GoldRequired: 16000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[26] Faster Research I'
+    ResearchType: research
+    RequiredResearch: 1300000015000000
+    GoldRequired: 15000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[27] Bullet Piercing I'
+    ResearchType: piercing
+    RequiredResearch: 1600000017000000
+    GoldRequired: 25000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[28] Increased Range II'
+    ResearchType: range
+    RequiredResearch: 17000000
+    GoldRequired: 18500
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[29] Fixer Drones'
+    ResearchType: fixer drones
+    RequiredResearch: 1800000019000000
+    GoldRequired: 30000
+    EssenceRequired: 0
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[30] Essence Yield I'
+    ResearchType: essence yield
+    RequiredResearch: 1a000000
+    GoldRequired: 35000
+    EssenceRequired: 250
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[31] Essence Storage I'
+    ResearchType: essence storage
+    RequiredResearch: 1a000000
+    GoldRequired: 28000
+    EssenceRequired: 150
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[32] Increased Firerate II'
+    ResearchType: firerate
+    RequiredResearch: 1b000000
+    GoldRequired: 29000
+    EssenceRequired: 50
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[33] Increased Defense III'
+    ResearchType: defense
+    RequiredResearch: 1c000000
+    GoldRequired: 35000
+    EssenceRequired: 300
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[34] Fixer Speed I'
+    ResearchType: fixer speed
+    RequiredResearch: 1d000000
+    GoldRequired: 45000
+    EssenceRequired: 1250
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[35] Resource Speed III'
+    ResearchType: resource speed
+    RequiredResearch: 1d000000
+    GoldRequired: 65000
+    EssenceRequired: 2500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[36] Building Speed III'
+    ResearchType: building speed
+    RequiredResearch: 1d000000
+    GoldRequired: 50000
+    EssenceRequired: 2000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[37] Essence Yield II'
+    ResearchType: essence yield
+    RequiredResearch: 1e000000
+    GoldRequired: 65000
+    EssenceRequired: 4500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[38] Essence Extraction I'
+    ResearchType: essence time
+    RequiredResearch: 1e000000
+    GoldRequired: 85000
+    EssenceRequired: 8000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[39] Collector Storage II'
+    ResearchType: essence collector storage
+    RequiredResearch: 1f000000
+    GoldRequired: 45000
+    EssenceRequired: 3500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[40] Increased Damage II'
+    ResearchType: damage
+    RequiredResearch: 20000000
+    GoldRequired: 50000
+    EssenceRequired: 6500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[41] Increased Range III'
+    ResearchType: range
+    RequiredResearch: 2000000021000000
+    GoldRequired: 45000
+    EssenceRequired: 6000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[42] Fixer Amount I'
+    ResearchType: fixer amount
+    RequiredResearch: 22000000
+    GoldRequired: 75000
+    EssenceRequired: 7000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[43] Building Capacity II'
+    ResearchType: building capacity
+    RequiredResearch: 2300000024000000
+    GoldRequired: 80000
+    EssenceRequired: 12500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[44] Essence Yield III'
+    ResearchType: essence yield
+    RequiredResearch: 25000000
+    GoldRequired: 135000
+    EssenceRequired: 25000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[45] Essence Extraction II'
+    ResearchType: essence time
+    RequiredResearch: 26000000
+    GoldRequired: 150000
+    EssenceRequired: 35000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[46] Essence Storage II'
+    ResearchType: essence storage
+    RequiredResearch: 2600000027000000
+    GoldRequired: 95000
+    EssenceRequired: 10000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[47] Frozen Bullets II'
+    ResearchType: freezing
+    RequiredResearch: 2800000029000000
+    GoldRequired: 150000
+    EssenceRequired: 11000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[48] Toxic Bullets II'
+    ResearchType: poisoning
+    RequiredResearch: 29000000
+    GoldRequired: 140000
+    EssenceRequired: 10500
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[49] Resource Capacity II'
+    ResearchType: resource capacity
+    RequiredResearch: 2a000000
+    GoldRequired: 160000
+    EssenceRequired: 15000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[50] Resource Targets II'
+    ResearchType: resource targets
+    RequiredResearch: 2a000000
+    GoldRequired: 145000
+    EssenceRequired: 13000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[51] Building Speed V'
+    ResearchType: construction speed
+    RequiredResearch: 2a000000
+    GoldRequired: 180000
+    EssenceRequired: 20000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[52] Faster Research II'
+    ResearchType: research
+    RequiredResearch: 2c0000002d0000002e000000
+    GoldRequired: 200000
+    EssenceRequired: 25000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[53] Explosive Collectors'
+    ResearchType: explosive collectors
+    RequiredResearch: 2f000000
+    GoldRequired: 180000
+    EssenceRequired: 22000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[54] Bullet Piercing II'
+    ResearchType: piercing
+    RequiredResearch: 2f00000030000000
+    GoldRequired: 225000
+    EssenceRequired: 30000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[55] Combat Drones'
+    ResearchType: combat drones
+    RequiredResearch: 310000003200000033000000
+    GoldRequired: 300000
+    EssenceRequired: 50000
+    IridiumRequired: 0
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[56] Iridium Yield I'
+    ResearchType: iridium yield
+    RequiredResearch: 34000000
+    GoldRequired: 500000
+    EssenceRequired: 80000
+    IridiumRequired: 50
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[57] Iridium Storage I'
+    ResearchType: iridium storage
+    RequiredResearch: 34000000
+    GoldRequired: 450000
+    EssenceRequired: 70000
+    IridiumRequired: 25
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[58] Increased Firerate III'
+    ResearchType: firerate
+    RequiredResearch: 3500000036000000
+    GoldRequired: 650000
+    EssenceRequired: 90000
+    IridiumRequired: 100
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[59] Increased Defense IV'
+    ResearchType: defense
+    RequiredResearch: 36000000
+    GoldRequired: 600000
+    EssenceRequired: 85000
+    IridiumRequired: 80
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[60] Combat Lasers'
+    ResearchType: combat lasers
+    RequiredResearch: 37000000
+    GoldRequired: 800000
+    EssenceRequired: 100000
+    IridiumRequired: 250
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[61] Fixer Speed II'
+    ResearchType: fixer speed
+    RequiredResearch: 37000000
+    GoldRequired: 750000
+    EssenceRequired: 90000
+    IridiumRequired: 200
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[62] Iridium Yield II'
+    ResearchType: iridium yield
+    RequiredResearch: 38000000
+    GoldRequired: 950000
+    EssenceRequired: 150000
+    IridiumRequired: 500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[63] Iridium Prospecting'
+    ResearchType: iridium prospecting
+    RequiredResearch: 3800000039000000
+    GoldRequired: 1250000
+    EssenceRequired: 500000
+    IridiumRequired: 10000
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[64] Iridium Storage II'
+    ResearchType: iridium storage
+    RequiredResearch: 39000000
+    GoldRequired: 650000
+    EssenceRequired: 100000
+    IridiumRequired: 500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[65] Flaming Bullets'
+    ResearchType: burning
+    RequiredResearch: 3a000000
+    GoldRequired: 800000
+    EssenceRequired: 100000
+    IridiumRequired: 1500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[66] Bullet Piercing III'
+    ResearchType: piercing
+    RequiredResearch: 3a0000003b000000
+    GoldRequired: 900000
+    EssenceRequired: 200000
+    IridiumRequired: 2000
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[67] Increased Range IV'
+    ResearchType: range
+    RequiredResearch: 3b000000
+    GoldRequired: 850000
+    EssenceRequired: 180000
+    IridiumRequired: 1650
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[68] Combat Rockets'
+    ResearchType: rockets
+    RequiredResearch: 3c000000
+    GoldRequired: 900000
+    EssenceRequired: 200000
+    IridiumRequired: 1800
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[69] Resource Speed IV'
+    ResearchType: resource speed
+    RequiredResearch: 3d000000
+    GoldRequired: 850000
+    EssenceRequired: 175000
+    IridiumRequired: 1600
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[70] Iridium Yield III'
+    ResearchType: iridium yield
+    RequiredResearch: 3e0000003f000000
+    GoldRequired: 1500000
+    EssenceRequired: 350000
+    IridiumRequired: 8000
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[71] Collector Storage III'
+    ResearchType: iridium collector storage
+    RequiredResearch: 3f00000040000000
+    GoldRequired: 850000
+    EssenceRequired: 250000
+    IridiumRequired: 4500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[72] Increased Damage III'
+    ResearchType: damage
+    RequiredResearch: 4100000042000000
+    GoldRequired: 950000
+    EssenceRequired: 350000
+    IridiumRequired: 4500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[73] Explosive Defenses'
+    ResearchType: explosive defenses
+    RequiredResearch: 4200000043000000
+    GoldRequired: 850000
+    EssenceRequired: 300000
+    IridiumRequired: 2500
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}
+  - Research: '[74] Building Blueprints'
+    ResearchType: blueprints
+    RequiredResearch: 4400000045000000
+    GoldRequired: 5000000
+    EssenceRequired: 1000000
+    IridiumRequired: 25000
+    needsGold: 0
+    needsEssence: 0
+    needsIridium: 0
+    ResearchButton: {fileID: 0}
+    IsResearched: 0
+    goldText: {fileID: 0}
+    essenceText: {fileID: 0}
+    iridiumText: {fileID: 0}

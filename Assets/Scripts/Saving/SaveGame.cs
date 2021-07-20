@@ -50,7 +50,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveGame (Survival data_1, Technology data_2, WaveSpawner data_3, Research data_4, int time = 0, int heatt = 0)
+    public static void SaveGame (Survival data_1, Technology data_2, Spawner data_3, Research data_4, int time = 0, int heatt = 0)
     {
         string SavePath = Application.persistentDataPath + "/location.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();

@@ -86,7 +86,7 @@ public class TileClass : MonoBehaviour
         // If take resources set true, remove heat and power
         if (takeResources)
         {
-            GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heat);
+            GameObject.Find("Spawner").GetComponent<Spawner>().decreaseHeat(heat);
             GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power);
         }
 
@@ -143,12 +143,12 @@ public class TileClass : MonoBehaviour
 
     public void DecreaseHeat(int amount)
     {
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(heatStack.Peek());
+        GameObject.Find("Spawner").GetComponent<Spawner>().decreaseHeat(heatStack.Peek());
         if (heatStack.Peek() - amount >= 0)
             heatStack.Push(heat - amount);
         else
             heatStack.Push(0);
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().increaseHeat(heatStack.Peek());
+        GameObject.Find("Spawner").GetComponent<Spawner>().increaseHeat(heatStack.Peek());
     }
 
     public void IncreaseHeat()
@@ -159,7 +159,7 @@ public class TileClass : MonoBehaviour
             heatStack.Push(heat);
         }
         int holder = heatStack.Pop();
-        GameObject.Find("Spawner").GetComponent<WaveSpawner>().increaseHeat(heatStack.Peek() - holder);
+        GameObject.Find("Spawner").GetComponent<Spawner>().increaseHeat(heatStack.Peek() - holder);
     }
 
     public int getID()

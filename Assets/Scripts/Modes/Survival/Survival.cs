@@ -33,7 +33,7 @@ public class Survival : MonoBehaviour
     public Research rsrch;
 
     // The game object used to spawn enemies
-    public WaveSpawner Spawner;
+    public Spawner Spawner;
 
     // Camera zoom object
     public CameraScroll cameraScroll;
@@ -982,7 +982,7 @@ public class Survival : MonoBehaviour
 
             // Set survival
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
-            Spawner.GetComponent<WaveSpawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
+            Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
 
             // Set engineering
             try

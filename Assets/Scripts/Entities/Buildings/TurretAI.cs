@@ -127,7 +127,7 @@ public class TurretAI : TurretClass
 
                     // Lower heat / power costs
                     GameObject.Find("Survival").GetComponent<Survival>().decreasePowerConsumption(power - 1);
-                    GameObject.Find("Spawner").GetComponent<WaveSpawner>().decreaseHeat(GetHeat() - 1);
+                    GameObject.Find("Spawner").GetComponent<Spawner>().decreaseHeat(GetHeat() - 1);
                     power = 1;
                     heatStack.Push(1);
                     break;

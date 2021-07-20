@@ -2,7 +2,7 @@
 using Michsky.UI.ModernUIPack;
 using TMPro;
 
-public class WaveSpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     // Spawner elements
     public Survival survival;

@@ -42,9 +42,17 @@ If you are interested in contributing to the core refactor, heres a list of what
 If you're interested in contributing, please make sure you understand the following rules / guidelines.
 
 - When you make a contribution, you are giving me (Ben Nichols) ownership whatever it may be. (code/art/sounds etc)
-- Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your branch.)
+- Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your fork.)
 - Always check the Trello board before making a contribution, as it may already be in the works. 
 - NEVER use any sort of external Unity asset. Due to licensing reasons, I cannot accept it! 
+- You will need to change a few scripts to build properly. Please undo these before submitting! (temporary workaround)
 
 **Tutorials coming soon!**
 
+# Required Assets
+In order to fully build the game, you'll need the following assets. If you do not want to pay for these assets, you can modify your fork to work without them, but make sure when you make a PR you do not include these changes (it will be denied), or simply just send us a link to your fork. If you have obtained these assets, create a folder called `Blacklist` inside the `External` folder and place the asset folders inside of it. 
+
+**NOTE:** We are talking with the asset developers to see if we can include the required parts of each asset so the game can be built without them, but until then, this is a temporary workaround. Sorry!
+
+- [**Modern UI Pack |** $29.99 (Required)](https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-150824)
+- [**MK Glow Lite |** $9.99 (Optional)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/mk-glow-lite-155643)

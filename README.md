@@ -1,5 +1,5 @@
-# Vectorio | Development Branch
-Welcome to the development branch for Vectorio! This is where you can make contributions to the game, or just view the source code. Before making any contributions, please read through the whole README document.
+# Vectorio | Source Code
+Welcome to the source code for Vectorio! This is where you can make contributions to the game, or just view the project. Before making any contributions, please read through the whole README document.
 
 **Important Links!** 
 - [Steam Page](https://store.steampowered.com/app/1462470/Vectorio__Early_Access/)

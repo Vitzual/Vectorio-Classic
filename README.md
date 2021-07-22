@@ -11,11 +11,10 @@ Though the current setup of the game works fine, it does not support extensive m
 
 If you are interested in contributing to the core refactor, heres a list of what needs to be done.
 
-**Turret Logic**
-- [ ] Create a new script, `BaseTurret`, which contains stats any turret will have
+**Turret Refactor**
+- [x] Create a new script, `BaseTurret`, which contains stats any turret will have (implements `IDamageable`)
 - [ ] Create a new script, `DefaultTurret`, which contains basic turret logic (extends `BaseTurret`)
-- [ ] Remove the singular scripts attached to each turret prefab
-- [ ] Replace the singular turret script with the `DefaultTurret` script
+- [ ] Replace the singular turret scripts with the `DefaultTurret` script and set variables
 - [ ] Replace methods that require external calls with events (ex. `onDamage event`)
 - [ ] Create interfaces to replace methods inside `DefaultTurret` (ex. `iDamageable`)
 - [ ] Have turret rotation be handled by a `TurretHandler` script

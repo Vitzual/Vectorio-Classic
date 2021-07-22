@@ -1,55 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTurret : MonoBehaviour
+public class BaseTurret : MonoBehaviour, IDamageable
 {
-    // Bullet Handler
-    private LayerMask layer;
+    // IDamageable interface variables
+    public int health { get; set; }
+    public int maxHealth { get; set; }
 
-    // Weapon variables
+    // Base turret stat variables
+    public int damage;
     public int range;
-    public float rotationSpeed;
-    public int bulletDamage = 1;
-    public int bulletPierces = 1;
-    public int bulletAmount = 1;
-    public float bulletSpeed = 80;
-    public float bulletSpread = 1;
-    public bool targetLock = true;
+    public int rotationSpeed;
     public float fireRate;
+    public int bulletPierces;
+    public int bulletAmount;
+    public float bulletSpeed;
+    public float bulletSpread;
+
+    // Base turret object variables
     public Transform[] FirePoints;
     public Transform Gun;
     public GameObject Bullet;
-    public bool hasAudio = false;
-    public HashSet<GameObject> nearbyEnemies = new HashSet<GameObject>();
 
-    // Global variables
-    protected float nextFire = 0;
-    protected float timePassed = 0;
-    protected bool hasTarget = false;
-    public Transform target = null;
-    protected float enemyAngle;
-    protected float gunRotation;
-    public bool isRotating = true;
+    // IDamageable damage method
+    public void damageEntity(int dmg)
+    {
+        health -= dmg;
+        if (health <= 0) destroyEntity();
+    }
 
-    // 1 = Closest 
-    // 2 = Strongest
-    // 3 = Weakest
-    // 4 = Furthest
-    public List<Transform> targets;
-    public int targettingMode = 1;
+    // IDamageable destroy method
+    public void destroyEntity()
+    {
+        Destroy(gameObject);
+        // Do other stuff
+    }
 
-    protected CameraScroll cameraScript;
-
-    // Gun shot particle
-    public bool gunShotParticles = false;
-    public ParticleSystem shotParticle;
-
-    // Shot anim variables
-    public bool animationEnabled = false;
-    protected bool animPlaying = false;
-    protected bool animRebound = false;
-    public int animTracker;
-    private int animHolder;
-    public float animMovement = 4f;
+    // IDamageable heal method
+    public void healEntity(int amount)
+    {
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
+    }
 }

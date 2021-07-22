@@ -41,11 +41,10 @@ If you are interested in contributing to the core refactor, heres a list of what
 # Contributing
 If you're interested in contributing, please make sure you understand the following rules / guidelines.
 
-- When you make a contribution, you are giving me (Ben Nichols) ownership whatever it may be. (code/art/sounds etc)
+- When you make a contribution, you are giving me the right to use whatever it may be. (code/art/sounds etc)
 - Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your fork.)
 - Always check the Trello board before making a contribution, as it may already be in the works. 
-- NEVER use any sort of external Unity asset. Due to licensing reasons, I cannot accept it! 
-- You will need to change a few scripts to build properly. Please undo these before submitting! (temporary workaround)
+- NEVER use any sort of external Unity asset except the ones listed below. 
 
 **Tutorials coming soon!**
 

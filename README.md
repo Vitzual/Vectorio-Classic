@@ -41,11 +41,10 @@ If you are interested in contributing to the core refactor, heres a list of what
 # Contributing
 If you're interested in contributing, please make sure you understand the following rules / guidelines.
 
-- Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your branch.)
-- Any PR's that contain external Unity assets will be denied, no matter what. 
 - When you make a contribution, you are giving me (Ben Nichols) ownership whatever it may be. (code/art/sounds etc)
-- Depending on your contribution, you may or may not be listed in the credits of the game.
+- Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your branch.)
 - Always check the Trello board before making a contribution, as it may already be in the works. 
+- NEVER use any sort of external Unity asset. Due to licensing reasons, I cannot accept it! 
 
 **Tutorials coming soon!**
 

@@ -38,6 +38,13 @@ If you are interested in contributing to the core refactor, heres a list of what
 - [ ] Replace methods that require external calls with events (ex. `onDestroyed event`)
 - [ ] Create interfaces to replace methods inside `DefaultEnemy` (ex. `iDamageable`)
 
+**Other Refactors (will be expanded in future)**
+- [ ] Survival full refactor 
+- [ ] Research full refactor
+- [ ] Technology full refactor
+- [ ] Interface full refactor
+- [ ] Spawner full refactor
+
 # Contributing
 If you're interested in contributing, please make sure you understand the following rules / guidelines.
 

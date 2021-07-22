@@ -6,4 +6,46 @@ Welcome to the development branch for Vectorio! This is where you can make contr
 - [Discord](https://discord.gg/auDgRJqtT9)
 - [Trello Board](https://trello.com/b/BfiySKBr/vectorio)
 
-WIP
+# Core Refactor 
+Though the current setup of the game works fine, it does not support extensive modding or multiplayer. It is both outdated and inefficient, so over the course of v0.2 multiple changes will be made to the base code to improve on these things as well as help streamline the development process. 
+
+If you are interested in contributing to the core refactor, heres a list of what needs to be done.
+
+**Turret Logic**
+- [ ] Create a new script, `BaseTurret`, which contains stats any turret will have
+- [ ] Create a new script, `DefaultTurret`, which contains basic turret logic (extends `BaseTurret`)
+- [ ] Remove the singular scripts attached to each turret prefab
+- [ ] Replace the singular turret script with the `DefaultTurret` script
+- [ ] Replace methods that require external calls with events (ex. `onDamage event`)
+- [ ] Create interfaces to replace methods inside `DefaultTurret` (ex. `iDamageable`)
+- [ ] Have turret rotation be handled by a `TurretHandler` script
+
+**Bullet Refactor**
+- [ ] Remove all bullet prefabs and instead create one prefab for all turrets
+- [ ] Create new variable inside `BaseTurret` called `bulletSize` 
+- [ ] Have bullets set size when spawned 
+
+**Enemy Refactor**
+- [ ] Create a new script, `BaseEnemy`, which contains stats any enemy will have
+- [ ] Create a new script, `DefaultEnemy`, which contains basic enemy logic (extends `BaseEnemy`)
+- [ ] Replace the `EnemyClass` script with the `DefaultEnemy` script
+- [ ] Replace methods that require external calls with events (ex. `onSpawn event`)
+- [ ] Create interfaces to replace methods inside `DefaultEnemy` (ex. `iDamageable`)
+
+**Boss Refactor**
+- [ ] Create a new script, `DefaultBoss`, which contains basic boss logic (extends `BaseEnemy`)
+- [ ] Replace the `BossAI` script with the `DefaultBoss` script
+- [ ] Replace methods that require external calls with events (ex. `onDestroyed event`)
+- [ ] Create interfaces to replace methods inside `DefaultEnemy` (ex. `iDamageable`)
+
+# Contributing
+If you're interested in contributing, please make sure you understand the following rules / guidelines.
+
+- Any PR's that contain Unity object changes will be denied. (Instead, please send me a link to your branch.)
+- Any PR's that contain external Unity assets will be denied, no matter what. 
+- When you make a contribution, you are giving me (Ben Nichols) ownership whatever it may be. (code/art/sounds etc)
+- Depending on your contribution, you may or may not be listed in the credits of the game.
+- Always check the Trello board before making a contribution, as it may already be in the works. 
+
+**Tutorials coming soon!**
+

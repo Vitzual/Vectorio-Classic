@@ -213,8 +213,8 @@ public class Survival : MonoBehaviour
         {
 
             // Check to see if there's a difficulty saved
-            try
-            {
+            //try
+            //{
                 // Set world data
                 Difficulties.world = data.WorldName;
                 Difficulties.mode = data.WorldMode;
@@ -234,11 +234,11 @@ public class Survival : MonoBehaviour
                 Difficulties.enemyWaves = data.EnemyGroups;
                 Difficulties.enemyOutposts = data.EnemyOutposts;
                 Difficulties.enemyGuardians = data.EnemyGuaridans;
-            }
-            catch
-            {
+            //}
+            //catch
+            //{
                 Debug.Log("Save file contains obsolete data! This may cause errors while attempting to load this save...");
-            }
+            //}
 
             try { Playtime = data.time; }
             catch { Debug.Log("Save file does not contain new time tracking data!"); Playtime = 0; }
@@ -266,38 +266,38 @@ public class Survival : MonoBehaviour
                 PlaceSavedBuildings(data);
 
                 // Update bosses
-                try
-                {
+                //try
+                //{
                     Spawner.updateBosses(data.bossesDefeated);
-                }
-                catch
-                {
+                //}
+                //catch
+                //{
                     Debug.Log("Save file does not contain new Guardian data!");
-                }
+                //}
 
                 // Set power usage
                 UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
                 UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
                 // Place saved enemies 
-                try
-                {
+                //try
+                //{
                     PlaceSavedEnemies(data.Enemies);
-                }
-                catch
-                {
+                //}
+                //catch
+                //{
                     Debug.Log("Save file does not contain new enemy data!");
-                }
+                //}
 
                 // Update hotbar with saved ID's
-                try
-                {
+                //try
+                //{
                     SetHotbarData(data.hotbar);
-                }
-                catch
-                {
+                //}
+                //catch
+                //{
                     Debug.Log("Save file does not contain new hotbar data!");
-                }
+                //}
 
                 manager.GetComponent<Settings>().SetSound(soundHolder);
             //}

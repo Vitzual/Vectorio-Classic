@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -144,10 +145,8 @@ GameObject:
   m_Component:
   - component: {fileID: 978944303393532262}
   - component: {fileID: 978944303393532265}
-  - component: {fileID: 978944303393532266}
   - component: {fileID: 978944303393532267}
   - component: {fileID: 978944303393532260}
-  - component: {fileID: 978944303393532261}
   m_Layer: 5
   m_Name: New Save
   m_TagString: Untagged
@@ -183,53 +182,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978944303393532263}
   m_CullTransparentMesh: 0
---- !u!114 &978944303393532266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978944303393532263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a12ddbc47b17cd478cb447d1113a22b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonText: NEW SAVE
-  clickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  normalText: {fileID: 978944303038258153}
-  soundSource: {fileID: 0}
-  rippleParent: {fileID: 0}
-  useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
-  useRipple: 1
-  rippleShape: {fileID: 21300000, guid: d25e2ce15dd1c67438e4b70f404fb197, type: 3}
-  speed: 2.4
-  maxSize: 6
-  startColor: {r: 0, g: 0, b: 0, a: 0.39215687}
-  transitionColor: {r: 0, g: 0, b: 0, a: 0}
-  renderOnTop: 0
-  centered: 0
 --- !u!114 &978944303393532267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 0
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -288,6 +241,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -302,52 +256,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 12
---- !u!114 &978944303393532261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978944303393532263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b01fef50de04046448865a6d70ddb9b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
-  buttonType: 0
-  basicFilled: {fileID: 978944303393532260}
-  basicText: {fileID: 0}
-  basicOnlyIconFilled: {fileID: 114809245569716970, guid: 9e8df12253060b348ae97b03d00984ea,
-    type: 3}
-  basicOnlyIconIcon: {fileID: 114755903884993926, guid: 9e8df12253060b348ae97b03d00984ea,
-    type: 3}
-  basicWithIconFilled: {fileID: 0}
-  basicWithIconIcon: {fileID: 0}
-  basicWithIconText: {fileID: 0}
-  basicOutlineBorder: {fileID: 0}
-  basicOutlineFilled: {fileID: 0}
-  basicOutlineText: {fileID: 0}
-  basicOutlineTextHighligted: {fileID: 0}
-  basicOutlineOOBorder: {fileID: 0}
-  basicOutlineOOFilled: {fileID: 0}
-  basicOutlineOOIcon: {fileID: 0}
-  basicOutlineOOIconHighlighted: {fileID: 0}
-  basicOutlineWOBorder: {fileID: 0}
-  basicOutlineWOFilled: {fileID: 0}
-  basicOutlineWOIcon: {fileID: 0}
-  basicOutlineWOIconHighlighted: {fileID: 0}
-  basicOutlineWOText: {fileID: 0}
-  basicOutlineWOTextHighligted: {fileID: 0}
-  radialOOBackground: {fileID: 0}
-  radialOOIcon: {fileID: 0}
-  radialOutlineOOBorder: {fileID: 0}
-  radialOutlineOOFilled: {fileID: 0}
-  radialOutlineOOIcon: {fileID: 0}
-  radialOutlineOOIconHighlighted: {fileID: 0}
-  roundedBackground: {fileID: 0}
-  roundedText: {fileID: 0}
-  roundedOutlineBorder: {fileID: 0}
-  roundedOutlineFilled: {fileID: 0}
-  roundedOutlineText: {fileID: 0}
-  roundedOutlineTextHighligted: {fileID: 0}

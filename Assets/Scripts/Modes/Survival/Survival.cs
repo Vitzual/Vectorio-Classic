@@ -248,8 +248,8 @@ public class Survival : MonoBehaviour
             UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
 
             // Attempt to load save data 
-            try
-            {
+            //try
+            //{
                 // Force tech tree update
                 try { tech.LoadSaveData(data.UnlockIDs); }
                 catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
@@ -300,13 +300,13 @@ public class Survival : MonoBehaviour
                 }
 
                 manager.GetComponent<Settings>().SetSound(soundHolder);
-            }
-            catch (System.Exception e)
-            {
+            //}
+            //catch (System.Exception e)
+            //{
                 Spawner.loadingSave = false;
-                Debug.Log("The save data found was corrupt.\n\nStacktrace: " + e.Message + "\n" + e.StackTrace);
+                //Debug.Log("The save data found was corrupt.\n\nStacktrace: " + e.Message + "\n" + e.StackTrace);
                 GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
-            }
+            //}
 
         }
         else

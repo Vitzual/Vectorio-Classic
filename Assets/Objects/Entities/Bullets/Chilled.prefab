@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c360b84188a9ee4b947049ac59c5612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
-  speed: 150
+  isParticleChangeable: 1
   Effect: {fileID: 918402723469912044, guid: f92aeede3103a7347a80840331e0aae1, type: 3}
 --- !u!212 &5990330869137716508
 SpriteRenderer:
@@ -64,6 +63,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -86,9 +86,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 972303193
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 2b939f4628fca7947b852edc05596f96, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1906b7857970cbc42bf03f1885836889, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -115,6 +115,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -137,7 +138,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 972303193
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Time: 0.69
   m_Parameters:

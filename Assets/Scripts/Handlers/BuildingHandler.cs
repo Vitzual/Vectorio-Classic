@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class BuildingHandler : MonoBehaviour
 {
-    public static Technology tech;
+    public Technology tech;
     public static bool isMenu = false;
     public static List<Transform> activeBuildings = new List<Transform>();
     public static List<Transform> damagedBuildings = new List<Transform>();
@@ -36,7 +36,7 @@ public class BuildingHandler : MonoBehaviour
             buildingAmount[building.name] += 1;
         else buildingAmount.Add(building.name, 1);
 
-        tech.UpdateUnlock("Place");
+        //tech.UpdateUnlock("Place");
     }
 
 

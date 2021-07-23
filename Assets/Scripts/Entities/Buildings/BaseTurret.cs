@@ -59,5 +59,6 @@ public class BaseTurret : TileClass, IAudible
         bulletAmount = turretStats.bulletAmount;
         bulletSpeed = turretStats.bulletSpeed;
         bulletSpread = turretStats.bulletSpread;
+        sound = turretStats.sound;
     }
 }

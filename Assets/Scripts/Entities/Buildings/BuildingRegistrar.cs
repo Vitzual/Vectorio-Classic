@@ -12,7 +12,7 @@ public class BuildingRegistrar : MonoBehaviour
     public class TurretStats
     {
         // Constructor
-        public TurretStats(int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread)
+        public TurretStats(int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound)
         {
             this.damage = damage;
             this.range = range;
@@ -22,6 +22,7 @@ public class BuildingRegistrar : MonoBehaviour
             this.bulletAmount = bulletAmount;
             this.bulletSpeed = bulletSpeed;
             this.bulletSpread = bulletSpread;
+            this.sound = sound;
         }
         
         // Turret info
@@ -37,6 +38,9 @@ public class BuildingRegistrar : MonoBehaviour
         public int bulletAmount;
         public float bulletSpeed;
         public float bulletSpread;
+
+        // Contains turret variables
+        public AudioClip sound;
     }
 
     // Contains a list of all tile stats 

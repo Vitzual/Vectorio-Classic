@@ -67,6 +67,10 @@ public class BuildingRegistrar : MonoBehaviour
         public int cost;
         public int power;
         public int heat;
+
+        // Contains tile variables
+        [TextArea] public string description;
+        public ParticleSystem deathParticle;
     }
 
     // Create class lists

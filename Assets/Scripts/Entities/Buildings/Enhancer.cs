@@ -51,7 +51,7 @@ public class Enhancer : TileClass
         srv.decreasePowerConsumption(power);
         BuildingHandler.removeBuilding(transform);
         GameObject.Find("Spawner").GetComponent<Spawner>().decreaseHeat(heat);
-        Instantiate(Effect, transform.position, Quaternion.identity);
+        Instantiate(deathParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -1,3 +1,6 @@
+// IAudible Interface
+// Apply to entities that should play a sound
+
 using UnityEngine;
 
 public interface IAudible

@@ -11,6 +11,13 @@ public class TileClass : MonoBehaviour, IDamageable
     // IDamageable interface variables
     public int health { get; set; }
     public int maxHealth { get; set; }
+    public ParticleSystem deathParticle { get; set; }
+
+    // Tile class variables
+    public int ID = 0;
+    public string tileType = "Default";
+    public bool isBig = false;
+    [SerializeField] protected string description;
 
     // IDamageable damage method
     public void DamageEntity(int dmg)
@@ -33,6 +40,12 @@ public class TileClass : MonoBehaviour, IDamageable
         if (health > maxHealth) health = maxHealth;
     }
 
+    // Plays the death particle from the IDamageable interface
+    public void PlayDeathEffect()
+    {
+        Instantiate(deathParticle, transform.position, Quaternion.identity); 
+    }
+
     // Set base turret variables
     public void InitTileStats()
     {
@@ -53,24 +66,19 @@ public class TileClass : MonoBehaviour, IDamageable
         cost = tileStats.cost;
         power = tileStats.power;
         heat = tileStats.heat;
+        deathParticle = tileStats.deathParticle;
+        description = tileStats.description;
     }
 
     public int GetCost() { return cost; }
     public int GetPower() { return power; }
     public int GetHeat() { return heat; }
-
+    public string GetDescription() { return description; }
 
 
 
     // OLD CODE //
 
-    // Tile class variables
-    public ParticleSystem Effect;
-    public string tileType = "Default";
-    private Stack<int> heatStack = new Stack<int>();
-    public int ID = 0;
-    public bool isBig = false;
-    [TextArea] public string description = "No description provided.";
 
     public virtual void UpdateWalls() { Debug.Log(transform.name + " is not a wall!"); }
     public virtual void UpdateStorage() { Debug.Log(transform.name + " is not a storage!"); }
@@ -125,7 +133,6 @@ public class TileClass : MonoBehaviour, IDamageable
 
         // Remove building from the building handler
         BuildingHandler.removeBuilding(transform);
-        Instantiate(Effect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
@@ -162,27 +169,6 @@ public class TileClass : MonoBehaviour, IDamageable
         return false;
     }
 
-    public void DecreaseHeat(int amount)
-    {
-        GameObject.Find("Spawner").GetComponent<Spawner>().decreaseHeat(heatStack.Peek());
-        if (heatStack.Peek() - amount >= 0)
-            heatStack.Push(heat - amount);
-        else
-            heatStack.Push(0);
-        GameObject.Find("Spawner").GetComponent<Spawner>().increaseHeat(heatStack.Peek());
-    }
-
-    public void IncreaseHeat()
-    {
-        if (heatStack.Count == 0)
-        {
-            heatStack.Push(heat);
-            heatStack.Push(heat);
-        }
-        int holder = heatStack.Pop();
-        GameObject.Find("Spawner").GetComponent<Spawner>().increaseHeat(heatStack.Peek() - holder);
-    }
-
     public int getID()
     {
         return ID;
@@ -196,11 +182,6 @@ public class TileClass : MonoBehaviour, IDamageable
     public int getConsumption()
     {
         return power;
-    }
-
-    public string GetDescription()
-    {
-        return description;
     }
 
     public float GetPercentage()

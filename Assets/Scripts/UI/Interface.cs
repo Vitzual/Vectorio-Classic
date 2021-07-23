@@ -332,7 +332,7 @@ public class Interface : MonoBehaviour
             case "Defenses":
                 DefaultTurret turret = obj.GetComponent<DefaultTurret>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
-                InfoPanels[0].description.text = tileInfo.description;
+                InfoPanels[0].description.text = tileInfo.GetDescription();
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();
@@ -357,7 +357,7 @@ public class Interface : MonoBehaviour
                 return;
             case "Logistics":
                 InfoPanels[1].title.text = obj.name.ToUpper();
-                InfoPanels[1].description.text = tileInfo.description;
+                InfoPanels[1].description.text = tileInfo.GetDescription();
                 InfoPanels[1].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[1].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[1].heat.text = tileInfo.GetHeat().ToString();
@@ -366,7 +366,7 @@ public class Interface : MonoBehaviour
                 return;
             case "Power":
                 InfoPanels[2].title.text = obj.name.ToUpper();
-                InfoPanels[2].description.text = tileInfo.description;
+                InfoPanels[2].description.text = tileInfo.GetDescription();
                 InfoPanels[2].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[2].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[2].heat.text = tileInfo.GetHeat().ToString();
@@ -375,7 +375,7 @@ public class Interface : MonoBehaviour
                 return;
             case "Heat":
                 InfoPanels[3].title.text = obj.name.ToUpper();
-                InfoPanels[3].description.text = tileInfo.description;
+                InfoPanels[3].description.text = tileInfo.GetDescription();
                 InfoPanels[3].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[3].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[3].heat.text = tileInfo.GetHeat().ToString();

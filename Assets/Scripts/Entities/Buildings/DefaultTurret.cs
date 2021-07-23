@@ -29,6 +29,10 @@ public class DefaultTurret : BaseTurret
     // Start method set variables
     private void Start()
     {
+        // Set stats for the building
+        InitTurretStats();
+        InitTileStats();
+
         if (shotParticle != null) hasShotParticle = true;
         layer = LayerManager.getTurretLayer();
         SetCooldown(fireRate - Research.research_firerate);

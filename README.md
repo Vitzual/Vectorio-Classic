@@ -9,8 +9,6 @@ Welcome to the source code for Vectorio! This is where you can make contribution
 # Core Refactor 
 Though the current setup of the game works fine, it does not support extensive modding or multiplayer. It is both outdated and inefficient, so over the course of v0.2 multiple changes will be made to the base code to improve on these things as well as help streamline the development process. 
 
-If you are interested in contributing to the core refactor, heres a list of what needs to be done.
-
 **Turret Refactor**
 - [x] Create a new script, `BaseTurret`, which contains stats any turret will have (implements `IDamageable`)
 - [x] Create a new script, `DefaultTurret`, which contains basic turret logic (extends `BaseTurret`)

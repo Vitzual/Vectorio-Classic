@@ -9,7 +9,7 @@ public class BaseTurret : TileClass, IAudible
     // Base turret stat variables
     public int damage = 0;
     public int range = 0;
-    public int rotationSpeed = 0;
+    public float rotationSpeed = 0;
     public float fireRate = 0;
     public int bulletPierces = 0;
     public int bulletAmount = 0;

@@ -143,7 +143,7 @@ public abstract class TurretClass : TileClass
 
     public void PlayAudio()
     {
-        float audioScale = cameraScript.getZoom() / 1400f;
+        float audioScale = CameraScroll.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 

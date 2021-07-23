@@ -815,7 +815,7 @@ public class DroneManager : MonoBehaviour
             survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
 
         // Play audio
-        float audioScale = cameraScroll.getZoom() / 1400f;
+        float audioScale = CameraScroll.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
 
         // Check for nearby enemy buildings

@@ -330,7 +330,7 @@ public class Interface : MonoBehaviour
         switch (type)
         {
             case "Defenses":
-                TurretClass turret = obj.GetComponent<TurretClass>();
+                DefaultTurret turret = obj.GetComponent<DefaultTurret>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.description;
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
@@ -340,11 +340,11 @@ public class Interface : MonoBehaviour
                 InfoPanels[0].health.text = tileInfo.health + "hp";
                 if (obj.name != "Wall")
                 {
-                    InfoPanels[0].damage.text = turret.bulletDamage + "/ps";
-                    InfoPanels[0].range.text = (turret.range / 5) + " tiles";
-                    InfoPanels[0].firerate.text = turret.fireRate + "s";
-                    InfoPanels[0].pierce.text = turret.bulletPierces + "/ps";
-                    InfoPanels[0].rotation.text = turret.rotationSpeed + "v";
+                    InfoPanels[0].damage.text = turret.getDamage() + "/ps";
+                    InfoPanels[0].range.text = (turret.getRange() / 5) + " tiles";
+                    InfoPanels[0].firerate.text = turret.getFireRate() + "s";
+                    InfoPanels[0].pierce.text = turret.getBulletPierces() + "/ps";
+                    InfoPanels[0].rotation.text = turret.getRotationSpeed() + "v";
                 }
                 else
                 {

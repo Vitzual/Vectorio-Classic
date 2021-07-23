@@ -826,7 +826,7 @@ public class DroneManager : MonoBehaviour
 
         foreach (Collider2D enemyTurret in colliders)
         {
-            enemyTurret.gameObject.GetComponent<TurretClass>().enabled = true;
+            enemyTurret.gameObject.GetComponent<DefaultTurret>().enabled = true;
         }
 
         return;

@@ -61,4 +61,14 @@ public class BaseTurret : TileClass, IAudible
         bulletSpread = turretStats.bulletSpread;
         sound = turretStats.sound;
     }
+
+    // Get methods
+    public int getDamage() { return damage; }
+    public int getRange() { return range; }
+    public float getRotationSpeed() { return rotationSpeed; }
+    public float getFireRate() { return fireRate; }
+    public int getBulletPierces() { return bulletPierces; }
+    public int getBulletAmount() { return bulletAmount; }
+    public float getBulletSpeed() { return bulletSpeed; }
+    public float getBulletSpread() { return bulletSpread; }
 }

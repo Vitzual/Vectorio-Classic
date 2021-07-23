@@ -54,7 +54,7 @@ public abstract class EnemyClass : MonoBehaviour
         {
             if (collider.name != "Wall" && collider.name != "Drone Port")
             {
-                TurretClass holder = collider.GetComponent<TurretClass>();
+                DefaultTurret holder = collider.GetComponent<DefaultTurret>();
                 if (!holder.enabled)
                 {
                     holder.enabled = true;
@@ -73,7 +73,7 @@ public abstract class EnemyClass : MonoBehaviour
     // Gets called when entering another defenses range or hitting the defense all together
     public void OnTriggerLeave2D(Collider2D collider)
     {
-        TurretClass holder = collider.GetComponent<TurretClass>();
+        DefaultTurret holder = collider.GetComponent<DefaultTurret>();
         if (holder.enabled) holder.removeTarget(transform);
     }
 

@@ -86,12 +86,6 @@ public class BulletHandler : MonoBehaviour
             case "Hive":
                 other.GetComponent<SpawnerAI>().SpawnEnemy();
                 break;
-            case "Enemy Turret":
-                other.GetComponent<EnemyTurretAI>().DamageTile(Bullets[bulletID].Damage);
-                break;
-            case "Enemy Wall":
-                other.GetComponent<EnemyWallAI>().DamageTile(Bullets[bulletID].Damage);
-                break;
             case "Enemy Mine":
                 other.GetComponent<EnemyStaticAI>().DamageTile(Bullets[bulletID].Damage);
                 break;

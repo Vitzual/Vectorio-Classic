@@ -24,12 +24,6 @@ public class ArtilleryBullet : BulletClass
                 case "Hive":
                     collider.GetComponent<SpawnerAI>().SpawnEnemy();
                     break;
-                case "Enemy Turret":
-                    collider.GetComponent<EnemyTurretAI>().DamageTile(splashDamage);
-                    break;
-                case "Enemy Wall":
-                    collider.GetComponent<EnemyWallAI>().DamageTile(splashDamage);
-                    break;
                 case "Enemy Mine":
                     collider.GetComponent<EnemyStaticAI>().DamageTile(splashDamage);
                     break;

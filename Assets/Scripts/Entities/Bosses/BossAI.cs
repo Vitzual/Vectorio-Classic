@@ -14,7 +14,7 @@ public class RevenantAI : BossClass
             Debug.Log(collider.name + " " + Vector3.Distance(collider.transform.position, transform.position));
             if (collider.name != "Wall" && collider.name != "Drone Port")
             {
-                TurretClass holder = collider.GetComponent<TurretClass>();
+                DefaultTurret holder = collider.GetComponent<DefaultTurret>();
                 if (!holder.enabled) holder.enabled = true;
                 holder.forceTarget(transform);
             }

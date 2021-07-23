@@ -8,6 +8,7 @@ using System.Collections;
 
 public class Engineer : TileClass
 {
+    /*
     // Interface interaction
     private Interface UI;
 
@@ -38,7 +39,6 @@ public class Engineer : TileClass
         foreach (Transform turret in availableBuildings)
             if (turret.name == building)
             {
-                localTime = turret.GetComponent<TileClass>().GetModificationTime(modID);
                 break;
             }
 
@@ -96,4 +96,5 @@ public class Engineer : TileClass
             }
         }
     }
+    */
 }

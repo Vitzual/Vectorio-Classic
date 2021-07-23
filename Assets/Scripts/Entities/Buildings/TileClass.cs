@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class TileClass : MonoBehaviour
+public class TileClass : MonoBehaviour, IDamageable
 {
     // Tile class variables
     [SerializeField]
     protected ParticleSystem Effect;
     public string tileType = "Default";
-    public float maxhp = 1;
-    public float health = 1;
     public int heat = 1;
     public Stack<int> heatStack = new Stack<int>();
     public int cost = 1;
@@ -17,28 +15,31 @@ public class TileClass : MonoBehaviour
     public bool isBig = false;
     [TextArea] public string description = "No description provided.";
 
-    // Engineer mods
-    [System.Serializable]
-    public class EngineerMods
+    // IDamageable interface variables
+    public int health { get; set; }
+    public int maxHealth { get; set; }
+
+    // IDamageable damage method
+    public void DamageEntity(int dmg)
     {
-        public string title;
-        [TextArea] public string description;
-        public int upgradeTime;
-        public int successRate;
-        public int iridiumCost;
-        public GameObject originalObj;
-        public GameObject engineerObj;
+        health -= dmg;
+        if (health <= 0) DestroyEntity();
     }
-    public EngineerMods[] EngineerModifications;
 
-    // Engineer variables
-    public List<int> AppliedModification = new List<int>();
+    // IDamageable destroy method
+    public void DestroyEntity()
+    {
+        Destroy(gameObject);
+        // Do other stuff
+    }
 
-    // Engineer variables
-    public bool isEngineered = false;
+    // IDamageable heal method
+    public void HealEntity(int amount)
+    {
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
+    }
 
-    // Create empty applyModification() method
-    public virtual void ApplyModification(int modID) { Debug.Log(transform.name + " does not contain a modification with ID " + modID); }
     public virtual void UpdateWalls() { Debug.Log(transform.name + " is not a wall!"); }
     public virtual void UpdateStorage() { Debug.Log(transform.name + " is not a storage!"); }
     public virtual void UpdatePower() { Debug.Log(transform.name + " does not produce power!"); }
@@ -96,23 +97,11 @@ public class TileClass : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Returns the modification time of a unit
-    public int GetModificationTime(int modID)
-    {
-        return EngineerModifications[modID].upgradeTime;
-    }
-
     // Sets an engineer button based on the modID
     public void SetEngineerButton(Transform building, int modID) 
     {
         if (name == "Turret")
             Debug.Log("a");
-    }
-
-    // Check if the building is engineered
-    public bool IsModifiable()
-    {
-        return AppliedModification.Count == 0;
     }
 
     // Update power
@@ -184,7 +173,7 @@ public class TileClass : MonoBehaviour
 
     public float GetPercentage()
     {
-        return (health / maxhp) * 100;
+        return (health / maxHealth) * 100;
     }
 
     public int GetCost()
@@ -201,13 +190,5 @@ public class TileClass : MonoBehaviour
     }
 
     public int GetHealth() { return (int) health; }
-    public void SetHealth(int a) { health = (float) a; }
-    public void setEngineered(bool a)
-    {
-        isEngineered = a;
-    }
-    public bool checkEngineered()
-    {
-        return isEngineered;
-    }
+    public void SetHealth(int a) { health = a; }
 }

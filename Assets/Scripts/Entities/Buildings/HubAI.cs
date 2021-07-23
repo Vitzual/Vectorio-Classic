@@ -19,9 +19,6 @@ public class HubAI : TileClass
             droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, 
                 new Transform[] { drone.GetChild(1), drone.GetChild(2), }, true, 
                 drone.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>());
-
-        health = 100;
-        maxhp = 100;
     }
 
     // Kill defense

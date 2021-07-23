@@ -664,34 +664,6 @@ public class Survival : MonoBehaviour
         MainCamera.transform.position = new Vector3(lastHit.x, lastHit.y, MainCamera.transform.position.z);
     }
 
-    // Let's put Engineer holder here as a "temporary" solution haha TEMPORARY that's a good one there bud
-    public void StartEngineer() { if (EngineerHolder != null) StartCoroutine(EngineerHolder.GetComponent<Engineer>().StartEngineer(EngineerName, EngineerModID)); }
-    public void SetEngineerName(string a) { EngineerName = a; }
-    public void SetEngineerID(int a) { EngineerModID = a; }
-    public void SetEngineerButton(Sprite Icon)
-    {
-        foreach(Transform building in EngineerHolder.GetComponent<Engineer>().availableBuildings)
-        {
-            if (building.name == EngineerName)
-            {
-                TileClass selected = building.GetComponent<TileClass>();
-                UI.EngineerIcon.sprite = Icon;
-                UI.EngineerTitle.text = selected.EngineerModifications[EngineerModID].title.ToUpper();
-                UI.EngineerDescription.text = selected.EngineerModifications[EngineerModID].description;
-                UI.EngineerTime.text = selected.EngineerModifications[EngineerModID].upgradeTime + " seconds";
-                UI.EngineerChance.text = selected.EngineerModifications[EngineerModID].successRate + "% success rate";
-                UI.EngineerCost.text = selected.EngineerModifications[EngineerModID].iridiumCost.ToString();
-                return;
-            }
-        }
-        UI.EngineerIcon.sprite = Resources.Load<Sprite>("Undiscovered");
-        UI.EngineerTitle.text = "???";
-        UI.EngineerDescription.text = "???";
-        UI.EngineerTime.text = "???";
-        UI.EngineerChance.text = "???";
-        UI.EngineerCost.text = "???";
-    }
-
     // Checks unit size
     private void CenterTransform()
     {
@@ -983,29 +955,6 @@ public class Survival : MonoBehaviour
             // Set survival
             increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
             Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
-
-            // Set engineering
-            try
-            {
-                if (a[i, 4] != -1)
-                {
-                    try
-                    {
-                        obj.GetComponent<TileClass>().ApplyModification(a[i, 4]);
-                        obj.GetComponent<TileClass>().isEngineered = true;
-                    }
-                    catch
-                    {
-                        Debug.Log("A modification on " + obj.name + " has become obsolete, and was removed.");
-                    }
-                }
-            } 
-            catch
-            {
-                Debug.Log("This save file does not contain engineering data and may become unstable.\nGenerate a new save file to fix this issue");
-            }
-
-            //Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
     }
 
@@ -1441,12 +1390,7 @@ public class Survival : MonoBehaviour
                     // Coordinates of the building
                     data[length, 2] = (int)allObjects[i].position.x;
                     data[length, 3] = (int)allObjects[i].position.y;
-
-                    // Engineering applied to the building
-                    if (allObjects[i].GetComponent<TileClass>().AppliedModification.Count > 0)
-                        data[length, 4] = allObjects[i].GetComponent<TileClass>().AppliedModification[0];
-                    else
-                        data[length, 4] = -1; // No engineer modifications on this unit
+                    data[length, 4] = -1; // No engineer modifications on this unit
 
                     // Meta data that should be saved 
                     if (allObjects[i].name == "Drone Port") data[length, 5] = allObjects[i].GetComponent<Dronehub>().droneType;

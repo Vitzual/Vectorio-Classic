@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseTurret : MonoBehaviour, IDamageable, IAudible
@@ -24,29 +25,37 @@ public class BaseTurret : MonoBehaviour, IDamageable, IAudible
     public Transform Gun;
     public GameObject Bullet;
 
+    // Base turret target variables
+    public Transform target = null;
+    public List<Transform> targets;
+
+    // Base turret firing variables
+    protected float cooldown = 0;
+    protected bool isRotating = false;
+
     // IDamageable damage method
-    public void damageEntity(int dmg)
+    public void DamageEntity(int dmg)
     {
         health -= dmg;
-        if (health <= 0) destroyEntity();
+        if (health <= 0) DestroyEntity();
     }
 
     // IDamageable destroy method
-    public void destroyEntity()
+    public void DestroyEntity()
     {
         Destroy(gameObject);
         // Do other stuff
     }
 
     // IDamageable heal method
-    public void healEntity(int amount)
+    public void HealEntity(int amount)
     {
         health += amount;
         if (health > maxHealth) health = maxHealth;
     }
 
     // IAudible sound method
-    public void playSound()
+    public void PlaySound()
     {
         float audioScale = CameraScroll.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);

@@ -1,18 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IAudible : MonoBehaviour
+public interface IAudible
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    AudioClip sound { get; set; }
+    void playSound();
 }

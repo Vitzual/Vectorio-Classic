@@ -3,17 +3,10 @@ using System.Collections.Generic;
 
 public class TileClass : MonoBehaviour, IDamageable
 {
-    // Tile class variables
-    [SerializeField]
-    protected ParticleSystem Effect;
-    public string tileType = "Default";
-    public int heat = 1;
-    public Stack<int> heatStack = new Stack<int>();
-    public int cost = 1;
-    public int power = 1;
-    public int ID = 0;
-    public bool isBig = false;
-    [TextArea] public string description = "No description provided.";
+    // Tile class stat variables
+    public int cost;
+    public int power;
+    public int heat;
 
     // IDamageable interface variables
     public int health { get; set; }
@@ -39,6 +32,41 @@ public class TileClass : MonoBehaviour, IDamageable
         health += amount;
         if (health > maxHealth) health = maxHealth;
     }
+
+    // Set base turret variables
+    public void InitTileStats()
+    {
+        // Grab values from BuildingRegistrar
+        BuildingRegistrar buildingRegistrar = ScriptHandler.buildingRegistrar;
+        BuildingRegistrar.TileStats tileStats = buildingRegistrar.getTileStats(transform);
+
+        // Check to make sure the stats exist
+        if (tileStats == null)
+        {
+            Debug.LogError("Could not find stats in registrar for " + transform.name);
+            return;
+        }
+
+        // Set values returned from BuildingRegistrar 
+        health = tileStats.health;
+        maxHealth = tileStats.maxHealth;
+        cost = tileStats.cost;
+        power = tileStats.power;
+        heat = tileStats.heat;
+    }
+
+
+
+
+    // OLD CODE //
+
+    // Tile class variables
+    public ParticleSystem Effect;
+    public string tileType = "Default";
+    public Stack<int> heatStack = new Stack<int>();
+    public int ID = 0;
+    public bool isBig = false;
+    [TextArea] public string description = "No description provided.";
 
     public virtual void UpdateWalls() { Debug.Log(transform.name + " is not a wall!"); }
     public virtual void UpdateStorage() { Debug.Log(transform.name + " is not a storage!"); }

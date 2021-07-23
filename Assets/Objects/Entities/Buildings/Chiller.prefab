@@ -91,11 +91,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: -8608446681562890158}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 2427496693388507814}
   - component: {fileID: 3707281681242850645}
+  - component: {fileID: 509225813860951908}
   m_Layer: 8
   m_Name: Chiller
   m_TagString: Defense
@@ -121,57 +121,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8608446681562890158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5afd29197e798a243a037a67a2b5c4fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 1786671999786839518, guid: 57aa66dd719190e4b8cef84bb2139fad, type: 3}
-  tileType: Default
-  maxhp: 15
-  health: 15
-  heat: -20
-  cost: 60000
-  power: 120
-  ID: 8
-  isBig: 0
-  description: Strong defense that lowers heat output by 20.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  range: 90
-  rotationSpeed: 70
-  bulletDamage: 25
-  bulletPierces: 3
-  bulletAmount: 1
-  bulletSpeed: 80
-  bulletSpread: 3
-  targetLock: 1
-  fireRate: 0.2
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  Gun: {fileID: 868748940344737781}
-  Bullet: {fileID: 3293027712645128820, guid: 2a93d27339bae654a9173892b6a37a4d, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 1
-  animTracker: 10
-  animMovement: 2
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -280,6 +229,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &509225813860951908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &1688262179590608685
 GameObject:
   m_ObjectHideFlags: 0

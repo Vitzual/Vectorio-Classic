@@ -334,9 +334,9 @@ public class Interface : MonoBehaviour
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.description;
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[0].cost.text = tileInfo.cost.ToString();
-                InfoPanels[0].heat.text = tileInfo.heat.ToString();
-                InfoPanels[0].power.text = tileInfo.power.ToString();
+                InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
+                InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();
+                InfoPanels[0].power.text = tileInfo.GetPower().ToString();
                 InfoPanels[0].health.text = tileInfo.health + "hp";
                 if (obj.name != "Wall")
                 {
@@ -359,27 +359,27 @@ public class Interface : MonoBehaviour
                 InfoPanels[1].title.text = obj.name.ToUpper();
                 InfoPanels[1].description.text = tileInfo.description;
                 InfoPanels[1].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[1].cost.text = tileInfo.cost.ToString();
-                InfoPanels[1].heat.text = tileInfo.heat.ToString();
-                InfoPanels[1].power.text = tileInfo.power.ToString();
+                InfoPanels[1].cost.text = tileInfo.GetCost().ToString();
+                InfoPanels[1].heat.text = tileInfo.GetHeat().ToString();
+                InfoPanels[1].power.text = tileInfo.GetPower().ToString();
                 InfoPanels[1].health.text = tileInfo.health + "hp";
                 return;
             case "Power":
                 InfoPanels[2].title.text = obj.name.ToUpper();
                 InfoPanels[2].description.text = tileInfo.description;
                 InfoPanels[2].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[2].cost.text = tileInfo.cost.ToString();
-                InfoPanels[2].heat.text = tileInfo.heat.ToString();
-                InfoPanels[2].power.text = tileInfo.power.ToString();
+                InfoPanels[2].cost.text = tileInfo.GetCost().ToString();
+                InfoPanels[2].heat.text = tileInfo.GetHeat().ToString();
+                InfoPanels[2].power.text = tileInfo.GetPower().ToString();
                 InfoPanels[2].health.text = tileInfo.health + "hp";
                 return;
             case "Heat":
                 InfoPanels[3].title.text = obj.name.ToUpper();
                 InfoPanels[3].description.text = tileInfo.description;
                 InfoPanels[3].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[3].cost.text = tileInfo.cost.ToString();
-                InfoPanels[3].heat.text = tileInfo.heat.ToString();
-                InfoPanels[3].power.text = tileInfo.power.ToString();
+                InfoPanels[3].cost.text = tileInfo.GetCost().ToString();
+                InfoPanels[3].heat.text = tileInfo.GetHeat().ToString();
+                InfoPanels[3].power.text = tileInfo.GetPower().ToString();
                 InfoPanels[3].health.text = tileInfo.health + "hp";
                 return;
             default:

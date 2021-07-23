@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 7758532871067055009}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: -1492994372838756852}
   - component: {fileID: 3026492365356427618}
+  - component: {fileID: 1441970488056806672}
   m_Layer: 8
   m_Name: Ripper
   m_TagString: Defense
@@ -38,58 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7758532871067055009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd8505a6a2caefb4c8d19cdc41d1bb75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 5699305487405233798, guid: d22c4499cc4840946a44eabf1e6c9350, type: 3}
-  tileType: Default
-  maxhp: 500
-  health: 500
-  heat: 450
-  cost: 300000
-  power: 50
-  ID: 666161654
-  isBig: 0
-  description: 'Fires a barrage of long-range high-velocity projectiles. '
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  range: 150
-  rotationSpeed: 200
-  bulletDamage: 180
-  bulletPierces: 2
-  bulletAmount: 1
-  bulletSpeed: 120
-  bulletSpread: 4
-  targetLock: 1
-  fireRate: 0.1
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  Gun: {fileID: 3288517954698328831}
-  Bullet: {fileID: 3293027712645128820, guid: ec9456c843701f94b9d33cba54d7ae87, type: 3}
-  hasAudio: 0
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 20
-  animMovement: 4
-  rotator: {fileID: 5292898588114667937}
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -198,6 +146,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &1441970488056806672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &711294998676830430
 GameObject:
   m_ObjectHideFlags: 0

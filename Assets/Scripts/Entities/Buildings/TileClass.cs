@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class TileClass : MonoBehaviour, IDamageable
 {
     // Tile class stat variables
-    public int cost;
-    public int power;
-    public int heat;
+    protected int cost;
+    protected int power;
+    protected int heat;
 
     // IDamageable interface variables
     public int health { get; set; }
@@ -55,6 +55,10 @@ public class TileClass : MonoBehaviour, IDamageable
         heat = tileStats.heat;
     }
 
+    public int GetCost() { return cost; }
+    public int GetPower() { return power; }
+    public int GetHeat() { return heat; }
+
 
 
 
@@ -63,7 +67,7 @@ public class TileClass : MonoBehaviour, IDamageable
     // Tile class variables
     public ParticleSystem Effect;
     public string tileType = "Default";
-    public Stack<int> heatStack = new Stack<int>();
+    private Stack<int> heatStack = new Stack<int>();
     public int ID = 0;
     public bool isBig = false;
     [TextArea] public string description = "No description provided.";
@@ -202,19 +206,6 @@ public class TileClass : MonoBehaviour, IDamageable
     public float GetPercentage()
     {
         return (health / maxHealth) * 100;
-    }
-
-    public int GetCost()
-    {
-        // Set additional costs via multiplier 
-        return cost;
-    }
-
-    public int GetHeat()
-    {
-        if (heatStack.Count == 0)
-            heatStack.Push(heat);
-        return heatStack.Peek();
     }
 
     public int GetHealth() { return (int) health; }

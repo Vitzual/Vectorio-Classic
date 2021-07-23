@@ -7,14 +7,14 @@ public class BaseTurret : TileClass, IAudible
     public AudioClip sound { get; set; }
 
     // Base turret stat variables
-    public int damage = 0;
-    public int range = 0;
-    public float rotationSpeed = 0;
-    public float fireRate = 0;
-    public int bulletPierces = 0;
-    public int bulletAmount = 0;
-    public float bulletSpeed = 0;
-    public float bulletSpread = 0;
+    protected int damage = 0;
+    protected int range = 0;
+    protected float rotationSpeed = 0;
+    protected float fireRate = 0;
+    protected int bulletPierces = 0;
+    protected int bulletAmount = 0;
+    protected float bulletSpeed = 0;
+    protected float bulletSpread = 0;
 
     // Base turret object variables
     public Transform[] FirePoints;

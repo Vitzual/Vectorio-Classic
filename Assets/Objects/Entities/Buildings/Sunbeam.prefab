@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 8990058187583287753}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: -1696219477063488349}
+  - component: {fileID: -6169596688685320272}
   m_Layer: 8
   m_Name: Sunbeam
   m_TagString: Defense
@@ -38,53 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8990058187583287753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb4118435faf9424c9f48f0208674e3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 1316700447265705421, guid: ca3ef2b9a37edde4db50f8f1613baa90, type: 3}
-  maxhp: 500
-  health: 500
-  heat: 1100
-  cost: 1000000
-  power: 2500
-  ID: 20
-  isBig: 1
-  description: Absorbs power from the sun to then unleash massive beams of light.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  scanThisFrame: 0
-  range: 2000
-  rotationSpeed: 50
-  bulletDamage: 100000
-  bulletPierces: 500
-  bulletAmount: 1
-  bulletSpeed: 80
-  bulletSpread: 0
-  fireRate: 3
-  FirePoints:
-  - {fileID: 4275736863817768540}
-  Gun: {fileID: 50363934921671977}
-  Bullet: {fileID: 3293027712645128820, guid: f30fe32ce862f7e48b6315b2a924df41, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 0
-  animMovement: 4
-  rotator1: {fileID: 6715412473779333749}
-  rotator2: {fileID: 2982515700406077949}
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,6 +53,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -122,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -176,6 +130,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 2.5
   animOriginal: 2
+--- !u!114 &-6169596688685320272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &922344869482399457
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +214,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -244,7 +237,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e6beb26995d59b345a4066a44c2d3cd5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -367,6 +360,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -389,7 +383,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8ab4179d0af5e374f8f9a78096b4ee80, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -478,6 +472,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -500,7 +495,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 666e6fd67d2e0e2408d34fc249ac6ddf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -559,6 +554,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -581,7 +577,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: b04c375af36ac6c439d8c84caa21d637, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -641,6 +637,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -663,7 +660,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ff79ca77b6ca1dc4db80bca9dd838067, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -722,6 +719,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -744,7 +742,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5e1e193bcdbda79408f433e06c60d1f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

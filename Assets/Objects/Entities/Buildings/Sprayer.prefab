@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 6908471939941203755}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: -4341349912831354588}
   - component: {fileID: -1447243805440655213}
+  - component: {fileID: -1853895230011519208}
   m_Layer: 8
   m_Name: Sprayer
   m_TagString: Defense
@@ -39,54 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6908471939941203755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15ca50bc8007d8a44939aa5e8a0b643f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 5498526772546205255, guid: 96e51e4807d8dfe4a9381fae5c18e4e4, type: 3}
-  maxhp: 10
-  health: 10
-  heat: 45
-  cost: 12000
-  power: 40
-  ID: 6
-  isBig: 0
-  description: Low accuracy turret that sprays tons of low damaging bullets.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  scanThisFrame: 0
-  range: 45
-  rotationSpeed: 120
-  bulletDamage: 2
-  bulletPierces: 1
-  bulletAmount: 1
-  bulletSpeed: 80
-  bulletSpread: 8
-  targetLock: 1
-  fireRate: 0.08
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  Gun: {fileID: 4448969581651554319}
-  Bullet: {fileID: 3293027712645128820, guid: c571360961b51b5418ca4b9e14906205, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 0
-  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -195,6 +147,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &-1853895230011519208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &1576630051450929366
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b69a7973381d4824a8fc885614bb4242, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -346,7 +336,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 523232b449f6c3847b293647eca4aedb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -428,7 +418,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 847b642a9e9286a4ea26aa5e2c505f73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -511,7 +501,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: c441fb5934289ea489841dbd34f87930, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

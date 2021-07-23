@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 2048516651047028956}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: -7778936089646482729}
   - component: {fileID: -4469380767562847511}
+  - component: {fileID: -5713973663981871051}
   m_Layer: 8
   m_Name: Tesla
   m_TagString: Defense
@@ -39,54 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2048516651047028956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3c5326e53768b94e9865dbe9d451d88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 2777576451022919055, guid: b69352ffb8d3b53419d1a8deb242fb87, type: 3}
-  maxhp: 100
-  health: 100
-  heat: 250
-  cost: 120000
-  power: 450
-  ID: 12
-  isBig: 0
-  description: Fires a barrage of lightning that deals electric damage to enemies.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  scanThisFrame: 0
-  range: 80
-  rotationSpeed: 200
-  bulletDamage: 180
-  bulletPierces: 1
-  bulletAmount: 3
-  bulletSpeed: 80
-  bulletSpread: 15
-  targetLock: 1
-  fireRate: 0.1
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  Gun: {fileID: 4558331692551859083}
-  Bullet: {fileID: 3293027712645128820, guid: b7f669ac45c19f24b820f089524cc895, type: 3}
-  hasAudio: 0
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 0
-  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -195,6 +147,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &-5713973663981871051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &2360406291137728608
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: e117f3e4513c1c643a362581b1b00ab0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -346,7 +336,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: bf4f78be83471f5469be5abad86930b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -429,7 +419,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d111bb0868c7be54eaeeca0a3263a38b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -511,7 +501,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e084166038a84354b883a62aca6cec63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: -7688334344611405368}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 5850754821206964708}
   - component: {fileID: 5633800536072645006}
+  - component: {fileID: 2074673792988328970}
   m_Layer: 8
   m_Name: Minigun
   m_TagString: Defense
@@ -39,61 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7688334344611405368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561b74bd933627a45bae0f3838156187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 5498526772546205255, guid: 96e51e4807d8dfe4a9381fae5c18e4e4, type: 3}
-  tileType: Default
-  maxhp: 120
-  health: 120
-  heat: 200
-  cost: 120000
-  power: 150
-  ID: 15
-  isBig: 0
-  description: High accuracy turret that unleashes a storm of high-damaging bullets.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  range: 70
-  rotationSpeed: 110
-  bulletDamage: 60
-  bulletPierces: 1
-  bulletAmount: 1
-  bulletSpeed: 80
-  bulletSpread: 6
-  targetLock: 1
-  fireRate: 0.08
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  - {fileID: 7831787184239906878}
-  - {fileID: 2441988496468078948}
-  - {fileID: 7328376403646076968}
-  Gun: {fileID: 4975649507425085726}
-  Bullet: {fileID: 3293027712645128820, guid: 678e0c8e79e57b547a0a5bfd71a1d4a5, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 0
-  animMovement: 4
-  FireTracker: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -202,6 +147,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &2074673792988328970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &1357030762067731375
 GameObject:
   m_ObjectHideFlags: 0

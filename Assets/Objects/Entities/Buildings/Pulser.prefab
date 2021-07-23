@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5e7f8a6bc2302bb449ab3f21365c3e28, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: e24b77606671ba34d9a0a3ced4612f10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -263,7 +263,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: f1a6ab390531df243aba936f494b9e89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -285,10 +285,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2528225824149251387}
-  - component: {fileID: 5219965094630755300}
   - component: {fileID: 4634768836004047852}
   - component: {fileID: -8960477013136004789}
   - component: {fileID: -2580251401245114387}
+  - component: {fileID: 6596745138344548548}
   m_Layer: 8
   m_Name: Pulser
   m_TagString: Defense
@@ -316,55 +316,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5219965094630755300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5638880538173755297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 804992204e740ab4290f9b23f91d600e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 746743657795411673, guid: 8e750babb9d96dc41913ff9a44db0b48, type: 3}
-  maxhp: 25
-  health: 25
-  heat: 120
-  cost: 40000
-  power: 80
-  ID: 7
-  isBig: 0
-  description: Dispenses high concentrated energy that pierces through multiple enemies
-    at a time.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  scanThisFrame: 0
-  range: 140
-  rotationSpeed: 70
-  bulletDamage: 120
-  bulletPierces: 50
-  bulletAmount: 1
-  bulletSpeed: 80
-  bulletSpread: 0
-  targetLock: 1
-  fireRate: 1.8
-  FirePoints:
-  - {fileID: 8893759301652938954}
-  Gun: {fileID: 4415353801824821857}
-  Bullet: {fileID: 3293027712645128820, guid: bfe8afa260ff41d42a7c31b6a43c2ca4, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 0
-  shotParticle: {fileID: 0}
-  animationEnabled: 1
-  animTracker: 20
-  animMovement: 4
 --- !u!61 &4634768836004047852
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -422,6 +373,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &6596745138344548548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638880538173755297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &6930377803330487759
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +481,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: b2a557e9c488b0b47b9695455996e117, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -574,7 +563,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 61bef71186eaaae45abb0cbc265ec0c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -656,7 +645,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6dec62c22ffaa6043a5da77e47a1c549, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

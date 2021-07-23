@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 5929377148749176787}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 5615815486813246293}
   - component: {fileID: 5030241480079116743}
+  - component: {fileID: 4748196274355704437}
   m_Layer: 8
   m_Name: Artillery
   m_TagString: Defense
@@ -41,57 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5929377148749176787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2220c5cff2b3084183fc1ea8d66c21c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 8688325068622682748, guid: a4449e3492a89b647806b6f6ac0282a3, type: 3}
-  maxhp: 500
-  health: 500
-  heat: 450
-  cost: 100000
-  power: 150
-  ID: 28
-  isBig: 1
-  description: Fires massive artillery shells that deal huge splash damage on impact.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  range: 500
-  rotationSpeed: 60
-  bulletDamage: 500
-  bulletPierces: 1
-  bulletAmount: 1
-  bulletSpeed: 120
-  bulletSpread: 0
-  targetLock: 1
-  fireRate: 1
-  FirePoints:
-  - {fileID: 4396292635411681285}
-  Gun: {fileID: 4730353520863384113}
-  Bullet: {fileID: 3293027712645128820, guid: 1440b85afda966f48bb58f87e9b15fac, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 1
-  shotParticle: {fileID: 7935179789090446223, guid: 1fa15fe0c369e7f4184210bb40dd493e,
-    type: 3}
-  animationEnabled: 1
-  animTracker: 20
-  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -200,6 +149,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &4748196274355704437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &2413863904708411791
 GameObject:
   m_ObjectHideFlags: 0

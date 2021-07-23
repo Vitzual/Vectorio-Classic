@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: e29a094d97ec433459926cbc99bc743f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -177,7 +177,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8c5a33f147004e544a1c1acffd04a8c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -230,11 +230,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 3702351155716561428}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 4514026479247561692}
   - component: {fileID: 6394988898322714690}
+  - component: {fileID: 7842172550779390273}
   m_Layer: 8
   m_Name: Turret
   m_TagString: Defense
@@ -266,101 +266,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3702351155716561428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c19de70c288a514d8c821ca590ff202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effect: {fileID: 6563660588469597660, guid: 041f256c74eeee54bb361acc0d177215, type: 3}
-  maxhp: 10
-  health: 10
-  heat: 8
-  cost: 150
-  power: 5
-  ID: 0
-  isBig: 0
-  description: Weak early game turret that targets and fires at nearby enemies.
-  EngineerModifications:
-  - title: Dual Barrel
-    description: Adds a secondary barrel to the turret, which increases firerate
-      and slightly increases damage.
-    upgradeTime: 30
-    successRate: 100
-    iridiumCost: 80
-    originalObj: {fileID: 353099131532261407}
-    engineerObj: {fileID: 1397037716342002614}
-  - title: Quadra Barrel
-    description: Adds three additional barrels and adjusts the targetting system
-      to just spin and fire.
-    upgradeTime: 30
-    successRate: 100
-    iridiumCost: 50
-    originalObj: {fileID: 353099131532261407}
-    engineerObj: {fileID: 4193623878598204960}
-  - title: Iridium Plating
-    description: Uses iridium to infuse bullets with high concentrated energy.
-    upgradeTime: 60
-    successRate: 100
-    iridiumCost: 120
-    originalObj: {fileID: 1795506980162462511}
-    engineerObj: {fileID: 5818148867272930388}
-  - title: Heavy Plating
-    description: Adds experimental heavy plating that is supposedly 10x stronger
-      then normal.
-    upgradeTime: 50
-    successRate: 100
-    iridiumCost: 80
-    originalObj: {fileID: 1795506980162462511}
-    engineerObj: {fileID: 1656680567978697855}
-  - title: Light Plating
-    description: Strips all unneccesary components from the turret to lower it's
-      heat and power output.
-    upgradeTime: 10
-    successRate: 100
-    iridiumCost: 30
-    originalObj: {fileID: 1795506980162462511}
-    engineerObj: {fileID: 1726383420262827280}
-  AppliedModification: 
-  isEngineered: 0
-  scanThisFrame: 0
-  range: 50
-  rotationSpeed: 150
-  bulletDamage: 1
-  bulletPierces: 1
-  bulletAmount: 1
-  bulletSpeed: 70
-  bulletSpread: 5
-  targetLock: 1
-  fireRate: 0.5
-  FirePoints:
-  - {fileID: 3069989843565101140}
-  - {fileID: 2729983306437495538}
-  - {fileID: 3005334070090899536}
-  - {fileID: 4724535499111337753}
-  - {fileID: 4936592916735889661}
-  - {fileID: 3046249984816152626}
-  - {fileID: 5515390844088837889}
-  Gun: {fileID: 3270423377498495860}
-  Bullet: {fileID: 3293027712645128820, guid: c48cecef139047b4fbc9277c8ee729c6, type: 3}
-  hasAudio: 1
-  target: {fileID: 0}
-  isRotating: 1
-  targets: []
-  targettingMode: 1
-  gunShotParticles: 1
-  shotParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
-    type: 3}
-  animationEnabled: 1
-  animTracker: 10
-  animMovement: 2
-  SwitchBarrel: 0
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -399,7 +304,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6451b502b5513134a9ebcf1e4b99954b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -469,6 +374,44 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!114 &7842172550779390273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  power: 0
+  heat: 0
+  Effect: {fileID: 0}
+  tileType: Default
+  ID: 0
+  isBig: 0
+  description: No description provided.
+  damage: 0
+  range: 0
+  rotationSpeed: 0
+  fireRate: 0
+  bulletPierces: 0
+  bulletAmount: 0
+  bulletSpeed: 0
+  bulletSpread: 0
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  targettingMode: 1
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!1 &1397037716342002614
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +515,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 54200af3b507f7a439bb37ec9052effd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -771,7 +714,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e3b978fe6a36aed4aa0c0c2988d717c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -853,7 +796,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7af522d2c8bc950429f3c024a3b03309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -965,7 +908,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d0e3fcea38a72854299b8d37e06f84e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1077,7 +1020,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7af522d2c8bc950429f3c024a3b03309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1159,7 +1102,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7af522d2c8bc950429f3c024a3b03309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1242,7 +1185,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 0ea635348db37fd4bbf1176d3019100e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1355,7 +1298,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7af522d2c8bc950429f3c024a3b03309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1437,7 +1380,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d0e3fcea38a72854299b8d37e06f84e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1519,7 +1462,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3e604c07f01f1da4282322e013d249cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1665,7 +1608,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4440a7a2c7962f343845919d8fcf14cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1777,7 +1720,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d6716d3ae7cc0c84e86f9a6c4689bad1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1889,7 +1832,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d0e3fcea38a72854299b8d37e06f84e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1971,7 +1914,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 585715533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d0e3fcea38a72854299b8d37e06f84e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

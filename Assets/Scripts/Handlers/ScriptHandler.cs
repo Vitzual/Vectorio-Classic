@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ScriptHandler : MonoBehaviour
 {
+    public BuildingRegistrar _buildingRegistrar;
     public static BuildingRegistrar buildingRegistrar;
 
     // Start is called before the first frame update
     void Start()
     {
-        buildingRegistrar = GameObject.Find("Building Registrar").GetComponent<BuildingRegistrar>();
+        buildingRegistrar = _buildingRegistrar;
     }
 }

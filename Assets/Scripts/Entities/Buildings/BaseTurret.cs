@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class BaseTurret : MonoBehaviour, IDamageable
+public class BaseTurret : MonoBehaviour, IDamageable, IAudible
 {
     // IDamageable interface variables
     public int health { get; set; }
     public int maxHealth { get; set; }
+
+    // IAudible interface variables
+    public AudioClip sound { get; set; }
 
     // Base turret stat variables
     public int damage;
@@ -40,5 +43,12 @@ public class BaseTurret : MonoBehaviour, IDamageable
     {
         health += amount;
         if (health > maxHealth) health = maxHealth;
+    }
+
+    // IAudible sound method
+    public void playSound()
+    {
+        float audioScale = CameraScroll.getZoom() / 1400f;
+        AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 }

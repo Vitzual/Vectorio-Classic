@@ -3,7 +3,7 @@
 public class CameraScroll : MonoBehaviour
 {
     private Camera cam;
-    private float targetZoom;
+    private static float targetZoom;
     private float zoomFactor = 150f;
     [SerializeField]
     private float zoomSpeed = 40;
@@ -46,7 +46,7 @@ public class CameraScroll : MonoBehaviour
         }
     }
 
-    public float getZoom()
+    public static float getZoom()
     {
         return targetZoom;
     }

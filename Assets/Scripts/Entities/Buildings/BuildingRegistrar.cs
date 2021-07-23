@@ -11,6 +11,19 @@ public class BuildingRegistrar : MonoBehaviour
     [System.Serializable]
     public class TurretStats
     {
+        // Constructor
+        public TurretStats(int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread)
+        {
+            this.damage = damage;
+            this.range = range;
+            this.rotationSpeed = rotationSpeed;
+            this.fireRate = fireRate;
+            this.bulletPierces = bulletPierces;
+            this.bulletAmount = bulletAmount;
+            this.bulletSpeed = bulletSpeed;
+            this.bulletSpread = bulletSpread;
+        }
+        
         // Turret info
         public string name;
         public Transform turretObj;
@@ -18,7 +31,7 @@ public class BuildingRegistrar : MonoBehaviour
         // Contains turret stats
         public int damage;
         public int range;
-        public int rotationSpeed;
+        public float rotationSpeed;
         public float fireRate;
         public int bulletPierces;
         public int bulletAmount;
@@ -30,6 +43,16 @@ public class BuildingRegistrar : MonoBehaviour
     [System.Serializable]
     public class TileStats
     {
+        // Constructor
+        public TileStats(int health, int maxHealth, int cost, int power, int heat)
+        {
+            this.health = health;
+            this.maxHealth = maxHealth;
+            this.cost = cost;
+            this.power = power;
+            this.heat = heat;
+        }
+
         // Tile info
         public string name;
         public Transform tileObj;

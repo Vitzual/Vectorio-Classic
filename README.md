@@ -13,8 +13,8 @@ If you are interested in contributing to the core refactor, heres a list of what
 
 **Turret Refactor**
 - [x] Create a new script, `BaseTurret`, which contains stats any turret will have (implements `IDamageable`)
-- [ ] Create a new script, `DefaultTurret`, which contains basic turret logic (extends `BaseTurret`)
-- [ ] Replace the singular turret scripts with the `DefaultTurret` script and set variables
+- [x] Create a new script, `DefaultTurret`, which contains basic turret logic (extends `BaseTurret`)
+- [x] Replace the singular turret scripts with the `DefaultTurret` script and set variables
 - [ ] Replace methods that require external calls with events (ex. `onDamage event`)
 - [ ] Create interfaces to replace methods inside `DefaultTurret` (ex. `iDamageable`)
 - [ ] Have turret rotation be handled by a `TurretHandler` script

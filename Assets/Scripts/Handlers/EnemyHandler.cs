@@ -105,7 +105,7 @@ public class EnemyHandler : MonoBehaviour
 
         Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
 
-        other.GetComponent<DefaultBuilding>().DamageTile(Enemies[enemyID].Damage);
+        other.GetComponent<DefaultBuilding>().DamageEntity(Enemies[enemyID].Damage);
 
         if (other != null && other.GetComponent<DefaultBuilding>().health > 0)
         {

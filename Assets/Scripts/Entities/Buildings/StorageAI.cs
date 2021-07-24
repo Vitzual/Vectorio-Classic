@@ -130,6 +130,7 @@ public class StorageAI: DefaultBuilding
     }
 
     // Kill defense
+    /*
     public override void UpdateStorage()
     {
         if (Research.research_explosive_storages)
@@ -154,4 +155,5 @@ public class StorageAI: DefaultBuilding
                 break;
         }
     }
+    */
 }

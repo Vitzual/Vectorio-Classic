@@ -25,7 +25,7 @@ public class ArtilleryBullet : BulletClass
                     collider.GetComponent<SpawnerAI>().SpawnEnemy();
                     break;
                 case "Enemy Mine":
-                    collider.GetComponent<EnemyStaticAI>().DamageTile(splashDamage);
+                    collider.GetComponent<EnemyStaticAI>().DamageEntity(splashDamage);
                     break;
                 default:
                     collider.GetComponent<EnemyClass>().DamageEntity(splashDamage);

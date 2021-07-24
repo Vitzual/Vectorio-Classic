@@ -71,7 +71,7 @@ public class EnemyBulletHandler : MonoBehaviour
     {
         // Add the other transform to the ignore list for future collisions
         Bullets[bulletID].IgnoreBuildings.Add(other);
-        other.GetComponent<DefaultBuilding>().DamageTile(Bullets[bulletID].Damage);
+        other.GetComponent<DefaultBuilding>().DamageEntity(Bullets[bulletID].Damage);
 
         Bullets[bulletID].Piercing--;
         if (Bullets[bulletID].Piercing == 0)

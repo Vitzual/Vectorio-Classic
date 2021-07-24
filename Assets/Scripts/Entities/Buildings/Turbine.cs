@@ -15,6 +15,4 @@ public class Turbine : DefaultBuilding
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
         SRV.increaseAvailablePower(amount);
     }
-
-    public override void UpdatePower() { SRV.decreaseAvailablePower(amount); }
 }

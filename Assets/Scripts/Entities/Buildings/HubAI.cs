@@ -22,6 +22,7 @@ public class HubAI : DefaultBuilding
     }
 
     // Kill defense
+    /*
     public override void EndGame()
     {
         // Take control away from player
@@ -43,4 +44,5 @@ public class HubAI : DefaultBuilding
         srv.decreasePowerConsumption(power);
         BuildingHandler.removeBuilding(transform);
     }
+    */
 }

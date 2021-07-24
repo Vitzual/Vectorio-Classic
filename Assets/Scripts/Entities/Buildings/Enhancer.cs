@@ -33,6 +33,7 @@ public class Enhancer : DefaultBuilding
                 colliders[i].GetComponent<CollectorAI>().enhanceCollector();
     }
 
+    /*
     // Kill defense
     public override void UpdateEnhancer()
     {
@@ -54,4 +55,5 @@ public class Enhancer : DefaultBuilding
         Instantiate(deathParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+    */
 }

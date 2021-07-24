@@ -17,6 +17,7 @@ public class Distributor : DefaultBuilding
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
     }
 
+    /*
     public override void UpdateEnergizer()
     {
         // Check if there is still an AOCB tile under each building
@@ -44,4 +45,5 @@ public class Distributor : DefaultBuilding
 
         transform.GetChild(0).gameObject.SetActive(false);
     }
+    */
 }

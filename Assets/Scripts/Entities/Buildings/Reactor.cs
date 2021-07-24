@@ -10,10 +10,4 @@ public class Reactor : DefaultBuilding
         SRV = GameObject.Find("Survival").GetComponent<Survival>();
         SRV.increaseAvailablePower(amount);
     }
-
-    // Kill defense
-    public override void UpdatePower()
-    {
-        SRV.decreaseAvailablePower(amount);
-    }
 }

@@ -50,6 +50,7 @@ public class WallAI : DefaultBuilding
         otherWallScript.UpdateSprite(otherWallID);
     }
 
+    /*
     public override void UpdateWalls()
     {
         // Set holder variables
@@ -79,6 +80,7 @@ public class WallAI : DefaultBuilding
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(0, -4, rayHit.collider.GetComponent<WallAI>());
     }
+    */
 
     public int CheckTotal()
     {
@@ -120,6 +122,7 @@ public class WallAI : DefaultBuilding
             top = 0;
         }
     }
+
 
     public void UpdateSprite(int a)
     {

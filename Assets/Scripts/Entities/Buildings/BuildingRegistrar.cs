@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +11,9 @@ public class BuildingRegistrar : MonoBehaviour
     public class TurretStats
     {
         // Constructor
-        public TurretStats(int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound)
+        public TurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound)
         {
+            this.obj = obj;
             this.damage = damage;
             this.range = range;
             this.rotationSpeed = rotationSpeed;
@@ -27,7 +27,7 @@ public class BuildingRegistrar : MonoBehaviour
         
         // Turret info
         public string name;
-        public Transform turretObj;
+        public Transform obj;
         public bool animEnabled;
 
         // Contains turret stats
@@ -46,11 +46,12 @@ public class BuildingRegistrar : MonoBehaviour
 
     // Contains a list of all tile stats 
     [System.Serializable]
-    public class TileStats
+    public class BuildingStats
     {
         // Constructor
-        public TileStats(int health, int maxHealth, int cost, int power, int heat)
+        public BuildingStats(Transform obj, int health, int maxHealth, int cost, int power, int heat)
         {
+            this.obj = obj;
             this.health = health;
             this.maxHealth = maxHealth;
             this.cost = cost;
@@ -60,7 +61,7 @@ public class BuildingRegistrar : MonoBehaviour
 
         // Tile info
         public string name;
-        public Transform tileObj;
+        public Transform obj;
         [TextArea] public string description;
 
         // Contains tile stats
@@ -76,21 +77,47 @@ public class BuildingRegistrar : MonoBehaviour
 
     // Create class lists
     public List<TurretStats> turretStats;
-    public List<TileStats> tileStats;
+    public List<BuildingStats> buildingStats;
 
     // Grab turret stats
     public TurretStats getTurretStats(Transform turret)
     {
+        // Iterates through class list
         foreach (TurretStats stat in turretStats)
-            if (turret == stat.turretObj) return stat;
+            if (turret == stat.obj) return stat;
         return null;
     }
 
-    // Grab tile stats
-    public TileStats getTileStats (Transform tile)
+    // Grab building stats
+    public BuildingStats getBuildingStats (Transform tile)
     {
-        foreach (TileStats stat in tileStats)
-            if (tile == stat.tileObj) return stat;
+        // Iterates through class list
+        foreach (BuildingStats stat in buildingStats)
+            if (tile == stat.obj) return stat;
         return null;
+    }
+
+    // Add to turret stats
+    // If a duplicate transform is found, it will be replaced
+    public void addTurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound = null)
+    {
+        // Remove older classes
+        TurretStats stat = getTurretStats(obj);
+        if (stat != null) turretStats.Remove(stat);
+
+        // Add the new stat class
+        turretStats.Add(new TurretStats(obj, damage, range, rotationSpeed, fireRate, bulletPierces, bulletAmount, bulletSpeed, bulletSpread, sound));
+    }
+
+    // Add to turret stats
+    // If a duplicate transform is found, it will be replaced
+    public void addBuildingStats(Transform obj, int health, int maxHealth, int cost, int power, int heat)
+    {
+        // Remove older classes
+        BuildingStats stat = getBuildingStats(obj);
+        if (stat != null) buildingStats.Remove(stat);
+
+        // Add the new stat class
+        buildingStats.Add(new BuildingStats(obj, health, maxHealth, cost, power, heat));
     }
 }

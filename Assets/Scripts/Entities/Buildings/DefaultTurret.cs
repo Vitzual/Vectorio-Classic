@@ -62,35 +62,6 @@ public class DefaultTurret : BaseTurret
         else RotationHandler();
     }
 
-    /*
-    // Plays the recoil animation
-    public void PlayAnim()
-    {
-        if (!animRebound)
-        {
-            animTracker -= 1;
-            Gun.localPosition -= Gun.up * animMovement * Time.deltaTime;
-            if (animTracker == animHolder / 2)
-            {
-                animTracker = 0;
-                animRebound = true;
-            }
-        }
-        else
-        {
-            animTracker += 1;
-            Gun.localPosition += Gun.up * animMovement / 2 * Time.deltaTime;
-            if (animTracker == animHolder)
-            {
-                Gun.localPosition = new Vector2(0, 0);
-                animRebound = false;
-                animPlaying = false;
-            }
-        }
-        return;
-    }
-    */
-
     public void PlayAudio()
     {
         float audioScale = CameraScroll.getZoom() / 1400f;

@@ -379,7 +379,7 @@ public class Survival : MonoBehaviour
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
-                TileClass ObjectComponent = SelectedObj.GetComponent<TileClass>();
+                DefaultBuilding ObjectComponent = SelectedObj.GetComponent<DefaultBuilding>();
 
                 // Place the building and register as a ghost variant and queue it in the drone network
                 LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -429,7 +429,7 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (RayTarget != null && RayTarget.name != "Hub")
             {
-                TileClass rayScript = RayTarget.GetComponent<TileClass>();
+                DefaultBuilding rayScript = RayTarget.GetComponent<DefaultBuilding>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
 
@@ -878,7 +878,7 @@ public class Survival : MonoBehaviour
             float y = a[i, 3];
             Vector2 position;
 
-            if (building.GetComponent<TileClass>().isBig)
+            if (building.GetComponent<DefaultBuilding>().isBig)
             {
                 // Check the x coordinate
                 if (x >= 0)
@@ -898,7 +898,7 @@ public class Survival : MonoBehaviour
                 position = new Vector2(x, y);
 
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            obj.GetComponent<TileClass>().SetHealth(a[i, 1]);
+            obj.GetComponent<DefaultBuilding>().SetHealth(a[i, 1]);
             obj.name = building.name;
             BuildingHandler.addBuilding(obj);
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
@@ -953,8 +953,8 @@ public class Survival : MonoBehaviour
             }
 
             // Set survival
-            increasePowerConsumption(building.GetComponent<TileClass>().getConsumption());
-            Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<TileClass>().GetHeat());
+            increasePowerConsumption(building.GetComponent<DefaultBuilding>().getConsumption());
+            Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<DefaultBuilding>().GetHeat());
         }
     }
 
@@ -1258,7 +1258,7 @@ public class Survival : MonoBehaviour
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly
-        if (SelectedObj.GetComponent<TileClass>().isBig) largerUnit = true;
+        if (SelectedObj.GetComponent<DefaultBuilding>().isBig) largerUnit = true;
         else largerUnit = false;
 
         // Disable any active info not relative to selected object
@@ -1349,7 +1349,7 @@ public class Survival : MonoBehaviour
         for(int i = 0; i < hotbar.Length; i++)
         {
             if (hotbar[i] != null)
-                hotbarIDs[i] = hotbar[i].GetComponent<TileClass>().ID;
+                hotbarIDs[i] = hotbar[i].GetComponent<DefaultBuilding>().ID;
             else hotbarIDs[i] = -1;
         }
         return hotbarIDs;
@@ -1382,10 +1382,10 @@ public class Survival : MonoBehaviour
                 try
                 {
                     // ID of the building to save
-                    data[length, 0] = allObjects[i].GetComponent<TileClass>().getID();
+                    data[length, 0] = allObjects[i].GetComponent<DefaultBuilding>().getID();
 
                     // Health of the building being saved
-                    data[length, 1] = allObjects[i].GetComponent<TileClass>().GetHealth();
+                    data[length, 1] = allObjects[i].GetComponent<DefaultBuilding>().GetHealth();
 
                     // Coordinates of the building
                     data[length, 2] = (int)allObjects[i].position.x;

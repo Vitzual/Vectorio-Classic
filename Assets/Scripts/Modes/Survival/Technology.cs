@@ -256,12 +256,12 @@ public class Technology : MonoBehaviour
     {
         // Checks the unlock list to see if the building exists
         for (int i = 0; i < unlocked.Count; i++)
-            if (unlocked[i].GetComponent<TileClass>().getID() == a)
+            if (unlocked[i].GetComponent<DefaultBuilding>().getID() == a)
                 return unlocked[i];
 
         // Backup check if the first iteration loop fails
         for (int i = 0; i < Unlocks.Length; i++)
-            if (Unlocks[i].Building.GetComponent<TileClass>().getID() == a)
+            if (Unlocks[i].Building.GetComponent<DefaultBuilding>().getID() == a)
                 return Unlocks[i].Building;
 
         // If both fail, return null
@@ -299,7 +299,7 @@ public class Technology : MonoBehaviour
         {
             UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
             UI.UOL.titleText = unlock.Building.name.ToUpper();
-            UI.UOL.descriptionText = unlock.Building.GetComponent<TileClass>().GetDescription();
+            UI.UOL.descriptionText = unlock.Building.GetComponent<DefaultBuilding>().GetDescription();
             UI.UOL.UpdateUI();
         }
 

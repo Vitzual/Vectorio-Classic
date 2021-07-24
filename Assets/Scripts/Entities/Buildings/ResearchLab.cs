@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ResearchLab : TileClass
+public class ResearchLab : DefaultBuilding
 {
     private void Start()
     {

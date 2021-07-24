@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Distributor : TileClass
+public class Distributor : DefaultBuilding
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;
@@ -23,7 +23,7 @@ public class Distributor : TileClass
         var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
             if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
-                colliders[i].GetComponent<TileClass>().UpdatePower(transform.GetChild(0));
+                colliders[i].GetComponent<DefaultBuilding>().UpdatePower(transform.GetChild(0));
 
         // Destroy ghost buildings in the area
         DroneManager droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();

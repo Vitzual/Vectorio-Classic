@@ -62,6 +62,7 @@ public class DefaultTurret : BaseTurret
         else RotationHandler();
     }
 
+    /*
     // Plays the recoil animation
     public void PlayAnim()
     {
@@ -88,6 +89,7 @@ public class DefaultTurret : BaseTurret
         }
         return;
     }
+    */
 
     public void PlayAudio()
     {
@@ -184,7 +186,7 @@ public class DefaultTurret : BaseTurret
     {
         // if (hasShotParticle) Instantiate(shotParticle, FirePoints[0].position, Quaternion.Euler(0, 0, Gun.localEulerAngles.z + 180f));
         if (sound != null) PlaySound();
-        if (animationEnabled) animPlaying = true;
+        //if (animationEnabled) animPlaying = true;
 
         pos.position = new Vector3(pos.position.x, pos.position.y, 0);
         GameObject bullet = Instantiate(prefab, pos.position, pos.rotation);

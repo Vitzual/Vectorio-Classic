@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WallAI : TileClass
+public class WallAI : DefaultBuilding
 {
 
     // Tile layer

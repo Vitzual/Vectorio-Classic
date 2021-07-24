@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTurret : TileClass, IAudible
+public class BaseTurret : DefaultBuilding, IAudible
 {
     // IAudible interface variables
     public AudioClip sound { get; set; }
@@ -28,14 +28,6 @@ public class BaseTurret : TileClass, IAudible
     // Base turret firing variables
     protected float cooldown = 0;
     protected bool isRotating = false;
-
-    // Animation variables
-    protected bool animationEnabled = false;
-    protected bool animPlaying = false;
-    protected bool animRebound = false;
-    protected int animTracker;
-    protected int animHolder;
-    protected float animMovement = 4f;
 
     // IAudible sound method
     public void PlaySound()
@@ -68,7 +60,9 @@ public class BaseTurret : TileClass, IAudible
         bulletSpeed = turretStats.bulletSpeed;
         bulletSpread = turretStats.bulletSpread;
         sound = turretStats.sound;
-        animationEnabled = turretStats.animEnabled;
+        
+        
+        if(turretStats.animEnabled) { Debug.Log("Register turret with anim enabled"); }
     }
 
     // Get methods

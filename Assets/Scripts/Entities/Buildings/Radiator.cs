@@ -1,3 +1,3 @@
 ﻿using UnityEngine;
 
-public class Radiator : TileClass { }
+public class Radiator : DefaultBuilding { }

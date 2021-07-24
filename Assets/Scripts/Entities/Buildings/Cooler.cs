@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cooler : TileClass
+public class Cooler : DefaultBuilding
 {
     // Internal placement variables
     public Transform rotator1;

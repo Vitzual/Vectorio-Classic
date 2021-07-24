@@ -105,9 +105,9 @@ public class EnemyHandler : MonoBehaviour
 
         Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
 
-        other.GetComponent<TileClass>().DamageTile(Enemies[enemyID].Damage);
+        other.GetComponent<DefaultBuilding>().DamageTile(Enemies[enemyID].Damage);
 
-        if (other != null && other.GetComponent<TileClass>().health > 0)
+        if (other != null && other.GetComponent<DefaultBuilding>().health > 0)
         {
             Enemies[enemyID].ObjectClass.KillEntity();
             Enemies.RemoveAt(enemyID);

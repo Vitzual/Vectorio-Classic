@@ -324,7 +324,7 @@ public class Interface : MonoBehaviour
         else type = unlockable.InvType;
 
         // Get some good shit
-        TileClass tileInfo = obj.GetComponent<TileClass>();
+        DefaultBuilding tileInfo = obj.GetComponent<DefaultBuilding>();
 
         // Iterate through
         switch (type)
@@ -392,7 +392,7 @@ public class Interface : MonoBehaviour
     {
         // TODO: Fix this bullshit
         Transform b = Overlay.transform.Find("Prompt");
-        TileClass c = a.GetComponent<TileClass>();
+        DefaultBuilding c = a.GetComponent<DefaultBuilding>();
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.GetPercentage();
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
@@ -406,9 +406,9 @@ public class Interface : MonoBehaviour
         if(!main.BuildingStats.activeSelf)
             main.BuildingStats.SetActive(true);
 
-        string goldUI = a.GetComponent<TileClass>().GetCost().ToString();
-        string powerUI = a.GetComponent<TileClass>().getConsumption().ToString();
-        string heatUI = a.GetComponent<TileClass>().GetHeat().ToString();
+        string goldUI = a.GetComponent<DefaultBuilding>().GetCost().ToString();
+        string powerUI = a.GetComponent<DefaultBuilding>().getConsumption().ToString();
+        string heatUI = a.GetComponent<DefaultBuilding>().GetHeat().ToString();
 
         gold.GetChild(0).GetComponent<TextMeshProUGUI>().text = goldUI;
         gold.GetChild(1).GetComponent<TextMeshProUGUI>().text = goldUI;

@@ -6,7 +6,7 @@ using System.Collections;
 
 // Not displaying "no targets found" message correctly
 
-public class Engineer : TileClass
+public class Engineer : DefaultBuilding
 {
     /*
     // Interface interaction

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyStaticAI : TileClass
+public class EnemyStaticAI : DefaultBuilding
 {
     public int amount = 0;
 }

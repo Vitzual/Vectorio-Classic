@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Turbine : TileClass
+public class Turbine : DefaultBuilding
 {
     public Survival SRV;
     public int amount;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class StorageAI: TileClass
+public class StorageAI: DefaultBuilding
 {
     // Declare local object variables
     public int type;

@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 6.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &420473218063467210
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 7257695650761451215}
+  - component: {fileID: 6262783014596858131}
   - component: {fileID: 5426603781963460672}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 8646574273394845543}
@@ -123,7 +123,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7257695650761451215
+--- !u!114 &6262783014596858131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,49 +132,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 420473218063467210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2deb8de3171325747a5f38e6fd9590e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Effect: {fileID: 8342469565711734033, guid: 4e90331f6e377bb419d9ba9ac0e50379, type: 3}
+  ID: 0
   tileType: Default
-  maxhp: 10
-  health: 10
-  heat: 30
-  cost: 3500
-  power: 35
-  ID: 4
   isBig: 0
-  description: Fires long-range high-velocity projectiles that deal massive damage.
-  EngineerModifications: []
-  AppliedModification: 
-  isEngineered: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  range: 80
-  rotationSpeed: 70
-  bulletDamage: 35
-  bulletPierces: 1
-  bulletAmount: 1
-  bulletSpeed: 100
-  bulletSpread: 0
-  targetLock: 1
-  fireRate: 2
-  FirePoints:
-  - {fileID: 1714094987215728718}
-  Gun: {fileID: 7464498898754835155}
-  Bullet: {fileID: 3293027712645128820, guid: a385a167a5c9a6a4d9ebe65993829728, type: 3}
-  hasAudio: 1
+  description: 
+  FirePoints: []
+  Gun: {fileID: 0}
+  Bullet: {fileID: 0}
   target: {fileID: 0}
-  isRotating: 1
   targets: []
   targettingMode: 1
-  gunShotParticles: 1
-  shotParticle: {fileID: 3534197822200428421, guid: 551b66376bf476a4faf68bfcf81778f0,
-    type: 3}
-  animationEnabled: 1
-  animTracker: 10
-  animMovement: 2
+  shotParticle: {fileID: 0}
+  animationEnabled: 0
+  animTracker: 0
+  animMovement: 4
 --- !u!212 &5426603781963460672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -526,7 +500,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 6.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4200299937730975688
@@ -713,7 +687,7 @@ SpriteRenderer:
   m_SortingLayerID: 585715533
   m_SortingLayer: 5
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 6736396b71b94c542a1de8a9e7d3ae43, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4aa1be40aefe5624c8d6f55a68e55ff7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -29,6 +29,14 @@ public class BaseTurret : TileClass, IAudible
     protected float cooldown = 0;
     protected bool isRotating = false;
 
+    // Animation variables
+    protected bool animationEnabled = false;
+    protected bool animPlaying = false;
+    protected bool animRebound = false;
+    protected int animTracker;
+    protected int animHolder;
+    protected float animMovement = 4f;
+
     // IAudible sound method
     public void PlaySound()
     {
@@ -60,6 +68,7 @@ public class BaseTurret : TileClass, IAudible
         bulletSpeed = turretStats.bulletSpeed;
         bulletSpread = turretStats.bulletSpread;
         sound = turretStats.sound;
+        animationEnabled = turretStats.animEnabled;
     }
 
     // Get methods

@@ -28,6 +28,7 @@ public class BuildingRegistrar : MonoBehaviour
         // Turret info
         public string name;
         public Transform turretObj;
+        public bool animEnabled;
 
         // Contains turret stats
         public int damage;
@@ -60,6 +61,7 @@ public class BuildingRegistrar : MonoBehaviour
         // Tile info
         public string name;
         public Transform tileObj;
+        [TextArea] public string description;
 
         // Contains tile stats
         public int health;
@@ -68,8 +70,7 @@ public class BuildingRegistrar : MonoBehaviour
         public int power;
         public int heat;
 
-        // Contains tile variables
-        [TextArea] public string description;
+        // Contains death particle
         public ParticleSystem deathParticle;
     }
 

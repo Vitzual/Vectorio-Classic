@@ -14,18 +14,6 @@ public class DefaultTurret : BaseTurret
     // 1 = Closest | 2 = Strongest | 3 = Weakest | 4 = Furthest
     public int targettingMode = 1;
 
-    // Default turret shot particle
-    private bool hasShotParticle = false;
-    public ParticleSystem shotParticle;
-
-    // Default turret recoil animation
-    public bool animationEnabled = false;
-    protected bool animPlaying = false;
-    protected bool animRebound = false;
-    public int animTracker;
-    private int animHolder;
-    public float animMovement = 4f;
-
     // Start method set variables
     private void Start()
     {
@@ -33,7 +21,7 @@ public class DefaultTurret : BaseTurret
         InitTurretStats();
         InitTileStats();
 
-        if (shotParticle != null) hasShotParticle = true;
+        // Get required references 
         layer = LayerManager.getTurretLayer();
         SetCooldown(fireRate - Research.research_firerate);
         bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
@@ -194,7 +182,7 @@ public class DefaultTurret : BaseTurret
     // Createa a bullet object
     protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
     {
-        if (hasShotParticle) Instantiate(shotParticle, FirePoints[0].position, Quaternion.Euler(0, 0, Gun.localEulerAngles.z + 180f));
+        // if (hasShotParticle) Instantiate(shotParticle, FirePoints[0].position, Quaternion.Euler(0, 0, Gun.localEulerAngles.z + 180f));
         if (sound != null) PlaySound();
         if (animationEnabled) animPlaying = true;
 

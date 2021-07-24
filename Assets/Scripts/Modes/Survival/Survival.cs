@@ -386,7 +386,7 @@ public class Survival : MonoBehaviour
                 LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
                 if (largerUnit) LastObj.GetComponent<BoxCollider2D>().size = new Vector2(10f, 10f);
                 LastObj.name = SelectedObj.name;
-                droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.getConsumption(), ObjectComponent.GetHeat());
+                droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.GetPower(), ObjectComponent.GetHeat());
                 ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
             }
             else if (RayTarget != null)
@@ -437,14 +437,14 @@ public class Survival : MonoBehaviour
                 if ((RayTarget.name == "Drone Port" || RayTarget.name == "Gold Collector" || RayTarget.name == "Gold Storage") &&
                     (!BuildingHandler.buildingAmount.ContainsKey(RayTarget.name) || BuildingHandler.buildingAmount[RayTarget.name] <= 1))
                 {
-                    rayScript.DestroyTile(false);
+                    rayScript.DestroyEntity();
                 }
                 else
                 {
                     int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
                     AddGold(amount, true);
                     UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
-                    rayScript.DestroyTile(true);
+                    rayScript.DestroyEntity();
                 }
             }
             else
@@ -878,7 +878,8 @@ public class Survival : MonoBehaviour
             float y = a[i, 3];
             Vector2 position;
 
-            if (building.GetComponent<DefaultBuilding>().isBig)
+            // OUTDATED - MARKED FOR REFACTOR
+            /* if (building.GetComponent<DefaultBuilding>().isBig)
             {
                 // Check the x coordinate
                 if (x >= 0)
@@ -894,11 +895,11 @@ public class Survival : MonoBehaviour
 
                 position = new Vector2(x, y);
             }
-            else
-                position = new Vector2(x, y);
+            else*/
+            position = new Vector2(x, y);
 
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            obj.GetComponent<DefaultBuilding>().SetHealth(a[i, 1]);
+            obj.GetComponent<DefaultBuilding>().health = a[i, 1];
             obj.name = building.name;
             BuildingHandler.addBuilding(obj);
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
@@ -953,7 +954,7 @@ public class Survival : MonoBehaviour
             }
 
             // Set survival
-            increasePowerConsumption(building.GetComponent<DefaultBuilding>().getConsumption());
+            increasePowerConsumption(building.GetComponent<DefaultBuilding>().GetPower());
             Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<DefaultBuilding>().GetHeat());
         }
     }
@@ -961,21 +962,9 @@ public class Survival : MonoBehaviour
     // Returns a buildings ID if unlocked
     public Transform GetBuildingWithID(int a)
     {
-        switch (a)
-        {
-            case 200:
-                return EnemyTurretSMG;
-            case 201:
-                return EnemyTurretDual;
-            case 202:
-                return EnemyTurretRanger;
-            case 204:
-                return EnemyStaticMine;
-            case 205:
-                return EnemyStaticWall;
-        }
+        // OUTDATED
 
-        return tech.FindTechBuilding(a);
+        return null;
     }
 
     // Returns available power 
@@ -1258,8 +1247,8 @@ public class Survival : MonoBehaviour
         MainCamera.backgroundColor = CameraColor;
 
         // If unit is larger then 1x1, change selected obj accordingly
-        if (SelectedObj.GetComponent<DefaultBuilding>().isBig) largerUnit = true;
-        else largerUnit = false;
+        // OUTDATED - MARKED FOR REFACTOR
+        largerUnit = false;
 
         // Disable any active info not relative to selected object
         UI.DisableActiveInfo();
@@ -1345,11 +1334,13 @@ public class Survival : MonoBehaviour
     // Returns the ID's of all buildings on the hotbar
     public int[] GetHotbarData()
     {
+        // OUTDATED - MARKED FOR REFACTOR
+
         int[] hotbarIDs = new int[9];
         for(int i = 0; i < hotbar.Length; i++)
         {
             if (hotbar[i] != null)
-                hotbarIDs[i] = hotbar[i].GetComponent<DefaultBuilding>().ID;
+                hotbarIDs[i] = 1;
             else hotbarIDs[i] = -1;
         }
         return hotbarIDs;
@@ -1382,10 +1373,11 @@ public class Survival : MonoBehaviour
                 try
                 {
                     // ID of the building to save
-                    data[length, 0] = allObjects[i].GetComponent<DefaultBuilding>().getID();
+                    // OUTDATED - MARKED FOR REFACTOR
+                    data[length, 0] = 1;
 
                     // Health of the building being saved
-                    data[length, 1] = allObjects[i].GetComponent<DefaultBuilding>().GetHealth();
+                    data[length, 1] = allObjects[i].GetComponent<DefaultBuilding>().health;
 
                     // Coordinates of the building
                     data[length, 2] = (int)allObjects[i].position.x;

@@ -393,11 +393,11 @@ public class Interface : MonoBehaviour
         // TODO: Fix this bullshit
         Transform b = Overlay.transform.Find("Prompt");
         DefaultBuilding c = a.GetComponent<DefaultBuilding>();
-        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.GetPercentage();
+        b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.health / c.maxHealth;
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
         b.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = (c.GetCost() - c.GetCost()/5).ToString();
-        b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.getConsumption().ToString();
+        b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.GetPower().ToString();
         b.transform.Find("Heat Amount").GetComponent<TextMeshProUGUI>().text = c.GetHeat().ToString();
     }
 
@@ -407,7 +407,7 @@ public class Interface : MonoBehaviour
             main.BuildingStats.SetActive(true);
 
         string goldUI = a.GetComponent<DefaultBuilding>().GetCost().ToString();
-        string powerUI = a.GetComponent<DefaultBuilding>().getConsumption().ToString();
+        string powerUI = a.GetComponent<DefaultBuilding>().GetPower().ToString();
         string heatUI = a.GetComponent<DefaultBuilding>().GetHeat().ToString();
 
         gold.GetChild(0).GetComponent<TextMeshProUGUI>().text = goldUI;

@@ -250,37 +250,15 @@ public class Technology : MonoBehaviour
         loadingSave = false;
     }
 
-    // Iterates through all buildings in the tree, and returns the correct ID
-    // This method will contain two for-loops until we find a solution to the UnlockLvl issue
     public Transform FindTechBuilding(int a)
     {
-        // Checks the unlock list to see if the building exists
-        for (int i = 0; i < unlocked.Count; i++)
-            if (unlocked[i].GetComponent<DefaultBuilding>().getID() == a)
-                return unlocked[i];
-
-        // Backup check if the first iteration loop fails
-        for (int i = 0; i < Unlocks.Length; i++)
-            if (Unlocks[i].Building.GetComponent<DefaultBuilding>().getID() == a)
-                return Unlocks[i].Building;
-
-        // If both fail, return null
+        // OUTDATED - MARKED FOR REFACTOR
         return null;
     }
 
     public Transform FindTechBuildingWithName(string a)
     {
-        // Checks the unlock list to see if the building exists
-        for (int i = 0; i < unlocked.Count; i++)
-            if (unlocked[i].name == a)
-                return unlocked[i];
-
-        // Backup check if the first iteration loop fails
-        for (int i = 0; i < Unlocks.Length; i++)
-            if (Unlocks[i].Building.name == a)
-                return Unlocks[i].Building;
-
-        // If both fail, return null
+        // OUTDATED - MARKED FOR REFACTOR
         return null;
     }
 

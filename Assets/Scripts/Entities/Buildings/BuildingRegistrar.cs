@@ -49,9 +49,10 @@ public class BuildingRegistrar : MonoBehaviour
     public class BuildingStats
     {
         // Constructor
-        public BuildingStats(Transform obj, int health, int maxHealth, int cost, int power, int heat)
+        public BuildingStats(Transform obj, int ID, int health, int maxHealth, int cost, int power, int heat)
         {
             this.obj = obj;
+            this.ID = ID;
             this.health = health;
             this.maxHealth = maxHealth;
             this.cost = cost;
@@ -62,6 +63,7 @@ public class BuildingRegistrar : MonoBehaviour
         // Tile info
         public string name;
         public Transform obj;
+        public int ID;
         [TextArea] public string description;
 
         // Contains tile stats
@@ -79,8 +81,15 @@ public class BuildingRegistrar : MonoBehaviour
     public List<TurretStats> turretStats;
     public List<BuildingStats> buildingStats;
 
+    // Register ID's to IDDB 
+    public void RegisterBuildingIDs()
+    {
+        foreach (BuildingStats building in buildingStats)
+            IDDB.RegisterID(building.obj, building.ID);
+    }
+
     // Grab turret stats
-    public TurretStats getTurretStats(Transform turret)
+    public TurretStats GetTurretStats(Transform turret)
     {
         // Iterates through class list
         foreach (TurretStats stat in turretStats)
@@ -89,7 +98,7 @@ public class BuildingRegistrar : MonoBehaviour
     }
 
     // Grab building stats
-    public BuildingStats getBuildingStats (Transform tile)
+    public BuildingStats GetBuildingStats (Transform tile)
     {
         // Iterates through class list
         foreach (BuildingStats stat in buildingStats)
@@ -99,10 +108,10 @@ public class BuildingRegistrar : MonoBehaviour
 
     // Add to turret stats
     // If a duplicate transform is found, it will be replaced
-    public void addTurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound = null)
+    public void AddTurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound = null)
     {
         // Remove older classes
-        TurretStats stat = getTurretStats(obj);
+        TurretStats stat = GetTurretStats(obj);
         if (stat != null) turretStats.Remove(stat);
 
         // Add the new stat class
@@ -111,13 +120,13 @@ public class BuildingRegistrar : MonoBehaviour
 
     // Add to turret stats
     // If a duplicate transform is found, it will be replaced
-    public void addBuildingStats(Transform obj, int health, int maxHealth, int cost, int power, int heat)
+    public void AddBuildingStats(Transform obj, int ID, int health, int maxHealth, int cost, int power, int heat)
     {
         // Remove older classes
-        BuildingStats stat = getBuildingStats(obj);
+        BuildingStats stat = GetBuildingStats(obj);
         if (stat != null) buildingStats.Remove(stat);
 
         // Add the new stat class
-        buildingStats.Add(new BuildingStats(obj, health, maxHealth, cost, power, heat));
+        buildingStats.Add(new BuildingStats(obj, ID, health, maxHealth, cost, power, heat));
     }
 }

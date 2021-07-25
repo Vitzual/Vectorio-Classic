@@ -49,7 +49,7 @@ public class DefaultBuilding : MonoBehaviour, IDamageable
     {
         // Grab values from BuildingRegistrar
         BuildingRegistrar buildingRegistrar = ScriptHandler.buildingRegistrar;
-        BuildingRegistrar.BuildingStats tileStats = buildingRegistrar.getBuildingStats(transform);
+        BuildingRegistrar.BuildingStats tileStats = buildingRegistrar.GetBuildingStats(transform);
 
         // Check to make sure the stats exist
         if (tileStats == null)

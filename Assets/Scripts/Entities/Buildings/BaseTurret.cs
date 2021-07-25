@@ -41,7 +41,7 @@ public class BaseTurret : DefaultBuilding, IAudible
     {
         // Grab values from BuildingRegistrar
         BuildingRegistrar buildingRegistrar = ScriptHandler.buildingRegistrar;
-        BuildingRegistrar.TurretStats turretStats = buildingRegistrar.getTurretStats(transform);
+        BuildingRegistrar.TurretStats turretStats = buildingRegistrar.GetTurretStats(transform);
         
         // Check to make sure the stats exist
         if (turretStats == null)

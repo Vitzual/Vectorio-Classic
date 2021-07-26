@@ -102,7 +102,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.7",
+      "version": "2.0.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -125,10 +125,49 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
-      "version": "2.3.0",
+      "version": "3.1.1",
       "depth": 0,
       "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.core": {
+      "version": "10.4.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.universal": {
+      "version": "10.4.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.1.0",
+        "com.unity.render-pipelines.core": "10.4.0",
+        "com.unity.shadergraph": "10.4.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.searcher": {
+      "version": "4.3.1",
+      "depth": 2,
+      "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.shadergraph": {
+      "version": "10.4.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "10.4.0",
+        "com.unity.searcher": "4.3.1"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.sysroot": {
@@ -159,7 +198,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.1",
+      "version": "3.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -180,7 +219,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.toolchain.win-x86_64-linux-x86_64": {
-      "version": "0.1.19-preview",
+      "version": "0.1.21-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {

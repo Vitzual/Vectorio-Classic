@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MK.Glow.Legacy;
+//using MK.Glow.URP;
 using Michsky.UI.ModernUIPack;
 
 public class Settings : MonoBehaviour
@@ -7,7 +7,7 @@ public class Settings : MonoBehaviour
     // Settings variables
     public static float soundVolume = 1f;
     public AudioSource music;
-    public MKGlowLite glowing;
+    //public MKGlowLite glowing;
     public Interface ui;
     public int glowMode = 2;
 
@@ -142,8 +142,8 @@ public class Settings : MonoBehaviour
 
     public void SetShaderMode(int a)
     {
-        if (a == 1) glowing.enabled = false;
-        else glowing.enabled = true;
+        //if (a == 1) glowing.enabled = false;
+        //else glowing.enabled = true;
         glowMode = a;
     }
 

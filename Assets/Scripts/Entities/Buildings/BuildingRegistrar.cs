@@ -11,13 +11,15 @@ public class BuildingRegistrar : MonoBehaviour
     public class TurretStats
     {
         // Constructor
-        public TurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound)
+        public TurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, float bulletSize, Material bulletMaterial, AudioClip sound)
         {
             this.obj = obj;
             this.damage = damage;
             this.range = range;
             this.rotationSpeed = rotationSpeed;
             this.fireRate = fireRate;
+            this.bulletSize = bulletSize;
+            this.bulletMaterial = bulletMaterial;
             this.bulletPierces = bulletPierces;
             this.bulletAmount = bulletAmount;
             this.bulletSpeed = bulletSpeed;
@@ -39,6 +41,8 @@ public class BuildingRegistrar : MonoBehaviour
         public int bulletAmount;
         public float bulletSpeed;
         public float bulletSpread;
+        public float bulletSize;
+        public Material bulletMaterial;
 
         // Contains turret variables
         public AudioClip sound;
@@ -108,14 +112,14 @@ public class BuildingRegistrar : MonoBehaviour
 
     // Add to turret stats
     // If a duplicate transform is found, it will be replaced
-    public void AddTurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, AudioClip sound = null)
+    public void AddTurretStats(Transform obj, int damage, int range, float rotationSpeed, float fireRate, int bulletPierces, int bulletAmount, float bulletSpeed, float bulletSpread, float bulletSize, Material bulletMaterial, AudioClip sound = null)
     {
         // Remove older classes
         TurretStats stat = GetTurretStats(obj);
         if (stat != null) turretStats.Remove(stat);
 
         // Add the new stat class
-        turretStats.Add(new TurretStats(obj, damage, range, rotationSpeed, fireRate, bulletPierces, bulletAmount, bulletSpeed, bulletSpread, sound));
+        turretStats.Add(new TurretStats(obj, damage, range, rotationSpeed, fireRate, bulletPierces, bulletAmount, bulletSpeed, bulletSpread, bulletSize, bulletMaterial, sound));
     }
 
     // Add to turret stats

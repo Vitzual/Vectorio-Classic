@@ -241,32 +241,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daee2fe8eda99d4184ce9890940787c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 0
-  power: 0
-  heat: 0
-  Effect: {fileID: 0}
-  tileType: Default
-  ID: 0
-  isBig: 0
-  description: No description provided.
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  fireRate: 0
-  bulletPierces: 0
-  bulletAmount: 0
-  bulletSpeed: 0
-  bulletSpread: 0
   FirePoints: []
   Gun: {fileID: 0}
   Bullet: {fileID: 0}
   target: {fileID: 0}
   targets: []
   targettingMode: 1
-  shotParticle: {fileID: 0}
-  animationEnabled: 0
-  animTracker: 0
-  animMovement: 4
 --- !u!1 &1688262179590608685
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +382,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6b3ea3031b83a8d4b921e399a90544f6, type: 2}
+  - {fileID: 2100000, guid: 6ac35eb421e6e4d4895f49b18ce6c218, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -653,6 +633,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 6714194749485206727, guid: f92aeede3103a7347a80840331e0aae1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92aeede3103a7347a80840331e0aae1, type: 3}
 --- !u!4 &7899018365178433538 stripped
@@ -768,6 +753,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 6714194749485206727, guid: f92aeede3103a7347a80840331e0aae1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92aeede3103a7347a80840331e0aae1, type: 3}
 --- !u!4 &5992845082022866295 stripped

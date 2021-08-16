@@ -91,26 +91,6 @@ public class Survival : MonoBehaviour
     private int AdjustLimiter = 0;
     private bool AdjustSwitch = false;
 
-    // Objects that have additional mechanics in Survival
-    [SerializeField] private Transform HubObj;             // No ID
-    [SerializeField] private Transform TurretObj;          // ID = 0
-    [SerializeField] private Transform WallObj;            // ID = 1
-    [SerializeField] private Transform CollectorObj;       // ID = 2
-    [SerializeField] private Transform DroneObj;
-    [SerializeField] private Transform EssenceObj;         // ID = 10
-    [SerializeField] private Transform PowerObj;           // ID = 13
-    [SerializeField] private Transform EngineerObj;        // ID = 16
-    [SerializeField] private Transform Iridium;            // ID = 23
-    [SerializeField] private Transform GoldStorage;        // ID = 25
-    [SerializeField] private Transform EssenceStorage;     // ID = 26
-    [SerializeField] private Transform IridiumStorage;     // ID = 27
-    
-    [SerializeField] private Transform EnemyTurretDual;    // ID = 201
-    [SerializeField] private Transform EnemyTurretSMG;     // ID = 200
-    [SerializeField] private Transform EnemyTurretRanger;  // ID = 202
-    [SerializeField] private Transform EnemyStaticWall;    // ID = 205
-    [SerializeField] private Transform EnemyStaticMine;    // ID = 204
-
     // Holds the last building that was hit
     public Vector3 lastHit;
 
@@ -877,25 +857,6 @@ public class Survival : MonoBehaviour
             float x = a[i, 2];
             float y = a[i, 3];
             Vector2 position;
-
-            // OUTDATED - MARKED FOR REFACTOR
-            /* if (building.GetComponent<DefaultBuilding>().isBig)
-            {
-                // Check the x coordinate
-                if (x >= 0)
-                    x += 0.5f;
-                else
-                    x -= 0.5f;
-
-                // Check the y coordinate
-                if (y >= 0)
-                    y += 0.5f;
-                else
-                    y -= 0.5f;
-
-                position = new Vector2(x, y);
-            }
-            else*/
             position = new Vector2(x, y);
 
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));

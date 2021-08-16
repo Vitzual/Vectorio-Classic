@@ -797,7 +797,7 @@ public class DroneManager : MonoBehaviour
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
-        BuildingHandler.addBuilding(LastObj);
+        BuildingSystem.addBuilding(LastObj);
         survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
         drone.buildingIcon.sprite = transparent;
@@ -870,24 +870,24 @@ public class DroneManager : MonoBehaviour
     {
         // Checks to see if a drone port should be counted as free or not
         if (building.name == "Drone Port" && constructionDrones.Count == 0 && 
-            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
-            BuildingHandler.buildingAmount[building.name] == 0))
+            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
+            BuildingSystem.buildingAmount[building.name] == 0))
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
 
         // Checks to see if a gold storage should be counted as free or not
         else if (building.name == "Gold Storage" && constructionDrones.Count == 0 && 
-            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
-            BuildingHandler.buildingAmount[building.name] == 0))
+            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
+            BuildingSystem.buildingAmount[building.name] == 0))
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
 
         // Checks to see if a gold collector should be counted as free or not
         else if (building.name == "Gold Collector" && constructionDrones.Count == 0 && 
-            (!BuildingHandler.buildingAmount.ContainsKey(building.name) || 
-            BuildingHandler.buildingAmount[building.name] == 0))
+            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
+            BuildingSystem.buildingAmount[building.name] == 0))
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));

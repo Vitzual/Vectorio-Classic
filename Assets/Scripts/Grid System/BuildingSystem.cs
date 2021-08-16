@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BuildingHandler : NetworkBehaviour
+public class BuildingSystem : NetworkBehaviour
 {
     // Grid variable
-    public static Grid tileGrid;
+    public static GridSystem tileGrid;
 
     // Building variables
-    public static BuildingHandler active;
+    public static BuildingSystem active;
     private static Tile selectedTile;
     private static Vector2 position;
     private static Vector2 offset;
@@ -37,8 +37,8 @@ public class BuildingHandler : NetworkBehaviour
         else active = null;
 
         // Sets static variables on start
-        tileGrid = new Grid();
-        tileGrid.cells = new Dictionary<Vector2Int, Grid.Cell>();
+        tileGrid = new GridSystem();
+        tileGrid.cells = new Dictionary<Vector2Int, GridSystem.Cell>();
         selectedTile = null;
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
@@ -267,7 +267,7 @@ public class BuildingHandler : NetworkBehaviour
     // Attempts to return a building
     public static Building TryGetBuilding(Vector2 position)
     {
-        Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        GridSystem.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
         if (cell != null)
         {
             Building building = cell.obj.GetComponent<Building>();
@@ -279,7 +279,7 @@ public class BuildingHandler : NetworkBehaviour
     // Attempts to return a conveyor
     public static Conveyor TryGetConveyor(Vector2 position)
     {
-        Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        GridSystem.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
         if (cell != null)
         {
             Conveyor conveyor = cell.obj.GetComponent<Conveyor>();

@@ -320,8 +320,8 @@ public class Research : MonoBehaviour
                 SurvivalCS.goldStorage = 0;
 
                 // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingHandler.storages.Count; i++)
-                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 1)
+                for (int i = 0; i < BuildingSystem.storages.Count; i++)
+                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 1)
                         SurvivalCS.goldStorage += research_gold_storage;
 
                 break;
@@ -341,8 +341,8 @@ public class Research : MonoBehaviour
                 SurvivalCS.essenceStorage = 0;
 
                 // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingHandler.storages.Count; i++)
-                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 2)
+                for (int i = 0; i < BuildingSystem.storages.Count; i++)
+                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 2)
                         SurvivalCS.essenceStorage += research_essence_storage;
 
                 break;
@@ -362,8 +362,8 @@ public class Research : MonoBehaviour
                 SurvivalCS.iridiumStorage = 0;
 
                 // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingHandler.storages.Count; i++)
-                    if (BuildingHandler.storages[i] != null && BuildingHandler.storages[i].type == 2)
+                for (int i = 0; i < BuildingSystem.storages.Count; i++)
+                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 2)
                         SurvivalCS.iridiumStorage += research_iridium_storage;
 
                 break;

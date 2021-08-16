@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid
+public class GridSystem
 {
     // Cell class. Holds info about each cell
     public class Cell
@@ -38,8 +38,7 @@ public class Grid
     public void SetCell(Vector2Int coords, bool occupy, Tile tile, GameObject obj)
     {
         if (cells.TryGetValue(coords, out Cell cell))
-        {
-            cell.tile = tile;
+        {            cell.tile = tile;
             cell.occupied = occupy;
             cell.obj = obj;
         }

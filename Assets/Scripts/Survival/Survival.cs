@@ -415,7 +415,7 @@ public class Survival : MonoBehaviour
 
                 // Check if tile is an essential resource and the amount is not less then 2
                 if ((RayTarget.name == "Drone Port" || RayTarget.name == "Gold Collector" || RayTarget.name == "Gold Storage") &&
-                    (!BuildingHandler.buildingAmount.ContainsKey(RayTarget.name) || BuildingHandler.buildingAmount[RayTarget.name] <= 1))
+                    (!BuildingSystem.buildingAmount.ContainsKey(RayTarget.name) || BuildingSystem.buildingAmount[RayTarget.name] <= 1))
                 {
                     rayScript.DestroyEntity();
                 }
@@ -862,7 +862,7 @@ public class Survival : MonoBehaviour
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.GetComponent<DefaultBuilding>().health = a[i, 1];
             obj.name = building.name;
-            BuildingHandler.addBuilding(obj);
+            BuildingSystem.addBuilding(obj);
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
@@ -987,17 +987,17 @@ public class Survival : MonoBehaviour
         // This will force input resources into the storages
         if (addToStorages)
         {
-            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            for (int i = 0; i < BuildingSystem.storages.Count; i++)
             {
-                if (BuildingHandler.storages[i].icon == null)
+                if (BuildingSystem.storages[i].icon == null)
                 {
-                    BuildingHandler.storages.RemoveAt(i);
+                    BuildingSystem.storages.RemoveAt(i);
                     i--;
                     continue;
                 }
-                else if (BuildingHandler.storages[i].type == 1)
+                else if (BuildingSystem.storages[i].type == 1)
                 {
-                    a = BuildingHandler.storages[i].addResources(a, true);
+                    a = BuildingSystem.storages[i].addResources(a, true);
                     if (a == 0) return;
                 }
             }
@@ -1009,7 +1009,7 @@ public class Survival : MonoBehaviour
     {
         gold -= a;
         if (gold < 0) gold = 0;
-        BuildingHandler.removeStorageResources(a, 1);
+        BuildingSystem.removeStorageResources(a, 1);
         UI.GoldAmount.text = gold.ToString();
     }
 
@@ -1024,17 +1024,17 @@ public class Survival : MonoBehaviour
         // This will force input resources into the storages
         if (addToStorages)
         {
-            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            for (int i = 0; i < BuildingSystem.storages.Count; i++)
             {
-                if (BuildingHandler.storages[i].icon == null)
+                if (BuildingSystem.storages[i].icon == null)
                 {
-                    BuildingHandler.storages.RemoveAt(i);
+                    BuildingSystem.storages.RemoveAt(i);
                     i--;
                     continue;
                 }
-                else if (BuildingHandler.storages[i].type == 2)
+                else if (BuildingSystem.storages[i].type == 2)
                 {
-                    a = BuildingHandler.storages[i].addResources(a, true);
+                    a = BuildingSystem.storages[i].addResources(a, true);
                     if (a == 0) return;
                 }
             }
@@ -1046,7 +1046,7 @@ public class Survival : MonoBehaviour
     {
         essence -= a;
         if (essence < 0) essence = 0;
-        BuildingHandler.removeStorageResources(a, 2);
+        BuildingSystem.removeStorageResources(a, 2);
         UI.EssenceAmount.text = essence.ToString();
     }
 
@@ -1061,17 +1061,17 @@ public class Survival : MonoBehaviour
         // This will force input resources into the storages
         if (addToStorages)
         {
-            for (int i = 0; i < BuildingHandler.storages.Count; i++)
+            for (int i = 0; i < BuildingSystem.storages.Count; i++)
             {
-                if (BuildingHandler.storages[i].icon == null)
+                if (BuildingSystem.storages[i].icon == null)
                 {
-                    BuildingHandler.storages.RemoveAt(i);
+                    BuildingSystem.storages.RemoveAt(i);
                     i--;
                     continue;
                 }
-                else if (BuildingHandler.storages[i].type == 3)
+                else if (BuildingSystem.storages[i].type == 3)
                 {
-                    a = BuildingHandler.storages[i].addResources(a, true);
+                    a = BuildingSystem.storages[i].addResources(a, true);
                     if (a == 0) return;
                 }
             }
@@ -1083,7 +1083,7 @@ public class Survival : MonoBehaviour
     {
         iridium -= a;
         if (iridium < 0) iridium = 0;
-        BuildingHandler.removeStorageResources(a, 3);
+        BuildingSystem.removeStorageResources(a, 3);
         UI.IridiumAmount.text = iridium.ToString();
     }
 

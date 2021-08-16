@@ -152,10 +152,10 @@ public class Technology : MonoBehaviour
                     if (Unlocks[index].Unlocked) continue;
                     Transform building = FindTechBuilding(Unlocks[index].AmountOptionalID);
                     if (building != null) {
-                        if (BuildingHandler.buildingAmount.ContainsKey(building.name))
+                        if (BuildingSystem.buildingAmount.ContainsKey(building.name))
                         {
-                            if (BuildingHandler.buildingAmount[building.name] >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
-                            UpdateUnlockUI(Unlocks[index], BuildingHandler.buildingAmount[building.name]);
+                            if (BuildingSystem.buildingAmount[building.name] >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
+                            UpdateUnlockUI(Unlocks[index], BuildingSystem.buildingAmount[building.name]);
                         }
                     }
                 }

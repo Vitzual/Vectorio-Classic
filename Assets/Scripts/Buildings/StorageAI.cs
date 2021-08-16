@@ -15,7 +15,7 @@ public class StorageAI: DefaultBuilding
     {
         // Default values
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        BuildingHandler.storages.Add(this);
+        BuildingSystem.storages.Add(this);
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         droneManager.updateResourceDrones(transform);
 

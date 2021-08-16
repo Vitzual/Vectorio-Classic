@@ -22,7 +22,7 @@ public class DroneManager : MonoBehaviour
             this.plates = plates;
             this.isHubDrone = isHubDrone;
             this.buildingIcon = buildingIcon;
-            buildingIcon.sprite = Resources.Load<Sprite>("Sprites/" + targetBuilding.name);
+            buildingIcon.sprite = Currencies.Load<Sprite>("Sprites/" + targetBuilding.name);
 
             goldCost = gold;
             powerCost = power;

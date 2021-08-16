@@ -51,7 +51,7 @@ namespace TMPro.Examples
                     go.transform.position = new Vector3(Random.Range(-95f, 95f), 0.25f, Random.Range(-95f, 95f));
 
                     TextMesh textMesh = go.AddComponent<TextMesh>();
-                    textMesh.font = Resources.Load<Font>("Fonts/ARIAL");
+                    textMesh.font = Currencies.Load<Font>("Fonts/ARIAL");
                     textMesh.GetComponent<Renderer>().sharedMaterial = textMesh.font.material;
 
                     textMesh.anchor = TextAnchor.LowerCenter;

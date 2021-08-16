@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,6 @@ public class BuildingSystem : NetworkBehaviour
     private static Quaternion rotation;
     private static GameObject lastObj;
     private static bool changeSprite;
-    private static bool conveyorOverrideSprite;
-    private static bool conveyorOverrideCreation;
 
     // Axis variables
     public static bool buildPressed;
@@ -27,7 +26,6 @@ public class BuildingSystem : NetworkBehaviour
     private static SpriteRenderer spriteRenderer;
     private static float alphaAdjust = 0.005f;
     private static float alphaHolder;
-    private static bool rotateSwitch;
 
     // Start method grabs tilemap
     private void Start()
@@ -44,15 +42,11 @@ public class BuildingSystem : NetworkBehaviour
         offset = new Vector2(0, 0);
         rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         changeSprite = false;
-        conveyorOverrideSprite = false;
-        conveyorOverrideCreation = false;
-
         lastObj = null;
 
         // Sets static anim variables
         spriteRenderer = GetComponent<SpriteRenderer>();
         alphaHolder = alphaAdjust;
-        rotateSwitch = false;
     }
 
     // Update is called once per frame
@@ -94,31 +88,7 @@ public class BuildingSystem : NetworkBehaviour
                 targetTile = new Vector2(position.x - 5f, position.y);
                 break;
         }
-        Conveyor conveyor = TryGetConveyor(targetTile);
-
-        if (conveyor != null && conveyor.transform.rotation == rotation && conveyor.nextTarget == null)
-        {
-            changeSprite = true;
-            conveyorOverrideSprite = true;
-            conveyorOverrideCreation = true;
-
-            // Check to see if rotation should happen
-            if (rotateSwitch)
-            {
-                active.transform.rotation = lastObj.transform.rotation;
-                active.transform.Rotate(new Vector3(0, 0, -90));
-                rotateSwitch = false;
-            }
-            else
-            {
-                active.transform.rotation = lastObj.transform.rotation;
-                rotateSwitch = true;
-            }
-        }
-        else
-        {
             active.transform.Rotate(0, 0, -90);
-        }
     }
 
     // Adjusts the alpha transparency of the SR component 
@@ -129,12 +99,7 @@ public class BuildingSystem : NetworkBehaviour
         {
             try
             {
-                if (conveyorOverrideSprite)
-                {
-                    conveyorOverrideSprite = false;
-                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Buildings/ConveyorTurn");
-                }
-                else if (selectedTile != null) spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
+                if (selectedTile != null) spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
                 else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Interface/Empty");
             }
             catch
@@ -191,50 +156,6 @@ public class BuildingSystem : NetworkBehaviour
         // Create the tile
         lastObj = Instantiate(obj, position, rotation);
         lastObj.name = obj.name;
-
-        if (conveyorOverrideCreation)
-        {
-            Conveyor conveyor = lastObj.GetComponent<Conveyor>();
-            if (conveyor != null)
-            {
-                conveyor.SetupPositions();
-                conveyor.ToggleCorner();
-
-                if (rotateSwitch) active.transform.Rotate(new Vector3(0, 0, 90));
-                else active.transform.Rotate(new Vector3(0, 0, -90));
-            }
-
-            conveyorOverrideCreation = false;
-            changeSprite = true;
-        }
-    }
-
-    private static void ConveyorCheck()
-    {
-        if (!buildPressed)
-        {
-            buildPressed = true;
-            InstantiateObj(selectedTile.obj, position, active.transform.rotation);
-        }
-        else if (selectedTile.name == "Conveyor")
-        {
-            if (lockAxisX == -1 && lockAxisY == -1 && lastObj.transform.position.x == position.x)
-            {
-                lockAxisX = position.x;
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Interface/Empty");
-            }
-            else if (lockAxisX == -1 && lockAxisY == -1 && lastObj.transform.position.y == position.y)
-            {
-                lockAxisY = position.y;
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Interface/Empty");
-            }
-
-            // Create the tile
-            if (lockAxisX != -1) InstantiateObj(selectedTile.obj, new Vector2(lockAxisX, position.y), active.transform.rotation, 0);
-            else if (lockAxisY != -1) InstantiateObj(selectedTile.obj, new Vector2(position.x, lockAxisY), active.transform.rotation, 1);
-            else { BuildReleased(); return; }
-        }
-        else InstantiateObj(selectedTile.obj, position, active.transform.rotation);
     }
 
     // Keybind for building released
@@ -262,29 +183,5 @@ public class BuildingSystem : NetworkBehaviour
         }
         else return tileGrid.RetrieveCell(Vector2Int.RoundToInt(position)) == null;
         return true;
-    }
-
-    // Attempts to return a building
-    public static Building TryGetBuilding(Vector2 position)
-    {
-        GridSystem.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
-        if (cell != null)
-        {
-            Building building = cell.obj.GetComponent<Building>();
-            return building;
-        }
-        return null;
-    }
-
-    // Attempts to return a conveyor
-    public static Conveyor TryGetConveyor(Vector2 position)
-    {
-        GridSystem.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
-        if (cell != null)
-        {
-            Conveyor conveyor = cell.obj.GetComponent<Conveyor>();
-            return conveyor;
-        }
-        return null;
     }
 }

@@ -2,9 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "New Parent Building", menuName = "Items/Tile")]
-public class Tile : Item
+[CreateAssetMenu(fileName = "New Tile", menuName = "Buildings/Tile")]
+public class Tile : ScriptableObject
 {
+    public new string name;
+    public string description;
+    public GameObject obj;
+
     [System.Serializable]
     public struct Cell
     {

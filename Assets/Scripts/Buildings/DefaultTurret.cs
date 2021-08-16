@@ -65,7 +65,7 @@ public class DefaultTurret : BaseTurret
     public void PlayAudio()
     {
         float audioScale = CameraScroll.getZoom() / 1400f;
-        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
+        AudioSource.PlayClipAtPoint(Currencies.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
     protected void RotationHandler()

@@ -69,7 +69,7 @@ namespace TMPro.Examples
                 m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
 
                 m_textMesh = m_floatingText.AddComponent<TextMesh>();
-                m_textMesh.font = Resources.Load<Font>("Fonts/ARIAL");
+                m_textMesh.font = Currencies.Load<Font>("Fonts/ARIAL");
                 m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 m_textMesh.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 m_textMesh.anchor = TextAnchor.LowerCenter;

@@ -363,7 +363,7 @@ public class Survival : MonoBehaviour
 
                 // Place the building and register as a ghost variant and queue it in the drone network
                 LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+                LastObj.GetComponent<SpriteRenderer>().sprite = Currencies.Load<Sprite>("Sprites/" + SelectedObj.name);
                 if (largerUnit) LastObj.GetComponent<BoxCollider2D>().size = new Vector2(10f, 10f);
                 LastObj.name = SelectedObj.name;
                 droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.GetPower(), ObjectComponent.GetHeat());
@@ -1214,7 +1214,7 @@ public class Survival : MonoBehaviour
         // Disable any active info not relative to selected object
         UI.DisableActiveInfo();
         Adjustment = 1f;
-        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
+        Selected.sprite = Currencies.Load<Sprite>("Sprites/" + SelectedObj.name);
         UI.ShowSelectedInfo(SelectedObj);
 
         // Set radius dimensions if selected object is defense

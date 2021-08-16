@@ -99,8 +99,8 @@ public class BuildingSystem : NetworkBehaviour
         {
             try
             {
-                if (selectedTile != null) spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
-                else spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Interface/Empty");
+                if (selectedTile != null) spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
+                else spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Interface/Empty");
             }
             catch
             {
@@ -167,7 +167,7 @@ public class BuildingSystem : NetworkBehaviour
 
         if (selectedTile != null)
         {
-            spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
+            spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
             changeSprite = true;
         }
     }

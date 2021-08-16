@@ -21,6 +21,6 @@ public class Popup : MonoBehaviour
     public void SetPopup(string amount, string name)
     {
         amountText.text = amount;
-        icon.sprite = Currencies.Load<Sprite>("Sprites/" + name);
+        icon.sprite = Resources.Load<Sprite>("Sprites/" + name);
     }
 }

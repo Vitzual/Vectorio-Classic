@@ -147,6 +147,7 @@ public class Technology : MonoBehaviour
                 }
                 return;
             case "Place":
+                /*
                 foreach (int index in PlaceUnlocks)
                 {
                     if (Unlocks[index].Unlocked) continue;
@@ -159,6 +160,7 @@ public class Technology : MonoBehaviour
                         }
                     }
                 }
+                */
                 return;
             case "Research":
                 foreach (int index in ResearchUnlocks)
@@ -203,7 +205,7 @@ public class Technology : MonoBehaviour
             unlock.Progress.gameObject.SetActive(false);
             unlock.InvName.fontSize = 30;
             unlock.InvName.text = unlock.Building.name.ToUpper() + " <size=18>LEVEL 1";
-            unlock.InvIcon.sprite = Currencies.Load<Sprite>("Sprites/" + unlock.Building.name);
+            unlock.InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
         }
         else
         {
@@ -269,13 +271,13 @@ public class Technology : MonoBehaviour
         if (unlock == null) return;
 
         // Set button icon and text
-        unlock.InvIcon.sprite = Currencies.Load<Sprite>("Sprites/" + unlock.Building.name);
+        unlock.InvIcon.sprite = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
         unlock.InvName.text = unlock.Building.name.ToUpper();
 
         // Set the UOL
         if (!loadingSave)
         {
-            UI.UOL.icon = Currencies.Load<Sprite>("Sprites/" + unlock.Building.name);
+            UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
             UI.UOL.titleText = unlock.Building.name.ToUpper();
             UI.UOL.descriptionText = unlock.Building.GetComponent<DefaultBuilding>().GetDescription();
             UI.UOL.UpdateUI();
@@ -309,7 +311,7 @@ public class Technology : MonoBehaviour
         if (a.name == "Research Lab")
         {
             if (!loadingSave) UI.showResearchUnlock();
-            rButton.buttonIcon = Currencies.Load<Sprite>("Sprites/Research");
+            rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
             Research.ResearchUnlocked = true;
         }
         else if (!loadingSave && a.name == "Energizer")

@@ -147,7 +147,7 @@ public abstract class EnemyClass : MonoBehaviour
                 if (Random.Range(0, 20) == 10)
                 {
                     is_burning = true;
-                    burning_effect = Instantiate(Currencies.Load<Transform>("Effects/Fire"), transform.position, transform.rotation);
+                    burning_effect = Instantiate(Resources.Load<Transform>("Effects/Fire"), transform.position, transform.rotation);
                     burning_effect.parent = transform;
                     StartCoroutine(ApplyBurning(Research.research_burning));
                 }
@@ -159,7 +159,7 @@ public abstract class EnemyClass : MonoBehaviour
                 if (Random.Range(0, 20) == 10)
                 {
                     is_frozen = true;
-                    freezing_effect = Instantiate(Currencies.Load<Transform>("Effects/Ice"), transform.position, transform.rotation);
+                    freezing_effect = Instantiate(Resources.Load<Transform>("Effects/Ice"), transform.position, transform.rotation);
                     freezing_effect.parent = transform;
                     StartCoroutine(ApplyFreezing(Research.research_freezing));
                 }
@@ -171,7 +171,7 @@ public abstract class EnemyClass : MonoBehaviour
                 if (Random.Range(0, 20) == 10)
                 {
                     is_poisoned = true;
-                    poison_effect = Instantiate(Currencies.Load<Transform>("Effects/Poison"), transform.position, transform.rotation);
+                    poison_effect = Instantiate(Resources.Load<Transform>("Effects/Poison"), transform.position, transform.rotation);
                     poison_effect.parent = transform;
                     StartCoroutine(ApplyPoisoning(Research.research_poisoning));
                 }

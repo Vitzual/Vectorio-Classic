@@ -158,7 +158,7 @@ public class Research : MonoBehaviour
         switch (type)
         {
             case 1:
-                SurvivalCS.RemoveGold(research_research_speed);
+                //SurvivalCS.RemoveGold(research_research_speed);
                 goldTracked += research_research_speed;
                 resourcesTracked += research_research_speed;
                 if (goldTracked >= goldNeeded)
@@ -169,7 +169,7 @@ public class Research : MonoBehaviour
                 else if (Researching.goldText != null) Researching.goldText.text = "x" + (goldNeeded - goldTracked);
                 break;
             case 2:
-                SurvivalCS.RemoveEssence(research_research_speed);
+                //SurvivalCS.RemoveEssence(research_research_speed);
                 essenceTracked += research_research_speed;
                 resourcesTracked += research_research_speed;
                 if (essenceTracked >= essenceNeeded)
@@ -180,7 +180,7 @@ public class Research : MonoBehaviour
                 else if (Researching.essenceText != null) Researching.essenceText.text = "x" + (essenceNeeded - essenceTracked);
                 break;
             case 3:
-                SurvivalCS.RemoveIridium(research_research_speed);
+                //SurvivalCS.RemoveIridium(research_research_speed);
                 iridiumTracked += research_research_speed;
                 resourcesTracked += research_research_speed;
                 if (iridiumTracked >= iridiumNeeded)
@@ -319,11 +319,6 @@ public class Research : MonoBehaviour
                 research_gold_storage += 2500;
                 SurvivalCS.goldStorage = 0;
 
-                // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingSystem.storages.Count; i++)
-                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 1)
-                        SurvivalCS.goldStorage += research_gold_storage;
-
                 break;
             case "essence yield":
                 research_essence_yield += 5;
@@ -340,11 +335,6 @@ public class Research : MonoBehaviour
                 research_essence_storage += 500;
                 SurvivalCS.essenceStorage = 0;
 
-                // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingSystem.storages.Count; i++)
-                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 2)
-                        SurvivalCS.essenceStorage += research_essence_storage;
-
                 break;
             case "iridium yield":
                 research_iridium_yield += 5;
@@ -360,11 +350,6 @@ public class Research : MonoBehaviour
                 // Update variables and set main gold storage to 0
                 research_iridium_storage += 100;
                 SurvivalCS.iridiumStorage = 0;
-
-                // Iterates through storages and adds back the proper amount
-                for (int i = 0; i < BuildingSystem.storages.Count; i++)
-                    if (BuildingSystem.storages[i] != null && BuildingSystem.storages[i].type == 2)
-                        SurvivalCS.iridiumStorage += research_iridium_storage;
 
                 break;
             case "burning":

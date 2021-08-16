@@ -333,7 +333,7 @@ public class Interface : MonoBehaviour
                 DefaultTurret turret = obj.GetComponent<DefaultTurret>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.GetDescription();
-                InfoPanels[0].icon.sprite = Currencies.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();
                 InfoPanels[0].power.text = tileInfo.GetPower().ToString();
@@ -358,7 +358,7 @@ public class Interface : MonoBehaviour
             case "Logistics":
                 InfoPanels[1].title.text = obj.name.ToUpper();
                 InfoPanels[1].description.text = tileInfo.GetDescription();
-                InfoPanels[1].icon.sprite = Currencies.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[1].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[1].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[1].heat.text = tileInfo.GetHeat().ToString();
                 InfoPanels[1].power.text = tileInfo.GetPower().ToString();
@@ -367,7 +367,7 @@ public class Interface : MonoBehaviour
             case "Power":
                 InfoPanels[2].title.text = obj.name.ToUpper();
                 InfoPanels[2].description.text = tileInfo.GetDescription();
-                InfoPanels[2].icon.sprite = Currencies.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[2].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[2].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[2].heat.text = tileInfo.GetHeat().ToString();
                 InfoPanels[2].power.text = tileInfo.GetPower().ToString();
@@ -376,7 +376,7 @@ public class Interface : MonoBehaviour
             case "Heat":
                 InfoPanels[3].title.text = obj.name.ToUpper();
                 InfoPanels[3].description.text = tileInfo.GetDescription();
-                InfoPanels[3].icon.sprite = Currencies.Load<Sprite>("Sprites/" + obj.name);
+                InfoPanels[3].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 InfoPanels[3].cost.text = tileInfo.GetCost().ToString();
                 InfoPanels[3].heat.text = tileInfo.GetHeat().ToString();
                 InfoPanels[3].power.text = tileInfo.GetPower().ToString();
@@ -395,7 +395,7 @@ public class Interface : MonoBehaviour
         DefaultBuilding c = a.GetComponent<DefaultBuilding>();
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.health / c.maxHealth;
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
-        b.transform.Find("Building").GetComponent<Image>().sprite = Currencies.Load<Sprite>("Sprites/" + a.name);
+        b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
         b.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = (c.GetCost() - c.GetCost()/5).ToString();
         b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.GetPower().ToString();
         b.transform.Find("Heat Amount").GetComponent<TextMeshProUGUI>().text = c.GetHeat().ToString();
@@ -431,12 +431,12 @@ public class Interface : MonoBehaviour
             if (main.hotbar[i] != null)
             {
                 if (main.hotbar[i].name == "Gold Storage")
-                    hotbarButtons[i].buttonIcon = Currencies.Load<Sprite>("Sprites/Gold Storage Small");
-                else hotbarButtons[i].buttonIcon = Currencies.Load<Sprite>("Sprites/" + main.hotbar[i].name);
+                    hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Gold Storage Small");
+                else hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/" + main.hotbar[i].name);
             }
             else
             {
-                hotbarButtons[i].buttonIcon = Currencies.Load<Sprite>("Sprites/Undiscovered");
+                hotbarButtons[i].buttonIcon = Resources.Load<Sprite>("Sprites/Undiscovered");
             }
             hotbarButtons[i].UpdateUI();
         }

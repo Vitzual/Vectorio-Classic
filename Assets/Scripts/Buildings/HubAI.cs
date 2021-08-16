@@ -13,7 +13,7 @@ public class HubAI : DefaultBuilding
     // On start, assign weapon variables
     void Start()
     {
-        BuildingSystem.addBuilding(transform);
+        //BuildingSystem.addBuilding(transform);
 
         foreach (Transform drone in drones)
             droneManager.registerAvailableConstructionDrone(drone.GetChild(0), drone, 

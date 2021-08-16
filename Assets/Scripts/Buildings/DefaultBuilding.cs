@@ -21,7 +21,6 @@ public class DefaultBuilding : MonoBehaviour, IDamageable
         bool isFull = health == maxHealth;
         health -= dmg;
         if (health <= 0) DestroyEntity();
-        else if (isFull) BuildingSystem.damagedBuildings.Add(transform);
     }
 
     // Destroys the entity (IDamageable interface method)

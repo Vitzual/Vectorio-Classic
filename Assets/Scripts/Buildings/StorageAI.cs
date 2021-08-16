@@ -15,7 +15,6 @@ public class StorageAI: DefaultBuilding
     {
         // Default values
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        BuildingSystem.storages.Add(this);
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
         droneManager.updateResourceDrones(transform);
 
@@ -73,19 +72,19 @@ public class StorageAI: DefaultBuilding
         switch(type)
         {
             case 1:
-                SRVSC.AddGold(input);
+                //SRVSC.AddGold(input);
                 SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
                 return;
             case 2:
-                SRVSC.AddEssence(input);
+                //SRVSC.AddEssence(input);
                 SRVSC.UI.CreateResourcePopup("+ " + input, "Essence", transform.position);
                 return;
             case 3:
-                SRVSC.AddIridium(input);
+                //SRVSC.AddIridium(input);
                 SRVSC.UI.CreateResourcePopup("+ " + input, "Iridium", transform.position);
                 return;
             default:
-                SRVSC.AddGold(input);
+                //SRVSC.AddGold(input);
                 SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
                 return;
         }

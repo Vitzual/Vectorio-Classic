@@ -60,7 +60,7 @@ namespace TMPro.Examples
                 //m_textMeshPro.fontColor = new Color32(255, 255, 255, 255);
 
                 m_material01 = m_textMeshPro.font.material;
-                m_material02 = Currencies.Load<Material>("Fonts & Materials/LiberationSans SDF - Drop Shadow"); // Make sure the LiberationSans SDF exists before calling this...  
+                m_material02 = Resources.Load<Material>("Fonts & Materials/LiberationSans SDF - Drop Shadow"); // Make sure the LiberationSans SDF exists before calling this...  
 
 
             }
@@ -75,7 +75,7 @@ namespace TMPro.Examples
                 }
                 else
                 {
-                    m_textMesh.font = Currencies.Load("Fonts/ARIAL", typeof(Font)) as Font;
+                    m_textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
                     m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 }
 

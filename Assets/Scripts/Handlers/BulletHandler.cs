@@ -97,15 +97,7 @@ public class BulletHandler : MonoBehaviour
         Bullets[bulletID].Piercing--;
         if (Bullets[bulletID].Piercing == 0)
         {
-            BulletClass bds = Bullets[bulletID].Object.GetComponent<BulletClass>();
-            if (bds.IsParticleChangeable())
-                if (other.name.Contains("Dark") || other.name == "The Kraken")
-                    bds.SetHitEffect("Dark Particle");
-                else if (other.name.Contains("Phantom"))
-                    bds.SetHitEffect("Phantom Particle");
-                else
-                    bds.SetHitEffect("Enemy Particle");
-            bds.collide();
+            // REMAKE THIS
             Bullets.RemoveAt(bulletID);
             return true;
         }

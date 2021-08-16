@@ -22,7 +22,7 @@ public class DroneManager : MonoBehaviour
             this.plates = plates;
             this.isHubDrone = isHubDrone;
             this.buildingIcon = buildingIcon;
-            buildingIcon.sprite = Currencies.Load<Sprite>("Sprites/" + targetBuilding.name);
+            buildingIcon.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/" + targetBuilding.name);
 
             goldCost = gold;
             powerCost = power;
@@ -797,7 +797,6 @@ public class DroneManager : MonoBehaviour
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
-        BuildingSystem.addBuilding(LastObj);
         survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
         drone.buildingIcon.sprite = transparent;
@@ -869,25 +868,19 @@ public class DroneManager : MonoBehaviour
     public void queueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
     {
         // Checks to see if a drone port should be counted as free or not
-        if (building.name == "Drone Port" && constructionDrones.Count == 0 && 
-            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
-            BuildingSystem.buildingAmount[building.name] == 0))
+        if (building.name == "Drone Port" && constructionDrones.Count == 0)
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
 
         // Checks to see if a gold storage should be counted as free or not
-        else if (building.name == "Gold Storage" && constructionDrones.Count == 0 && 
-            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
-            BuildingSystem.buildingAmount[building.name] == 0))
+        else if (building.name == "Gold Storage" && constructionDrones.Count == 0)
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
 
         // Checks to see if a gold collector should be counted as free or not
-        else if (building.name == "Gold Collector" && constructionDrones.Count == 0 && 
-            (!BuildingSystem.buildingAmount.ContainsKey(building.name) || 
-            BuildingSystem.buildingAmount[building.name] == 0))
+        else if (building.name == "Gold Collector" && constructionDrones.Count == 0)
 
             // Queues the building for free
             buildingQueue.Add(new BuildingQueue(building, ghostBuilding, gold, power, heat, true));
@@ -936,14 +929,14 @@ public class DroneManager : MonoBehaviour
 
     public void applyResources(int gold, int power, int heat)
     {
-        survival.RemoveGold(gold);
+        //survival.RemoveGold(gold);
         survival.increasePowerConsumption(power);
         survival.Spawner.increaseHeat(heat);
     }
 
     public void revertResources(int gold, int power, int heat)
     {
-        survival.AddGold(gold, true);
+        //survival.AddGold(gold, true);
         survival.decreasePowerConsumption(power);
         survival.Spawner.decreaseHeat(heat);
     }

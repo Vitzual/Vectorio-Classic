@@ -177,11 +177,6 @@ public class Survival : MonoBehaviour
 
         // Default starting unlocks / hotbar
         PopulateHotbar();
-        tech.unlocked.Add(TurretObj);
-        tech.unlocked.Add(CollectorObj);
-        tech.unlocked.Add(GoldStorage);
-        tech.unlocked.Add(WallObj);
-        tech.unlocked.Add(DroneObj);
 
         // Load save data to file
         SaveData data = SaveSystem.LoadGame();
@@ -344,6 +339,7 @@ public class Survival : MonoBehaviour
             {
                 if (tutorial.disableBuilding) return;
 
+                /*
                 if (SelectedObj == CollectorObj)
                 {
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
@@ -359,11 +355,12 @@ public class Survival : MonoBehaviour
                     RaycastHit2D resourceCheck = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, ResourceLayer);
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
+                */
                 DefaultBuilding ObjectComponent = SelectedObj.GetComponent<DefaultBuilding>();
 
                 // Place the building and register as a ghost variant and queue it in the drone network
                 LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                LastObj.GetComponent<SpriteRenderer>().sprite = Currencies.Load<Sprite>("Sprites/" + SelectedObj.name);
+                LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
                 if (largerUnit) LastObj.GetComponent<BoxCollider2D>().size = new Vector2(10f, 10f);
                 LastObj.name = SelectedObj.name;
                 droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.GetPower(), ObjectComponent.GetHeat());
@@ -413,19 +410,9 @@ public class Survival : MonoBehaviour
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
 
-                // Check if tile is an essential resource and the amount is not less then 2
-                if ((RayTarget.name == "Drone Port" || RayTarget.name == "Gold Collector" || RayTarget.name == "Gold Storage") &&
-                    (!BuildingSystem.buildingAmount.ContainsKey(RayTarget.name) || BuildingSystem.buildingAmount[RayTarget.name] <= 1))
-                {
-                    rayScript.DestroyEntity();
-                }
-                else
-                {
-                    int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
-                    AddGold(amount, true);
-                    UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
-                    rayScript.DestroyEntity();
-                }
+                int amount = rayScript.GetCost() - rayScript.GetCost() / 5;
+                UI.CreateResourcePopup("+ " + amount, "Gold", RayTarget.position);
+                rayScript.DestroyEntity();
             }
             else
             {
@@ -605,30 +592,6 @@ public class Survival : MonoBehaviour
     {
         lastDronePort.GetComponent<Dronehub>().changeDroneType(type);
         UI.OpenDronePort();
-    }
-
-    // Updates the gold storage
-    public void UpdateGoldStorage(int amount)
-    {
-        RemoveGold(amount);
-        goldStorage -= Research.research_gold_storage;
-        UI.GoldStorage.text = goldStorage + " MAX";
-    }
-
-    // Updates the essence storage
-    public void UpdateEssenceStorage(int amount)
-    {
-        RemoveEssence(amount);
-        essenceStorage -= Research.research_essence_storage;
-        UI.EssenceStorage.text = essenceStorage + " MAX";
-    }
-
-    // Updates the iridium storage
-    public void UpdateIridiumStorage(int amount)
-    {
-        RemoveIridium(amount);
-        iridiumStorage -= Research.research_iridium_storage;
-        UI.IridiumStorage.text = iridiumStorage + " MAX";
     }
 
     // Set the last object that was hit
@@ -862,7 +825,6 @@ public class Survival : MonoBehaviour
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             obj.GetComponent<DefaultBuilding>().health = a[i, 1];
             obj.name = building.name;
-            BuildingSystem.addBuilding(obj);
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
@@ -876,11 +838,6 @@ public class Survival : MonoBehaviour
                     // Attempt to grab the attached script
                     StorageAI storage = obj.GetComponent<StorageAI>();
                     int holder = storage.addResources(a[i, 5], true);
-
-                    // Add resources depedent on collector type
-                    if (storage.type == 1) AddGold(a[i, 5], false, true);
-                    else if (storage.type == 2) AddEssence(a[i, 5], false, true);
-                    else if(storage.type == 3) AddIridium(a[i, 5], false, true);
                 }
                 catch
                 {
@@ -892,9 +849,6 @@ public class Survival : MonoBehaviour
                     gold = 0;
                     essence = 0;
                     iridium = 0;
-                    AddGold(data.Gold);
-                    AddEssence(data.Essence);
-                    AddIridium(data.Iridium);
                 }
             }
 
@@ -976,117 +930,6 @@ public class Survival : MonoBehaviour
         UI.PowerUsage.text = PowerConsumption.ToString();
     }
 
-    // Add x gold to player
-    public void AddGold(int a, bool addToStorages = false, bool fromSave = false)
-    {
-        if (!fromSave && a + gold >= goldStorage)
-            gold = goldStorage;
-        else gold += a;
-        UI.GoldAmount.text = gold.ToString();
-
-        // This will force input resources into the storages
-        if (addToStorages)
-        {
-            for (int i = 0; i < BuildingSystem.storages.Count; i++)
-            {
-                if (BuildingSystem.storages[i].icon == null)
-                {
-                    BuildingSystem.storages.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                else if (BuildingSystem.storages[i].type == 1)
-                {
-                    a = BuildingSystem.storages[i].addResources(a, true);
-                    if (a == 0) return;
-                }
-            }
-        }
-    }
-
-    // Remove x gold from player
-    public void RemoveGold(int a)
-    {
-        gold -= a;
-        if (gold < 0) gold = 0;
-        BuildingSystem.removeStorageResources(a, 1);
-        UI.GoldAmount.text = gold.ToString();
-    }
-
-    // Add x essence to player
-    public void AddEssence(int a, bool addToStorages = false, bool fromSave = false)
-    {
-        if (!fromSave && a + essence >= essenceStorage)
-            essence = essenceStorage;
-        else essence += a;
-        UI.EssenceAmount.text = essence.ToString();
-
-        // This will force input resources into the storages
-        if (addToStorages)
-        {
-            for (int i = 0; i < BuildingSystem.storages.Count; i++)
-            {
-                if (BuildingSystem.storages[i].icon == null)
-                {
-                    BuildingSystem.storages.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                else if (BuildingSystem.storages[i].type == 2)
-                {
-                    a = BuildingSystem.storages[i].addResources(a, true);
-                    if (a == 0) return;
-                }
-            }
-        }
-    }
-
-    // Remove x essence from player
-    public void RemoveEssence(int a)
-    {
-        essence -= a;
-        if (essence < 0) essence = 0;
-        BuildingSystem.removeStorageResources(a, 2);
-        UI.EssenceAmount.text = essence.ToString();
-    }
-
-    // Add x iridium to player
-    public void AddIridium(int a, bool addToStorages = false, bool fromSave = false)
-    {
-        if (!fromSave && a + iridium >= iridiumStorage)
-            iridium = iridiumStorage;
-        else iridium += a;
-        UI.IridiumAmount.text = iridium.ToString();
-
-        // This will force input resources into the storages
-        if (addToStorages)
-        {
-            for (int i = 0; i < BuildingSystem.storages.Count; i++)
-            {
-                if (BuildingSystem.storages[i].icon == null)
-                {
-                    BuildingSystem.storages.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                else if (BuildingSystem.storages[i].type == 3)
-                {
-                    a = BuildingSystem.storages[i].addResources(a, true);
-                    if (a == 0) return;
-                }
-            }
-        }
-    }
-
-    // Remove x essence from player
-    public void RemoveIridium(int a)
-    {
-        iridium -= a;
-        if (iridium < 0) iridium = 0;
-        BuildingSystem.removeStorageResources(a, 3);
-        UI.IridiumAmount.text = iridium.ToString();
-    }
-
     // Adjust the selected overlay transparency by 0.1f
     public void AdjustAlphaValue()
     {
@@ -1123,10 +966,6 @@ public class Survival : MonoBehaviour
     // Set default hotbar variables
     private void PopulateHotbar()
     {
-        hotbar[0] = TurretObj;
-        hotbar[1] = WallObj;
-        hotbar[2] = CollectorObj;
-        hotbar[3] = DroneObj;
         UI.UpdateHotbar();
     }
 
@@ -1214,7 +1053,7 @@ public class Survival : MonoBehaviour
         // Disable any active info not relative to selected object
         UI.DisableActiveInfo();
         Adjustment = 1f;
-        Selected.sprite = Currencies.Load<Sprite>("Sprites/" + SelectedObj.name);
+        Selected.sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
         UI.ShowSelectedInfo(SelectedObj);
 
         // Set radius dimensions if selected object is defense
@@ -1245,10 +1084,7 @@ public class Survival : MonoBehaviour
         }
 
         // Set AOCB if required
-        if (SelectedObj != null && SelectedObj == PowerObj)
-            AOCB.SetActive(true);
-        else
-            AOCB.SetActive(false);
+        AOCB.SetActive(false);
     }
 
     // Loads the menu scene
@@ -1417,10 +1253,5 @@ public class Survival : MonoBehaviour
 
             //Debug.Log("Placed " + obj.name + " at " + a[i, 2] + " " + a[i, 3]);
         }
-    }
-
-    public Transform GetEssenceObj()
-    {
-        return EssenceObj;
     }
 }

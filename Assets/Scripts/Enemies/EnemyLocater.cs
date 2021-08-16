@@ -13,11 +13,12 @@ public class EnemyLocater : MonoBehaviour
 
     public Transform requestTarget(Vector3 position, Transform PreferredTarget)
     {
+        /*
         Transform result = null;
         float closest = float.PositiveInfinity;
         bool isTarget = false;
 
-        if (isMenu || BuildingSystem.activeBuildings == null) return null;
+        if (isMenu) return null;
 
         foreach (Transform collider in BuildingSystem.activeBuildings)
         {
@@ -42,5 +43,8 @@ public class EnemyLocater : MonoBehaviour
             }
         }
         return result;
+        */
+        Debug.LogError("Hey buddy you need to remake this");
+        return null;
     }
 }

@@ -131,11 +131,11 @@ public class WallAI : DefaultBuilding
         SpriteRenderer SROBJ = gameObject.GetComponent<SpriteRenderer>();
         if (total == 0)
         {
-            SROBJ.sprite = Currencies.Load<Sprite>("Sprites/Wall");
+            SROBJ.sprite = Resources.Load<Sprite>("Sprites/Wall");
         }
         else if (total == 1)
         {
-            SROBJ.sprite = Currencies.Load<Sprite>("Sprites/WallDuo");
+            SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallDuo");
             if (bottom == 1)
                 transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
             else if (right == 1)
@@ -147,7 +147,7 @@ public class WallAI : DefaultBuilding
         {
             if (top == bottom || left == right)
             {
-                SROBJ.sprite = Currencies.Load<Sprite>("Sprites/WallCross");
+                SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallCross");
                 if (top == 1 && bottom == 1)
                     transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90f));
                 else
@@ -155,7 +155,7 @@ public class WallAI : DefaultBuilding
             }
             else
             {
-                SROBJ.sprite = Currencies.Load<Sprite>("Sprites/WallCorner");
+                SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallCorner");
                 if (left == 1 && bottom == 1)
                     transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -90f));
                 else if (bottom == 1 && right == 1)
@@ -168,7 +168,7 @@ public class WallAI : DefaultBuilding
         }
         else if (total == 3)
         {
-            SROBJ.sprite = Currencies.Load<Sprite>("Sprites/WallTrio");
+            SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallTrio");
             if (top == 0)
                 transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0f));
             else if (right == 0)
@@ -180,7 +180,7 @@ public class WallAI : DefaultBuilding
         }
         else if (total == 4)
         {
-            SROBJ.sprite = Currencies.Load<Sprite>("Sprites/WallQuad");
+            SROBJ.sprite = Resources.Load<Sprite>("Sprites/WallQuad");
         }
     }
 }

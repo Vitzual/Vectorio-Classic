@@ -22,10 +22,4 @@ public class Difficulties : MonoBehaviour
     public static bool enemyOutposts;
     public static bool enemyWaves;
     public static bool enemyGuardians;
-
-    public void Start()
-    {
-        if (SceneManager.GetActiveScene().name == "Menu")
-            DontDestroyOnLoad(transform.gameObject);
-    }
 }

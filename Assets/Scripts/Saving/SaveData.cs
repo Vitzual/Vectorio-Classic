@@ -35,7 +35,7 @@ public class SaveData
     public int heatt;
     public int bossesDefeated;
 
-    public SaveData (Survival data, Technology unlock, Spawner heat, Research research, int time = 0, int heatt = 0) 
+    public SaveData (Survival data, Technology unlock, EnemySpawner heat, Research research, int time = 0, int heatt = 0) 
     {
         //Buildings = data.GetSaveData();
         hotbar = data.GetHotbarData();

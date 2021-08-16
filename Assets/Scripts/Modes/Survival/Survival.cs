@@ -33,7 +33,7 @@ public class Survival : MonoBehaviour
     public Research rsrch;
 
     // The game object used to spawn enemies
-    public Spawner Spawner;
+    public EnemySpawner Spawner;
 
     // Camera zoom object
     public CameraScroll cameraScroll;
@@ -255,7 +255,7 @@ public class Survival : MonoBehaviour
                 catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
 
                 // Generate world data
-                GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, true);
+                GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, true);
 
                 // Get research save data
                 rsrch.SetResearchData(data.ResearchedTiers);
@@ -305,7 +305,7 @@ public class Survival : MonoBehaviour
             //{
                 Spawner.loadingSave = false;
                 //Debug.Log("The save data found was corrupt.\n\nStacktrace: " + e.Message + "\n" + e.StackTrace);
-                GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
+                GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, false);
             //}
 
         }
@@ -315,7 +315,7 @@ public class Survival : MonoBehaviour
             tutorial.enableTutorial();
             Spawner.loadingSave = false;
             Debug.LogError("No save data found. Starting new save.");
-            GameObject.Find("OnSpawn").GetComponent<OnSpawn>().GenerateWorldData(Difficulties.seed, false);
+            GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, false);
         }
 
         // Start auto saving
@@ -955,7 +955,7 @@ public class Survival : MonoBehaviour
 
             // Set survival
             increasePowerConsumption(building.GetComponent<DefaultBuilding>().GetPower());
-            Spawner.GetComponent<Spawner>().increaseHeat(building.GetComponent<DefaultBuilding>().GetHeat());
+            Spawner.GetComponent<EnemySpawner>().increaseHeat(building.GetComponent<DefaultBuilding>().GetHeat());
         }
     }
 

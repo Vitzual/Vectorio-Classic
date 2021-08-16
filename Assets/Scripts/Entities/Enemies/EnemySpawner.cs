@@ -2,7 +2,7 @@
 using Michsky.UI.ModernUIPack;
 using TMPro;
 
-public class Spawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     // Spawner elements
     public Survival survival;

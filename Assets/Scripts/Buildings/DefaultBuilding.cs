@@ -2,6 +2,9 @@
 
 public class DefaultBuilding : MonoBehaviour, IDamageable
 {
+    // Building scriptable
+    public Building building;
+
     // IDamageable interface variables
     public int health { get; set; }
     public int maxHealth { get; set; }
@@ -15,10 +18,27 @@ public class DefaultBuilding : MonoBehaviour, IDamageable
     // Building default description
     protected string description;
 
+    // Start method
+    public void Start()
+    {
+        if (building == null)
+        {
+            Debug.LogError(transform.name + " does not have a scriptable attached to it!");
+        }
+        else
+        {
+            health = building.health;
+            maxHealth = building.health;
+            cost = building.cost;
+            power = building.power;
+            heat = building.heat;
+            deathParticle = building.deathParticle;
+        }
+    }
+
     // Damages the entity (IDamageable interface method)
     public void DamageEntity(int dmg)
     {
-        bool isFull = health == maxHealth;
         health -= dmg;
         if (health <= 0) DestroyEntity();
     }

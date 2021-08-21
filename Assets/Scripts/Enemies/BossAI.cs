@@ -16,7 +16,7 @@ public class RevenantAI : BossClass
             {
                 DefaultTurret holder = collider.GetComponent<DefaultTurret>();
                 if (!holder.enabled) holder.enabled = true;
-                holder.forceTarget(transform);
+                holder.ForceTarget(transform);
             }
         }
         else 

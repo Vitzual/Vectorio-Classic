@@ -17,10 +17,6 @@ public class DefaultTurret : BaseTurret
     // Start method set variables
     private void Start()
     {
-        // Set stats for the building
-        InitTurretStats();
-        InitTileStats();
-
         // Get required references 
         layer = LayerManager.getTurretLayer();
         SetCooldown(fireRate - Research.research_firerate);
@@ -28,20 +24,20 @@ public class DefaultTurret : BaseTurret
     }
 
     // Forces a turret to fire at the passed target
-    public void forceTarget(Transform target)
+    public void ForceTarget(Transform target)
     {
         this.target = target;
         RotationHandler();
     }
 
     // Forces a turret to stop firing at the passed target (if it is the target)
-    public void removeTarget(Transform target)
+    public void RemoveTarget(Transform target)
     {
         if (this.target == target) this.target = null;
     }
 
     // Forces a turret to recheck its targets
-    public void forceUpdate()
+    public void ForceUpdate()
     {
         target = null;
 
@@ -79,7 +75,7 @@ public class DefaultTurret : BaseTurret
             Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
 
             // Get the distance from the turret to the target
-            Vector2 distance = targetPosition - new Vector2(Gun.position.x, Gun.position.y);
+            Vector2 distance = targetPosition - new Vector2(gun.position.x, gun.position.y);
 
             // Get the angle between the gun position and the target position
             float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
@@ -93,7 +89,7 @@ public class DefaultTurret : BaseTurret
             }
 
             // Calculate the difference between the target angle and the current angle
-            float difference = targetAngle - (Gun.rotation.eulerAngles.z);
+            float difference = targetAngle - (gun.rotation.eulerAngles.z);
 
             if ((difference < 0 || difference >= 180) && !(difference < -180))
             {
@@ -108,7 +104,7 @@ public class DefaultTurret : BaseTurret
                 }
 
                 // Rotate the turret
-                Gun.Rotate(Vector3.forward, distanceToRotate);
+                gun.Rotate(Vector3.forward, distanceToRotate);
             }
             else if (!(difference <= 5 && difference >= -5))
             {
@@ -123,15 +119,15 @@ public class DefaultTurret : BaseTurret
                 }
 
                 // Rotate the turret
-                Gun.Rotate(Vector3.forward, distanceToRotate);
+                gun.Rotate(Vector3.forward, distanceToRotate);
             }
             else
             {
-                Gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+                gun.transform.eulerAngles = new Vector3(0, 0, targetAngle);
                 isRotating = false;
             }
         }
-        else { isRotating = false; forceUpdate(); }
+        else { isRotating = false; ForceUpdate(); }
     }
 
     // Attempts to fire a bullet and returns true if fired

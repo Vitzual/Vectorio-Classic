@@ -20,13 +20,13 @@ public class BaseTurret : DefaultBuilding, IAudible
     protected float bulletSpread = 0;
 
     // Base turret object variables
-    public Transform[] FirePoints;
-    public Transform Gun;
-    protected GameObject Bullet;
+    protected Transform[] firePoints;
+    protected Transform gun;
+    protected GameObject bullet;
 
     // Base turret target variables
-    public Transform target = null;
-    public List<Transform> targets;
+    protected Transform target = null;
+    protected List<Transform> targets;
 
     // Base turret firing variables
     protected float cooldown = 0;
@@ -40,6 +40,8 @@ public class BaseTurret : DefaultBuilding, IAudible
     }
 
     // Get methods
+    public Transform GetTarget() { return target; }
+    public void AddTarget(Transform newTarget) { targets.Add(newTarget); }
     public int GetDamage() { return damage; }
     public int GetRange() { return range; }
     public float GetRotationSpeed() { return rotationSpeed; }

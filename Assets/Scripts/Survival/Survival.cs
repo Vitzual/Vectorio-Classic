@@ -1059,7 +1059,7 @@ public class Survival : MonoBehaviour
         // Set radius dimensions if selected object is defense
         if (SelectedObj.tag == "Defense" && SelectedObj.name != "Wall" && SelectedObj.name != "Drone Port")
         {
-            float range = SelectedObj.GetComponent<DefaultTurret>().getRange() * 2 + Research.research_range;
+            float range = SelectedObj.GetComponent<DefaultTurret>().GetRange() * 2 + Research.research_range;
             SelectedRadius.transform.localScale = new Vector3(range, 1, range);
             SelectedRadius.SetActive(true);
             SquareRadius.SetActive(false);

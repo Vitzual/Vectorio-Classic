@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class BaseTurret : DefaultBuilding, IAudible
 {
+    // Turret scriptable
+    public Turret turret;
+
     // IAudible interface variables
     public AudioClip sound { get; set; }
 
@@ -19,7 +22,7 @@ public class BaseTurret : DefaultBuilding, IAudible
     // Base turret object variables
     public Transform[] FirePoints;
     public Transform Gun;
-    public GameObject Bullet;
+    protected GameObject Bullet;
 
     // Base turret target variables
     public Transform target = null;
@@ -36,42 +39,13 @@ public class BaseTurret : DefaultBuilding, IAudible
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
-    // Set base turret variables
-    public void InitTurretStats()
-    {
-        // Grab values from BuildingRegistrar
-        BuildingRegistrar buildingRegistrar = ScriptHandler.buildingRegistrar;
-        BuildingRegistrar.TurretStats turretStats = buildingRegistrar.GetTurretStats(transform);
-        
-        // Check to make sure the stats exist
-        if (turretStats == null)
-        {
-            Debug.LogError("Could not find stats in registrar for " + transform.name);
-            return;
-        }
-
-        // Set values returned from BuildingRegistrar 
-        damage = turretStats.damage;
-        range = turretStats.range;
-        rotationSpeed = turretStats.rotationSpeed;
-        fireRate = turretStats.fireRate;
-        bulletPierces = turretStats.bulletPierces;
-        bulletAmount = turretStats.bulletAmount;
-        bulletSpeed = turretStats.bulletSpeed;
-        bulletSpread = turretStats.bulletSpread;
-        sound = turretStats.sound;
-        
-        
-        if(turretStats.animEnabled) { Debug.Log("Register turret with anim enabled"); }
-    }
-
     // Get methods
-    public int getDamage() { return damage; }
-    public int getRange() { return range; }
-    public float getRotationSpeed() { return rotationSpeed; }
-    public float getFireRate() { return fireRate; }
-    public int getBulletPierces() { return bulletPierces; }
-    public int getBulletAmount() { return bulletAmount; }
-    public float getBulletSpeed() { return bulletSpeed; }
-    public float getBulletSpread() { return bulletSpread; }
+    public int GetDamage() { return damage; }
+    public int GetRange() { return range; }
+    public float GetRotationSpeed() { return rotationSpeed; }
+    public float GetFireRate() { return fireRate; }
+    public int GetBulletPierces() { return bulletPierces; }
+    public int GetBulletAmount() { return bulletAmount; }
+    public float GetBulletSpeed() { return bulletSpeed; }
+    public float GetBulletSpread() { return bulletSpread; }
 }

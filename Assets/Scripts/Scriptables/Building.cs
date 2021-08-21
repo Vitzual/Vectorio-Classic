@@ -11,6 +11,4 @@ public class Building : Tile
     public int power;
     public int heat;
     public ParticleSystem deathParticle;
-
-    
 }

@@ -15,9 +15,6 @@ public class DefaultBuilding : MonoBehaviour, IDamageable
     protected int power;
     protected int heat;
 
-    // Building default description
-    protected string description;
-
     // Start method
     public void Start()
     {
@@ -63,32 +60,10 @@ public class DefaultBuilding : MonoBehaviour, IDamageable
         Instantiate(deathParticle, transform.position, Quaternion.identity); 
     }
 
-    // Set base turret variables
-    public void InitTileStats()
-    {
-        // Grab values from BuildingRegistrar
-        BuildingRegistrar buildingRegistrar = ScriptHandler.buildingRegistrar;
-        BuildingRegistrar.BuildingStats tileStats = buildingRegistrar.GetBuildingStats(transform);
-
-        // Check to make sure the stats exist
-        if (tileStats == null)
-        {
-            Debug.LogError("Could not find stats in registrar for " + transform.name);
-            return;
-        }
-
-        // Set values returned from BuildingRegistrar 
-        health = tileStats.health;
-        maxHealth = tileStats.maxHealth;
-        cost = tileStats.cost;
-        power = tileStats.power;
-        heat = tileStats.heat;
-        deathParticle = tileStats.deathParticle;
-        description = tileStats.description;
-    }
-
-    public int GetCost() { return cost; }
-    public int GetPower() { return power; }
-    public int GetHeat() { return heat; }
-    public string GetDescription() { return description; }
+    public int GetHealth() { return building.health; }
+    public int GetMaxHealth() { return building.maxHealth; }
+    public int GetCost() { return building.cost; }
+    public int GetPower() { return building.power; }
+    public int GetHeat() { return building.heat; }
+    public string GetDescription() { return building.description; }
 }

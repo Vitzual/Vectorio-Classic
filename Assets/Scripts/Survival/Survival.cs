@@ -828,16 +828,16 @@ public class Survival : MonoBehaviour
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
-            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<DefaultCollector>().UpdateCollector());
+            // if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<DefaultCollector>().UpdateCollector());
 
             // Attempt to apply metadata for storages
-            else if (metadata && obj.name.Contains("Storage"))
+            if (metadata && obj.name.Contains("Storage"))
             {
                 try 
                 {
                     // Attempt to grab the attached script
                     DefaultStorage storage = obj.GetComponent<DefaultStorage>();
-                    int holder = storage.addResources(a[i, 5], true);
+                    int holder = storage.AddResources(a[i, 5], true);
                 }
                 catch
                 {

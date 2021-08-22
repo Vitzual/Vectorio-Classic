@@ -16,9 +16,6 @@ public class DefaultCollector : BaseBuilding
         Events.active.CollectorPlaced(this);
 
         /*
-        droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        droneManager.updateResourceDrones(transform);
-
         switch (collectorType) {
             case 1:
                 if (Research.research_gold_time >= 1 && !isOffset)

@@ -5,51 +5,43 @@ public class DefaultStorage: BaseBuilding
     // Declare local object variables
     public int type;
     public int amount = 0;
-    public GameObject icon;
     public bool isFull = false;
-    private Survival SRVSC;
-    private DroneManager droneManager;
+    public GameObject icon;
 
     // On start, invoke repeating SendGold() method
-    private void Start()
+    public void Start()
     {
         // Default values
-        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
-        droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        droneManager.UpdateResourceDrones(transform);
+        Events.active.StoragePlaced(this);
 
         // Add the storage
         switch (type)
         {
             case 1:
-                SRVSC.goldStorage += Research.research_gold_storage;
-                SRVSC.UI.GoldStorage.text = SRVSC.goldStorage + " MAX";
+                Resource.AddStorage(Resource.Currency.Gold, Research.research_gold_storage);
                 return;
             case 2:
-                SRVSC.essenceStorage += Research.research_essence_storage;
-                SRVSC.UI.EssenceStorage.text = SRVSC.essenceStorage + " MAX";
+                Resource.AddStorage(Resource.Currency.Essence, Research.research_gold_storage);
                 return;
             case 3:
-                SRVSC.iridiumStorage += Research.research_iridium_storage;
-                SRVSC.UI.IridiumStorage.text = SRVSC.iridiumStorage + " MAX";
+                Resource.AddStorage(Resource.Currency.Iridium, Research.research_gold_storage);
                 return;
         }
     }
 
-    public void enableIcon()
+    public void EnableIcon()
     {
         icon.SetActive(true);
     }
 
-    public void disableIcon()
+    public void DisableIcon()
     {
         icon.SetActive(false);
     }
 
-    public int takeResources(int input)
+    public int TakeResources(int input)
     {
-        int leftOver = 0;
-        droneManager.ForceUpdateResourceDrones();
+        int leftOver;
 
         if (amount >= input)
         {
@@ -63,11 +55,12 @@ public class DefaultStorage: BaseBuilding
         }     
         
         isFull = false;
-        disableIcon();
+        DisableIcon();
         return leftOver;
     }
 
-    public void sendResources(int input)
+    /*
+    public void SendResources(int input)
     {
         switch(type)
         {
@@ -89,70 +82,45 @@ public class DefaultStorage: BaseBuilding
                 return;
         }
     }
+    */
 
-    public int addResources(int input, bool fromSave = false)
+    public int AddResources(int input, bool fromSave = false)
     {
         // Get the correct storage value
         int storage = Research.research_gold_storage;
         if (type == 2) storage = Research.research_essence_storage;
         else if (type == 3) storage = Research.research_iridium_storage;
+
         // Determine if icon should be enabled
         // Return the amount not put in storage
         int holder = amount + input;
         if (holder > storage)
         {
-            if (!fromSave) sendResources(storage - amount);
-            enableIcon();
+            //if (!fromSave) SendResources(storage - amount);
+            EnableIcon();
             amount = storage;
             isFull = true;
             return holder - storage;
         }
         else if (holder == storage)
         {
-            if (!fromSave) sendResources(input);
+            //if (!fromSave) SendResources(input);
             amount = holder;
-            enableIcon();
+            EnableIcon();
             isFull = true;
             return 0;
         }
         else
         {
-            if (!fromSave) sendResources(input);
+            //if (!fromSave) SendResources(input);
             amount = holder;
             return 0;
         }
     }
 
-    public Transform getPosition()
+    public Transform GetPosition()
     {
         return transform;
     }
 
-    // Kill defense
-    /*
-    public override void UpdateStorage()
-    {
-        if (Research.research_explosive_storages)
-        {
-            var colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 20f, 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy Defense"));
-            foreach (Collider2D collider in colliders)
-            {
-                if (collider.tag == "Enemy" && !collider.name.Contains("The")) collider.GetComponent<EnemyClass>().KillEntity();
-            }
-        }
-
-        switch (type)
-        {
-            case 1:
-                SRVSC.UpdateGoldStorage(amount);
-                break;
-            case 2:
-                SRVSC.UpdateEssenceStorage(amount);
-                break;
-            case 3:
-                SRVSC.UpdateIridiumStorage(amount);
-                break;
-        }
-    }
-    */
 }

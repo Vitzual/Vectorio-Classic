@@ -345,9 +345,9 @@ public class DroneManager : MonoBehaviour
                             case 2:
 
                                 // See how much gold the storage can hold
-                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedGold);
-                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedEssence);
-                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedIridium);
+                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedGold);
+                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedEssence);
+                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedIridium);
 
                                 // Animate building
                                 AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
@@ -509,7 +509,7 @@ public class DroneManager : MonoBehaviour
             else if (!storage.isFull && storage.type == type)
             {
                 // If storage is not full, grab it's distance from the drones current position 
-                float distance = Vector2.Distance(storage.getPosition().position, drone.body.transform.position);
+                float distance = Vector2.Distance(storage.GetPosition().position, drone.body.transform.position);
                 if (distance < closest)
                 {
                     index = i;
@@ -521,7 +521,7 @@ public class DroneManager : MonoBehaviour
         // Set drone target if a storage is available, or go home.
         if (index != -1)
         {
-            drone.target = drone.availableStorages[index].getPosition();
+            drone.target = drone.availableStorages[index].GetPosition();
             Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
             drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
             drone.targetType = 2;

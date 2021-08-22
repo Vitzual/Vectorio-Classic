@@ -79,20 +79,7 @@ public class BulletHandler : MonoBehaviour
     {
         // Add the other transform to the ignore list for future collisions
         Bullets[bulletID].IgnoreEnemies.Add(other);
-
-        // Get correct component
-        switch (other.name)
-        {
-            case "Hive":
-                other.GetComponent<SpawnerAI>().SpawnEnemy();
-                break;
-            case "Enemy Mine":
-                other.GetComponent<EnemyStaticAI>().DamageEntity(Bullets[bulletID].Damage);
-                break;
-            default:
-                other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
-                break;
-        }
+        other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
 
         Bullets[bulletID].Piercing--;
         if (Bullets[bulletID].Piercing == 0)

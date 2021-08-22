@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CollectorAI: DefaultBuilding
+public class CollectorAI: BaseBuilding
 {
     // Declare local object variables
     public int collectorType;

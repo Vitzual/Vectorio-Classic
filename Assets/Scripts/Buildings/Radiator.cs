@@ -1,3 +1,3 @@
 ﻿using UnityEngine;
 
-public class Radiator : DefaultBuilding { }
+public class Radiator : BaseBuilding { }

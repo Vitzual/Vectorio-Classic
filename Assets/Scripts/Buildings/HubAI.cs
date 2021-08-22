@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class HubAI : DefaultBuilding
+public class HubAI : BaseBuilding
 {
     protected bool gameOver;
     public GameObject EndScreen;

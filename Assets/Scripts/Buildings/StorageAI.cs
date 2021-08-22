@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class StorageAI: DefaultBuilding
+public class StorageAI: BaseBuilding
 {
     // Declare local object variables
     public int type;

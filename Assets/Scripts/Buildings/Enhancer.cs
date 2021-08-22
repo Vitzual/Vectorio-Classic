@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Enhancer : DefaultBuilding
+public class Enhancer : BaseBuilding
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;

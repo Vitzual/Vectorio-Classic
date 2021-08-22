@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class DefaultTurret : BaseTurret
 {
-    // Layer of the turret (will grab from LayerManager.cs)
-    private LayerMask layer;
-
-    // Bullet handler script. This will be removed during refactor v3
-    private BulletHandler bulletHandler;
-
     // The targetting mode of the turret
-    // 1 = Closest | 2 = Strongest | 3 = Weakest | 4 = Furthest
-    public int targettingMode = 1;
+    public LayerMask layer;
 
-    // Start method set variables
-    private void Start()
+    // Sets stats and registers itself under the turret handler
+    public void Start()
     {
-        // Get required references 
-        layer = LayerManager.getTurretLayer();
-        SetCooldown(fireRate - Research.research_firerate);
-        bulletHandler = GameObject.Find("Bullet Handler").GetComponent<BulletHandler>();
+        SetTurretStats();
     }
 
     // Forces a turret to fire at the passed target
@@ -58,12 +48,14 @@ public class DefaultTurret : BaseTurret
         else RotationHandler();
     }
 
+    // Plays audio
     public void PlayAudio()
     {
         float audioScale = CameraScroll.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Sound/" + transform.name), gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
+    // Handles the rotation of the turret
     protected void RotationHandler()
     {
         if (target != null)
@@ -148,10 +140,9 @@ public class DefaultTurret : BaseTurret
         }
     }
 
-    // Createa a bullet object
+    // Create a bullet object
     protected void CreateBullet(GameObject prefab, Transform pos, float multiplier = 1)
     {
-        // if (hasShotParticle) Instantiate(shotParticle, FirePoints[0].position, Quaternion.Euler(0, 0, Gun.localEulerAngles.z + 180f));
         if (sound != null) PlaySound();
         //if (animationEnabled) animPlaying = true;
 
@@ -165,9 +156,10 @@ public class DefaultTurret : BaseTurret
         int damage = this.damage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
-        bulletHandler.RegisterBullet(bullet.transform, target, speed, pierces, damage);
+        Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, damage));
     }
 
+    // Set the turrets cooldown
     public void SetCooldown(float cooldown)
     {
         if (cooldown <= 0.03f) this.cooldown = 0.03f;

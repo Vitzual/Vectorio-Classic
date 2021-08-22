@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Reactor : DefaultBuilding
+public class Reactor : BaseBuilding
 {
     public Survival SRV;
     public int amount;

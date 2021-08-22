@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTurret : DefaultBuilding, IAudible
+[HideInInspector]
+public class BaseTurret : BaseBuilding, IAudible
 {
     // Turret scriptable
     public Turret turret;
@@ -37,6 +38,28 @@ public class BaseTurret : DefaultBuilding, IAudible
     {
         float audioScale = CameraScroll.getZoom() / 1400f;
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
+    }
+
+    // Set the turret stats
+    public void SetTurretStats()
+    {
+        if (turret == null)
+        {
+            Debug.LogError(transform.name + " does not have a scriptable attached to it!");
+        }
+        else
+        {
+            damage = turret.damage;
+            range = turret.range;
+            rotationSpeed = turret.rotationSpeed;
+            fireRate = turret.fireRate;
+            bulletPierces = turret.bulletPierces;
+            bulletAmount = turret.bulletAmount;
+            bulletSpeed = turret.bulletSpeed;
+            bulletSpread = turret.bulletSpread;
+        }
+
+        SetBuildingStats();
     }
 
     // Get methods

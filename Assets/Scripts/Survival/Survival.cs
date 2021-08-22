@@ -356,7 +356,7 @@ public class Survival : MonoBehaviour
                     if (resourceCheck.collider == null || resourceCheck.collider.name != "Iridiumtile") return;
                 }
                 */
-                DefaultBuilding ObjectComponent = SelectedObj.GetComponent<DefaultBuilding>();
+                BaseBuilding ObjectComponent = SelectedObj.GetComponent<BaseBuilding>();
 
                 // Place the building and register as a ghost variant and queue it in the drone network
                 LastObj = Instantiate(GhostBuilding, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -406,7 +406,7 @@ public class Survival : MonoBehaviour
             // Raycast tile to see if there is already a tile placed
             if (RayTarget != null && RayTarget.name != "Hub")
             {
-                DefaultBuilding rayScript = RayTarget.GetComponent<DefaultBuilding>();
+                BaseBuilding rayScript = RayTarget.GetComponent<BaseBuilding>();
                 UI.ShowingInfo = false;
                 SelectedOverlay.SetActive(false);
 
@@ -823,7 +823,7 @@ public class Survival : MonoBehaviour
             position = new Vector2(x, y);
 
             Transform obj = Instantiate(building, position, Quaternion.Euler(new Vector3(0, 0, 0)));
-            obj.GetComponent<DefaultBuilding>().health = a[i, 1];
+            obj.GetComponent<BaseBuilding>().health = a[i, 1];
             obj.name = building.name;
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
@@ -869,8 +869,8 @@ public class Survival : MonoBehaviour
             }
 
             // Set survival
-            increasePowerConsumption(building.GetComponent<DefaultBuilding>().GetPower());
-            Spawner.GetComponent<EnemySpawner>().increaseHeat(building.GetComponent<DefaultBuilding>().GetHeat());
+            increasePowerConsumption(building.GetComponent<BaseBuilding>().GetPower());
+            Spawner.GetComponent<EnemySpawner>().increaseHeat(building.GetComponent<BaseBuilding>().GetHeat());
         }
     }
 
@@ -1174,7 +1174,7 @@ public class Survival : MonoBehaviour
                     data[length, 0] = 1;
 
                     // Health of the building being saved
-                    data[length, 1] = allObjects[i].GetComponent<DefaultBuilding>().health;
+                    data[length, 1] = allObjects[i].GetComponent<BaseBuilding>().health;
 
                     // Coordinates of the building
                     data[length, 2] = (int)allObjects[i].position.x;

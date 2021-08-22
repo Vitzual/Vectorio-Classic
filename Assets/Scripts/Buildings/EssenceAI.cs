@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EssenceAI: DefaultBuilding
+public class EssenceAI: BaseBuilding
 {
     // Declare local object variables
     public int amount;

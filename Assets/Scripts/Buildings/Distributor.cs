@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Distributor : DefaultBuilding
+public class Distributor : BaseBuilding
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;

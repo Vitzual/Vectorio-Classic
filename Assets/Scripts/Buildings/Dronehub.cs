@@ -75,10 +75,10 @@ public class Dronehub : BaseBuilding
                 activeDrone.name = constructorDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                droneManager.registerAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false, activeDrone.GetChild(0).GetComponent<SpriteRenderer>());
-                droneManager.forceUI();
+                droneManager.RegisterAvailableConstructionDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel }, false, activeDrone.GetChild(0).GetComponent<SpriteRenderer>());
+                droneManager.ForceUI();
                 resourcePort = false;
-                droneManager.forceCheckAvailableDrones();
+                droneManager.ForceCheckAvailableDrones();
                 BlueLight.SetActive(true);
                 YellowLight.SetActive(false);
                 break;
@@ -89,7 +89,7 @@ public class Dronehub : BaseBuilding
                 activeDrone.name = resourceDrone.name;
                 activeDrone.parent = transform;
                 activeDrone.localScale = new Vector2(0.8f, 0.8f);
-                resourceScript = droneManager.registerResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
+                resourceScript = droneManager.RegisterResourceDrone(activeDrone, transform, new Transform[] { leftPanel, rightPanel });
                 resourcePort = true;
                 BlueLight.SetActive(false);
                 YellowLight.SetActive(true);

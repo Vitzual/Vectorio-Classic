@@ -191,11 +191,16 @@ public class DroneManager : MonoBehaviour
 
     public Sprite transparent;
 
+    public void Start()
+    {
+        Events.active.onCollectorPlaced += UpdateResourceDrones;
+    }
+
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         // Check available drones
-        checkConstructionDrones();
+        CheckConstructionDrones();
 
         // Handles the construction drone logic
         for (int i = 0; i < constructionDrones.Count; i++)
@@ -206,10 +211,10 @@ public class DroneManager : MonoBehaviour
             if (drone.body == null)
             {
                 // Update resource values
-                revertResources(drone.goldCost, drone.powerCost, drone.heatCost);
+                RevertResources(drone.goldCost, drone.powerCost, drone.heatCost);
 
                 // Queue the building if not yet placed
-                if (!drone.droneReturning) queueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
+                if (!drone.droneReturning) QueueBuilding(drone.targetBuilding, drone.target, drone.goldCost, drone.powerCost, drone.heatCost);
                 
                 // Remove from active pool and do not add back to inactive
                 constructionDrones.Remove(drone);
@@ -234,13 +239,13 @@ public class DroneManager : MonoBehaviour
                         if (drone.target != drone.spawnPosition)
                         {
                             // Attempt to place a building
-                            placeBuilding(drone);
-                            returnConstructionToParent(drone);
+                            PlaceBuilding(drone);
+                            ReturnConstructionToParent(drone);
                         }
                         else
                         {
                             // Reset drone so it's ready to go again
-                            if (!drone.platesClosing) resetConstructionDrone(drone);
+                            if (!drone.platesClosing) ResetConstructionDrone(drone);
                         }
                     }
                 }
@@ -324,13 +329,13 @@ public class DroneManager : MonoBehaviour
                                 // Attempt to find another collector
                                 bool validCollectorTarget = false;
                                 if (drone.targetsLeft > 0)
-                                    validCollectorTarget = findResourceTarget(drone);
+                                    validCollectorTarget = FindResourceTarget(drone);
 
                                 // If no valid collector found, locate storage
                                 if (!validCollectorTarget)
                                 {
-                                    bool validStorageTarget = findStorageTarget(drone);
-                                    if (!validStorageTarget) returnResourceToParent(drone);
+                                    bool validStorageTarget = FindStorageTarget(drone);
+                                    if (!validStorageTarget) ReturnResourceToParent(drone);
                                 }
 
                                 break;
@@ -355,29 +360,29 @@ public class DroneManager : MonoBehaviour
                                 if (drone.visitedIridium && drone.collectedIridium <= 0) drone.visitedIridium = false;
 
                                 // Set drone to return to parent or look for anoter storage
-                                if (!drone.visitedGold && !drone.visitedEssence && !drone.visitedIridium) returnResourceToParent(drone);
-                                else if(!findStorageTarget(drone)) returnResourceToParent(drone);
+                                if (!drone.visitedGold && !drone.visitedEssence && !drone.visitedIridium) ReturnResourceToParent(drone);
+                                else if(!FindStorageTarget(drone)) ReturnResourceToParent(drone);
 
                                 break;
 
                             // Port target reached (reset drone)
                             case 3:
-                                resetResourceDrone(drone);
+                                ResetResourceDrone(drone);
                                 break;
                         }
                     }
                 }
                 else
                 {
-                    if (!findResourceTarget(drone))
-                        if ((drone.collectedGold <= 0 && drone.collectedEssence <= 0 && drone.collectedIridium <= 0) || !findStorageTarget(drone))
-                            returnResourceToParent(drone);
+                    if (!FindResourceTarget(drone))
+                        if ((drone.collectedGold <= 0 && drone.collectedEssence <= 0 && drone.collectedIridium <= 0) || !FindStorageTarget(drone))
+                            ReturnResourceToParent(drone);
                 }
             }
         }
     }
 
-    public void setupResourceDrone(ResourceDrone drone)
+    public void SetupResourceDrone(ResourceDrone drone)
     {
         var colliders = Physics2D.OverlapCircleAll(drone.port.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
@@ -387,15 +392,16 @@ public class DroneManager : MonoBehaviour
         }
     }
 
-    public void forceUpdateResourceDrones()
+    public void ForceUpdateResourceDrones()
     {
         for (int i = 0; i < resourceDrone.Count; i++)
             if (!resourceDrone[i].storagesAvailable)
                 resourceDrone[i].storagesAvailable = true;
     }
 
-    public void updateResourceDrones(Transform building)
+    public void UpdateResourceDrones(DefaultCollector collector)
     {
+        Transform building = collector.transform;
         var colliders = Physics2D.OverlapCircleAll(building.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
         {
@@ -421,7 +427,7 @@ public class DroneManager : MonoBehaviour
         }
     }
 
-    public bool findResourceTarget(ResourceDrone drone)
+    public bool FindResourceTarget(ResourceDrone drone)
     {
         if (isMenu)
         {
@@ -462,7 +468,7 @@ public class DroneManager : MonoBehaviour
         else return false;
     }
 
-    public bool findStorageTarget(ResourceDrone drone)
+    public bool FindStorageTarget(ResourceDrone drone)
     {
         // Keep track of closest target
         float closest = Mathf.Infinity;
@@ -517,7 +523,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Scans through the building queue and assigns a drone if there's a task for it
-    public void checkConstructionDrones()
+    public void CheckConstructionDrones()
     {
         float closest = Mathf.Infinity;
         int[] available = new int[] { -1, -1 };
@@ -562,10 +568,10 @@ public class DroneManager : MonoBehaviour
             int b = available[1];
 
             // Update resource values
-            if(!buildingQueue[a].freeBuilding) applyResources(buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost);
+            if(!buildingQueue[a].freeBuilding) ApplyResources(buildingQueue[a].goldCost, buildingQueue[a].powerCost, buildingQueue[a].heatCost);
 
             // Register the construction drone
-            registerConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, 
+            RegisterConstructionDrone(availableConstructionDrones[b].body, buildingQueue[a].buildingPos, buildingQueue[a].building, availableConstructionDrones[b].port, 
                 availableConstructionDrones[b].plates, availableConstructionDrones[b].isHubDrone, buildingQueue[a].goldCost, buildingQueue[a].powerCost, 
                 buildingQueue[a].heatCost, availableConstructionDrones[b].buildingIcon, buildingQueue[a].freeBuilding);
 
@@ -579,7 +585,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Reset the drone after it's task is complete
-    public void resetConstructionDrone(ConstructionDrone drone)
+    public void ResetConstructionDrone(ConstructionDrone drone)
     {
         drone.platesClosing = true;
 
@@ -593,11 +599,11 @@ public class DroneManager : MonoBehaviour
     }
 
     // Reset the drone after it's task is complete
-    public void resetResourceDrone(ResourceDrone drone)
+    public void ResetResourceDrone(ResourceDrone drone)
     {
         if (isMenu)
         {
-            clearResourceDrone(drone);
+            ClearResourceDrone(drone);
             return;
         }
 
@@ -613,7 +619,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Set the drone to return back to the parent
-    public void returnConstructionToParent(ConstructionDrone drone)
+    public void ReturnConstructionToParent(ConstructionDrone drone)
     {
         drone.targetPos = drone.spawnPosition.position;
         drone.target = drone.spawnPosition;
@@ -623,7 +629,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Set the drone to return back to the parent
-    public void returnResourceToParent(ResourceDrone drone)
+    public void ReturnResourceToParent(ResourceDrone drone)
     {
         if (drone.body != null)
         {
@@ -692,7 +698,7 @@ public class DroneManager : MonoBehaviour
                 {
                     // Reset drone so it's ready to go again
                     drone.buildingIcon.sprite = transparent;
-                    registerAvailableConstructionDrone(drone.body, drone.spawnPosition, drone.plates, drone.isHubDrone, drone.buildingIcon);
+                    RegisterAvailableConstructionDrone(drone.body, drone.spawnPosition, drone.plates, drone.isHubDrone, drone.buildingIcon);
                     survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count - 1);
                     drone.body.position = drone.spawnPosition.position;
                     if (!drone.isHubDrone) drone.body.localScale = new Vector2(0.8f, 0.8f);
@@ -767,14 +773,14 @@ public class DroneManager : MonoBehaviour
                 drone.platesClosing = false;
 
                 // Reset drone so it's ready to go again
-                clearResourceDrone(drone);
+                ClearResourceDrone(drone);
             }
             else return true;
         }
         return false;
     }
 
-    public void clearResourceDrone(ResourceDrone drone)
+    public void ClearResourceDrone(ResourceDrone drone)
     {
         drone.collectedGold = 0;
         drone.collectedEssence = 0;
@@ -792,7 +798,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Attempt to place a building
-    public void placeBuilding(ConstructionDrone drone)
+    public void PlaceBuilding(ConstructionDrone drone)
     {
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -831,7 +837,7 @@ public class DroneManager : MonoBehaviour
         return;
     }
 
-    public void forceCheckAvailableDrones()
+    public void ForceCheckAvailableDrones()
     {
         for (int i = 0; i < availableConstructionDrones.Count; i++)
         {
@@ -844,28 +850,28 @@ public class DroneManager : MonoBehaviour
     }
 
     // Register an active resource drone
-    public ResourceDrone registerResourceDrone(Transform body, Transform port, Transform[] plates)
+    public ResourceDrone RegisterResourceDrone(Transform body, Transform port, Transform[] plates)
     {
         ResourceDrone drone = new ResourceDrone(body, port, plates);
-        setupResourceDrone(drone);
+        SetupResourceDrone(drone);
         resourceDrone.Add(drone);
         return drone;
     }
 
     // Register an active construction drone
-    public void registerConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat, SpriteRenderer buildingIcon, bool freeBuilding = false)
+    public void RegisterConstructionDrone(Transform body, Transform targetPos, Transform targetBuilding, Transform startingPos, Transform[] plates, bool isHubDrone, int gold, int power, int heat, SpriteRenderer buildingIcon, bool freeBuilding = false)
     {
         constructionDrones.Add(new ConstructionDrone(body, targetPos, targetBuilding, startingPos, plates, isHubDrone, gold, power, heat, buildingIcon, freeBuilding));
     }
 
     // Register an available construction drone
-    public void registerAvailableConstructionDrone(Transform body, Transform port, Transform[] plates, bool isHubDrone, SpriteRenderer buildingIcon)
+    public void RegisterAvailableConstructionDrone(Transform body, Transform port, Transform[] plates, bool isHubDrone, SpriteRenderer buildingIcon)
     {
         availableConstructionDrones.Add(new AvailableConstructionDrones(body, port, plates, buildingIcon, isHubDrone));
     }
 
     // Queue a building to be placed
-    public void queueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
+    public void QueueBuilding(Transform building, Transform ghostBuilding, int gold, int power, int heat)
     {
         // Checks to see if a drone port should be counted as free or not
         if (building.name == "Drone Port" && constructionDrones.Count == 0)
@@ -890,7 +896,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Remove a queued building
-    public bool dequeueBuilding(Transform ghost)
+    public bool DequeueBuilding(Transform ghost)
     {
         // Check the building queue
         for (int i = 0; i < buildingQueue.Count; i++)
@@ -909,11 +915,11 @@ public class DroneManager : MonoBehaviour
         {
             if (constructionDrones[i].targetPos == new Vector2(ghost.position.x, ghost.position.y))
             {
-                revertResources(constructionDrones[i].goldCost, constructionDrones[i].powerCost, constructionDrones[i].heatCost);
+                RevertResources(constructionDrones[i].goldCost, constructionDrones[i].powerCost, constructionDrones[i].heatCost);
 
                 survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
-                returnConstructionToParent(constructionDrones[i]);
+                ReturnConstructionToParent(constructionDrones[i]);
                 return true;
             }
         }
@@ -922,19 +928,19 @@ public class DroneManager : MonoBehaviour
     }
 
     // Forces a UI update
-    public void forceUI()
+    public void ForceUI()
     {
         if (!isMenu) survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
     }
 
-    public void applyResources(int gold, int power, int heat)
+    public void ApplyResources(int gold, int power, int heat)
     {
         //survival.RemoveGold(gold);
         survival.increasePowerConsumption(power);
         survival.Spawner.increaseHeat(heat);
     }
 
-    public void revertResources(int gold, int power, int heat)
+    public void RevertResources(int gold, int power, int heat)
     {
         //survival.AddGold(gold, true);
         survival.decreasePowerConsumption(power);

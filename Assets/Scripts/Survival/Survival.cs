@@ -363,7 +363,7 @@ public class Survival : MonoBehaviour
                 LastObj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + SelectedObj.name);
                 if (largerUnit) LastObj.GetComponent<BoxCollider2D>().size = new Vector2(10f, 10f);
                 LastObj.name = SelectedObj.name;
-                droneManager.queueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.GetPower(), ObjectComponent.GetHeat());
+                droneManager.QueueBuilding(SelectedObj, LastObj, ObjectComponent.GetCost(), ObjectComponent.GetPower(), ObjectComponent.GetHeat());
                 ghostBuildings.Add(new Vector2(transform.position.x, transform.position.y));
             }
             else if (RayTarget != null)
@@ -420,7 +420,7 @@ public class Survival : MonoBehaviour
                 bool holder;
                 if (rayGhost.collider != null)
                 {
-                    holder = droneManager.dequeueBuilding(rayGhost.collider.transform);
+                    holder = droneManager.DequeueBuilding(rayGhost.collider.transform);
                     if (!holder) Destroy(rayGhost.collider.gameObject);
                 }
             }

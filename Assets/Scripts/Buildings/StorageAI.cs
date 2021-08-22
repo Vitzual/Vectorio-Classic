@@ -16,7 +16,7 @@ public class StorageAI: BaseBuilding
         // Default values
         SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        droneManager.updateResourceDrones(transform);
+        droneManager.UpdateResourceDrones(transform);
 
         // Add the storage
         switch (type)
@@ -49,7 +49,7 @@ public class StorageAI: BaseBuilding
     public int takeResources(int input)
     {
         int leftOver = 0;
-        droneManager.forceUpdateResourceDrones();
+        droneManager.ForceUpdateResourceDrones();
 
         if (amount >= input)
         {

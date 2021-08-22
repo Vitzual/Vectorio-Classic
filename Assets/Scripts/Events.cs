@@ -33,4 +33,11 @@ public class Events : MonoBehaviour
         if (onCollectorPlaced != null)
             onCollectorPlaced(collector);
     }
+
+    public event Action<DefaultStorage> onStoragePlaced;
+    public void StoragePlaced(DefaultStorage storage)
+    {
+        if (onStoragePlaced != null)
+            onStoragePlaced(storage);
+    }
 }

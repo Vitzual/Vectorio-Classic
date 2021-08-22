@@ -96,14 +96,14 @@ public class DroneManager : MonoBehaviour
 
             visitedCollectors = new List<DefaultCollector>();
             availableCollectors = new List<DefaultCollector>();
-            availableStorages = new List<StorageAI>();
+            availableStorages = new List<DefaultStorage>();
         }
 
         public Transform[] plates;
         public bool storagesAvailable;
         public List<DefaultCollector> visitedCollectors;
         public List<DefaultCollector> availableCollectors;
-        public List<StorageAI> availableStorages;
+        public List<DefaultStorage> availableStorages;
         public Transform body;
         public Transform port;
         public Transform target;
@@ -193,7 +193,8 @@ public class DroneManager : MonoBehaviour
 
     public void Start()
     {
-        Events.active.onCollectorPlaced += UpdateResourceDrones;
+        Events.active.onCollectorPlaced += AddCollectorReference;
+        Events.active.onStoragePlaced += AddStorageReference;
     }
 
     // Update is called once per frame
@@ -344,9 +345,9 @@ public class DroneManager : MonoBehaviour
                             case 2:
 
                                 // See how much gold the storage can hold
-                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<StorageAI>().addResources(drone.collectedGold);
-                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<StorageAI>().addResources(drone.collectedEssence);
-                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<StorageAI>().addResources(drone.collectedIridium);
+                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedGold);
+                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedEssence);
+                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<DefaultStorage>().addResources(drone.collectedIridium);
 
                                 // Animate building
                                 AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
@@ -388,7 +389,7 @@ public class DroneManager : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
             if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<DefaultCollector>());
-            else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<StorageAI>());
+            else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<DefaultStorage>());
         }
     }
 
@@ -399,10 +400,9 @@ public class DroneManager : MonoBehaviour
                 resourceDrone[i].storagesAvailable = true;
     }
 
-    public void UpdateResourceDrones(DefaultCollector collector)
+    public void AddCollectorReference(DefaultCollector collector)
     {
-        Transform building = collector.transform;
-        var colliders = Physics2D.OverlapCircleAll(building.position, Research.research_resource_range, layer);
+        var colliders = Physics2D.OverlapCircleAll(collector.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
         {
             if (collider.name == "Drone Port")
@@ -411,15 +411,27 @@ public class DroneManager : MonoBehaviour
                 {
                     if (drone.port == collider.transform)
                     {
-                        if (building.name.Contains("Collector"))
-                        {
-                            drone.availableCollectors.Add(building.GetComponent<DefaultCollector>());
-                        }
-                        else if (building.name.Contains("Storage"))
-                        {
-                            drone.availableStorages.Add(building.GetComponent<StorageAI>());
-                            drone.storagesAvailable = true;
-                        }
+                        drone.availableCollectors.Add(collector);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void AddStorageReference(DefaultStorage storage)
+    {
+        var colliders = Physics2D.OverlapCircleAll(storage.transform.position, Research.research_resource_range, layer);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.name == "Drone Port")
+            {
+                foreach (ResourceDrone drone in resourceDrone)
+                {
+                    if (drone.port == collider.transform)
+                    {
+                        drone.availableStorages.Add(storage);
+                        drone.storagesAvailable = true;
                         break;
                     }
                 }
@@ -481,7 +493,7 @@ public class DroneManager : MonoBehaviour
         else if (drone.visitedIridium) type = 3;
 
         // Loop through all available storages
-        StorageAI storage;
+        DefaultStorage storage;
         for (int i = 0; i < total; i++)
         {
             // Check if storage is null

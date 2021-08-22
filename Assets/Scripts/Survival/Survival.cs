@@ -828,7 +828,7 @@ public class Survival : MonoBehaviour
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
-            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<DefaultCollector>().OffsetStart());
+            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<DefaultCollector>().UpdateCollector());
 
             // Attempt to apply metadata for storages
             else if (metadata && obj.name.Contains("Storage"))
@@ -836,7 +836,7 @@ public class Survival : MonoBehaviour
                 try 
                 {
                     // Attempt to grab the attached script
-                    StorageAI storage = obj.GetComponent<StorageAI>();
+                    DefaultStorage storage = obj.GetComponent<DefaultStorage>();
                     int holder = storage.addResources(a[i, 5], true);
                 }
                 catch
@@ -1183,7 +1183,7 @@ public class Survival : MonoBehaviour
 
                     // Meta data that should be saved 
                     if (allObjects[i].name == "Drone Port") data[length, 5] = allObjects[i].GetComponent<Dronehub>().droneType;
-                    else if (allObjects[i].name.Contains("Storage")) data[length, 5] = allObjects[i].GetComponent<StorageAI>().amount;
+                    else if (allObjects[i].name.Contains("Storage")) data[length, 5] = allObjects[i].GetComponent<DefaultStorage>().amount;
                     else data[length, 5] = -1; // No meta data to apply
 
                     // Increment length

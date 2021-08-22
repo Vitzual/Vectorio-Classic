@@ -39,6 +39,11 @@ public class DefaultCollector : BaseBuilding
         */
     }
 
+    public void UpdateCollector()
+    {
+        // do stuff
+    }
+
     public int GrabResources()
     {
         // Set animation

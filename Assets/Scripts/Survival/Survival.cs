@@ -64,18 +64,6 @@ public class Survival : MonoBehaviour
     public Camera MainCamera;
     Color CameraColor;
 
-    // Resource stats
-    public int gold = 0;
-    public int essence = 0;
-    public int iridium = 0;
-    public int goldStorage = 0;
-    public int essenceStorage = 0;
-    public int iridiumStorage = 0;
-    public int PowerConsumption = 0;
-    public int AvailablePower = 0;
-    public static bool Blackout = false;
-    public Notify[] elements;
-
     // Resource UI popups
     public GameObject BuildingStats;
     public GameObject popup;

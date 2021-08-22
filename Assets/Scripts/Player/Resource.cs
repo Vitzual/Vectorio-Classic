@@ -8,7 +8,9 @@ public class Resource : MonoBehaviour
     {
         Gold,
         Essence,
-        Iridium
+        Iridium,
+        Power,
+        Heat
     }
 
     // Currency and storage variables

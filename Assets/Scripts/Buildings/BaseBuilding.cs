@@ -17,6 +17,7 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
     protected int power;
     protected int heat;
 
+    // Sets the buildings stats
     public void SetBuildingStats()
     {
         if (building == null)
@@ -31,6 +32,8 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
             power = building.power;
             heat = building.heat;
             deathParticle = building.deathParticle;
+
+            Resource.Remove(Resource.Currency.Gold, cost);
         }
     }
 

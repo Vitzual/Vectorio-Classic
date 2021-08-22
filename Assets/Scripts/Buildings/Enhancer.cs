@@ -30,7 +30,7 @@ public class Enhancer : BaseBuilding
         var colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
         for (int i = 0; i < colliders.Length; i++)
             if (colliders[i].name.Contains("Collector"))
-                colliders[i].GetComponent<CollectorAI>().enhanceCollector();
+                colliders[i].GetComponent<DefaultCollector>().EnhanceCollector();
     }
 
     /*

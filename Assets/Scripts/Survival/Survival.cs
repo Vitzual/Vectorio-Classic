@@ -828,7 +828,7 @@ public class Survival : MonoBehaviour
             try { obj.GetComponent<AnimateThenStop>().animEnabled = false; } catch { }
 
             // Resource offset
-            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<CollectorAI>().OffsetStart());
+            if (obj.name.Contains("Collector")) StartCoroutine(obj.GetComponent<DefaultCollector>().OffsetStart());
 
             // Attempt to apply metadata for storages
             else if (metadata && obj.name.Contains("Storage"))

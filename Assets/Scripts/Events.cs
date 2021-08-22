@@ -20,10 +20,17 @@ public class Events : MonoBehaviour
             onBulletFired(bullet);
     }
 
-    public event Action<Rotator> onRegisterRotator;
-    public void RegisterRotator(Rotator rotator)
+    public event Action<Rotator> onRotatorPlaced;
+    public void RotatorPlaced(Rotator rotator)
     {
-        if (onRegisterRotator != null)
-            onRegisterRotator(rotator);
+        if (onRotatorPlaced != null)
+            onRotatorPlaced(rotator);
+    }
+
+    public event Action<DefaultCollector> onCollectorPlaced;
+    public void CollectorPlaced(DefaultCollector collector)
+    {
+        if (onCollectorPlaced != null)
+            onCollectorPlaced(collector);
     }
 }

@@ -94,20 +94,20 @@ public class DroneManager : MonoBehaviour
             targetType = 1;
             storagesAvailable = true;
 
-            visitedCollectors = new List<CollectorAI>();
-            availableCollectors = new List<CollectorAI>();
+            visitedCollectors = new List<DefaultCollector>();
+            availableCollectors = new List<DefaultCollector>();
             availableStorages = new List<StorageAI>();
         }
 
         public Transform[] plates;
         public bool storagesAvailable;
-        public List<CollectorAI> visitedCollectors;
-        public List<CollectorAI> availableCollectors;
+        public List<DefaultCollector> visitedCollectors;
+        public List<DefaultCollector> availableCollectors;
         public List<StorageAI> availableStorages;
         public Transform body;
         public Transform port;
         public Transform target;
-        public CollectorAI targetScript;
+        public DefaultCollector targetScript;
         public int collectedGold;
         public bool visitedGold;
         public int collectedEssence;
@@ -382,7 +382,7 @@ public class DroneManager : MonoBehaviour
         var colliders = Physics2D.OverlapCircleAll(drone.port.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
         {
-            if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<CollectorAI>());
+            if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<DefaultCollector>());
             else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<StorageAI>());
         }
     }
@@ -407,7 +407,7 @@ public class DroneManager : MonoBehaviour
                     {
                         if (building.name.Contains("Collector"))
                         {
-                            drone.availableCollectors.Add(building.GetComponent<CollectorAI>());
+                            drone.availableCollectors.Add(building.GetComponent<DefaultCollector>());
                         }
                         else if (building.name.Contains("Storage"))
                         {
@@ -426,8 +426,8 @@ public class DroneManager : MonoBehaviour
         if (isMenu)
         {
             if (drone.availableCollectors.Count == 0) return false;
-            CollectorAI randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
-            drone.target = randomizer.getPosition();
+            DefaultCollector randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
+            drone.target = randomizer.transform;
             Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
             drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
             drone.targetScript = randomizer;
@@ -435,12 +435,12 @@ public class DroneManager : MonoBehaviour
             return true;
         }
 
-        CollectorAI holder = null;
+        DefaultCollector holder = null;
         int mostResources = -1;
 
         for(int i = 0; i < drone.availableCollectors.Count; i++)   
         {
-            CollectorAI collector = drone.availableCollectors[i];
+            DefaultCollector collector = drone.availableCollectors[i];
             if (collector == null)
             {
                 drone.availableCollectors.Remove(collector);
@@ -450,7 +450,7 @@ public class DroneManager : MonoBehaviour
             {
                 holder = collector;
                 mostResources = collector.collected;
-                drone.target = collector.getPosition();
+                drone.target = collector.transform;
                 Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
                 drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
                 drone.targetScript = collector;
@@ -785,7 +785,7 @@ public class DroneManager : MonoBehaviour
         drone.platesClosing = false;
         drone.body.position = drone.port.position;
         drone.body.localScale = new Vector2(0.8f, 0.8f);
-        drone.visitedCollectors = new List<CollectorAI>();
+        drone.visitedCollectors = new List<DefaultCollector>();
         drone.target = null;
         drone.targetScript = null;
         drone.check = true;

@@ -16,6 +16,4 @@ public class Turret : Building
     public float bulletSpeed = 0;
     public float bulletSpread = 0;
     public GameObject Bullet;
-
-
 }

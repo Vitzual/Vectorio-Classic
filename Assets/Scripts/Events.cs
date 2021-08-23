@@ -40,4 +40,11 @@ public class Events : MonoBehaviour
         if (onStoragePlaced != null)
             onStoragePlaced(storage);
     }
+
+    public event Action<Transform> onBuildingPlaced;
+    public void BuildingPlaced(Transform building)
+    {
+        if (onBuildingPlaced != null)
+            onBuildingPlaced(building);
+    }
 }

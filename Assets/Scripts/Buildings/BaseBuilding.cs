@@ -32,8 +32,6 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
             power = building.power;
             heat = building.heat;
             deathParticle = building.deathParticle;
-
-            Resource.Remove(Resource.Currency.Gold, cost);
         }
     }
 

@@ -14,13 +14,8 @@ public class BuildingSystem : NetworkBehaviour
     private static Tile selectedTile;
     private static Vector2 position;
     private static Vector2 offset;
-    private static Quaternion rotation;
     private static GameObject lastObj;
     private static bool changeSprite;
-
-    // Axis variables
-    public static bool buildPressed;
-    public static float lockAxisX, lockAxisY;
 
     // Sprite values
     private static SpriteRenderer spriteRenderer;
@@ -28,7 +23,7 @@ public class BuildingSystem : NetworkBehaviour
     private static float alphaHolder;
 
     // Start method grabs tilemap
-    private void Start()
+    public void Start()
     {
         // Grabs active component if it exists
         if (this != null) active = this;
@@ -40,7 +35,6 @@ public class BuildingSystem : NetworkBehaviour
         selectedTile = null;
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
-        rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         changeSprite = false;
         lastObj = null;
 
@@ -50,15 +44,13 @@ public class BuildingSystem : NetworkBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    public void Update()
     {
         // Check if active is null
         if (active == null) return;
 
         // Round to grid
         OffsetBuilding();
-        rotation = active.transform.rotation;
-
         AdjustTransparency();
     }
 
@@ -67,28 +59,6 @@ public class BuildingSystem : NetworkBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         active.transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
         position = active.transform.position;
-    }
-
-    public static void Rotate()
-    {
-        // Set rotation
-        Vector2 targetTile;
-        switch (rotation.eulerAngles.z)
-        {
-            case 90f:
-                targetTile = new Vector2(position.x, position.y - 5f);
-                break;
-            case 180f:
-                targetTile = new Vector2(position.x + 5f, position.y);
-                break;
-            case -90f:
-                targetTile = new Vector2(position.x, position.y + 5f);
-                break;
-            default:
-                targetTile = new Vector2(position.x - 5f, position.y);
-                break;
-        }
-            active.transform.Rotate(0, 0, -90);
     }
 
     // Adjusts the alpha transparency of the SR component 
@@ -151,25 +121,14 @@ public class BuildingSystem : NetworkBehaviour
         else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, selectedTile, lastObj);
     }
 
-    private static void InstantiateObj(GameObject obj, Vector2 position, Quaternion rotation, int axisLock = -1)
+    private static void InstantiateObj(GameObject obj, Vector2 position, Quaternion rotation)
     {
         // Create the tile
         lastObj = Instantiate(obj, position, rotation);
         lastObj.name = obj.name;
-    }
 
-    // Keybind for building released
-    public static void BuildReleased()
-    {
-        buildPressed = false;
-        lockAxisX = -1;
-        lockAxisY = -1;
-
-        if (selectedTile != null)
-        {
-            spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
-            changeSprite = true;
-        }
+        // Broadcast placement event
+        Events.active.BuildingPlaced(lastObj.transform);
     }
 
     // Checks to make sure tile(s) isn't occupied

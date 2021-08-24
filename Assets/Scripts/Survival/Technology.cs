@@ -142,8 +142,8 @@ public class Technology : MonoBehaviour
             case "Power":
                 foreach (int index in PowerUnlocks)
                 {
-                    if (!Unlocks[index].Unlocked && main.PowerConsumption >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
-                    UpdateUnlockUI(Unlocks[index], main.PowerConsumption);
+                    // if (!Unlocks[index].Unlocked && main.PowerConsumption >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
+                    // UpdateUnlockUI(Unlocks[index], main.PowerConsumption);
                 }
                 return;
             case "Place":

@@ -2,14 +2,7 @@ using UnityEngine;
 
 public class Hotbar
 {
-    // Parameterized constructor (size & tiles)
-    public Hotbar(Tile[] slot, int hotbarSize)
-    {
-        this.slot = slot;
-        this.hotbarSize = hotbarSize;
-    }
-
-    // Parameterized constructor (just size)
+    // Parameterized constructor
     public Hotbar(int hotbarSize)
     {
         slot = new Tile[hotbarSize];

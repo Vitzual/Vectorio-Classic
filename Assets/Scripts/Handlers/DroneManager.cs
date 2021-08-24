@@ -549,9 +549,9 @@ public class DroneManager : MonoBehaviour
             // Check if adequate resources for a drone to be deployed
             if (!buildingQueue[a].freeBuilding)
             {
-                if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
-                if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
-                if (buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0) continue;
+                // if (survival.Spawner.htrack >= survival.Spawner.maxHeat && buildingQueue[a].heatCost > 0) continue;
+                // if (survival.PowerConsumption >= survival.AvailablePower && buildingQueue[a].powerCost > 0) continue;
+                // if (buildingQueue[a].goldCost > survival.gold && buildingQueue[a].goldCost > 0) continue;
             }
 
             for (int b = 0; b < availableConstructionDrones.Count; b++)
@@ -740,7 +740,7 @@ public class DroneManager : MonoBehaviour
 
         // Check on the first run that there are valid targets
         if (drone.check)
-            if (survival.gold < survival.goldStorage && drone.storagesAvailable && drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
+            // if (survival.gold < survival.goldStorage && drone.storagesAvailable && drone.availableCollectors.Count > 0 && drone.availableStorages.Count > 0)
                 drone.check = false;
             else return true;
 
@@ -948,14 +948,14 @@ public class DroneManager : MonoBehaviour
     public void ApplyResources(int gold, int power, int heat)
     {
         //survival.RemoveGold(gold);
-        survival.increasePowerConsumption(power);
+        // survival.increasePowerConsumption(power);
         survival.Spawner.increaseHeat(heat);
     }
 
     public void RevertResources(int gold, int power, int heat)
     {
         //survival.AddGold(gold, true);
-        survival.decreasePowerConsumption(power);
+        // survival.decreasePowerConsumption(power);
         survival.Spawner.decreaseHeat(heat);
     }
 }

@@ -196,9 +196,9 @@ public class Research : MonoBehaviour
     public void UpdateResearch()
     {
         // Update all resources
-        if (Researching.needsGold && SurvivalCS.gold >= research_research_speed) UpdateResource(1);
-        if (Researching.needsEssence && SurvivalCS.essence >= research_research_speed) UpdateResource(2);
-        if (Researching.needsIridium && SurvivalCS.iridium >= research_research_speed) UpdateResource(3);
+        // if (Researching.needsGold && SurvivalCS.gold >= research_research_speed) UpdateResource(1);
+        // if (Researching.needsEssence && SurvivalCS.essence >= research_research_speed) UpdateResource(2);
+        // if (Researching.needsIridium && SurvivalCS.iridium >= research_research_speed) UpdateResource(3);
 
         // Update the UI elements
         ResearchBar.currentPercent = (float)resourcesTracked / (float)resourcesNeeded * 100;
@@ -317,7 +317,7 @@ public class Research : MonoBehaviour
 
                 // Update variables and set main gold storage to 0
                 research_gold_storage += 2500;
-                SurvivalCS.goldStorage = 0;
+                //SurvivalCS.goldStorage = 0;
 
                 break;
             case "essence yield":
@@ -333,7 +333,7 @@ public class Research : MonoBehaviour
 
                 // Update variables and set main gold storage to 0
                 research_essence_storage += 500;
-                SurvivalCS.essenceStorage = 0;
+                //SurvivalCS.essenceStorage = 0;
 
                 break;
             case "iridium yield":
@@ -349,7 +349,7 @@ public class Research : MonoBehaviour
 
                 // Update variables and set main gold storage to 0
                 research_iridium_storage += 100;
-                SurvivalCS.iridiumStorage = 0;
+                //SurvivalCS.iridiumStorage = 0;
 
                 break;
             case "burning":

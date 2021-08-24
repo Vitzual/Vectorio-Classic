@@ -144,150 +144,6 @@ public class Survival : MonoBehaviour
     // Holds a list of all ghost objects 
     public List<Vector2> ghostBuildings;
 
-    private void Start()
-    {
-        difficulties = GameObject.Find("Difficulty").GetComponent<Difficulties>();
-
-        // Make sure it's not the menu
-        if (SceneManager.GetActiveScene().name == "Menu")
-        {
-            isMenu = true;
-            return;
-        }
-
-        // Assign default variables
-        Selected = GetComponent<SpriteRenderer>();
-        CameraColor = new Color();
-
-        // Set color
-        ColorUtility.TryParseHtmlString("#333333", out CameraColor);
-        MainCamera.backgroundColor = CameraColor;
-
-        // Default starting unlocks / hotbar
-        PopulateHotbar();
-
-        // Load save data to file
-        SurvivalData data = SaveSystem.LoadGame();
-
-        // Load settings
-        manager.GetComponent<Settings>().LoadSettings();
-
-        if (data != null)
-        {
-
-            // Check to see if there's a difficulty saved
-            //try
-            //{
-                // Set world data
-                Difficulties.world = data.worldName;
-                Difficulties.mode = data.worldMode;
-                Difficulties.seed = data.worldSeed;
-                Difficulties.version = data.worldVersion;
-
-                // Set resources
-                Difficulties.goldMulti = data.goldSpawnAmount;
-                Difficulties.essenceMulti = data.essenceSpawnAmount;
-                Difficulties.iridiumMulti = data.iridiumSpawnAmount;
-
-                // Set enemies
-                Difficulties.enemyAmountMulti = data.enemyAmountMulti;
-                Difficulties.enemyHealthMulti = data.enemyHealthMulti;
-                Difficulties.enemyDamageMulti = data.enemyDamageMulti;
-                Difficulties.enemySpeedMulti = data.enemySpeedMulti;
-                Difficulties.enemyGroups = data.enemyGroups;
-                Difficulties.enemyOutposts = data.enemyOutposts;
-                Difficulties.enemyGuardians = data.enemyGuaridans;
-            //}
-            //catch
-            //{
-                Debug.Log("Save file contains obsolete data! This may cause errors while attempting to load this save...");
-            //}
-
-            try { Playtime = data.time; }
-            catch { Debug.Log("Save file does not contain new time tracking data!"); Playtime = 0; }
-
-            // Set power usage
-            UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-            UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-            // Attempt to load save data 
-            //try
-            //{
-                // Force tech tree update
-                try { tech.LoadSaveData(data.unlocked); }
-                catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
-
-                // Generate world data
-                GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, true);
-
-                // Get research save data
-                rsrch.SetResearchData(data.researchTechs);
-
-                // Attempt to place saved buildings
-                float soundHolder = manager.GetComponent<Settings>().GetSound();
-                manager.GetComponent<Settings>().SetSound(0);
-                PlaceSavedBuildings(data);
-
-                // Update bosses
-                //try
-                //{
-                    Spawner.updateBosses(data.bossesDefeated);
-                //}
-                //catch
-                //{
-                    Debug.Log("Save file does not contain new Guardian data!");
-                //}
-
-                // Set power usage
-                UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-                UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-
-                // Place saved enemies 
-                //try
-                //{
-                    PlaceSavedEnemies(data.enemies);
-                //}
-                //catch
-                //{
-                    Debug.Log("Save file does not contain new enemy data!");
-                //}
-
-                // Update hotbar with saved ID's
-                //try
-                //{
-                    SetHotbarData(data.hotbar);
-                //}
-                //catch
-                //{
-                    Debug.Log("Save file does not contain new hotbar data!");
-                //}
-
-                manager.GetComponent<Settings>().SetSound(soundHolder);
-            //}
-            //catch (System.Exception e)
-            //{
-                Spawner.loadingSave = false;
-                //Debug.Log("The save data found was corrupt.\n\nStacktrace: " + e.Message + "\n" + e.StackTrace);
-                GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, false);
-            //}
-
-        }
-        else
-        {
-            // New save
-            tutorial.enableTutorial();
-            Spawner.loadingSave = false;
-            Debug.LogError("No save data found. Starting new save.");
-            GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, false);
-        }
-
-        // Start auto saving
-        InvokeRepeating("AutoSave", 0f, AutoSaveInterval);
-        InvokeRepeating("IncreaseTime", 0f, 1f);
-        increaseAvailablePower(0);
-        increasePowerConsumption(0);
-    }
-
     // Gets called once every frame
     private void Update()
     {
@@ -834,9 +690,9 @@ public class Survival : MonoBehaviour
                     Debug.Log("Save does not contain metadata support. Save the game again to update the save structure automatically.");
 
                     // Reset values and add what is saved on record. Do note this can cause offsets between storages and internal values
-                    gold = 0;
-                    essence = 0;
-                    iridium = 0;
+                    //gold = 0;
+                    //essence = 0;
+                    //iridium = 0;
                 }
             }
 
@@ -857,7 +713,7 @@ public class Survival : MonoBehaviour
             }
 
             // Set survival
-            increasePowerConsumption(building.GetComponent<BaseBuilding>().GetPower());
+            //increasePowerConsumption(building.GetComponent<BaseBuilding>().GetPower());
             Spawner.GetComponent<EnemySpawner>().increaseHeat(building.GetComponent<BaseBuilding>().GetHeat());
         }
     }
@@ -870,53 +726,7 @@ public class Survival : MonoBehaviour
         return null;
     }
 
-    // Returns available power 
-    public int getAvailablePower()
-    {
-        return AvailablePower;
-    }
-
-    // Increases available power by x amount
-    public void increaseAvailablePower(int a)
-    {
-        AvailablePower += a;
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        if (AvailablePower >= 1000000) UI.AvailablePower.text = string.Concat(AvailablePower / 100000, "M") + " MAX";
-        else if (AvailablePower >= 10000) UI.AvailablePower.text = string.Concat(AvailablePower / 1000, "K") + " MAX";
-        else UI.AvailablePower.text = AvailablePower + " MAX";
-    }
-
-    // Decreases available power by x amount
-    public void decreaseAvailablePower(int a)
-    {
-        AvailablePower -= a;
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.AvailablePower.text = AvailablePower.ToString() + " MAX";
-    }
-
-    // Returns power consumption
-    public int getPowerConsumption()
-    {
-        return PowerConsumption;
-    }
-
-    // Increase power consumption by x amount
-    public void increasePowerConsumption(int a)
-    {
-        PowerConsumption += a;
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.PowerUsage.text = PowerConsumption.ToString();
-
-        tech.UpdateUnlock("Power");
-    }
-
-    // Decrease power consumption by x amount
-    public void decreasePowerConsumption(int a)
-    {
-        PowerConsumption -= a;
-        UI.PowerUsageBar.currentPercent = (float)PowerConsumption / (float)AvailablePower * 100;
-        UI.PowerUsage.text = PowerConsumption.ToString();
-    }
+    
 
     // Adjust the selected overlay transparency by 0.1f
     public void AdjustAlphaValue()
@@ -1096,7 +906,7 @@ public class Survival : MonoBehaviour
         if (!Spawner.bossSpawned)
         {
             Debug.Log("Attempting to save data");
-            SaveSystem.SaveGame(this, tech, Spawner, rsrch, Playtime, Spawner.htrack);
+            //SaveSystem.SaveGame(this, tech, Spawner, rsrch, Playtime, Spawner.htrack);
             Debug.Log("Data was saved successfully");
 
             UI.SaveButton.buttonText = "SAVED";

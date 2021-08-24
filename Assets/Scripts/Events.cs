@@ -12,7 +12,8 @@ public class Events : MonoBehaviour
     {
         active = this;
     }
-
+    
+    // Invoked when a bullet is fired
     public event Action<Bullet> onBulletFired;
     public void BulletFired(Bullet bullet)
     {
@@ -20,6 +21,7 @@ public class Events : MonoBehaviour
             onBulletFired(bullet);
     }
 
+    // Invoked when a building with a rotating piece is placed
     public event Action<Rotator> onRotatorPlaced;
     public void RotatorPlaced(Rotator rotator)
     {
@@ -27,6 +29,7 @@ public class Events : MonoBehaviour
             onRotatorPlaced(rotator);
     }
 
+    // Invoked when a building with a collector script is placed
     public event Action<DefaultCollector> onCollectorPlaced;
     public void CollectorPlaced(DefaultCollector collector)
     {
@@ -34,6 +37,7 @@ public class Events : MonoBehaviour
             onCollectorPlaced(collector);
     }
 
+    // Invoked when a building with a storage script is placed
     public event Action<DefaultStorage> onStoragePlaced;
     public void StoragePlaced(DefaultStorage storage)
     {
@@ -41,6 +45,7 @@ public class Events : MonoBehaviour
             onStoragePlaced(storage);
     }
 
+    // Invoked when a building is placed
     public event Action<Transform> onBuildingPlaced;
     public void BuildingPlaced(Transform building)
     {
@@ -48,10 +53,19 @@ public class Events : MonoBehaviour
             onBuildingPlaced(building);
     }
 
-    public event Action<SurvivalData> onSaveLoaded;
-    public void SaveLoaded(SurvivalData data)
+    // Invoked when a survival save is loaded
+    public event Action<SurvivalData> onSurvivalLoaded;
+    public void SurvivalLoaded(SurvivalData data)
     {
-        if (onSaveLoaded != null)
-            onSaveLoaded(data);
+        if (onSurvivalLoaded != null)
+            onSurvivalLoaded(data);
+    }
+
+    // Invoked when a hotbar is set
+    public event Action<Tile, int> onHotbarSet;
+    public void HotbarSet(Tile tile, int slot)
+    {
+        if (onHotbarSet != null)
+            onHotbarSet(tile, slot);
     }
 }

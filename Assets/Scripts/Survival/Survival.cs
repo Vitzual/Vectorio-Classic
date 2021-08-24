@@ -167,7 +167,7 @@ public class Survival : MonoBehaviour
         PopulateHotbar();
 
         // Load save data to file
-        SaveData data = SaveSystem.LoadGame();
+        SurvivalData data = SaveSystem.LoadGame();
 
         // Load settings
         manager.GetComponent<Settings>().LoadSettings();
@@ -179,24 +179,24 @@ public class Survival : MonoBehaviour
             //try
             //{
                 // Set world data
-                Difficulties.world = data.WorldName;
-                Difficulties.mode = data.WorldMode;
-                Difficulties.seed = data.WorldSeed;
-                Difficulties.version = data.WorldVersion;
+                Difficulties.world = data.worldName;
+                Difficulties.mode = data.worldMode;
+                Difficulties.seed = data.worldSeed;
+                Difficulties.version = data.worldVersion;
 
                 // Set resources
-                Difficulties.goldMulti = data.GoldAmount;
-                Difficulties.essenceMulti = data.EssenceAmount;
-                Difficulties.iridiumMulti = data.IridiumAmount;
+                Difficulties.goldMulti = data.goldSpawnAmount;
+                Difficulties.essenceMulti = data.essenceSpawnAmount;
+                Difficulties.iridiumMulti = data.iridiumSpawnAmount;
 
                 // Set enemies
-                Difficulties.enemyAmountMulti = data.EnemyAmountMulti;
-                Difficulties.enemyHealthMulti = data.EnemyHealthMulti;
-                Difficulties.enemyDamageMulti = data.EnemyDamageMulti;
-                Difficulties.enemySpeedMulti = data.EnemySpeedMulti;
-                Difficulties.enemyWaves = data.EnemyGroups;
-                Difficulties.enemyOutposts = data.EnemyOutposts;
-                Difficulties.enemyGuardians = data.EnemyGuaridans;
+                Difficulties.enemyAmountMulti = data.enemyAmountMulti;
+                Difficulties.enemyHealthMulti = data.enemyHealthMulti;
+                Difficulties.enemyDamageMulti = data.enemyDamageMulti;
+                Difficulties.enemySpeedMulti = data.enemySpeedMulti;
+                Difficulties.enemyGroups = data.enemyGroups;
+                Difficulties.enemyOutposts = data.enemyOutposts;
+                Difficulties.enemyGuardians = data.enemyGuaridans;
             //}
             //catch
             //{
@@ -214,14 +214,14 @@ public class Survival : MonoBehaviour
             //try
             //{
                 // Force tech tree update
-                try { tech.LoadSaveData(data.UnlockIDs); }
+                try { tech.LoadSaveData(data.unlocked); }
                 catch (Exception e) { Debug.Log("Save file does not contain new unlock data!\nStack: "+e); }
 
                 // Generate world data
                 GameObject.Find("OnSpawn").GetComponent<WorldGenerator>().GenerateWorldData(Difficulties.seed, true);
 
                 // Get research save data
-                rsrch.SetResearchData(data.ResearchedTiers);
+                rsrch.SetResearchData(data.researchTechs);
 
                 // Attempt to place saved buildings
                 float soundHolder = manager.GetComponent<Settings>().GetSound();
@@ -245,7 +245,7 @@ public class Survival : MonoBehaviour
                 // Place saved enemies 
                 //try
                 //{
-                    PlaceSavedEnemies(data.Enemies);
+                    PlaceSavedEnemies(data.enemies);
                 //}
                 //catch
                 //{
@@ -795,10 +795,10 @@ public class Survival : MonoBehaviour
 
 
     // Place building loaded from a save file
-    public void PlaceSavedBuildings(SaveData data)
+    public void PlaceSavedBuildings(SurvivalData data)
     {
         bool metadata = true;
-        int[,] a = data.Locations;
+        int[,] a = data.buildings;
 
         for (int i = 0; i < a.GetLength(0); i++)
         {

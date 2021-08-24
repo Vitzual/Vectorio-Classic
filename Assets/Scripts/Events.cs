@@ -47,4 +47,11 @@ public class Events : MonoBehaviour
         if (onBuildingPlaced != null)
             onBuildingPlaced(building);
     }
+
+    public event Action<SurvivalData> onSaveLoaded;
+    public void SaveLoaded(SurvivalData data)
+    {
+        if (onSaveLoaded != null)
+            onSaveLoaded(data);
+    }
 }

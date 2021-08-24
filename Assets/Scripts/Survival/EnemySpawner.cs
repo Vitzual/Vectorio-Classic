@@ -116,7 +116,7 @@ public class EnemySpawner : MonoBehaviour
     {
         // Check if it's time for a group spawn
         bool groupSpawn = false;
-        if (Difficulties.enemyWaves)
+        if (Difficulties.enemyGroups)
         {
             if (htrack >= 1000)
             {

@@ -18,17 +18,17 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/world_" + a+ ".save";
         FileStream stream = new FileStream(path, FileMode.Open);
-        SaveData data = formatter.Deserialize(stream) as SaveData;
+        SurvivalData data = formatter.Deserialize(stream) as SurvivalData;
         stream.Close();
         
         // Return string data
         string[] saveInfo = new string[5];
         try {
-            saveInfo[0] = data.WorldName;
-            saveInfo[1] = data.WorldMode;
-            saveInfo[2] = data.heatt.ToString();
-            saveInfo[3] = data.time.ToString();
-            saveInfo[4] = data.WorldSeed;
+            saveInfo[0] = data.worldName;
+            saveInfo[1] = data.worldMode;
+            saveInfo[2] = data.heat.ToString();
+            saveInfo[3] = data.worldPlaytime.ToString();
+            saveInfo[4] = data.worldVersion;
         } 
         catch
         {
@@ -36,7 +36,7 @@ public static class SaveSystem
             saveInfo[1] = "OLD SAVE";
             saveInfo[2] = "???";
             saveInfo[3] = "0:00";
-            saveInfo[4] = "v0.2";
+            saveInfo[4] = "v0.3";
         }
 
         return saveInfo;
@@ -50,7 +50,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveGame (Survival data_1, Technology data_2, EnemySpawner data_3, Research data_4, int time = 0, int heatt = 0)
+    public static void SaveGame (Survival data_1, Technology data_2, EnemySpawner data_3, Research data_4, int time = 0)
     {
         string SavePath = Application.persistentDataPath + "/location.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
@@ -76,7 +76,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveData data = new SaveData(data_1, data_2, data_3, data_4, time, heatt);
+        SurvivalData data = new SurvivalData(data_1, data_2, data_3, data_4, time);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -84,7 +84,7 @@ public static class SaveSystem
         Debug.Log("Saved file to " + path);
     }
 
-    public static SaveData LoadGame()
+    public static SurvivalData LoadGame()
     {
 
         string SavePath = Application.persistentDataPath + "/location.vectorio";
@@ -113,7 +113,7 @@ public static class SaveSystem
         {
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            SaveData data = formatter.Deserialize(stream) as SaveData;
+            SurvivalData data = formatter.Deserialize(stream) as SurvivalData;
             stream.Close();
 
             Debug.Log("Loaded file from " + path);

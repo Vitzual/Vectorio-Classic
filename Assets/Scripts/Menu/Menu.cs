@@ -379,7 +379,7 @@ public class Menu : MonoBehaviour
         Difficulties.enemyDamageMulti = EnemiesDamage.mainSlider.value;
         Difficulties.enemySpeedMulti = 1f;
         Difficulties.enemyOutposts = EnemyOutposts.isOn;
-        Difficulties.enemyWaves = EnemyGroups.isOn;
+        Difficulties.enemyGroups = EnemyGroups.isOn;
         Difficulties.enemyGuardians = EnemyGuardians.isOn;
 
         LoadingSave.SetActive(true);

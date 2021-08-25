@@ -68,4 +68,11 @@ public class Events : MonoBehaviour
         if (onHotbarSet != null)
             onHotbarSet(tile, slot);
     }
+
+    public event Action<int, bool> onNumberInput;
+    public void NumberInput(int number, bool hotbar)
+    {
+        if (onNumberInput != null)
+            onNumberInput(number, hotbar);
+    }
 }

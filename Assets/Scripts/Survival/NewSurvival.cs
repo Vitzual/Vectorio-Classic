@@ -6,6 +6,7 @@ using Mirror;
 // This is a WIP rewrite script of Survival.cs
 public class NewSurvival : NetworkBehaviour
 {
+    // Register for events
     public void Start()
     {
         Events.active.onBuildingPlaced += CmdBuildingPlaced;

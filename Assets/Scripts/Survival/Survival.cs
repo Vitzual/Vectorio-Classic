@@ -270,8 +270,6 @@ public class Survival : MonoBehaviour
             }
         }
 
-        // Check hotbar thing        
-        CheckNumberInput();
 
         if (tutorial.disableMenus) return;
 
@@ -466,91 +464,7 @@ public class Survival : MonoBehaviour
         UI.InfoPanels[panelType].hotbarButton.UpdateUI();
     }
 
-    // Checks if for numeric input
-    public void CheckNumberInput()
-    {
-        if (tutorial.disableBuilding) return;
-
-        if (SettingHotbar)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SetHotbarSlot(0, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SetHotbarSlot(1, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SetHotbarSlot(2, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SetHotbarSlot(3, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                SetHotbarSlot(4, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                SetHotbarSlot(5, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                SetHotbarSlot(6, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                SetHotbarSlot(7, HoveredObj);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                SetHotbarSlot(8, HoveredObj);
-            }
-            return;
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SelectHotbar(0);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SelectHotbar(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SelectHotbar(2);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SelectHotbar(3);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                SelectHotbar(4);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                SelectHotbar(5);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                SelectHotbar(6);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                SelectHotbar(7);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                SelectHotbar(8);
-            }
-        }
-    }
+  
 
     // Checks if a unit can be placed
     public bool CheckPlacement(Transform obj)
@@ -634,22 +548,7 @@ public class Survival : MonoBehaviour
             d.collider.GetComponent<WallAI>().UpdateSprite(-4);
         }
     }
-
-    // Increase the AOC size
-    public void IncreaseAOC()
-    {
-        AOC_Level += 1;
-        //AOC_Size += 60;
-        //AOC_Object.localScale = new Vector2(AOC_Object.localScale.x + .394f, AOC_Object.localScale.y + .394f);
-    }
     
-    // Returns the AOC size
-    public int GetAOC()
-    {
-        return AOC_Size;
-    }
-
-
     // Place building loaded from a save file
     public void PlaceSavedBuildings(SurvivalData data)
     {

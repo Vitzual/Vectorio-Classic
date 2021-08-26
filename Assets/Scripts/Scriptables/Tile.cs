@@ -8,6 +8,7 @@ public class Tile : ScriptableObject
     public new string name;
     public string description;
     public GameObject obj;
+    public Sprite icon;
 
     [System.Serializable]
     public struct Cell

@@ -25,12 +25,12 @@ public class Settings : MonoBehaviour
 
     public void DisableRotatingObjects()
     {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = false;
+        //GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = false;
     }
 
     public void EnableRotatingObjects()
     {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = true;
+        //GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().isEnabled = true;
     }
 
     void OnMouseEnter()

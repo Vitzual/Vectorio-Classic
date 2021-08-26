@@ -8,7 +8,7 @@ using Michsky.UI.ModernUIPack;
 public class Technology : MonoBehaviour
 {
     // Survival script
-    public Survival main;
+    // public Survival main;
 
     // Interface script
     public Interface UI;
@@ -72,7 +72,7 @@ public class Technology : MonoBehaviour
     private void Start()
     {
         // Get scripts
-        main = gameObject.GetComponent<Survival>();
+        // main = gameObject.GetComponent<Survival>();
         UI = gameObject.GetComponent<Interface>();
 
         GenerateTree();
@@ -112,7 +112,7 @@ public class Technology : MonoBehaviour
 
             // Set all variables grabbed 
             Transform building = Unlocks[i].Building;
-            Unlocks[i].InvButton.onClick.AddListener(delegate { main.SetChosenObj(building); });
+            // Unlocks[i].InvButton.onClick.AddListener(delegate { main.SetChosenObj(building); });
             Unlocks[i].InvName.text = Unlocks[i].Building.name.ToUpper();
             Unlocks[i].ProgressDesc.text = Unlocks[i].UnlockDesc;
             Unlocks[i].ProgressText.text = "0/" + Unlocks[i].AmountRequirement;
@@ -135,8 +135,8 @@ public class Technology : MonoBehaviour
             case "Heat":
                 foreach (int index in HeatUnlocks)
                 {
-                    if (!Unlocks[index].Unlocked && main.Spawner.htrack >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
-                    UpdateUnlockUI(Unlocks[index], main.Spawner.htrack);
+                    // if (!Unlocks[index].Unlocked && main.Spawner.htrack >= Unlocks[index].AmountRequirement) UnlockDefense(Unlocks[index]);
+                    // UpdateUnlockUI(Unlocks[index], main.Spawner.htrack);
                 }
                 return;
             case "Power":

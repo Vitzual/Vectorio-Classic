@@ -6,7 +6,6 @@ public class EssenceAI: BaseBuilding
     // Declare local object variables
     public int amount;
     public bool enhanced;
-    private Survival SRVSC;
 
     // Popup variables
     public Transform popup;
@@ -21,11 +20,10 @@ public class EssenceAI: BaseBuilding
     // On start, invoke repeating SendGold() method
     private void Start()
     {
-        SRVSC = GameObject.Find("Survival").GetComponent<Survival>();
         if (!isOffset) InvokeRepeating("SendEssence", 0f, Research.research_essence_time);
         popup = Instantiate(popup, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
         rPopup = popup.GetComponent<ResourcePopup>();
-        popup.parent = SRVSC.UI.IngameCanvas.transform;
+        // popup.parent = SRVSC.UI.IngameCanvas.transform;
         rPopup.SetPopup(new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
     }
 

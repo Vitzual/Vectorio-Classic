@@ -39,12 +39,12 @@ public class SurvivalData
     public string worldVersion;
     public int worldPlaytime;
 
-    public SurvivalData (Survival data_1, Technology data_2, EnemySpawner data_3, Research data_4, int worldPlaytime = 0) 
+    public SurvivalData (Technology data_2, EnemySpawner data_3, Research data_4, int worldPlaytime = 0) 
     {
         // Location data
-        buildings = data_1.GetLocationData();
-        enemies = data_1.GetEnemyData();
-        hotbar = data_1.GetHotbarData();
+        // buildings = data_1.GetLocationData();
+        // enemies = data_1.GetEnemyData();
+        // hotbar = data_1.GetHotbarData();
 
         // Resource data
         gold = Resource.Get(Resource.Currency.Gold);

@@ -50,7 +50,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveGame (Survival data_1, Technology data_2, EnemySpawner data_3, Research data_4, int time = 0)
+    public static void SaveGame (Technology data_2, EnemySpawner data_3, Research data_4, int time = 0)
     {
         string SavePath = Application.persistentDataPath + "/location.vectorio";
         BinaryFormatter formatter = new BinaryFormatter();
@@ -76,7 +76,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + SaveLocation;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SurvivalData data = new SurvivalData(data_1, data_2, data_3, data_4, time);
+        SurvivalData data = new SurvivalData(data_2, data_3, data_4, time);
 
         formatter.Serialize(stream, data);
         stream.Close();

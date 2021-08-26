@@ -68,7 +68,6 @@ public class Research : MonoBehaviour
     public ScrollRect overlay;
 
     // Data source scripts
-    public Survival SurvivalCS;
     public Technology TechnologyCS;
 
     // Research array class
@@ -108,7 +107,7 @@ public class Research : MonoBehaviour
     public void Update()
     {
         // Check if research open
-        if (isMenu || !SurvivalCS.UI.ResearchOpen) return;
+        // if (isMenu || !SurvivalCS.UI.ResearchOpen) return;
 
         // Check if space pressed
         if (Input.GetKeyDown(KeyCode.Space)) ScreenSet();

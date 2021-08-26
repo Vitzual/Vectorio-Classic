@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotationHandler : MonoBehaviour
 {
-    public bool isEnabled = true;
+    public static bool isEnabled = true;
 
     // Contains all active enemies in the scene
     [System.Serializable]
@@ -22,10 +22,12 @@ public class RotationHandler : MonoBehaviour
         public float speed { get; set; }
 
     }
+
+    [HideInInspector]
     public List<ActiveRotators> Rotators;
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (!isEnabled) return;
 

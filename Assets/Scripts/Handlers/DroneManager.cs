@@ -185,7 +185,6 @@ public class DroneManager : MonoBehaviour
     public Tutorial tutorial;
 
     // Survival
-    public Survival survival;
     public LayerMask layer;
     public bool isMenu = false;
 
@@ -592,7 +591,7 @@ public class DroneManager : MonoBehaviour
             buildingQueue.Remove(buildingQueue[a]);
 
             // Update the UI
-            survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
+            // survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
         }
     }
 
@@ -711,7 +710,7 @@ public class DroneManager : MonoBehaviour
                     // Reset drone so it's ready to go again
                     drone.buildingIcon.sprite = transparent;
                     RegisterAvailableConstructionDrone(drone.body, drone.spawnPosition, drone.plates, drone.isHubDrone, drone.buildingIcon);
-                    survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count - 1);
+                    // survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count - 1);
                     drone.body.position = drone.spawnPosition.position;
                     if (!drone.isHubDrone) drone.body.localScale = new Vector2(0.8f, 0.8f);
                     else drone.body.localScale = new Vector2(1.2f, 1.2f);
@@ -815,7 +814,7 @@ public class DroneManager : MonoBehaviour
         // Create the new building and remove the ghost version
         var LastObj = Instantiate(drone.targetBuilding, drone.targetPos, Quaternion.Euler(new Vector3(0, 0, 0)));
         LastObj.name = drone.targetBuilding.name;
-        survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
+        // survival.ghostBuildings.Remove(new Vector2(drone.target.position.x, drone.target.position.y));
         Destroy(drone.target.gameObject);
         drone.buildingIcon.sprite = transparent;
 
@@ -828,8 +827,8 @@ public class DroneManager : MonoBehaviour
         }
 
         // Create a UI resource popup thing idk lmaooo
-        if (!drone.freeBuilding)
-            survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
+        // if (!drone.freeBuilding)
+        //     survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
 
         // Play audio
         float audioScale = CameraScroll.getZoom() / 1400f;
@@ -915,7 +914,7 @@ public class DroneManager : MonoBehaviour
         {
             if (buildingQueue[i].buildingPos.position == ghost.position)
             {
-                survival.ghostBuildings.Remove(ghost.position);
+                // survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
                 buildingQueue.RemoveAt(i);
                 return true;
@@ -929,7 +928,7 @@ public class DroneManager : MonoBehaviour
             {
                 RevertResources(constructionDrones[i].goldCost, constructionDrones[i].powerCost, constructionDrones[i].heatCost);
 
-                survival.ghostBuildings.Remove(ghost.position);
+                // survival.ghostBuildings.Remove(ghost.position);
                 Destroy(ghost.gameObject);
                 ReturnConstructionToParent(constructionDrones[i]);
                 return true;
@@ -942,20 +941,20 @@ public class DroneManager : MonoBehaviour
     // Forces a UI update
     public void ForceUI()
     {
-        if (!isMenu) survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
+        // if (!isMenu) survival.UI.updateDronesUI(availableConstructionDrones.Count, availableConstructionDrones.Count + constructionDrones.Count);
     }
 
     public void ApplyResources(int gold, int power, int heat)
     {
-        //survival.RemoveGold(gold);
-        // survival.increasePowerConsumption(power);
-        survival.Spawner.increaseHeat(heat);
+        Resource.Remove(Resource.Currency.Gold, gold);
+        Resource.Remove(Resource.Currency.Power, power);
+        Resource.Remove(Resource.Currency.Heat, heat);
     }
 
     public void RevertResources(int gold, int power, int heat)
     {
-        //survival.AddGold(gold, true);
-        // survival.decreasePowerConsumption(power);
-        survival.Spawner.decreaseHeat(heat);
+        Resource.Add(Resource.Currency.Gold, gold);
+        Resource.Add(Resource.Currency.Power, power);
+        Resource.Add(Resource.Currency.Heat, heat);
     }
 }

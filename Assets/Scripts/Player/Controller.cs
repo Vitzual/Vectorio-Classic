@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    [HideInInspector]
     public bool SettingHotbar = false;
-
 
     // Checks if for numeric input
     public void CheckNumberInput()

@@ -69,8 +69,9 @@ public class Events : MonoBehaviour
             onHotbarSet(tile, slot);
     }
 
+    // Invoked when input from the keyboard is detected
     public event Action<int, bool> onNumberInput;
-    public void NumberInput(int number, bool hotbar)
+    public void NumberInput(int number, bool hotbar = false)
     {
         if (onNumberInput != null)
             onNumberInput(number, hotbar);

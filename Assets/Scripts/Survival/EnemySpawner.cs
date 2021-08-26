@@ -5,7 +5,6 @@ using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
     // Spawner elements
-    public Survival survival;
     public Technology technology;
     public ProgressBar heatUI;
     public TextMeshProUGUI heatAmount;
@@ -185,7 +184,7 @@ public class EnemySpawner : MonoBehaviour
                 if (htrack >= attacks[a].minHeat && htrack <= attacks[a].maxHeat)
                 {
                     Instantiate(attacks[a].groupObject, spawnPos, Quaternion.Euler(new Vector3(0, 0, rotation)));
-                    survival.UI.DisplayGroupComing(spawnInfo);
+                    // survival.UI.DisplayGroupComing(spawnInfo);
                     return;
                 }
             }
@@ -414,13 +413,13 @@ public class EnemySpawner : MonoBehaviour
     public void displayBossDestroyed(int a)
     {
         bosses[a].BossDefeatedScreen.OpenWindow();
-        survival.UI.BossInfoOpen = true;
+        // survival.UI.BossInfoOpen = true;
         Time.timeScale = 0f;
     }
 
     public void closeBossInfo()
     {
-        survival.UI.BossInfoOpen = false;
+        // survival.UI.BossInfoOpen = false;
         bossInfo.CloseWindow();
         bossDestroyed.CloseWindow();
         Time.timeScale = 1f;

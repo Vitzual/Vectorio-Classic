@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class EnemyLocater : MonoBehaviour
 {
-    public Survival srv;
     public bool isMenu = false;
 
     public void Start()

@@ -7,7 +7,6 @@ using System.Collections;
 public class Interface : MonoBehaviour
 {
     // Survival script
-    public Survival main;
     public DroneManager drone;
 
     // Interace Elements
@@ -312,9 +311,10 @@ public class Interface : MonoBehaviour
         if (obj == null) return;
 
         // Get unlockable
-        Technology.Unlockable unlockable = main.tech.GetUnlockableWithBuilding(obj);
+        // Technology.Unlockable unlockable = main.tech.GetUnlockableWithBuilding(obj);
         string type;
 
+        /*
         if (unlockable == null)
         {
             if (obj.name == "Turret" || obj.name == "Wall") type = "Defenses";
@@ -322,12 +322,13 @@ public class Interface : MonoBehaviour
             else return;
         }
         else type = unlockable.InvType;
+        */
 
         // Get some good shit
         BaseBuilding tileInfo = obj.GetComponent<BaseBuilding>();
 
         // Iterate through
-        switch (type)
+        switch ("Defenses") // REFACTOR
         {
             case "Defenses":
                 DefaultTurret turret = obj.GetComponent<DefaultTurret>();
@@ -403,8 +404,8 @@ public class Interface : MonoBehaviour
 
     public void ShowSelectedInfo(Transform a)
     {
-        if(!main.BuildingStats.activeSelf)
-            main.BuildingStats.SetActive(true);
+        // if(!main.BuildingStats.activeSelf)
+        //     main.BuildingStats.SetActive(true);
 
         string goldUI = a.GetComponent<BaseBuilding>().GetCost().ToString();
         string powerUI = a.GetComponent<BaseBuilding>().GetPower().ToString();
@@ -423,6 +424,7 @@ public class Interface : MonoBehaviour
         HotbarUI[index].GetComponent<Button>().interactable = false;
     }
 
+    /*
     // why, why is u not wokr
     public void UpdateHotbar()
     {
@@ -441,6 +443,7 @@ public class Interface : MonoBehaviour
             hotbarButtons[i].UpdateUI();
         }
     }
+    */
 
     // Disables active information
     public void DisableActiveInfo()

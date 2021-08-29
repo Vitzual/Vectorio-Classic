@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class NewInterface : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject buildingMenu;
+
+    public void Start()
     {
-        
+        UIEvents.active.onBuildingMenuPressed += ToggleBuildingMenu;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToggleBuildingMenu()
     {
-        
+        buildingMenu.SetActive(!buildingMenu.activeInHierarchy);
     }
 }

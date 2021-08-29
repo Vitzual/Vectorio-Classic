@@ -14,10 +14,10 @@ public class UIEvents : MonoBehaviour
     }
 
     // Invoked when a bullet is fired
-    public event Action onMenuOpened;
+    public event Action onBuildingMenuPressed;
     public void MenuOpened()
     {
-        if (onMenuOpened != null)
-            onMenuOpened();
+        if (onBuildingMenuPressed != null)
+            onBuildingMenuPressed();
     }
 }

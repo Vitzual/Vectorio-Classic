@@ -8,7 +8,7 @@ public class Events : MonoBehaviour
     public static Events active;
 
     // Start is called before the first frame update
-    private void Awake()
+    public void Awake()
     {
         active = this;
     }

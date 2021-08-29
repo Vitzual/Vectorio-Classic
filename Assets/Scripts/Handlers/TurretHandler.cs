@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretHandler : MonoBehaviour, IRecoilAnim
+public class TurretHandler : MonoBehaviour
 {
     // IRecoilAnim interface variables
     public bool animationEnabled { get; set; }

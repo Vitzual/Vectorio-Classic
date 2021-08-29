@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Tile", menuName = "Buildings/Building")]
 public class Building : Tile
 {
     // Building base variables

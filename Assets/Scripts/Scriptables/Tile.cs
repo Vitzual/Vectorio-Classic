@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class Tile : ScriptableObject
 {
     public new string name;
-    public string description;
+    [TextArea] public string description;
     public GameObject obj;
     public Sprite icon;
 

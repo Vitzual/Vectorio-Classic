@@ -9,6 +9,8 @@ public class Interface : MonoBehaviour
     // Survival script
     public DroneManager drone;
 
+    public static bool researchOpen = false;
+
     // Interace Elements
     public Canvas IngameCanvas;
     public GameObject ResourcePopup;

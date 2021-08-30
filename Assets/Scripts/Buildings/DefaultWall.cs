@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WallAI : BaseBuilding
+public class DefaultWall : BaseBuilding
 {
 
     // Tile layer
@@ -23,28 +23,28 @@ public class WallAI : BaseBuilding
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(3, 1, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(3, 1, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the left
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(1, 3, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(1, 3, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the top
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y +5f), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(4, 2, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(4, 2, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the bottom
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(2, 4, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(2, 4, rayHit.collider.GetComponent<DefaultWall>());
     }
 
-    public void SetWallStatus(int thisWallID, int otherWallID, WallAI otherWallScript)
+    public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)
     {
         if (thisWallID != 0) UpdateSprite(thisWallID);
         otherWallScript.UpdateSprite(otherWallID);

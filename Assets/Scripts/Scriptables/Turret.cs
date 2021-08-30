@@ -4,7 +4,7 @@ using UnityEngine;
 public class Turret : Building
 {
     // IAudible interface variables
-    public AudioClip sound { get; set; }
+    public AudioClip sound;
 
     // Base turret stat variables
     public int damage = 0;
@@ -15,5 +15,4 @@ public class Turret : Building
     public int bulletAmount = 0;
     public float bulletSpeed = 0;
     public float bulletSpread = 0;
-    public GameObject Bullet;
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ResearchLab : BaseBuilding
+public class Lab : BaseBuilding
 {
     private void Start()
     {

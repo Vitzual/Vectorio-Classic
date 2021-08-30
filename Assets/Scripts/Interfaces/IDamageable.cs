@@ -5,7 +5,6 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    ParticleSystem deathParticle { get; set; }
     int health { get; set; }
     int maxHealth { get; set; }
     void DamageEntity(int dmg);

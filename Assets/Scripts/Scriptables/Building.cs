@@ -11,5 +11,6 @@ public class Building : Tile
     public int cost;
     public int power;
     public int heat;
-    public Material color;
+    public Material material;
+    public ParticleSystem particle;
 }

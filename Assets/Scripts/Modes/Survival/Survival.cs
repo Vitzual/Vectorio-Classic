@@ -8,7 +8,7 @@ public class Survival : Gamemode
 {
     // Attempts to get the BaseBuilding script from the building
     [Command]
-    public override void CmdPlaceBuilding()
+    public override void PlaceBuilding()
     {
         // Checks resources
     }

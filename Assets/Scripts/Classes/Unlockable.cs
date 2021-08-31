@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unlockable : Buildable
+public class Unlockable
 {
-    // Stuff here
+
 }

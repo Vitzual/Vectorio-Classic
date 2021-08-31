@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Creative : Gamemode
 {
-    public override void CmdPlaceBuilding()
+    public override void PlaceBuilding()
     {
         BuildingSystem.CmdCreateBuilding();
+    }
+
+    public override void LoadScriptables(List<Tile> tiles)
+    {
+        // Load the scriptables
     }
 }

@@ -101,7 +101,6 @@ public class BuildingSystem : NetworkBehaviour
     }
 
     // Creates a building
-    [Command]
     public static void CmdCreateBuilding()
     {
         // Check if active is null
@@ -114,7 +113,6 @@ public class BuildingSystem : NetworkBehaviour
         RpcInstantiateObject(selectedTile.obj, position, active.transform.rotation);
     }
 
-    [ClientRpc]
     private static void RpcInstantiateObject(GameObject obj, Vector2 position, Quaternion rotation)
     {
         // Create the tile

@@ -23,7 +23,7 @@ public class BuildingSystem : NetworkBehaviour
     private static float alphaHolder;
 
     // Start method grabs tilemap
-    public void Start()
+    public void Awake()
     {
         // Grabs active component if it exists
         if (this != null) active = this;

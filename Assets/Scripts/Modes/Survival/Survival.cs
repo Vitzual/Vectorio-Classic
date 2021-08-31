@@ -7,14 +7,12 @@ using Mirror;
 public class Survival : Gamemode
 {
     // Attempts to get the BaseBuilding script from the building
-    [Command]
     public override void PlaceBuilding()
     {
         // Checks resources
     }
 
     // Updates the resources for all clients
-    [ClientRpc]
     public void RpcPlaceBuilding(int gold, int power, int heat)
     {
         BuildingSystem.CmdCreateBuilding();

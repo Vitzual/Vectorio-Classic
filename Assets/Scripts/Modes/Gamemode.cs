@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 
-public class Gamemode : NetworkBehaviour
+public class Gamemode : MonoBehaviour
 {
     // Gamemode information
     public new string name;
@@ -16,15 +16,8 @@ public class Gamemode : NetworkBehaviour
 
         try
         {
-            List<Tile> tiles = new List<Tile>();
-            var loadedObjects = Resources.LoadAll("GameObjects", typeof(GameObject)).Cast<GameObject>();
-
-            foreach(GameObject obj in loadedObjects)
-            {
-                Tile tile = obj.GetComponent<Tile>();
-                if (tile != null) tiles.Add(tile);
-            }
-
+            List<Tile> tiles = Resources.LoadAll("Scriptables", typeof(Tile)).Cast<Tile>().ToList();
+            Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
             LoadScriptables(tiles);
         }
         catch

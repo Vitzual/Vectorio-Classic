@@ -126,9 +126,6 @@ public class BuildingSystem : NetworkBehaviour
         // Create the tile
         lastObj = Instantiate(obj, position, rotation);
         lastObj.name = obj.name;
-
-        // Broadcast placement event
-        Events.active.BuildingPlaced(lastObj.transform);
     }
 
     // Checks to make sure tile(s) isn't occupied

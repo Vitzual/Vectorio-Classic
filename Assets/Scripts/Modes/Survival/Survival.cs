@@ -4,29 +4,24 @@ using UnityEngine;
 using Mirror;
 
 // This is a WIP rewrite script of Survival.cs
-public class NewSurvival : NetworkBehaviour
+public class Survival : Gamemode
 {
-    // Register for events
-    public void Start()
-    {
-        Events.active.onBuildingPlaced += CmdBuildingPlaced;
-    }
-
     // Attempts to get the BaseBuilding script from the building
     [Command]
-    public void CmdBuildingPlaced(Transform building)
+    public override void CmdPlaceBuilding(Transform building)
     {
         BaseBuilding script = building.GetComponent<BaseBuilding>();
 
         // Update resources for all clients
-        if (script != null) RpcBuildingPlaced(script.building.cost, script.building.power, script.building.heat);
+        if (script != null) RpcPlaceBuilding(script.building.cost, script.building.power, script.building.heat);
         else Debug.LogError("Could not retrieve script from " + transform.name);
     }
 
     // Updates the resources for all clients
     [ClientRpc]
-    public void RpcBuildingPlaced(int gold, int power, int heat)
+    public void RpcPlaceBuilding(int gold, int power, int heat)
     {
+        BuildingSystem.CmdCreateBuilding();
         Resource.Remove(Resource.Currency.Gold, gold);
         Resource.Remove(Resource.Currency.Power, power);
         Resource.Remove(Resource.Currency.Heat, heat);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class DifficultyData
+public class Difficulty
 {
     public int startingGold;
     public int startingPower;
@@ -16,7 +16,7 @@ public class DifficultyData
     public float enemyDMG;
     public float additionalCost;
 
-    public DifficultyData(int startingGold, int startingPower, int enemyBases, int[] goldSpawn, int[] essenceSpawn, int[] iridiumSpawn, float defenseHP, float enemyHP, float enemyDMG, float additionalCost) 
+    public Difficulty(int startingGold, int startingPower, int enemyBases, int[] goldSpawn, int[] essenceSpawn, int[] iridiumSpawn, float defenseHP, float enemyHP, float enemyDMG, float additionalCost) 
     {
         this.startingGold = startingGold;
         this.startingPower = startingPower;

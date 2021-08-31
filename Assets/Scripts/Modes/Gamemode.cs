@@ -16,7 +16,7 @@ public class Gamemode : NetworkBehaviour
     }
 
     // Attempts to get the BaseBuilding script from the building
-    public virtual void CmdPlaceBuilding(Transform building)
+    public virtual void CmdPlaceBuilding()
     {
         Debug.Log("Mode does not contain definition for building placed");
     }

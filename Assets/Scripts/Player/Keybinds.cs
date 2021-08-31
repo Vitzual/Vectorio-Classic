@@ -7,7 +7,7 @@ public class Keybinds
     public static KeyCode move_left = KeyCode.A;
     public static KeyCode move_right = KeyCode.D;
     public static KeyCode sprint = KeyCode.LeftShift;
-    public static KeyCode shoot = KeyCode.Mouse0;
+    public static KeyCode select = KeyCode.Mouse0;
     public static KeyCode deselect = KeyCode.Mouse1;
     public static KeyCode escape = KeyCode.Escape;
     public static KeyCode inventory = KeyCode.E;

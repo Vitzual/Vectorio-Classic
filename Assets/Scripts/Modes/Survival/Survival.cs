@@ -8,13 +8,9 @@ public class Survival : Gamemode
 {
     // Attempts to get the BaseBuilding script from the building
     [Command]
-    public override void CmdPlaceBuilding(Transform building)
+    public override void CmdPlaceBuilding()
     {
-        BaseBuilding script = building.GetComponent<BaseBuilding>();
-
-        // Update resources for all clients
-        if (script != null) RpcPlaceBuilding(script.building.cost, script.building.power, script.building.heat);
-        else Debug.LogError("Could not retrieve script from " + transform.name);
+        // Checks resources
     }
 
     // Updates the resources for all clients

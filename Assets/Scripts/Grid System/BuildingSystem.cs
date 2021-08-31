@@ -101,16 +101,25 @@ public class BuildingSystem : NetworkBehaviour
     }
 
     // Creates a building
+    [Command]
     public static void CmdCreateBuilding()
     {
         // Check if active is null
-        if (active == null || selectedTile == null) return;
+        if (active == null || selectedTile == null || selectedTile.obj == null) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        InstantiateObj(selectedTile.obj, position, active.transform.rotation);
+        RpcInstantiateObject(selectedTile.obj, position, active.transform.rotation);
+    }
+
+    [ClientRpc]
+    private static void RpcInstantiateObject(GameObject obj, Vector2 position, Quaternion rotation)
+    {
+        // Create the tile
+        lastObj = Instantiate(obj, position, rotation);
+        lastObj.name = obj.name;
 
         // Set the tiles on the grid class
         if (selectedTile.cells.Length > 0)
@@ -119,13 +128,6 @@ public class BuildingSystem : NetworkBehaviour
                 tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, selectedTile, lastObj);
         }
         else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, selectedTile, lastObj);
-    }
-
-    private static void InstantiateObj(GameObject obj, Vector2 position, Quaternion rotation)
-    {
-        // Create the tile
-        lastObj = Instantiate(obj, position, rotation);
-        lastObj.name = obj.name;
     }
 
     // Checks to make sure tile(s) isn't occupied

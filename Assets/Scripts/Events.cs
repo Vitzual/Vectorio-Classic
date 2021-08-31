@@ -46,11 +46,11 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building is placed
-    public event Action<Transform> onBuildingPlaced;
-    public void BuildingPlaced(Transform building)
+    public event Action onBuildingPlaced;
+    public void PlaceBuilding()
     {
         if (onBuildingPlaced != null)
-            onBuildingPlaced(building);
+            onBuildingPlaced();
     }
 
     // Invoked when a survival save is loaded

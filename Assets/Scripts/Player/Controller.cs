@@ -11,6 +11,8 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
+        if (Input.GetKeyDown(Keybinds.select))
+            Events.active.PlaceBuilding();
     }
 
     // Checks if for numeric input

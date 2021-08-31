@@ -12,24 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
   m_Name: Turret
   m_EditorClassIdentifier: 
-  name: 
-  description: 
-  obj: {fileID: 0}
-  icon: {fileID: 0}
+  name: Turret
+  description: A basic starter turret. Shoots and fires at nearby enemies. Not much
+    else to say.
+  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
+  icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 0
-  maxHealth: 0
-  cost: 0
-  power: 0
-  heat: 0
-  deathParticle: {fileID: 0}
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  fireRate: 0
-  bulletPierces: 0
-  bulletAmount: 0
-  bulletSpeed: 0
-  bulletSpread: 0
-  Bullet: {fileID: 0}
+  health: 10
+  maxHealth: 10
+  cost: 150
+  power: 5
+  heat: 8
+  material: {fileID: 0}
+  particle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
+    type: 3}
+  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
+  damage: 1
+  range: 10
+  rotationSpeed: 150
+  fireRate: 0.5
+  bulletPierces: 1
+  bulletAmount: 1
+  bulletSpeed: 50
+  bulletSpread: 2

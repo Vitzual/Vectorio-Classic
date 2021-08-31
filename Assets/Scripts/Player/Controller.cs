@@ -7,6 +7,12 @@ public class Controller : MonoBehaviour
     [HideInInspector]
     public bool SettingHotbar = false;
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(Keybinds.inventory))
+            UIEvents.active.MenuOpened();
+    }
+
     // Checks if for numeric input
     public void CheckNumberInput()
     {

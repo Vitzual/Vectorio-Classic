@@ -10,7 +10,7 @@ public class Keybinds
     public static KeyCode shoot = KeyCode.Mouse0;
     public static KeyCode deselect = KeyCode.Mouse1;
     public static KeyCode escape = KeyCode.Escape;
-    public static KeyCode equip = KeyCode.E;
+    public static KeyCode inventory = KeyCode.E;
     public static KeyCode rotate = KeyCode.R;
     public static KeyCode map = KeyCode.M;
     public static KeyCode hotbar_1 = KeyCode.Alpha1;

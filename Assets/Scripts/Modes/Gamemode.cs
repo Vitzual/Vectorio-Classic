@@ -16,7 +16,7 @@ public class Gamemode : MonoBehaviour
 
         try
         {
-            List<Tile> tiles = Resources.LoadAll("Scriptables", typeof(Tile)).Cast<Tile>().ToList();
+            List<Building> tiles = Resources.LoadAll("Scriptables", typeof(Building)).Cast<Building>().ToList();
             Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
             LoadScriptables(tiles);
         }
@@ -36,7 +36,7 @@ public class Gamemode : MonoBehaviour
     //
     // Ex. Survival will load scriptables into a list of type Unlock
     // whereas Creative will load scriptables into an array of type Building
-    public virtual void LoadScriptables(List<Tile> tiles)
+    public virtual void LoadScriptables(List<Building> tiles)
     {
         Debug.Log("Mode does not contain definition for load scriptables");
     }

@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    // Resource UI variables
-    public TextMeshProUGUI gold;
-    public TextMeshProUGUI essence;
-    public TextMeshProUGUI iridium;
+    public GameObject buildingStat;
+
+    public void CreateStat(Stat stat)
+    {
+
+    }
 
 
 }

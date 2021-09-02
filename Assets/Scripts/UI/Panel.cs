@@ -13,31 +13,41 @@ public class Panel : MonoBehaviour
     public Transform resourceStats;
     public Transform buildingStats;
 
-    public void SetBuildingStats(Building building)
+    public void Start()
     {
-        //foreach (Building.Resources resource in building.resources)
-            //CreateStat();
+        
     }
 
-    public void SetTurretStats(Turret turret)
+    public void SetResourceStats(Building building)
     {
-
+        // Create resources
+        foreach (Building.Resources resource in building.resources)
+            CreateStat(new Stat(resource.ToString(), resource.amount, 0, resource.icon, true));
     }
 
     // Creates a menu stat
-    public void CreateStat(string name, int value, Sprite icon, bool isResource)
+    public void CreateStat(Stat stat)
     {
         // Create object
         GameObject obj = Instantiate(menuStat.obj, new Vector3(0, 0, 0), Quaternion.identity);
         menuObjects.Add(obj.transform);
 
+        // Create modifier variable
+        string modifier = "";
+
+        // Set modifier string if not 0
+        if (stat.modifier > 0)
+            modifier = "<color=green>(+" + stat.modifier + ")";
+        else if (stat.modifier < 0)
+            modifier = "<color=red>(+" + stat.modifier + ")";
+
         // Set the values
         MenuStat holder = obj.GetComponent<MenuStat>();
-        holder.text.text = "<b>" + name + ":</b> " + value;
-        holder.icon = icon;
+        holder.text.text = "<b>" + name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
+        holder.icon.sprite = stat.icon;
 
         // Set parent transform
-        if (isResource)
+        if (stat.isResource)
             obj.transform.parent = resourceStats;
         else
             obj.transform.parent = buildingStats;

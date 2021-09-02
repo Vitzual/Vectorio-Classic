@@ -10,6 +10,7 @@ public class Building : Tile
     public class Resources
     {
         public Resource.Currency resource;
+        public Sprite icon;
         public int amount;
     }
 

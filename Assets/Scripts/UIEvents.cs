@@ -20,4 +20,15 @@ public class UIEvents : MonoBehaviour
         if (onBuildingMenuPressed != null)
             onBuildingMenuPressed();
     }
+
+    // Invoked when a building is clicked
+    public event Action<Building> onBuildingPressed;
+    public void BuildingPressed(Building building)
+    {
+        if (onBuildingPressed != null)
+            onBuildingPressed(building);
+    }
+
+    // Invoked when a building creates a custom stat
+    public event Action<>
 }

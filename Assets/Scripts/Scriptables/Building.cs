@@ -5,12 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tile", menuName = "Buildings/Building")]
 public class Building : Tile
 {
+    // Resource class
+    [System.Serializable]
+    public class Resources
+    {
+        public Resource.Currency resource;
+        public int amount;
+    }
+
     // Building base variables
     public int health;
     public int maxHealth;
-    public int cost;
-    public int power;
-    public int heat;
+    
+    // Resources
+    public Resources[] resources;
+
+    // Materials
     public Material material;
     public ParticleSystem particle;
 }

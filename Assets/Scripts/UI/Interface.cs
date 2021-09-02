@@ -337,9 +337,9 @@ public class Interface : MonoBehaviour
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.GetDescription();
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
-                InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();
-                InfoPanels[0].power.text = tileInfo.GetPower().ToString();
+                //InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
+                //InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();
+                //InfoPanels[0].power.text = tileInfo.GetPower().ToString();
                 InfoPanels[0].health.text = tileInfo.health + "hp";
                 if (obj.name != "Wall")
                 {
@@ -358,36 +358,6 @@ public class Interface : MonoBehaviour
                     InfoPanels[0].rotation.text = "-";
                 }
                 return;
-            case "Logistics":
-                InfoPanels[1].title.text = obj.name.ToUpper();
-                InfoPanels[1].description.text = tileInfo.GetDescription();
-                InfoPanels[1].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[1].cost.text = tileInfo.GetCost().ToString();
-                InfoPanels[1].heat.text = tileInfo.GetHeat().ToString();
-                InfoPanels[1].power.text = tileInfo.GetPower().ToString();
-                InfoPanels[1].health.text = tileInfo.health + "hp";
-                return;
-            case "Power":
-                InfoPanels[2].title.text = obj.name.ToUpper();
-                InfoPanels[2].description.text = tileInfo.GetDescription();
-                InfoPanels[2].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[2].cost.text = tileInfo.GetCost().ToString();
-                InfoPanels[2].heat.text = tileInfo.GetHeat().ToString();
-                InfoPanels[2].power.text = tileInfo.GetPower().ToString();
-                InfoPanels[2].health.text = tileInfo.health + "hp";
-                return;
-            case "Heat":
-                InfoPanels[3].title.text = obj.name.ToUpper();
-                InfoPanels[3].description.text = tileInfo.GetDescription();
-                InfoPanels[3].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
-                InfoPanels[3].cost.text = tileInfo.GetCost().ToString();
-                InfoPanels[3].heat.text = tileInfo.GetHeat().ToString();
-                InfoPanels[3].power.text = tileInfo.GetPower().ToString();
-                InfoPanels[3].health.text = tileInfo.health + "hp";
-                return;
-            default:
-                Debug.Log("Could not find a valid info panel");
-                return;
         }
     }
 
@@ -399,26 +369,9 @@ public class Interface : MonoBehaviour
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.health / c.maxHealth;
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);
-        b.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = (c.GetCost() - c.GetCost()/5).ToString();
-        b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.GetPower().ToString();
-        b.transform.Find("Heat Amount").GetComponent<TextMeshProUGUI>().text = c.GetHeat().ToString();
-    }
-
-    public void ShowSelectedInfo(Transform a)
-    {
-        // if(!main.BuildingStats.activeSelf)
-        //     main.BuildingStats.SetActive(true);
-
-        string goldUI = a.GetComponent<BaseBuilding>().GetCost().ToString();
-        string powerUI = a.GetComponent<BaseBuilding>().GetPower().ToString();
-        string heatUI = a.GetComponent<BaseBuilding>().GetHeat().ToString();
-
-        gold.GetChild(0).GetComponent<TextMeshProUGUI>().text = goldUI;
-        gold.GetChild(1).GetComponent<TextMeshProUGUI>().text = goldUI;
-        power.GetChild(0).GetComponent<TextMeshProUGUI>().text = powerUI;
-        power.GetChild(1).GetComponent<TextMeshProUGUI>().text = powerUI;
-        heat.GetChild(0).GetComponent<TextMeshProUGUI>().text = heatUI;
-        heat.GetChild(1).GetComponent<TextMeshProUGUI>().text = heatUI;
+        //b.transform.Find("Gold Amount").GetComponent<TextMeshProUGUI>().text = (c.GetCost() - c.GetCost()/5).ToString();
+        //b.transform.Find("Power Amount").GetComponent<TextMeshProUGUI>().text = c.GetPower().ToString();
+        //b.transform.Find("Heat Amount").GetComponent<TextMeshProUGUI>().text = c.GetHeat().ToString();
     }
 
     public void SetSelectedHotbar(int index)

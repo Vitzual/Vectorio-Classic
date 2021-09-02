@@ -11,11 +11,6 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
     public int health { get; set; }
     public int maxHealth { get; set; }
 
-    // Building default stat variables
-    protected int cost;
-    protected int power;
-    protected int heat;
-
     // Sets the buildings stats
     public void SetBuildingStats()
     {
@@ -27,9 +22,6 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
         {
             health = building.health;
             maxHealth = building.health;
-            cost = building.cost;
-            power = building.power;
-            heat = building.heat;
         }
     }
 
@@ -66,8 +58,5 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
 
     public int GetHealth() { return building.health; }
     public int GetMaxHealth() { return building.maxHealth; }
-    public int GetCost() { return building.cost; }
-    public int GetPower() { return building.power; }
-    public int GetHeat() { return building.heat; }
     public string GetDescription() { return building.description; }
 }

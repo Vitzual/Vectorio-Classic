@@ -15,10 +15,10 @@ public class Building : Tile
     }
 
     // Building base variables
-    public Stat health;
-    [HideInInspector] 
-    public int maxHealth;
-    
+    public int health;
+    [HideInInspector] public int maxHealth;
+    [HideInInspector] public int healthModifier;
+
     // Resources
     public Resources[] resources;
 
@@ -33,5 +33,7 @@ public class Building : Tile
             string name = nameof(resource.resource);
             UIEvents.active.CreateStat(new Stat(name, resource.amount, resource.modifier, Sprites.active.GetByName(name), true));
         }
+
+        UIEvents.active.CreateStat(new Stat("Health", health, healthModifier, Sprites.active.health));
     }
 }

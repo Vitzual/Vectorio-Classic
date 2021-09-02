@@ -20,7 +20,7 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
         }
         else
         {
-            health = building.health.value;
+            health = building.health;
             maxHealth = health;
         }
     }
@@ -56,6 +56,6 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
         if (health > maxHealth) health = maxHealth;
     }
 
-    public float GetHealth() { return building.health.value; }
+    public float GetHealth() { return building.health; }
     public string GetDescription() { return building.description; }
 }

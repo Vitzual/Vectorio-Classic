@@ -153,7 +153,7 @@ public class DefaultTurret : BaseTurret
 
         float speed = Random.Range(bulletSpeed - 10, bulletSpeed + 10) * Research.research_bulletspeed;
         int pierces = bulletPierces + Research.research_pierce;
-        int damage = this.damage + Research.research_damage;
+        float damage = this.damage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
         Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, damage));

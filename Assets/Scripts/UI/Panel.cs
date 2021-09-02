@@ -18,13 +18,6 @@ public class Panel : MonoBehaviour
         
     }
 
-    public void SetResourceStats(Building building)
-    {
-        // Create resources
-        foreach (Building.Resources resource in building.resources)
-            CreateStat(new Stat(resource.ToString(), resource.amount, 0, resource.icon, true));
-    }
-
     // Creates a menu stat
     public void CreateStat(Stat stat)
     {

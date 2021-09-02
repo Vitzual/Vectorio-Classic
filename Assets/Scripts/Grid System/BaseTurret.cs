@@ -11,14 +11,14 @@ public class BaseTurret : BaseBuilding, IAudible
     public AudioClip sound { get; set; }
 
     // Base turret stat variables
-    protected int damage = 0;
-    protected int range = 0;
-    protected float rotationSpeed = 0;
-    protected float fireRate = 0;
-    protected int bulletPierces = 0;
-    protected int bulletAmount = 0;
-    protected float bulletSpeed = 0;
-    protected float bulletSpread = 0;
+    public float damage = 0;
+    public float range = 0;
+    public float rotationSpeed = 0;
+    public float fireRate = 0;
+    public int bulletPierces = 0;
+    public int bulletAmount = 0;
+    public float bulletSpeed = 0;
+    public float bulletSpread = 0;
 
     // Base turret object variables
     protected Transform[] firePoints;
@@ -53,8 +53,8 @@ public class BaseTurret : BaseBuilding, IAudible
             range = turret.range;
             rotationSpeed = turret.rotationSpeed;
             fireRate = turret.fireRate;
-            bulletPierces = turret.bulletPierces;
-            bulletAmount = turret.bulletAmount;
+            bulletPierces = (int)turret.bulletPierces;
+            bulletAmount = (int)turret.bulletAmount;
             bulletSpeed = turret.bulletSpeed;
             bulletSpread = turret.bulletSpread;
         }
@@ -65,12 +65,12 @@ public class BaseTurret : BaseBuilding, IAudible
     // Get methods
     public Transform GetTarget() { return target; }
     public void AddTarget(Transform newTarget) { targets.Add(newTarget); }
-    public int GetDamage() { return damage; }
-    public int GetRange() { return range; }
-    public float GetRotationSpeed() { return rotationSpeed; }
-    public float GetFireRate() { return fireRate; }
-    public int GetBulletPierces() { return bulletPierces; }
-    public int GetBulletAmount() { return bulletAmount; }
-    public float GetBulletSpeed() { return bulletSpeed; }
-    public float GetBulletSpread() { return bulletSpread; }
+    public float GetDamage() { return turret.damage; }
+    public float GetRange() { return turret.range; }
+    public float GetRotationSpeed() { return turret.rotationSpeed; }
+    public float GetFireRate() { return turret.fireRate; }
+    public int GetBulletPierces() { return (int)turret.bulletPierces; }
+    public int GetBulletAmount() { return (int)turret.bulletAmount; }
+    public float GetBulletSpeed() { return turret.bulletSpeed; }
+    public float GetBulletSpread() { return turret.bulletSpread; }
 }

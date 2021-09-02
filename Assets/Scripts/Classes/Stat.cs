@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Stat
 {
-    public Stat(string name, int value, int modifier, Sprite icon, bool isResource = false)
+    public Stat(string name, float value, float modifier, Sprite icon, bool isResource = false)
     {
         this.name = name;
         this.value = value;
@@ -14,8 +15,8 @@ public class Stat
     }
 
     public string name;
-    public int value;
-    public int modifier;
+    public float value;
     public Sprite icon;
+    public float modifier;
     public bool isResource;
 }

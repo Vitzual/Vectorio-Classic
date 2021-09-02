@@ -8,8 +8,8 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
     public Building building;
 
     // IDamageable interface variables
-    public int health { get; set; }
-    public int maxHealth { get; set; }
+    public float health { get; set; }
+    public float maxHealth { get; set; }
 
     // Sets the buildings stats
     public void SetBuildingStats()
@@ -20,8 +20,8 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
         }
         else
         {
-            health = building.health;
-            maxHealth = building.health;
+            health = building.health.value;
+            maxHealth = health;
         }
     }
 
@@ -56,7 +56,6 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
         if (health > maxHealth) health = maxHealth;
     }
 
-    public int GetHealth() { return building.health; }
-    public int GetMaxHealth() { return building.maxHealth; }
+    public float GetHealth() { return building.health.value; }
     public string GetDescription() { return building.description; }
 }

@@ -30,5 +30,10 @@ public class UIEvents : MonoBehaviour
     }
 
     // Invoked when a building creates a custom stat
-    public event Action<>
+    public event Action<Stat> onCreateStat;
+    public  void CreateStat(Stat stat)
+    {
+        if (onCreateStat != null)
+            onCreateStat(stat);
+    }
 }

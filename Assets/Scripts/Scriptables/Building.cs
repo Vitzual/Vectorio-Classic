@@ -10,12 +10,13 @@ public class Building : Tile
     public class Resources
     {
         public Resource.Currency resource;
-        public Sprite icon;
         public int amount;
+        public int modifier;
     }
 
     // Building base variables
-    public int health;
+    public Stat health;
+    [HideInInspector] 
     public int maxHealth;
     
     // Resources
@@ -24,4 +25,13 @@ public class Building : Tile
     // Materials
     public Material material;
     public ParticleSystem particle;
+
+    public virtual void CreateStat()
+    {
+        foreach (Resources resource in resources) 
+        {
+            string name = nameof(resource.resource);
+            UIEvents.active.CreateStat(new Stat(name, resource.amount, resource.modifier, Sprites.active.GetByName(name), true));
+        }
+    }
 }

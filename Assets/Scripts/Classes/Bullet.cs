@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet
 {
-    public Bullet(Transform bullet, Transform target, float speed, int pierces, int damage)
+    public Bullet(Transform bullet, Transform target, float speed, int pierces, float damage)
     {
         this.bullet = bullet;
         this.target = target;
@@ -15,5 +15,5 @@ public class Bullet
     public Transform target;
     public float speed;
     public int pierces;
-    public int damage;
+    public float damage;
 }

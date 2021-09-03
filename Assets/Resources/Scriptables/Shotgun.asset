@@ -12,27 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  name: Shotgun
-  description: Fires multiple projectiles at once. Good at eliminating large groups
+  name: Shotgunner
+  description: Fires multiple projectiles at once. Good for eliminating large groups
     of enemies.
   obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
-  icon: {fileID: 21300000, guid: f5839d70412a71b4fa1d333a60c4800d, type: 3}
+  icon: {fileID: 21300000, guid: 3f3fb79d8a67b2344909ad2b219b244a, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 15
-  maxHealth: 15
+  health: 20
+  maxHealth: 0
+  healthModifier: 0
+  isDefensive: 1
+  unlockDesc: Unlocked by destroying 10 triangles
+  isUnlocked: 0
   resources:
   - resource: 0
-    amount: 5
+    amount: 250
+    modifier: 0
+  - resource: 3
+    amount: 25
+    modifier: 0
+  - resource: 4
+    amount: 15
+    modifier: 0
   material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
-  particle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
-    type: 3}
-  sound: {fileID: 0}
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  fireRate: 0
-  bulletPierces: 0
-  bulletAmount: 0
-  bulletSpeed: 0
-  bulletSpread: 0
+  sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
+  damage: 10
+  range: 5
+  rotationSpeed: 25
+  fireRate: 5
+  bulletPierces: 2
+  bulletAmount: 3
+  bulletSpeed: 5
+  bulletSpread: 6
+  damageModifier: 0
+  rangeModifier: 0
+  rotationSpeedModifier: 0
+  fireRateModifier: 0
+  bulletPiercesModifier: 0
+  bulletAmountModifier: 0
+  bulletSpeedModifier: 0
+  bulletSpreadModifier: 0

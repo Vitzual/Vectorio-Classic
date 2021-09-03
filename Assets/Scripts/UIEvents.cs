@@ -22,11 +22,11 @@ public class UIEvents : MonoBehaviour
     }
 
     // Invoked when a building is clicked
-    public event Action<Building> onBuildingPressed;
-    public void BuildingPressed(Building building)
+    public event Action onBuildingPressed;
+    public void BuildingPressed()
     {
         if (onBuildingPressed != null)
-            onBuildingPressed(building);
+            onBuildingPressed();
     }
 
     // Invoked when a building creates a custom stat

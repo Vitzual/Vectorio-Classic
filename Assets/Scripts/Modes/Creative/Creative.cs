@@ -8,9 +8,4 @@ public class Creative : Gamemode
     {
         BuildingSystem.CmdCreateBuilding();
     }
-
-    public override void LoadScriptables(List<Building> tiles)
-    {
-        // Load the scriptables
-    }
 }

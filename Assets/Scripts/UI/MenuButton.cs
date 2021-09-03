@@ -8,10 +8,12 @@ using TMPro;
 public class MenuButton : MonoBehaviour
 {
     // Building holder
+    [HideInInspector]
     public Building building;
 
     // Button variables
-    public new ButtonManagerBasic button;
+    public GameObject obj;
+    public ButtonManagerBasic button;
     public TextMeshProUGUI desc;
     public Image icon;
 
@@ -21,4 +23,11 @@ public class MenuButton : MonoBehaviour
     public GameObject goldIcon;
     public GameObject heatIcon;
     public GameObject powerIcon;
+
+    // Show stats
+    public void DisplayStats()
+    {
+        UIEvents.active.BuildingPressed();
+        building.CreateStat();
+    }
 }

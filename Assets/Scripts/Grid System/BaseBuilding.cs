@@ -36,16 +36,15 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
     public void DestroyEntity()
     {
         // Create the particle
-        if (building.particle != null)
-        {
-            ParticleSystemRenderer holder = Instantiate(building.particle, transform.position, Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-            if (building.material != null)
-            {
-                holder.material = building.material;
-                holder.trailMaterial = building.material;
-            }
+        ParticleSystemRenderer holder = Instantiate(Resources.Load<ParticleSystem>("Particles/Death"), 
+            transform.position, Quaternion.identity).GetComponent<ParticleSystemRenderer>();
 
+        if (building.material != null)
+        {
+            holder.material = building.material;
+            holder.trailMaterial = building.material;
         }
+
         Destroy(gameObject);
     }
 

@@ -15,7 +15,9 @@ public class Panel : MonoBehaviour
 
     public void Start()
     {
+        UIEvents.active.onBuildingPressed += ResetStats;
         UIEvents.active.onCreateStat += CreateStat;
+        menuObjects = new List<Transform>();
     }
 
     // Creates a menu stat
@@ -24,6 +26,16 @@ public class Panel : MonoBehaviour
         // Create object
         GameObject obj = Instantiate(menuStat.obj, new Vector3(0, 0, 0), Quaternion.identity);
         menuObjects.Add(obj.transform);
+
+        // Set parent transform
+        if (stat.isResource)
+            obj.transform.SetParent(resourceStats);
+        else
+            obj.transform.SetParent(buildingStats);
+
+        // Adjust size
+        RectTransform temp = obj.GetComponent<RectTransform>();
+        if (temp != null) temp.localScale = new Vector3(1, 1, 1);
 
         // Create modifier variable
         string modifier = "";
@@ -36,14 +48,8 @@ public class Panel : MonoBehaviour
 
         // Set the values
         MenuStat holder = obj.GetComponent<MenuStat>();
-        holder.text.text = "<b>" + name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
+        holder.text.text = "<b>" + stat.name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
         holder.icon.sprite = stat.icon;
-
-        // Set parent transform
-        if (stat.isResource)
-            obj.transform.parent = resourceStats;
-        else
-            obj.transform.parent = buildingStats;
     }
 
     // Resets all the menu stats

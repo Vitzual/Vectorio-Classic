@@ -18,28 +18,32 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 0
+  health: 25
   maxHealth: 10
   healthModifier: 0
+  isDefensive: 1
+  unlockDesc: Unlocked by default
+  isUnlocked: 1
   resources:
   - resource: 0
-    amount: 0
+    amount: 150
     modifier: 0
   - resource: 3
     amount: 15
     modifier: 0
+  - resource: 4
+    amount: 10
+    modifier: 0
   material: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
-  particle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
-    type: 3}
   sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  fireRate: 0
-  bulletPierces: 0
-  bulletAmount: 0
-  bulletSpeed: 0
-  bulletSpread: 0
+  damage: 1
+  range: 5
+  rotationSpeed: 10
+  fireRate: 5
+  bulletPierces: 2
+  bulletAmount: 3
+  bulletSpeed: 1
+  bulletSpread: 4
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

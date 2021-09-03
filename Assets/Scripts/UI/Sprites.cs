@@ -27,22 +27,21 @@ public class Sprites : MonoBehaviour
         active = this;
     }
 
-    public Sprite GetByName(string name)
+    public Sprite GetByEnum(Resource.Currency resource)
     {
-        switch (name.ToLower())
+        switch (resource)
         {
-            case "gold":
+            case Resource.Currency.Gold:
                 return gold;
-            case "essence":
+            case Resource.Currency.Essence:
                 return essence;
-            case "iridium":
+            case Resource.Currency.Iridium:
                 return iridium;
-            case "power":
+            case Resource.Currency.Power:
                 return power;
-            case "heat":
+            case Resource.Currency.Heat:
                 return heat;
             default:
-                Debug.LogError("Could not retrieve sprite with name " + name);
                 return blank;
         }
     }

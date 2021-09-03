@@ -915,7 +915,7 @@ RectTransform:
   m_GameObject: {fileID: 737301983481892412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 737301981940924772}
   - {fileID: 737301982308225893}
@@ -958,7 +958,19 @@ MonoBehaviour:
   buttonText: <b>SHOTGUNNER</b> <size=20>LEVEL 1
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5022990784066692206}
+        m_TargetAssemblyTypeName: MenuButton, Assembly-CSharp
+        m_MethodName: DisplayStats
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -992,6 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 0}
+  obj: {fileID: 737301983481892412}
   button: {fileID: 737301983481892359}
   desc: {fileID: 737301982847385146}
   icon: {fileID: 737301982789029903}

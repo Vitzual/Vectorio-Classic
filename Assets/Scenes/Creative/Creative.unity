@@ -7926,7 +7926,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 32f3d6d2feb2f1043871a61cf0d451eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b6edc936f7accd4ebb346d13c4aef0f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17229,6 +17229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1078757170}
+  - component: {fileID: 1078757175}
   - component: {fileID: 1078757174}
   - component: {fileID: 1078757173}
   - component: {fileID: 1078757172}
@@ -17333,6 +17334,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1078757175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078757169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b9391cd6fa0b24a9151d9fc8b3618f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildable: {fileID: 5022990784066692206, guid: 153947c3571e32f4f839a5ae1cd4e369,
+    type: 3}
+  defensesList: {fileID: 15386396}
+  logisticsList: {fileID: 1644446410}
 --- !u!1 &1078985108
 GameObject:
   m_ObjectHideFlags: 0
@@ -25005,6 +25022,7 @@ GameObject:
   - component: {fileID: 1591098551}
   - component: {fileID: 1591098550}
   - component: {fileID: 1591098552}
+  - component: {fileID: 1591098553}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -25085,6 +25103,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a59020cc0289c44aa6c465fb5e14154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1591098553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591098547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca66955388953f479fb4344e76ebe29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: {fileID: 21300000, guid: 272fe30baa0cc1d428df041e64a7240e, type: 3}
+  essence: {fileID: 21300000, guid: bff613cc1fd1a9140adb3a7f3afa1893, type: 3}
+  iridium: {fileID: 21300000, guid: 43fe47b76eaf70643b68b4bdba0df8d7, type: 3}
+  power: {fileID: 21300000, guid: 30234a95604bad945b8bc010d6724ad1, type: 3}
+  heat: {fileID: 21300000, guid: 4dcf0c8c7e6d8cf4f8e8d3466bf7ccd4, type: 3}
+  health: {fileID: 21300000, guid: 2b38851a04e6ae14cb7178d6a57f230b, type: 3}
+  damage: {fileID: 21300000, guid: d31eee64168edee41b058ed85bc813c6, type: 3}
+  range: {fileID: 21300000, guid: 1e86031094673c54498bc369fcd40145, type: 3}
+  rotationSpeed: {fileID: 21300000, guid: 8c999b906f7c4cd4f9d7663af13b4437, type: 3}
+  fireRate: {fileID: 21300000, guid: 11fcb764b28235c41ba4635606a96021, type: 3}
+  bulletPierces: {fileID: 21300000, guid: 92045935c8cb36048b3731ed8d4bcb54, type: 3}
+  bulletAmount: {fileID: 21300000, guid: 190e7bc9f6931974cb12b65cff01f801, type: 3}
+  bulletSpeed: {fileID: 21300000, guid: c65a606473e5e824b9415950b7e41b4e, type: 3}
+  bulletSpread: {fileID: 21300000, guid: bcdc18237f9436d4f850fa02199234e1, type: 3}
+  blank: {fileID: 21300000, guid: ad50e7d5254124246b6fb3e16120f440, type: 3}
 --- !u!1 &1592196691
 GameObject:
   m_ObjectHideFlags: 0

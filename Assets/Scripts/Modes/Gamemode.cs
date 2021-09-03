@@ -13,31 +13,11 @@ public class Gamemode : MonoBehaviour
     public void Start()
     {
         Events.active.onBuildingPlaced += PlaceBuilding;
-
-        try
-        {
-            List<Building> tiles = Resources.LoadAll("Scriptables", typeof(Building)).Cast<Building>().ToList();
-            Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
-            LoadScriptables(tiles);
-        }
-        catch
-        {
-            Debug.LogError("The folder Resources/Scriptables/ contains a non-scriptable object. Please remove it!");
-        }
     }
 
     // Tells the gamemode how to handle building placements
     public virtual void PlaceBuilding()
     {
         Debug.Log("Mode does not contain definition for building placed");
-    }
-
-    // Loads scriptables to determine how to set them up
-    //
-    // Ex. Survival will load scriptables into a list of type Unlock
-    // whereas Creative will load scriptables into an array of type Building
-    public virtual void LoadScriptables(List<Building> tiles)
-    {
-        Debug.Log("Mode does not contain definition for load scriptables");
     }
 }

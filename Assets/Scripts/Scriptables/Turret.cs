@@ -34,11 +34,10 @@ public class Turret : Building
         base.CreateStat();
 
         UIEvents.active.CreateStat(new Stat("Damage", damage, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Range", range, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Firerate", fireRate, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Bullet Pierces", bulletPierces, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Bullet Amount", bulletAmount, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Bullet Speed", bulletSpeed, damageModifier, Sprites.active.damage));
-        UIEvents.active.CreateStat(new Stat("Bullet Spread", bulletSpread, damageModifier, Sprites.active.damage));
+        UIEvents.active.CreateStat(new Stat("Range", range, damageModifier, Sprites.active.range));
+        UIEvents.active.CreateStat(new Stat("Firerate", fireRate, damageModifier, Sprites.active.fireRate));
+        UIEvents.active.CreateStat(new Stat("Pierces", bulletPierces, damageModifier, Sprites.active.bulletPierces));
+        UIEvents.active.CreateStat(new Stat("Bullets", bulletAmount, damageModifier, Sprites.active.bulletAmount));
+        UIEvents.active.CreateStat(new Stat("Spread", bulletSpread, damageModifier, Sprites.active.bulletSpread));
     }
 }

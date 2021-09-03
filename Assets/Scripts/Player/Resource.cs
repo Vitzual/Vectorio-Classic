@@ -80,4 +80,42 @@ public class Resource : MonoBehaviour
             return storage[type];
         else return 0;
     }
+
+    public static string GetName(Currency type)
+    {
+        switch(type)
+        {
+            case Currency.Gold:
+                return "Gold";
+            case Currency.Essence:
+                return "Essence";
+            case Currency.Iridium:
+                return "Iridium";
+            case Currency.Power:
+                return "Power";
+            case Currency.Heat:
+                return "Heat";
+            default:
+                return "Unknown";
+        }
+    }
+
+    public static Sprite GetSprite(Currency type)
+    {
+        switch (type)
+        {
+            case Currency.Gold:
+                return Sprites.active.gold;
+            case Currency.Essence:
+                return Sprites.active.essence;
+            case Currency.Iridium:
+                return Sprites.active.iridium;
+            case Currency.Power:
+                return Sprites.active.power;
+            case Currency.Heat:
+                return Sprites.active.heat;
+            default:
+                return Sprites.active.blank;
+        }
+    }
 }

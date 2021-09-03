@@ -7,35 +7,95 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    private List<Transform> menuObjects;
+    // List of stats
+    private List<MenuStat> menuObjects;
+    private List<MenuStat> unusedObjects;
 
+    // Panel variables
     public MenuStat menuStat;
     public Transform resourceStats;
     public Transform buildingStats;
 
+    // Panel UI variables
+    public new TextMeshProUGUI name;
+    public TextMeshProUGUI desc;
+    public Image icon;
+
+    // Building
+    public Building building;
+
     public void Start()
     {
-        UIEvents.active.onBuildingPressed += ResetStats;
-        UIEvents.active.onCreateStat += CreateStat;
-        menuObjects = new List<Transform>();
+        UIEvents.active.onBuildingPressed += SetPanel;
+
+        menuObjects = new List<MenuStat>();
+        unusedObjects = new List<MenuStat>();
+    }
+
+    // Sets the panel information
+    public void SetPanel(Building building)
+    {
+        // Grab building
+        this.building = building;
+
+        // Set panel description
+        name.text = building.name.ToUpper();
+        desc.text = building.description;
+        icon.sprite = building.icon;
+
+        // Create stats for the building
+        SetUnused();
+        building.CreateStats(this);
+        ResetUnused();
+    }
+
+    // Reset unused objects
+    public void SetUnused()
+    {
+        unusedObjects = new List<MenuStat>(menuObjects);
     }
 
     // Creates a menu stat
     public void CreateStat(Stat stat)
     {
+        // Already created
+        MenuStat holder = null;
+        bool isInstantiated = false;
+
+        // Check previous stats to see if it exists
+        foreach(MenuStat previousStat in menuObjects)
+        {
+            if (previousStat.name == stat.name)
+            {
+                unusedObjects.Remove(previousStat);
+                holder = previousStat;
+                isInstantiated = true;
+                break;
+            }
+        }
+
         // Create object
-        GameObject obj = Instantiate(menuStat.obj, new Vector3(0, 0, 0), Quaternion.identity);
-        menuObjects.Add(obj.transform);
+        if (!isInstantiated)
+        {
+            // Instantiate the object
+            GameObject obj = Instantiate(menuStat.obj, new Vector3(0, 0, 0), Quaternion.identity);
+            obj.name = stat.name;
+            
+            // Add to list
+            holder = obj.GetComponent<MenuStat>();
+            menuObjects.Add(holder);
+            holder.name = stat.name;
 
-        // Set parent transform
-        if (stat.isResource)
-            obj.transform.SetParent(resourceStats);
-        else
-            obj.transform.SetParent(buildingStats);
+            // Set parent transform
+            if (stat.isResource)
+                obj.transform.SetParent(resourceStats);
+            else
+                obj.transform.SetParent(buildingStats);
 
-        // Adjust size
-        RectTransform temp = obj.GetComponent<RectTransform>();
-        if (temp != null) temp.localScale = new Vector3(1, 1, 1);
+            // Adjust size
+            RectTransform temp = obj.GetComponent<RectTransform>();
+            if (temp != null) temp.localScale = new Vector3(1, 1, 1);
+        }
 
         // Create modifier variable
         string modifier = "";
@@ -47,20 +107,18 @@ public class Panel : MonoBehaviour
             modifier = "<color=red>(+" + stat.modifier + ")";
 
         // Set the values
-        MenuStat holder = obj.GetComponent<MenuStat>();
         holder.text.text = "<b>" + stat.name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
         holder.icon.sprite = stat.icon;
     }
 
     // Resets all the menu stats
-    public void ResetStats()
+    public void ResetUnused()
     {
-        List<Transform> objs = menuObjects;
-        menuObjects.Clear();
-
-        foreach (Transform transform in objs)
-            Recycler.AddRecyclable(transform);
+        foreach (MenuStat stat in unusedObjects)
+        {
+            menuObjects.Remove(stat);
+            Recycler.AddRecyclable(stat.transform);
+        }
+        unusedObjects.Clear();
     }
-
-    
 }

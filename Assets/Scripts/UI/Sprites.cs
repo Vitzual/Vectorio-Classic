@@ -26,23 +26,4 @@ public class Sprites : MonoBehaviour
     {
         active = this;
     }
-
-    public Sprite GetByEnum(Resource.Currency resource)
-    {
-        switch (resource)
-        {
-            case Resource.Currency.Gold:
-                return gold;
-            case Resource.Currency.Essence:
-                return essence;
-            case Resource.Currency.Iridium:
-                return iridium;
-            case Resource.Currency.Power:
-                return power;
-            case Resource.Currency.Heat:
-                return heat;
-            default:
-                return blank;
-        }
-    }
 }

@@ -16,6 +16,7 @@ public class Building : Tile
 
     // Building base variables
     public int health;
+    [HideInInspector] public int level = 1;
     [HideInInspector] public int maxHealth;
     [HideInInspector] public int healthModifier;
     public bool isDefensive;
@@ -28,10 +29,12 @@ public class Building : Tile
     public Resources[] resources;
     public Material material;
 
-    public virtual void CreateStat()
+    public virtual void CreateStats(Panel panel)
     {
         // Resource stats
+        foreach (Resources type in resources)
+            panel.CreateStat(new Stat(Resource.GetName(type.resource), type.amount, type.modifier, Resource.GetSprite(type.resource), true));
 
-        UIEvents.active.CreateStat(new Stat("Health", health, healthModifier, Sprites.active.health));
+        panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.active.health));
     }
 }

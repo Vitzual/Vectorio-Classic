@@ -27,7 +27,6 @@ public class MenuButton : MonoBehaviour
     // Show stats
     public void DisplayStats()
     {
-        UIEvents.active.BuildingPressed();
-        building.CreateStat();
+        UIEvents.active.BuildingPressed(building);
     }
 }

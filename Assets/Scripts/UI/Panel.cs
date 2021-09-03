@@ -15,7 +15,7 @@ public class Panel : MonoBehaviour
 
     public void Start()
     {
-        
+        UIEvents.active.onCreateStat += CreateStat;
     }
 
     // Creates a menu stat

@@ -53,8 +53,8 @@ public class BaseTurret : BaseBuilding, IAudible
             range = turret.range;
             rotationSpeed = turret.rotationSpeed;
             fireRate = turret.fireRate;
-            bulletPierces = (int)turret.bulletPierces;
-            bulletAmount = (int)turret.bulletAmount;
+            bulletPierces = turret.bulletPierces;
+            bulletAmount = turret.bulletAmount;
             bulletSpeed = turret.bulletSpeed;
             bulletSpread = turret.bulletSpread;
         }

@@ -27,6 +27,9 @@ public class MenuButton : MonoBehaviour
     // Show stats
     public void DisplayStats()
     {
+        if (BuildingSystem.active != null)
+            BuildingSystem.active.SetBuilding(building);
+        else Debug.LogError("Cannot set building without building system!");
         UIEvents.active.BuildingPressed(building);
     }
 }

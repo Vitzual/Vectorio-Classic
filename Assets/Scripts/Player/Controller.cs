@@ -4,14 +4,32 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    // Get the camera
+    public Camera cam;
+    public GameObject grid;
+
+    public float cameraZoomSpeed;
+    public float cameraZoomFactor;
+    public float cameraMinZoom;
+    public float cameraMaxZoom;
+
+    private float targetZoom;
+
     [HideInInspector]
     public bool SettingHotbar = false;
 
+    public void Start()
+    {
+        targetZoom = cam.orthographicSize;
+    }
+
     public void Update()
     {
+        CheckScrollInput();
+
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
-        if (Input.GetKeyDown(Keybinds.select))
+        if (Input.GetKey(Keybinds.select))
             Events.active.PlaceBuilding();
     }
 
@@ -36,5 +54,22 @@ public class Controller : MonoBehaviour
             Events.active.NumberInput(8, SettingHotbar);
         else if (Input.GetKeyDown(Keybinds.hotbar_9))
             Events.active.NumberInput(9, SettingHotbar);
+    }
+
+    // Check scroll input
+    public void CheckScrollInput()
+    {
+        float scrollData;
+        scrollData = Input.GetAxis("Mouse ScrollWheel");
+
+        targetZoom -= scrollData * cameraZoomFactor;
+        targetZoom = Mathf.Clamp(targetZoom, cameraMinZoom, cameraMaxZoom);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * cameraZoomSpeed);
+
+        if (grid != null)
+        {
+            if (cam.orthographicSize > 120 && grid.activeSelf) grid.SetActive(false);
+            else if (cam.orthographicSize <= 120 && !grid.activeSelf) grid.SetActive(true);
+        }
     }
 }

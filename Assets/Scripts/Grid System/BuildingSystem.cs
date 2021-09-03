@@ -4,23 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BuildingSystem : NetworkBehaviour
+public class BuildingSystem : MonoBehaviour
 {
     // Grid variable
-    public static GridSystem tileGrid;
+    public GridSystem tileGrid;
 
     // Building variables
     public static BuildingSystem active;
-    private static Tile selectedTile;
-    private static Vector2 position;
-    private static Vector2 offset;
-    private static GameObject lastObj;
-    private static bool changeSprite;
+    public Building building;
+    public Vector2 position;
+    private Vector2 offset;
+    private GameObject lastObj;
 
     // Sprite values
-    private static SpriteRenderer spriteRenderer;
-    private static float alphaAdjust = 0.005f;
-    private static float alphaHolder;
+    private SpriteRenderer spriteRenderer;
+    private float alphaAdjust = 0.005f;
+    private float alphaHolder;
 
     // Start method grabs tilemap
     public void Awake()
@@ -32,10 +31,9 @@ public class BuildingSystem : NetworkBehaviour
         // Sets static variables on start
         tileGrid = new GridSystem();
         tileGrid.cells = new Dictionary<Vector2Int, GridSystem.Cell>();
-        selectedTile = null;
+        building = null;
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
-        changeSprite = false;
         lastObj = null;
 
         // Sets static anim variables
@@ -54,7 +52,7 @@ public class BuildingSystem : NetworkBehaviour
         AdjustTransparency();
     }
 
-    private static void OffsetBuilding()
+    private void OffsetBuilding()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         active.transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
@@ -64,21 +62,6 @@ public class BuildingSystem : NetworkBehaviour
     // Adjusts the alpha transparency of the SR component 
     private void AdjustTransparency()
     {
-        // Check if building changed
-        if (changeSprite)
-        {
-            try
-            {
-                if (selectedTile != null) spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Buildings/" + selectedTile.name);
-                else spriteRenderer.sprite = UnityEngine.Resources.Load<Sprite>("Sprites/Interface/Empty");
-            }
-            catch
-            {
-                Debug.LogError("Sprite could not be retrieved. Please check you have placed the sprite in resources with the correct name!");
-            }
-            changeSprite = false;
-        }
-
         // Switches
         if (spriteRenderer.color.a >= 1f)
             alphaHolder = -alphaAdjust;
@@ -90,50 +73,47 @@ public class BuildingSystem : NetworkBehaviour
     }
 
     // Sets the selected building
-    public static void SetBuilding(Tile tile)
+    public void SetBuilding(Building building)
     {
-        // Check if active is null
-        if (active == null) return;
-
-        changeSprite = true;
-        selectedTile = tile;
-        if (tile != null) offset = tile.offset;
+        spriteRenderer.sprite = building.icon;
+        this.building = building;
+        if (building != null) offset = building.offset;
     }
 
     // Creates a building
-    public static void CmdCreateBuilding()
+    public void CmdCreateBuilding()
     {
         // Check if active is null
-        if (active == null || selectedTile == null || selectedTile.obj == null) return;
+        if (building == null || building.obj == null) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(selectedTile.obj, position, active.transform.rotation);
+        RpcInstantiateObject(building.obj, position, active.transform.rotation);
     }
 
-    private static void RpcInstantiateObject(GameObject obj, Vector2 position, Quaternion rotation)
+    private void RpcInstantiateObject(GameObject obj, Vector2 position, Quaternion rotation)
     {
         // Create the tile
         lastObj = Instantiate(obj, position, rotation);
         lastObj.name = obj.name;
 
         // Set the tiles on the grid class
-        if (selectedTile.cells.Length > 0)
+        if (building.cells.Length > 0)
         {
-            foreach (Tile.Cell cell in selectedTile.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, selectedTile, lastObj);
+            foreach (Tile.Cell cell in building.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, building, lastObj);
         }
-        else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, selectedTile, lastObj);
+        else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, building, lastObj);
     }
 
     // Checks to make sure tile(s) isn't occupied
-    public static bool CheckTiles()
+    public bool CheckTiles()
     {
-        if (selectedTile.cells.Length > 0)
+        if (building.cells.Length > 0)
         {
-            foreach (Tile.Cell cell in selectedTile.cells)
+            foreach (Tile.Cell cell in building.cells)
                 if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y))) != null)
                     return false;
         }

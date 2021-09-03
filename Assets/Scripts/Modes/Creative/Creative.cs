@@ -6,6 +6,7 @@ public class Creative : Gamemode
 {
     public override void PlaceBuilding()
     {
-        BuildingSystem.CmdCreateBuilding();
+        if (BuildingSystem.active != null)
+            BuildingSystem.active.CmdCreateBuilding();
     }
 }

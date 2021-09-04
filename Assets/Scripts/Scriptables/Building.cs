@@ -22,6 +22,7 @@ public class Building : Tile
     public bool isDefensive;
 
     // Lock things
+    public int unlockOrder;
     public string unlockDesc;
     public bool isUnlocked = true;
 

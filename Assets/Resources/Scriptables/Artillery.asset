@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
+  m_Name: Artillery
+  m_EditorClassIdentifier: 
+  name: Artillery
+  description: The first 2x2 defense. Fires explosive proximity shells that deal
+    huge area damage. Downside is the reload time.
+  obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
+  icon: {fileID: 21300000, guid: 80305bc2b604b6e4eb373021fd7bf426, type: 3}
+  cells:
+  - x: 2.5
+    y: 2.5
+  - x: 2.5
+    y: -2.5
+  - x: -2.5
+    y: 2.5
+  - x: -2.5
+    y: -2.5
+  offset: {x: 2.5, y: 2.5}
+  health: 500
+  level: 1
+  maxHealth: 0
+  healthModifier: 0
+  isDefensive: 1
+  unlockOrder: 10
+  unlockDesc: 
+  isUnlocked: 0
+  resources:
+  - resource: 0
+    amount: 100000
+    modifier: 0
+  - resource: 1
+    amount: 2500
+    modifier: 0
+  - resource: 4
+    amount: 450
+    modifier: 0
+  - resource: 3
+    amount: 300
+    modifier: 0
+  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
+  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
+  damage: 500
+  range: 100
+  rotationSpeed: 40
+  fireRate: 3
+  bulletPierces: 0
+  bulletAmount: 1
+  bulletSpeed: 20
+  bulletSpread: 0
+  damageModifier: 0
+  rangeModifier: 0
+  rotationSpeedModifier: 0
+  fireRateModifier: 0
+  bulletPiercesModifier: 0
+  bulletAmountModifier: 0
+  bulletSpeedModifier: 0
+  bulletSpreadModifier: 0

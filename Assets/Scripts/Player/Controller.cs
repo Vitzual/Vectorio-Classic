@@ -8,8 +8,6 @@ public class Controller : MonoBehaviour
     public Camera cam;
     public GameObject grid;
 
-    public Building building;
-
     public float closeLOD;
     public float farLOD;
 
@@ -26,16 +24,6 @@ public class Controller : MonoBehaviour
     public void Start()
     {
         targetZoom = cam.orthographicSize;
-
-        BuildingSystem.active.SetBuilding(building);
-
-        for (int y = -500; y < 500; y += 5)
-        {
-            for (int x = -500; x < 500; x += 5)
-            {
-                BuildingSystem.active.CmdCreateBuilding(new Vector2(x, y));
-            }
-        }
     }
 
     public void Update()
@@ -87,10 +75,12 @@ public class Controller : MonoBehaviour
             else if (cam.orthographicSize <= 120 && !grid.activeSelf) grid.SetActive(true);
         }
 
+        /*
         if (Detail.active != null)
         {
             if (cam.orthographicSize > closeLOD && Detail.active.closeEnabled || cam.orthographicSize <= closeLOD && !Detail.active.closeEnabled) Detail.active.ToggleClose();
             else if (cam.orthographicSize > farLOD && Detail.active.farEnabled || cam.orthographicSize <= farLOD && !Detail.active.farEnabled) Detail.active.ToggleFar();
         }
+        */
     }
 }

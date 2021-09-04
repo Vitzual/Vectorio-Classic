@@ -12,8 +12,8 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
 
-    public List<GameObject> closeDetailedAssets;
-    public List<GameObject> farDetailedAssets;
+    //public List<GameObject> closeDetailedAssets;
+    //public List<GameObject> farDetailedAssets;
 
     // Sets the buildings stats
     public void SetBuildingStats()
@@ -28,11 +28,13 @@ public class BaseBuilding : NetworkBehaviour, IDamageable
             maxHealth = health;
         }
 
+        /*
         if (Detail.active != null)
         {
             Detail.active.close.AddRange(closeDetailedAssets);
             Detail.active.far.AddRange(farDetailedAssets);
         }
+        */
     }
 
     // Damages the entity (IDamageable interface method)

@@ -10,42 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
-  m_Name: Turret
+  m_Name: Chiller
   m_EditorClassIdentifier: 
-  name: Turret
-  description: Weak early game turret that targets and fires at nearby enemies.
-  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
-  icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
+  name: Chiller
+  description: A weak defense that freezes nearby enemies. Great for countering speeders.
+  obj: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b, type: 3}
+  icon: {fileID: 21300000, guid: bb83db53dd2da5749a16b859166dfb55, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 10
+  health: 60
   level: 1
-  maxHealth: 10
+  maxHealth: 0
   healthModifier: 0
   isDefensive: 1
-  unlockOrder: 0
-  unlockDesc: Unlocked by default
+  unlockOrder: 6
+  unlockDesc: 
   isUnlocked: 1
   resources:
   - resource: 0
-    amount: 150
+    amount: 60000
     modifier: 0
   - resource: 4
-    amount: 8
+    amount: 10
     modifier: 0
   - resource: 3
-    amount: 5
+    amount: 80
     modifier: 0
-  material: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
-  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
-  damage: 1
-  range: 10
-  rotationSpeed: 150
+  material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
+  sound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
+  damage: 5
+  range: 18
+  rotationSpeed: 70
   fireRate: 0.5
   bulletPierces: 0
   bulletAmount: 1
-  bulletSpeed: 5
-  bulletSpread: 0.5
+  bulletSpeed: 10
+  bulletSpread: 0
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

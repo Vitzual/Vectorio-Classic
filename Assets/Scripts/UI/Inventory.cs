@@ -34,6 +34,7 @@ public class Inventory : MonoBehaviour
         // Set parent
         if (building.isDefensive) holder.transform.SetParent(defensesList);
         else holder.transform.SetParent(logisticsList);
+        holder.transform.SetSiblingIndex(building.unlockOrder);
         holder.transform.name = building.name;
 
         // Adjust size

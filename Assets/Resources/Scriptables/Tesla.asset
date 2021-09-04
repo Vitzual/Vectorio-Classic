@@ -10,42 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
-  m_Name: Turret
+  m_Name: Tesla
   m_EditorClassIdentifier: 
-  name: Turret
-  description: Weak early game turret that targets and fires at nearby enemies.
-  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
-  icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
+  name: Tesla
+  description: Fires bolts of lightning that deal massive damage and slow down enemies.
+    Consumes extra power while firing.
+  obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
+  icon: {fileID: 21300000, guid: daf7f58d71ea7f5439de0ada8ba2ba82, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 10
+  health: 100
   level: 1
-  maxHealth: 10
+  maxHealth: 0
   healthModifier: 0
   isDefensive: 1
-  unlockOrder: 0
-  unlockDesc: Unlocked by default
-  isUnlocked: 1
+  unlockOrder: 9
+  unlockDesc: 
+  isUnlocked: 0
   resources:
   - resource: 0
-    amount: 150
+    amount: 140000
     modifier: 0
   - resource: 4
-    amount: 8
+    amount: 250
     modifier: 0
   - resource: 3
-    amount: 5
+    amount: 600
     modifier: 0
-  material: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
-  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
-  damage: 1
-  range: 10
-  rotationSpeed: 150
-  fireRate: 0.5
+  material: {fileID: 2100000, guid: 77419f772c08b3d478d0bb55d0282e7c, type: 2}
+  sound: {fileID: 0}
+  damage: 150
+  range: 16
+  rotationSpeed: 200
+  fireRate: 0.1
   bulletPierces: 0
-  bulletAmount: 1
-  bulletSpeed: 5
-  bulletSpread: 0.5
+  bulletAmount: 2
+  bulletSpeed: 15
+  bulletSpread: 3
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

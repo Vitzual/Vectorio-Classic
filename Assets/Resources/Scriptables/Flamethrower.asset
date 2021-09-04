@@ -10,42 +10,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
-  m_Name: Turret
+  m_Name: Flamethrower
   m_EditorClassIdentifier: 
-  name: Turret
-  description: Weak early game turret that targets and fires at nearby enemies.
-  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
-  icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
+  name: Flamethrower
+  description: Unleashes a barrage of flames that deal extremely high damage to nearby
+    enemies. Produces extra heat while firing.
+  obj: {fileID: 420473218063467210, guid: aac8052e92deef54c85db4e9ceab838a, type: 3}
+  icon: {fileID: 21300000, guid: 25f373584708d8a489be7c3850c3aa4e, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 10
+  health: 80
   level: 1
-  maxHealth: 10
+  maxHealth: 0
   healthModifier: 0
   isDefensive: 1
-  unlockOrder: 0
-  unlockDesc: Unlocked by default
-  isUnlocked: 1
+  unlockOrder: 7
+  unlockDesc: 
+  isUnlocked: 0
   resources:
   - resource: 0
-    amount: 150
+    amount: 80000
+    modifier: 0
+  - resource: 1
+    amount: 100
     modifier: 0
   - resource: 4
-    amount: 8
+    amount: 250
     modifier: 0
   - resource: 3
-    amount: 5
+    amount: 50
     modifier: 0
-  material: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
-  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
-  damage: 1
+  material: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
+  sound: {fileID: 0}
+  damage: 50
   range: 10
-  rotationSpeed: 150
-  fireRate: 0.5
-  bulletPierces: 0
-  bulletAmount: 1
-  bulletSpeed: 5
-  bulletSpread: 0.5
+  rotationSpeed: 120
+  fireRate: 0.1
+  bulletPierces: 5
+  bulletAmount: 2
+  bulletSpeed: 20
+  bulletSpread: 2
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

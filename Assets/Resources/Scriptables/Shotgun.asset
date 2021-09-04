@@ -13,38 +13,39 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   name: Shotgunner
-  description: Fires multiple projectiles at once. Good for eliminating large groups
-    of enemies.
+  description: Fires multiple projectiles at once to eliminate large groups of enemies
   obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
   icon: {fileID: 21300000, guid: 3f3fb79d8a67b2344909ad2b219b244a, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 20
+  health: 15
+  level: 1
   maxHealth: 0
   healthModifier: 0
   isDefensive: 1
+  unlockOrder: 2
   unlockDesc: Unlocked by destroying 10 triangles
   isUnlocked: 0
   resources:
   - resource: 0
-    amount: 250
-    modifier: 0
-  - resource: 3
-    amount: 25
+    amount: 750
     modifier: 0
   - resource: 4
+    amount: 20
+    modifier: 0
+  - resource: 3
     amount: 15
     modifier: 0
   material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
-  damage: 10
-  range: 5
-  rotationSpeed: 25
-  fireRate: 5
-  bulletPierces: 2
-  bulletAmount: 3
+  damage: 1
+  range: 8
+  rotationSpeed: 60
+  fireRate: 0.75
+  bulletPierces: 0
+  bulletAmount: 5
   bulletSpeed: 5
-  bulletSpread: 6
+  bulletSpread: 0.5
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

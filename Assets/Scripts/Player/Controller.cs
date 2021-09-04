@@ -8,6 +8,9 @@ public class Controller : MonoBehaviour
     public Camera cam;
     public GameObject grid;
 
+    public float closeLOD;
+    public float farLOD;
+
     public float cameraZoomSpeed;
     public float cameraZoomFactor;
     public float cameraMinZoom;
@@ -70,6 +73,12 @@ public class Controller : MonoBehaviour
         {
             if (cam.orthographicSize > 120 && grid.activeSelf) grid.SetActive(false);
             else if (cam.orthographicSize <= 120 && !grid.activeSelf) grid.SetActive(true);
+        }
+
+        if (Detail.active != null)
+        {
+            if (cam.orthographicSize > closeLOD && Detail.active.closeEnabled || cam.orthographicSize <= closeLOD && !Detail.active.closeEnabled) Detail.active.ToggleClose();
+            else if (cam.orthographicSize > farLOD && Detail.active.farEnabled || cam.orthographicSize <= farLOD && !Detail.active.farEnabled) Detail.active.ToggleFar();
         }
     }
 }

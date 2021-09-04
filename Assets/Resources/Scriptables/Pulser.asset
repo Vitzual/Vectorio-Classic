@@ -13,22 +13,31 @@ MonoBehaviour:
   m_Name: Pulser
   m_EditorClassIdentifier: 
   name: Pulser
-  description: 
-  obj: {fileID: 0}
-  icon: {fileID: 0}
+  description: Fires plasma bullets that pierce through multiple enemies at a time.
+  obj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
+  icon: {fileID: 21300000, guid: caec0635f3eefdf41bf7d9aaa1f631f3, type: 3}
   cells: []
   offset: {x: 0, y: 0}
-  health: 0
+  health: 100
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 0
+  isDefensive: 1
   unlockOrder: 5
   unlockDesc: Destroy a dropship
-  isUnlocked: 1
-  resources: []
-  material: {fileID: 0}
-  sound: {fileID: 0}
+  isUnlocked: 0
+  resources:
+  - resource: 0
+    amount: 15000
+    modifier: 0
+  - resource: 3
+    amount: 100
+    modifier: 0
+  - resource: 4
+    amount: 80
+    modifier: 0
+  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
+  sound: {fileID: 8300000, guid: 46e4002e4b6074361a58bbd232a2cfd5, type: 3}
   damage: 0
   range: 0
   rotationSpeed: 0

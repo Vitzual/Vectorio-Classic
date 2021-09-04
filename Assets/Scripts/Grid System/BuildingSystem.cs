@@ -9,14 +9,14 @@ public class BuildingSystem : MonoBehaviour
     // Building class
     public class BuildingQueue
     {
-        public BuildingQueue(GameObject obj, Vector2 pos, Quaternion rotation)
+        public BuildingQueue(Tile scriptable, Vector2 pos, Quaternion rotation)
         {
-            this.obj = obj;
+            this.scriptable = scriptable;
             this.pos = pos;
             this.rotation = rotation;
         }
 
-        public GameObject obj;
+        public Tile scriptable;
         public Vector2 pos;
         public Quaternion rotation;
     }
@@ -26,7 +26,7 @@ public class BuildingSystem : MonoBehaviour
 
     // Building variables
     public static BuildingSystem active;
-    public Building building;
+    public Tile building;
     public Vector2 position;
     private Vector2 offset;
     private GameObject lastObj;
@@ -35,9 +35,6 @@ public class BuildingSystem : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float alphaAdjust = 0.005f;
     private float alphaHolder;
-
-    private List<BuildingQueue> buildingQueue;
-    private int cooldown;
 
     // Start method grabs tilemap
     public void Awake()
@@ -53,13 +50,10 @@ public class BuildingSystem : MonoBehaviour
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
         lastObj = null;
-        buildingQueue = new List<BuildingQueue>();
 
         // Sets static anim variables
         spriteRenderer = GetComponent<SpriteRenderer>();
         alphaHolder = alphaAdjust;
-
-        cooldown = 3;
     }
 
     // Update is called once per frame
@@ -71,14 +65,6 @@ public class BuildingSystem : MonoBehaviour
         // Round to grid
         OffsetBuilding();
         AdjustTransparency();
-
-        if (buildingQueue.Count > 0 && cooldown == 0)
-        {
-            RpcInstantiateObject(buildingQueue[0]);
-            buildingQueue.RemoveAt(0);
-            cooldown = 3;
-        }
-        else cooldown -= 1;
     }
 
     private void OffsetBuilding()
@@ -102,7 +88,7 @@ public class BuildingSystem : MonoBehaviour
     }
 
     // Sets the selected building
-    public void SetBuilding(Building building)
+    public void SetBuilding(Tile building)
     {
         spriteRenderer.sprite = building.icon;
         this.building = building;
@@ -119,7 +105,7 @@ public class BuildingSystem : MonoBehaviour
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        buildingQueue.Add(new BuildingQueue(building.obj, position, Quaternion.identity));
+        RpcInstantiateObject(new BuildingQueue(building, position, Quaternion.identity));
     }
 
     // Creates a building at specified coords
@@ -129,16 +115,16 @@ public class BuildingSystem : MonoBehaviour
         if (building == null || building.obj == null) return;
 
         // Instantiate the object like usual
-        buildingQueue.Add(new BuildingQueue(building.obj, coords, Quaternion.identity));
+        RpcInstantiateObject(new BuildingQueue(building, coords, Quaternion.identity));
     }
 
     private void RpcInstantiateObject(BuildingQueue building)
     {
         // Create the tile
-        lastObj = Instantiate(building.obj, building.pos, building.rotation);
-        lastObj.name = building.obj.name;
+        lastObj = Instantiate(building.scriptable.obj, building.pos, building.rotation);
+        lastObj.name = building.scriptable.name;
 
-        SetCells();
+        SetCells(building.scriptable, lastObj);
     }
 
     // Checks to make sure tile(s) isn't occupied
@@ -154,14 +140,14 @@ public class BuildingSystem : MonoBehaviour
         return true;
     }
 
-    public void SetCells()
+    public void SetCells(Tile building, GameObject obj)
     {
         // Set the tiles on the grid class
         if (building.cells.Length > 0)
         {
             foreach (Tile.Cell cell in building.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, building, lastObj);
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, building, obj);
         }
-        else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, building, lastObj);
+        else tileGrid.SetCell(Vector2Int.RoundToInt(obj.transform.position), true, building, obj);
     }
 }

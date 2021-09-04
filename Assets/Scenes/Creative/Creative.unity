@@ -527,10 +527,10 @@ RectTransform:
   m_Father: {fileID: 885479361}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 293.53833, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &26964548
 CanvasRenderer:
@@ -980,6 +980,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 930415909}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -988,6 +989,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -1102,7 +1104,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -5.549988, y: 0}
   m_SizeDelta: {x: 11.100003, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2284,6 +2286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 7
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 0}
@@ -2413,15 +2416,19 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 971520657}
   highlightedIcon: {fileID: 98946340}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 1054503454}
+  animationSolution: 1
+  fadingMultiplier: 8
   useCustomContent: 0
   enableButtonSounds: 0
   useHoverSound: 1
   useClickSound: 1
   useRipple: 0
+  rippleUpdateMode: 1
   rippleShape: {fileID: 21300000, guid: d25e2ce15dd1c67438e4b70f404fb197, type: 3}
   speed: 2.4
   maxSize: 6
@@ -2947,10 +2954,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 239.35231, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &195741507
 CanvasRenderer:
@@ -3111,6 +3118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   border: {fileID: 747046752}
   background: {fileID: 1918108126}
   handleOn: {fileID: 1954281428}
@@ -4191,6 +4199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 0
+  webglMode: 0
   basicFilled: {fileID: 260699747}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 114809245569716970, guid: 9e8df12253060b348ae97b03d00984ea,
@@ -4341,6 +4350,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 1447320068}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 159085230}
@@ -4349,6 +4359,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 21300000, guid: d25e2ce15dd1c67438e4b70f404fb197, type: 3}
   speed: 2.4
   maxSize: 6
@@ -4852,6 +4863,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 1904837982}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -4861,6 +4873,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -4932,6 +4945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 321421050}
@@ -6035,6 +6049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84a94b099bc62645a689ebb5655db16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableMobileMode: 0
   buttonAnimator: {fileID: 0}
 --- !u!95 &392553351
 Animator:
@@ -6692,6 +6707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   background: {fileID: 567945765}
   bar: {fileID: 81339913}
 --- !u!114 &431453872
@@ -6784,10 +6800,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 374.81738, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &434874000
 CanvasRenderer:
@@ -7108,10 +7124,10 @@ RectTransform:
   m_Father: {fileID: 885479361}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320.63135, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &452670162
 CanvasRenderer:
@@ -7981,7 +7997,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -5.5500183, y: 0}
   m_SizeDelta: {x: 11.100003, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8290,6 +8306,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 1106354820}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -8298,6 +8315,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -8369,6 +8387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 555117389}
@@ -8664,6 +8683,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 224504032}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -8672,6 +8692,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -8794,8 +8815,8 @@ RectTransform:
   m_Father: {fileID: 1975138614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -6.299988, y: 0}
   m_SizeDelta: {x: 30, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9740,10 +9761,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 347.72437, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &630663503
 CanvasRenderer:
@@ -9986,8 +10007,8 @@ RectTransform:
   m_Father: {fileID: 734544233}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -6.299988, y: 0}
   m_SizeDelta: {x: 30, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10946,6 +10967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   background: {fileID: 1919168754}
   bar: {fileID: 741988625}
 --- !u!114 &714929125
@@ -10991,7 +11013,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 741988625}
   m_HandleRect: {fileID: 741988624}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11205,6 +11227,7 @@ MonoBehaviour:
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   hasLabel: 0
   hasPopupLabel: 0
+  webglMode: 0
   background: {fileID: 940511969}
   bar: {fileID: 538873978}
   handle: {fileID: 652492741}
@@ -12103,10 +12126,10 @@ RectTransform:
   m_Father: {fileID: 1606656188}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 334.17786, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &783681386
 CanvasRenderer:
@@ -12786,10 +12809,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 266.4453, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &833633858
 CanvasRenderer:
@@ -13237,6 +13260,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 974509521}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -13246,6 +13270,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -13317,6 +13342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 909805671}
@@ -13785,6 +13811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 0
+  webglMode: 0
   basicFilled: {fileID: 925589708}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 114809245569716970, guid: 9e8df12253060b348ae97b03d00984ea,
@@ -13915,6 +13942,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 583772420}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 1932218996}
@@ -13923,6 +13951,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 21300000, guid: d25e2ce15dd1c67438e4b70f404fb197, type: 3}
   speed: 2.4
   maxSize: 6
@@ -14338,10 +14367,10 @@ RectTransform:
   m_Father: {fileID: 885479361}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 347.72437, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &948814173
 CanvasRenderer:
@@ -15135,51 +15164,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 0}
   labelHelper: {fileID: 343709283}
+  labelIcon: {fileID: 0}
+  labelIconHelper: {fileID: 0}
   indicatorParent: {fileID: 1606656188}
   indicatorObject: {fileID: 1323806087491500, guid: d761d163a9f3c244a97cdaa6e14fafc1,
     type: 3}
+  selectorAnimator: {fileID: 0}
+  contentLayout: {fileID: 0}
+  contentLayoutHelper: {fileID: 0}
+  enableIcon: 1
   saveValue: 1
   selectorTag: Fullscreen
   enableIndicators: 1
   invokeAtStart: 0
   invertAnimation: 0
   loopSelection: 1
+  iconScale: 1
+  contentSpacing: 15
   defaultIndex: 0
   index: 0
   itemList:
   - itemTitle: Fullscreen
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetScreenmode
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: Windowed
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetScreenmode
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  selectorEvent:
+        m_Calls: []
+  onValueChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!224 &981954382
@@ -15238,6 +15253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   images:
   - {fileID: 1415523548}
   - {fileID: 869995071}
@@ -15292,10 +15308,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 401.9104, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &989337076
 CanvasRenderer:
@@ -15609,6 +15625,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 376812480}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -15617,6 +15634,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -15688,6 +15706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1008668241}
@@ -16246,147 +16265,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 0}
   labelHelper: {fileID: 162731736}
+  labelIcon: {fileID: 0}
+  labelIconHelper: {fileID: 0}
   indicatorParent: {fileID: 684494606}
   indicatorObject: {fileID: 1323806087491500, guid: d761d163a9f3c244a97cdaa6e14fafc1,
     type: 3}
+  selectorAnimator: {fileID: 0}
+  contentLayout: {fileID: 0}
+  contentLayoutHelper: {fileID: 0}
+  enableIcon: 1
   saveValue: 1
   selectorTag: Resolution
   enableIndicators: 1
   invokeAtStart: 0
   invertAnimation: 0
   loopSelection: 1
+  iconScale: 1
+  contentSpacing: 15
   defaultIndex: 7
   index: 0
   itemList:
   - itemTitle: 1280 x 720
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "1280 \xD7 800"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "1366 \xD7 768"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "1440 \xD7 900"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "1600 \xD7 900"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: 1680 x 1050
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 6
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "1920 \xD7 1080"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 7
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: "2560 \xD7 1440"
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetResolution
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 8
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  selectorEvent:
+        m_Calls: []
+  onValueChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!224 &1021951926
@@ -16445,6 +16384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   images:
   - {fileID: 1167451100}
   - {fileID: 605217537}
@@ -16756,10 +16696,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320.63135, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1033845143
 CanvasRenderer:
@@ -17082,6 +17022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   background: {fileID: 0}
   icon: {fileID: 331769488}
   title: {fileID: 0}
@@ -17148,6 +17089,7 @@ MonoBehaviour:
   timer: 4
   useCustomContent: 0
   useStacking: 0
+  destroyAfterPlaying: 0
   notificationStyle: 2
 --- !u!1 &1064065703
 GameObject:
@@ -18277,6 +18219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1140911512}
@@ -18417,6 +18360,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 1892738094}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -18426,6 +18370,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 0
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -18609,6 +18554,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 1183680684}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -18617,6 +18563,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -19372,10 +19319,7 @@ MonoBehaviour:
     windowObject: {fileID: 1234938918}
     buttonObject: {fileID: 2063361949}
   currentWindowIndex: 0
-  windowFadeIn: Demo Window In
-  windowFadeOut: Demo Window Out
-  buttonFadeIn: Normal to Pressed
-  buttonFadeOut: Pressed to Normal
+  editMode: 0
 --- !u!222 &1204082688
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20436,6 +20380,7 @@ MonoBehaviour:
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   hasLabel: 0
   hasPopupLabel: 0
+  webglMode: 0
   background: {fileID: 957535795}
   bar: {fileID: 76008162}
   handle: {fileID: 575047278}
@@ -20910,6 +20855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 0
+  webglMode: 0
   basicFilled: {fileID: 1331790046}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 114809245569716970, guid: 9e8df12253060b348ae97b03d00984ea,
@@ -21048,6 +20994,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 1964508697}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 175413477}
@@ -21056,6 +21003,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 21300000, guid: d25e2ce15dd1c67438e4b70f404fb197, type: 3}
   speed: 2.4
   maxSize: 6
@@ -25324,10 +25272,10 @@ RectTransform:
   m_Father: {fileID: 684494606}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 293.53833, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1594594505
 CanvasRenderer:
@@ -25609,10 +25557,10 @@ RectTransform:
   m_Father: {fileID: 1606656188}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17.09301, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 307.08484, y: -9.000024}
+  m_SizeDelta: {x: 17.09301, y: 18.000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1604817731
 CanvasRenderer:
@@ -25805,6 +25753,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 2005985087}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -25814,6 +25763,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -25885,6 +25835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1607621725}
@@ -26816,6 +26767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   background: {fileID: 1444665798}
   bar: {fileID: 1478515052}
 --- !u!114 &1671355420
@@ -27678,6 +27630,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 1420633971}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -27686,6 +27639,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -27852,7 +27806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1722630126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28640,6 +28594,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 2124556905}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -28648,6 +28603,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -28855,6 +28811,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 1225766063}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -28863,6 +28820,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -28934,6 +28892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1783496616}
@@ -29931,6 +29890,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 928261583}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -29940,6 +29900,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -30011,6 +29972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1870662605}
@@ -30654,67 +30616,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 0}
   labelHelper: {fileID: 1834226409}
+  labelIcon: {fileID: 0}
+  labelIconHelper: {fileID: 0}
   indicatorParent: {fileID: 885479361}
   indicatorObject: {fileID: 1323806087491500, guid: d761d163a9f3c244a97cdaa6e14fafc1,
     type: 3}
+  selectorAnimator: {fileID: 0}
+  contentLayout: {fileID: 0}
+  contentLayoutHelper: {fileID: 0}
+  enableIcon: 1
   saveValue: 1
   selectorTag: Quality
   enableIndicators: 1
   invokeAtStart: 0
   invertAnimation: 0
   loopSelection: 1
+  iconScale: 1
+  contentSpacing: 15
   defaultIndex: 2
   index: 0
   itemList:
   - itemTitle: Low Shader Quality
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetShaderMode
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: High Shader Quality
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetShaderMode
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - itemTitle: Ultra Shader Quality
-    onValueChanged:
+    itemIcon: {fileID: 0}
+    onItemSelect:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1591098548}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetShaderMode
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  selectorEvent:
+        m_Calls: []
+  onValueChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!224 &1921141661
@@ -30773,6 +30710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   images:
   - {fileID: 1249450773}
   - {fileID: 183461}
@@ -31101,6 +31039,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 2037652543}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -31110,6 +31049,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -31181,6 +31121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 1955841789}
@@ -32235,6 +32176,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalIcon: {fileID: 1257465093}
   soundSource: {fileID: 4208561860216174225, guid: b06ceeb0b90b43246a0cbd639ba4b95b,
     type: 3}
@@ -32244,6 +32186,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -32315,6 +32258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
   buttonType: 1
+  webglMode: 0
   basicFilled: {fileID: 0}
   basicText: {fileID: 0}
   basicOnlyIconFilled: {fileID: 2002355745}
@@ -32578,6 +32522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   bar: {fileID: 1401111433}
   background: {fileID: 1016123555}
   label: {fileID: 0}
@@ -32601,7 +32546,11 @@ MonoBehaviour:
   isOn: 1
   restart: 1
   invert: 0
-  isPercent: 1
+  addPrefix: 0
+  addSuffix: 1
+  prefix: 
+  suffix: '%'
+  isFilled: 0
 --- !u!222 &2022736295
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33033,6 +32982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84a94b099bc62645a689ebb5655db16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableMobileMode: 0
   buttonAnimator: {fileID: 0}
 --- !u!95 &2063361952
 Animator:
@@ -33273,6 +33223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIManagerAsset: {fileID: 11400000, guid: 2a619a9609984be49b53b928dd94e61b, type: 2}
+  webglMode: 0
   background: {fileID: 483118907}
   bar: {fileID: 1849576403}
 --- !u!114 &2071095098
@@ -33762,6 +33713,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  buttonVar: {fileID: 0}
   normalText: {fileID: 1178989474}
   soundSource: {fileID: 0}
   rippleParent: {fileID: 0}
@@ -33770,6 +33722,7 @@ MonoBehaviour:
   useHoverSound: 1
   useClickSound: 1
   useRipple: 1
+  rippleUpdateMode: 1
   rippleShape: {fileID: 0}
   speed: 1
   maxSize: 4
@@ -34306,7 +34259,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 415323880}
   grid: {fileID: 1180912179}
-  building: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
   closeLOD: 100
   farLOD: 200
   cameraZoomSpeed: 50

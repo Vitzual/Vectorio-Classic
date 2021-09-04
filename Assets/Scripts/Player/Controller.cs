@@ -8,6 +8,8 @@ public class Controller : MonoBehaviour
     public Camera cam;
     public GameObject grid;
 
+    public Building building;
+
     public float closeLOD;
     public float farLOD;
 
@@ -24,6 +26,16 @@ public class Controller : MonoBehaviour
     public void Start()
     {
         targetZoom = cam.orthographicSize;
+
+        BuildingSystem.active.SetBuilding(building);
+
+        for (int y = -500; y < 500; y += 5)
+        {
+            for (int x = -500; x < 500; x += 5)
+            {
+                BuildingSystem.active.CmdCreateBuilding(new Vector2(x, y));
+            }
+        }
     }
 
     public void Update()

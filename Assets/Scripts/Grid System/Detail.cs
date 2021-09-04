@@ -32,7 +32,7 @@ public class Detail : MonoBehaviour
                 close.Remove(obj);
                 continue;
             }
-            obj.SetActive(false);
+            obj.SetActive(!obj.activeSelf);
         }
     }
 
@@ -48,7 +48,7 @@ public class Detail : MonoBehaviour
                 far.Remove(obj);
                 continue;
             }
-            obj.SetActive(false);
+            obj.SetActive(!obj.activeSelf);
         }
     }
 }

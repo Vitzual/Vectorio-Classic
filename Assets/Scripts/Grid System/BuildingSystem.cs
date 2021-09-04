@@ -6,6 +6,21 @@ using Mirror;
 
 public class BuildingSystem : MonoBehaviour
 {
+    // Building class
+    public class BuildingQueue
+    {
+        public BuildingQueue(GameObject obj, Vector2 pos, Quaternion rotation)
+        {
+            this.obj = obj;
+            this.pos = pos;
+            this.rotation = rotation;
+        }
+
+        public GameObject obj;
+        public Vector2 pos;
+        public Quaternion rotation;
+    }
+
     // Grid variable
     public GridSystem tileGrid;
 
@@ -21,6 +36,9 @@ public class BuildingSystem : MonoBehaviour
     private float alphaAdjust = 0.005f;
     private float alphaHolder;
 
+    private List<BuildingQueue> buildingQueue;
+    private int cooldown;
+
     // Start method grabs tilemap
     public void Awake()
     {
@@ -35,10 +53,13 @@ public class BuildingSystem : MonoBehaviour
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
         lastObj = null;
+        buildingQueue = new List<BuildingQueue>();
 
         // Sets static anim variables
         spriteRenderer = GetComponent<SpriteRenderer>();
         alphaHolder = alphaAdjust;
+
+        cooldown = 3;
     }
 
     // Update is called once per frame
@@ -50,6 +71,14 @@ public class BuildingSystem : MonoBehaviour
         // Round to grid
         OffsetBuilding();
         AdjustTransparency();
+
+        if (buildingQueue.Count > 0 && cooldown == 0)
+        {
+            RpcInstantiateObject(buildingQueue[0]);
+            buildingQueue.RemoveAt(0);
+            cooldown = 3;
+        }
+        else cooldown -= 1;
     }
 
     private void OffsetBuilding()
@@ -90,22 +119,26 @@ public class BuildingSystem : MonoBehaviour
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(building.obj, position, active.transform.rotation);
+        buildingQueue.Add(new BuildingQueue(building.obj, position, Quaternion.identity));
     }
 
-    private void RpcInstantiateObject(GameObject obj, Vector2 position, Quaternion rotation)
+    // Creates a building at specified coords
+    public void CmdCreateBuilding(Vector2 coords)
+    {
+        // Check if active is null
+        if (building == null || building.obj == null) return;
+
+        // Instantiate the object like usual
+        buildingQueue.Add(new BuildingQueue(building.obj, coords, Quaternion.identity));
+    }
+
+    private void RpcInstantiateObject(BuildingQueue building)
     {
         // Create the tile
-        lastObj = Instantiate(obj, position, rotation);
-        lastObj.name = obj.name;
+        lastObj = Instantiate(building.obj, building.pos, building.rotation);
+        lastObj.name = building.obj.name;
 
-        // Set the tiles on the grid class
-        if (building.cells.Length > 0)
-        {
-            foreach (Tile.Cell cell in building.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, building, lastObj);
-        }
-        else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, building, lastObj);
+        SetCells();
     }
 
     // Checks to make sure tile(s) isn't occupied
@@ -119,5 +152,16 @@ public class BuildingSystem : MonoBehaviour
         }
         else return tileGrid.RetrieveCell(Vector2Int.RoundToInt(position)) == null;
         return true;
+    }
+
+    public void SetCells()
+    {
+        // Set the tiles on the grid class
+        if (building.cells.Length > 0)
+        {
+            foreach (Tile.Cell cell in building.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastObj.transform.position.x + cell.x, lastObj.transform.position.y + cell.y)), true, building, lastObj);
+        }
+        else tileGrid.SetCell(Vector2Int.RoundToInt(lastObj.transform.position), true, building, lastObj);
     }
 }

@@ -58,7 +58,7 @@ public abstract class EnemyClass : MonoBehaviour
                 if (!holder.enabled)
                 {
                     holder.enabled = true;
-                    holder.ForceTarget(transform);
+                    //holder.ForceTarget(transform);
                 }
             }
         }
@@ -74,7 +74,7 @@ public abstract class EnemyClass : MonoBehaviour
     public void OnTriggerLeave2D(Collider2D collider)
     {
         DefaultTurret holder = collider.GetComponent<DefaultTurret>();
-        if (holder.enabled) holder.RemoveTarget(transform);
+        //if (holder.enabled) holder.RemoveTarget(transform);
     }
 
     // Kill entity

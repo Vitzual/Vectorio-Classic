@@ -343,11 +343,11 @@ public class Interface : MonoBehaviour
                 InfoPanels[0].health.text = tileInfo.health + "hp";
                 if (obj.name != "Wall")
                 {
-                    InfoPanels[0].damage.text = turret.GetDamage() + "/ps";
-                    InfoPanels[0].range.text = (turret.GetRange() / 5) + " tiles";
-                    InfoPanels[0].firerate.text = turret.GetFireRate() + "s";
-                    InfoPanels[0].pierce.text = turret.GetBulletPierces() + "/ps";
-                    InfoPanels[0].rotation.text = turret.GetRotationSpeed() + "v";
+                    //InfoPanels[0].damage.text = turret.GetDamage() + "/ps";
+                    //InfoPanels[0].range.text = (turret.GetRange() / 5) + " tiles";
+                    //InfoPanels[0].firerate.text = turret.GetFireRate() + "s";
+                    //InfoPanels[0].pierce.text = turret.GetBulletPierces() + "/ps";
+                    //InfoPanels[0].rotation.text = turret.GetRotationSpeed() + "v";
                 }
                 else
                 {

@@ -10,19 +10,55 @@ public class TurretHandler : MonoBehaviour
     // Barrel class
     public List<TurretEntity> turretEntities;
 
-    // IRecoilAnim interface variables
-    public bool animationEnabled { get; set; }
-    public bool animPlaying { get; set; }
-    public bool animRebound { get; set; }
-    public int animTracker { get; set; }
-    public int animHolder { get; set; }
-    public float animMovement { get; set; }
-
     public void Start()
     {
         if (this != null)
             active = this;
     }
+
+    public void Update()
+    {
+        for (int i=0; i<turretEntities.Count; i++)
+        {
+            if (turretEntities[i].obj == null)
+            {
+                RemoveTurretEntity(turretEntities[i]);
+                i--;
+            }
+            else if (turretEntities[i].hasTarget)
+            {
+
+            }
+        }
+    }
+
+    public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform obj, GameObject bullet = null)
+    {
+        turretEntities.Add(new TurretEntity(turret, firePoints, obj, bullet));
+    }
+
+    public void RemoveTurretEntity(TurretEntity turretEntity)
+    {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Plays the recoil animation (IRecoilAnim interface method)
     public void PlayRecoilAnimation(Transform obj)

@@ -4,11 +4,14 @@ using UnityEngine;
 [HideInInspector]
 public class BaseTurret : BaseBuilding, IAudible
 {
-    // Turret scriptable
-    public Turret turret;
-
     // IAudible interface variables
     public AudioClip sound { get; set; }
+
+    // Sets stats and registers itself under the turret handler
+    public void Start()
+    {
+        SetBuildingStats();
+    }
 
     // IAudible sound method
     public void PlaySound()

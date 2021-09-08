@@ -25,10 +25,12 @@ public class TurretEntity
 
     // Base turret object variables
     public Transform[] firePoints;
-    public Transform obj;
+    public Transform barrel;
+    public Vector2 position;
     public GameObject bullet;
 
     // Boolean flags
-    public Enemy target;
+    public Enemy enemy;
+    public Transform target;
     public bool hasTarget;
 }

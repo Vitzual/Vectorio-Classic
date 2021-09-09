@@ -41,6 +41,4 @@ public class Turret : Building
         // Base method
         base.CreateStats(panel);
     }
-
-    // 
 }

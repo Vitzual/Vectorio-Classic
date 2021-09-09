@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class TurretHandler : MonoBehaviour
 {
@@ -78,7 +79,59 @@ public class TurretHandler : MonoBehaviour
             // Rotate the turret
             entity.barrel.Rotate(Vector3.forward, distanceToRotate);
         }
-        else entity.barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+        else 
+        { 
+            entity.barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+            if (Shoot(entity))
+            {
+
+            }
+        }
+
+    }
+
+    // Attempts to fire a bullet and returns true if fired
+    protected bool Shoot(TurretEntity entity)
+    {
+        if (entity.cooldown > 0)
+        {
+            entity.cooldown -= Time.deltaTime;
+            return false;
+        }
+        else
+        {
+            foreach(Transform firePoint in entity.firePoints)
+                for (int i = 0; i < entity.turret.bulletAmount; i += 1)
+                    CreateBullet(entity, firePoint.position);
+            SetCooldown(entity);
+            return true;
+        }
+    }
+
+    // Create a bullet object
+    protected void CreateBullet(TurretEntity entity, Vector2 position)
+    {
+        if (entity.turret.sound != null)
+            Debug.Log("Playing sound!");
+
+        GameObject bullet = Instantiate(entity.bullet, position, entity.barrel.rotation);
+        bullet.transform.rotation = entity.barrel.rotation;
+        bullet.transform.Rotate(0f, 0f, Random.Range(-entity.turret.bulletSpread, entity.turret.bulletSpread));
+
+        float speed = Random.Range(entity.turret.bulletSpeed - 10, entity.turret.bulletSpeed + 10);
+        int pierces = entity.turret.bulletPierces + Research.research_pierce;
+        float damage = entity.turret.damage + Research.research_damage;
+
+        // Dependent on the bullet, register under the correct master script
+        // Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, damage));
+        Debug.Log("Broadcasting bullet fired event");
+    }
+
+    // Set the turrets cooldown
+    public void SetCooldown(TurretEntity entity)
+    {
+        if (entity.turret.fireRate <= 0.03f) entity.cooldown = 0.03f;
+        else entity.cooldown = entity.turret.fireRate;
     }
 
     public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)

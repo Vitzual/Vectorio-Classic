@@ -21,6 +21,7 @@ public class TurretEntity
 
         target = null;
         hasTarget = false;
+        cooldown = turret.fireRate;
     }
 
     // Turret scriptable
@@ -36,4 +37,7 @@ public class TurretEntity
     public Enemy enemy;
     public Transform target;
     public bool hasTarget;
+
+    // Cooldown
+    public float cooldown;
 }

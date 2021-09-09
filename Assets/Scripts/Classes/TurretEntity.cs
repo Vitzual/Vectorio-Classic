@@ -6,11 +6,14 @@ using UnityEngine;
 public class TurretEntity 
 {
     // Parameterized Constructor 
-    public TurretEntity(Turret turret, Transform[] firePoints, Transform obj, GameObject bullet = null)
+    public TurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
     {
         this.turret = turret;
+
         this.firePoints = firePoints;
-        this.obj = obj;
+        this.barrel = barrel;
+        this.position = position;
+        this.bullet = bullet;
 
         if (bullet == null)
             this.bullet = Resources.Load<GameObject>("Bullet/Default");

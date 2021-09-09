@@ -54,12 +54,12 @@ public abstract class EnemyClass : MonoBehaviour
         {
             if (collider.name != "Wall" && collider.name != "Drone Port")
             {
-                DefaultTurret holder = collider.GetComponent<DefaultTurret>();
-                if (!holder.enabled)
-                {
-                    holder.enabled = true;
+                //DefaultTurret holder = collider.GetComponent<DefaultTurret>();
+                //if (!holder.enabled)
+                //{
+                //    holder.enabled = true;
                     //holder.ForceTarget(transform);
-                }
+                //}
             }
         }
 
@@ -73,7 +73,7 @@ public abstract class EnemyClass : MonoBehaviour
     // Gets called when entering another defenses range or hitting the defense all together
     public void OnTriggerLeave2D(Collider2D collider)
     {
-        DefaultTurret holder = collider.GetComponent<DefaultTurret>();
+        //DefaultTurret holder = collider.GetComponent<DefaultTurret>();
         //if (holder.enabled) holder.RemoveTarget(transform);
     }
 

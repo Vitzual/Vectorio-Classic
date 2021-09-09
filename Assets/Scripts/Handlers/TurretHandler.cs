@@ -20,7 +20,7 @@ public class TurretHandler : MonoBehaviour
     {
         for (int i=0; i<turretEntities.Count; i++)
         {
-            if (turretEntities[i].obj == null)
+            if (turretEntities[i].barrel == null)
             {
                 RemoveTurretEntity(turretEntities[i]);
                 i--;
@@ -81,9 +81,9 @@ public class TurretHandler : MonoBehaviour
         else entity.barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
     }
 
-    public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform obj, GameObject bullet = null)
+    public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
     {
-        turretEntities.Add(new TurretEntity(turret, firePoints, obj, bullet));
+        turretEntities.Add(new TurretEntity(turret, firePoints, barrel, position, bullet));
     }
 
     public void RemoveTurretEntity(TurretEntity turretEntity)

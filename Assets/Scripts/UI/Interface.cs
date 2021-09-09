@@ -333,7 +333,7 @@ public class Interface : MonoBehaviour
         switch ("Defenses") // REFACTOR
         {
             case "Defenses":
-                DefaultTurret turret = obj.GetComponent<DefaultTurret>();
+                //DefaultTurret turret = obj.GetComponent<DefaultTurret>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
                 InfoPanels[0].description.text = tileInfo.GetDescription();
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);

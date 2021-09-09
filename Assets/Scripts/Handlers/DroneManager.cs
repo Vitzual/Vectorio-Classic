@@ -840,10 +840,10 @@ public class DroneManager : MonoBehaviour
             100 + Research.research_range,
             1 << LayerMask.NameToLayer("Enemy Defense"));
 
-        foreach (Collider2D enemyTurret in colliders)
-        {
-            enemyTurret.gameObject.GetComponent<DefaultTurret>().enabled = true;
-        }
+        //foreach (Collider2D enemyTurret in colliders)
+        //{
+        //    enemyTurret.gameObject.GetComponent<DefaultTurret>().enabled = true;
+        //}
 
         return;
     }

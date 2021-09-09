@@ -9,83 +9,83 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform Object, Transform Target, float Speed, int Tracker, int Piercing, int Damage)
+        public ActiveBullets(Transform obj, Transform target, float speed, int piercing, float damage, bool tracking)
         {
-            this.Object = Object;
-            this.Target = Target;
-            this.Speed = Speed;
-            this.Tracker = Tracker;
-            this.Piercing = Piercing;
-            this.Damage = Damage;
+            this.obj = obj;
+            this.target = target;
+            this.speed = speed;
+            this.piercing = piercing;
+            this.damage = damage;
+            this.tracking = tracking;
+
+            ignore = new List<Transform>();
         }
 
         // Class variables
-        public Transform Object { get; set; }
-        public Transform Target { get; set; }
-        public float Speed { get; set; }
-        public int Tracker { get; set; }
-        public int Piercing { get; set; }
-        public int Damage { get; set; }
-        public List<Transform> IgnoreEnemies = new List<Transform>();
+        public Transform obj;
+        public Transform target;
+        public float speed;
+        public int piercing;
+        public float damage;
+        public bool tracking;
+        public List<Transform> ignore;
 
     }
-    public List<ActiveBullets> Bullets;
+    public List<ActiveBullets> bullets;
 
-    public LayerMask EnemyLayer;
-    public LayerMask EnemyBuildingLayer;
-    private LayerMask LayerCast;
+    public LayerMask enemyLayer;
 
     // Called when awoken
     public void Start()
     {
-        LayerCast = EnemyLayer | EnemyBuildingLayer;
+        Events.active.onBulletFired += RegisterBullet;
     }
 
     // Handles bullet movement and hit detection frame-by-frame
     public void Update()
     {
-        for (int i = 0; i < Bullets.Count; i++)
-            try
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            if (bullets[i].obj != null)
             {
-                Bullets[i].Object.position += Bullets[i].Object.up * Bullets[i].Speed * Time.deltaTime;
-                if (Bullets[i].Tracker == 2)
+                if (bullets[i].tracking && bullets[i].target != null)
                 {
-                    Bullets[i].Tracker = 1;
-                    RaycastHit2D hit = Physics2D.Raycast(Bullets[i].Object.position, Bullets[i].Object.up, 1.5f, LayerCast);
-                    if (hit.collider != null && !Bullets[i].IgnoreEnemies.Contains(hit.collider.transform))
-                        if (OnHit(i, hit.collider.transform)) { i--; continue; }
+                    float step = bullets[i].speed * Time.deltaTime;
+                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.position, step);
                 }
                 else
                 {
-                    Bullets[i].Tracker+=1;
-                    continue;
+                    bullets[i].obj.position += bullets[i].obj.up * bullets[i].speed * Time.deltaTime;
                 }
+                RaycastHit2D hit = Physics2D.Raycast(bullets[i].obj.position, bullets[i].obj.up, 2f, enemyLayer);
+                if (hit.collider != null && !bullets[i].ignore.Contains(hit.collider.transform))
+                    if (OnHit(i, hit.collider.transform)) { i--; continue; }
             }
-            catch
+            else
             {
-                Bullets.RemoveAt(i);
+                bullets.RemoveAt(i);
                 i--;
             }
+        }
     }
 
     // Registers a bullet to be handled by the updater in this script
-    public void RegisterBullet(Transform bullet, Transform target, float speed, int pierces, int damage)
+    public void RegisterBullet(Bullet bullet)
     {
-        Bullets.Add(new ActiveBullets(bullet, target, speed, 1, pierces, damage));
+        bullets.Add(new ActiveBullets(bullet.obj, bullet.target, bullet.speed, bullet.pierces, bullet.damage, bullet.tracking));
     }
 
     // Called when a hit is detected in the updater 
     public bool OnHit(int bulletID, Transform other)
     {
         // Add the other transform to the ignore list for future collisions
-        Bullets[bulletID].IgnoreEnemies.Add(other);
-        other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
+        bullets[bulletID].ignore.Add(other);
+        //other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
 
-        Bullets[bulletID].Piercing--;
-        if (Bullets[bulletID].Piercing == 0)
+        bullets[bulletID].piercing--;
+        if (bullets[bulletID].piercing == 0)
         {
-            // REMAKE THIS
-            Bullets.RemoveAt(bulletID);
+            bullets.RemoveAt(bulletID);
             return true;
         }
         return false;

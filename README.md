@@ -10,14 +10,7 @@ Welcome to the source code for Vectorio!
 Though the current setup of the game works fine, it does not support extensive modding or multiplayer. It is both outdated and inefficient, so over the course of v0.2 multiple changes will be made to the base code to improve on these things as well as help streamline the development process. 
 
 **What does the refactor include?**
-- [x] Turret refactor
-- [ ] Bullet refactor
-- [ ] Enemy refactor
-- [ ] Research refactor
-- [ ] Technology refactor
-- [ ] Interface refactor
-- [ ] Spawner refactor
-- [x] Material refactor
+https://github.com/Vitzual/Vectorio/projects/2
 
 # Required Assets
 In order to fully build the game, you'll need the following assets. If you do not want to pay for these assets, you can modify your fork to work without them, but make sure when you make a PR you do not include these changes (it will be denied), or simply just send us a link to your fork. If you have obtained these assets, create a folder called `Blacklist` inside the `External` folder and place the asset folders inside of it. 

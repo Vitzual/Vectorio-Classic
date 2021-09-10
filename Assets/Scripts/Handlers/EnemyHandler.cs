@@ -49,12 +49,17 @@ public class EnemyHandler : MonoBehaviour
                     {
                         enemies[i].enemy.Kill(enemies[i].obj);
                         enemies.RemoveAt(i);
-                        return;
+                        i--;
                     }
                     else
                     {
                         DefaultBuilding building = hit.collider.GetComponent<DefaultBuilding>();
-                        if (building != null) enemies[i].enemy.GiveDamage(building);
+                        if (building != null && enemies[i].enemy.GiveDamage(building))
+                        {
+                            enemies[i].enemy.Kill(enemies[i].obj);
+                            enemies.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
             }
@@ -70,29 +75,5 @@ public class EnemyHandler : MonoBehaviour
     public void RegisterEnemy(Transform obj, Enemy enemy)
     {
         enemies.Add(new ActiveEnemies(obj, enemy));
-    }
-
-    // Request information about an enemy using the transform attached
-    public int RequestID(Transform obj)
-    {
-        for (int i = 0; i < enemies.Count; i++)
-            if (enemies[i].obj == obj) return i;
-        return -1;
-    }
-
-    public Transform findClosest(Vector3 pos)
-    {
-        Transform result = null;
-        float closest = float.PositiveInfinity;
-        foreach (ActiveEnemies enemy in enemies)
-        {
-            float distance = Vector2.Distance(enemy.obj.position, pos);
-            if (distance < closest)
-            {
-                result = enemy.obj;
-                closest = distance;
-            }
-        }
-        return result;
     }
 }

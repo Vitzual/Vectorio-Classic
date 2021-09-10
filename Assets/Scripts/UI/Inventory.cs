@@ -11,19 +11,11 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
-        // Loads all buildings on record
-        try
-        {
-            List<Building> tiles = Resources.LoadAll("Scriptables", typeof(Building)).Cast<Building>().ToList();
-            Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
+        List<Building> tiles = Resources.LoadAll("Scriptables", typeof(Building)).Cast<Building>().ToList();
+        Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
 
-            foreach (Building building in tiles) 
-                CreateBuildable(building);
-        }
-        catch
-        {
-            Debug.LogError("The folder Resources/Scriptables/ contains a non-scriptable object. Please remove it!");
-        }
+        foreach (Building building in tiles) 
+            CreateBuildable(building);
     }
 
     public void CreateBuildable(Building building)

@@ -12,13 +12,11 @@ public class Sprites : MonoBehaviour
     {
         CreateDefaultSprite();
 
-        List<Sprite> sprites = Resources.LoadAll("Sprites/Buildings", typeof(Sprite)).Cast<Sprite>().ToList();
+        List<Sprite> sprites = Resources.LoadAll("Sprites", typeof(Sprite)).Cast<Sprite>().ToList();
 
         foreach (Sprite sprite in sprites)
-        {
-            Debug.Log(sprite.name);
-            library.Add(sprite.name, sprite);
-        }
+            if (sprite != null)
+                library.Add(sprite.name, sprite);
     }
 
     public static Sprite GetSprite(string name)

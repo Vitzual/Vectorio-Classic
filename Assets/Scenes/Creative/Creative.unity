@@ -9406,13 +9406,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef71275ec2520684ca687ec542b02ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullets: []
-  EnemyLayer:
+  bullets: []
+  enemyLayer:
     serializedVersion: 2
-    m_Bits: 512
-  EnemyBuildingLayer:
-    serializedVersion: 2
-    m_Bits: 524288
+    m_Bits: 0
 --- !u!4 &612658974
 Transform:
   m_ObjectHideFlags: 0
@@ -12250,6 +12247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8803b0ce495474a46b0b99e1d9aecda0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turretEntities: []
 --- !u!4 &798355008
 Transform:
   m_ObjectHideFlags: 0
@@ -25071,24 +25069,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1591098547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600dfff3b3f918945b12306d1b83b2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 57be68d993f298c44922dbf8ee08ef04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: {fileID: 21300000, guid: 272fe30baa0cc1d428df041e64a7240e, type: 3}
-  essence: {fileID: 21300000, guid: bff613cc1fd1a9140adb3a7f3afa1893, type: 3}
-  iridium: {fileID: 21300000, guid: 43fe47b76eaf70643b68b4bdba0df8d7, type: 3}
-  power: {fileID: 21300000, guid: 30234a95604bad945b8bc010d6724ad1, type: 3}
-  heat: {fileID: 21300000, guid: 4dcf0c8c7e6d8cf4f8e8d3466bf7ccd4, type: 3}
-  health: {fileID: 21300000, guid: 2b38851a04e6ae14cb7178d6a57f230b, type: 3}
-  damage: {fileID: 21300000, guid: d31eee64168edee41b058ed85bc813c6, type: 3}
-  range: {fileID: 21300000, guid: 1e86031094673c54498bc369fcd40145, type: 3}
-  rotationSpeed: {fileID: 21300000, guid: 8c999b906f7c4cd4f9d7663af13b4437, type: 3}
-  fireRate: {fileID: 21300000, guid: 11fcb764b28235c41ba4635606a96021, type: 3}
-  bulletPierces: {fileID: 21300000, guid: 92045935c8cb36048b3731ed8d4bcb54, type: 3}
-  bulletAmount: {fileID: 21300000, guid: 190e7bc9f6931974cb12b65cff01f801, type: 3}
-  bulletSpeed: {fileID: 21300000, guid: c65a606473e5e824b9415950b7e41b4e, type: 3}
-  bulletSpread: {fileID: 21300000, guid: bcdc18237f9436d4f850fa02199234e1, type: 3}
-  blank: {fileID: 21300000, guid: ad50e7d5254124246b6fb3e16120f440, type: 3}
 --- !u!114 &1591098554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26545,10 +26528,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingGoDeadSound: {fileID: 655988622}
-  Enemies: []
-  BuildingLayer:
+  enemies: []
+  buildingLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   isMenu: 0
 --- !u!4 &1663495716
 Transform:
@@ -26813,7 +26796,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1478515052}
   m_HandleRect: {fileID: 1478515051}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -33269,7 +33252,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1849576403}
   m_HandleRect: {fileID: 1849576402}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

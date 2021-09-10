@@ -30,13 +30,12 @@ public class Turret : Building
     // This gets used to set the stats on the building menu panel
     public override void CreateStats(Panel panel)
     {
-        panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.active.health));
-        panel.CreateStat(new Stat("Damage", damage, damageModifier, Sprites.active.damage));
-        panel.CreateStat(new Stat("Range", range, damageModifier, Sprites.active.range));
-        panel.CreateStat(new Stat("Firerate", fireRate, damageModifier, Sprites.active.fireRate));
-        panel.CreateStat(new Stat("Pierces", bulletPierces, damageModifier, Sprites.active.bulletPierces));
-        panel.CreateStat(new Stat("Bullets", bulletAmount, damageModifier, Sprites.active.bulletAmount));
-        panel.CreateStat(new Stat("Spread", bulletSpread, damageModifier, Sprites.active.bulletSpread));
+        panel.CreateStat(new Stat("Damage", damage, damageModifier, Sprites.GetSprite("Damage")));
+        panel.CreateStat(new Stat("Range", range, damageModifier, Sprites.GetSprite("Range")));
+        panel.CreateStat(new Stat("Firerate", fireRate, damageModifier, Sprites.GetSprite("Firerate")));
+        panel.CreateStat(new Stat("Pierces", bulletPierces, damageModifier, Sprites.GetSprite("Pierces")));
+        panel.CreateStat(new Stat("Bullets", bulletAmount, damageModifier, Sprites.GetSprite("Bullets")));
+        panel.CreateStat(new Stat("Spread", bulletSpread, damageModifier, Sprites.GetSprite("Spread")));
 
         // Base method
         base.CreateStats(panel);

@@ -36,6 +36,6 @@ public class Building : Tile
         foreach (Resources type in resources)
             panel.CreateStat(new Stat(Resource.GetName(type.resource), type.amount, type.modifier, Resource.GetSprite(type.resource), true));
 
-        panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.active.health));
+        panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.GetSprite("Health")));
     }
 }

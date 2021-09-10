@@ -105,17 +105,17 @@ public class Resource : MonoBehaviour
         switch (type)
         {
             case Currency.Gold:
-                return Sprites.active.gold;
+                return Sprites.GetSprite("Gold");
             case Currency.Essence:
-                return Sprites.active.essence;
+                return Sprites.GetSprite("Essence");
             case Currency.Iridium:
-                return Sprites.active.iridium;
+                return Sprites.GetSprite("Iridium");
             case Currency.Power:
-                return Sprites.active.power;
+                return Sprites.GetSprite("Power");
             case Currency.Heat:
-                return Sprites.active.heat;
+                return Sprites.GetSprite("Heat");
             default:
-                return Sprites.active.blank;
+                return Sprites.GetSprite("Transparent");
         }
     }
 }

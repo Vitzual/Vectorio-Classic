@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
         buildable = holder.GetComponent<MenuButton>();
         buildable.building = building;
         buildable.button.buttonText = "<b>" + building.name.ToUpper() + "</b><size=20> LEVEL " + building.level;
-        buildable.icon.sprite = building.icon;
+        buildable.icon.sprite = Sprites.GetSprite(building.sprite);
 
         // Set building unlock value
         if (building.isUnlocked)

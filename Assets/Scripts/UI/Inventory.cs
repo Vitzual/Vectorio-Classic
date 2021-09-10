@@ -45,27 +45,22 @@ public class Inventory : MonoBehaviour
         else
             buildable.desc.text = "<b>LOCKED |</b> <size=16>" + building.unlockDesc;
 
-        // Set buildable resources
-        //
-        // WIP - Will eventually automatically scan and add every resource
-        // so that this script doesn't need to be modified
-
         foreach (Building.Resources resource in building.resources)
         {
             // Check power
             if (resource.resource == Resource.Currency.Power)
-                buildable.essenceIcon.SetActive(true);
-            else buildable.essenceIcon.SetActive(false);
+                buildable.powerIcon.SetActive(true);
+            else buildable.powerIcon.SetActive(false);
 
             // Check heat
             if (resource.resource == Resource.Currency.Heat)
-                buildable.essenceIcon.SetActive(true);
-            else buildable.essenceIcon.SetActive(false);
+                buildable.heatIcon.SetActive(true);
+            else buildable.heatIcon.SetActive(false);
 
             // Check gold
             if (resource.resource == Resource.Currency.Gold)
-                buildable.essenceIcon.SetActive(true);
-            else buildable.essenceIcon.SetActive(false);
+                buildable.goldIcon.SetActive(true);
+            else buildable.goldIcon.SetActive(false);
 
             // Check essence
             if (resource.resource == Resource.Currency.Essence)

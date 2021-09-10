@@ -7,20 +7,31 @@ public class Sprites : MonoBehaviour
 {
     public static Dictionary<string, Sprite> library = new Dictionary<string, Sprite>();
     public static Sprite emptySprite;
+    public static bool generated = false;
 
     public void Start()
     {
+        if (!generated)
+            GenerateSprites(); 
+    }
+
+    public static void GenerateSprites()
+    {
+        generated = true;
+
         CreateDefaultSprite();
 
         List<Sprite> sprites = Resources.LoadAll("Sprites", typeof(Sprite)).Cast<Sprite>().ToList();
 
         foreach (Sprite sprite in sprites)
-            if (sprite != null)
-                library.Add(sprite.name, sprite);
+            library.Add(sprite.name, sprite);
     }
 
     public static Sprite GetSprite(string name)
     {
+        if (!generated)
+            GenerateSprites();
+
         library.TryGetValue(name, out Sprite sprite);
         if (sprite == null)
         {
@@ -30,8 +41,11 @@ public class Sprites : MonoBehaviour
         else return sprite;
     }
 
-    public void CreateDefaultSprite()
+    public static void CreateDefaultSprite()
     {
+        if (!generated)
+            GenerateSprites();
+
         Texture2D tex = new Texture2D(256, 256);
         tex.alphaIsTransparency = true;
 

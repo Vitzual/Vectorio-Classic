@@ -90,7 +90,7 @@ public class BuildingSystem : MonoBehaviour
     // Sets the selected building
     public void SetBuilding(Tile building)
     {
-        spriteRenderer.sprite = Sprites.GetSprite(building.sprite);
+        spriteRenderer.sprite = Sprites.GetSprite(building.name);
         this.building = building;
         if (building != null) offset = building.offset;
     }

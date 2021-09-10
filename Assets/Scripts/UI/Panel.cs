@@ -41,7 +41,7 @@ public class Panel : MonoBehaviour
         // Set panel description
         name.text = building.name.ToUpper();
         desc.text = building.description;
-        icon.sprite = Sprites.GetSprite(building.sprite);
+        icon.sprite = Sprites.GetSprite(building.name);
 
         // Create stats for the building
         SetUnused();

@@ -327,7 +327,7 @@ public class Interface : MonoBehaviour
         */
 
         // Get some good shit
-        BaseBuilding tileInfo = obj.GetComponent<BaseBuilding>();
+        DefaultBuilding tileInfo = obj.GetComponent<DefaultBuilding>();
 
         // Iterate through
         switch ("Defenses") // REFACTOR
@@ -365,7 +365,7 @@ public class Interface : MonoBehaviour
     {
         // TODO: Fix this bullshit
         Transform b = Overlay.transform.Find("Prompt");
-        BaseBuilding c = a.GetComponent<BaseBuilding>();
+        DefaultBuilding c = a.GetComponent<DefaultBuilding>();
         b.transform.Find("Health").GetComponent<ProgressBar>().currentPercent = c.health / c.maxHealth;
         b.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = a.name;
         b.transform.Find("Building").GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + a.name);

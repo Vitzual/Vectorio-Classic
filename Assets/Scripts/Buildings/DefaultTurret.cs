@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [HideInInspector]
-public class BaseTurret : BaseBuilding, IAudible
+public class DefaultTurret : DefaultBuilding, IAudible
 {
     // IAudible interface variables
     public AudioClip sound { get; set; }

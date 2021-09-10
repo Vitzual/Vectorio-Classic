@@ -7,7 +7,7 @@ public interface IDamageable
 {
     float health { get; set; }
     float maxHealth { get; set; }
-    void DamageEntity(int dmg);
+    bool DamageEntity(float dmg);
     void DestroyEntity();
-    void HealEntity(int amounnt);
+    void HealEntity(float amount);
 }

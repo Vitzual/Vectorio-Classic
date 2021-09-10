@@ -12,28 +12,19 @@ public class EnemyHandler : MonoBehaviour
     public class ActiveEnemies
     {
         // Constructor
-        public ActiveEnemies(Transform Object, float Speed, int Damage)
+        public ActiveEnemies(Transform obj, Enemy enemy)
         {
-            this.Object = Object;
-            this.Speed = Speed;
-            this.Damage = Damage;
-
-            ObjectClass = Object.GetComponent<EnemyClass>();
-            if (ObjectClass != null) EnemyID = ObjectClass.ID;
-            else EnemyID = -2; // Will not update other techs
+            this.obj = obj;
+            this.enemy = enemy;
         }
 
         // Class variables
-        public Transform Object { get; set; }
-        public float Speed { get; set; }
-        public int Damage { get; set; }
-        public int EnemyID { get; set; }
-        public EnemyClass ObjectClass { get; set; }
-
+        public Transform obj;
+        public Enemy enemy;
     }
-    public List<ActiveEnemies> Enemies;
+    public List<ActiveEnemies> enemies;
 
-    public LayerMask BuildingLayer;
+    public LayerMask buildingLayer;
     public bool isMenu = false;
 
     public void Start()
@@ -45,90 +36,60 @@ public class EnemyHandler : MonoBehaviour
     // Handles enemy movement every frame
     public void Update()
     {
-        if (isMenu)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            for (int i = 0; i < Enemies.Count; i++)
+            if (enemies[i].obj != null) 
             {
-                try
+                enemies[i].enemy.Move(enemies[i].obj);
+                RaycastHit2D hit = Physics2D.Raycast(enemies[i].obj.position, enemies[i].obj.up, 2f, buildingLayer);
+
+                if (hit.collider != null)
                 {
-                    Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-                }
-                catch
-                {
-                    Enemies.RemoveAt(i);
-                    i--;
+                    if (isMenu)
+                    {
+                        enemies[i].enemy.Kill(enemies[i].obj);
+                        enemies.RemoveAt(i);
+                        return;
+                    }
+                    else
+                    {
+                        DefaultBuilding building = hit.collider.GetComponent<DefaultBuilding>();
+                        if (building != null) enemies[i].enemy.GiveDamage(building);
+                    }
                 }
             }
-        }
-        else
-        {
-            for (int i = 0; i < Enemies.Count; i++)
+            else
             {
-                try
-                {
-                    if (Enemies[i].ObjectClass.target == null) Enemies[i].ObjectClass.FindNearestDefence();
-                    Enemies[i].Object.position += Enemies[i].Object.up * Enemies[i].Speed * Time.deltaTime;
-                }
-                catch
-                {
-                    Enemies.RemoveAt(i);
-                    i--;
-                }
+                enemies.RemoveAt(i);
+                i--;
             }
         }
     }
 
     // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(Transform Object, float Speed, int Damage)
+    public void RegisterEnemy(Transform obj, Enemy enemy)
     {
-        Enemies.Add(new ActiveEnemies(Object, Speed, Damage));
+        enemies.Add(new ActiveEnemies(obj, enemy));
     }
 
     // Request information about an enemy using the transform attached
     public int RequestID(Transform obj)
     {
-        for (int i = 0; i < Enemies.Count; i++)
-            if (Enemies[i].Object == obj) return i;
+        for (int i = 0; i < enemies.Count; i++)
+            if (enemies[i].obj == obj) return i;
         return -1;
-    }
-
-    // Called when a hit is detected in the updater 
-    public void OnHit(int enemyID, Transform other)
-    {
-        if (isMenu)
-        {
-            Enemies[enemyID].ObjectClass.KillEntity();
-            Enemies.RemoveAt(enemyID);
-            return;
-        }
-
-        Vector3 pos = new Vector3(other.position.x, other.position.y, other.position.z);
-
-        other.GetComponent<BaseBuilding>().DamageEntity(Enemies[enemyID].Damage);
-
-        if (other != null && other.GetComponent<BaseBuilding>().health > 0)
-        {
-            Enemies[enemyID].ObjectClass.KillEntity();
-            Enemies.RemoveAt(enemyID);
-
-            return;
-        }
-
-        BuildingGoDeadSound.Play();
-        // survival.SetLastHit(pos);
-        return;
     }
 
     public Transform findClosest(Vector3 pos)
     {
         Transform result = null;
         float closest = float.PositiveInfinity;
-        foreach (ActiveEnemies enemy in Enemies)
+        foreach (ActiveEnemies enemy in enemies)
         {
-            float distance = Vector2.Distance(enemy.Object.position, pos);
+            float distance = Vector2.Distance(enemy.obj.position, pos);
             if (distance < closest)
             {
-                result = enemy.Object;
+                result = enemy.obj;
                 closest = distance;
             }
         }

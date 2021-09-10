@@ -123,7 +123,7 @@ public class TurretHandler : MonoBehaviour
         float damage = entity.turret.damage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
-        // Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, damage));
+        Events.active.BulletFired(new Bullet(bullet.transform, entity.target, speed, pierces, damage, true));
         Debug.Log("Broadcasting bullet fired event");
     }
 

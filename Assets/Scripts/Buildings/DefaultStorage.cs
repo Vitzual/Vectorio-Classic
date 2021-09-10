@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DefaultStorage: BaseBuilding
+public class DefaultStorage: DefaultBuilding
 {
     // Declare local object variables
     public int type;

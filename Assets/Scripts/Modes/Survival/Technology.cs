@@ -279,7 +279,7 @@ public class Technology : MonoBehaviour
         {
             UI.UOL.icon = Resources.Load<Sprite>("Sprites/" + unlock.Building.name);
             UI.UOL.titleText = unlock.Building.name.ToUpper();
-            UI.UOL.descriptionText = unlock.Building.GetComponent<BaseBuilding>().GetDescription();
+            UI.UOL.descriptionText = unlock.Building.GetComponent<DefaultBuilding>().GetDescription();
             UI.UOL.UpdateUI();
         }
 

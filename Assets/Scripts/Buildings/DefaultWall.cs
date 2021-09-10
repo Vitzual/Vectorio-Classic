@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DefaultWall : BaseBuilding
+public class DefaultWall : DefaultBuilding
 {
 
     // Tile layer

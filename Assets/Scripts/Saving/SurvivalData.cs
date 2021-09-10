@@ -56,7 +56,7 @@ public class SurvivalData
         // Progress data
         unlocked = data_2.GetSaveData();
         researchTechs = data_4.GetResearchData();
-        bossesDefeated = data_3.bossesDefeated;
+        //bossesDefeated = data_3.bossesDefeated;
 
         // Difficulty data
         enemyAmountMulti = Difficulties.enemyAmountMulti;

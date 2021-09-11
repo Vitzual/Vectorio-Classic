@@ -12,15 +12,17 @@ public class EnemyHandler : MonoBehaviour
     public class ActiveEnemies
     {
         // Constructor
-        public ActiveEnemies(Transform obj, Enemy enemy)
+        public ActiveEnemies(Transform obj, Enemy enemy, Variant variant)
         {
             this.obj = obj;
             this.enemy = enemy;
+            this.variant = variant;
         }
 
         // Class variables
         public Transform obj;
         public Enemy enemy;
+        public Variant variant;
     }
     public List<ActiveEnemies> enemies;
 
@@ -40,23 +42,24 @@ public class EnemyHandler : MonoBehaviour
         {
             if (enemies[i].obj != null) 
             {
-                enemies[i].enemy.Move(enemies[i].obj);
+                enemies[i].variant.Move(enemies[i].obj, enemies[i].enemy.moveSpeed);
                 RaycastHit2D hit = Physics2D.Raycast(enemies[i].obj.position, enemies[i].obj.up, 2f, buildingLayer);
 
                 if (hit.collider != null)
                 {
                     if (isMenu)
                     {
-                        enemies[i].enemy.Kill(enemies[i].obj);
+                        enemies[i].variant.Kill(enemies[i].obj);
                         enemies.RemoveAt(i);
                         i--;
                     }
                     else
                     {
                         DefaultBuilding building = hit.collider.GetComponent<DefaultBuilding>();
-                        if (building != null && enemies[i].enemy.GiveDamage(building))
+                        if (building != null && enemies[i].variant.GiveDamage(building, enemies[i].enemy.damage))
                         {
-                            enemies[i].enemy.Kill(enemies[i].obj);
+                            enemies[i].variant.Kill(enemies[i].obj);
+                            Destroy(enemies[i].obj.gameObject);
                             enemies.RemoveAt(i);
                             i--;
                         }
@@ -72,8 +75,8 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(Transform obj, Enemy enemy)
+    public void RegisterEnemy(Transform obj, Enemy enemy, Variant variant)
     {
-        enemies.Add(new ActiveEnemies(obj, enemy));
+        enemies.Add(new ActiveEnemies(obj, enemy, variant));
     }
 }

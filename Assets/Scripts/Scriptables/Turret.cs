@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Turret", menuName = "Turret")]
+[CreateAssetMenu(fileName = "New Turret", menuName = "Building/Turret")]
 public class Turret : Building
 {
     // IAudible interface variables

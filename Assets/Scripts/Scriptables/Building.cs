@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Building", menuName = "Building")]
+[CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
 public class Building : Tile
 {
     // Resource class

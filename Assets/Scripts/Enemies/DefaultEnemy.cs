@@ -11,6 +11,10 @@ public class DefaultEnemy : MonoBehaviour
     public float health { get; set; }
     public float maxHealth { get; set; }
 
+    // Sprite info
+    public SpriteRenderer border;
+    public SpriteRenderer fill;
+
     // Enemy target
     public Transform target;
 

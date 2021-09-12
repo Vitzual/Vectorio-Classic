@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 504701f0aa93c6e4488f9cd1bb42ed63, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0916a315857992b489d2d737bf9d90c2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 5039664635893281569}
   - component: {fileID: 2593784069211655838}
   m_Layer: 9
-  m_Name: Shuriken MK2
+  m_Name: Saw
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,28 +240,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6065519297016329530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e2a2273f8586347ae6288fe4d4dbed, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e284bd9b7a8c9541a098a0be0dbe973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScript: {fileID: 0}
-  ID: 6
-  is_burning: 0
-  is_frozen: 0
-  is_poisoned: 0
-  health: 5
-  damage: 500
-  moveSpeed: 10
-  attackSpeed: 4
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rayLength: 3
-  effectImmunity: 0
-  spawnOnDeath: []
-  amountToSpawn: 
-  Effect: {fileID: 7050970385817730975, guid: 1b9a20db14bca94449de4d56853865b8, type: 3}
-  PreferredTarget: {fileID: 0}
+  enemy: {fileID: 0}
   target: {fileID: 0}
-  body: {fileID: 6236072940171842573}
 --- !u!212 &6065519297016329531
 SpriteRenderer:
   m_ObjectHideFlags: 0

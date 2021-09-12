@@ -70,7 +70,13 @@ public class BuildingSystem : MonoBehaviour
     private void OffsetBuilding()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        active.transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
+
+        if (selected != null)
+        {
+            if (selected.snap) active.transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
+            else active.transform.position = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
+        }
+
         position = active.transform.position;
     }
 

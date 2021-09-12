@@ -5,10 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/Normal")]
 public class Enemy : Entity
 {
-    // Sprite info
-    public SpriteRenderer border;
-    public SpriteRenderer fill;
-
     // Enemy stats
     public float damage;
     public float moveSpeed;

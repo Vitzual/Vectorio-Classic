@@ -9,7 +9,7 @@ public class MenuButton : MonoBehaviour
 {
     // Building holder
     [HideInInspector]
-    public Building building;
+    public Entity entity;
 
     // Button variables
     public GameObject obj;
@@ -28,8 +28,8 @@ public class MenuButton : MonoBehaviour
     public void DisplayStats()
     {
         if (BuildingSystem.active != null)
-            BuildingSystem.active.SetBuilding(building);
+            BuildingSystem.active.SetBuilding(entity);
         else Debug.LogError("Cannot set building without building system!");
-        UIEvents.active.BuildingPressed(building);
+        UIEvents.active.BuildingPressed(entity);
     }
 }

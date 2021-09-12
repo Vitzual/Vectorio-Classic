@@ -15,11 +15,9 @@ public class Building : Tile
     }
 
     // Building base variables
-    public int health;
     [HideInInspector] public int level = 1;
-    [HideInInspector] public int maxHealth;
     [HideInInspector] public int healthModifier;
-    public bool isDefensive;
+    public bool isDefense;
 
     // Lock things
     public int unlockOrder;

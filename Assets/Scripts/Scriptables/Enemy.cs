@@ -3,19 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/Normal")]
-public class Enemy : ScriptableObject
+public class Enemy : Entity
 {
-    // Enemy info
-    public new string name;
-    [TextArea] public string desc;
-    public GameObject obj;
-
     // Sprite info
     public SpriteRenderer border;
     public SpriteRenderer fill;
 
     // Enemy stats
-    public float health;
     public float damage;
     public float moveSpeed;
     public float explosiveRadius;
@@ -34,4 +28,10 @@ public class Enemy : ScriptableObject
 
     // Particle and materials
     public ParticleSystem particle;
+
+    // MOVEMENT
+    // Variants handle the movement of each enemy. However,
+    // variants get passed the data container when their 
+    // method is called, so if you want an enemy to override
+    // that behaviour, you can call a method from there.
 }

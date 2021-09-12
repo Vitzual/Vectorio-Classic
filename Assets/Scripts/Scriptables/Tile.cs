@@ -2,12 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-public class Tile : ScriptableObject
+public class Tile : Entity
 {
-    public new string name;
-    [TextArea] public string description;
-    public GameObject obj;
-
     [System.Serializable]
     public struct Cell
     {

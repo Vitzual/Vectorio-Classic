@@ -42,7 +42,7 @@ public class Turret : Building
         base.CreateStats(panel);
     }
 
-    public virtual void RotateTurret(TurretEntity entity)
+    public virtual void RotateTurret(Barrel entity)
     {
         // Get target position relative to this entity
         Vector2 targetPosition = new Vector2(entity.target.position.x, entity.target.position.y);
@@ -105,7 +105,7 @@ public class Turret : Building
     }
 
     // Attempts to fire a bullet and returns true if fired
-    public virtual void Shoot(TurretEntity entity)
+    public virtual void Shoot(Barrel entity)
     {
         foreach (Transform firePoint in entity.firePoints)
             for (int i = 0; i < entity.turret.bulletAmount; i += 1)
@@ -113,7 +113,7 @@ public class Turret : Building
     }
 
     // Create a bullet object
-    public virtual void CreateBullet(TurretEntity entity, Vector2 position)
+    public virtual void CreateBullet(Barrel entity, Vector2 position)
     {
         if (entity.turret.sound != null)
             Debug.Log("Playing sound!");

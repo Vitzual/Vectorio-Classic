@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TurretEntity 
+public class Barrel 
 {
     // Parameterized Constructor 
-    public TurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
+    public Barrel(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
     {
         this.turret = turret;
 

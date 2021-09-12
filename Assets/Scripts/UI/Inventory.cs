@@ -6,28 +6,25 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public MenuButton buildable;
-    public Transform defensesList;
-    public Transform logisticsList;
 
-    public void Start()
+    public void GenerateEntities(Transform list, string path)
     {
-        List<Building> tiles = Resources.LoadAll("Scriptables", typeof(Building)).Cast<Building>().ToList();
-        Debug.Log("Loaded " + tiles.Count + " tiles from Resources/Scriptables");
+        List<Entity> entities = Resources.LoadAll(path, typeof(Entity)).Cast<Entity>().ToList();
+        Debug.Log("Loaded " + entities.Count + " entities from " + path);
 
-        foreach (Building building in tiles) 
-            CreateBuildable(building);
+        foreach (Entity entity in entities)
+            CreateItem(entity, list);
     }
 
-    public void CreateBuildable(Building building)
+    public void CreateItem(Entity entity, Transform list)
     {
         // Create the new buildable object
         GameObject holder = Instantiate(buildable.obj, new Vector3(0, 0, 0), Quaternion.identity);
 
         // Set parent
-        if (building.isDefensive) holder.transform.SetParent(defensesList);
-        else holder.transform.SetParent(logisticsList);
-        holder.transform.SetSiblingIndex(building.unlockOrder);
-        holder.transform.name = building.name;
+        holder.transform.SetParent(list);
+        holder.transform.SetSiblingIndex(entity.order);
+        holder.transform.name = entity.name;
 
         // Adjust size
         RectTransform temp = holder.GetComponent<RectTransform>();
@@ -35,15 +32,15 @@ public class Inventory : MonoBehaviour
 
         // Set buildable values
         buildable = holder.GetComponent<MenuButton>();
-        buildable.building = building;
-        buildable.button.buttonText = "<b>" + building.name.ToUpper() + "</b><size=20> LEVEL " + building.level;
-        buildable.icon.sprite = Sprites.GetSprite(building.name);
+        buildable.entity = entity;
+        buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
+        buildable.icon.sprite = Sprites.GetSprite(entity.name);
 
         // Set building unlock value
-        if (building.isUnlocked)
-            buildable.desc.text = "<b>24 ACTIVE |</b> <size=16>0 power draw, 0 heat generation";
+        if (entity.isUnlocked)
+            buildable.desc.text = "<b>" + entity.active + " ACTIVE |</b> <size=16>0 power draw, 0 heat generation";
         else
-            buildable.desc.text = "<b>LOCKED |</b> <size=16>" + building.unlockDesc;
+            buildable.desc.text = "<b>LOCKED |</b> <size=16>" + entity.unlockDesc;
 
         /*
         foreach (Building.Resources resource in building.resources)

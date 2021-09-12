@@ -9,7 +9,7 @@ public class TurretHandler : MonoBehaviour
     public static TurretHandler active;
 
     // Barrel class
-    public List<TurretEntity> turretEntities;
+    public List<Barrel> turretEntities;
 
     public void Start()
     {
@@ -35,10 +35,10 @@ public class TurretHandler : MonoBehaviour
 
     public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
     {
-        turretEntities.Add(new TurretEntity(turret, firePoints, barrel, position, bullet));
+        turretEntities.Add(new Barrel(turret, firePoints, barrel, position, bullet));
     }
 
-    public void RemoveTurretEntity(TurretEntity turretEntity)
+    public void RemoveTurretEntity(Barrel turretEntity)
     {
         turretEntities.Remove(turretEntity);
     }

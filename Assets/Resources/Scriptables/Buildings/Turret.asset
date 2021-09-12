@@ -15,14 +15,19 @@ MonoBehaviour:
   name: Turret
   description: Weak early game turret that targets and fires at nearby enemies.
   obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
-  icon: {fileID: 21300000, guid: 6fc698b517ae83b4fa8ad4dd7a611fea, type: 3}
-  cells: []
-  offset: {x: 0, y: 0}
+  tile:
+    cells:
+    - x: 0
+      y: 0
+    offset: {x: 0, y: 0}
+  snap: 1
   health: 10
   level: 1
   maxHealth: 10
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 0
+  invIndex: 0
+  active: 0
   unlockOrder: 0
   unlockDesc: Unlocked by default
   isUnlocked: 1

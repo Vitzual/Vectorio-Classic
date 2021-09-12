@@ -16,14 +16,19 @@ MonoBehaviour:
   description: Fires bolts of lightning that deal massive damage and slow down enemies.
     Consumes extra power while firing.
   obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
-  icon: {fileID: 21300000, guid: daf7f58d71ea7f5439de0ada8ba2ba82, type: 3}
-  cells: []
-  offset: {x: 0, y: 0}
+  tile:
+    cells:
+    - x: 0
+      y: 0
+    offset: {x: 0, y: 0}
+  snap: 1
   health: 100
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 8
+  invIndex: 0
+  active: 0
   unlockOrder: 9
   unlockDesc: 
   isUnlocked: 0

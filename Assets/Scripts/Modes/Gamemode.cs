@@ -13,6 +13,7 @@ public class Gamemode : MonoBehaviour
     public void Start()
     {
         Events.active.onBuildingPlaced += PlaceBuilding;
+        Events.active.setupBuildables += InitEntities;
     }
 
     // Tells the gamemode how to handle building placements

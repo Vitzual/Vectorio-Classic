@@ -10,29 +10,35 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
-        Events.active.initEntities += GenerateEntities;
+        Events.active.initBuildables += GenerateEntities;
     }
 
     public void GenerateEntities(string path)
     {
-        List<MenuButton> holders = new List<MenuButton>();
         List<Entity> entities = Resources.LoadAll(path, typeof(Entity)).Cast<Entity>().ToList();
         Debug.Log("Loaded " + entities.Count + " entities from " + path);
+        MenuButton[] holders = new MenuButton[entities.Count];
 
         // Generate buildables
-        foreach (Entity entity in entities)
+        for(int i = 0; i < entities.Count; i++)
         {
-            if (entity.invIndex >= 0 && entity.invIndex < lists.Count)
+            Debug.Log("Setting up " + entities[i].name);
+
+            if (entities[i].invIndex >= 0 && entities[i].invIndex < lists.Count)
             {
-                MenuButton holder = CreateEntity(entity, lists[entity.invIndex]);
-                if (holder != null) holders.Add(holder);
+                Debug.Log("Creating entity at " + entities[i].invIndex + " " + entities[i].invOrder);
+
+                MenuButton holder = CreateEntity(entities[i], lists[entities[i].invIndex]);
+                if (holder != null) holders[entities[i].invOrder] = holder;
+                else Debug.Log("Error");
             }
         }
 
         // Set order of buildables
-        foreach(MenuButton holder in holders)
+        for(int i = 0; i < holders.Length; i++)
         {
-            holder.transform.SetSiblingIndex(holder.entity.invOrder);
+            if(holders[i].transform != null)
+                holders[i].transform.SetSiblingIndex(i);
         }
     }
 

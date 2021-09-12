@@ -13,10 +13,22 @@ MonoBehaviour:
   m_Name: Triangle
   m_EditorClassIdentifier: 
   name: Triangle
-  desc: A weak early-game unit. Triangles fly slowly towards a target until it collides,
-    dealing damage to whatever it hits and destroying itself in the process.
+  description: A weak early-game enemy. Moves in a straight line and deals damage
+    to buildings it collides with. Destroys itself on impact.
   obj: {fileID: 6065519297016329530, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+  tile:
+    cells: []
+    offset: {x: 0, y: 0}
+  snap: 0
   health: 3
+  level: 0
+  maxHealth: 0
+  healthModifier: 0
+  invOrder: 0
+  invIndex: 1
+  active: 0
+  border: {fileID: 0}
+  fill: {fileID: 0}
   damage: 1
   moveSpeed: 5
   explosiveRadius: 0

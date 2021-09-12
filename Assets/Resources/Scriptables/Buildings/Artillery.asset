@@ -16,22 +16,25 @@ MonoBehaviour:
   description: The first 2x2 defense. Fires explosive proximity shells that deal
     huge area damage. Downside is the reload time.
   obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
-  icon: {fileID: 21300000, guid: 80305bc2b604b6e4eb373021fd7bf426, type: 3}
-  cells:
-  - x: 2.5
-    y: 2.5
-  - x: 2.5
-    y: -2.5
-  - x: -2.5
-    y: 2.5
-  - x: -2.5
-    y: -2.5
-  offset: {x: 2.5, y: 2.5}
+  tile:
+    cells:
+    - x: 2.5
+      y: 2.5
+    - x: 2.5
+      y: -2.5
+    - x: -2.5
+      y: 2.5
+    - x: -2.5
+      y: -2.5
+    offset: {x: 2.5, y: 2.5}
+  snap: 1
   health: 500
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 9
+  invIndex: 0
+  active: 0
   unlockOrder: 10
   unlockDesc: 
   isUnlocked: 0

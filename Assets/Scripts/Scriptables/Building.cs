@@ -14,9 +14,6 @@ public class Building : Entity
         [HideInInspector] public int modifier;
     }
 
-    // Building base variables
-    public bool isDefense;
-
     // Lock things
     public int unlockOrder;
     public string unlockDesc;

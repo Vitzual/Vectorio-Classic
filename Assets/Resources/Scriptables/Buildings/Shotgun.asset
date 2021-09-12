@@ -15,14 +15,19 @@ MonoBehaviour:
   name: Shotgunner
   description: Fires multiple projectiles at once to eliminate large groups of enemies
   obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
-  icon: {fileID: 21300000, guid: 3f3fb79d8a67b2344909ad2b219b244a, type: 3}
-  cells: []
-  offset: {x: 0, y: 0}
+  tile:
+    cells:
+    - x: 0
+      y: 0
+    offset: {x: 0, y: 0}
+  snap: 1
   health: 15
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 1
+  invIndex: 0
+  active: 0
   unlockOrder: 2
   unlockDesc: Unlocked by destroying 10 triangles
   isUnlocked: 0

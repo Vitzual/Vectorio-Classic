@@ -78,10 +78,17 @@ public class Events : MonoBehaviour
     }
 
     // Initializes entities
-    public event Action<string> initEntities;
-    public void InitEntities(String path)
+    public event Action<string> initBuildables;
+    public void InitBuildables(string path)
     {
-        if (initEntities != null)
-            initEntities(path);
+        if (initBuildables != null)
+            initBuildables(path);
+    }
+
+    public event Action setupBuildables;
+    public void SetupBuildables()
+    {
+        if (setupBuildables != null)
+            setupBuildables();
     }
 }

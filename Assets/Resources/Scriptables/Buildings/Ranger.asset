@@ -16,14 +16,19 @@ MonoBehaviour:
   description: Fires long-range high-velocity projectiles that deal massive damage
     upon impact.
   obj: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f, type: 3}
-  icon: {fileID: 21300000, guid: 72c0cbf8e14f4934a9eb787461d79e5c, type: 3}
-  cells: []
-  offset: {x: 0, y: 0}
+  tile:
+    cells:
+    - x: 0
+      y: 0
+    offset: {x: 0, y: 0}
+  snap: 1
   health: 25
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 2
+  invIndex: 0
+  active: 0
   unlockOrder: 3
   unlockDesc: 
   isUnlocked: 1

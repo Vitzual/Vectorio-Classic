@@ -16,14 +16,19 @@ MonoBehaviour:
   description: Low accuracy turret that fires a storm of high-damaging bullets. All
     around good early/mid game turret.
   obj: {fileID: 420473218063467210, guid: 0117140630b641d4b894099ff605286d, type: 3}
-  icon: {fileID: 21300000, guid: c977ba5fc78e4644fb679506b843c101, type: 3}
-  cells: []
-  offset: {x: 0, y: 0}
+  tile:
+    cells:
+    - x: 0
+      y: 0
+    offset: {x: 0, y: 0}
+  snap: 1
   health: 120
   level: 1
   maxHealth: 0
   healthModifier: 0
-  isDefensive: 1
+  invOrder: 7
+  invIndex: 0
+  active: 0
   unlockOrder: 8
   unlockDesc: 
   isUnlocked: 0

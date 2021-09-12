@@ -15,10 +15,13 @@ public class Entity : ScriptableObject
 
     // Building base variables
     public int health;
-    public int order;
     public int level;
     [HideInInspector] public int maxHealth;
     [HideInInspector] public int healthModifier;
+
+    // Inventory variables
+    public int invOrder;
+    public int invIndex;
 
     // Holds active amount in scene
     [HideInInspector] public int active = 0;

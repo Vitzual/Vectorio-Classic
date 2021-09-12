@@ -9,4 +9,10 @@ public class Creative : Gamemode
         if (BuildingSystem.active != null)
             BuildingSystem.active.CmdCreateBuilding();
     }
+
+    public override void InitEntities()
+    {
+        Events.active.InitEntities("Scriptables/Buildings");
+        Events.active.InitEntities("Scriptables/Enemies");
+    }
 }

@@ -76,4 +76,12 @@ public class Events : MonoBehaviour
         if (onNumberInput != null)
             onNumberInput(number, hotbar);
     }
+
+    // Initializes entities
+    public event Action<string> initEntities;
+    public void InitEntities(String path)
+    {
+        if (initEntities != null)
+            initEntities(path);
+    }
 }

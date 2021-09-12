@@ -15,6 +15,7 @@ public class Panel : MonoBehaviour
     public MenuStat menuStat;
     public Transform resourceStats;
     public Transform buildingStats;
+    public GameObject configuration;
 
     // Panel UI variables
     public new TextMeshProUGUI name;
@@ -42,6 +43,12 @@ public class Panel : MonoBehaviour
         name.text = entity.name.ToUpper();
         desc.text = entity.description;
         icon.sprite = Sprites.GetSprite(entity.name);
+
+        // Check for configuration
+        if (entity.level == -1)
+            configuration.SetActive(false);
+        else
+            configuration.SetActive(true);
 
         // Create stats for the building
         SetUnused();

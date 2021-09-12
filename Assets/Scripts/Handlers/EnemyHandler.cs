@@ -16,7 +16,7 @@ public class EnemyHandler : MonoBehaviour
         {
             this.obj = obj;
             this.enemy = enemy;
-            this.variant = variant;
+            variant = enemy.variant;
         }
 
         // Class variables

@@ -14,6 +14,7 @@ public class DefaultEnemy : MonoBehaviour
     // Sprite info
     public SpriteRenderer border;
     public SpriteRenderer fill;
+    public TrailRenderer trail;
 
     // Enemy target
     public Transform target;
@@ -23,6 +24,10 @@ public class DefaultEnemy : MonoBehaviour
     {
         health = enemy.health;
         maxHealth = health;
+
+        border.material = enemy.variant.border;
+        fill.material = enemy.variant.fill;
+        trail.material = enemy.variant.trail;
     }
 
     // Gets called when entering another defenses range or hitting the defense all together

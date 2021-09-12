@@ -22,8 +22,8 @@ public class Enemy : Entity
     }
     public EnemySpawn[] spawns;
 
-    // Particle and materials
-    public ParticleSystem particle;
+    // Variant
+    public Variant variant;
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel
@@ -31,7 +31,7 @@ public class Enemy : Entity
     {
         panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
         panel.CreateStat(new Stat("Damage", damage, 0, Sprites.GetSprite("Damage")));
-        panel.CreateStat(new Stat("Range", moveSpeed, 0, Sprites.GetSprite("Range")));
+        panel.CreateStat(new Stat("Speed", moveSpeed, 0, Sprites.GetSprite("Rotation Speed")));
 
         // Base method
         base.CreateStats(panel);

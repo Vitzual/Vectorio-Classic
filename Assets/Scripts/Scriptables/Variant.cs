@@ -24,9 +24,11 @@ public class Variant : ScriptableObject
     }
     public EnemySpawn[] spawns;
 
-    // Variant material 
+    // Materials and stuff
     public Material border;
     public Material fill;
+    public Material trail;
+    public ParticleSystem particle;
 
     public virtual void Move(Transform obj, float speed)
     {

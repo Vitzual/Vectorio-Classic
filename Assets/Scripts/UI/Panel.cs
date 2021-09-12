@@ -22,7 +22,7 @@ public class Panel : MonoBehaviour
     public Image icon;
 
     // Building
-    public Building building;
+    public Entity entity;
 
     public void Start()
     {
@@ -33,19 +33,19 @@ public class Panel : MonoBehaviour
     }
 
     // Sets the panel information
-    public void SetPanel(Building building)
+    public void SetPanel(Entity entity)
     {
         // Grab building
-        this.building = building;
+        this.entity = entity;
 
         // Set panel description
-        name.text = building.name.ToUpper();
-        desc.text = building.description;
-        icon.sprite = Sprites.GetSprite(building.name);
+        name.text = entity.name.ToUpper();
+        desc.text = entity.description;
+        icon.sprite = Sprites.GetSprite(entity.name);
 
         // Create stats for the building
         SetUnused();
-        building.CreateStats(this);
+        entity.CreateStats(this);
         ResetUnused();
     }
 

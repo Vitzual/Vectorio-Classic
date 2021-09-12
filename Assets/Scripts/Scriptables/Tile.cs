@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-public class Tile : Entity
+[System.Serializable]
+public class Tile
 {
     [System.Serializable]
     public struct Cell

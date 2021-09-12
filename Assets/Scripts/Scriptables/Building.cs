@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
-public class Building : Tile
+public class Building : Entity
 {
     // Resource class
     [System.Serializable]
@@ -15,8 +15,6 @@ public class Building : Tile
     }
 
     // Building base variables
-    [HideInInspector] public int level = 1;
-    [HideInInspector] public int healthModifier;
     public bool isDefense;
 
     // Lock things
@@ -28,7 +26,7 @@ public class Building : Tile
     public Resources[] resources;
     public Material material;
 
-    public virtual void CreateStats(Panel panel)
+    public override void CreateStats(Panel panel)
     {
         // Resource stats
         foreach (Resources type in resources)

@@ -9,14 +9,14 @@ public class BuildingSystem : MonoBehaviour
     // Building class
     public class BuildingQueue
     {
-        public BuildingQueue(Tile scriptable, Vector2 pos, Quaternion rotation)
+        public BuildingQueue(Entity scriptable, Vector2 pos, Quaternion rotation)
         {
             this.scriptable = scriptable;
             this.pos = pos;
             this.rotation = rotation;
         }
 
-        public Tile scriptable;
+        public Entity scriptable;
         public Vector2 pos;
         public Quaternion rotation;
     }
@@ -26,7 +26,7 @@ public class BuildingSystem : MonoBehaviour
 
     // Building variables
     public static BuildingSystem active;
-    public Tile building;
+    public Entity selected;
     public Vector2 position;
     private Vector2 offset;
     private GameObject lastObj;
@@ -46,7 +46,7 @@ public class BuildingSystem : MonoBehaviour
         // Sets static variables on start
         tileGrid = new GridSystem();
         tileGrid.cells = new Dictionary<Vector2Int, GridSystem.Cell>();
-        building = null;
+        selected = null;
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
         lastObj = null;
@@ -88,66 +88,64 @@ public class BuildingSystem : MonoBehaviour
     }
 
     // Sets the selected building
-    public void SetBuilding(Tile building)
+    public void SetBuilding(Entity entity)
     {
-        spriteRenderer.sprite = Sprites.GetSprite(building.name);
-        this.building = building;
-        if (building != null) offset = building.offset;
+        spriteRenderer.sprite = Sprites.GetSprite(entity.name);
+        selected = entity;
+        if (entity != null) offset = entity.tile.offset;
     }
 
     // Creates a building
     public void CmdCreateBuilding()
     {
         // Check if active is null
-        if (building == null || building.obj == null) return;
+        if (selected == null || selected.obj == null) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(new BuildingQueue(building, position, Quaternion.identity));
+        RpcInstantiateObject(new BuildingQueue(selected, position, Quaternion.identity));
     }
 
     // Creates a building at specified coords
     public void CmdCreateBuilding(Vector2 coords)
     {
         // Check if active is null
-        if (building == null || building.obj == null) return;
+        if (selected == null || selected.obj == null) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(new BuildingQueue(building, coords, Quaternion.identity));
+        RpcInstantiateObject(new BuildingQueue(selected, coords, Quaternion.identity));
     }
 
-    private void RpcInstantiateObject(BuildingQueue building)
+    private void RpcInstantiateObject(BuildingQueue entity)
     {
         // Create the tile
-        lastObj = Instantiate(building.scriptable.obj, building.pos, building.rotation);
-        lastObj.name = building.scriptable.name;
+        lastObj = Instantiate(entity.scriptable.obj, entity.pos, entity.rotation);
+        lastObj.name = entity.scriptable.name;
 
-        SetCells(building.scriptable, lastObj);
+        SetCells(entity.scriptable, lastObj);
     }
 
     // Checks to make sure tile(s) isn't occupied
     public bool CheckTiles()
     {
-        if (building.cells.Length > 0)
+        if (selected.tile.cells.Length > 0)
         {
-            foreach (Tile.Cell cell in building.cells)
+            foreach (Tile.Cell cell in selected.tile.cells)
                 if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y))) != null)
                     return false;
         }
-        else return tileGrid.RetrieveCell(Vector2Int.RoundToInt(position)) == null;
         return true;
     }
 
-    public void SetCells(Tile building, GameObject obj)
+    public void SetCells(Entity entity, GameObject obj)
     {
         // Set the tiles on the grid class
-        if (building.cells.Length > 0)
+        if (entity.tile.cells.Length > 0)
         {
-            foreach (Tile.Cell cell in building.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, building, obj);
+            foreach (Tile.Cell cell in entity.tile.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, entity.tile, obj);
         }
-        else tileGrid.SetCell(Vector2Int.RoundToInt(obj.transform.position), true, building, obj);
     }
 }

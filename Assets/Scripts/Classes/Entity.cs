@@ -9,11 +9,22 @@ public class Entity : ScriptableObject
     [TextArea] public string description;
     public GameObject obj;
 
+    // Tile variables 
+    public Tile tile;
+    public bool snap;
+
     // Building base variables
     public int health;
     public int order;
+    public int level;
     [HideInInspector] public int maxHealth;
+    [HideInInspector] public int healthModifier;
 
     // Holds active amount in scene
     [HideInInspector] public int active = 0;
+
+    public virtual void CreateStats(Panel panel)
+    {
+        panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
+    }
 }

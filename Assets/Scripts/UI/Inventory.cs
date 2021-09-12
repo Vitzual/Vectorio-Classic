@@ -13,10 +13,10 @@ public class Inventory : MonoBehaviour
         Debug.Log("Loaded " + entities.Count + " entities from " + path);
 
         foreach (Entity entity in entities)
-            CreateItem(entity, list);
+            CreateEntity(entity, list);
     }
 
-    public void CreateItem(Entity entity, Transform list)
+    public void CreateEntity(Entity entity, Transform list)
     {
         // Create the new buildable object
         GameObject holder = Instantiate(buildable.obj, new Vector3(0, 0, 0), Quaternion.identity);
@@ -33,14 +33,19 @@ public class Inventory : MonoBehaviour
         // Set buildable values
         buildable = holder.GetComponent<MenuButton>();
         buildable.entity = entity;
-        buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
+
+        // Set building level
+        if (entity.level > 0) 
+            buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
+        else
+            buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b>";
+
+        // Set building icon
         buildable.icon.sprite = Sprites.GetSprite(entity.name);
 
         // Set building unlock value
-        if (entity.isUnlocked)
-            buildable.desc.text = "<b>" + entity.active + " ACTIVE |</b> <size=16>0 power draw, 0 heat generation";
-        else
-            buildable.desc.text = "<b>LOCKED |</b> <size=16>" + entity.unlockDesc;
+        buildable.desc.text = "<b>" + entity.active + " ACTIVE |</b> <size=16>Click for more details!";
+
 
         /*
         foreach (Building.Resources resource in building.resources)

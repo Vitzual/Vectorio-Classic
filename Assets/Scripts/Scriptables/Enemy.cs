@@ -29,9 +29,15 @@ public class Enemy : Entity
     // Particle and materials
     public ParticleSystem particle;
 
-    // MOVEMENT
-    // Variants handle the movement of each enemy. However,
-    // variants get passed the data container when their 
-    // method is called, so if you want an enemy to override
-    // that behaviour, you can call a method from there.
+    // Set panel stats
+    // This gets used to set the stats on the building menu panel
+    public override void CreateStats(Panel panel)
+    {
+        panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
+        panel.CreateStat(new Stat("Damage", damage, 0, Sprites.GetSprite("Damage")));
+        panel.CreateStat(new Stat("Range", moveSpeed, 0, Sprites.GetSprite("Range")));
+
+        // Base method
+        base.CreateStats(panel);
+    }
 }

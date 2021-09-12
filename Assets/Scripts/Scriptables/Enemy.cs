@@ -10,6 +10,10 @@ public class Enemy : ScriptableObject
     [TextArea] public string desc;
     public GameObject obj;
 
+    // Sprite info
+    public SpriteRenderer border;
+    public SpriteRenderer fill;
+
     // Enemy stats
     public float health;
     public float damage;

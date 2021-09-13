@@ -12,9 +12,9 @@ public class DefaultEnemy : MonoBehaviour
     public float maxHealth { get; set; }
 
     // Sprite info
-    public SpriteRenderer border;
-    public SpriteRenderer fill;
-    public TrailRenderer trail;
+    public SpriteRenderer[] border;
+    public SpriteRenderer[] fill;
+    public TrailRenderer[] trail;
 
     // Enemy target
     public Transform target;
@@ -25,9 +25,14 @@ public class DefaultEnemy : MonoBehaviour
         health = enemy.health;
         maxHealth = health;
 
-        border.material = enemy.variant.border;
-        fill.material = enemy.variant.fill;
-        trail.material = enemy.variant.trail;
+        foreach (SpriteRenderer a in border)
+            a.material = enemy.variant.border;
+
+        foreach (SpriteRenderer a in fill)
+            a.material = enemy.variant.fill;
+
+        foreach (TrailRenderer a in trail)
+            a.material = enemy.variant.trail;
     }
 
     // Gets called when entering another defenses range or hitting the defense all together

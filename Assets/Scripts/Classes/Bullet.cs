@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet
 {
-    public Bullet(Transform obj, Transform target, float speed, int pierces, float damage, bool tracking)
+    public Bullet(Transform obj, ActiveEnemy target, float speed, int pierces, float damage, bool tracking)
     {
         this.obj = obj;
         this.target = target;
@@ -13,7 +13,7 @@ public class Bullet
     }
 
     public Transform obj;
-    public Transform target;
+    public ActiveEnemy target;
     public float speed;
     public int pierces;
     public float damage;

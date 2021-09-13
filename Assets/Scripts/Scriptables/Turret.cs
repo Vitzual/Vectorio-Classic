@@ -15,6 +15,7 @@ public class Turret : Building
     public int bulletAmount;
     public float bulletSpeed;
     public float bulletSpread;
+    public bool bulletLock;
 
     // Base turret modifiers
     [HideInInspector] public float damageModifier;
@@ -42,10 +43,10 @@ public class Turret : Building
         base.CreateStats(panel);
     }
 
-    public virtual void RotateTurret(Barrel entity)
+    public virtual void RotateTurret(ActiveTurret entity)
     {
         // Get target position relative to this entity
-        Vector2 targetPosition = new Vector2(entity.target.position.x, entity.target.position.y);
+        Vector2 targetPosition = new Vector2(entity.target.obj.position.x, entity.target.obj.position.y);
 
         // Get the distance from the turret to the target
         Vector2 distance = targetPosition - new Vector2(entity.barrel.position.x, entity.barrel.position.y);
@@ -105,7 +106,7 @@ public class Turret : Building
     }
 
     // Attempts to fire a bullet and returns true if fired
-    public virtual void Shoot(Barrel entity)
+    public virtual void Shoot(ActiveTurret entity)
     {
         foreach (Transform firePoint in entity.firePoints)
             for (int i = 0; i < entity.turret.bulletAmount; i += 1)
@@ -113,7 +114,7 @@ public class Turret : Building
     }
 
     // Create a bullet object
-    public virtual void CreateBullet(Barrel entity, Vector2 position)
+    public virtual void CreateBullet(ActiveTurret entity, Vector2 position)
     {
         if (entity.turret.sound != null)
             Debug.Log("Playing sound!");
@@ -127,7 +128,7 @@ public class Turret : Building
         float damage = entity.turret.damage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
-        Events.active.BulletFired(new Bullet(bullet.transform, entity.target, speed, pierces, damage, true));
+        Events.active.BulletFired(new Bullet(bullet.transform, entity.target, speed, pierces, damage, bulletLock));
         Debug.Log("Broadcasting bullet fired event");
     }
 }

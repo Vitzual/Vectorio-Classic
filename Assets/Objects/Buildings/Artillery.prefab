@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 4748196274355704437}
   - component: {fileID: 5615815486813246293}
+  - component: {fileID: 4748196274355704437}
   - component: {fileID: 652309008671687663}
   m_Layer: 8
   m_Name: Artillery
@@ -39,6 +39,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &5615815486813246293
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 500
 --- !u!114 &4748196274355704437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,22 +82,6 @@ MonoBehaviour:
     target: {fileID: 0}
     hasTarget: 0
     cooldown: 0
---- !u!58 &5615815486813246293
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 500
 --- !u!114 &652309008671687663
 MonoBehaviour:
   m_ObjectHideFlags: 0

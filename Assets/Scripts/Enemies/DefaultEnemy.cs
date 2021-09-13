@@ -35,15 +35,4 @@ public class DefaultEnemy : MonoBehaviour
             a.material = enemy.variant.trail;
     }
 
-    // Gets called when entering another defenses range or hitting the defense all together
-    public void OnTriggerEnter2D(Collider2D collider)
-    {
-        
-    }
-
-    // Gets called when entering another defenses range or hitting the defense all together
-    public void OnTriggerLeave2D(Collider2D collider)
-    {
-        
-    }
 }

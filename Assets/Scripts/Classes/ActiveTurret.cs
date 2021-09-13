@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Barrel 
+public class ActiveTurret 
 {
     // Turret scriptable
     public Turret turret;
@@ -16,7 +16,7 @@ public class Barrel
 
     // Boolean flags
     [HideInInspector] public Enemy enemy;
-    [HideInInspector] public Transform target;
+    [HideInInspector] public ActiveEnemy target;
     [HideInInspector] public bool hasTarget;
 
     // Cooldown

@@ -9,7 +9,7 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, Transform target, float speed, int piercing, float damage, bool tracking)
+        public ActiveBullets(Transform obj, ActiveEnemy target, float speed, int piercing, float damage, bool tracking)
         {
             this.obj = obj;
             this.target = target;
@@ -23,7 +23,7 @@ public class BulletHandler : MonoBehaviour
 
         // Class variables
         public Transform obj;
-        public Transform target;
+        public ActiveEnemy target;
         public float speed;
         public int piercing;
         public float damage;
@@ -51,7 +51,7 @@ public class BulletHandler : MonoBehaviour
                 if (bullets[i].tracking && bullets[i].target != null)
                 {
                     float step = bullets[i].speed * Time.deltaTime;
-                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.position, step);
+                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.position, step);
                 }
                 else
                 {

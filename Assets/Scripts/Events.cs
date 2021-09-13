@@ -46,11 +46,11 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a turret script is placed
-    public event Action<Barrel> onTurretPlaced;
-    public void TurretPlaced(Barrel barrel)
+    public event Action<DefaultTurret, ActiveTurret> onTurretPlaced;
+    public void TurretPlaced(DefaultTurret turret, ActiveTurret barrel)
     {
         if (onTurretPlaced != null)
-            onTurretPlaced(barrel);
+            onTurretPlaced(turret, barrel);
     }
 
     // Invoked when a building is placed

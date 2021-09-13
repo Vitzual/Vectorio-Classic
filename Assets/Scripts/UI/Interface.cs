@@ -335,7 +335,7 @@ public class Interface : MonoBehaviour
             case "Defenses":
                 //DefaultTurret turret = obj.GetComponent<DefaultTurret>();
                 InfoPanels[0].title.text = obj.name.ToUpper();
-                InfoPanels[0].description.text = tileInfo.GetDescription();
+                //InfoPanels[0].description.text = tileInfo.GetDescription();
                 InfoPanels[0].icon.sprite = Resources.Load<Sprite>("Sprites/" + obj.name);
                 //InfoPanels[0].cost.text = tileInfo.GetCost().ToString();
                 //InfoPanels[0].heat.text = tileInfo.GetHeat().ToString();

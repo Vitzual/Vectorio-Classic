@@ -7,10 +7,14 @@ public class DefaultTurret : DefaultBuilding, IAudible
     // IAudible interface variables
     public AudioClip sound { get; set; }
 
+    // Barrel thing
+    public Barrel barrel;
+
     // Sets stats and registers itself under the turret handler
     public void Start()
     {
-        SetBuildingStats();
+        Events.active.TurretPlaced(barrel);
+        SetStats();
     }
 
     // IAudible sound method

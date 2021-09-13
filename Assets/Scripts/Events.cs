@@ -45,6 +45,14 @@ public class Events : MonoBehaviour
             onStoragePlaced(storage);
     }
 
+    // Invoked when a building with a turret script is placed
+    public event Action<Barrel> onTurretPlaced;
+    public void TurretPlaced(Barrel barrel)
+    {
+        if (onTurretPlaced != null)
+            onTurretPlaced(barrel);
+    }
+
     // Invoked when a building is placed
     public event Action onBuildingPlaced;
     public void PlaceBuilding()

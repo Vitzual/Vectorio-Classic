@@ -53,7 +53,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  building: {fileID: 0}
+  building: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
+  barrel:
+    turret: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
+    firePoints:
+    - {fileID: 4396292635411681285}
+    barrel: {fileID: 4730353520863384113}
+    bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79,
+      type: 3}
+    position: {x: 0, y: 0}
+    enemy: {fileID: 0}
+    target: {fileID: 0}
+    hasTarget: 0
+    cooldown: 0
 --- !u!58 &5615815486813246293
 CircleCollider2D:
   m_ObjectHideFlags: 0

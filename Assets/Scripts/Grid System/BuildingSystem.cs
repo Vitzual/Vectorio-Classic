@@ -35,6 +35,7 @@ public class BuildingSystem : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float alphaAdjust = 0.005f;
     private float alphaHolder;
+    public int cooldown = 10;
 
     // Start method grabs tilemap
     public void Awake()
@@ -106,6 +107,17 @@ public class BuildingSystem : MonoBehaviour
     {
         // Check if active is null
         if (selected == null || selected.obj == null) return;
+
+        // Check if snap is enabled
+        if (!selected.snap)
+        {
+            if (cooldown != 0)
+            {
+                cooldown -= 1;
+                return;
+            }
+            else cooldown = 10;
+        }
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles()) return;

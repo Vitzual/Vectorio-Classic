@@ -5,25 +5,16 @@ using System.Collections.Generic;
 [HideInInspector]
 public class DefaultBuilding : NetworkBehaviour, IDamageable
 {
-    // Building scriptable
-    public Building building;
-
     // IDamageable interface variables
     public float health { get; set; }
     public float maxHealth { get; set; }
 
-    // Sets the buildings stats
-    public void SetBuildingStats()
+    public Building building;
+
+    public void SetStats()
     {
-        if (building == null)
-        {
-            Debug.LogError(transform.name + " does not have a scriptable attached to it!");
-        }
-        else
-        {
-            health = building.health;
-            maxHealth = health;
-        }
+        health = building.health;
+        maxHealth = health;
     }
 
     // Damages the entity (IDamageable interface method)
@@ -42,14 +33,8 @@ public class DefaultBuilding : NetworkBehaviour, IDamageable
     public void DestroyEntity()
     {
         // Create the particle
-        ParticleSystemRenderer holder = Instantiate(Resources.Load<ParticleSystem>("Particles/Death"), 
+        Instantiate(Resources.Load<ParticleSystem>("Particles/Death"), 
             transform.position, Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-
-        if (building.material != null)
-        {
-            holder.material = building.material;
-            holder.trailMaterial = building.material;
-        }
 
         Destroy(gameObject);
     }
@@ -60,7 +45,4 @@ public class DefaultBuilding : NetworkBehaviour, IDamageable
         health += amount;
         if (health > maxHealth) health = maxHealth;
     }
-
-    public float GetHealth() { return building.health; }
-    public string GetDescription() { return building.description; }
 }

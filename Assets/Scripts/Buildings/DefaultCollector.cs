@@ -12,7 +12,6 @@ public class DefaultCollector : DefaultBuilding
     // On start, invoke repeating SendGold() method
     public void Start()
     {
-        SetBuildingStats();
         Events.active.CollectorPlaced(this);
 
         /*

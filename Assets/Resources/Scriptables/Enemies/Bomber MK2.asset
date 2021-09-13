@@ -15,25 +15,25 @@ MonoBehaviour:
   name: Bomber MK2
   description: A stronger version of the bomber. Larger explosion radius and drops
     a bunch of small bombers when destroyed.
-  obj: {fileID: 0}
+  obj: {fileID: 6065519297016329530, guid: 6c2d52d5018f2de409d5d0a82b3deda7, type: 3}
   tile:
     cells: []
     offset: {x: 0, y: 0}
   snap: 0
-  health: 15
+  health: 20
   level: -1
   maxHealth: 0
   healthModifier: 0
   invOrder: 5
   invIndex: 1
   active: 0
-  damage: 0
-  moveSpeed: 0
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rayLength: 0
+  damage: 30
+  moveSpeed: 6
+  explosiveRadius: 10
+  explosiveDamage: 15
+  rayLength: 5
   spawns:
   - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
     amount: 5
     radius: 5
-  variant: {fileID: 0}
+  variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}

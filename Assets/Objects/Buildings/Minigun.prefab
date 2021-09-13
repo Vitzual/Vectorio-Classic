@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5850754821206964708}
   - component: {fileID: 5633800536072645006}
   - component: {fileID: 2074673792988328970}
+  - component: {fileID: 115140010690443093}
   m_Layer: 8
   m_Name: Minigun
   m_TagString: Defense
@@ -35,7 +36,7 @@ Transform:
   - {fileID: 6509446996131245578}
   - {fileID: 5899246551326963330}
   - {fileID: 4649580042156447931}
-  - {fileID: 4975649507425085726}
+  - {fileID: 1201917456551285202}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -161,7 +162,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  building: {fileID: 0}
+  building: {fileID: 11400000, guid: 54f60d7651f2b6245a89ac92b87efc96, type: 2}
+  barrel:
+    turret: {fileID: 11400000, guid: 54f60d7651f2b6245a89ac92b87efc96, type: 2}
+    firePoints:
+    - {fileID: 3069989843565101140}
+    - {fileID: 7831787184239906878}
+    - {fileID: 2441988496468078948}
+    - {fileID: 7328376403646076968}
+    barrel: {fileID: 1201917456551285202}
+    bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79,
+      type: 3}
+    position: {x: 0, y: 0}
+    enemy: {fileID: 0}
+    target: {fileID: 0}
+    hasTarget: 0
+    cooldown: 0
+--- !u!114 &115140010690443093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 0117140630b641d4b894099ff605286d
+  hasSpawned: 0
 --- !u!1 &1357030762067731375
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,15 +414,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4636478441122754782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0.88999987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3069989843565101140}
   - {fileID: 7831787184239906878}
   - {fileID: 2441988496468078948}
   - {fileID: 7328376403646076968}
-  m_Father: {fileID: 4975649507425085726}
-  m_RootOrder: 0
+  m_Father: {fileID: 7459549504340388867}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &569952947982731020
 SpriteRenderer:
@@ -524,37 +557,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &4973699443612800352
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4975649507425085726}
-  m_Layer: 8
-  m_Name: Minigun Turret Holder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4975649507425085726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4973699443612800352}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.009999871, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1201917456551285202}
-  m_Father: {fileID: 7459549504340388867}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7090222570691961293
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,9 +33,9 @@ public class TurretHandler : MonoBehaviour
         }
     }
 
-    public void AddTurretEntity(Turret turret, Transform[] firePoints, Transform barrel, Vector2 position, GameObject bullet = null)
+    public void AddTurretEntity(Barrel barrel)
     {
-        turretEntities.Add(new Barrel(turret, firePoints, barrel, position, bullet));
+        turretEntities.Add(barrel);
     }
 
     public void RemoveTurretEntity(Barrel turretEntity)

@@ -97,7 +97,7 @@ public class EnemyHandler : MonoBehaviour
     {
         Vector3 dir = pos.position - target.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        pos.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        pos.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
     }
 
     // Registers an enemy to then be handled by the controller 

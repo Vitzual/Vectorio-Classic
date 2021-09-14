@@ -15,6 +15,7 @@ public class Turret : Building
     public int bulletAmount;
     public float bulletSpeed;
     public float bulletSpread;
+    public float bulletTime;
     public bool bulletLock;
 
     // Base turret modifiers
@@ -130,7 +131,7 @@ public class Turret : Building
         float damage = entity.turret.damage + Research.research_damage;
 
         // Dependent on the bullet, register under the correct master script
-        Events.active.BulletFired(new Bullet(bullet.transform, entity.target, speed, pierces, damage, bulletLock));
+        Events.active.BulletFired(new Bullet(bullet.transform, entity.target, speed, pierces, damage, bulletTime, bulletLock));
         Debug.Log("Broadcasting bullet fired event");
     }
 }

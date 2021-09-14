@@ -9,13 +9,14 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, ActiveEnemy target, float speed, int piercing, float damage, bool tracking)
+        public ActiveBullets(Transform obj, ActiveEnemy target, float speed, int piercing, float damage, float time, bool tracking)
         {
             this.obj = obj;
             this.target = target;
             this.speed = speed;
             this.piercing = piercing;
             this.damage = damage;
+            this.time = time;
             this.tracking = tracking;
 
             ignore = new List<Transform>();
@@ -27,6 +28,7 @@ public class BulletHandler : MonoBehaviour
         public float speed;
         public int piercing;
         public float damage;
+        public float time;
         public bool tracking;
         public List<Transform> ignore;
 
@@ -48,18 +50,27 @@ public class BulletHandler : MonoBehaviour
         {
             if (bullets[i].obj != null)
             {
-                if (bullets[i].tracking && bullets[i].target.obj != null)
+                bullets[i].time -= Time.deltaTime;
+                if (bullets[i].time <= 0)
                 {
-                    float step = bullets[i].speed * Time.deltaTime;
-                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.transform.position, step);
+                    DestroyBullet(i);
+                    i--;
                 }
                 else
                 {
-                    bullets[i].obj.position += bullets[i].obj.up * bullets[i].speed * Time.deltaTime;
+                    if (bullets[i].tracking && bullets[i].target.obj != null)
+                    {
+                        float step = bullets[i].speed * Time.deltaTime;
+                        bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.transform.position, step);
+                    }
+                    else
+                    {
+                        bullets[i].obj.position += bullets[i].obj.up * bullets[i].speed * Time.deltaTime;
+                    }
+                    RaycastHit2D hit = Physics2D.Raycast(bullets[i].obj.position, bullets[i].obj.up, 3f, enemyLayer);
+                    if (hit.collider != null && !bullets[i].ignore.Contains(hit.collider.transform))
+                        if (OnHit(i, hit.collider.transform)) { i--; continue; }
                 }
-                RaycastHit2D hit = Physics2D.Raycast(bullets[i].obj.position, bullets[i].obj.up, 5f, enemyLayer);
-                if (hit.collider != null && !bullets[i].ignore.Contains(hit.collider.transform))
-                    if (OnHit(i, hit.collider.transform)) { i--; continue; }
             }
             else
             {
@@ -72,7 +83,7 @@ public class BulletHandler : MonoBehaviour
     // Registers a bullet to be handled by the updater in this script
     public void RegisterBullet(Bullet bullet)
     {
-        bullets.Add(new ActiveBullets(bullet.obj, bullet.target, bullet.speed, bullet.pierces, bullet.damage, bullet.tracking));
+        bullets.Add(new ActiveBullets(bullet.obj, bullet.target, bullet.speed, bullet.pierces, bullet.damage, bullet.time, bullet.tracking));
     }
 
     // Called when a hit is detected in the updater 
@@ -82,13 +93,21 @@ public class BulletHandler : MonoBehaviour
         bullets[bulletID].ignore.Add(other);
         bullets[bulletID].target.script.DamageEnemy(bullets[bulletID].damage);
         bullets[bulletID].piercing--;
+        bullets[bulletID].tracking = false;
 
         if (bullets[bulletID].piercing == 0)
         {
-            bullets.RemoveAt(bulletID);
+            DestroyBullet(bulletID);
             return true;
         }
 
         return false;
+    }
+
+    public void DestroyBullet(int bulletID)
+    {
+        // Do a thing with particles 
+        Destroy(bullets[bulletID].obj.gameObject);
+        bullets.RemoveAt(bulletID);
     }
 }

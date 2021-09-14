@@ -32,7 +32,7 @@ public class EnemyHandler : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].transform != null) 
+            if (enemies[i] != null) 
             {
                 if (enemies[i].target != null)
                 {

@@ -34,7 +34,7 @@ public class DefaultEnemy : DefaultEntity
 
     public virtual void Move()
     {
-        base.transform.position += base.transform.up * enemy.moveSpeed * Time.deltaTime;
+        transform.position += transform.up * enemy.moveSpeed * Time.deltaTime;
     }
 
     public virtual void GiveDamage(DefaultBuilding building)
@@ -44,7 +44,7 @@ public class DefaultEnemy : DefaultEntity
 
     public override void DestroyEntity()
     {
-        ParticleSystemRenderer holder = Instantiate(enemy.variant.particle, base.transform.position,
+        ParticleSystemRenderer holder = Instantiate(enemy.variant.particle, transform.position,
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
         holder.material = enemy.variant.border;
         holder.trailMaterial = enemy.variant.border;

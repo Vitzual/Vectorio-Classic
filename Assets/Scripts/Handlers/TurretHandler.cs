@@ -24,20 +24,21 @@ public class TurretHandler : MonoBehaviour
 
     public void Update()
     {
-        foreach (DefaultTurret turret in turretEntities)
+        for (int i = 0; i < turretEntities.Count; i++)
         {
-            if (turret.transform == null)
+            if (turretEntities[i] == null)
             {
-                turretEntities.Remove(turret);
+                turretEntities.Remove(turretEntities[i]);
+                i--;
                 return;
             }
-            else if (turret.target.transform != null)
+            else if (turretEntities[i].target != null)
             {
-                turret.RotateTurret();
+                turretEntities[i].RotateTurret();
             }
-            else if (!turret.GetNewTarget())
+            else if (!turretEntities[i].GetNewTarget())
             {
-                turretEntities.Remove(turret);
+                turretEntities.Remove(turretEntities[i]);
             }
         }
     }

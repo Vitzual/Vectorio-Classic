@@ -84,6 +84,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
             {
                 Shoot();
                 cooldown = turret.fireRate;
+                Debug.Log(cooldown);
             }
         }
 

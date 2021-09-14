@@ -46,7 +46,7 @@ public class BuildingSystem : MonoBehaviour
 
         // Sets static variables on start
         tileGrid = new GridSystem();
-        tileGrid.cells = new Dictionary<Vector2Int, GridSystem.Cell>();
+        tileGrid.cells = new Dictionary<Vector2Int, Cell>();
         selected = null;
         position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
@@ -159,11 +159,26 @@ public class BuildingSystem : MonoBehaviour
 
     public void SetCells(Entity entity, GameObject obj)
     {
+        // Attempt to get the default building script
+        DefaultBuilding building = obj.GetComponent<DefaultBuilding>();
+
         // Set the tiles on the grid class
         if (entity.tile.cells.Length > 0)
         {
             foreach (Tile.Cell cell in entity.tile.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, entity.tile, obj);
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, entity.tile, building);
         }
+    }
+
+    public DefaultBuilding GetClosestBuilding(Vector2Int position)
+    {
+        DefaultBuilding nearest = null;
+        float distance = float.PositiveInfinity;
+
+        foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)
+            if (Vector2Int.Distance(position, cell.Key) < distance)
+                nearest = cell.Value.building;
+
+        return nearest;
     }
 }

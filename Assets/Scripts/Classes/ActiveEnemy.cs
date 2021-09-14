@@ -7,18 +7,23 @@ using UnityEngine;
 public class ActiveEnemy
 {
     // Constructor
-    public ActiveEnemy(Transform obj, Enemy enemy, Variant variant)
+    public ActiveEnemy(Transform obj, DefaultEnemy script, Enemy enemy, Transform rotator)
     {
         this.obj = obj;
+        this.script = script;
         this.enemy = enemy;
-        this.variant = enemy.variant;
+        this.rotator = rotator;
+
         target = null;
+        variant = enemy.variant;
     }
 
     // Class variables
     public Transform obj;
+    public Transform rotator;
+    public DefaultEnemy script;
+
     public Enemy enemy;
     public Variant variant;
-    [HideInInspector] public ActiveTurret target;
-    [HideInInspector] public bool hasTarget;
+    public DefaultBuilding target;
 }

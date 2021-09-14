@@ -46,7 +46,7 @@ public class Turret : Building
     public virtual void RotateTurret(ActiveTurret entity)
     {
         // Get target position relative to this entity
-        Vector2 targetPosition = new Vector2(entity.target.obj.position.x, entity.target.obj.position.y);
+        Vector2 targetPosition = new Vector2(entity.target.obj.transform.position.x, entity.target.obj.transform.position.y);
 
         // Get the distance from the turret to the target
         Vector2 distance = targetPosition - new Vector2(entity.barrel.position.x, entity.barrel.position.y);
@@ -123,7 +123,9 @@ public class Turret : Building
         bullet.transform.rotation = entity.barrel.rotation;
         bullet.transform.Rotate(0f, 0f, Random.Range(-entity.turret.bulletSpread, entity.turret.bulletSpread));
 
-        float speed = Random.Range(entity.turret.bulletSpeed - 10, entity.turret.bulletSpeed + 10);
+        bullet.GetComponent<TrailRenderer>().material = material;
+
+        float speed = Random.Range(entity.turret.bulletSpeed - 2, entity.turret.bulletSpeed + 2);
         int pierces = entity.turret.bulletPierces + Research.research_pierce;
         float damage = entity.turret.damage + Research.research_damage;
 

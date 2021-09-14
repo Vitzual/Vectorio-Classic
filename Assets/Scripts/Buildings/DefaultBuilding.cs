@@ -9,11 +9,11 @@ public class DefaultBuilding : NetworkBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
 
-    public Building building;
+    public Entity entity;
 
     public void SetStats()
     {
-        health = building.health;
+        health = entity.health;
         maxHealth = health;
     }
 
@@ -33,8 +33,8 @@ public class DefaultBuilding : NetworkBehaviour, IDamageable
     public void DestroyEntity()
     {
         // Create the particle
-        Instantiate(Resources.Load<ParticleSystem>("Particles/Death"), 
-            transform.position, Quaternion.identity).GetComponent<ParticleSystemRenderer>();
+        //Instantiate(Resources.Load<ParticleSystem>("Particles/Death"), 
+        //    transform.position, Quaternion.identity).GetComponent<ParticleSystemRenderer>();
 
         Destroy(gameObject);
     }

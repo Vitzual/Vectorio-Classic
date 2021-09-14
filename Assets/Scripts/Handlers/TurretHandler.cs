@@ -13,6 +13,8 @@ public class TurretHandler : MonoBehaviour
 
     public void Start()
     {
+        turretEntities = new Dictionary<DefaultTurret, ActiveTurret>();
+
         if (this != null)
         {
             active = this;
@@ -29,7 +31,7 @@ public class TurretHandler : MonoBehaviour
                 turretEntities.Remove(entity.Key);
                 return;
             }
-            else if (entity.Value.hasTarget)
+            else if (entity.Value.target.obj != null)
                 entity.Value.turret.RotateTurret(entity.Value);
         }
     }

@@ -17,7 +17,6 @@ public class ActiveTurret
     // Boolean flags
     [HideInInspector] public Enemy enemy;
     [HideInInspector] public ActiveEnemy target;
-    [HideInInspector] public bool hasTarget;
 
     // Cooldown
     [HideInInspector] public float cooldown;

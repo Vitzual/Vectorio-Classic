@@ -11,13 +11,12 @@ public class DefaultEnemy : MonoBehaviour
     public float health { get; set; }
     public float maxHealth { get; set; }
 
+    public Transform rotator;
+
     // Sprite info
     public SpriteRenderer[] border;
     public SpriteRenderer[] fill;
     public TrailRenderer[] trail;
-
-    // Enemy target
-    public Transform target;
 
     // Start method
     public void Start()
@@ -33,6 +32,15 @@ public class DefaultEnemy : MonoBehaviour
 
         foreach (TrailRenderer a in trail)
             a.material = enemy.variant.trail;
+
+        Events.active.EnemySpawned(this, rotator);
     }
 
+    public void DamageEnemy(float damage)
+    {
+        if (enemy.variant.TakeDamage(this, damage))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

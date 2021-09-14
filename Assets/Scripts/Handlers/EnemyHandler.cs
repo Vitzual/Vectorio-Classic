@@ -14,24 +14,29 @@ public class EnemyHandler : MonoBehaviour
     public List<ActiveEnemy> enemies;
 
     public LayerMask buildingLayer;
-    public bool isMenu = false;
+    private bool isMenu = false;
+    private bool scan = false;
 
     public void Start()
     {
+        enemies = new List<ActiveEnemy>();
         if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
+
+        Events.active.onEnemySpawned += RegisterEnemy;
     }
 
     // Handles enemy movement every frame
     public void Update()
     {
+        scan = true;
+
         for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].obj != null) 
             {
                 if (enemies[i].target != null)
                 {
-                    enemies[i].enemy.Rotate(enemies[i].obj, enemies[i].target.barrel);
-                    enemies[i].variant.Move(enemies[i].obj, enemies[i].enemy.moveSpeed);
+                    enemies[i].enemy.MoveTowards(enemies[i].obj, enemies[i].target.transform);
                     RaycastHit2D hit = Physics2D.Raycast(enemies[i].obj.position, enemies[i].obj.up, 2f, buildingLayer);
 
                     if (hit.collider != null)
@@ -63,17 +68,21 @@ public class EnemyHandler : MonoBehaviour
                             {
                                 turretHandler.turretEntities.TryGetValue(turret, out ActiveTurret barrel);
                                 if (barrel != null)
-                                {
                                     barrel.target = enemies[i];
-                                    barrel.hasTarget = true;
-                                }
                             }
                         }
                     }
                 }
-                else
+                else if (scan)
                 {
+                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].obj.transform.position));
 
+                    if (building != null)
+                    {
+                        enemies[i].target = building;
+                        RotateTowards(enemies[i].obj, building.transform);
+                    }
+                    else scan = false;
                 }
             }
             else
@@ -84,10 +93,16 @@ public class EnemyHandler : MonoBehaviour
         }
     }
 
-    // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(Transform obj, Enemy enemy, Variant variant)
+    public void RotateTowards(Transform pos, Transform target)
     {
-        enemies.Add(new ActiveEnemy(obj, enemy, variant));
+        Vector3 dir = pos.position - target.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        pos.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+    // Registers an enemy to then be handled by the controller 
+    public void RegisterEnemy(DefaultEnemy enemy, Transform rotator)
+    {
+        enemies.Add(new ActiveEnemy(enemy.transform, enemy, enemy.enemy, rotator));
+    }
 }

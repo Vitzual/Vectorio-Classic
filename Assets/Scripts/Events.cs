@@ -53,6 +53,14 @@ public class Events : MonoBehaviour
             onTurretPlaced(turret, barrel);
     }
 
+    // Invoked when a building with a turret script is placed
+    public event Action<DefaultEnemy, Transform> onEnemySpawned;
+    public void EnemySpawned(DefaultEnemy enemy, Transform rotator)
+    {
+        if (onEnemySpawned != null)
+            onEnemySpawned(enemy, rotator);
+    }
+
     // Invoked when a building is placed
     public event Action onBuildingPlaced;
     public void PlaceBuilding()

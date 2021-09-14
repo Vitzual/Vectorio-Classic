@@ -48,16 +48,16 @@ public class BulletHandler : MonoBehaviour
         {
             if (bullets[i].obj != null)
             {
-                if (bullets[i].tracking && bullets[i].target != null)
+                if (bullets[i].tracking && bullets[i].target.obj != null)
                 {
                     float step = bullets[i].speed * Time.deltaTime;
-                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.position, step);
+                    bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.transform.position, step);
                 }
                 else
                 {
                     bullets[i].obj.position += bullets[i].obj.up * bullets[i].speed * Time.deltaTime;
                 }
-                RaycastHit2D hit = Physics2D.Raycast(bullets[i].obj.position, bullets[i].obj.up, 2f, enemyLayer);
+                RaycastHit2D hit = Physics2D.Raycast(bullets[i].obj.position, bullets[i].obj.up, 5f, enemyLayer);
                 if (hit.collider != null && !bullets[i].ignore.Contains(hit.collider.transform))
                     if (OnHit(i, hit.collider.transform)) { i--; continue; }
             }
@@ -80,14 +80,15 @@ public class BulletHandler : MonoBehaviour
     {
         // Add the other transform to the ignore list for future collisions
         bullets[bulletID].ignore.Add(other);
-        //other.GetComponent<EnemyClass>().DamageEntity(Bullets[bulletID].Damage);
-
+        bullets[bulletID].target.script.DamageEnemy(bullets[bulletID].damage);
         bullets[bulletID].piercing--;
+
         if (bullets[bulletID].piercing == 0)
         {
             bullets.RemoveAt(bulletID);
             return true;
         }
+
         return false;
     }
 }

@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  building: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
+  entity: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
   barrel:
     turret: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
     firePoints:
@@ -160,8 +160,11 @@ MonoBehaviour:
       type: 3}
     position: {x: 0, y: 0}
     enemy: {fileID: 0}
-    target: {fileID: 0}
-    hasTarget: 0
+    target:
+      obj: {fileID: 0}
+      enemy: {fileID: 0}
+      variant: {fileID: 0}
+      target: {fileID: 0}
     cooldown: 0
 --- !u!114 &6312723558137510667
 MonoBehaviour:

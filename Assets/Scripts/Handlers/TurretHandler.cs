@@ -31,7 +31,7 @@ public class TurretHandler : MonoBehaviour
                 turretEntities.Remove(turret);
                 return;
             }
-            else if (turret.activeTurret.target.obj != null)
+            else if (turret.target.transform != null)
             {
                 turret.RotateTurret();
             }

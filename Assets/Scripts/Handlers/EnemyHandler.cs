@@ -32,16 +32,16 @@ public class EnemyHandler : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].obj != null) 
+            if (enemies[i].transform != null) 
             {
                 if (enemies[i].target != null)
                 {
-                    enemies[i].enemy.MoveTowards(enemies[i].obj, enemies[i].target.transform);
-                    RaycastHit2D hit = Physics2D.Raycast(enemies[i].obj.position, enemies[i].obj.up, 2f, buildingLayer);
+                    enemies[i].enemy.MoveTowards(enemies[i].transform, enemies[i].target.transform);
+                    RaycastHit2D hit = Physics2D.Raycast(enemies[i].transform.position, enemies[i].transform.up, 2f, buildingLayer);
 
                     if (hit.collider != null)
                     {
-                        if (Vector2.Distance(hit.collider.transform.position, enemies[i].obj.position) <= enemies[i].enemy.rayLength)
+                        if (Vector2.Distance(hit.collider.transform.position, enemies[i].transform.position) <= enemies[i].enemy.rayLength)
                         {
                             if (isMenu)
                             {
@@ -74,12 +74,12 @@ public class EnemyHandler : MonoBehaviour
                 }
                 else if (scan)
                 {
-                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].obj.position));
+                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].transform.position));
 
                     if (building != null)
                     {
                         enemies[i].target = building;
-                        RotateTowards(enemies[i].obj, building.transform);
+                        RotateTowards(enemies[i].transform, building.transform);
                     }
                     else scan = false;
                 }

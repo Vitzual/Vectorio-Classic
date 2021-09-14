@@ -14,14 +14,12 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public Transform[] firePoints;
     public Transform barrel;
     public GameObject bullet;
-    private DefaultEnemy target;
-    public Queue<DefaultEnemy> targets;
+    [HideInInspector] public DefaultEnemy target;
+    public Queue<DefaultEnemy> targets = new Queue<DefaultEnemy>();
     [HideInInspector] public float cooldown;
 
     public override void Setup()
     {
-        targets = new Queue<DefaultEnemy>();
-
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
 
         if (collider != null)
@@ -32,7 +30,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public virtual void RotateTurret()
     {
         // Get target position relative to this entity
-        Vector2 targetPosition = new Vector2(target.obj.transform.position.x, target.obj.transform.position.y);
+        Vector2 targetPosition = new Vector2(target.transform.transform.position.x, target.transform.transform.position.y);
 
         // Get the distance from the turret to the target
         Vector2 distance = targetPosition - new Vector2(barrel.position.x, barrel.position.y);
@@ -130,7 +128,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public void AddTarget(DefaultEnemy enemy)
     {
         targets.Enqueue(enemy);
-        if (target.obj == null && GetNewTarget())
+        if (target == null && GetNewTarget())
             Events.active.RegisterTurret(this);
     }
 

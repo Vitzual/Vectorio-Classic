@@ -63,10 +63,10 @@ public class BulletHandler : MonoBehaviour
                 }
                 else
                 {
-                    if (bullets[i].tracking && bullets[i].target.obj != null)
+                    if (bullets[i].tracking && bullets[i].target.transform != null)
                     {
                         float step = bullets[i].speed * Time.deltaTime;
-                        bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.obj.transform.position, step);
+                        bullets[i].obj.position = Vector2.MoveTowards(bullets[i].obj.position, bullets[i].target.transform.transform.position, step);
                     }
                     else
                     {

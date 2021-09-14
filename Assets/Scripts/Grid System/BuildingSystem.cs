@@ -7,9 +7,9 @@ using Mirror;
 public class BuildingSystem : MonoBehaviour
 {
     // Building class
-    public class BuildingQueue
+    public class EntityQueue
     {
-        public BuildingQueue(Entity scriptable, Vector2 pos, Quaternion rotation)
+        public EntityQueue(Entity scriptable, Vector2 pos, Quaternion rotation)
         {
             this.scriptable = scriptable;
             this.pos = pos;
@@ -30,6 +30,7 @@ public class BuildingSystem : MonoBehaviour
     public Vector2 position;
     private Vector2 offset;
     private GameObject lastObj;
+    public Variant variant;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -123,7 +124,7 @@ public class BuildingSystem : MonoBehaviour
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(new BuildingQueue(selected, position, Quaternion.identity));
+        RpcInstantiateObject(new EntityQueue(selected, position, Quaternion.identity));
     }
 
     // Creates a building at specified coords
@@ -133,14 +134,19 @@ public class BuildingSystem : MonoBehaviour
         if (selected == null || selected.obj == null) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(new BuildingQueue(selected, coords, Quaternion.identity));
+        RpcInstantiateObject(new EntityQueue(selected, coords, Quaternion.identity));
     }
 
-    private void RpcInstantiateObject(BuildingQueue entity)
+    private void RpcInstantiateObject(EntityQueue entity)
     {
         // Create the tile
         lastObj = Instantiate(entity.scriptable.obj, entity.pos, entity.rotation);
         lastObj.name = entity.scriptable.name;
+
+        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
+        if (enemy != null) enemy.variant = variant;
+
+        lastObj.GetComponent<DefaultEntity>().Setup();
 
         SetCells(entity.scriptable, lastObj);
     }

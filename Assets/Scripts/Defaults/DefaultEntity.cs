@@ -1,0 +1,44 @@
+using UnityEngine;
+using Mirror;
+using System.Collections.Generic;
+
+
+public class DefaultEntity : NetworkBehaviour, IDamageable
+{
+    // IDamageable interface variables
+    public float health { get; set; }
+    public float maxHealth { get; set; }
+
+    private ParticleSystem particle;
+
+    public virtual void Setup()
+    {
+        health = 1;
+        maxHealth = 1;
+
+        Debug.LogError("This entity needs a setup call!");
+    }
+
+    // Damages the entity (IDamageable interface method)
+    public virtual void DamageEntity(float dmg)
+    {
+        health -= dmg;
+        if (health <= 0)
+            DestroyEntity();
+    }
+
+    // Destroys the entity (IDamageable interface method)
+    public virtual void DestroyEntity()
+    {
+        if (particle != null)
+            Instantiate(particle, transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
+
+    // Heals the entity (IDamageable interface method)
+    public virtual void HealEntity(float amount)
+    {
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
+    }
+}

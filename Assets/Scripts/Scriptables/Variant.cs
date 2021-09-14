@@ -29,31 +29,4 @@ public class Variant : ScriptableObject
     public Material fill;
     public Material trail;
     public ParticleSystem particle;
-
-    public virtual void Move(Transform obj, float speed)
-    {
-        obj.position += obj.up * speed * Time.deltaTime;
-    }
-
-    public virtual bool GiveDamage(DefaultBuilding building, float damage)
-    {
-        return building.DamageEntity(damage);
-    }
-
-    public virtual bool TakeDamage(DefaultEnemy enemy, float amount)
-    {
-        enemy.health -= amount;
-        if (enemy.health <= 0)
-        {
-            Kill(enemy.transform);
-            return true;
-        }
-        return false;
-    }
-
-    public virtual void Kill(Transform obj)
-    {
-        Debug.Log("Pretend there's a particle");
-        
-    }
 }

@@ -308,8 +308,8 @@ public class Research : MonoBehaviour
                 break;
             case "gold time":
                 research_gold_time -= 0.5f;
-                DefaultCollector[] allGoldCollectors = FindObjectsOfType<DefaultCollector>();
-                foreach (DefaultCollector collector in allGoldCollectors)
+                Collector[] allGoldCollectors = FindObjectsOfType<Collector>();
+                foreach (Collector collector in allGoldCollectors)
                     collector.UpdateCollector();
                 break;
             case "gold storage":
@@ -324,8 +324,8 @@ public class Research : MonoBehaviour
                 break;
             case "essence time":
                 research_essence_time -= 1f;
-                DefaultCollector[] allEssenceCollectors = FindObjectsOfType<DefaultCollector>();
-                foreach (DefaultCollector collector in allEssenceCollectors)
+                Collector[] allEssenceCollectors = FindObjectsOfType<Collector>();
+                foreach (Collector collector in allEssenceCollectors)
                     collector.UpdateCollector();
                 break;
             case "essence storage":
@@ -340,8 +340,8 @@ public class Research : MonoBehaviour
                 break;
             case "iridium time":
                 research_iridium_time -= 1f;
-                DefaultCollector[] allIridiumCollectors = FindObjectsOfType<DefaultCollector>();
-                foreach (DefaultCollector collector in allIridiumCollectors)
+                Collector[] allIridiumCollectors = FindObjectsOfType<Collector>();
+                foreach (Collector collector in allIridiumCollectors)
                     collector.UpdateCollector();
                 break;
             case "iridium storage":

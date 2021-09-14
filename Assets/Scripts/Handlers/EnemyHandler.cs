@@ -11,7 +11,7 @@ public class EnemyHandler : MonoBehaviour
     public AudioSource BuildingGoDeadSound;
 
     // Contains all active enemies in the scene
-    public List<ActiveEnemy> enemies;
+    public List<DefaultEnemy> enemies;
 
     public LayerMask buildingLayer;
     private bool isMenu = false;
@@ -19,7 +19,7 @@ public class EnemyHandler : MonoBehaviour
 
     public void Start()
     {
-        enemies = new List<ActiveEnemy>();
+        enemies = new List<DefaultEnemy>();
         if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
 
         Events.active.onEnemySpawned += RegisterEnemy;
@@ -45,19 +45,22 @@ public class EnemyHandler : MonoBehaviour
                         {
                             if (isMenu)
                             {
-                                enemies[i].variant.Kill(enemies[i].obj);
+                                enemies[i].DestroyEntity();
                                 enemies.RemoveAt(i);
                                 i--;
                             }
                             else
                             {
                                 DefaultBuilding building = hit.collider.GetComponent<DefaultBuilding>();
-                                if (building != null && enemies[i].variant.GiveDamage(building, enemies[i].enemy.damage))
+                                if (building != null)
                                 {
-                                    enemies[i].variant.Kill(enemies[i].obj);
-                                    Destroy(enemies[i].obj.gameObject);
-                                    enemies.RemoveAt(i);
-                                    i--;
+                                    enemies[i].GiveDamage(building);
+                                    if (building.transform != null)
+                                    {
+                                        enemies[i].DestroyEntity();
+                                        enemies.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
                             }
                         }
@@ -65,17 +68,13 @@ public class EnemyHandler : MonoBehaviour
                         {
                             DefaultTurret turret = hit.collider.GetComponent<DefaultTurret>();
                             if (turret != null)
-                            {
-                                turretHandler.turretEntities.TryGetValue(turret, out ActiveTurret barrel);
-                                if (barrel != null)
-                                    barrel.target = enemies[i];
-                            }
+                                turret.AddTarget(enemies[i]);
                         }
                     }
                 }
                 else if (scan)
                 {
-                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].obj.transform.position));
+                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].obj.position));
 
                     if (building != null)
                     {
@@ -101,8 +100,8 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(DefaultEnemy enemy, Transform rotator)
+    public void RegisterEnemy(DefaultEnemy enemy)
     {
-        enemies.Add(new ActiveEnemy(enemy.transform, enemy, enemy.enemy, rotator));
+        enemies.Add(enemy);
     }
 }

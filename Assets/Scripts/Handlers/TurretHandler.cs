@@ -9,35 +9,41 @@ public class TurretHandler : MonoBehaviour
     public static TurretHandler active;
 
     // Barrel class
-    public Dictionary<DefaultTurret, ActiveTurret> turretEntities;
+    public List<DefaultTurret> turretEntities;
 
     public void Start()
     {
-        turretEntities = new Dictionary<DefaultTurret, ActiveTurret>();
+        turretEntities = new List<DefaultTurret>();
 
         if (this != null)
         {
             active = this;
-            Events.active.onTurretPlaced += AddTurretEntity;
+            Events.active.onTurretRegistered += AddTurretEntity;
         }
     }
 
     public void Update()
     {
-        foreach (KeyValuePair<DefaultTurret, ActiveTurret> entity in turretEntities)
+        foreach (DefaultTurret turret in turretEntities)
         {
-            if (entity.Value.barrel == null)
+            if (turret.transform == null)
             {
-                turretEntities.Remove(entity.Key);
+                turretEntities.Remove(turret);
                 return;
             }
-            else if (entity.Value.target.obj != null)
-                entity.Value.turret.RotateTurret(entity.Value);
+            else if (turret.activeTurret.target.obj != null)
+            {
+                turret.RotateTurret();
+            }
+            else if (!turret.GetNewTarget())
+            {
+                turretEntities.Remove(turret);
+            }
         }
     }
 
-    public void AddTurretEntity(DefaultTurret turret, ActiveTurret barrel)
+    public void AddTurretEntity(DefaultTurret turret)
     {
-        turretEntities.Add(turret, barrel);
+        turretEntities.Add(turret);
     }
 }

@@ -30,35 +30,35 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a collector script is placed
-    public event Action<DefaultCollector> onCollectorPlaced;
-    public void CollectorPlaced(DefaultCollector collector)
+    public event Action<Collector> onCollectorPlaced;
+    public void CollectorPlaced(Collector collector)
     {
         if (onCollectorPlaced != null)
             onCollectorPlaced(collector);
     }
 
     // Invoked when a building with a storage script is placed
-    public event Action<DefaultStorage> onStoragePlaced;
-    public void StoragePlaced(DefaultStorage storage)
+    public event Action<Storage> onStoragePlaced;
+    public void StoragePlaced(Storage storage)
     {
         if (onStoragePlaced != null)
             onStoragePlaced(storage);
     }
 
     // Invoked when a building with a turret script is placed
-    public event Action<DefaultTurret, ActiveTurret> onTurretPlaced;
-    public void TurretPlaced(DefaultTurret turret, ActiveTurret barrel)
+    public event Action<DefaultTurret> onTurretRegistered;
+    public void RegisterTurret(DefaultTurret turret)
     {
-        if (onTurretPlaced != null)
-            onTurretPlaced(turret, barrel);
+        if (onTurretRegistered != null)
+            onTurretRegistered(turret);
     }
 
     // Invoked when a building with a turret script is placed
-    public event Action<DefaultEnemy, Transform> onEnemySpawned;
-    public void EnemySpawned(DefaultEnemy enemy, Transform rotator)
+    public event Action<DefaultEnemy> onEnemySpawned;
+    public void EnemySpawned(DefaultEnemy enemy)
     {
         if (onEnemySpawned != null)
-            onEnemySpawned(enemy, rotator);
+            onEnemySpawned(enemy);
     }
 
     // Invoked when a building is placed

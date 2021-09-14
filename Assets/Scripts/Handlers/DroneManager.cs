@@ -94,20 +94,20 @@ public class DroneManager : MonoBehaviour
             targetType = 1;
             storagesAvailable = true;
 
-            visitedCollectors = new List<DefaultCollector>();
-            availableCollectors = new List<DefaultCollector>();
-            availableStorages = new List<DefaultStorage>();
+            visitedCollectors = new List<Collector>();
+            availableCollectors = new List<Collector>();
+            availableStorages = new List<Storage>();
         }
 
         public Transform[] plates;
         public bool storagesAvailable;
-        public List<DefaultCollector> visitedCollectors;
-        public List<DefaultCollector> availableCollectors;
-        public List<DefaultStorage> availableStorages;
+        public List<Collector> visitedCollectors;
+        public List<Collector> availableCollectors;
+        public List<Storage> availableStorages;
         public Transform body;
         public Transform port;
         public Transform target;
-        public DefaultCollector targetScript;
+        public Collector targetScript;
         public int collectedGold;
         public bool visitedGold;
         public int collectedEssence;
@@ -344,9 +344,9 @@ public class DroneManager : MonoBehaviour
                             case 2:
 
                                 // See how much gold the storage can hold
-                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedGold);
-                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedEssence);
-                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<DefaultStorage>().AddResources(drone.collectedIridium);
+                                if (drone.collectedGold > 0) drone.collectedGold = drone.target.GetComponent<Storage>().AddResources(drone.collectedGold);
+                                else if (drone.collectedEssence > 0) drone.collectedEssence = drone.target.GetComponent<Storage>().AddResources(drone.collectedEssence);
+                                else if (drone.collectedIridium > 0) drone.collectedIridium = drone.target.GetComponent<Storage>().AddResources(drone.collectedIridium);
 
                                 // Animate building
                                 AnimateThenStop animScript = drone.target.GetComponent<AnimateThenStop>();
@@ -387,8 +387,8 @@ public class DroneManager : MonoBehaviour
         var colliders = Physics2D.OverlapCircleAll(drone.port.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
         {
-            if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<DefaultCollector>());
-            else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<DefaultStorage>());
+            if (collider.name.Contains("Collector")) drone.availableCollectors.Add(collider.GetComponent<Collector>());
+            else if (collider.name.Contains("Storage")) drone.availableStorages.Add(collider.GetComponent<Storage>());
         }
     }
 
@@ -399,7 +399,7 @@ public class DroneManager : MonoBehaviour
                 resourceDrone[i].storagesAvailable = true;
     }
 
-    public void AddCollectorReference(DefaultCollector collector)
+    public void AddCollectorReference(Collector collector)
     {
         var colliders = Physics2D.OverlapCircleAll(collector.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
@@ -418,7 +418,7 @@ public class DroneManager : MonoBehaviour
         }
     }
 
-    public void AddStorageReference(DefaultStorage storage)
+    public void AddStorageReference(Storage storage)
     {
         var colliders = Physics2D.OverlapCircleAll(storage.transform.position, Research.research_resource_range, layer);
         foreach (Collider2D collider in colliders)
@@ -443,7 +443,7 @@ public class DroneManager : MonoBehaviour
         if (isMenu)
         {
             if (drone.availableCollectors.Count == 0) return false;
-            DefaultCollector randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
+            Collector randomizer = drone.availableCollectors[Random.Range(0, drone.availableCollectors.Count)];
             drone.target = randomizer.transform;
             Vector2 lookDirection = new Vector2(drone.target.position.x, drone.target.position.y) - new Vector2(drone.body.position.x, drone.body.position.y);
             drone.body.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
@@ -452,12 +452,12 @@ public class DroneManager : MonoBehaviour
             return true;
         }
 
-        DefaultCollector holder = null;
+        Collector holder = null;
         int mostResources = -1;
 
         for(int i = 0; i < drone.availableCollectors.Count; i++)   
         {
-            DefaultCollector collector = drone.availableCollectors[i];
+            Collector collector = drone.availableCollectors[i];
             if (collector == null)
             {
                 drone.availableCollectors.Remove(collector);
@@ -492,7 +492,7 @@ public class DroneManager : MonoBehaviour
         else if (drone.visitedIridium) type = 3;
 
         // Loop through all available storages
-        DefaultStorage storage;
+        Storage storage;
         for (int i = 0; i < total; i++)
         {
             // Check if storage is null
@@ -802,7 +802,7 @@ public class DroneManager : MonoBehaviour
         drone.platesClosing = false;
         drone.body.position = drone.port.position;
         drone.body.localScale = new Vector2(0.8f, 0.8f);
-        drone.visitedCollectors = new List<DefaultCollector>();
+        drone.visitedCollectors = new List<Collector>();
         drone.target = null;
         drone.targetScript = null;
         drone.check = true;

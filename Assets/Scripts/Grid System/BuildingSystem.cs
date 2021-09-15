@@ -99,6 +99,7 @@ public class BuildingSystem : MonoBehaviour
     public void SetBuilding(Entity entity)
     {
         spriteRenderer.sprite = Sprites.GetSprite(entity.name);
+        transform.localScale = new Vector2(entity.size, entity.size);
         selected = entity;
         if (entity != null) offset = entity.tile.offset;
     }
@@ -112,6 +113,10 @@ public class BuildingSystem : MonoBehaviour
         // Check if snap is enabled
         if (!selected.snap)
         {
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
+            foreach(RaycastHit2D hit in hits)
+                if (hit.collider.GetComponent<DefaultBuilding>() == null) return;
+
             if (cooldown != 0)
             {
                 cooldown -= 1;
@@ -182,8 +187,14 @@ public class BuildingSystem : MonoBehaviour
         float distance = float.PositiveInfinity;
 
         foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)
-            if (Vector2Int.Distance(position, cell.Key) < distance)
+        {
+            float holder = Vector2Int.Distance(position, cell.Key);
+            if (holder < distance)
+            {
+                distance = holder;
                 nearest = cell.Value.building;
+            }
+        }
 
         return nearest;
     }

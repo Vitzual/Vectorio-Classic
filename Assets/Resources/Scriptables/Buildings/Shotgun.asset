@@ -30,7 +30,7 @@ MonoBehaviour:
   active: 0
   unlockOrder: 2
   unlockDesc: Unlocked by destroying 10 triangles
-  isUnlocked: 0
+  isUnlocked: 1
   resources:
   - resource: 0
     amount: 750
@@ -44,13 +44,15 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
   damage: 1
-  range: 8
+  range: 35
   rotationSpeed: 60
-  fireRate: 0.75
-  bulletPierces: 0
+  cooldown: 1
+  bulletPierces: 1
   bulletAmount: 5
-  bulletSpeed: 5
-  bulletSpread: 0.5
+  bulletSpeed: 45
+  bulletSpread: 15
+  bulletTime: 0.5
+  bulletLock: 0
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

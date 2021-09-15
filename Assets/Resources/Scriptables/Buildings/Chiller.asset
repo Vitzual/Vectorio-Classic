@@ -21,6 +21,7 @@ MonoBehaviour:
       y: 0
     offset: {x: 0, y: 0}
   snap: 1
+  size: 1
   health: 60
   level: 1
   maxHealth: 0
@@ -44,13 +45,15 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
   sound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
   damage: 5
-  range: 18
+  range: 50
   rotationSpeed: 70
-  fireRate: 0.5
-  bulletPierces: 0
+  cooldown: 0.3
+  bulletPierces: 1
   bulletAmount: 1
-  bulletSpeed: 10
+  bulletSpeed: 60
   bulletSpread: 0
+  bulletTime: 0.8
+  bulletLock: 1
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

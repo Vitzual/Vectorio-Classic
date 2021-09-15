@@ -32,12 +32,11 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public virtual void RotateTurret()
     {
         // Calculate the rotation towards the enemy
-        Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
-        Vector2 distance = targetPosition - new Vector2(transform.position.x, transform.position.y);
-        float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
+        Vector3 dir = barrel.position - target.transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        barrel.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
 
-        // Face the enemy
-        barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+        // Fire once cooldown reached
         if (cooldown > 0) cooldown -= Time.deltaTime;
         else
         {
@@ -57,8 +56,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
     // Create a bullet object
     public virtual void CreateBullet(Vector2 position)
     {
-        if (turret.sound != null)
-            AudioSource.PlayClipAtPoint(turret.sound, transform.position);
+        //if (turret.sound != null)
+        //    AudioSource.PlayClipAtPoint(turret.sound, transform.position);
 
         GameObject bullet = Instantiate(this.bullet, position, barrel.rotation);
         bullet.transform.rotation = barrel.rotation;

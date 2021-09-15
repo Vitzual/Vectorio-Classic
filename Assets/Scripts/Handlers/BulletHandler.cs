@@ -72,10 +72,9 @@ public class BulletHandler : MonoBehaviour
                     {
                         bullets[a].obj.position += bullets[a].obj.up * bullets[a].speed * Time.deltaTime;
                     }
-                    RaycastHit2D[] hit = Physics2D.RaycastAll(bullets[a].obj.position, bullets[a].obj.up, 3f, enemyLayer);
-                    for(int b = 0; b < hit.Length; b++) 
-                        if (hit[b].collider != null && !bullets[a].ignore.Contains(hit[b].collider.transform))
-                            if (OnHit(a, hit[b].collider.transform)) { a--; continue; }
+                    RaycastHit2D hit = Physics2D.Raycast(bullets[a].obj.position, bullets[a].obj.up, 3f, enemyLayer);
+                    if (hit.collider != null && !bullets[a].ignore.Contains(hit.collider.transform))
+                        if (OnHit(a, hit.collider.transform)) { a--; continue; }
                 }
             }
             else

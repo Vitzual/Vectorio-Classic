@@ -12,6 +12,7 @@ public class Entity : ScriptableObject
     // Tile variables 
     public Tile tile;
     public bool snap;
+    public float size = 1f;
 
     // Building base variables
     public int health;

@@ -37,42 +37,52 @@ public class EnemyHandler : MonoBehaviour
                 if (enemies[a].target != null)
                 {
                     enemies[a].enemy.MoveTowards(enemies[a].transform, enemies[a].target.transform);
-                    RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
 
-                    for (int b = 0; b < hit.Length; b++)
+                    if (enemies[a].raycastCooldown == 0)
                     {
-                        if (hit[b].collider != null)
+                        enemies[a].raycastCooldown = 5;
+
+                        RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
+
+                        for (int b = 0; b < hit.Length; b++)
                         {
-                            if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= enemies[a].enemy.rayLength)
+                            if (hit[b].collider != null)
                             {
-                                if (isMenu)
+                                if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= enemies[a].enemy.rayLength)
                                 {
-                                    enemies[a].DestroyEntity();
-                                    enemies.RemoveAt(a);
-                                    a--;
-                                }
-                                else
-                                {
-                                    DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
-                                    if (building != null)
+                                    if (isMenu)
                                     {
-                                        enemies[a].GiveDamage(building);
-                                        if (building.transform != null)
+                                        enemies[a].DestroyEntity();
+                                        enemies.RemoveAt(a);
+                                        a--;
+                                    }
+                                    else
+                                    {
+                                        DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
+                                        if (building != null)
                                         {
-                                            enemies[a].DestroyEntity();
-                                            enemies.RemoveAt(a);
-                                            a--;
+                                            enemies[a].GiveDamage(building);
+                                            if (building.transform != null)
+                                            {
+                                                enemies[a].DestroyEntity();
+                                                enemies.RemoveAt(a);
+                                                a--;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
-                                if (turret != null)
-                                    turret.AddTarget(enemies[a]);
+                                else
+                                {
+                                    DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
+                                    if (turret != null)
+                                        turret.AddTarget(enemies[a]);
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        enemies[a].raycastCooldown -= 1;
                     }
                 }
                 else if (scan)

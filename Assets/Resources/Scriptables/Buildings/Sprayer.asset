@@ -21,6 +21,7 @@ MonoBehaviour:
       y: 0
     offset: {x: 0, y: 0}
   snap: 1
+  size: 1
   health: 50
   level: 1
   maxHealth: 0
@@ -43,14 +44,16 @@ MonoBehaviour:
     modifier: 0
   material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
   sound: {fileID: 8300000, guid: 67ff0f1f4f6f24ad5ac07ccfd34636fd, type: 3}
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  fireRate: 0
-  bulletPierces: 0
-  bulletAmount: 0
-  bulletSpeed: 0
-  bulletSpread: 0
+  damage: 3
+  range: 40
+  rotationSpeed: 60
+  cooldown: 0.2
+  bulletPierces: 1
+  bulletAmount: 1
+  bulletSpeed: 55
+  bulletSpread: 20
+  bulletTime: 0.5
+  bulletLock: 0
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

@@ -5,5 +5,12 @@ using System.Collections.Generic;
 [HideInInspector]
 public class DefaultBuilding : DefaultEntity
 {
-    // Do stuff maybe
+    public override void DestroyEntity()
+    {
+        BuildingSystem.active.tileGrid.RemoveCell(Vector2Int.RoundToInt(transform.position));
+
+        if (particle != null)
+            Instantiate(particle, transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
 }

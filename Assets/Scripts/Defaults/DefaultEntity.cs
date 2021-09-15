@@ -9,7 +9,7 @@ public class DefaultEntity : NetworkBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
 
-    private ParticleSystem particle;
+    protected ParticleSystem particle;
 
     public virtual void Setup()
     {

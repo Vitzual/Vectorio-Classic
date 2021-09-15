@@ -22,10 +22,17 @@ public class GridSystem
     public void SetCell(Vector2Int coords, bool occupy, Tile tile, DefaultBuilding building)
     {
         if (cells.TryGetValue(coords, out Cell cell))
-        {            cell.tile = tile;
+        {            
+            cell.tile = tile;
             cell.occupied = occupy;
             cell.building = building;
         }
         else cells.Add(coords, new Cell(occupy, tile, building));
+    }
+
+    public void RemoveCell(Vector2Int coords)
+    {
+        if (cells.ContainsKey(coords))
+            cells.Remove(coords);
     }
 }

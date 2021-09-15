@@ -30,64 +30,67 @@ public class EnemyHandler : MonoBehaviour
     {
         scan = true;
 
-        for (int i = 0; i < enemies.Count; i++)
+        for (int a = 0; a < enemies.Count; a++)
         {
-            if (enemies[i] != null) 
+            if (enemies[a] != null) 
             {
-                if (enemies[i].target != null)
+                if (enemies[a].target != null)
                 {
-                    enemies[i].enemy.MoveTowards(enemies[i].transform, enemies[i].target.transform);
-                    RaycastHit2D hit = Physics2D.Raycast(enemies[i].transform.position, enemies[i].transform.up, 2f, buildingLayer);
+                    enemies[a].enemy.MoveTowards(enemies[a].transform, enemies[a].target.transform);
+                    RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
 
-                    if (hit.collider != null)
+                    for (int b = 0; b < hit.Length; b++)
                     {
-                        if (Vector2.Distance(hit.collider.transform.position, enemies[i].transform.position) <= enemies[i].enemy.rayLength)
+                        if (hit[b].collider != null)
                         {
-                            if (isMenu)
+                            if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= enemies[a].enemy.rayLength)
                             {
-                                enemies[i].DestroyEntity();
-                                enemies.RemoveAt(i);
-                                i--;
-                            }
-                            else
-                            {
-                                DefaultBuilding building = hit.collider.GetComponent<DefaultBuilding>();
-                                if (building != null)
+                                if (isMenu)
                                 {
-                                    enemies[i].GiveDamage(building);
-                                    if (building.transform != null)
+                                    enemies[a].DestroyEntity();
+                                    enemies.RemoveAt(a);
+                                    a--;
+                                }
+                                else
+                                {
+                                    DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
+                                    if (building != null)
                                     {
-                                        enemies[i].DestroyEntity();
-                                        enemies.RemoveAt(i);
-                                        i--;
+                                        enemies[a].GiveDamage(building);
+                                        if (building.transform != null)
+                                        {
+                                            enemies[a].DestroyEntity();
+                                            enemies.RemoveAt(a);
+                                            a--;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else 
-                        {
-                            DefaultTurret turret = hit.collider.GetComponent<DefaultTurret>();
-                            if (turret != null)
-                                turret.AddTarget(enemies[i]);
+                            else
+                            {
+                                DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
+                                if (turret != null)
+                                    turret.AddTarget(enemies[a]);
+                            }
                         }
                     }
                 }
                 else if (scan)
                 {
-                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[i].transform.position));
+                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
                     if (building != null)
                     {
-                        enemies[i].target = building;
-                        RotateTowards(enemies[i].transform, building.transform);
+                        enemies[a].target = building;
+                        RotateTowards(enemies[a].transform, building.transform);
                     }
                     else scan = false;
                 }
             }
             else
             {
-                enemies.RemoveAt(i);
-                i--;
+                enemies.RemoveAt(a);
+                a--;
             }
         }
     }

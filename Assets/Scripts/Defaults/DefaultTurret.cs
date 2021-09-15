@@ -25,15 +25,18 @@ public class DefaultTurret : DefaultBuilding, IAudible
         if (collider != null)
             collider.radius = turret.range;
         else Debug.LogError("Turret does not have a circle collider!");
+
+        cooldown = turret.cooldown;
     }
 
     public virtual void RotateTurret()
     {
+        /*
         // Get target position relative to this entity
-        Vector2 targetPosition = new Vector2(target.transform.transform.position.x, target.transform.transform.position.y);
+        Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
 
         // Get the distance from the turret to the target
-        Vector2 distance = targetPosition - new Vector2(barrel.position.x, barrel.position.y);
+        Vector2 distance = targetPosition - new Vector2(transform.position.x, transform.position.y);
 
         // Get the angle between the gun position and the target position
         float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
@@ -75,18 +78,22 @@ public class DefaultTurret : DefaultBuilding, IAudible
         }
         else
         {
-            barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
-            if (cooldown > 0)
-            {
-                cooldown -= Time.deltaTime;
-            }
-            else
-            {
-                Shoot();
-                cooldown = turret.fireRate;
-                Debug.Log(cooldown);
-            }
+        */
+
+        // Calculate the rotation towards the enemy
+        Vector2 targetPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+        Vector2 distance = targetPosition - new Vector2(transform.position.x, transform.position.y);
+        float targetAngle = Mathf.Atan(distance.y / distance.x) * Mathf.Rad2Deg + 90f;
+
+        // Face the enemy
+        barrel.transform.eulerAngles = new Vector3(0, 0, targetAngle);
+        if (cooldown > 0) cooldown -= Time.deltaTime;
+        else
+        {
+            Shoot();
+            cooldown = turret.cooldown;
         }
+        //}
 
     }
 
@@ -128,9 +135,12 @@ public class DefaultTurret : DefaultBuilding, IAudible
 
     public void AddTarget(DefaultEnemy enemy)
     {
-        targets.Enqueue(enemy);
-        if (target == null && GetNewTarget())
-            Events.active.RegisterTurret(this);
+        if (!targets.Contains(enemy))
+        {
+            targets.Enqueue(enemy);
+            if (target == null && GetNewTarget())
+                Events.active.RegisterTurret(this);
+        }
     }
 
     public bool GetNewTarget()

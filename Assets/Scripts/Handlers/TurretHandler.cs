@@ -30,7 +30,6 @@ public class TurretHandler : MonoBehaviour
             {
                 turretEntities.Remove(turretEntities[i]);
                 i--;
-                return;
             }
             else if (turretEntities[i].target != null)
             {

@@ -10,7 +10,7 @@ public class Turret : Building
     public float damage;
     public float range;
     public float rotationSpeed;
-    public float fireRate;
+    public float cooldown;
     public int bulletPierces;
     public int bulletAmount;
     public float bulletSpeed;
@@ -35,7 +35,7 @@ public class Turret : Building
         panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.GetSprite("Health")));
         panel.CreateStat(new Stat("Damage", damage, damageModifier, Sprites.GetSprite("Damage")));
         panel.CreateStat(new Stat("Range", range, damageModifier, Sprites.GetSprite("Range")));
-        panel.CreateStat(new Stat("Firerate", fireRate, damageModifier, Sprites.GetSprite("Firerate")));
+        panel.CreateStat(new Stat("Firerate", cooldown, damageModifier, Sprites.GetSprite("Firerate")));
         panel.CreateStat(new Stat("Pierces", bulletPierces, damageModifier, Sprites.GetSprite("Pierces")));
         panel.CreateStat(new Stat("Bullets", bulletAmount, damageModifier, Sprites.GetSprite("Bullets")));
         panel.CreateStat(new Stat("Spread", bulletSpread, damageModifier, Sprites.GetSprite("Spread")));

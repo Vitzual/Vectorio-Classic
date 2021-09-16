@@ -12,7 +12,7 @@ public class Gamemode : MonoBehaviour
     // Register for events
     public void Start()
     {
-        Events.active.onBuildingPlaced += PlaceBuilding;
+        Events.active.onLeftMousePressed += PlaceBuilding;
         Events.active.setupBuildables += InitEntities;
     }
 

@@ -133,4 +133,11 @@ public class BulletHandler : MonoBehaviour
         Recycler.AddRecyclable(bullets[bulletID].obj);
         bullets.RemoveAt(bulletID);
     }
+
+    public void DestroyAllBullets()
+    {
+        for(int i = 0; i < bullets.Count; i++)
+            Destroy(bullets[i].obj.gameObject);
+        bullets = new List<ActiveBullets>();
+    }
 }

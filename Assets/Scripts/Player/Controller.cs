@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -18,6 +19,10 @@ public class Controller : MonoBehaviour
 
     private float targetZoom;
 
+    private float timer = 0;
+    private float fpsRefreshRate = 1f;
+    public TextMeshProUGUI fpsCurrent;
+
     [HideInInspector]
     public bool SettingHotbar = false;
 
@@ -28,12 +33,23 @@ public class Controller : MonoBehaviour
 
     public void Update()
     {
+        if (Time.unscaledTime > timer)
+        {
+            int fps = (int)(1f / Time.unscaledDeltaTime);
+            fpsCurrent.text = fps+"fps";
+            timer = Time.unscaledTime + fpsRefreshRate;
+        }
+
         CheckScrollInput();
 
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
-        if (Input.GetKey(Keybinds.select))
-            Events.active.PlaceBuilding();
+        if (Input.GetKey(Keybinds.lmb))
+            Events.active.LeftMousePressed();
+        if (Input.GetKeyUp(Keybinds.rmb))
+            Events.active.RightMouseReleased();
+        if (Input.GetKey(Keybinds.rmb))
+            Events.active.RightMousePressed();
     }
 
     // Checks if for numeric input

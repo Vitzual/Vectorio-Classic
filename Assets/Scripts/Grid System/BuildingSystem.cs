@@ -27,10 +27,10 @@ public class BuildingSystem : MonoBehaviour
     // Building variables
     public static BuildingSystem active;
     public Entity selected;
-    public Vector2 position;
     private Vector2 offset;
     private GameObject lastObj;
     public Variant variant;
+    public bool canDelete = true;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -39,7 +39,7 @@ public class BuildingSystem : MonoBehaviour
     public int cooldown = 10;
 
     // Start method grabs tilemap
-    public void Awake()
+    public void Start()
     {
         // Grabs active component if it exists
         if (this != null) active = this;
@@ -49,13 +49,16 @@ public class BuildingSystem : MonoBehaviour
         tileGrid = new GridSystem();
         tileGrid.cells = new Dictionary<Vector2Int, Cell>();
         selected = null;
-        position = new Vector2(0, 0);
         offset = new Vector2(0, 0);
         lastObj = null;
 
         // Sets static anim variables
         spriteRenderer = GetComponent<SpriteRenderer>();
         alphaHolder = alphaAdjust;
+
+        // Setup events
+        Events.active.onRightMousePressed += DeleteTile;
+        Events.active.onRightMouseReleased += Deselect;
     }
 
     // Update is called once per frame
@@ -68,6 +71,20 @@ public class BuildingSystem : MonoBehaviour
         OffsetBuilding();
         AdjustTransparency();
     }
+    
+    private void Deselect()
+    {
+        if (selected != null)
+            SetBuilding(null);
+    }
+
+    public void DeleteTile()
+    {
+        if (canDelete)
+        {
+            tileGrid.DestroyCell(Vector2Int.RoundToInt(transform.position));
+        }
+    }
 
     private void OffsetBuilding()
     {
@@ -75,11 +92,13 @@ public class BuildingSystem : MonoBehaviour
 
         if (selected != null)
         {
-            if (selected.snap) active.transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
-            else active.transform.position = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
+            if (selected.snap) transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
+            else transform.position = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
         }
-
-        position = active.transform.position;
+        else
+        {
+            transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
+        }
     }
 
     // Adjusts the alpha transparency of the SR component 
@@ -98,10 +117,21 @@ public class BuildingSystem : MonoBehaviour
     // Sets the selected building
     public void SetBuilding(Entity entity)
     {
-        spriteRenderer.sprite = Sprites.GetSprite(entity.name);
-        transform.localScale = new Vector2(entity.size, entity.size);
         selected = entity;
-        if (entity != null) offset = entity.tile.offset;
+        if (entity != null)
+        {
+            canDelete = false;
+
+            spriteRenderer.sprite = Sprites.GetSprite(entity.name);
+            transform.localScale = new Vector2(entity.size, entity.size);
+            offset = entity.tile.offset;
+        }
+        else
+        {
+            canDelete = true;
+
+            spriteRenderer.sprite = Sprites.GetSprite("Transparent");
+        }
     }
 
     // Creates a building
@@ -129,7 +159,7 @@ public class BuildingSystem : MonoBehaviour
         if (!CheckTiles()) return;
 
         // Instantiate the object like usual
-        RpcInstantiateObject(new EntityQueue(selected, position, Quaternion.identity));
+        RpcInstantiateObject(new EntityQueue(selected, transform.position, Quaternion.identity));
     }
 
     // Creates a building at specified coords
@@ -162,7 +192,7 @@ public class BuildingSystem : MonoBehaviour
         if (selected.tile.cells.Length > 0)
         {
             foreach (Tile.Cell cell in selected.tile.cells)
-                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y))) != null)
+                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(transform.position.x + cell.x, transform.position.y + cell.y))) != null)
                     return false;
         }
         return true;
@@ -197,5 +227,10 @@ public class BuildingSystem : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    public void ClearBuildings()
+    {
+        tileGrid.DestroyAllCells();
     }
 }

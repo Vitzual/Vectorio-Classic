@@ -11,6 +11,6 @@ public class DefaultBuilding : DefaultEntity
 
         if (particle != null)
             Instantiate(particle, transform.position, transform.rotation);
-        Destroy(gameObject);
+        Recycler.AddRecyclable(transform);
     }
 }

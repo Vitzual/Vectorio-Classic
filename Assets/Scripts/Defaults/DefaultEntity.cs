@@ -32,7 +32,7 @@ public class DefaultEntity : NetworkBehaviour, IDamageable
     {
         if (particle != null)
             Instantiate(particle, transform.position, transform.rotation);
-        Destroy(gameObject);
+        Recycler.AddRecyclable(transform);
     }
 
     // Heals the entity (IDamageable interface method)

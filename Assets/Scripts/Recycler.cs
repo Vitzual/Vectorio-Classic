@@ -9,7 +9,6 @@ public class Recycler : MonoBehaviour
 {
     private static List<Transform> recyclables;
     private static bool acceptingRecyclables;
-    private bool recycleThisFrame = false;
 
     public void Start()
     {
@@ -24,16 +23,12 @@ public class Recycler : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (recycleThisFrame)
+        if (recyclables.Count > 0)
         {
-            recycleThisFrame = false;
-            if (recyclables.Count > 0)
-            {
+            if (recyclables[0] != null)
                 Destroy(recyclables[0].gameObject);
-                recyclables.RemoveAt(0);
-            }
+            recyclables.RemoveAt(0);
         }
-        else recycleThisFrame = true;
     }
 
     public static void AddRecyclable(Transform recyclable)

@@ -62,11 +62,27 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building is placed
-    public event Action onBuildingPlaced;
-    public void PlaceBuilding()
+    public event Action onLeftMousePressed;
+    public void LeftMousePressed()
     {
-        if (onBuildingPlaced != null)
-            onBuildingPlaced();
+        if (onLeftMousePressed != null)
+            onLeftMousePressed();
+    }
+
+    // Invoked when a building is placed
+    public event Action onRightMousePressed;
+    public void RightMousePressed()
+    {
+        if (onRightMousePressed != null)
+            onRightMousePressed();
+    }
+
+    // Invoked when a building is placed
+    public event Action onRightMouseReleased;
+    public void RightMouseReleased()
+    {
+        if (onRightMouseReleased != null)
+            onRightMouseReleased();
     }
 
     // Invoked when a survival save is loaded

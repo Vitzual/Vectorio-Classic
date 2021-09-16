@@ -117,4 +117,11 @@ public class EnemyHandler : MonoBehaviour
     {
         enemies.Add(enemy);
     }
+
+    public void DestroyAllEnemies()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+            Destroy(enemies[i].gameObject);
+        enemies = new List<DefaultEnemy>();
+    }
 }

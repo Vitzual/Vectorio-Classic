@@ -35,4 +35,17 @@ public class GridSystem
         if (cells.ContainsKey(coords))
             cells.Remove(coords);
     }
+
+    public void DestroyCell(Vector2Int coords)
+    {
+        if (cells.ContainsKey(coords))
+            cells[coords].building.DestroyEntity();
+    }
+
+    public void DestroyAllCells()
+    {
+        foreach (Cell cell in cells.Values)
+            Recycler.AddRecyclable(cell.building.transform);
+        cells = new Dictionary<Vector2Int, Cell>();
+    }
 }

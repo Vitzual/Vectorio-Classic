@@ -96,10 +96,12 @@ public class BulletHandler : MonoBehaviour
     public bool OnHit(int bulletID, Transform other)
     {
         // Add the other transform to the ignore list for future collisions
-        if (bullets[bulletID].target != null)
+        DefaultEnemy enemy = other.GetComponent<DefaultEnemy>();
+
+        if (enemy != null)
         {
             bullets[bulletID].ignore.Add(other);
-            bullets[bulletID].target.DamageEntity(bullets[bulletID].damage);
+            enemy.DamageEntity(bullets[bulletID].damage);
         }
         bullets[bulletID].piercing--;
         bullets[bulletID].tracking = false;

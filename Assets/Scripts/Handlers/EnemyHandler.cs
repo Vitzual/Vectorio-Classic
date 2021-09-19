@@ -40,7 +40,7 @@ public class EnemyHandler : MonoBehaviour
 
                     if (enemies[a].raycastCooldown == 0)
                     {
-                        enemies[a].raycastCooldown = 5;
+                        enemies[a].raycastCooldown = 3;
 
                         RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
 
@@ -48,7 +48,7 @@ public class EnemyHandler : MonoBehaviour
                         {
                             if (hit[b].collider != null)
                             {
-                                if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= enemies[a].enemy.rayLength)
+                                if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= 2f)
                                 {
                                     if (isMenu)
                                     {

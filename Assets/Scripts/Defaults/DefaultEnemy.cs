@@ -15,7 +15,7 @@ public class DefaultEnemy : DefaultEntity
     public SpriteRenderer[] fill;
     public TrailRenderer[] trail;
 
-    [HideInInspector] public int raycastCooldown = 5;
+    [HideInInspector] public int raycastCooldown = 3;
 
     public override void Setup()
     {

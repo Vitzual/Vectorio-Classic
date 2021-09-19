@@ -50,6 +50,8 @@ public class Controller : MonoBehaviour
             Events.active.RightMouseReleased();
         if (Input.GetKey(Keybinds.rmb))
             Events.active.RightMousePressed();
+        if (Input.GetKeyDown(Keybinds.escape))
+            Application.Quit();
     }
 
     // Checks if for numeric input

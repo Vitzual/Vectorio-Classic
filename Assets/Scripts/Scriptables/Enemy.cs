@@ -10,7 +10,7 @@ public class Enemy : Entity
     public float moveSpeed;
     public float explosiveRadius;
     public float explosiveDamage;
-    public float rayLength;
+    public bool useRaycasts;
     public float rotationSpeed;
 
     // Spawn on death

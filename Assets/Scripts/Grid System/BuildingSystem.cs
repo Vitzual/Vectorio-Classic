@@ -31,12 +31,12 @@ public class BuildingSystem : MonoBehaviour
     private GameObject lastObj;
     public Variant variant;
     public bool canDelete = true;
+    public float border = 742.5f;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
     private float alphaAdjust = 0.005f;
     private float alphaHolder;
-    public int cooldown = 10;
 
     // Start method grabs tilemap
     public void Start()
@@ -141,8 +141,8 @@ public class BuildingSystem : MonoBehaviour
         if (selected == null || selected.obj == null) return;
 
         // Check if within tiles
-        if (transform.position.x < -745 || transform.position.x > 745 ||
-            transform.position.y < -745 || transform.position.y > 745) return;
+        if (transform.position.x < -border || transform.position.x > border ||
+            transform.position.y < -border || transform.position.y > border) return;
 
         // Check if snap is enabled
         if (!selected.snap)
@@ -150,13 +150,6 @@ public class BuildingSystem : MonoBehaviour
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
             foreach(RaycastHit2D hit in hits)
                 if (hit.collider.GetComponent<DefaultBuilding>() == null) return;
-
-            if (cooldown != 0)
-            {
-                cooldown -= 1;
-                return;
-            }
-            else cooldown = 10;
         }
 
         // Check to make sure the tiles are not being used

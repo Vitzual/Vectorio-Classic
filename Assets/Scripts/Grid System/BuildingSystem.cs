@@ -140,6 +140,10 @@ public class BuildingSystem : MonoBehaviour
         // Check if active is null
         if (selected == null || selected.obj == null) return;
 
+        // Check if within tiles
+        if (transform.position.x < -745 || transform.position.x > 745 ||
+            transform.position.y < -745 || transform.position.y > 745) return;
+
         // Check if snap is enabled
         if (!selected.snap)
         {

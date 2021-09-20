@@ -54,12 +54,17 @@ public class Controller : MonoBehaviour
                 Events.active.RightMouseReleased();
             if (Input.GetKey(Keybinds.rmb))
                 Events.active.RightMousePressed();
+            if (Input.GetKeyDown(Keybinds.escape))
+                Application.Quit();
+        }
+        else
+        {
+            if (Input.GetKeyDown(Keybinds.escape))
+                UIEvents.active.MenuOpened();
         }
 
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
-        if (Input.GetKeyDown(Keybinds.escape))
-            Application.Quit();
 
         // TEMP
         if (Input.GetKeyDown(Keybinds.map))

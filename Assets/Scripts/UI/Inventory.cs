@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         Events.active.initBuildables += GenerateEntities;
+        gameObject.SetActive(false);
     }
 
     public void GenerateEntities(string path)

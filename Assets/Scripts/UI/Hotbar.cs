@@ -5,28 +5,28 @@ public class Hotbar
     // Parameterized constructor
     public Hotbar(int hotbarSize)
     {
-        slot = new Tile[hotbarSize];
+        slot = new Entity[hotbarSize];
         this.hotbarSize = hotbarSize;
     }
 
     // Default constructor
     public Hotbar()
     {
-        slot = new Tile[9];
+        slot = new Entity[9];
         hotbarSize = 9;
     }
 
     // Hotbar variables
-    public Tile[] slot;
+    public Entity[] slot;
     public int hotbarSize;
 
     // Sets a hotbar slot and broadcasts it 
-    public void SetSlot(Tile tile, int slot)
+    public void SetSlot(Entity entity, int slot)
     {
         if (slot < hotbarSize && slot >= 0)
         {
-            this.slot[slot] = tile;
-            Events.active.HotbarSet(tile, slot);
+            this.slot[slot] = entity;
+            //Events.active.HotbarSet(entity, slot);
         }
         else Debug.LogError("Slot number was outside the bounds of the hotbar!");
     }

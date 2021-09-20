@@ -14,7 +14,7 @@ public class Energizer : DefaultBuilding
     // Update is called once per frame
     void Start()
     {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().RegisterRotator(rotator, speed);
     }
 
     /*

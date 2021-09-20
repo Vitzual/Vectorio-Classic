@@ -9,6 +9,10 @@ public class Controller : MonoBehaviour
     public Camera cam;
     public GameObject grid;
 
+    // TEMP
+    public AudioSource music;
+    public GameObject inv;
+
     public float closeLOD;
     public float farLOD;
 
@@ -40,18 +44,30 @@ public class Controller : MonoBehaviour
             timer = Time.unscaledTime + fpsRefreshRate;
         }
 
-        CheckScrollInput();
+        if (!inv.activeSelf)
+        {
+            CheckScrollInput();
+
+            if (Input.GetKey(Keybinds.lmb))
+                Events.active.LeftMousePressed();
+            if (Input.GetKeyUp(Keybinds.rmb))
+                Events.active.RightMouseReleased();
+            if (Input.GetKey(Keybinds.rmb))
+                Events.active.RightMousePressed();
+        }
 
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
-        if (Input.GetKey(Keybinds.lmb))
-            Events.active.LeftMousePressed();
-        if (Input.GetKeyUp(Keybinds.rmb))
-            Events.active.RightMouseReleased();
-        if (Input.GetKey(Keybinds.rmb))
-            Events.active.RightMousePressed();
         if (Input.GetKeyDown(Keybinds.escape))
             Application.Quit();
+
+        // TEMP
+        if (Input.GetKeyDown(Keybinds.map))
+        {
+            if (music.volume <= 0f)
+                music.volume = 0f;
+            else music.volume = 0.5f;
+        }
     }
 
     // Checks if for numeric input

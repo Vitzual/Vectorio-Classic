@@ -26,6 +26,14 @@ public class RotationHandler : MonoBehaviour
     [HideInInspector]
     public List<ActiveRotators> Rotators;
 
+    public static RotationHandler active;
+
+    public void Start()
+    {
+        if (this != null)
+            active = this;
+    }
+
     // Update is called once per frame
     public void Update()
     {
@@ -45,7 +53,7 @@ public class RotationHandler : MonoBehaviour
         }
     }
 
-    public void registerRotator(Transform a, float b)
+    public void RegisterRotator(Transform a, float b)
     {
         Rotators.Add(new ActiveRotators(a, b));
     }

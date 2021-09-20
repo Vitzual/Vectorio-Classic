@@ -14,7 +14,7 @@ public class DefaultWall : DefaultBuilding
     public int left = 0;
     public int total = 0;
 
-    public void Start()
+    public override void Setup()
     {
         // Set holder variables
         RaycastHit2D[] rayHits;
@@ -42,6 +42,8 @@ public class DefaultWall : DefaultBuilding
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(2, 4, rayHit.collider.GetComponent<DefaultWall>());
+
+        base.Setup();
     }
 
     public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)
@@ -50,8 +52,7 @@ public class DefaultWall : DefaultBuilding
         otherWallScript.UpdateSprite(otherWallID);
     }
 
-    /*
-    public override void UpdateWalls()
+    public override void DestroyEntity()
     {
         // Set holder variables
         RaycastHit2D[] rayHits;
@@ -60,27 +61,28 @@ public class DefaultWall : DefaultBuilding
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x + 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(0, -1, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(0, -1, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the left
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x - 5f, transform.position.y), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(0, -3, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(0, -3, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the top
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(0, -2, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(0, -2, rayHit.collider.GetComponent<DefaultWall>());
 
         // Check for walls on the bottom
         rayHits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y - 5f), Vector2.zero, Mathf.Infinity, TileLayer);
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
-                SetWallStatus(0, -4, rayHit.collider.GetComponent<WallAI>());
+                SetWallStatus(0, -4, rayHit.collider.GetComponent<DefaultWall>());
+
+        base.DestroyEntity();
     }
-    */
 
     public int CheckTotal()
     {

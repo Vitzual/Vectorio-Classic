@@ -15,8 +15,6 @@ public class DefaultEntity : NetworkBehaviour, IDamageable
     {
         health = 1;
         maxHealth = 1;
-
-        Debug.LogError("This entity needs a setup call!");
     }
 
     // Damages the entity (IDamageable interface method)

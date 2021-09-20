@@ -27,6 +27,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
         else Debug.LogError("Turret does not have a circle collider!");
 
         cooldown = turret.cooldown;
+
+        base.Setup();
     }
 
     public virtual void RotateTurret()

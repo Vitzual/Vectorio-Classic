@@ -16,7 +16,7 @@ public class Enhancer : DefaultBuilding
     {
         try
         {
-            GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().registerRotator(rotator, speed);
+            GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().RegisterRotator(rotator, speed);
         }
         catch { }
         if (SceneManager.GetActiveScene().name != "Menu")

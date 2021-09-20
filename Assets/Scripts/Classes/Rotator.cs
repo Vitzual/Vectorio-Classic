@@ -1,7 +1,14 @@
 using UnityEngine;
 
-public class Rotator
+public class Rotator : MonoBehaviour
 {
-    public Transform rotator;
     public float speed;
+
+    public void Start()
+    {
+        if (RotationHandler.active != null)
+            RotationHandler.active.RegisterRotator(transform, speed);
+
+        enabled = false;
+    }
 }

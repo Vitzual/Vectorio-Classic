@@ -50,6 +50,6 @@ public class DefaultEnemy : DefaultEntity
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
         holder.material = enemy.variant.border;
         holder.trailMaterial = enemy.variant.border;
-        Recycler.AddRecyclable(transform);
+        Destroy(gameObject);
     }
 }

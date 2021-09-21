@@ -40,7 +40,7 @@ public class EnemyHandler : MonoBehaviour
 
                     if (enemies[a].raycastCooldown == 0)
                     {
-                        enemies[a].raycastCooldown = 3;
+                        enemies[a].raycastCooldown = 5;
 
                         RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
 

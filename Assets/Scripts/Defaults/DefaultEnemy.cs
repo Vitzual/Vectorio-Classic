@@ -15,12 +15,13 @@ public class DefaultEnemy : DefaultEntity
     public SpriteRenderer[] fill;
     public TrailRenderer[] trail;
 
-    [HideInInspector] public int raycastCooldown = 3;
+    [HideInInspector] public int raycastCooldown;
 
     public override void Setup()
     {
-        variant = enemy.variant;
+        raycastCooldown = Random.Range(0, 5); 
 
+        variant = enemy.variant;
         health = enemy.health;
         maxHealth = health;
 

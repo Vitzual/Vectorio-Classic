@@ -24,6 +24,8 @@ public class TurretHandler : MonoBehaviour
 
     public void Update()
     {
+        if (Settings.paused) return;
+
         for (int i = 0; i < turretEntities.Count; i++)
         {
             if (turretEntities[i] == null)

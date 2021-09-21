@@ -63,6 +63,8 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
+        if (Input.GetKeyDown(Keybinds.pause))
+            Settings.paused = !Settings.paused;
 
         // TEMP
         if (Input.GetKeyDown(Keybinds.map))

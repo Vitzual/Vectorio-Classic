@@ -4,6 +4,32 @@ using Michsky.UI.ModernUIPack;
 
 public class Settings : MonoBehaviour
 {
+    public static bool paused = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// OLD CODE 
+    /// </summary>
+
     // Settings variables
     public static float soundVolume = 1f;
     public AudioSource music;

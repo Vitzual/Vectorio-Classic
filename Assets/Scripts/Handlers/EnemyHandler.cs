@@ -28,6 +28,8 @@ public class EnemyHandler : MonoBehaviour
     // Handles enemy movement every frame
     public void Update()
     {
+        if (Settings.paused) return;
+
         scan = true;
 
         for (int a = 0; a < enemies.Count; a++)

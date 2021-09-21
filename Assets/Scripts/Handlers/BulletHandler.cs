@@ -51,6 +51,8 @@ public class BulletHandler : MonoBehaviour
     // Handles bullet movement and hit detection frame-by-frame
     public void Update()
     {
+        if (Settings.paused) return;
+
         for (int a = 0; a < bullets.Count; a++)
         {
             if (bullets[a].obj != null)

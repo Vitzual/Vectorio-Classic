@@ -19,6 +19,8 @@ public class DefaultEnemy : DefaultEntity
 
     public override void Setup()
     {
+        variant = enemy.variant;
+
         health = enemy.health;
         maxHealth = health;
 

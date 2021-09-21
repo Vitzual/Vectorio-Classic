@@ -48,7 +48,7 @@ public class Controller : MonoBehaviour
             if (Input.GetKey(Keybinds.rmb))
                 Events.active.RightMousePressed();
             if (Input.GetKeyDown(Keybinds.escape))
-                Application.Quit();
+                UIEvents.active.QuitGame();
         }
         else
         {

@@ -68,8 +68,8 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(Keybinds.map))
         {
             if (music.volume <= 0f)
-                music.volume = 0f;
-            else music.volume = 0.5f;
+                music.volume = 0.5f;
+            else music.volume = 0f;
         }
     }
 

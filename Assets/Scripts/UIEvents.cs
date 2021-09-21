@@ -28,4 +28,18 @@ public class UIEvents : MonoBehaviour
         if (onBuildingPressed != null)
             onBuildingPressed(entity);
     }
+
+    public event Action<int> onHotbarPressed;
+    public void HotbarPressed(int index)
+    {
+        if (onHotbarPressed != null)
+            onHotbarPressed(index);
+    }
+
+    public event Action onDisableHotbar;
+    public void DisableHotbar()
+    {
+        if (onDisableHotbar != null)
+            onDisableHotbar();
+    }
 }

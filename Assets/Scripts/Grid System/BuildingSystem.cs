@@ -140,10 +140,6 @@ public class BuildingSystem : MonoBehaviour
         // Check if active is null
         if (selected == null || selected.obj == null) return;
 
-        // Check if within tiles
-        if (transform.position.x < -border || transform.position.x > border ||
-            transform.position.y < -border || transform.position.y > border) return;
-
         // Check if snap is enabled
         if (!selected.snap)
         {
@@ -186,11 +182,18 @@ public class BuildingSystem : MonoBehaviour
     // Checks to make sure tile(s) isn't occupied
     public bool CheckTiles()
     {
+        float xCoord, yCoord;
+
         if (selected.tile.cells.Length > 0)
         {
             foreach (Tile.Cell cell in selected.tile.cells)
-                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(transform.position.x + cell.x, transform.position.y + cell.y))) != null)
-                    return false;
+            {
+                xCoord = transform.position.x + cell.x;
+                yCoord = transform.position.y + cell.y;
+
+                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(xCoord, yCoord))) != null) return false;
+                else if (xCoord < -border || xCoord > border || yCoord < -border || yCoord > border) return false;
+            }
         }
         return true;
     }

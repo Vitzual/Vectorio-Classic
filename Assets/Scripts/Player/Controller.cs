@@ -9,26 +9,19 @@ public class Controller : MonoBehaviour
     public Camera cam;
     public GameObject grid;
 
-    // TEMP
-    public AudioSource music;
-    public GameObject inv;
-
-    public float closeLOD;
-    public float farLOD;
-
+    // Camera variables
     public float cameraZoomSpeed;
     public float cameraZoomFactor;
     public float cameraMinZoom;
     public float cameraMaxZoom;
-
     private float targetZoom;
 
+    // TEMP
+    public AudioSource music;
+    public GameObject inv;
     private float timer = 0;
     private float fpsRefreshRate = 1f;
     public TextMeshProUGUI fpsCurrent;
-
-    [HideInInspector]
-    public bool SettingHotbar = false;
 
     public void Start()
     {
@@ -60,8 +53,13 @@ public class Controller : MonoBehaviour
         else
         {
             if (Input.GetKeyDown(Keybinds.escape))
+            {
                 UIEvents.active.MenuOpened();
+                UIEvents.active.DisableHotbar();
+            }
         }
+
+        CheckNumberInput();
 
         if (Input.GetKeyDown(Keybinds.inventory))
             UIEvents.active.MenuOpened();
@@ -79,23 +77,23 @@ public class Controller : MonoBehaviour
     public void CheckNumberInput()
     {
         if (Input.GetKeyDown(Keybinds.hotbar_1))
-            Events.active.NumberInput(1, SettingHotbar);
+            Events.active.NumberInput(0);
         else if (Input.GetKeyDown(Keybinds.hotbar_2))
-            Events.active.NumberInput(2, SettingHotbar);
+            Events.active.NumberInput(1);
         else if (Input.GetKeyDown(Keybinds.hotbar_3))
-            Events.active.NumberInput(3, SettingHotbar);
+            Events.active.NumberInput(2);
         else if (Input.GetKeyDown(Keybinds.hotbar_4))
-            Events.active.NumberInput(4, SettingHotbar);
+            Events.active.NumberInput(3);
         else if (Input.GetKeyDown(Keybinds.hotbar_5))
-            Events.active.NumberInput(5, SettingHotbar);
+            Events.active.NumberInput(4);
         else if (Input.GetKeyDown(Keybinds.hotbar_6))
-            Events.active.NumberInput(6, SettingHotbar);
+            Events.active.NumberInput(5);
         else if (Input.GetKeyDown(Keybinds.hotbar_7))
-            Events.active.NumberInput(7, SettingHotbar);
+            Events.active.NumberInput(6);
         else if (Input.GetKeyDown(Keybinds.hotbar_8))
-            Events.active.NumberInput(8, SettingHotbar);
+            Events.active.NumberInput(7);
         else if (Input.GetKeyDown(Keybinds.hotbar_9))
-            Events.active.NumberInput(9, SettingHotbar);
+            Events.active.NumberInput(8);
     }
 
     // Check scroll input

@@ -16,10 +16,12 @@ public class Panel : MonoBehaviour
     public Transform resourceStats;
     public Transform buildingStats;
     public GameObject configuration;
+    public bool settingHotbar;
 
     // Panel UI variables
     public new TextMeshProUGUI name;
     public TextMeshProUGUI desc;
+    public ButtonManagerBasic hotbar;
     public Image icon;
 
     // Building
@@ -28,9 +30,33 @@ public class Panel : MonoBehaviour
     public void Start()
     {
         UIEvents.active.onBuildingPressed += SetPanel;
+        UIEvents.active.onDisableHotbar += DisableHotbar;
 
         menuObjects = new List<MenuStat>();
         unusedObjects = new List<MenuStat>();
+    }
+
+    // Toggles the hotbar
+    public void ToggleHotbar()
+    {
+        if (settingHotbar) DisableHotbar();
+        else EnableHotbar();
+    }
+
+    // Enables setting hotbar
+    public void EnableHotbar()
+    {
+        hotbar.buttonText = "PRESS NUMBER (1-9)";
+        hotbar.UpdateUI();
+        settingHotbar = true;
+    }
+
+    // Disables setting hotbar
+    public void DisableHotbar()
+    {
+        hotbar.buttonText = "ASSIGN TO HOTBAR";
+        hotbar.UpdateUI();
+        settingHotbar = false;
     }
 
     // Sets the panel information

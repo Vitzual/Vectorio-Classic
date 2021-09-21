@@ -1,33 +1,44 @@
 using UnityEngine;
 
-public class Hotbar
+public class Hotbar : MonoBehaviour
 {
-    // Parameterized constructor
-    public Hotbar(int hotbarSize)
-    {
-        slot = new Entity[hotbarSize];
-        this.hotbarSize = hotbarSize;
-    }
-
-    // Default constructor
-    public Hotbar()
-    {
-        slot = new Entity[9];
-        hotbarSize = 9;
-    }
+    // Grab the panel
+    public Panel panel;
 
     // Hotbar variables
-    public Entity[] slot;
-    public int hotbarSize;
+    public HotbarSlot[] slots;
+
+    public void Start()
+    {
+        Events.active.onNumberInput += UseSlot;
+        UIEvents.active.onHotbarPressed += UseSlot;
+    }
 
     // Sets a hotbar slot and broadcasts it 
-    public void SetSlot(Entity entity, int slot)
+    public void SetSlot(Entity entity, int index)
     {
-        if (slot < hotbarSize && slot >= 0)
-        {
-            this.slot[slot] = entity;
-            //Events.active.HotbarSet(entity, slot);
-        }
+        Debug.Log("Settings slot " + index + " " + entity.name);
+
+        if (index < slots.Length && index >= 0)
+            slots[index].SetSlot(entity, Sprites.GetSprite(entity.name));
         else Debug.LogError("Slot number was outside the bounds of the hotbar!");
+    }
+
+    // Broadcasts to building handler
+    public void UseSlot(int index)
+    {
+        Debug.Log("Using slot " + index);
+
+        if (panel != null && panel.settingHotbar)
+        {
+            SetSlot(panel.entity, index);
+            panel.DisableHotbar();
+        }
+        else
+        {
+            if (index < slots.Length && index >= 0)
+                BuildingSystem.active.SetBuilding(slots[index].entity);
+            else Debug.LogError("Slot number was outside the bounds of the hotbar!");
+        }
     }
 }

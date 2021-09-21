@@ -102,11 +102,11 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when input from the keyboard is detected
-    public event Action<int, bool> onNumberInput;
-    public void NumberInput(int number, bool hotbar = false)
+    public event Action<int> onNumberInput;
+    public void NumberInput(int number)
     {
         if (onNumberInput != null)
-            onNumberInput(number, hotbar);
+            onNumberInput(number);
     }
 
     // Initializes entities

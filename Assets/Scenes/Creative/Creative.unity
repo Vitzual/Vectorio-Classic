@@ -632,7 +632,7 @@ RectTransform:
   m_LocalScale: {x: 0.56017655, y: 0.56017655, z: 0.56017655}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1033,7 +1033,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63396461
 GameObject:
@@ -3010,7 +3010,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &199961768
 GameObject:
@@ -4299,7 +4299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &260699745
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4469,10 +4469,10 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Survival, Assembly-CSharp
-        m_MethodName: SetHorbar
-        m_Mode: 3
+      - m_Target: {fileID: 457357187}
+        m_TargetAssemblyTypeName: Panel, Assembly-CSharp
+        m_MethodName: ToggleHotbar
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4982,9 +4982,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5722,7 +5722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &367481347
 GameObject:
@@ -7472,7 +7472,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &452670160
 GameObject:
@@ -7620,8 +7620,10 @@ MonoBehaviour:
   resourceStats: {fileID: 1390588666}
   buildingStats: {fileID: 1932386222}
   configuration: {fileID: 1830227323}
+  settingHotbar: 0
   name: {fileID: 1495545586}
   desc: {fileID: 1426528647}
+  hotbar: {fileID: 260699750}
   icon: {fileID: 1604193559}
   entity: {fileID: 0}
 --- !u!1 &464878656
@@ -8671,9 +8673,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9804,7 +9806,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &615818634
 GameObject:
@@ -10354,75 +10356,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648791230}
   m_CullTransparentMesh: 1
---- !u!1001 &649013845
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4707224646968812267, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_Name
-      value: Death Small
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -64.55994
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -21.14631
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.6199377
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8168572200745202895, guid: 0b71f93078ff0aa429e02f510353ac8c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0b71f93078ff0aa429e02f510353ac8c, type: 3}
 --- !u!1 &652492739
 GameObject:
   m_ObjectHideFlags: 0
@@ -10623,7 +10556,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &656087152
 GameObject:
@@ -10974,7 +10907,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &692777482
 GameObject:
@@ -11461,7 +11394,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 741988625}
   m_HandleRect: {fileID: 741988624}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12846,7 +12779,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &804859209
 GameObject:
@@ -14112,9 +14045,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15997,7 +15930,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &981954380
 GameObject:
@@ -16300,7 +16233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1004353875
 GameObject:
@@ -16612,9 +16545,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17881,7 +17814,7 @@ Transform:
   - {fileID: 436806114}
   - {fileID: 367481348}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054503454
 GameObject:
@@ -21532,7 +21465,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285941005
 GameObject:
@@ -21949,7 +21882,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323487412
 GameObject:
@@ -21986,8 +21919,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 200, y: 0}
-  m_SizeDelta: {x: 364, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1323487414
 MonoBehaviour:
@@ -22504,7 +22437,7 @@ RectTransform:
   - {fileID: 2145635730}
   - {fileID: 1101579050}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -25312,13 +25245,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1494610649}
+  - component: {fileID: 1494610650}
   m_Layer: 20
   m_Name: Hotbar Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1494610649
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25349,6 +25283,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 525.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1494610650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494610648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26fcfdc0de7bde47ad9b722bf863d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 457357187}
+  slots:
+  - entity: {fileID: 0}
+    button: {fileID: 1783496611}
+  - entity: {fileID: 0}
+    button: {fileID: 1955841784}
+  - entity: {fileID: 0}
+    button: {fileID: 1607621720}
+  - entity: {fileID: 0}
+    button: {fileID: 1008668236}
+  - entity: {fileID: 0}
+    button: {fileID: 321421045}
+  - entity: {fileID: 0}
+    button: {fileID: 2002355740}
+  - entity: {fileID: 0}
+    button: {fileID: 555117384}
+  - entity: {fileID: 0}
+    button: {fileID: 909805666}
+  - entity: {fileID: 0}
+    button: {fileID: 1870662600}
 --- !u!1 &1495545583
 GameObject:
   m_ObjectHideFlags: 0
@@ -26360,7 +26326,7 @@ PrefabInstance:
     - target: {fileID: 1137824925047311359, guid: 940446d39d3c0734db122d57e6f14bce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1137824925047311359, guid: 940446d39d3c0734db122d57e6f14bce,
         type: 3}
@@ -26604,7 +26570,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1591098550
 MonoBehaviour:
@@ -26908,7 +26874,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <b>TEST ENVIRONMENT |</b><size=25> Creative v0.1.1
+  m_text: <b>TEST ENVIRONMENT |</b><size=25> Creative v0.1.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -27437,9 +27403,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28398,7 +28364,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1667720758
 GameObject:
@@ -28649,7 +28615,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1478515052}
   m_HandleRect: {fileID: 1478515051}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -28828,7 +28794,7 @@ Transform:
   m_Children:
   - {fileID: 415323886}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1676182708
 Rigidbody2D:
@@ -30103,7 +30069,7 @@ PrefabInstance:
     - target: {fileID: 3613251916774924679, guid: 6be2df0703da69c47a4897d69ef52123,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3613251916774924679, guid: 6be2df0703da69c47a4897d69ef52123,
         type: 3}
@@ -31035,9 +31001,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32235,9 +32201,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33817,9 +33783,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34954,9 +34920,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 1591098550}
+        m_TargetAssemblyTypeName: UIEvents, Assembly-CSharp
+        m_MethodName: HotbarPressed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37277,16 +37243,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 415323880}
   grid: {fileID: 1180912179}
-  music: {fileID: 1310072194}
-  inv: {fileID: 1078757169}
-  closeLOD: 100
-  farLOD: 200
   cameraZoomSpeed: 50
   cameraZoomFactor: 150
   cameraMinZoom: 10
   cameraMaxZoom: 250
+  music: {fileID: 1310072194}
+  inv: {fileID: 1078757169}
   fpsCurrent: {fileID: 898012250}
-  SettingHotbar: 0
 --- !u!114 &7221066089669452788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37302,4 +37265,4 @@ MonoBehaviour:
   selected: {fileID: 0}
   variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}
   canDelete: 1
-  cooldown: 10
+  border: 742.5

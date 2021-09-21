@@ -170,13 +170,10 @@ public class BuildingSystem : MonoBehaviour
         // Create the tile
         lastObj = Instantiate(entity.scriptable.obj, entity.pos, entity.rotation);
         lastObj.name = entity.scriptable.name;
-
-        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
-        if (enemy != null) enemy.variant = variant;
-
         lastObj.GetComponent<DefaultEntity>().Setup();
 
-        SetCells(entity.scriptable, lastObj);
+        if (selected.tile.cells.Length > 0)
+            SetCells(entity.scriptable, lastObj);
     }
 
     // Checks to make sure tile(s) isn't occupied
@@ -203,11 +200,24 @@ public class BuildingSystem : MonoBehaviour
         // Attempt to get the default building script
         DefaultBuilding building = obj.GetComponent<DefaultBuilding>();
 
+        // Check to see if the building contains a DB script
+        if (building == null)
+        {
+            Debug.LogError("Entity has cells but does not contain a DefaultBuilding script!\nRemoving from scene.");
+            Destroy(obj);
+            return;
+        }
+
         // Set the tiles on the grid class
+        Vector2Int coords;
         if (entity.tile.cells.Length > 0)
         {
             foreach (Tile.Cell cell in entity.tile.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y)), true, entity.tile, building);
+            {
+                coords = Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y));
+                tileGrid.SetCell(coords, true, entity.tile, building);
+                building.cells.Add(coords);
+            }
         }
     }
 

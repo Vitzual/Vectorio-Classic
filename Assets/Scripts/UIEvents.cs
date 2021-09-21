@@ -42,4 +42,11 @@ public class UIEvents : MonoBehaviour
         if (onDisableHotbar != null)
             onDisableHotbar();
     }
+
+    public event Action onQuitGame;
+    public void QuitGame()
+    {
+        if (onQuitGame != null)
+            onQuitGame();
+    }
 }

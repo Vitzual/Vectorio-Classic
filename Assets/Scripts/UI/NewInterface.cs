@@ -16,9 +16,9 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleQuitMenu()
     {
-        buildingMenu.SetActive(!buildingMenu.activeSelf);
+        quitMenu.SetActive(!quitMenu.activeSelf);
 
-        if (buildingMenu.activeSelf) Time.timeScale = 0f;
+        if (quitMenu.activeSelf) Time.timeScale = 0f;
         else Time.timeScale = 1f;
     }
 

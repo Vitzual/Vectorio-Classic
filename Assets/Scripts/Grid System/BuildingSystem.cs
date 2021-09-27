@@ -26,11 +26,12 @@ public class BuildingSystem : MonoBehaviour
 
     // Building variables
     public static BuildingSystem active;
-    public Entity selected;
+    [HideInInspector] public Entity selected;
     private Vector2 offset;
     private GameObject lastObj;
     public Variant variant;
-    public bool canDelete = true;
+    public LayerMask enemyLayer;
+    [HideInInspector] public bool canDelete = true;
     public float border = 742.5f;
 
     // Sprite values
@@ -143,9 +144,8 @@ public class BuildingSystem : MonoBehaviour
         // Check if snap is enabled
         if (!selected.snap)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
-            foreach(RaycastHit2D hit in hits)
-                if (hit.collider.GetComponent<DefaultBuilding>() == null) return;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, enemyLayer);
+            if (hit.collider != null) return;
         }
 
         // Check to make sure the tiles are not being used

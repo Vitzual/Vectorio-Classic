@@ -20,19 +20,4 @@ public class DefaultBuilding : DefaultEntity
             Instantiate(particle, transform.position, transform.rotation);
         Recycler.AddRecyclable(transform);
     }
-
-    // If a collision is detected, destroy the other entity and apply damage to self
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("Ree");
-
-        DefaultEnemy enemy = other.GetComponent<DefaultEnemy>();
-
-        if (enemy != null)
-        {
-            enemy.GiveDamage(this);
-            if (this != null)
-                enemy.DestroyEntity();
-        }
-    }
 }

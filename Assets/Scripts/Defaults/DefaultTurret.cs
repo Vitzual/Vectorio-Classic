@@ -12,7 +12,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
 
     // Base turret object variables
     public Transform[] firePoints;
-    public DefaultCannon cannon;
+    public Transform cannon;
     public GameObject bullet;
     [HideInInspector] public DefaultEnemy target;
     public Queue<DefaultEnemy> targets = new Queue<DefaultEnemy>();
@@ -20,9 +20,11 @@ public class DefaultTurret : DefaultBuilding, IAudible
 
     public override void Setup()
     {
-        if (cannon != null)
-            cannon.Setup(this);
-        else Debug.LogError("Turret is missing cannon!");
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+
+        if (collider != null)
+            collider.radius = turret.range;
+        else Debug.LogError("Turret does not have a circle collider!");
 
         cooldown = turret.cooldown;
 
@@ -32,9 +34,9 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public virtual void RotateTurret()
     {
         // Calculate the rotation towards the enemy
-        Vector3 dir = cannon.transform.position - target.transform.position;
+        Vector3 dir = cannon.position - target.transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        cannon.transform.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+        cannon.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
 
         // Fire once cooldown reached
         if (cooldown > 0) cooldown -= Time.deltaTime;
@@ -59,8 +61,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
         //if (turret.sound != null)
         //    AudioSource.PlayClipAtPoint(turret.sound, transform.position);
 
-        GameObject bullet = Instantiate(this.bullet, position, cannon.transform.rotation);
-        bullet.transform.rotation = cannon.transform.rotation;
+        GameObject bullet = Instantiate(this.bullet, position, cannon.rotation);
+        bullet.transform.rotation = cannon.rotation;
         bullet.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
 
         bullet.GetComponent<TrailRenderer>().material = turret.material;

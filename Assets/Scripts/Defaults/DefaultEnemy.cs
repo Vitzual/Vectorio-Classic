@@ -56,4 +56,29 @@ public class DefaultEnemy : DefaultEntity
         float step = enemy.moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
     }
+
+    // If a collision is detected, destroy the other entity and apply damage to self
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("REeera");
+
+        if (other is BoxCollider2D)
+        {
+            DefaultBuilding building = other.GetComponent<DefaultBuilding>();
+
+            if (building != null)
+            {
+                GiveDamage(building);
+                if (building != null)
+                    Destroy(gameObject);
+            }
+        }
+        else
+        {
+            DefaultTurret turret = other.GetComponent<DefaultTurret>();
+
+            if (turret != null)
+                turret.AddTarget(this);
+        }
+    }
 }

@@ -9,9 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2055557111240337833}
-  - component: {fileID: 1776995947239005330}
-  - component: {fileID: 5408625003764326339}
-  - component: {fileID: 8947243664141439597}
   - component: {fileID: 2113213356352814226}
   m_Layer: 8
   m_Name: ShotgunGun
@@ -35,55 +32,6 @@ Transform:
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1776995947239005330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395188799358712017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34818ee63f93389469271a0eeb8e1b20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!58 &5408625003764326339
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395188799358712017}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.56
---- !u!50 &8947243664141439597
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395188799358712017}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 3
 --- !u!212 &2113213356352814226
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,8 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7459549504340388867}
   - component: {fileID: -1930811943359663110}
-  - component: {fileID: -8127077227219097972}
   - component: {fileID: 6867253957611795612}
+  - component: {fileID: 8368875532741909379}
   - component: {fileID: 6374826527683784704}
   m_Layer: 8
   m_Name: Shotgunner
@@ -191,31 +139,10 @@ MonoBehaviour:
   turret: {fileID: 11400000, guid: b45ce3523574d4b4884b6df625bcac7f, type: 2}
   firePoints:
   - {fileID: 3069989843565101140}
-  cannon: {fileID: 1776995947239005330}
+  cannon: {fileID: 2055557111240337833}
   bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
---- !u!50 &-8127077227219097972
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!61 &6867253957611795612
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -242,6 +169,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!58 &8368875532741909379
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!114 &6374826527683784704
 MonoBehaviour:
   m_ObjectHideFlags: 0

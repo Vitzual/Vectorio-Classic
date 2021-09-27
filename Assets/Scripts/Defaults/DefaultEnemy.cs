@@ -37,11 +37,6 @@ public class DefaultEnemy : DefaultEntity
         Events.active.EnemySpawned(this);
     }
 
-    public virtual void Move()
-    {
-        transform.position += transform.up * enemy.moveSpeed * Time.deltaTime;
-    }
-
     public virtual void GiveDamage(DefaultBuilding building)
     {
         building.DamageEntity(enemy.damage);
@@ -54,5 +49,11 @@ public class DefaultEnemy : DefaultEntity
         holder.material = enemy.variant.border;
         holder.trailMaterial = enemy.variant.border;
         Destroy(gameObject);
+    }
+
+    public virtual void MoveTowards(Transform obj, Transform target)
+    {
+        float step = enemy.moveSpeed * Time.deltaTime;
+        obj.position = Vector2.MoveTowards(obj.position, target.position, step);
     }
 }

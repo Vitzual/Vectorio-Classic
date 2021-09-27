@@ -14,14 +14,11 @@ public class EnemyHandler : MonoBehaviour
     public List<DefaultEnemy> enemies;
 
     public LayerMask buildingLayer;
-    private bool isMenu = false;
     private bool scan = false;
 
     public void Start()
     {
         enemies = new List<DefaultEnemy>();
-        if (SceneManager.GetActiveScene().name == "Menu") isMenu = true;
-
         Events.active.onEnemySpawned += RegisterEnemy;
     }
 
@@ -38,51 +35,7 @@ public class EnemyHandler : MonoBehaviour
             {
                 if (enemies[a].target != null)
                 {
-                    enemies[a].enemy.MoveTowards(enemies[a].transform, enemies[a].target.transform);
-
-                    if (enemies[a].raycastCooldown == 0)
-                    {
-                        enemies[a].raycastCooldown = 5;
-
-                        RaycastHit2D[] hit = Physics2D.RaycastAll(enemies[a].transform.position, enemies[a].transform.up, 2f, buildingLayer);
-
-                        for (int b = 0; b < hit.Length; b++)
-                        {
-                            if (hit[b].collider is BoxCollider2D)
-                            {
-                                if (isMenu)
-                                {
-                                    enemies[a].DestroyEntity();
-                                    enemies.RemoveAt(a);
-                                    a--;
-                                }
-                                else
-                                {
-                                    DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
-                                    if (building != null)
-                                    {
-                                        enemies[a].GiveDamage(building);
-                                        if (building.transform != null)
-                                        {
-                                            enemies[a].DestroyEntity();
-                                            enemies.RemoveAt(a);
-                                            a--;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
-                                if (turret != null)
-                                    turret.AddTarget(enemies[a]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        enemies[a].raycastCooldown -= 1;
-                    }
+                    enemies[a].MoveTowards(enemies[a].transform, enemies[a].target.transform);
                 }
                 else if (scan)
                 {
@@ -104,6 +57,7 @@ public class EnemyHandler : MonoBehaviour
         }
     }
 
+    // Rotates towards a target
     public void RotateTowards(Transform pos, Transform target)
     {
         Vector3 dir = pos.position - target.position;
@@ -117,6 +71,7 @@ public class EnemyHandler : MonoBehaviour
         enemies.Add(enemy);
     }
 
+    // Destroys all active enemies
     public void DestroyAllEnemies()
     {
         for (int i = 0; i < enemies.Count; i++)

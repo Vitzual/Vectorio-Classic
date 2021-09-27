@@ -37,10 +37,4 @@ public class Enemy : Entity
         // Base method
         base.CreateStats(panel);
     }
-
-    public virtual void MoveTowards(Transform obj, Transform target)
-    {
-        float step = moveSpeed * Time.deltaTime;
-        obj.position = Vector2.MoveTowards(obj.position, target.position, step);
-    }
 }

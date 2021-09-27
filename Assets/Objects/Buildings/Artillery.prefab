@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 5615815486813246293}
   - component: {fileID: 4748196274355704437}
+  - component: {fileID: -870499741065656939}
+  - component: {fileID: -3565159775669386803}
   - component: {fileID: 652309008671687663}
   m_Layer: 8
   m_Name: Artillery
@@ -39,22 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5615815486813246293
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 500
 --- !u!114 &4748196274355704437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,13 +54,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  cells: []
   turret: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
   firePoints:
   - {fileID: 4396292635411681285}
-  barrel: {fileID: 4730353520863384113}
+  cannon: {fileID: 5340040482045061684}
   bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
+--- !u!50 &-870499741065656939
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!61 &-3565159775669386803
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10}
+  m_EdgeRadius: 0
 --- !u!114 &652309008671687663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +135,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4730353520863384113}
+  - component: {fileID: 5340040482045061684}
+  - component: {fileID: 1330740074005662936}
   - component: {fileID: 2780803212178955437}
   m_Layer: 8
   m_Name: Artillery Cannon
@@ -119,12 +154,40 @@ Transform:
   m_GameObject: {fileID: 2413863904708411791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4396292635411681285}
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5340040482045061684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413863904708411791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34818ee63f93389469271a0eeb8e1b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &1330740074005662936
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413863904708411791}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 6
 --- !u!212 &2780803212178955437
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -202,7 +265,7 @@ Transform:
   m_GameObject: {fileID: 4652505994942865405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 5
@@ -284,7 +347,7 @@ Transform:
   m_GameObject: {fileID: 5946541597489079957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 3
@@ -396,7 +459,7 @@ Transform:
   m_GameObject: {fileID: 7684024531706632053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 4
@@ -478,7 +541,7 @@ Transform:
   m_GameObject: {fileID: 8045636914597282238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 2
@@ -560,7 +623,7 @@ Transform:
   m_GameObject: {fileID: 8694871195101270179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 0

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459549504340388867}
-  - component: {fileID: 1820260277892886629}
-  - component: {fileID: -5026528499157299796}
   - component: {fileID: -911315255747955257}
+  - component: {fileID: 2800377731529602096}
+  - component: {fileID: -8945762538657005672}
   - component: {fileID: 8677294633841162408}
   m_Layer: 8
   m_Name: Flamethrower
@@ -38,37 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1820260277892886629
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 50
---- !u!114 &-5026528499157299796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animEnabled: 1
-  animSize: 1.5
-  animOriginal: 1
 --- !u!114 &-911315255747955257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,13 +52,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  cells: []
   turret: {fileID: 11400000, guid: 507b500e238e4f5489866cbefad7f108, type: 2}
   firePoints:
   - {fileID: 5062284943659950144}
-  barrel: {fileID: 4228772720140216805}
+  cannon: {fileID: 901744645584289866}
   bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
+--- !u!50 &2800377731529602096
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!61 &-8945762538657005672
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420473218063467210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5}
+  m_EdgeRadius: 0
 --- !u!114 &8677294633841162408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +297,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4228772720140216805}
+  - component: {fileID: 901744645584289866}
+  - component: {fileID: 2833022067572211568}
   - component: {fileID: 7056929359090190237}
   m_Layer: 8
   m_Name: FlamethrowerGun
@@ -303,6 +322,34 @@ Transform:
   m_Father: {fileID: 7459549504340388867}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &901744645584289866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389694984923287467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34818ee63f93389469271a0eeb8e1b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &2833022067572211568
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389694984923287467}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.56
 --- !u!212 &7056929359090190237
 SpriteRenderer:
   m_ObjectHideFlags: 0

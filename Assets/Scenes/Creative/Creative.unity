@@ -38463,24 +38463,26 @@ MonoBehaviour:
   loopSelection: 1
   iconScale: 1
   contentSpacing: 15
-  defaultIndex: 2
+  defaultIndex: 0
   index: 0
   itemList:
-  - itemTitle: Selected Item 0
-    itemIcon: {fileID: 21300000, guid: bd190f341a63ae7449752d80a3a8ef73, type: 3}
+  - itemTitle: Normal
+    itemIcon: {fileID: 0}
     onItemSelect:
       m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Selected Item 1
-    itemIcon: {fileID: 21300000, guid: 6ca804909faea644aa355ec5c5a9e1ba, type: 3}
-    onItemSelect:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Selected Item 2
-    itemIcon: {fileID: 21300000, guid: e7f5d551fd1925040bd01a8ec66c0ae0, type: 3}
-    onItemSelect:
-      m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -38536,7 +38538,7 @@ MonoBehaviour:
   - {fileID: 5689856814884669543}
   - {fileID: 5689728139723966323}
   - {fileID: 573753805316926201}
-  - {fileID: 0}
+  - {fileID: 360573895}
   imagesHighlighted:
   - {fileID: 5689704450751332247}
   - {fileID: 5689962506907450145}
@@ -38861,8 +38863,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NORMAL
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ca60657c190bc8c4e89dfb3e23d76209, type: 2}
-  m_sharedMaterial: {fileID: 21131478253023500, guid: ca60657c190bc8c4e89dfb3e23d76209,
+  m_fontAsset: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f, type: 2}
+  m_sharedMaterial: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -38887,8 +38889,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

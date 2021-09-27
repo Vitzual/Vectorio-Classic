@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 public class Inventory : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class Inventory : MonoBehaviour
     {
         Events.active.initBuildables += GenerateEntities;
         gameObject.SetActive(false);
+    }
+
+    public void GenerateVariants(string path)
+    {
+        List<Variant> entities = Resources.LoadAll(path, typeof(Variant)).Cast<Variant>().ToList();
+        Debug.Log("Loaded " + entities.Count + " variants from " + path);
     }
 
     public void GenerateEntities(string path)
@@ -30,7 +37,7 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Creating entity at " + entities[i].invIndex + " " + entities[i].invOrder);
 
                 MenuButton holder = CreateEntity(entities[i], lists[entities[i].invIndex]);
-                if (holder != null) holders[entities[i].invOrder] = holder;
+                if (holder != null) holders[i] = holder;
                 else Debug.Log("Error");
             }
         }
@@ -39,7 +46,7 @@ public class Inventory : MonoBehaviour
         for(int i = 0; i < holders.Length; i++)
         {
             if(holders[i].transform != null)
-                holders[i].transform.SetSiblingIndex(i);
+                holders[i].transform.SetSiblingIndex(holders[i].entity.invOrder);
         }
     }
 

@@ -48,37 +48,34 @@ public class EnemyHandler : MonoBehaviour
 
                         for (int b = 0; b < hit.Length; b++)
                         {
-                            if (hit[b].collider != null)
+                            if (hit[b].collider is BoxCollider2D)
                             {
-                                if (Vector2.Distance(hit[b].collider.transform.position, enemies[a].transform.position) <= 2f)
+                                if (isMenu)
                                 {
-                                    if (isMenu)
-                                    {
-                                        enemies[a].DestroyEntity();
-                                        enemies.RemoveAt(a);
-                                        a--;
-                                    }
-                                    else
-                                    {
-                                        DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
-                                        if (building != null)
-                                        {
-                                            enemies[a].GiveDamage(building);
-                                            if (building.transform != null)
-                                            {
-                                                enemies[a].DestroyEntity();
-                                                enemies.RemoveAt(a);
-                                                a--;
-                                            }
-                                        }
-                                    }
+                                    enemies[a].DestroyEntity();
+                                    enemies.RemoveAt(a);
+                                    a--;
                                 }
                                 else
                                 {
-                                    DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
-                                    if (turret != null)
-                                        turret.AddTarget(enemies[a]);
+                                    DefaultBuilding building = hit[b].collider.GetComponent<DefaultBuilding>();
+                                    if (building != null)
+                                    {
+                                        enemies[a].GiveDamage(building);
+                                        if (building.transform != null)
+                                        {
+                                            enemies[a].DestroyEntity();
+                                            enemies.RemoveAt(a);
+                                            a--;
+                                        }
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                DefaultTurret turret = hit[b].collider.GetComponent<DefaultTurret>();
+                                if (turret != null)
+                                    turret.AddTarget(enemies[a]);
                             }
                         }
                     }

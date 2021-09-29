@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Energizer : DefaultBuilding
+public class Energizer : BaseTile
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;

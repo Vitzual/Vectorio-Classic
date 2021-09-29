@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [HideInInspector]
-public class DefaultTurret : DefaultBuilding, IAudible
+public class DefaultTurret : BaseTile, IAudible
 {
     // IAudible interface variables
     public AudioClip sound { get; set; }
@@ -14,8 +14,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public Transform[] firePoints;
     public Transform cannon;
     public GameObject bullet;
-    [HideInInspector] public DefaultEntity target;
-    public Queue<DefaultEntity> targets = new Queue<DefaultEntity>();
+    [HideInInspector] public BaseEntity target;
+    public Queue<BaseEntity> targets = new Queue<BaseEntity>();
     [HideInInspector] public float cooldown;
 
     public override void Setup()
@@ -29,7 +29,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
         material = turret.material;
         cooldown = turret.cooldown;
 
-        base.Setup();
+        health = turret.health;
+        maxHealth = health;
     }
 
     public virtual void RotateTurret()
@@ -84,7 +85,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
-    public void AddTarget(DefaultEntity enemy)
+    public void AddTarget(BaseEntity enemy)
     {
         if (!targets.Contains(enemy))
         {

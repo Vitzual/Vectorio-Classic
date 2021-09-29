@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Dronehub : DefaultBuilding
+public class Dronehub : BaseTile
 {
     // Drone logic registrar script
     public DroneManager droneManager;

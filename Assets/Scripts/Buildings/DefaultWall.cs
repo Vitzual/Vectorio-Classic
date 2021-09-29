@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DefaultWall : DefaultBuilding
+public class DefaultWall : BaseTile
 {
 
     // Tile layer
@@ -42,8 +42,6 @@ public class DefaultWall : DefaultBuilding
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(2, 4, rayHit.collider.GetComponent<DefaultWall>());
-
-        base.Setup();
     }
 
     public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)

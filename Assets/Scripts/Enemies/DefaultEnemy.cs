@@ -2,12 +2,12 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class DefaultEnemy : DefaultEntity
+public class DefaultEnemy : BaseEntity
 {
     // Class variables
     public Enemy enemy;
     [HideInInspector] public Variant variant;
-    [HideInInspector] public DefaultBuilding target;
+    [HideInInspector] public BaseTile target;
 
     // Sprite info
     public SpriteRenderer[] border;
@@ -33,7 +33,7 @@ public class DefaultEnemy : DefaultEntity
         Events.active.EnemySpawned(this);
     }
 
-    public virtual void GiveDamage(DefaultBuilding building)
+    public virtual void GiveDamage(BaseTile building)
     {
         building.DamageEntity(enemy.damage);
     }
@@ -58,7 +58,7 @@ public class DefaultEnemy : DefaultEntity
     {
         if (other is BoxCollider2D)
         {
-            DefaultBuilding building = other.GetComponent<DefaultBuilding>();
+            BaseTile building = other.GetComponent<BaseTile>();
 
             if (building != null)
             {

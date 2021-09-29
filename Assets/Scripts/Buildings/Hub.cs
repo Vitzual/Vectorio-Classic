@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Hub : DefaultBuilding
+public class Hub : BaseTile
 {
     protected bool gameOver;
     public GameObject EndScreen;

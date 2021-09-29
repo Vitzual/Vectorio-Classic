@@ -3,7 +3,7 @@ using Mirror;
 using System.Collections.Generic;
 
 
-public class DefaultEntity : NetworkBehaviour, IDamageable
+public class BaseEntity : NetworkBehaviour, IDamageable
 {
     // IDamageable interface variables
     public float health { get; set; }
@@ -14,14 +14,19 @@ public class DefaultEntity : NetworkBehaviour, IDamageable
 
     public virtual void Setup()
     {
-        health = 1;
-        maxHealth = 1;
+        Debug.LogError("This object has a BaseEntity script attached to it!\n" +
+            "Please use a default script that inherits from BaseEntity instead.");
     }
 
     // Damages the entity (IDamageable interface method)
     public virtual void DamageEntity(float dmg)
     {
+        Debug.Log("Receiving damage " + dmg + " with " + health);
+
         health -= dmg;
+
+        Debug.Log("End: " + health);
+
         if (health <= 0)
             DestroyEntity();
     }

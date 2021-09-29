@@ -1,7 +1,7 @@
 [System.Serializable]
 public class Cell
 {
-    public Cell(bool occupied, Tile tile, DefaultBuilding building)
+    public Cell(bool occupied, Tile tile, BaseTile building)
     {
         this.occupied = occupied;
         this.tile = tile;
@@ -10,5 +10,5 @@ public class Cell
 
     public bool occupied;
     public Tile tile;
-    public DefaultBuilding building;
+    public BaseTile building;
 }

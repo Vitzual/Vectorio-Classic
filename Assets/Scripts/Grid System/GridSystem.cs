@@ -19,7 +19,7 @@ public class GridSystem
         else return null;
     }
 
-    public void SetCell(Vector2Int coords, bool occupy, Tile tile, DefaultBuilding building)
+    public void SetCell(Vector2Int coords, bool occupy, Tile tile, BaseTile building)
     {
         if (cells.TryGetValue(coords, out Cell cell))
         {            

@@ -9,7 +9,7 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, DefaultEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material)
+        public ActiveBullets(Transform obj, BaseEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material)
         {
             this.obj = obj;
             this.target = target;
@@ -24,7 +24,7 @@ public class BulletHandler : MonoBehaviour
 
         // Class variables
         public Transform obj;
-        public DefaultEntity target;
+        public BaseEntity target;
         public float speed;
         public int piercing;
         public float damage;

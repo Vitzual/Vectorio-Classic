@@ -31,6 +31,7 @@ public class EnemyHandler : MonoBehaviour
 
         scan = true;
 
+        // Move enemies each frame
         for (int a = 0; a < enemies.Count; a++)
         {
             if (enemies[a] != null) 
@@ -41,7 +42,7 @@ public class EnemyHandler : MonoBehaviour
                 }
                 else if (scan)
                 {
-                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
+                    BaseTile building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
                     if (building != null)
                     {
@@ -58,6 +59,7 @@ public class EnemyHandler : MonoBehaviour
             }
         }
 
+        // Move guardians each frame
         for (int i = 0; i < guardians.Count; i++)
         {
             if (guardians[i] != null)
@@ -66,9 +68,9 @@ public class EnemyHandler : MonoBehaviour
                 {
                     guardians[i].MoveTowards(guardians[i].transform, guardians[i].target.transform);
                 }
-                else
+                else if (scan)
                 {
-                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+                    BaseTile building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
 
                     if (building != null)
                         guardians[i].target = building;

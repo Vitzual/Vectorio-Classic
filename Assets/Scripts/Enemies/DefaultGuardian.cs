@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultGuardian : DefaultEntity
+public class DefaultGuardian : BaseEntity
 {
     public Guardian guardian;
-    [HideInInspector] public DefaultBuilding target;
+    [HideInInspector] public BaseTile target;
     
     public override void Setup()
     {
@@ -33,7 +33,7 @@ public class DefaultGuardian : DefaultEntity
     {
         if (other is BoxCollider2D)
         {
-            DefaultBuilding building = other.GetComponent<DefaultBuilding>();
+            BaseTile building = other.GetComponent<BaseTile>();
 
             if (building != null)
                 building.DestroyEntity();

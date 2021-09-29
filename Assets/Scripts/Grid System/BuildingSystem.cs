@@ -144,12 +144,11 @@ public class BuildingSystem : MonoBehaviour
         // Check if snap is enabled
         if (!selected.snap)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, enemyLayer);
-            if (hit.collider != null) return;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
+            if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
+                hit.collider.GetComponent<DefaultGuardian>() != null)) return;
         }
-
-        // Check to make sure the tiles are not being used
-        if (!CheckTiles()) return;
+        else if (!CheckTiles()) return;
 
         // Instantiate the object like usual
         RpcInstantiateObject(new EntityQueue(selected, transform.position, Quaternion.identity));
@@ -176,7 +175,7 @@ public class BuildingSystem : MonoBehaviour
         if (enemy != null) enemy.variant = variant;
 
         // Setup entity
-        lastObj.GetComponent<DefaultEntity>().Setup();
+        lastObj.GetComponent<BaseEntity>().Setup();
 
         if (selected.tile.cells.Length > 0)
             SetCells(entity.scriptable, lastObj);
@@ -204,7 +203,7 @@ public class BuildingSystem : MonoBehaviour
     public void SetCells(Entity entity, GameObject obj)
     {
         // Attempt to get the default building script
-        DefaultBuilding building = obj.GetComponent<DefaultBuilding>();
+        BaseTile building = obj.GetComponent<BaseTile>();
 
         // Check to see if the building contains a DB script
         if (building == null)
@@ -227,9 +226,9 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    public DefaultBuilding GetClosestBuilding(Vector2Int position)
+    public BaseTile GetClosestBuilding(Vector2Int position)
     {
-        DefaultBuilding nearest = null;
+        BaseTile nearest = null;
         float distance = float.PositiveInfinity;
 
         foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)

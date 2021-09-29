@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Lab : DefaultBuilding
+public class Lab : BaseTile
 {
     private void Start()
     {

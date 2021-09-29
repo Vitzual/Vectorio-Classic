@@ -16,6 +16,7 @@ MonoBehaviour:
   description: A stronger version of the bomber. Larger explosion radius and drops
     a bunch of small bombers when destroyed.
   obj: {fileID: 6065519297016329530, guid: 6c2d52d5018f2de409d5d0a82b3deda7, type: 3}
+  material: {fileID: 0}
   tile:
     cells: []
     offset: {x: 0, y: 0}
@@ -26,16 +27,14 @@ MonoBehaviour:
   maxHealth: 0
   healthModifier: 0
   invOrder: 4
-  invIndex: 1
+  invIndex: 2
   active: 0
   damage: 30
   moveSpeed: 6
   explosiveRadius: 10
   explosiveDamage: 15
-  useRaycasts: 0
   rotationSpeed: 0
   spawns:
   - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
     amount: 5
     radius: 5
-  variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}

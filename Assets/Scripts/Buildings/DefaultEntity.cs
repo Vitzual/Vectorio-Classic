@@ -10,6 +10,7 @@ public class DefaultEntity : NetworkBehaviour, IDamageable
     public float maxHealth { get; set; }
 
     protected ParticleSystem particle;
+    [HideInInspector] public Material material;
 
     public virtual void Setup()
     {

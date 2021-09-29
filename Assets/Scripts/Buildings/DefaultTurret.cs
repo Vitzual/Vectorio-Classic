@@ -14,8 +14,8 @@ public class DefaultTurret : DefaultBuilding, IAudible
     public Transform[] firePoints;
     public Transform cannon;
     public GameObject bullet;
-    [HideInInspector] public DefaultEnemy target;
-    public Queue<DefaultEnemy> targets = new Queue<DefaultEnemy>();
+    [HideInInspector] public DefaultEntity target;
+    public Queue<DefaultEntity> targets = new Queue<DefaultEntity>();
     [HideInInspector] public float cooldown;
 
     public override void Setup()
@@ -26,6 +26,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
             collider.radius = turret.range;
         else Debug.LogError("Turret does not have a circle collider!");
 
+        material = turret.material;
         cooldown = turret.cooldown;
 
         base.Setup();
@@ -83,7 +84,7 @@ public class DefaultTurret : DefaultBuilding, IAudible
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
     }
 
-    public void AddTarget(DefaultEnemy enemy)
+    public void AddTarget(DefaultEntity enemy)
     {
         if (!targets.Contains(enemy))
         {

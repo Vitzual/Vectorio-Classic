@@ -21,7 +21,6 @@ public class Building : Entity
 
     // Resources
     public Resources[] resources;
-    public Material material;
 
     public override void CreateStats(Panel panel)
     {

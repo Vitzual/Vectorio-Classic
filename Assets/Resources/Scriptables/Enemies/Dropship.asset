@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Strongest early-game enemy. Dropships are extremely tanky and will
     drop multiple carriers when destroyed. Get ready!
   obj: {fileID: 6065519297016329530, guid: 28683fe33a2b14b47af343ea5ce83634, type: 3}
+  material: {fileID: 0}
   tile:
     cells: []
     offset: {x: 0, y: 0}
@@ -26,16 +27,14 @@ MonoBehaviour:
   maxHealth: 0
   healthModifier: 0
   invOrder: 8
-  invIndex: 1
+  invIndex: 2
   active: 0
   damage: 500
   moveSpeed: 1
   explosiveRadius: 0
   explosiveDamage: 0
-  useRaycasts: 0
   rotationSpeed: 0
   spawns:
   - enemy: {fileID: 11400000, guid: c384091c5e0c74d4b93d0cf7de6876d2, type: 2}
     amount: 5
     radius: 20
-  variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}

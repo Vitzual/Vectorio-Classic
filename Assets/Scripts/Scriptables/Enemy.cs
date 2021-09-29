@@ -10,7 +10,6 @@ public class Enemy : Entity
     public float moveSpeed;
     public float explosiveRadius;
     public float explosiveDamage;
-    public bool useRaycasts;
     public float rotationSpeed;
 
     // Spawn on death
@@ -22,9 +21,6 @@ public class Enemy : Entity
         public float radius;
     }
     public EnemySpawn[] spawns;
-
-    // Variant
-    public Variant variant;
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

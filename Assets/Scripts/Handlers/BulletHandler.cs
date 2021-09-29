@@ -9,7 +9,7 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, DefaultEnemy target, float speed, int piercing, float damage, float time, bool tracking, Material material)
+        public ActiveBullets(Transform obj, DefaultEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material)
         {
             this.obj = obj;
             this.target = target;
@@ -24,7 +24,7 @@ public class BulletHandler : MonoBehaviour
 
         // Class variables
         public Transform obj;
-        public DefaultEnemy target;
+        public DefaultEntity target;
         public float speed;
         public int piercing;
         public float damage;
@@ -130,8 +130,8 @@ public class BulletHandler : MonoBehaviour
         }
         else
         {
-            holder.material = bullets[bulletID].target.variant.border;
-            holder.trailMaterial = bullets[bulletID].target.variant.border;
+            holder.material = bullets[bulletID].target.material;
+            holder.trailMaterial = bullets[bulletID].target.material;
         }
 
         Recycler.AddRecyclable(bullets[bulletID].obj);

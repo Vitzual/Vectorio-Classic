@@ -9,29 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
-  m_Name: Triangle
+  m_Script: {fileID: 11500000, guid: 75d7a1e49c2674a4d8affdc295876e9c, type: 3}
+  m_Name: The Kraken
   m_EditorClassIdentifier: 
-  name: Triangle
-  description: A weak early-game enemy. Moves in a straight line and deals damage
-    to buildings it collides with. Destroys itself on impact.
-  obj: {fileID: 6065519297016329530, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+  name: The Kraken
+  description: The second guardian. Can use it's wings to block incoming attacks
+    and fire beams of light at attacking defenses.
+  obj: {fileID: 0}
   material: {fileID: 0}
   tile:
     cells: []
     offset: {x: 0, y: 0}
   snap: 0
-  size: 0.3
-  health: 1
+  size: 1
+  health: 150000
   level: -1
   maxHealth: 0
   healthModifier: 0
-  invOrder: 0
-  invIndex: 2
+  invOrder: 1
+  invIndex: 3
   active: 0
-  damage: 1
+  damage: 25000
   moveSpeed: 5
   explosiveRadius: 0
   explosiveDamage: 0
   rotationSpeed: 0
   spawns: []
+  heat: 25000

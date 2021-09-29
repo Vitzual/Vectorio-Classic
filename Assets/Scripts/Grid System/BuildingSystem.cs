@@ -170,6 +170,12 @@ public class BuildingSystem : MonoBehaviour
         // Create the tile
         lastObj = Instantiate(entity.scriptable.obj, entity.pos, entity.rotation);
         lastObj.name = entity.scriptable.name;
+
+        // Attempt to set enemy variant
+        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
+        if (enemy != null) enemy.variant = variant;
+
+        // Setup entity
         lastObj.GetComponent<DefaultEntity>().Setup();
 
         if (selected.tile.cells.Length > 0)

@@ -15,13 +15,10 @@ public class DefaultEnemy : DefaultEntity
     public SpriteRenderer[] fill;
     public TrailRenderer[] trail;
 
-    [HideInInspector] public int raycastCooldown;
-
     public override void Setup()
     {
-        raycastCooldown = Random.Range(0, 5); 
+        material = enemy.material;
 
-        variant = enemy.variant;
         health = enemy.health;
         maxHealth = health;
 
@@ -44,10 +41,10 @@ public class DefaultEnemy : DefaultEntity
 
     public override void DestroyEntity()
     {
-        ParticleSystemRenderer holder = Instantiate(enemy.variant.particle, transform.position,
+        ParticleSystemRenderer holder = Instantiate(variant.particle, transform.position,
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-        holder.material = enemy.variant.border;
-        holder.trailMaterial = enemy.variant.border;
+        holder.material = variant.border;
+        holder.trailMaterial = variant.border;
         Destroy(gameObject);
     }
 

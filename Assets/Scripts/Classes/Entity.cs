@@ -8,6 +8,7 @@ public class Entity : ScriptableObject
     public new string name;
     [TextArea] public string description;
     public GameObject obj;
+    public Material material;
 
     // Tile variables 
     public Tile tile;

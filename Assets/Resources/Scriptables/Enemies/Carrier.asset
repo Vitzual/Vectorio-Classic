@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Slow moving enemy with a lot of health. Carries smaller enemies which
     get dropped when destroyed.
   obj: {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
+  material: {fileID: 0}
   tile:
     cells: []
     offset: {x: 0, y: 0}
@@ -26,13 +27,12 @@ MonoBehaviour:
   maxHealth: 0
   healthModifier: 0
   invOrder: 3
-  invIndex: 1
+  invIndex: 2
   active: 0
   damage: 15
   moveSpeed: 2
   explosiveRadius: 0
   explosiveDamage: 0
-  useRaycasts: 0
   rotationSpeed: 0
   spawns:
   - enemy: {fileID: 11400000, guid: 7ba95261bd61b914fb36f91b96bbf0e7, type: 2}
@@ -41,4 +41,3 @@ MonoBehaviour:
   - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
     amount: 2
     radius: 5
-  variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}

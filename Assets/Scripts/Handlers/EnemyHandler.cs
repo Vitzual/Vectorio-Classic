@@ -12,6 +12,7 @@ public class EnemyHandler : MonoBehaviour
 
     // Contains all active enemies in the scene
     public List<DefaultEnemy> enemies;
+    public List<DefaultGuardian> guardians;
 
     public LayerMask buildingLayer;
     private bool scan = false;
@@ -20,6 +21,7 @@ public class EnemyHandler : MonoBehaviour
     {
         enemies = new List<DefaultEnemy>();
         Events.active.onEnemySpawned += RegisterEnemy;
+        Events.active.onGuardianSpawned += RegisterGuardian;
     }
 
     // Handles enemy movement every frame
@@ -55,6 +57,33 @@ public class EnemyHandler : MonoBehaviour
                 a--;
             }
         }
+
+        for (int i = 0; i < guardians.Count; i++)
+        {
+            if (guardians[i] != null)
+            {
+                if (guardians[i].target != null)
+                {
+                    guardians[i].MoveTowards(guardians[i].transform, guardians[i].target.transform);
+                }
+                else
+                {
+                    DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+
+                    if (building != null)
+                    {
+                        guardians[i].target = building;
+                        RotateTowards(guardians[i].transform, building.transform);
+                    }
+                    else scan = false;
+                }
+            }
+            else
+            {
+                guardians.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     // Rotates towards a target
@@ -69,6 +98,11 @@ public class EnemyHandler : MonoBehaviour
     public void RegisterEnemy(DefaultEnemy enemy)
     {
         enemies.Add(enemy);
+    }
+
+    public void RegisterGuardian(DefaultGuardian guardian)
+    {
+
     }
 
     // Destroys all active enemies

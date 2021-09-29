@@ -7,7 +7,6 @@ public class DefaultEnemy : DefaultEntity
     // Class variables
     public Enemy enemy;
     [HideInInspector] public Variant variant;
-    public Transform rotator;
     [HideInInspector] public DefaultBuilding target;
 
     // Sprite info
@@ -17,7 +16,7 @@ public class DefaultEnemy : DefaultEntity
 
     public override void Setup()
     {
-        material = enemy.material;
+        material = variant.border;
 
         health = enemy.health;
         maxHealth = health;
@@ -57,8 +56,6 @@ public class DefaultEnemy : DefaultEntity
     // If a collision is detected, destroy the other entity and apply damage to self
     public void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("REeera");
-
         if (other is BoxCollider2D)
         {
             DefaultBuilding building = other.GetComponent<DefaultBuilding>();

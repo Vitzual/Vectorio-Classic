@@ -71,10 +71,7 @@ public class EnemyHandler : MonoBehaviour
                     DefaultBuilding building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
 
                     if (building != null)
-                    {
                         guardians[i].target = building;
-                        RotateTowards(guardians[i].transform, building.transform);
-                    }
                     else scan = false;
                 }
             }
@@ -102,7 +99,7 @@ public class EnemyHandler : MonoBehaviour
 
     public void RegisterGuardian(DefaultGuardian guardian)
     {
-
+        guardians.Add(guardian);
     }
 
     // Destroys all active enemies

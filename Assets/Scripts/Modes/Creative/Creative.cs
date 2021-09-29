@@ -14,5 +14,6 @@ public class Creative : Gamemode
     {
         Events.active.InitBuildables("Scriptables/Buildings");
         Events.active.InitBuildables("Scriptables/Enemies");
+        Events.active.InitBuildables("Scriptables/Guardians");
     }
 }

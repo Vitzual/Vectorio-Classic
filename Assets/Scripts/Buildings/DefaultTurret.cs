@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [HideInInspector]
@@ -90,6 +91,14 @@ public class DefaultTurret : BaseTile, IAudible
             if (target == null && GetNewTarget())
                 Events.active.RegisterTurret(this);
         }
+    }
+
+    public void RemoveTarget(BaseEntity enemy)
+    {
+        if (targets.Contains(this))
+            targets = new Queue<BaseEntity>(targets.Where(x => x != enemy));
+
+        GetNewTarget();
     }
 
     public bool GetNewTarget()

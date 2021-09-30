@@ -8,7 +8,7 @@ public class Instantiator : NetworkBehaviour
     public static Instantiator active;
     public Variant variant;
 
-    public void Start()
+    public void Awake()
     {
         active = this;
     }
@@ -22,6 +22,14 @@ public class Instantiator : NetworkBehaviour
         // Attempt to set enemy variant
         DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
         if (enemy != null) enemy.variant = variant;
+
+        // Set the health for the entity
+        BaseEntity holder = lastObj.GetComponent<BaseEntity>();
+        if (entity != null) 
+        {
+            holder.health = entity.health;
+            holder.maxHealth = holder.health; 
+        }
 
         // Setup entity
         lastObj.GetComponent<BaseEntity>().Setup();

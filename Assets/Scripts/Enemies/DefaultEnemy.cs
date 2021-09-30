@@ -72,4 +72,13 @@ public class DefaultEnemy : BaseEntity
                 turret.AddTarget(this);
         }
     }
+
+    // If entity leaves defense range, remove self from target list
+    public virtual void OnTriggerExit2D(Collider2D other)
+    {
+        DefaultTurret turret = other.GetComponent<DefaultTurret>();
+
+        if (turret != null)
+            turret.RemoveTarget(this);
+    }
 }

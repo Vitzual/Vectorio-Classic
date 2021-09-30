@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class Instantiator : NetworkBehaviour
+public class Instantiator : MonoBehaviour
 {
     public static Instantiator active;
     public Variant variant;
@@ -36,11 +35,5 @@ public class Instantiator : NetworkBehaviour
 
         // Return object
         return lastObj;
-    }
-
-    [ClientRpc]
-    public void RpcSyncEntity()
-    {
-        Debug.Log("Entity synced");
     }
 }

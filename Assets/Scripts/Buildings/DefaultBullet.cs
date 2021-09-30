@@ -30,7 +30,11 @@ public class DefaultBullet : MonoBehaviour
         particle = GetComponent<ParticleSystemRenderer>();
 
         if (trail != null) trail.material = turret.material;
-        if (particle != null) particle.material = turret.material;
+        if (particle != null)
+        {
+            particle.material = turret.material;
+            particle.trailMaterial = turret.material;
+        }
 
         damage = turret.damage + Research.research_damage;
         speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);

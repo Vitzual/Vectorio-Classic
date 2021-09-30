@@ -9,7 +9,7 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, BaseEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material)
+        public ActiveBullets(Transform obj, BaseEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material, ParticleSystem particle)
         {
             this.obj = obj;
             this.target = target;
@@ -19,6 +19,7 @@ public class BulletHandler : MonoBehaviour
             this.time = time;
             this.tracking = tracking;
             this.material = material;
+            this.particle = particle;
             ignore = new List<Transform>();
         }
 
@@ -31,20 +32,17 @@ public class BulletHandler : MonoBehaviour
         public float time;
         public bool tracking;
         public Material material;
+        public ParticleSystem particle;
 
         public List<Transform> ignore;
 
     }
     public List<ActiveBullets> bullets;
-
     public LayerMask enemyLayer;
-    private ParticleSystem particle;
 
     // Called when awoken
     public void Start()
     {
-        // temp
-        particle = Resources.Load<ParticleSystem>("Particles/Shot");
         Events.active.onBulletFired += RegisterBullet;
     }
 
@@ -91,7 +89,7 @@ public class BulletHandler : MonoBehaviour
     public void RegisterBullet(Bullet bullet)
     {
         bullets.Add(new ActiveBullets(bullet.obj, bullet.target, bullet.speed, bullet.pierces, 
-            bullet.damage, bullet.time, bullet.tracking, bullet.material));
+            bullet.damage, bullet.time, bullet.tracking, bullet.material, bullet.particle));
     }
 
     // Called when a hit is detected in the updater 
@@ -119,23 +117,33 @@ public class BulletHandler : MonoBehaviour
 
     public void DestroyBullet(int bulletID, bool reverseEffect)
     {
-        ParticleSystemRenderer holder = Instantiate(particle, bullets[bulletID].obj.position,
-            bullets[bulletID].obj.rotation).GetComponent<ParticleSystemRenderer>();
-        holder.transform.rotation *= Quaternion.Euler(0, 0, 180f);
-
-        if (!reverseEffect)
+        if (bullets[bulletID].particle != null)
         {
-            holder.material = bullets[bulletID].material;
-            holder.trailMaterial = bullets[bulletID].material;
-        }
-        else
-        {
-            holder.material = bullets[bulletID].target.material;
-            holder.trailMaterial = bullets[bulletID].target.material;
+            ParticleSystemRenderer particle = CreateParticle(bulletID);
+            
+            if (reverseEffect)
+            {
+                particle.material = bullets[bulletID].target.material;
+                particle.trailMaterial = bullets[bulletID].target.material;
+            }
+            else
+            {
+                particle.material = bullets[bulletID].material;
+                particle.trailMaterial = bullets[bulletID].material;
+            }
         }
 
         Recycler.AddRecyclable(bullets[bulletID].obj);
         bullets.RemoveAt(bulletID);
+    }
+
+    public ParticleSystemRenderer CreateParticle(int bulletID)
+    {
+        ParticleSystemRenderer holder = Instantiate(bullets[bulletID].particle, bullets[bulletID].obj.position,
+                bullets[bulletID].obj.rotation).GetComponent<ParticleSystemRenderer>();
+        holder.transform.rotation *= Quaternion.Euler(0, 0, 180f);
+
+        return holder;
     }
 
     public void DestroyAllBullets()

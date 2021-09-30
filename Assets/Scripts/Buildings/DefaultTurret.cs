@@ -65,7 +65,18 @@ public class DefaultTurret : BaseTile, IAudible
         bullet.transform.rotation = cannon.rotation;
         bullet.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
 
-        bullet.GetComponent<TrailRenderer>().material = turret.material;
+        // Set bullet material
+        TrailRenderer trail = bullet.GetComponent<TrailRenderer>();
+        if (trail != null) trail.material = turret.material;
+        else
+        {
+            ParticleSystemRenderer particle = bullet.GetComponent<ParticleSystemRenderer>();
+            if (particle != null)
+            {
+                particle.material = turret.material;
+                particle.trailMaterial = turret.material;
+            }
+        }
 
         float speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
         int pierces = turret.bulletPierces + Research.research_pierce;
@@ -73,7 +84,7 @@ public class DefaultTurret : BaseTile, IAudible
 
         // Dependent on the bullet, register under the correct master script
         Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, 
-            damage, turret.bulletTime, turret.bulletLock, turret.material));
+            damage, turret.bulletTime, turret.bulletLock, turret.material, turret.bulletParticle));
     }
 
     // IAudible sound method

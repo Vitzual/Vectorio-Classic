@@ -17,6 +17,7 @@ public class Turret : Building
     public float bulletSpread;
     public float bulletTime;
     public bool bulletLock;
+    public ParticleSystem bulletParticle;
 
     // Base turret modifiers
     [HideInInspector] public float damageModifier;

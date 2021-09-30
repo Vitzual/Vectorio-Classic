@@ -109,6 +109,8 @@ public class EnemyHandler : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
             Destroy(enemies[i].gameObject);
+        for (int i = 0; i < guardians.Count; i++)
+            Destroy(guardians[i].gameObject);
         enemies = new List<DefaultEnemy>();
     }
 }

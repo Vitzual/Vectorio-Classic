@@ -24,6 +24,6 @@ public class BaseTile : BaseEntity
 
         if (particle != null)
             Instantiate(particle, transform.position, transform.rotation);
-        Recycler.AddRecyclable(transform);
+        Destroy(gameObject);
     }
 }

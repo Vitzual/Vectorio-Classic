@@ -21,11 +21,7 @@ public class BaseEntity : NetworkBehaviour, IDamageable
     // Damages the entity (IDamageable interface method)
     public virtual void DamageEntity(float dmg)
     {
-        Debug.Log("Receiving damage " + dmg + " with " + health);
-
         health -= dmg;
-
-        Debug.Log("End: " + health);
 
         if (health <= 0)
             DestroyEntity();

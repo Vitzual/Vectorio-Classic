@@ -84,7 +84,7 @@ public class BulletHandler : MonoBehaviour
     public void DestroyAllBullets()
     {
         for(int i = 0; i < bullets.Count; i++)
-            Destroy(bullets[i].obj.gameObject);
+            Recycler.AddRecyclable(bullets[i].obj);
         bullets = new List<ActiveBullets>();
     }
 }

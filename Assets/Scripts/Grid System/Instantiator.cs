@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Mirror;
+
+public class Instantiator : NetworkBehaviour
+{
+    public static Instantiator active;
+    public Variant variant;
+
+    public void Start()
+    {
+        active = this;
+    }
+
+    public GameObject CreateEntity(Entity entity, Transform transform)
+    {
+        // Create the tile
+        GameObject lastObj = Instantiate(entity.obj, transform.position, transform.rotation);
+        lastObj.name = entity.name;
+
+        // Attempt to set enemy variant
+        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
+        if (enemy != null) enemy.variant = variant;
+
+        // Setup entity
+        lastObj.GetComponent<BaseEntity>().Setup();
+
+        // Return object
+        return lastObj;
+    }
+
+    [ClientRpc]
+    public void RpcSyncEntity()
+    {
+        Debug.Log("Entity synced");
+    }
+}

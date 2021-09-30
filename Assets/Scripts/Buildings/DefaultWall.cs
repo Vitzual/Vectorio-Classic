@@ -2,6 +2,8 @@
 
 public class DefaultWall : BaseTile
 {
+    // Building scriptable
+    public Building building;
 
     // Tile layer
     [SerializeField]

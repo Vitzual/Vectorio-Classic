@@ -28,9 +28,6 @@ public class DefaultTurret : BaseTile, IAudible
 
         material = turret.material;
         cooldown = turret.cooldown;
-
-        health = turret.health;
-        maxHealth = health;
     }
 
     public virtual void RotateTurret()

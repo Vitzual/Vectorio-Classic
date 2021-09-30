@@ -18,9 +18,6 @@ public class DefaultEnemy : BaseEntity
     {
         material = variant.border;
 
-        health = enemy.health;
-        maxHealth = health;
-
         foreach (SpriteRenderer a in border)
             a.material = variant.border;
 

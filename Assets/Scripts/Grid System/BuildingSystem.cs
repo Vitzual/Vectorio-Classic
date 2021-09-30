@@ -6,33 +6,20 @@ using Mirror;
 
 public class BuildingSystem : MonoBehaviour
 {
-    // Building class
-    public class EntityQueue
-    {
-        public EntityQueue(Entity scriptable, Vector2 pos, Quaternion rotation)
-        {
-            this.scriptable = scriptable;
-            this.pos = pos;
-            this.rotation = rotation;
-        }
-
-        public Entity scriptable;
-        public Vector2 pos;
-        public Quaternion rotation;
-    }
-
     // Grid variable
     public GridSystem tileGrid;
 
     // Building variables
     public static BuildingSystem active;
-    [HideInInspector] public Entity selected;
     private Vector2 offset;
-    private GameObject lastObj;
+    public float border = 742.5f;
+
+    [HideInInspector] public Entity selected;
+    [HideInInspector] public bool canDelete = true;
+
+    // Enemy variables
     public Variant variant;
     public LayerMask enemyLayer;
-    [HideInInspector] public bool canDelete = true;
-    public float border = 742.5f;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -51,7 +38,6 @@ public class BuildingSystem : MonoBehaviour
         tileGrid.cells = new Dictionary<Vector2Int, Cell>();
         selected = null;
         offset = new Vector2(0, 0);
-        lastObj = null;
 
         // Sets static anim variables
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -72,21 +58,7 @@ public class BuildingSystem : MonoBehaviour
         OffsetBuilding();
         AdjustTransparency();
     }
-    
-    private void Deselect()
-    {
-        if (selected != null)
-            SetBuilding(null);
-    }
-
-    public void DeleteTile()
-    {
-        if (canDelete)
-        {
-            tileGrid.DestroyCell(Vector2Int.RoundToInt(transform.position));
-        }
-    }
-
+   
     private void OffsetBuilding()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -135,72 +107,8 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    // Creates a building
-    public void CmdCreateBuilding()
-    {
-        // Check if active is null
-        if (selected == null || selected.obj == null) return;
-
-        // Check if snap is enabled
-        if (!selected.snap)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-            if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
-                hit.collider.GetComponent<DefaultGuardian>() != null)) return;
-        }
-        else if (!CheckTiles()) return;
-
-        // Instantiate the object like usual
-        RpcInstantiateObject(new EntityQueue(selected, transform.position, Quaternion.identity));
-    }
-
-    // Creates a building at specified coords
-    public void CmdCreateBuilding(Vector2 coords)
-    {
-        // Check if active is null
-        if (selected == null || selected.obj == null) return;
-
-        // Instantiate the object like usual
-        RpcInstantiateObject(new EntityQueue(selected, coords, Quaternion.identity));
-    }
-
-    private void RpcInstantiateObject(EntityQueue entity)
-    {
-        // Create the tile
-        lastObj = Instantiate(entity.scriptable.obj, entity.pos, entity.rotation);
-        lastObj.name = entity.scriptable.name;
-
-        // Attempt to set enemy variant
-        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
-        if (enemy != null) enemy.variant = variant;
-
-        // Setup entity
-        lastObj.GetComponent<BaseEntity>().Setup();
-
-        if (selected.tile.cells.Length > 0)
-            SetCells(entity.scriptable, lastObj);
-    }
-
-    // Checks to make sure tile(s) isn't occupied
-    public bool CheckTiles()
-    {
-        float xCoord, yCoord;
-
-        if (selected.tile.cells.Length > 0)
-        {
-            foreach (Tile.Cell cell in selected.tile.cells)
-            {
-                xCoord = transform.position.x + cell.x;
-                yCoord = transform.position.y + cell.y;
-
-                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(xCoord, yCoord))) != null) return false;
-                else if (xCoord < -border || xCoord > border || yCoord < -border || yCoord > border) return false;
-            }
-        }
-        return true;
-    }
-
-    public void SetCells(Entity entity, GameObject obj)
+    // Sets the tiles for a specified entity
+    public void SetTiles(Entity entity, GameObject obj)
     {
         // Attempt to get the default building script
         BaseTile building = obj.GetComponent<BaseTile>();
@@ -226,6 +134,49 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
+    // Checks to make sure tile(s) isn't occupied
+    public bool CheckTiles()
+    {
+        float xCoord, yCoord;
+
+        if (selected.tile.cells.Length > 0)
+        {
+            foreach (Tile.Cell cell in selected.tile.cells)
+            {
+                xCoord = transform.position.x + cell.x;
+                yCoord = transform.position.y + cell.y;
+
+                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(xCoord, yCoord))) != null) return false;
+                else if (xCoord < -border || xCoord > border || yCoord < -border || yCoord > border) return false;
+            }
+        }
+        return true;
+    }
+
+    // Creates a building
+    public void CmdCreateBuilding()
+    {
+        // Check if active is null
+        if (selected == null || selected.obj == null) return;
+
+        // Check if snap is enabled
+        if (!selected.snap)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
+            if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
+                hit.collider.GetComponent<DefaultGuardian>() != null)) return;
+        }
+        else if (!CheckTiles()) return;
+
+        // Instantiate the object like usual
+        if (Instantiator.active != null)
+        {
+            GameObject last = Instantiator.active.CreateEntity(selected, transform);
+            if (last != null && selected.tile.cells.Length > 0) SetTiles(selected, last);
+        }
+        else Debug.LogError("Scene is missing an instantiator!");
+    }
+
     public BaseTile GetClosestBuilding(Vector2Int position)
     {
         BaseTile nearest = null;
@@ -243,6 +194,21 @@ public class BuildingSystem : MonoBehaviour
 
         return nearest;
     }
+
+    private void Deselect()
+    {
+        if (selected != null)
+            SetBuilding(null);
+    }
+
+    public void DeleteTile()
+    {
+        if (canDelete)
+        {
+            tileGrid.DestroyCell(Vector2Int.RoundToInt(transform.position));
+        }
+    }
+
 
     public void ClearBuildings()
     {

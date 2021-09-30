@@ -11,9 +11,6 @@ public class DefaultGuardian : BaseEntity
     {
         material = guardian.material;
 
-        health = guardian.health;
-        maxHealth = health;
-
         Events.active.GuardianSpawned(this);
     }
 

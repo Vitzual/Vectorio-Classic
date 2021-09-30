@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Chiller
   description: A weak defense that freezes nearby enemies. Great for countering speeders.
   obj: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b, type: 3}
+  material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
   tile:
     cells:
     - x: 0
@@ -42,18 +43,20 @@ MonoBehaviour:
   - resource: 3
     amount: 80
     modifier: 0
-  material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
   sound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
   damage: 5
   range: 50
   rotationSpeed: 70
   cooldown: 0.3
+  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 60
   bulletSpread: 0
   bulletTime: 0.8
   bulletLock: 1
+  bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
+    type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Fires long-range high-velocity projectiles that deal massive damage
     upon impact.
   obj: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f, type: 3}
+  material: {fileID: 2100000, guid: bec28cf577e05814190c34c3fc5dcbe8, type: 2}
   tile:
     cells:
     - x: 0
@@ -43,18 +44,20 @@ MonoBehaviour:
   - resource: 3
     amount: 35
     modifier: 0
-  material: {fileID: 2100000, guid: bec28cf577e05814190c34c3fc5dcbe8, type: 2}
   sound: {fileID: 8300000, guid: df0e60887b63f45c7801a38fccae1f8f, type: 3}
   damage: 35
   range: 80
   rotationSpeed: 50
   cooldown: 2
+  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 70
   bulletSpread: 0
   bulletTime: 1.5
   bulletLock: 1
+  bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
+    type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

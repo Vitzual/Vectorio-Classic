@@ -14,7 +14,6 @@ public class DefaultTurret : BaseTile, IAudible
     // Base turret object variables
     public Transform[] firePoints;
     public Transform cannon;
-    public GameObject bullet;
     [HideInInspector] public BaseEntity target;
     public Queue<BaseEntity> targets = new Queue<BaseEntity>();
     [HideInInspector] public float cooldown;
@@ -61,30 +60,16 @@ public class DefaultTurret : BaseTile, IAudible
         //if (turret.sound != null)
         //    AudioSource.PlayClipAtPoint(turret.sound, transform.position);
 
-        GameObject bullet = Instantiate(this.bullet, position, cannon.rotation);
-        bullet.transform.rotation = cannon.rotation;
-        bullet.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
+        GameObject holder = Instantiate(turret.bullet.gameObject, position, cannon.rotation);
+        holder.transform.rotation = cannon.rotation;
+        holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
 
-        // Set bullet material
-        TrailRenderer trail = bullet.GetComponent<TrailRenderer>();
-        if (trail != null) trail.material = turret.material;
-        else
-        {
-            ParticleSystemRenderer particle = bullet.GetComponent<ParticleSystemRenderer>();
-            if (particle != null)
-            {
-                particle.material = turret.material;
-                particle.trailMaterial = turret.material;
-            }
-        }
-
-        float speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
-        int pierces = turret.bulletPierces + Research.research_pierce;
-        float damage = turret.damage + Research.research_damage;
+        // Set bullet variables
+        DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
+        if (bullet != null) bullet.Setup(turret);
 
         // Dependent on the bullet, register under the correct master script
-        Events.active.BulletFired(new Bullet(bullet.transform, target, speed, pierces, 
-            damage, turret.bulletTime, turret.bulletLock, turret.material, turret.bulletParticle));
+        Events.active.BulletFired(bullet, target);
     }
 
     // IAudible sound method

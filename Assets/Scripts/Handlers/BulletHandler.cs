@@ -9,32 +9,23 @@ public class BulletHandler : MonoBehaviour
     public class ActiveBullets
     {
         // Constructor
-        public ActiveBullets(Transform obj, BaseEntity target, float speed, int piercing, float damage, float time, bool tracking, Material material, ParticleSystem particle)
+        public ActiveBullets(DefaultBullet bullet, BaseEntity target)
         {
-            this.obj = obj;
-            this.target = target;
-            this.speed = speed;
-            this.piercing = piercing;
-            this.damage = damage;
-            this.time = time;
-            this.tracking = tracking;
-            this.material = material;
-            this.particle = particle;
-            ignore = new List<Transform>();
+            this.bullet = bullet;
+            obj = bullet.transform;
+
+            if (target != null)
+            {
+                this.target = target;
+                bullet.tracking = true;
+            }
+            else bullet.tracking = false;
         }
 
         // Class variables
+        public DefaultBullet bullet;
         public Transform obj;
         public BaseEntity target;
-        public float speed;
-        public int piercing;
-        public float damage;
-        public float time;
-        public bool tracking;
-        public Material material;
-        public ParticleSystem particle;
-
-        public List<Transform> ignore;
 
     }
     public List<ActiveBullets> bullets;
@@ -53,28 +44,25 @@ public class BulletHandler : MonoBehaviour
 
         for (int a = 0; a < bullets.Count; a++)
         {
-            if (bullets[a].obj != null)
+            if (bullets[a].bullet != null && !bullets[a].bullet.recycling)
             {
-                bullets[a].time -= Time.deltaTime;
-                if (bullets[a].time <= 0)
+                bullets[a].bullet.time -= Time.deltaTime;
+                if (bullets[a].bullet.time <= 0)
                 {
-                    DestroyBullet(a, false);
+                    bullets[a].bullet.DestroyBullet(bullets[a].bullet.turret.material);
                     a--;
                 }
                 else
                 {
-                    if (bullets[a].tracking && bullets[a].target != null)
+                    if (bullets[a].bullet.tracking && bullets[a].target != null)
                     {
-                        float step = bullets[a].speed * Time.deltaTime;
+                        float step = bullets[a].bullet.speed * Time.deltaTime;
                         bullets[a].obj.position = Vector2.MoveTowards(bullets[a].obj.position, bullets[a].target.transform.transform.position, step);
                     }
                     else
                     {
-                        bullets[a].obj.position += bullets[a].obj.up * bullets[a].speed * Time.deltaTime;
+                        bullets[a].obj.position += bullets[a].obj.up * bullets[a].bullet.speed * Time.deltaTime;
                     }
-                    RaycastHit2D hit = Physics2D.Raycast(bullets[a].obj.position, bullets[a].obj.up, 3f, enemyLayer);
-                    if (hit.collider != null && !bullets[a].ignore.Contains(hit.collider.transform))
-                        if (OnHit(a, hit.collider.transform)) { a--; continue; }
                 }
             }
             else
@@ -86,66 +74,13 @@ public class BulletHandler : MonoBehaviour
     }
 
     // Registers a bullet to be handled by the updater in this script
-    public void RegisterBullet(Bullet bullet)
+    public void RegisterBullet(DefaultBullet bullet, BaseEntity target)
     {
-        bullets.Add(new ActiveBullets(bullet.obj, bullet.target, bullet.speed, bullet.pierces, 
-            bullet.damage, bullet.time, bullet.tracking, bullet.material, bullet.particle));
+        bullets.Add(new ActiveBullets(bullet, target));
     }
 
-    // Called when a hit is detected in the updater 
-    public bool OnHit(int bulletID, Transform other)
-    {
-        // Add the other transform to the ignore list for future collisions
-        BaseEntity enemy = other.GetComponent<BaseEntity>();
 
-        if (enemy != null)
-        {
-            bullets[bulletID].ignore.Add(other);
-            enemy.DamageEntity(bullets[bulletID].damage);
-        }
-        bullets[bulletID].piercing--;
-        bullets[bulletID].tracking = false;
-
-        if (bullets[bulletID].piercing == 0)
-        {
-            DestroyBullet(bulletID, true);
-            return true;
-        }
-
-        return false;
-    }
-
-    public void DestroyBullet(int bulletID, bool reverseEffect)
-    {
-        if (bullets[bulletID].particle != null)
-        {
-            ParticleSystemRenderer particle = CreateParticle(bulletID);
-            
-            if (reverseEffect)
-            {
-                particle.material = bullets[bulletID].target.material;
-                particle.trailMaterial = bullets[bulletID].target.material;
-            }
-            else
-            {
-                particle.material = bullets[bulletID].material;
-                particle.trailMaterial = bullets[bulletID].material;
-            }
-        }
-
-        Recycler.AddRecyclable(bullets[bulletID].obj);
-        bullets.RemoveAt(bulletID);
-    }
-
-    public ParticleSystemRenderer CreateParticle(int bulletID)
-    {
-        ParticleSystemRenderer holder = Instantiate(bullets[bulletID].particle, bullets[bulletID].obj.position,
-                bullets[bulletID].obj.rotation).GetComponent<ParticleSystemRenderer>();
-        holder.transform.rotation *= Quaternion.Euler(0, 0, 180f);
-
-        return holder;
-    }
-
+    // Destroys all active bullets
     public void DestroyAllBullets()
     {
         for(int i = 0; i < bullets.Count; i++)

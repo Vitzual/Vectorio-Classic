@@ -14,11 +14,11 @@ public class Events : MonoBehaviour
     }
     
     // Invoked when a bullet is fired
-    public event Action<Bullet> onBulletFired;
-    public void BulletFired(Bullet bullet)
+    public event Action<DefaultBullet, BaseEntity> onBulletFired;
+    public void BulletFired(DefaultBullet bullet, BaseEntity target)
     {
         if (onBulletFired != null)
-            onBulletFired(bullet);
+            onBulletFired(bullet, target);
     }
 
     // Invoked when a building with a rotating piece is placed

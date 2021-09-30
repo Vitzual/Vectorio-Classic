@@ -16,6 +16,7 @@ MonoBehaviour:
   description: 'The Pulser''s older sibling. Fires piercing shots that break apart
     as they travel. '
   obj: {fileID: 420473218063467210, guid: 39ba00b36b630e34bb56cef838c68c30, type: 3}
+  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   tile:
     cells:
     - x: 0
@@ -49,18 +50,20 @@ MonoBehaviour:
   - resource: 4
     amount: 800
     modifier: 0
-  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   sound: {fileID: 8300000, guid: b71edef5d6eb84fe0b6837f05a411bd4, type: 3}
   damage: 500
   range: 120
   rotationSpeed: 50
   cooldown: 5
+  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 10
   bulletAmount: 1
   bulletSpeed: 70
   bulletSpread: 0
   bulletTime: 5
   bulletLock: 1
+  bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
+    type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

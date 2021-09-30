@@ -162,9 +162,10 @@ public class BuildingSystem : MonoBehaviour
         // Check if snap is enabled
         if (!selected.snap)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-            if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
-                hit.collider.GetComponent<DefaultGuardian>() != null)) return;
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
+            foreach(RaycastHit2D hit in hits) 
+                if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
+                    hit.collider.GetComponent<DefaultGuardian>() != null)) return;
         }
         else if (!CheckTiles()) return;
 

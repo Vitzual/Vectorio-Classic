@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Fires bolts of lightning that deal massive damage and slow down enemies.
     Consumes extra power while firing.
   obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
+  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   tile:
     cells:
     - x: 0
@@ -43,18 +44,20 @@ MonoBehaviour:
   - resource: 3
     amount: 600
     modifier: 0
-  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   sound: {fileID: 0}
   damage: 150
   range: 60
   rotationSpeed: 200
   cooldown: 0.05
+  bullet: {fileID: -1636311487633401878, guid: a1f86ff9cf138dc4e871f2d2dbc067db, type: 3}
   bulletPierces: 1
-  bulletAmount: 2
+  bulletAmount: 1
   bulletSpeed: 60
-  bulletSpread: 25
+  bulletSpread: 20
   bulletTime: 1
   bulletLock: 0
+  bulletParticle: {fileID: 274222557884159627, guid: 20ca77f1ed76de54dbf34ec846a9d6d2,
+    type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

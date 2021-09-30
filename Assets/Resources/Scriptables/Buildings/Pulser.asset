@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Pulser
   description: Fires plasma bullets that pierce through multiple enemies at a time.
   obj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
+  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
   tile:
     cells:
     - x: 0
@@ -42,18 +43,20 @@ MonoBehaviour:
   - resource: 4
     amount: 80
     modifier: 0
-  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
   sound: {fileID: 8300000, guid: 46e4002e4b6074361a58bbd232a2cfd5, type: 3}
   damage: 80
   range: 120
   rotationSpeed: 50
   cooldown: 4
+  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 5
   bulletAmount: 1
   bulletSpeed: 45
   bulletSpread: 0
   bulletTime: 3
   bulletLock: 1
+  bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
+    type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

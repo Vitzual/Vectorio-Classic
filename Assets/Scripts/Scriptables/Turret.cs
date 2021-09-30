@@ -11,6 +11,7 @@ public class Turret : Building
     public float range;
     public float rotationSpeed;
     public float cooldown;
+    public DefaultBullet bullet;
     public int bulletPierces;
     public int bulletAmount;
     public float bulletSpeed;

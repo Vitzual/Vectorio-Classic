@@ -95,10 +95,8 @@ public class DefaultTurret : BaseTile, IAudible
 
     public void RemoveTarget(BaseEntity enemy)
     {
-        if (targets.Contains(this))
-            targets = new Queue<BaseEntity>(targets.Where(x => x != enemy));
-
-        GetNewTarget();
+        targets = new Queue<BaseEntity>(targets.Where(x => x != enemy));
+        if (target == enemy) { target = null; GetNewTarget(); }
     }
 
     public bool GetNewTarget()

@@ -98,7 +98,7 @@ public class BulletHandler : MonoBehaviour
     public bool OnHit(int bulletID, Transform other)
     {
         // Add the other transform to the ignore list for future collisions
-        DefaultEnemy enemy = other.GetComponent<DefaultEnemy>();
+        BaseEntity enemy = other.GetComponent<BaseEntity>();
 
         if (enemy != null)
         {

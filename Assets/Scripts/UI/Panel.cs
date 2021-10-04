@@ -24,7 +24,7 @@ public class Panel : MonoBehaviour
     public Image icon;
 
     // Selection objects
-    public GameObject variantSelector;
+    public HorizontalSelector variantSelector;
     public GameObject configSelector;
 
     // Building
@@ -34,6 +34,7 @@ public class Panel : MonoBehaviour
     {
         UIEvents.active.onEntityPressed += SetPanel;
         UIEvents.active.onDisableHotbar += DisableHotbar;
+        //Events.active.onVariantLoaded += AddVariant;
 
         menuObjects = new List<MenuStat>();
         unusedObjects = new List<MenuStat>();
@@ -66,7 +67,7 @@ public class Panel : MonoBehaviour
     public void SetPanel(Entity entity, bool isEnemy)
     {
         // Toggle variant selection
-        variantSelector.SetActive(isEnemy);
+        variantSelector.gameObject.SetActive(isEnemy);
 
         // Grab building
         this.entity = entity;
@@ -149,6 +150,14 @@ public class Panel : MonoBehaviour
         holder.text.text = "<b>" + stat.name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
         holder.icon.sprite = stat.icon;
     }
+
+    /* Adds a variant to the variant list
+    public void AddVariant(Variant variant)
+    {
+        variantSelector.CreateNewItem(variant.name);
+        variantSelector.SetupSelector();
+    }
+    */
 
     // Resets all the menu stats
     public void ResetUnused()

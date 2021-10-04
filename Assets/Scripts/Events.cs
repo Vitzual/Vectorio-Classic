@@ -125,10 +125,19 @@ public class Events : MonoBehaviour
             initBuildables(path);
     }
 
+    // Initializes buildables
     public event Action setupBuildables;
     public void SetupBuildables()
     {
         if (setupBuildables != null)
             setupBuildables();
+    }
+
+    // Initializes variants
+    public event Action<Variant> onVariantLoaded;
+    public void VariantLoaded(Variant variant)
+    {
+        if (onVariantLoaded != null)
+            onVariantLoaded(variant);
     }
 }

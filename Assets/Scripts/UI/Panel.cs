@@ -15,7 +15,6 @@ public class Panel : MonoBehaviour
     public MenuStat menuStat;
     public Transform resourceStats;
     public Transform buildingStats;
-    public GameObject configuration;
     public bool settingHotbar;
 
     // Panel UI variables
@@ -24,12 +23,16 @@ public class Panel : MonoBehaviour
     public ButtonManagerBasic hotbar;
     public Image icon;
 
+    // Selection objects
+    public GameObject variantSelector;
+    public GameObject configSelector;
+
     // Building
     public Entity entity;
 
     public void Start()
     {
-        UIEvents.active.onBuildingPressed += SetPanel;
+        UIEvents.active.onEntityPressed += SetPanel;
         UIEvents.active.onDisableHotbar += DisableHotbar;
 
         menuObjects = new List<MenuStat>();
@@ -60,8 +63,11 @@ public class Panel : MonoBehaviour
     }
 
     // Sets the panel information
-    public void SetPanel(Entity entity)
+    public void SetPanel(Entity entity, bool isEnemy)
     {
+        // Toggle variant selection
+        variantSelector.SetActive(isEnemy);
+
         // Grab building
         this.entity = entity;
 
@@ -72,9 +78,9 @@ public class Panel : MonoBehaviour
 
         // Check for configuration
         if (entity.level == -1)
-            configuration.SetActive(false);
+            configSelector.SetActive(false);
         else
-            configuration.SetActive(true);
+            configSelector.SetActive(true);
 
         // Create stats for the building
         SetUnused();

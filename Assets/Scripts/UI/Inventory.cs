@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public MenuButton CreateEntity(Entity entity, Transform list)
+    public MenuButton CreateEntity(Entity entity, Transform list, List<Building.Resources> resources = null)
     {
         // Create the new buildable object
         GameObject holder = Instantiate(buildable.obj, new Vector3(0, 0, 0), Quaternion.identity);
@@ -81,25 +81,26 @@ public class Inventory : MonoBehaviour
         // Set building unlock value
         buildable.desc.text = "<b>" + entity.active + " ACTIVE |</b> <size=16>Click for more details!";
 
-        return buildable;
-
-        /*
-        foreach (Building.Resources resource in building.resources)
-        {
-            if (resource.amount > 0)
+        // Add resource icons
+        if (resources != null) {
+            foreach (Building.Resources resource in resources)
             {
-                if (resource.resource == Resource.Currency.Power)
-                    buildable.powerIcon.SetActive(true);
-                else if (resource.resource == Resource.Currency.Heat)
-                    buildable.heatIcon.SetActive(true);
-                else if (resource.resource == Resource.Currency.Gold)
-                    buildable.goldIcon.SetActive(true);
-                else if (resource.resource == Resource.Currency.Essence)
-                    buildable.essenceIcon.SetActive(true);
-                else if (resource.resource == Resource.Currency.Iridium)
-                    buildable.iridiumIcon.SetActive(true);
+                if (resource.amount > 0)
+                {
+                    if (resource.resource == Resource.Currency.Power)
+                        buildable.powerIcon.SetActive(true);
+                    else if (resource.resource == Resource.Currency.Heat)
+                        buildable.heatIcon.SetActive(true);
+                    else if (resource.resource == Resource.Currency.Gold)
+                        buildable.goldIcon.SetActive(true);
+                    else if (resource.resource == Resource.Currency.Essence)
+                        buildable.essenceIcon.SetActive(true);
+                    else if (resource.resource == Resource.Currency.Iridium)
+                        buildable.iridiumIcon.SetActive(true);
+                }
             }
         }
-        */
+
+        return buildable;
     }
 }

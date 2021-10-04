@@ -30,6 +30,8 @@ public class MenuButton : MonoBehaviour
         if (BuildingSystem.active != null)
             BuildingSystem.active.SetBuilding(entity);
         else Debug.LogError("Cannot set building without building system!");
-        UIEvents.active.BuildingPressed(entity);
+
+        DefaultEnemy enemy = entity.obj.GetComponent<DefaultEnemy>();
+        UIEvents.active.BuildingPressed(entity, enemy != null);
     }
 }

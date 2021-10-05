@@ -9,16 +9,11 @@ public class Survival : Gamemode
     public override void PlaceBuilding()
     {
         if (BuildingSystem.active != null)
-        {
             BuildingSystem.active.CmdCreateBuilding();
-
-            
-        }
     }
 
-    // Updates the resources for all clients
-    public void RpcPlaceBuilding(Resource.Currency[] resources)
+    public override void InitEntities()
     {
-        
+        Events.active.InitBuildables("Scriptables/Buildings");
     }
 }

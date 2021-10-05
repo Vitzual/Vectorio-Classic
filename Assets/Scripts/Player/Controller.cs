@@ -19,9 +19,6 @@ public class Controller : MonoBehaviour
     // TEMP
     public AudioSource music;
     public GameObject inv;
-    private float timer = 0;
-    private float fpsRefreshRate = 1f;
-    public TextMeshProUGUI fpsCurrent;
 
     public void Start()
     {
@@ -30,13 +27,6 @@ public class Controller : MonoBehaviour
 
     public void Update()
     {
-        if (Time.unscaledTime > timer)
-        {
-            int fps = (int)(1f / Time.unscaledDeltaTime);
-            fpsCurrent.text = fps+"fps";
-            timer = Time.unscaledTime + fpsRefreshRate;
-        }
-
         if (!inv.activeSelf)
         {
             CheckScrollInput();

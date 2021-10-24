@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BuildingSystem : MonoBehaviour
+public class BuildingHandler : MonoBehaviour
 {
     // Grid variable
     public GridSystem tileGrid;
 
     // Building variables
-    public static BuildingSystem active;
+    public static BuildingHandler active;
     private Vector2 offset;
     public float border = 742.5f;
 

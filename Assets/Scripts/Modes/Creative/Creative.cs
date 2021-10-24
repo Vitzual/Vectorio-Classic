@@ -6,8 +6,8 @@ public class Creative : Gamemode
 {
     public override void PlaceBuilding()
     {
-        if (BuildingSystem.active != null)
-            BuildingSystem.active.CmdCreateBuilding();
+        if (BuildingHandler.active != null)
+            BuildingHandler.active.CmdCreateBuilding();
     }
 
     public override void InitEntities()

@@ -42,7 +42,7 @@ public class EnemyHandler : MonoBehaviour
                 }
                 else if (scan)
                 {
-                    BaseTile building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
+                    BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
                     if (building != null)
                     {
@@ -70,7 +70,7 @@ public class EnemyHandler : MonoBehaviour
                 }
                 else if (scan)
                 {
-                    BaseTile building = BuildingSystem.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+                    BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
 
                     if (building != null)
                         guardians[i].target = building;

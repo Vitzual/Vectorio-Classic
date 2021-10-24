@@ -15,6 +15,7 @@ public class Building : Entity
 
     // Refers to how many cells this building will occupy
     public Cell[] cells;
+    public Vector2 offset;
 
     // Resource class
     [System.Serializable]

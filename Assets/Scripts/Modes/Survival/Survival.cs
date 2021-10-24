@@ -8,12 +8,11 @@ public class Survival : Gamemode
 {
     public override void PlaceBuilding()
     {
-        if (BuildingHandler.active != null)
-            BuildingHandler.active.CmdCreateBuilding();
+        
     }
 
     public override void InitEntities()
     {
-        Events.active.InitBuildables("Scriptables/Buildings");
+        ScriptableManager.GenerateBuildings();
     }
 }

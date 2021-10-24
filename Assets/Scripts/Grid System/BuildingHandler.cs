@@ -43,17 +43,14 @@ public class BuildingHandler : NetworkBehaviour
         if (obj == null) return;
 
         // Create the tile
-        Building lastBuilding = Instantiate(obj, position, rotation).GetComponent<Building>();
+        BaseTile lastBuilding = Instantiate(obj, position, rotation).GetComponent<BaseTile>();
         lastBuilding.transform.position = new Vector3(position.x, position.y, -1);
         lastBuilding.name = tile.name;
-
-        // Apply options if required
-        if (option != -1) lastBuilding.ApplyOptions(option);
 
         // Set the tiles on the grid class
         if (tile.cells.Length > 0)
         {
-            foreach (BuildingTile.Cell cell in tile.cells)
+            foreach (Building.Cell cell in tile.cells)
                 tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, tile, lastBuilding);
         }
         else tileGrid.SetCell(Vector2Int.RoundToInt(lastBuilding.transform.position), true, tile, lastBuilding);
@@ -70,24 +67,14 @@ public class BuildingHandler : NetworkBehaviour
     [Server]
     public bool CheckTiles(Building tile, Vector3 position)
     {
-        // Tells system to check tile placement
-        bool checkTilePlacement = tile.spawnableOn.Count > 0;
-
         if (tile.cells.Length > 0)
         {
-            foreach (BuildingTile.Cell cell in tile.cells)
+            foreach (Building.Cell cell in tile.cells)
             {
                 // Check to make sure nothing occupying tile
                 Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));
                 if (tileGrid.RetrieveCell(coords) != null)
                     return false;
-
-                // Check to make sure tile can be placed
-                if (checkTilePlacement)
-                {
-                    if (WorldGen.active.spawnedResources.TryGetValue(coords, out Mineral value) &&
-                        tile.spawnableOn.Contains(value)) checkTilePlacement = false;
-                }
             }
         }
         else
@@ -96,39 +83,18 @@ public class BuildingHandler : NetworkBehaviour
             Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
             if (tileGrid.RetrieveCell(coords) != null)
                 return false;
-
-            // Check to make sure tile can be placed
-            if (checkTilePlacement)
-            {
-                if (WorldGen.active.spawnedResources.TryGetValue(coords, out Mineral value) &&
-                    tile.spawnableOn.Contains(value)) checkTilePlacement = false;
-            }
         }
-
-        if (checkTilePlacement) return false;
-        else return true;
+        return true;
     }
 
     // Attempts to return a building
     public Building TryGetBuilding(Vector2 position)
     {
-        UnityEngine.Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
         if (cell != null)
         {
             Building building = cell.obj.GetComponent<Building>();
             return building;
-        }
-        return null;
-    }
-
-    // Attempts to return a conveyor
-    public Conveyor TryGetConveyor(Vector2 position)
-    {
-        UnityEngine.Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
-        if (cell != null)
-        {
-            Conveyor conveyor = cell.obj.GetComponent<Conveyor>();
-            return conveyor;
         }
         return null;
     }

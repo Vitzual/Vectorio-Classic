@@ -5,6 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
 public class Building : Entity
 {
+    // Cell class
+    [System.Serializable]
+    public struct Cell
+    {
+        public float x;
+        public float y;
+    }
+
+    // Refers to how many cells this building will occupy
+    public Cell[] cells;
+
     // Resource class
     [System.Serializable]
     public class Resources

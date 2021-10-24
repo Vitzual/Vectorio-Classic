@@ -3,21 +3,6 @@ using UnityEngine;
 
 public class Grid
 {
-    // Cell class. Holds info about each cell
-    public class Cell
-    {
-        public Cell(bool occupied, Building building, BaseTile obj)
-        {
-            this.occupied = occupied;
-            this.building = building;
-            this.obj = obj;
-        }
-
-        public bool occupied;
-        public Building building;
-        public BaseTile obj;
-    }
-
     // Holds a dictionary of all cells
     // Int represents coords of the tile 
     public Dictionary<Vector2Int, Cell> cells;
@@ -48,15 +33,15 @@ public class Grid
     {
         if (cells.TryGetValue(coords, out Cell cell))
         {
-            cell.building = tile;
-            cell.occupied = occupy;
+            cell.occupied = true;
+            cell.tile = tile;
             cell.obj = obj;
         }
         else cells.Add(coords, new Cell(occupy, tile, obj));
         if (obj != null) obj.cells.Add(coords);
     }
 
-    public void DestroyCell(Vector2Int coords)
+    public void RemoveCell(Vector2Int coords)
     {
         if (cells.TryGetValue(coords, out Cell cell))
         {
@@ -66,8 +51,17 @@ public class Grid
             {
                 for (int i = 0; i < building.cells.Count; i++)
                     cells.Remove(building.cells[i]);
-                building.DestroyEntity();
             }
+        }
+    }
+
+    public void DestroyCell(Vector2Int coords)
+    {
+        if (cells.TryGetValue(coords, out Cell cell))
+        {
+            BaseTile building = cell.obj.GetComponent<BaseTile>();
+            if (building != null)
+                building.DestroyEntity();
         }
     }
 }

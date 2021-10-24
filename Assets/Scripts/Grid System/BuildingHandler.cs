@@ -19,7 +19,7 @@ public class BuildingHandler : NetworkBehaviour
 
         // Sets static variables on start
         tileGrid = new Grid();
-        tileGrid.cells = new Dictionary<Vector2Int, Grid.Cell>();
+        tileGrid.cells = new Dictionary<Vector2Int, Cell>();
     }
 
     // Creates a building
@@ -87,15 +87,22 @@ public class BuildingHandler : NetworkBehaviour
         return true;
     }
 
-    // Attempts to return a building
-    public Building TryGetBuilding(Vector2 position)
+    // Returns closest building to position given
+    public BaseTile GetClosestBuilding(Vector2Int position)
     {
-        Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
-        if (cell != null)
+        BaseTile nearest = null;
+        float distance = float.PositiveInfinity;
+
+        foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)
         {
-            Building building = cell.obj.GetComponent<Building>();
-            return building;
+            float holder = Vector2Int.Distance(position, cell.Key);
+            if (holder < distance)
+            {
+                distance = holder;
+                nearest = cell.Value.obj;
+            }
         }
-        return null;
+
+        return nearest;
     }
 }

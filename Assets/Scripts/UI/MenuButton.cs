@@ -27,9 +27,11 @@ public class MenuButton : MonoBehaviour
     // Show stats
     public void DisplayStats()
     {
+        /*
         if (BuildingHandler.active != null)
             BuildingHandler.active.SetBuilding(entity);
         else Debug.LogError("Cannot set building without building system!");
+        */
 
         DefaultEnemy enemy = entity.obj.GetComponent<DefaultEnemy>();
         UIEvents.active.BuildingPressed(entity, enemy != null);

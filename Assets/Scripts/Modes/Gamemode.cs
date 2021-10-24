@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 
+// TODO:
+// - Fix building creation in MenuButton and Hotbar (commented out)
+// - Get resources properly connected to survival
+
 public class Gamemode : MonoBehaviour
 {
     // Gamemode information

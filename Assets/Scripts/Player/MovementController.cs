@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Controller : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     // Get the camera
     public Camera cam;

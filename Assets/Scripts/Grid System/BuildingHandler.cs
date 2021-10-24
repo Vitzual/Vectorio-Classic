@@ -1,10 +1,11 @@
 using UnityEngine;
-using Mirror;
+//using Mirror;
 using System.Collections.Generic;
 
-// TODO: Fix scriptable object reference in commands
+// This script is ported from Automa.
+// https://github.com/Vitzual/Automa
 
-public class BuildingHandler : NetworkBehaviour
+public class BuildingHandler : MonoBehaviour
 {
     // Grid variable
     [HideInInspector] public Grid tileGrid;
@@ -23,7 +24,7 @@ public class BuildingHandler : NetworkBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Building tile, Vector2 position, Quaternion rotation, int option)
+    public void CreateBuilding(Building tile, Vector2 position, Quaternion rotation)
     {
         // Untiy is so fucky it is now in a new dimension of bullshit
         if (tile == null) return;
@@ -32,11 +33,11 @@ public class BuildingHandler : NetworkBehaviour
         if (!CheckTiles(tile, position)) return;
 
         // Instantiate the object like usual
-        RpcInstantiateBuilding(tile, position, rotation, option);
+        RpcInstantiateBuilding(tile, position, rotation);
     }
 
-    [ClientRpc]
-    private void RpcInstantiateBuilding(Building tile, Vector2 position, Quaternion rotation, int option)
+    //[ClientRpc]
+    private void RpcInstantiateBuilding(Building tile, Vector2 position, Quaternion rotation)
     {
         // Get game objected from scriptable manager
         GameObject obj = ScriptableManager.RequestBuildingByName(tile.name);
@@ -57,14 +58,14 @@ public class BuildingHandler : NetworkBehaviour
     }
 
     // Destroys a building
-    [ClientRpc]
+    //[ClientRpc]
     public void RpcDestroyBuilding(Vector3 position)
     {
         tileGrid.DestroyCell(Vector2Int.RoundToInt(position));
     }
 
     // Checks to make sure tile(s) isn't occupied
-    [Server]
+    //[Server]
     public bool CheckTiles(Building tile, Vector3 position)
     {
         if (tile.cells.Length > 0)
@@ -104,5 +105,17 @@ public class BuildingHandler : NetworkBehaviour
         }
 
         return nearest;
+    }
+
+    // Attempts to return a building
+    public BaseTile TryGetBuilding(Vector2 position)
+    {
+        Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        if (cell != null)
+        {
+            BaseTile building = cell.obj.GetComponent<BaseTile>();
+            return building;
+        }
+        return null;
     }
 }

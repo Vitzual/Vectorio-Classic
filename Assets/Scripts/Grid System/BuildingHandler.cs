@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class BuildingHandler : NetworkBehaviour
 {
     // Grid variable
-    [HideInInspector] public UnityEngine.Grid tileGrid;
+    [HideInInspector] public Grid tileGrid;
 
     // Building variables
     public static BuildingHandler active;
@@ -18,12 +18,12 @@ public class BuildingHandler : NetworkBehaviour
         active = this;
 
         // Sets static variables on start
-        tileGrid = new UnityEngine.Grid();
-        tileGrid.cells = new Dictionary<Vector2Int, UnityEngine.Grid.Cell>();
+        tileGrid = new Grid();
+        tileGrid.cells = new Dictionary<Vector2Int, Grid.Cell>();
     }
 
     // Creates a building
-    public void CreateBuilding(BuildingTile tile, Vector3 position, Quaternion rotation, int option)
+    public void CreateBuilding(Building tile, Vector3 position, Quaternion rotation, int option)
     {
         // Untiy is so fucky it is now in a new dimension of bullshit
         if (tile == null) return;
@@ -36,7 +36,7 @@ public class BuildingHandler : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcInstantiateBuilding(BuildingTile tile, Vector2 position, Quaternion rotation, int option)
+    private void RpcInstantiateBuilding(Building tile, Vector2 position, Quaternion rotation, int option)
     {
         // Get game objected from scriptable manager
         GameObject obj = ScriptableManager.active.RequestBuildingByName(tile.name);
@@ -68,7 +68,7 @@ public class BuildingHandler : NetworkBehaviour
 
     // Checks to make sure tile(s) isn't occupied
     [Server]
-    public bool CheckTiles(BuildingTile tile, Vector3 position)
+    public bool CheckTiles(Building tile, Vector3 position)
     {
         // Tells system to check tile placement
         bool checkTilePlacement = tile.spawnableOn.Count > 0;

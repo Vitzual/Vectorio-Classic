@@ -6,29 +6,23 @@ using Michsky.UI.ModernUIPack;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory active;
     public MenuButton buildable;
     public List<Transform> lists;
 
     public void Start()
     {
-        Events.active.initBuildables += GenerateEntities;
+        active = this;
         gameObject.SetActive(false);
     }
 
-    public void GenerateVariants(string path)
+    public void GenerateEntities(Entity[] entities)
     {
-        List<Variant> entities = Resources.LoadAll(path, typeof(Variant)).Cast<Variant>().ToList();
-        Debug.Log("Loaded " + entities.Count + " variants from " + path);
-    }
-
-    public void GenerateEntities(string path)
-    {
-        List<Entity> entities = Resources.LoadAll(path, typeof(Entity)).Cast<Entity>().ToList();
-        Debug.Log("Loaded " + entities.Count + " entities from " + path);
-        MenuButton[] holders = new MenuButton[entities.Count];
+        // Create a new array of holders
+        MenuButton[] holders = new MenuButton[entities.Length];
 
         // Generate buildables
-        for(int i = 0; i < entities.Count; i++)
+        for(int i = 0; i < entities.Length; i++)
         {
             Debug.Log("Setting up " + entities[i].name);
 

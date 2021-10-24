@@ -13,6 +13,7 @@ public class Survival : Gamemode
 
     public override void InitEntities()
     {
-        ScriptableManager.GenerateBuildings();
+        ScriptableManager.GenerateAllScriptables();
+        Inventory.active.GenerateEntities(ScriptableManager.buildings.ToArray());
     }
 }

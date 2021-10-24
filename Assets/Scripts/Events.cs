@@ -117,14 +117,6 @@ public class Events : MonoBehaviour
             onNumberInput(number);
     }
 
-    // Initializes entities
-    public event Action<string> initBuildables;
-    public void InitBuildables(string path)
-    {
-        if (initBuildables != null)
-            initBuildables(path);
-    }
-
     // Initializes buildables
     public event Action setupBuildables;
     public void SetupBuildables()

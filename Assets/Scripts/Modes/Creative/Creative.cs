@@ -6,14 +6,14 @@ public class Creative : Gamemode
 {
     public override void PlaceBuilding()
     {
-        if (BuildingHandler.active != null)
-            BuildingHandler.active.CmdCreateBuilding();
+        
     }
 
     public override void InitEntities()
     {
-        Events.active.InitBuildables("Scriptables/Buildings");
-        Events.active.InitBuildables("Scriptables/Enemies");
-        Events.active.InitBuildables("Scriptables/Guardians");
+        ScriptableManager.GenerateAllScriptables();
+        Inventory.active.GenerateEntities(ScriptableManager.buildings.ToArray());
+        Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
+        Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
     }
 }

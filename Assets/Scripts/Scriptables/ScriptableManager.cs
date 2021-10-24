@@ -18,12 +18,20 @@ public static class ScriptableManager
     public static List<Guardian> guardians = new List<Guardian>();
     public static List<Variant> variants = new List<Variant>();
 
+    // Generate all scriptables
+    public static void GenerateAllScriptables()
+    {
+        GenerateBuildings();
+        GenerateEnemies();
+        GenerateGuardians();
+        GenerateVariants();
+    }
+
     // Generates buildings on run
     public static void GenerateBuildings()
     {
         buildings = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
         Debug.Log("Loaded " + buildings.Count + " buildings from " + BuildingPath);
-        Events.active.InitBuildables(BuildingPath);
     }
 
     // Generates enemies on run
@@ -31,7 +39,6 @@ public static class ScriptableManager
     {
         enemies = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();
         Debug.Log("Loaded " + enemies.Count + " enemies from " + EnemyPath);
-        Events.active.InitBuildables(EnemyPath);
     }
 
     // Generates guardians on run
@@ -39,7 +46,6 @@ public static class ScriptableManager
     {
         guardians = Resources.LoadAll(GuardianPath, typeof(Guardian)).Cast<Guardian>().ToList();
         Debug.Log("Loaded " + guardians.Count + " guardians from " + GuardianPath);
-        Events.active.InitBuildables(GuardianPath);
     }
 
     // Generates guardians on run
@@ -47,7 +53,6 @@ public static class ScriptableManager
     {
         variants = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
         Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
-        Events.active.InitBuildables(VariantPath);
     }
 
     // Retrieves a building object by name

@@ -25,6 +25,6 @@ public class Gamemode : MonoBehaviour
     // Tells the gamemode how to generate inventory
     public virtual void InitEntities()
     {
-        Debug.Log("Mode does not contain definition for initializing buildables");
+        ScriptableManager.GenerateAllScriptables();
     }
 }

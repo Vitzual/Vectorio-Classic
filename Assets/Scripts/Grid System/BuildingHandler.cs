@@ -23,7 +23,7 @@ public class BuildingHandler : NetworkBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Building tile, Vector3 position, Quaternion rotation, int option)
+    public void CreateBuilding(Building tile, Vector2 position, Quaternion rotation, int option)
     {
         // Untiy is so fucky it is now in a new dimension of bullshit
         if (tile == null) return;
@@ -39,7 +39,7 @@ public class BuildingHandler : NetworkBehaviour
     private void RpcInstantiateBuilding(Building tile, Vector2 position, Quaternion rotation, int option)
     {
         // Get game objected from scriptable manager
-        GameObject obj = ScriptableManager.active.RequestBuildingByName(tile.name);
+        GameObject obj = ScriptableManager.RequestBuildingByName(tile.name);
         if (obj == null) return;
 
         // Create the tile

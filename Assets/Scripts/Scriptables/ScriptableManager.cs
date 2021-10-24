@@ -13,10 +13,10 @@ public static class ScriptableManager
     public static string VariantPath = "Scriptables/Variants";
 
     // Scriptable lists
-    public static List<Building> buildings = new List<Building>();
-    public static List<Enemy> enemies = new List<Enemy>();
-    public static List<Guardian> guardians = new List<Guardian>();
-    public static List<Variant> variants = new List<Variant>();
+    public static List<Building> buildings;
+    public static List<Enemy> enemies;
+    public static List<Guardian> guardians;
+    public static List<Variant> variants;
 
     // Generate all scriptables
     public static void GenerateAllScriptables()
@@ -30,6 +30,7 @@ public static class ScriptableManager
     // Generates buildings on run
     public static void GenerateBuildings()
     {
+        buildings = new List<Building>();
         buildings = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
         Debug.Log("Loaded " + buildings.Count + " buildings from " + BuildingPath);
     }
@@ -37,6 +38,7 @@ public static class ScriptableManager
     // Generates enemies on run
     public static void GenerateEnemies()
     {
+        enemies = new List<Enemy>();
         enemies = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();
         Debug.Log("Loaded " + enemies.Count + " enemies from " + EnemyPath);
     }
@@ -44,6 +46,7 @@ public static class ScriptableManager
     // Generates guardians on run
     public static void GenerateGuardians()
     {
+        guardians = new List<Guardian>();
         guardians = Resources.LoadAll(GuardianPath, typeof(Guardian)).Cast<Guardian>().ToList();
         Debug.Log("Loaded " + guardians.Count + " guardians from " + GuardianPath);
     }
@@ -51,6 +54,7 @@ public static class ScriptableManager
     // Generates guardians on run
     public static void GenerateVariants()
     {
+        variants = new List<Variant>();
         variants = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
         Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
     }

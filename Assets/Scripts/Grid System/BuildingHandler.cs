@@ -1,218 +1,135 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
-public class BuildingHandler : MonoBehaviour
+// TODO: Fix scriptable object reference in commands
+
+public class BuildingHandler : NetworkBehaviour
 {
     // Grid variable
-    public GridSystem tileGrid;
+    [HideInInspector] public UnityEngine.Grid tileGrid;
 
     // Building variables
     public static BuildingHandler active;
-    private Vector2 offset;
-    public float border = 742.5f;
 
-    [HideInInspector] public Entity selected;
-    [HideInInspector] public bool canDelete = true;
-
-    // Enemy variables
-    public Variant variant;
-    public LayerMask enemyLayer;
-
-    // Sprite values
-    private SpriteRenderer spriteRenderer;
-    private float alphaAdjust = 0.005f;
-    private float alphaHolder;
-
-    // Start method grabs tilemap
     public void Start()
     {
-        // Grabs active component if it exists
-        if (this != null) active = this;
-        else active = null;
+        // Get reference to active instance
+        active = this;
 
         // Sets static variables on start
-        tileGrid = new GridSystem();
-        tileGrid.cells = new Dictionary<Vector2Int, Cell>();
-        selected = null;
-        offset = new Vector2(0, 0);
-
-        // Sets static anim variables
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        alphaHolder = alphaAdjust;
-
-        // Setup events
-        Events.active.onRightMousePressed += DeleteTile;
-        Events.active.onRightMouseReleased += Deselect;
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-        // Check if active is null
-        if (active == null) return;
-
-        // Round to grid
-        OffsetBuilding();
-        AdjustTransparency();
-    }
-   
-    private void OffsetBuilding()
-    {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (selected != null)
-        {
-            if (selected.snap) transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5) + offset.x, 5 * Mathf.Round(mousePos.y / 5) + offset.y);
-            else transform.position = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
-        }
-        else
-        {
-            transform.position = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
-        }
-    }
-
-    // Adjusts the alpha transparency of the SR component 
-    private void AdjustTransparency()
-    {
-        // Switches
-        if (spriteRenderer.color.a >= 1f)
-            alphaHolder = -alphaAdjust;
-        else if (spriteRenderer.color.a <= 0f)
-            alphaHolder = alphaAdjust;
-
-        // Set alpha
-        spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a + alphaHolder);
-    }
-
-    // Sets the selected building
-    public void SetBuilding(Entity entity)
-    {
-        selected = entity;
-        if (entity != null)
-        {
-            canDelete = false;
-
-            spriteRenderer.sprite = Sprites.GetSprite(entity.name);
-            transform.localScale = new Vector2(entity.size, entity.size);
-            offset = entity.tile.offset;
-        }
-        else
-        {
-            canDelete = true;
-
-            spriteRenderer.sprite = Sprites.GetSprite("Transparent");
-        }
-    }
-
-    // Sets the tiles for a specified entity
-    public void SetTiles(Entity entity, GameObject obj)
-    {
-        // Attempt to get the default building script
-        BaseTile building = obj.GetComponent<BaseTile>();
-
-        // Check to see if the building contains a DB script
-        if (building == null)
-        {
-            Debug.LogError("Entity has cells but does not contain a DefaultBuilding script!\nRemoving from scene.");
-            Destroy(obj);
-            return;
-        }
-
-        // Set the tiles on the grid class
-        Vector2Int coords;
-        if (entity.tile.cells.Length > 0)
-        {
-            foreach (Tile.Cell cell in entity.tile.cells)
-            {
-                coords = Vector2Int.RoundToInt(new Vector2(obj.transform.position.x + cell.x, obj.transform.position.y + cell.y));
-                tileGrid.SetCell(coords, true, entity.tile, building);
-                building.cells.Add(coords);
-            }
-        }
-    }
-
-    // Checks to make sure tile(s) isn't occupied
-    public bool CheckTiles()
-    {
-        float xCoord, yCoord;
-
-        if (selected.tile.cells.Length > 0)
-        {
-            foreach (Tile.Cell cell in selected.tile.cells)
-            {
-                xCoord = transform.position.x + cell.x;
-                yCoord = transform.position.y + cell.y;
-
-                if (tileGrid.RetrieveCell(Vector2Int.RoundToInt(new Vector2(xCoord, yCoord))) != null) return false;
-                else if (xCoord < -border || xCoord > border || yCoord < -border || yCoord > border) return false;
-            }
-        }
-        return true;
+        tileGrid = new UnityEngine.Grid();
+        tileGrid.cells = new Dictionary<Vector2Int, UnityEngine.Grid.Cell>();
     }
 
     // Creates a building
-    public void CmdCreateBuilding()
+    public void CreateBuilding(BuildingTile tile, Vector3 position, Quaternion rotation, int option)
     {
-        // Check if active is null
-        if (selected == null || selected.obj == null) return;
+        // Untiy is so fucky it is now in a new dimension of bullshit
+        if (tile == null) return;
 
-        // Check if snap is enabled
-        if (!selected.snap)
-        {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
-            foreach(RaycastHit2D hit in hits) 
-                if (hit.collider != null && (hit.collider.GetComponent<DefaultEnemy>() != null ||
-                    hit.collider.GetComponent<DefaultGuardian>() != null)) return;
-        }
-        else if (!CheckTiles()) return;
+        // Check to make sure the tiles are not being used
+        if (!CheckTiles(tile, position)) return;
 
         // Instantiate the object like usual
-        if (Instantiator.active != null)
-        {
-            GameObject last = Instantiator.active.CreateEntity(selected, transform);
-            if (last != null && selected.tile.cells.Length > 0) SetTiles(selected, last);
-        }
-        else Debug.LogError("Scene is missing an instantiator!");
+        RpcInstantiateBuilding(tile, position, rotation, option);
     }
 
-    public BaseTile GetClosestBuilding(Vector2Int position)
+    [ClientRpc]
+    private void RpcInstantiateBuilding(BuildingTile tile, Vector2 position, Quaternion rotation, int option)
     {
-        BaseTile nearest = null;
-        float distance = float.PositiveInfinity;
+        // Get game objected from scriptable manager
+        GameObject obj = ScriptableManager.active.RequestBuildingByName(tile.name);
+        if (obj == null) return;
 
-        foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)
+        // Create the tile
+        Building lastBuilding = Instantiate(obj, position, rotation).GetComponent<Building>();
+        lastBuilding.transform.position = new Vector3(position.x, position.y, -1);
+        lastBuilding.name = tile.name;
+
+        // Apply options if required
+        if (option != -1) lastBuilding.ApplyOptions(option);
+
+        // Set the tiles on the grid class
+        if (tile.cells.Length > 0)
         {
-            float holder = Vector2Int.Distance(position, cell.Key);
-            if (holder < distance)
+            foreach (BuildingTile.Cell cell in tile.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, tile, lastBuilding);
+        }
+        else tileGrid.SetCell(Vector2Int.RoundToInt(lastBuilding.transform.position), true, tile, lastBuilding);
+    }
+
+    // Destroys a building
+    [ClientRpc]
+    public void RpcDestroyBuilding(Vector3 position)
+    {
+        tileGrid.DestroyCell(Vector2Int.RoundToInt(position));
+    }
+
+    // Checks to make sure tile(s) isn't occupied
+    [Server]
+    public bool CheckTiles(BuildingTile tile, Vector3 position)
+    {
+        // Tells system to check tile placement
+        bool checkTilePlacement = tile.spawnableOn.Count > 0;
+
+        if (tile.cells.Length > 0)
+        {
+            foreach (BuildingTile.Cell cell in tile.cells)
             {
-                distance = holder;
-                nearest = cell.Value.building;
+                // Check to make sure nothing occupying tile
+                Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));
+                if (tileGrid.RetrieveCell(coords) != null)
+                    return false;
+
+                // Check to make sure tile can be placed
+                if (checkTilePlacement)
+                {
+                    if (WorldGen.active.spawnedResources.TryGetValue(coords, out Mineral value) &&
+                        tile.spawnableOn.Contains(value)) checkTilePlacement = false;
+                }
+            }
+        }
+        else
+        {
+            // Check to make sure nothing occupying tile
+            Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
+            if (tileGrid.RetrieveCell(coords) != null)
+                return false;
+
+            // Check to make sure tile can be placed
+            if (checkTilePlacement)
+            {
+                if (WorldGen.active.spawnedResources.TryGetValue(coords, out Mineral value) &&
+                    tile.spawnableOn.Contains(value)) checkTilePlacement = false;
             }
         }
 
-        return nearest;
+        if (checkTilePlacement) return false;
+        else return true;
     }
 
-    private void Deselect()
+    // Attempts to return a building
+    public Building TryGetBuilding(Vector2 position)
     {
-        if (selected != null)
-            SetBuilding(null);
-    }
-
-    public void DeleteTile()
-    {
-        if (canDelete)
+        UnityEngine.Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        if (cell != null)
         {
-            tileGrid.DestroyCell(Vector2Int.RoundToInt(transform.position));
+            Building building = cell.obj.GetComponent<Building>();
+            return building;
         }
+        return null;
     }
 
-
-    public void ClearBuildings()
+    // Attempts to return a conveyor
+    public Conveyor TryGetConveyor(Vector2 position)
     {
-        tileGrid.DestroyAllCells();
+        UnityEngine.Grid.Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        if (cell != null)
+        {
+            Conveyor conveyor = cell.obj.GetComponent<Conveyor>();
+            return conveyor;
+        }
+        return null;
     }
 }

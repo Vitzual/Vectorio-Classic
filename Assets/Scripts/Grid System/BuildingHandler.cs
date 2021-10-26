@@ -24,40 +24,39 @@ public class BuildingHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Building tile, Vector2 position, Quaternion rotation)
+    public void CreateBuildable(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Untiy is so fucky it is now in a new dimension of bullshit
-        if (tile == null) return;
+        if (entity == null) return;
 
         // Check to make sure the tiles are not being used
-        if (!CheckTiles(tile, position)) return;
+        if (!CheckTiles(entity, position)) return;
 
         // Instantiate the object like usual
-        RpcInstantiateBuilding(tile, position, rotation);
+        RpcInstantiateBuilding(entity, position, rotation);
     }
 
     //[ClientRpc]
-    private void RpcInstantiateBuilding(Building tile, Vector2 position, Quaternion rotation)
+    private void RpcInstantiateBuilding(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Get game objected from scriptable manager
-        GameObject obj = ScriptableManager.RequestBuildingByName(tile.name);
+        GameObject obj = ScriptableManager.RequestBuildingByName(entity.name);
         if (obj == null) return;
 
         // Create the tile
         BaseTile lastBuilding = Instantiate(obj, position, rotation).GetComponent<BaseTile>();
         lastBuilding.transform.position = new Vector3(position.x, position.y, -1);
-        lastBuilding.name = tile.name;
+        lastBuilding.name = entity.name;
 
         // Set the tiles on the grid class
-        if (tile.cells.Length > 0)
+        if (entity.cells.Length > 0)
         {
-            foreach (Building.Cell cell in tile.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, tile, lastBuilding);
+            foreach (Building.Cell cell in entity.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, entity, lastBuilding);
         }
-        else tileGrid.SetCell(Vector2Int.RoundToInt(lastBuilding.transform.position), true, tile, lastBuilding);
     }
 
-    // Destroys a building
+    // Destroys a buildingg
     //[ClientRpc]
     public void RpcDestroyBuilding(Vector3 position)
     {
@@ -66,11 +65,11 @@ public class BuildingHandler : MonoBehaviour
 
     // Checks to make sure tile(s) isn't occupied
     //[Server]
-    public bool CheckTiles(Building tile, Vector3 position)
+    public bool CheckTiles(Entity entity, Vector3 position)
     {
-        if (tile.cells.Length > 0)
+        if (entity.cells.Length > 0)
         {
-            foreach (Building.Cell cell in tile.cells)
+            foreach (Building.Cell cell in entity.cells)
             {
                 // Check to make sure nothing occupying tile
                 Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));

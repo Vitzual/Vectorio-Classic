@@ -3,10 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Turret", menuName = "Building/Turret")]
 public class Turret : Building
 {
-    // IAudible interface variables
-    public AudioClip sound;
-
     // Base turret stat variables
+    [Header("Turret Variables")]
     public float damage;
     public float range;
     public float rotationSpeed;
@@ -19,6 +17,7 @@ public class Turret : Building
     public float bulletTime;
     public bool bulletLock;
     public ParticleSystem bulletParticle;
+    public AudioClip sound;
 
     // Base turret modifiers
     [HideInInspector] public float damageModifier;

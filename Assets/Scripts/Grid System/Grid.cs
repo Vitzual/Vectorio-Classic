@@ -29,15 +29,15 @@ public class Grid
         else return null;
     }
 
-    public void SetCell(Vector2Int coords, bool occupy, Building tile = null, BaseTile obj = null)
+    public void SetCell(Vector2Int coords, bool occupy, Entity entity = null, BaseTile obj = null)
     {
         if (cells.TryGetValue(coords, out Cell cell))
         {
             cell.occupied = true;
-            cell.tile = tile;
+            cell.entity = entity;
             cell.obj = obj;
         }
-        else cells.Add(coords, new Cell(occupy, tile, obj));
+        else cells.Add(coords, new Cell(occupy, entity, obj));
         if (obj != null) obj.cells.Add(coords);
     }
 

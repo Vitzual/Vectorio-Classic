@@ -36,7 +36,7 @@ public class Sprites : MonoBehaviour
         library.TryGetValue(name, out Sprite sprite);
         if (sprite == null)
         {
-            Debug.LogError("Failed to get sprite with name " + name);
+            Debug.Log("Failed to get sprite with name " + name);
             return emptySprite;
         }
         else return sprite;

@@ -1,14 +1,14 @@
 [System.Serializable]
 public class Cell
 {
-    public Cell(bool occupied, Building tile, BaseTile obj)
+    public Cell(bool occupied, Entity entity, BaseTile obj)
     {
         this.occupied = occupied;
-        this.tile = tile;
+        this.entity = entity;
         this.obj = obj;
     }
 
     public bool occupied;
-    public Building tile;
+    public Entity entity;
     public BaseTile obj;
 }

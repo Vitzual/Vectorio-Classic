@@ -5,18 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
 public class Building : Entity
 {
-    // Cell class
-    [System.Serializable]
-    public struct Cell
-    {
-        public float x;
-        public float y;
-    }
-
-    // Refers to how many cells this building will occupy
-    public Cell[] cells;
-    public Vector2 offset;
-
     // Resource class
     [System.Serializable]
     public class Resources
@@ -26,13 +14,14 @@ public class Building : Entity
         [HideInInspector] public int modifier;
     }
 
+    // Resources
+    public Resources[] resources;
+
     // Lock things
+    [Header("Unlock Requirement")]
     public int unlockOrder;
     public string unlockDesc;
     public bool isUnlocked = true;
-
-    // Resources
-    public Resources[] resources;
 
     public override void CreateStats(Panel panel)
     {

@@ -62,12 +62,12 @@ public class Inventory : MonoBehaviour
         buildable.entity = entity;
 
         // Set building level
-        if (entity.level > 0)
-            buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
-        else
-        {
+        //if (entity.level > 0)
+        //    buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
+        //else
+        //{
             buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b>";
-        }
+        //}
 
         // Set building icon
         buildable.icon.sprite = Sprites.GetSprite(entity.name);

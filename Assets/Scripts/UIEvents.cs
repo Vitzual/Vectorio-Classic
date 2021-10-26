@@ -23,7 +23,7 @@ public class UIEvents : MonoBehaviour
 
     // Invoked when a building is clicked
     public event Action<Entity, bool> onEntityPressed;
-    public void BuildingPressed(Entity entity, bool isEnemy)
+    public void EntityPressed(Entity entity, bool isEnemy)
     {
         if (onEntityPressed != null)
             onEntityPressed(entity, isEnemy);

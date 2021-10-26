@@ -8,7 +8,7 @@ public class BuildingController : MonoBehaviour
 {
     // Selected tile
     public Transform hologram;
-    private Building building;
+    private Entity entity;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -17,6 +17,9 @@ public class BuildingController : MonoBehaviour
 
     public void Start()
     {
+        // Set event
+        UIEvents.active.onEntityPressed += SetBuildable;
+
         // Confirm user has authority
         //if (!hasAuthority) return;
 
@@ -41,7 +44,7 @@ public class BuildingController : MonoBehaviour
         // Clicking input check
         if (Input.GetKey(Keybinds.lmb))
         {
-            if (building != null) CmdCreateBuilding();
+            if (entity != null) CmdCreateBuildable();
             else
             {
                 BaseTile holder = BuildingHandler.active.TryGetBuilding(hologram.position);
@@ -51,15 +54,15 @@ public class BuildingController : MonoBehaviour
         else if (Input.GetKey(Keybinds.rmb)) CmdDestroyBuilding();
         else if (Input.GetKeyDown(Keybinds.rotate)) RotatePosition();
         else if (Input.GetKeyDown(Keybinds.rmb)
-            || Input.GetKeyDown(Keybinds.escape)) SetBuilding(null);
+            || Input.GetKeyDown(Keybinds.escape)) SetBuildable(null);
     }
 
     // Create building (command)
     //[Command]
-    public void CmdCreateBuilding()
+    public void CmdCreateBuildable()
     {
         if (BuildingHandler.active != null)
-            BuildingHandler.active.CreateBuilding(building, hologram.position, hologram.rotation);
+            BuildingHandler.active.CreateBuildable(entity, hologram.position, hologram.rotation);
         else Debug.LogError("Scene does not have active building handler!");
     }
 
@@ -73,17 +76,17 @@ public class BuildingController : MonoBehaviour
     }
 
     // Sets the selected building (null to deselect)
-    public void SetBuilding(Building building)
+    public void SetBuildable(Entity entity, bool isEnemy = false)
     {
         // Set tile 
-        this.building = building;
+        this.entity = entity;
 
-        if (building != null)
+        if (entity != null)
         {
             // Get the tile sprite and set offset
-            spriteRenderer.sprite = Sprites.GetSprite(building.name);
+            spriteRenderer.sprite = Sprites.GetSprite(entity.name);
         }
-        else spriteRenderer.sprite = Sprites.GetSprite("Empty");
+        else spriteRenderer.sprite = Sprites.GetSprite("Transparent");
     }
 
     // Uses the offset value from the Tile SO to center the object
@@ -93,7 +96,7 @@ public class BuildingController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 newPosition;
 
-        if (building != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + building.offset.x, 5 * Mathf.Round(mousePos.y / 5) + building.offset.y);
+        if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.offset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.offset.y);
         else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
 
         hologram.position = newPosition;

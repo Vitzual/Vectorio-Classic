@@ -12,7 +12,7 @@ public class Events : MonoBehaviour
     {
         active = this;
     }
-    
+
     // Invoked when a bullet is fired
     public event Action<DefaultBullet, BaseEntity> onBulletFired;
     public void BulletFired(DefaultBullet bullet, BaseEntity target)

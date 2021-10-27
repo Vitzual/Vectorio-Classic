@@ -12,6 +12,7 @@ public class BuildingHandler : MonoBehaviour
 
     // Building variables
     public static BuildingHandler active;
+    public LayerMask enemyLayer;
 
     public void Start()
     {
@@ -41,6 +42,9 @@ public class BuildingHandler : MonoBehaviour
     private void RpcInstantiateEnemy(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Use enemy handler thing
+        RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
+        foreach (RaycastHit2D hit in hits)
+            if (hit.collider != null) return;
         EnemyHandler.CreateEntity(entity, position, rotation);
     }
 

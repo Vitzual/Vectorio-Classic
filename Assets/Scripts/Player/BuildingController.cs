@@ -89,6 +89,9 @@ public class BuildingController : MonoBehaviour
             spriteRenderer.sprite = Sprites.GetSprite(entity.name);
         }
         else spriteRenderer.sprite = Sprites.GetSprite("Transparent");
+
+        // Set the scale
+        hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
     }
 
     // Uses the offset value from the Tile SO to center the object
@@ -98,8 +101,12 @@ public class BuildingController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 newPosition;
 
-        if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.offset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.offset.y);
-        else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
+        if (!isEnemy)
+        {
+            if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.offset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.offset.y);
+            else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
+        }
+        else newPosition = mousePos;
 
         hologram.position = newPosition;
     }

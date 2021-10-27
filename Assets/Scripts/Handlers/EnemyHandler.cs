@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
 {
+    // Active variant
+    public static Variant variant;
+    public Variant _variant;
+
     // Holds a reference to turret handler
     public TurretHandler turretHandler;
 
@@ -19,6 +23,7 @@ public class EnemyHandler : MonoBehaviour
 
     public void Start()
     {
+        variant = _variant;
         enemies = new List<DefaultEnemy>();
         Events.active.onEnemySpawned += RegisterEnemy;
         Events.active.onGuardianSpawned += RegisterGuardian;
@@ -102,6 +107,28 @@ public class EnemyHandler : MonoBehaviour
     public void RegisterGuardian(DefaultGuardian guardian)
     {
         guardians.Add(guardian);
+    }
+
+    public static void CreateEntity(Entity entity, Vector2 position, Quaternion rotation)
+    {
+        // Create the tile
+        GameObject lastObj = Instantiate(entity.obj, position, rotation);
+        lastObj.name = entity.name;
+
+        // Attempt to set enemy variant
+        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
+        if (enemy != null) enemy.variant = variant;
+
+        // Set the health for the entity
+        BaseEntity holder = lastObj.GetComponent<BaseEntity>();
+        if (entity != null)
+        {
+            holder.health = entity.health;
+            holder.maxHealth = holder.health;
+        }
+
+        // Setup entity
+        lastObj.GetComponent<BaseEntity>().Setup();
     }
 
     // Destroys all active enemies

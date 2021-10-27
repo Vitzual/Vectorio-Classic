@@ -9,6 +9,7 @@ public class BuildingController : MonoBehaviour
     // Selected tile
     public Transform hologram;
     private Entity entity;
+    private bool isEnemy = false;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -62,7 +63,7 @@ public class BuildingController : MonoBehaviour
     public void CmdCreateBuildable()
     {
         if (BuildingHandler.active != null)
-            BuildingHandler.active.CreateBuildable(entity, hologram.position, hologram.rotation);
+            BuildingHandler.active.CreateBuildable(entity, hologram.position, hologram.rotation, isEnemy);
         else Debug.LogError("Scene does not have active building handler!");
     }
 
@@ -80,6 +81,7 @@ public class BuildingController : MonoBehaviour
     {
         // Set tile 
         this.entity = entity;
+        this.isEnemy = isEnemy;
 
         if (entity != null)
         {

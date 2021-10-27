@@ -24,16 +24,24 @@ public class BuildingHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuildable(Entity entity, Vector2 position, Quaternion rotation)
+    public void CreateBuildable(Entity entity, Vector2 position, Quaternion rotation, bool isEnemy)
     {
         // Untiy is so fucky it is now in a new dimension of bullshit
         if (entity == null) return;
 
         // Check to make sure the tiles are not being used
-        if (!CheckTiles(entity, position)) return;
+        if (!isEnemy && !CheckTiles(entity, position)) return;
 
         // Instantiate the object like usual
-        RpcInstantiateBuilding(entity, position, rotation);
+        if (isEnemy) RpcInstantiateEnemy(entity, position, rotation);
+        else RpcInstantiateBuilding(entity, position, rotation);
+    }
+
+    //[ClientRpc]
+    private void RpcInstantiateEnemy(Entity entity, Vector2 position, Quaternion rotation)
+    {
+        // Use enemy handler thing
+        EnemyHandler.CreateEntity(entity, position, rotation);
     }
 
     //[ClientRpc]

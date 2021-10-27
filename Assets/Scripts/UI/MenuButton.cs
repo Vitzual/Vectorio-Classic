@@ -7,8 +7,8 @@ using TMPro;
 
 public class MenuButton : MonoBehaviour
 {
+
     // Building holder
-    [HideInInspector]
     public Entity entity;
 
     // Button variables

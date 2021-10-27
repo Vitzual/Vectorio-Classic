@@ -16,23 +16,18 @@ MonoBehaviour:
   description: Weak early game turret that targets and fires at nearby enemies.
   obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
   material: {fileID: 2100000, guid: b9b0562c110345f47b9878735bb519d1, type: 2}
-  tile:
-    cells:
-    - x: 0
-      y: 0
-    offset: {x: 0, y: 0}
-  snap: 1
-  size: 1
-  health: 10
-  level: 1
-  maxHealth: 10
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 0
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 10
+  maxHealth: 10
+  healthModifier: 0
   active: 0
-  unlockOrder: 0
-  unlockDesc: Unlocked by default
-  isUnlocked: 1
   resources:
   - resource: 0
     amount: 150
@@ -43,7 +38,9 @@ MonoBehaviour:
   - resource: 3
     amount: 5
     modifier: 0
-  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
+  unlockOrder: 0
+  unlockDesc: Unlocked by default
+  isUnlocked: 1
   damage: 1
   range: 50
   rotationSpeed: 150
@@ -57,6 +54,7 @@ MonoBehaviour:
   bulletLock: 1
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
+  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

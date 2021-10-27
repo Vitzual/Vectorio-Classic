@@ -59,6 +59,17 @@ public static class ScriptableManager
         Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
     }
 
+    // Retrieves an enemy or guardian by name
+    public static GameObject RequestEnemyByName(string name)
+    {
+        foreach (Enemy enemy in enemies)
+            if (enemy.name == name) return enemy.obj;
+        foreach (Guardian guardian in guardians)
+            if (guardian.name == name) return guardian.obj;
+        Debug.Log("Could not retrieve object with name " + name);
+        return null;
+    }
+
     // Retrieves a building object by name
     public static GameObject RequestBuildingByName(string name)
     {

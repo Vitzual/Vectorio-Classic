@@ -13,6 +13,14 @@ public class UIEvents : MonoBehaviour
         active = this;
     }
 
+    // On add resource
+    public event Action<Resource.Currency, int> onAddResource;
+    public void AddResource(Resource.Currency currency, int amount)
+    {
+        if (onAddResource != null)
+            onAddResource(currency, amount);
+    }
+
     // Invoked when a bullet is fired
     public event Action onBuildingMenuPressed;
     public void MenuOpened()

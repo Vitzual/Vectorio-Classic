@@ -20,6 +20,7 @@ public class Detail : MonoBehaviour
         else active = null;
     }
 
+    //
     public void ToggleClose()
     {
         Debug.Log("Toggling close for " + close.Count);

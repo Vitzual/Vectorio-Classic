@@ -81,15 +81,15 @@ public class Inventory : MonoBehaviour
             {
                 if (resource.amount > 0)
                 {
-                    if (resource.resource == Resource.Currency.Power)
+                    if (resource.resource == Resource.CurrencyType.Power)
                         buildable.powerIcon.SetActive(true);
-                    else if (resource.resource == Resource.Currency.Heat)
+                    else if (resource.resource == Resource.CurrencyType.Heat)
                         buildable.heatIcon.SetActive(true);
-                    else if (resource.resource == Resource.Currency.Gold)
+                    else if (resource.resource == Resource.CurrencyType.Gold)
                         buildable.goldIcon.SetActive(true);
-                    else if (resource.resource == Resource.Currency.Essence)
+                    else if (resource.resource == Resource.CurrencyType.Essence)
                         buildable.essenceIcon.SetActive(true);
-                    else if (resource.resource == Resource.Currency.Iridium)
+                    else if (resource.resource == Resource.CurrencyType.Iridium)
                         buildable.iridiumIcon.SetActive(true);
                 }
             }

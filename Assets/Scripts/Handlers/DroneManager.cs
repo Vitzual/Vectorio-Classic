@@ -946,15 +946,15 @@ public class DroneManager : MonoBehaviour
 
     public void ApplyResources(int gold, int power, int heat)
     {
-        Resource.Remove(Resource.Currency.Gold, gold);
-        Resource.Remove(Resource.Currency.Power, power);
-        Resource.Remove(Resource.Currency.Heat, heat);
+        Resource.active.Remove(Resource.CurrencyType.Gold, gold);
+        Resource.active.Remove(Resource.CurrencyType.Power, power);
+        Resource.active.Remove(Resource.CurrencyType.Heat, heat);
     }
 
     public void RevertResources(int gold, int power, int heat)
     {
-        Resource.Add(Resource.Currency.Gold, gold);
-        Resource.Add(Resource.Currency.Power, power);
-        Resource.Add(Resource.Currency.Heat, heat);
+        Resource.active.Add(Resource.CurrencyType.Gold, gold);
+        Resource.active.Add(Resource.CurrencyType.Power, power);
+        Resource.active.Add(Resource.CurrencyType.Heat, heat);
     }
 }

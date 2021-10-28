@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
+    // Active instance
+    public static Resource active;
+
     // Currency types
-    public enum Currency
+    public enum CurrencyType
     {
         Gold,
         Essence,
@@ -13,106 +17,128 @@ public class Resource : MonoBehaviour
         Heat
     }
 
-    // Currency and storage variables
-    public static Dictionary<Currency, int> currency = new Dictionary<Currency, int>();
-    public static Dictionary<Currency, int> storage = new Dictionary<Currency, int>();
+    // Resource currency class
+    [System.Serializable]
+    public class Currency
+    {
+        // Parameterized Constructor
+        public Currency(TextMeshProUGUI ui) { this.ui = ui; }
+
+        // Currency variables
+        public int amount;
+        public int storage;
+        public TextMeshProUGUI ui;
+    }
+
+    // Dictionary of all currencies
+    public Dictionary<CurrencyType, Currency> currencies;
+    public List<TextMeshProUGUI> amountElements; // TEMP
+
+    // Get active instance
+    public void Awake()
+    {
+        active = this;
+
+        // I hate this and will change it :(
+        int indexer = 0;
+        foreach (CurrencyType currency in CurrencyType.GetValues(typeof(CurrencyType)))
+        {
+            currencies.Add(CurrencyType.Gold, new Currency(amountElements[indexer]));
+            indexer += 1;
+            if (indexer > amountElements.Count) break;
+        }
+    }
 
     // Add a resource
-    public static void Add(Currency type, int amount)
+    public void Add(CurrencyType type, int amount)
     {
-        if (currency.ContainsKey(type) && (!storage.ContainsKey(type) || currency[type] + amount < storage[type]))
+        if (currencies.ContainsKey(type)) 
         {
-            currency[type] += amount;
-        }
-        else
-        {
-            currency.Add(type, amount);
+            currencies[type].amount += amount;
+            if (currencies[type].amount >= currencies[type].storage)
+                currencies[type].amount = currencies[type].storage;
         }
     }
 
     // Remove a resource
-    public static void Remove(Currency type, int amount)
+    public void Remove(CurrencyType type, int amount)
     {
-        if (currency.ContainsKey(type))
+        if (currencies.ContainsKey(type))
         {
-            currency[type] -= amount;
-            if (currency[type] < 0)
-                currency[type] = 0;
+            currencies[type].amount -= amount;
+            if (currencies[type].amount <= 0)
+                currencies[type].amount = 0;
         }
-    }
-
-    // Check a resource
-    public static int Get(Currency type)
-    {
-        if (currency.ContainsKey(type))
-            return currency[type];
-        else return 0;
     }
 
     // Add storage
-    public static void AddStorage(Currency type, int amount)
+    public void AddStorage(CurrencyType type, int amount)
     {
-        if (storage.ContainsKey(type))
-        {
-            storage[type] += amount;
-        }
-        else
-        {
-            storage.Add(type, amount);
-        }
+        if (currencies.ContainsKey(type))
+            currencies[type].storage += amount;
     }
 
     // Remove storage
-    public static void RemoveStorage(Currency type, int amount)
+    public void RemoveStorage(CurrencyType type, int amount)
     {
-        if (storage.ContainsKey(type))
+        if (currencies.ContainsKey(type))
         {
-            storage[type] -= amount;
-            if (storage[type] < 0)
-                storage[type] = 0;
+            currencies[type].storage -= amount;
+            if (currencies[type].storage <= 0)
+                currencies[type].storage = 0;
         }
     }
 
-    // Check a storage
-    public static int GetStorage(Currency type)
+    // Check a resource amount
+    public int GetAmount(CurrencyType type)
     {
-        if (storage.ContainsKey(type))
-            return storage[type];
+        if (currencies.ContainsKey(type))
+            return currencies[type].amount;
         else return 0;
     }
 
-    public static string GetName(Currency type)
+    // Check a resource storage
+    public int GetStorage(CurrencyType type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type].storage;
+        else return 0;
+    }
+
+    // Get a resource name
+    public string GetName(CurrencyType type)
     {
         switch(type)
         {
-            case Currency.Gold:
+            case CurrencyType.Gold:
                 return "Gold";
-            case Currency.Essence:
+            case CurrencyType.Essence:
                 return "Essence";
-            case Currency.Iridium:
+            case CurrencyType.Iridium:
                 return "Iridium";
-            case Currency.Power:
+            case CurrencyType.Power:
                 return "Power";
-            case Currency.Heat:
+            case CurrencyType.Heat:
                 return "Heat";
             default:
                 return "Unknown";
         }
     }
 
-    public static Sprite GetSprite(Currency type)
+    // Get a resource sprite
+    public Sprite GetSprite(CurrencyType type)
     {
         switch (type)
         {
-            case Currency.Gold:
+            case CurrencyType.Gold:
                 return Sprites.GetSprite("Gold");
-            case Currency.Essence:
+            case CurrencyType.Essence:
                 return Sprites.GetSprite("Essence");
-            case Currency.Iridium:
+            case CurrencyType.Iridium:
                 return Sprites.GetSprite("Iridium");
-            case Currency.Power:
+            case CurrencyType.Power:
                 return Sprites.GetSprite("Power");
-            case Currency.Heat:
+            case CurrencyType.Heat:
                 return Sprites.GetSprite("Heat");
             default:
                 return Sprites.GetSprite("Transparent");

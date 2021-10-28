@@ -9,7 +9,7 @@ public class Building : Entity
     [System.Serializable]
     public class Resources
     {
-        public Resource.Currency resource;
+        public Resource.CurrencyType resource;
         public int amount;
         [HideInInspector] public int modifier;
     }
@@ -27,7 +27,7 @@ public class Building : Entity
     {
         // Resource stats
         foreach (Resources type in resources)
-            panel.CreateStat(new Stat(Resource.GetName(type.resource), type.amount, type.modifier, Resource.GetSprite(type.resource), true));
+            panel.CreateStat(new Stat(Resource.active.GetName(type.resource), type.amount, type.modifier, Resource.active.GetSprite(type.resource), true));
 
         panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.GetSprite("Health")));
     }

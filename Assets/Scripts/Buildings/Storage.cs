@@ -18,13 +18,13 @@ public class Storage: BaseTile
         switch (type)
         {
             case 1:
-                Resource.AddStorage(Resource.Currency.Gold, Research.research_gold_storage);
+                Resource.active.AddStorage(Resource.CurrencyType.Gold, Research.research_gold_storage);
                 return;
             case 2:
-                Resource.AddStorage(Resource.Currency.Essence, Research.research_gold_storage);
+                Resource.active.AddStorage(Resource.CurrencyType.Essence, Research.research_gold_storage);
                 return;
             case 3:
-                Resource.AddStorage(Resource.Currency.Iridium, Research.research_gold_storage);
+                Resource.active.AddStorage(Resource.CurrencyType.Iridium, Research.research_gold_storage);
                 return;
         }
     }

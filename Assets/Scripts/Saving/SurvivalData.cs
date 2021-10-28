@@ -47,11 +47,11 @@ public class SurvivalData
         // hotbar = data_1.GetHotbarData();
 
         // Resource data
-        gold = Resource.Get(Resource.Currency.Gold);
-        essence = Resource.Get(Resource.Currency.Essence);
-        iridium = Resource.Get(Resource.Currency.Iridium);
-        heat = Resource.Get(Resource.Currency.Heat);
-        power = Resource.Get(Resource.Currency.Power);
+        gold = Resource.active.GetAmount(Resource.CurrencyType.Gold);
+        essence = Resource.active.GetAmount(Resource.CurrencyType.Essence);
+        iridium = Resource.active.GetAmount(Resource.CurrencyType.Iridium);
+        heat = Resource.active.GetAmount(Resource.CurrencyType.Heat);
+        power = Resource.active.GetAmount(Resource.CurrencyType.Power);
         
         // Progress data
         unlocked = data_2.GetSaveData();

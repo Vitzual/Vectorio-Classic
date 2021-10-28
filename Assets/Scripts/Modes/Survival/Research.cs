@@ -96,8 +96,8 @@ public class Research : MonoBehaviour
     // On start
     public void Start()
     {
-        ResetResearchData();
         if (isMenu) return;
+        ResetResearchData();
         UpdateAllButtons();
         UpdateAllPrices();
         ResearchBackground.SetActive(false);
@@ -106,6 +106,8 @@ public class Research : MonoBehaviour
     // Movement trackingoverlay.normalizedPosition = new Vector2(0, 1);
     public void Update()
     {
+        if (isMenu) return;
+
         // Check if research open
         // if (isMenu || !SurvivalCS.UI.ResearchOpen) return;
 

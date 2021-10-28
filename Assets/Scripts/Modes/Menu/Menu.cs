@@ -82,6 +82,8 @@ public class Menu : MonoBehaviour
 
     public void UpdateSaves()
     {
+        return;
+
         Transform holder;
         bool availableSave = false;
 

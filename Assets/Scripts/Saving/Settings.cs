@@ -77,6 +77,8 @@ public class Settings : MonoBehaviour
 
     public void LoadSettings()
     {
+        return;
+
         // Load settings from file
         SettingsData settings = SaveSystem.LoadSettings();
         if (settings == null)

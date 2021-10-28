@@ -165,8 +165,8 @@ public class Technology : MonoBehaviour
             case "Research":
                 foreach (int index in ResearchUnlocks)
                 {
-                    if (!Unlocks[index].Unlocked && Research.amountResearched >= Unlocks[index].AmountRequirement ) UnlockDefense(Unlocks[index]);
-                    UpdateUnlockUI(Unlocks[index], Research.amountResearched);
+                    //if (!Unlocks[index].Unlocked && Research.amountResearched >= Unlocks[index].AmountRequirement ) UnlockDefense(Unlocks[index]);
+                    //UpdateUnlockUI(Unlocks[index], Research.amountResearched);
                 }
                 return;
             case "Destroy":
@@ -312,7 +312,7 @@ public class Technology : MonoBehaviour
         {
             if (!loadingSave) UI.showResearchUnlock();
             rButton.buttonIcon = Resources.Load<Sprite>("Sprites/Research");
-            Research.ResearchUnlocked = true;
+            //Research.ResearchUnlocked = true;
         }
         else if (!loadingSave && a.name == "Energizer")
         {

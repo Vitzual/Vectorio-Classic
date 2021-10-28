@@ -228,7 +228,7 @@ public class Interface : MonoBehaviour
     {
         UOLOpen = true;
         ResearchUnlockedWindow.OpenWindow();
-        Research.ResearchUnlocked = true;
+        //Research.ResearchUnlocked = true;
     }
 
     // Enables the research overlay
@@ -410,7 +410,7 @@ public class Interface : MonoBehaviour
     // Opens research overlay and pauses game
     public void OpenResearchOverlay()
     {
-        if (!Research.ResearchUnlocked) return;
+        //if (!Research.ResearchUnlocked) return;
         ResearchOpen = true;
         SetOverlayStatus("Research UI", true);
     }
@@ -418,7 +418,7 @@ public class Interface : MonoBehaviour
     // Closes research overlay and unpauses game
     public void CloseResearchOverlay()
     {
-        if (!Research.ResearchUnlocked) return;
+        //if (!Research.ResearchUnlocked) return;
         ResearchOpen = false;
         SetOverlayStatus("Research UI", false);
     }

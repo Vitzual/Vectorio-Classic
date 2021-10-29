@@ -77,12 +77,6 @@ public class Panel : MonoBehaviour
         desc.text = entity.description;
         icon.sprite = Sprites.GetSprite(entity.name);
 
-        // Check for configuration
-        //if (entity.level == -1)
-        //    configSelector.SetActive(false);
-        //else
-        //    configSelector.SetActive(true);
-
         // Create stats for the building
         SetUnused();
         entity.CreateStats(this);

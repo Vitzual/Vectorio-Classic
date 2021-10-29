@@ -32,20 +32,19 @@ public class Resource : MonoBehaviour
 
     // Dictionary of all currencies
     public Dictionary<CurrencyType, Currency> currencies;
-    public List<TextMeshProUGUI> amountElements; // TEMP
+    public TextMeshProUGUI[] amountElements;
 
     // Get active instance
     public void Awake()
     {
         active = this;
 
-        // I hate this and will change it :(
         int indexer = 0;
+        currencies = new Dictionary<CurrencyType, Currency>();
         foreach (CurrencyType currency in CurrencyType.GetValues(typeof(CurrencyType)))
         {
-            currencies.Add(CurrencyType.Gold, new Currency(amountElements[indexer]));
+            currencies.Add(currency, new Currency(amountElements[indexer]));
             indexer += 1;
-            if (indexer > amountElements.Count) break;
         }
     }
 
@@ -54,9 +53,14 @@ public class Resource : MonoBehaviour
     {
         if (currencies.ContainsKey(type)) 
         {
+            // Calculate amount
             currencies[type].amount += amount;
             if (currencies[type].amount >= currencies[type].storage)
                 currencies[type].amount = currencies[type].storage;
+
+            // Display to UI
+            if (currencies[type].ui != null)
+                currencies[type].ui.text = currencies[type].amount.ToString();
         }
     }
 
@@ -65,9 +69,14 @@ public class Resource : MonoBehaviour
     {
         if (currencies.ContainsKey(type))
         {
+            // Calculate amount
             currencies[type].amount -= amount;
             if (currencies[type].amount <= 0)
                 currencies[type].amount = 0;
+
+            // Display to UI
+            if (currencies[type].ui != null)
+                currencies[type].ui.text = currencies[type].amount.ToString();
         }
     }
 

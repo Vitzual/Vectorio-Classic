@@ -11,7 +11,6 @@ public class Building : Entity
     {
         public Resource.CurrencyType resource;
         public int amount;
-        [HideInInspector] public int modifier;
     }
 
     // Resources
@@ -27,7 +26,12 @@ public class Building : Entity
     {
         // Resource stats
         foreach (Resources type in resources)
-            panel.CreateStat(new Stat(Resource.active.GetName(type.resource), type.amount, type.modifier, Resource.active.GetSprite(type.resource), true));
+        {
+            Debug.Log(Resource.active);
+            string name = Resource.active.GetName(type.resource);
+            Sprite sprite = Resource.active.GetSprite(type.resource);
+            panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
+        }
 
         panel.CreateStat(new Stat("Health", health, healthModifier, Sprites.GetSprite("Health")));
     }

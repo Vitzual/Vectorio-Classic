@@ -87,11 +87,11 @@ public class BuildingController : MonoBehaviour
         {
             // Get the tile sprite and set offset
             spriteRenderer.sprite = Sprites.GetSprite(entity.name);
+
+            // Set the scale
+            hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
         }
         else spriteRenderer.sprite = Sprites.GetSprite("Transparent");
-
-        // Set the scale
-        hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
     }
 
     // Uses the offset value from the Tile SO to center the object

@@ -27,7 +27,6 @@ public class Building : Entity
         // Resource stats
         foreach (Resources type in resources)
         {
-            Debug.Log(Resource.active);
             string name = Resource.active.GetName(type.resource);
             Sprite sprite = Resource.active.GetSprite(type.resource);
             panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));

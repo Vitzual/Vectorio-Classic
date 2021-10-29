@@ -57,7 +57,6 @@ public class BuildingHandler : MonoBehaviour
 
         // Create the tile
         BaseTile lastBuilding = Instantiate(obj, position, rotation).GetComponent<BaseTile>();
-        lastBuilding.transform.position = new Vector3(position.x, position.y, -1);
         lastBuilding.name = entity.name;
 
         // Set the tiles on the grid class
@@ -66,6 +65,9 @@ public class BuildingHandler : MonoBehaviour
             foreach (Building.Cell cell in entity.cells)
                 tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, entity, lastBuilding);
         }
+
+        // Call buildings setup method
+        lastBuilding.Setup();
     }
 
     // Destroys a buildingg

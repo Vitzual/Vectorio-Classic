@@ -16,34 +16,28 @@ MonoBehaviour:
   description: Fires plasma bullets that pierce through multiple enemies at a time.
   obj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
   material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
-  tile:
-    cells:
-    - x: 0
-      y: 0
-    offset: {x: 0, y: 0}
-  snap: 1
-  size: 1
-  health: 100
-  level: 1
-  maxHealth: 0
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 4
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 100
+  maxHealth: 0
+  healthModifier: 0
   active: 0
-  unlockOrder: 5
-  unlockDesc: Destroy a dropship
-  isUnlocked: 0
   resources:
   - resource: 0
     amount: 15000
-    modifier: 0
   - resource: 3
     amount: 100
-    modifier: 0
   - resource: 4
     amount: 80
-    modifier: 0
-  sound: {fileID: 8300000, guid: 46e4002e4b6074361a58bbd232a2cfd5, type: 3}
+  unlockOrder: 5
+  unlockDesc: Destroy a dropship
+  isUnlocked: 0
   damage: 80
   range: 120
   rotationSpeed: 50
@@ -57,6 +51,7 @@ MonoBehaviour:
   bulletLock: 1
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
+  sound: {fileID: 8300000, guid: 46e4002e4b6074361a58bbd232a2cfd5, type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
         buildable.icon.sprite = Sprites.GetSprite(entity.name);
 
         // Set building unlock value
-        buildable.desc.text = "<b>" + entity.active + " ACTIVE |</b> <size=16>Click for more details!";
+        buildable.desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
 
         // Add resource icons
         if (resources != null) {

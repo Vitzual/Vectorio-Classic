@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class Entity : ScriptableObject
 {
+    // Resource class
+    [System.Serializable]
+    public class Resources
+    {
+        public Resource.CurrencyType resource;
+        public int amount;
+    }
+
+    // Cell class
+    [System.Serializable]
+    public struct Cell
+    {
+        public float x;
+        public float y;
+    }
+
+
     // Entity description
     [Header("Entity Info")]
     public new string name;
@@ -18,15 +35,7 @@ public class Entity : ScriptableObject
     public int invOrder;
     public int invIndex;
 
-    // Cell class
-    [System.Serializable]
-    public struct Cell
-    {
-        public float x;
-        public float y;
-    }
-
-    // Refers to how many cells this building will occupy
+    // Refers to how many cells this entity will occupy
     [Header("Tile cells")]
     public Cell[] cells;
     public Vector2 offset;
@@ -34,14 +43,19 @@ public class Entity : ScriptableObject
     // Building base variables
     [Header("Base Stats")]
     public int health;
-    [HideInInspector] public int maxHealth;
-    [HideInInspector] public int healthModifier;
+    public Resources[] resources;
 
-    // Holds active amount in scene
-    [HideInInspector] public int active = 0;
-
+    // Creates stats
     public virtual void CreateStats(Panel panel)
     {
+        // Resource stats
+        foreach (Resources type in resources)
+        {
+            string name = Resource.active.GetName(type.resource);
+            Sprite sprite = Resource.active.GetSprite(type.resource);
+            panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
+        }
+
         panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
     }
 }

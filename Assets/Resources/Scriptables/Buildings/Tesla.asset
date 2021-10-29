@@ -17,38 +17,32 @@ MonoBehaviour:
     Consumes extra power while firing.
   obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
   material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
-  tile:
-    cells:
-    - x: 0
-      y: 0
-    offset: {x: 0, y: 0}
-  snap: 1
-  size: 1
-  health: 100
-  level: 1
-  maxHealth: 0
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 8
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 100
+  maxHealth: 0
+  healthModifier: 0
   active: 0
-  unlockOrder: 9
-  unlockDesc: 
-  isUnlocked: 0
   resources:
   - resource: 0
     amount: 140000
-    modifier: 0
   - resource: 4
     amount: 250
-    modifier: 0
   - resource: 3
     amount: 600
-    modifier: 0
-  sound: {fileID: 0}
+  unlockOrder: 9
+  unlockDesc: 
+  isUnlocked: 0
   damage: 150
   range: 60
   rotationSpeed: 200
-  cooldown: 0.05
+  cooldown: 0.1
   bullet: {fileID: -1636311487633401878, guid: a1f86ff9cf138dc4e871f2d2dbc067db, type: 3}
   bulletPierces: 1
   bulletAmount: 1
@@ -58,6 +52,7 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 274222557884159627, guid: 20ca77f1ed76de54dbf34ec846a9d6d2,
     type: 3}
+  sound: {fileID: 0}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

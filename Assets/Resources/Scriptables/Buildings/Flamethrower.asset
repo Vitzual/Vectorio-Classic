@@ -17,37 +17,30 @@ MonoBehaviour:
     enemies. Produces extra heat while firing.
   obj: {fileID: 420473218063467210, guid: aac8052e92deef54c85db4e9ceab838a, type: 3}
   material: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
-  tile:
-    cells:
-    - x: 0
-      y: 0
-    offset: {x: 0, y: 0}
-  snap: 1
-  size: 1
-  health: 80
-  level: 1
-  maxHealth: 0
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 6
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 80
+  maxHealth: 0
+  healthModifier: 0
   active: 0
-  unlockOrder: 7
-  unlockDesc: 
-  isUnlocked: 0
   resources:
   - resource: 0
     amount: 80000
-    modifier: 0
   - resource: 1
     amount: 100
-    modifier: 0
   - resource: 4
     amount: 250
-    modifier: 0
   - resource: 3
     amount: 50
-    modifier: 0
-  sound: {fileID: 0}
+  unlockOrder: 7
+  unlockDesc: 
+  isUnlocked: 0
   damage: 50
   range: 40
   rotationSpeed: 120
@@ -61,6 +54,7 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
+  sound: {fileID: 0}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

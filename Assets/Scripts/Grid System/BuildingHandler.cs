@@ -12,6 +12,7 @@ public class BuildingHandler : MonoBehaviour
 
     // Building variables
     public static BuildingHandler active;
+    public static bool useResources;
     public LayerMask enemyLayer;
 
     public void Start()
@@ -27,8 +28,13 @@ public class BuildingHandler : MonoBehaviour
     // Creates a building
     public void CreateBuildable(Entity entity, Vector2 position, Quaternion rotation, bool isEnemy)
     {
-        // Untiy is so fucky it is now in a new dimension of bullshit
+        // Check if entity is null
         if (entity == null) return;
+
+        // Check if resource should be used
+        if (useResources)
+            foreach (Entity.Resources resource in entity.resources)
+                if (Resource.active.GetAmount(resource.resource) < resource.amount) return;
 
         // Check to make sure the tiles are not being used
         if (!isEnemy && !CheckTiles(entity, position)) return;

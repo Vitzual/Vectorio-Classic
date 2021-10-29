@@ -10,25 +10,31 @@ using Mirror;
 public class Gamemode : MonoBehaviour
 {
     // Gamemode information
+    [Header("Gamemode Info")]
     public new string name;
     public string version;
+
+    [Header("Gamemode Settings")]
+    public bool useResources;
+    public bool initBuildings;
+    public bool initEnemies;
+    public bool initGuardians;
 
     // Register for events
     public void Start()
     {
-        Events.active.onLeftMousePressed += PlaceBuilding;
         Events.active.setupBuildables += InitEntities;
     }
 
-    // Tells the gamemode how to handle building placements
-    public virtual void PlaceBuilding()
-    {
-        Debug.Log("Mode does not contain definition for building placed");
-    }
-
     // Tells the gamemode how to generate inventory
-    public virtual void InitEntities()
+    public void InitEntities()
     {
         ScriptableManager.GenerateAllScriptables();
+
+        if (initBuildings) Inventory.active.GenerateEntities(ScriptableManager.buildings.ToArray());
+        if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
+        if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
+        
+        BuildingHandler.useResources = useResources;
     }
 }

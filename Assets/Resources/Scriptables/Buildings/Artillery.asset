@@ -17,43 +17,36 @@ MonoBehaviour:
     huge area damage. Downside is the reload time.
   obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
   material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
-  tile:
-    cells:
-    - x: 2.5
-      y: 2.5
-    - x: 2.5
-      y: -2.5
-    - x: -2.5
-      y: 2.5
-    - x: -2.5
-      y: -2.5
-    offset: {x: 2.5, y: 2.5}
-  snap: 1
-  size: 1.5
-  health: 500
-  level: 1
-  maxHealth: 0
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 8
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 500
+  maxHealth: 0
+  healthModifier: 0
   active: 0
-  unlockOrder: 10
-  unlockDesc: 
-  isUnlocked: 0
   resources:
   - resource: 0
     amount: 100000
-    modifier: 0
   - resource: 1
     amount: 2500
-    modifier: 0
   - resource: 4
     amount: 450
-    modifier: 0
   - resource: 3
     amount: 300
-    modifier: 0
-  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
+  unlockOrder: 10
+  unlockDesc: 
+  isUnlocked: 0
   damage: 500
   range: 250
   rotationSpeed: 40
@@ -67,6 +60,7 @@ MonoBehaviour:
   bulletLock: 1
   bulletParticle: {fileID: 918402723469912044, guid: 17a602cb45ef54f42b927552d300dcbe,
     type: 3}
+  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

@@ -16,34 +16,28 @@ MonoBehaviour:
   description: Fires multiple projectiles at once to eliminate large groups of enemies
   obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
   material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
-  tile:
-    cells:
-    - x: 0
-      y: 0
-    offset: {x: 0, y: 0}
-  snap: 1
-  size: 1
-  health: 15
-  level: 1
-  maxHealth: 0
-  healthModifier: 0
+  gridSnap: 0
+  hologramSize: 1
   invOrder: 1
   invIndex: 0
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 15
+  maxHealth: 0
+  healthModifier: 0
   active: 0
-  unlockOrder: 2
-  unlockDesc: Unlocked by destroying 10 triangles
-  isUnlocked: 1
   resources:
   - resource: 0
     amount: 750
-    modifier: 0
   - resource: 4
     amount: 20
-    modifier: 0
   - resource: 3
     amount: 15
-    modifier: 0
-  sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
+  unlockOrder: 2
+  unlockDesc: Unlocked by destroying 10 triangles
+  isUnlocked: 1
   damage: 2
   range: 35
   rotationSpeed: 60
@@ -57,6 +51,7 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
+  sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

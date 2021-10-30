@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Variants", menuName = "Variants/Normal")]
+[CreateAssetMenu(fileName = "New Variant", menuName = "Enemy/Variant")]
 public class Variant : ScriptableObject
 {
     // Variant info

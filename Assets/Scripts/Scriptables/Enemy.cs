@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/Normal")]
+[CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy/Enemy")]
 public class Enemy : Entity
 {
     // Enemy stats

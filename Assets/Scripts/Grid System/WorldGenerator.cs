@@ -73,20 +73,20 @@ public class WorldGenerator : MonoBehaviour
         {
             if (!defOverride)
             {
-                if (Difficulties.goldMulti >= 250) { Difficulties.goldMulti = 250; }
-                if (Difficulties.essenceMulti >= 250) { Difficulties.essenceMulti = 250; }
-                if (Difficulties.iridiumMulti >= 250) { Difficulties.iridiumMulti = 250; }
+                if (GameManager.goldSpawnModifier >= 250) { GameManager.goldSpawnModifier = 250; }
+                if (GameManager.essenceSpawnModifier >= 250) { GameManager.essenceSpawnModifier = 250; }
+                if (GameManager.iridiumSpawnModifier >= 250) { GameManager.iridiumSpawnModifier = 250; }
 
-                GoldSpawnScale -= (int)(Difficulties.goldMulti / 100);
-                GoldSpawnThreshold -= Difficulties.goldMulti / 2500;
+                GoldSpawnScale -= (int)(GameManager.goldSpawnModifier / 100);
+                GoldSpawnThreshold -= GameManager.goldSpawnModifier / 2500;
 
-                EssenceSpawnScale -= (int)(Difficulties.essenceMulti / 100);
-                EssenceSpawnThreshold -= Difficulties.essenceMulti / 2500;
+                EssenceSpawnScale -= (int)(GameManager.essenceSpawnModifier / 100);
+                EssenceSpawnThreshold -= GameManager.essenceSpawnModifier / 2500;
 
-                IridiumSpawnScale -= (int)(Difficulties.iridiumMulti / 100);
-                IridiumSpawnThreshold -= Difficulties.iridiumMulti / 2500;
+                IridiumSpawnScale -= (int)(GameManager.iridiumSpawnModifier / 100);
+                IridiumSpawnThreshold -= GameManager.iridiumSpawnModifier / 2500;
 
-                maxBases = (int)(maxBases * (Difficulties.enemyAmountMulti / 50));
+                maxBases = (int)(maxBases * (GameManager.enemySpawnrateModifier / 50));
             }
         }
         catch { Debug.Log("Could not set difficulty data"); }
@@ -97,7 +97,7 @@ public class WorldGenerator : MonoBehaviour
         GenIridium();
 
         // Gen bases ONLY if a fresh save is being loaded
-        if (defOverride || (!save && Difficulties.enemyOutposts)) { GenBases(); }
+        //if (defOverride || (!save && GameManager.enemyOutposts)) { GenBases(); }
     }
 
     // Enemy Base Generation

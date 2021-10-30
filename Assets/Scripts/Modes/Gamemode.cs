@@ -13,6 +13,7 @@ public class Gamemode : MonoBehaviour
     [Header("Gamemode Info")]
     public new string name;
     public string version;
+    public Difficulty difficulty;
 
     [Header("Gamemode Settings")]
     public bool useResources;
@@ -24,6 +25,7 @@ public class Gamemode : MonoBehaviour
     public void Start()
     {
         Events.active.setupBuildables += InitEntities;
+        GameManager.SetupGame(difficulty);
     }
 
     // Tells the gamemode how to generate inventory

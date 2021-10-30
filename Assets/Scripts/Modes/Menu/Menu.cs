@@ -370,19 +370,19 @@ public class Menu : MonoBehaviour
 
     public void StartNewGame()
     {
-        Difficulties.world = WorldName.text;
-        Difficulties.seed = WorldSeed.text;
-        Difficulties.mode = "Version 0.2";
-        Difficulties.goldMulti = GoldMulti.mainSlider.value;
-        Difficulties.essenceMulti = EssenceMulti.mainSlider.value;
-        Difficulties.iridiumMulti = IridiumMulti.mainSlider.value;
-        Difficulties.enemyAmountMulti = EnemiesAmount.mainSlider.value;
-        Difficulties.enemyHealthMulti = EnemiesHealth.mainSlider.value;
-        Difficulties.enemyDamageMulti = EnemiesDamage.mainSlider.value;
-        Difficulties.enemySpeedMulti = 1f;
-        Difficulties.enemyOutposts = EnemyOutposts.isOn;
-        Difficulties.enemyGroups = EnemyGroups.isOn;
-        Difficulties.enemyGuardians = EnemyGuardians.isOn;
+        GameManager.name = WorldName.text;
+        GameManager.seed = WorldSeed.text;
+        GameManager.mode = "Version 0.2";
+        GameManager.goldSpawnModifier = GoldMulti.mainSlider.value;
+        GameManager.essenceSpawnModifier = EssenceMulti.mainSlider.value;
+        GameManager.iridiumSpawnModifier = IridiumMulti.mainSlider.value;
+        GameManager.enemySpawnrateModifier = EnemiesAmount.mainSlider.value;
+        GameManager.enemyHealthModifier = EnemiesHealth.mainSlider.value;
+        GameManager.enemyDamageModifier = EnemiesDamage.mainSlider.value;
+        GameManager.enemySpeedModifier = 1f;
+        //GameManager.enemyOutposts = EnemyOutposts.isOn;
+        //GameManager.enemyGroups = EnemyGroups.isOn;
+        //GameManager.enemyGuardians = EnemyGuardians.isOn;
 
         LoadingSave.SetActive(true);
         SceneManager.LoadScene("Survival");

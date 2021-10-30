@@ -59,24 +59,24 @@ public class SurvivalData
         //bossesDefeated = data_3.bossesDefeated;
 
         // Difficulty data
-        enemyAmountMulti = Difficulties.enemyAmountMulti;
-        enemyHealthMulti = Difficulties.enemyHealthMulti;
-        enemyDamageMulti = Difficulties.enemyDamageMulti;
-        enemySpeedMulti = Difficulties.enemySpeedMulti;
-        enemyOutposts = Difficulties.enemyOutposts;
-        enemyGroups = Difficulties.enemyGroups;
-        enemyGuaridans = Difficulties.enemyGuardians;
+        enemyAmountMulti = GameManager.enemySpawnrateModifier;
+        enemyHealthMulti = GameManager.enemyHealthModifier;
+        enemyDamageMulti = GameManager.enemyDamageModifier;
+        enemySpeedMulti = GameManager.enemySpeedModifier;
+        //enemyOutposts = GameManager.enemyOutposts;
+        //enemyGroups = GameManager.enemyGroups;
+        //enemyGuaridans = GameManager.enemyGuardians;
 
         // World data
-        goldSpawnAmount = Difficulties.goldMulti;
-        essenceSpawnAmount = Difficulties.essenceMulti;
-        iridiumSpawnAmount = Difficulties.iridiumMulti;
+        goldSpawnAmount = GameManager.goldSpawnModifier;
+        essenceSpawnAmount = GameManager.essenceSpawnModifier;
+        iridiumSpawnAmount = GameManager.iridiumSpawnModifier;
 
         // Save data
-        worldName = Difficulties.world;
-        worldMode = Difficulties.mode;
-        worldSeed = Difficulties.seed;
-        worldVersion = Difficulties.version;
+        worldName = GameManager.name;
+        worldMode = GameManager.mode;
+        worldSeed = GameManager.seed;
+        worldVersion = GameManager.version;
         this.worldPlaytime = worldPlaytime;
     }
 }

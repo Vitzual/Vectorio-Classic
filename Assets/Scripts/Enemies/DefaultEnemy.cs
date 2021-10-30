@@ -16,6 +16,7 @@ public class DefaultEnemy : BaseEntity
 
     public override void Setup()
     {
+        variant = EnemyHandler.variant;
         material = variant.border;
 
         foreach (SpriteRenderer a in border)

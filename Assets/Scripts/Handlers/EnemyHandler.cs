@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
 {
+    // Is menu bool
+    public bool isMenu;
+    public Transform menuTarget;
+
     // Active variant
     public static Variant variant;
     public Variant _variant;
@@ -21,7 +25,7 @@ public class EnemyHandler : MonoBehaviour
     public LayerMask buildingLayer;
     private bool scan = false;
 
-    public void Start()
+    public void Awake()
     {
         variant = _variant;
         enemies = new List<DefaultEnemy>();
@@ -37,55 +41,75 @@ public class EnemyHandler : MonoBehaviour
         scan = true;
 
         // Move enemies each frame
-        for (int a = 0; a < enemies.Count; a++)
+        if (isMenu)
         {
-            if (enemies[a] != null) 
+            for (int a = 0; a < enemies.Count; a++)
             {
-                if (enemies[a].target != null)
+                if (enemies[a] != null)
                 {
-                    enemies[a].MoveTowards(enemies[a].transform, enemies[a].target.transform);
+                    float step = enemies[a].enemy.moveSpeed * Time.deltaTime;
+                    enemies[a].transform.position = Vector2.MoveTowards(enemies[a].transform.position, menuTarget.position, step);
                 }
-                else if (scan)
+                else
                 {
-                    BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
-
-                    if (building != null)
-                    {
-                        enemies[a].target = building;
-                        RotateTowards(enemies[a].transform, building.transform);
-                    }
-                    else scan = false;
+                    enemies.RemoveAt(a);
+                    a--;
                 }
-            }
-            else
-            {
-                enemies.RemoveAt(a);
-                a--;
             }
         }
-
-        // Move guardians each frame
-        for (int i = 0; i < guardians.Count; i++)
+        else
         {
-            if (guardians[i] != null)
+            for (int a = 0; a < enemies.Count; a++)
             {
-                if (guardians[i].target != null)
+                if (enemies[a] != null)
                 {
-                    guardians[i].MoveTowards(guardians[i].transform, guardians[i].target.transform);
-                }
-                else if (scan)
-                {
-                    BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+                    if (enemies[a].target != null)
+                    {
+                        enemies[a].MoveTowards(enemies[a].transform, enemies[a].target.transform);
+                    }
+                    else if (scan)
+                    {
+                        BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
-                    if (building != null)
-                        guardians[i].target = building;
-                    else scan = false;
+                        if (building != null)
+                        {
+                            enemies[a].target = building;
+                            RotateTowards(enemies[a].transform, building.transform);
+                        }
+                        else scan = false;
+                    }
+                }
+                else
+                {
+                    enemies.RemoveAt(a);
+                    a--;
                 }
             }
-            else
+
+
+            // Move guardians each frame
+            for (int i = 0; i < guardians.Count; i++)
             {
-                guardians.RemoveAt(i);
-                i--;
+                if (guardians[i] != null)
+                {
+                    if (guardians[i].target != null)
+                    {
+                        guardians[i].MoveTowards(guardians[i].transform, guardians[i].target.transform);
+                    }
+                    else if (scan)
+                    {
+                        BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+
+                        if (building != null)
+                            guardians[i].target = building;
+                        else scan = false;
+                    }
+                }
+                else
+                {
+                    guardians.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

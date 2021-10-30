@@ -9,7 +9,7 @@ public class MenuSpawner : MonoBehaviour
     [System.Serializable]
     public class Enemies
     {
-        public Transform enemyObject;
+        public Enemy enemy;
         public float chance;
     }
 
@@ -22,20 +22,21 @@ public class MenuSpawner : MonoBehaviour
             var proc = Random.Range(0, 100);
             if (proc <= enemy[a].chance)
             {
-                SpawnEnemy(enemy[a].enemyObject);
+                SpawnEnemy(enemy[a].enemy);
             }
         }
     }
 
-    void SpawnEnemy(Transform _enemy)
+    void SpawnEnemy(Enemy enemy)
     {
         Vector3 OGP = transform.position;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
         transform.position += transform.right * 15;
-        var holder = Instantiate(_enemy, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-        holder.name = _enemy.name;
-
+        var holder = Instantiate(enemy.obj, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        holder.name = enemy.name;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = OGP;
+
+        holder.GetComponent<DefaultEnemy>().Setup();
     }
 }

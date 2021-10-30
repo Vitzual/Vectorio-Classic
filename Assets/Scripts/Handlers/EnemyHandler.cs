@@ -25,7 +25,7 @@ public class EnemyHandler : MonoBehaviour
     public LayerMask buildingLayer;
     private bool scan = false;
 
-    public void Awake()
+    public void Start()
     {
         variant = _variant;
         enemies = new List<DefaultEnemy>();
@@ -125,6 +125,7 @@ public class EnemyHandler : MonoBehaviour
     // Registers an enemy to then be handled by the controller 
     public void RegisterEnemy(DefaultEnemy enemy)
     {
+        enemy.isMenu = isMenu;
         enemies.Add(enemy);
     }
 

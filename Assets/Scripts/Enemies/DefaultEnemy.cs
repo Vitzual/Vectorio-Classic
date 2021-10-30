@@ -6,6 +6,7 @@ public class DefaultEnemy : BaseEntity
 {
     // Class variables
     public Enemy enemy;
+    [HideInInspector] public bool isMenu;
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
 
@@ -54,23 +55,31 @@ public class DefaultEnemy : BaseEntity
     // If a collision is detected, destroy the other entity and apply damage to self
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other is BoxCollider2D)
+        if (isMenu)
         {
-            BaseTile building = other.GetComponent<BaseTile>();
-
-            if (building != null)
-            {
-                GiveDamage(building);
-                if (building != null)
-                    Destroy(gameObject);
-            }
+            Destroy(gameObject);
+            return;
         }
         else
         {
-            DefaultTurret turret = other.GetComponent<DefaultTurret>();
+            if (other is BoxCollider2D)
+            {
+                BaseTile building = other.GetComponent<BaseTile>();
 
-            if (turret != null)
-                turret.AddTarget(this);
+                if (building != null)
+                {
+                    GiveDamage(building);
+                    if (building != null)
+                        Destroy(gameObject);
+                }
+            }
+            else
+            {
+                DefaultTurret turret = other.GetComponent<DefaultTurret>();
+
+                if (turret != null)
+                    turret.AddTarget(this);
+            }
         }
     }
 

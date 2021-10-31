@@ -3686,8 +3686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 364, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &255591110
 MonoBehaviour:
@@ -6668,8 +6668,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378215873
 MonoBehaviour:
@@ -30282,8 +30282,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873019623
 MonoBehaviour:
@@ -42026,7 +42026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Survival
   version: v0.3
-  difficulty: {fileID: 0}
+  difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   useResources: 1
   initBuildings: 1
   initEnemies: 0
@@ -45899,7 +45899,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615395611188}
   m_HandleRect: {fileID: 5933648615395611189}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -46012,7 +46012,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615616703358}
   m_HandleRect: {fileID: 5933648615616703359}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -48863,6 +48863,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1222277264768163970, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
         type: 3}
+      propertyPath: BorderSize
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222277264768163970, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
+        type: 3}
       propertyPath: DefaultOre
       value: 
       objectReference: {fileID: 3244655040231230240, guid: 194b17c8e411163419a3af11884477da,
@@ -48871,7 +48876,7 @@ PrefabInstance:
         type: 3}
       propertyPath: EssenceOre
       value: 
-      objectReference: {fileID: 3865090052339850862, guid: 419454ea73920fd4999783b8c2434a67,
+      objectReference: {fileID: 3865090052339850862, guid: 0ba2eec53d3750843b1fa8c1762c4075,
         type: 3}
     - target: {fileID: 1222277264768163970, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
         type: 3}
@@ -49043,6 +49048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: IridiumSpawnThreshold
       value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222277264768163970, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
+        type: 3}
+      propertyPath: spawnables.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1222277264768163970, guid: 5ae8584dbb91e6d44bda9f04f09bbf98,
         type: 3}

@@ -34,14 +34,20 @@ public class GameManager
     // Sets up a game
     public static void SetupGame(Difficulty difficulty, string name = "Unnamed Save", string mode = "Survival", string version = "v0.3", string seed = "")
     {
+        // Set save variables
         GameManager.name = name;
         GameManager.mode = mode;
         GameManager.version = version;
         GameManager.seed = seed;
 
+        // Set modifier variables 
         goldSpawnModifier = difficulty.goldSpawnModifier;
         essenceSpawnModifier = difficulty.essenceSpawnModifier;
         iridiumSpawnModifier = difficulty.iridiumSpawnModifier;
+
+        // Generate world
+        if (WorldGenerator.active != null)
+            WorldGenerator.active.GenerateWorldData();
 
         startingGold = difficulty.startingGold;
         startingEssence = difficulty.startingEssence;

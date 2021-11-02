@@ -8,5 +8,4 @@ public class Spawnable : MonoBehaviour
     public float spawnScale;
     public float spawnThreshold;
     [HideInInspector] public float spawnOffset;
-
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1373808976597636892
+--- !u!114 &-281505294243130176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b7f813b992430245ad61f09b0473d9f, type: 3}
-  m_Name: MKGlowLiteRendererFeature
+  m_Name: MKGlowLite
   m_EditorClassIdentifier: 
   m_Active: 1
 --- !u!114 &11400000
@@ -26,8 +26,8 @@ MonoBehaviour:
   m_Name: UniversalRenderPipelineAsset_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: 6605710575214767009}
-  m_RendererFeatureMap: a1abb704c532ac5b
+  - {fileID: -281505294243130176}
+  m_RendererFeatureMap: c0143f266de417fc
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -57,29 +57,3 @@ MonoBehaviour:
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 0
---- !u!114 &6605710575214767009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7f813b992430245ad61f09b0473d9f, type: 3}
-  m_Name: MKGlowLite
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &7142193511673337380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7f813b992430245ad61f09b0473d9f, type: 3}
-  m_Name: MKGlowLite
-  m_EditorClassIdentifier: 
-  m_Active: 1

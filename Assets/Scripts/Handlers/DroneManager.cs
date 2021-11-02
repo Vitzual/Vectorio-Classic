@@ -180,7 +180,6 @@ public class DroneManager : MonoBehaviour
     public List<BuildingQueue> buildingQueue;
 
     // Camera zoom object
-    public CameraScroll cameraScroll;
     public AudioClip placementSound;
     public Tutorial tutorial;
 
@@ -831,8 +830,8 @@ public class DroneManager : MonoBehaviour
         //     survival.UI.CreateResourcePopup("- " + drone.goldCost, "Gold", drone.targetPos);
 
         // Play audio
-        float audioScale = CameraScroll.getZoom() / 1400f;
-        AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
+        //float audioScale = CameraScroll.getZoom() / 1400f;
+        //AudioSource.PlayClipAtPoint(placementSound, LastObj.transform.position, Settings.soundVolume - audioScale);
 
         // Check for nearby enemy buildings
         var colliders = Physics2D.OverlapCircleAll(

@@ -314,7 +314,6 @@ public class Interface : MonoBehaviour
 
         // Get unlockable
         // Technology.Unlockable unlockable = main.tech.GetUnlockableWithBuilding(obj);
-        string type;
 
         /*
         if (unlockable == null)

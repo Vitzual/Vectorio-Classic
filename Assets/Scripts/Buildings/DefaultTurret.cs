@@ -76,8 +76,7 @@ public class DefaultTurret : BaseTile, IAudible
     // IAudible sound method
     public void PlaySound()
     {
-        float audioScale = CameraScroll.getZoom() / 1400f;
-        AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - audioScale);
+        AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - 0.25f);
     }
 
     public void AddTarget(BaseEntity enemy)

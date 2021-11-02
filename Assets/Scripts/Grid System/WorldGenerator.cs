@@ -13,11 +13,10 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] protected List<Spawnable> spawnables;
     [HideInInspector] public Dictionary<Vector2Int, Spawnable> spawnedResources;
 
+    public void Awake() { active = this; }
+
     public void GenerateWorldData()
     {
-        // Get active instance
-        active = this;
-
         // Create a new resource grid
         spawnedResources = new Dictionary<Vector2Int, Spawnable>();
 

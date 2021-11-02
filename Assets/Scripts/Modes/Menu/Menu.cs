@@ -83,7 +83,7 @@ public class Menu : MonoBehaviour
     public void UpdateSaves()
     {
         return;
-
+        /*
         Transform holder;
         bool availableSave = false;
 
@@ -132,6 +132,7 @@ public class Menu : MonoBehaviour
 
         if (!availableSave) NewSaveGame.SetActive(false);
         else NewSaveGame.SetActive(true);
+        */
     }
 
     public void OpenDeleteSaveMenu(int a)

@@ -32,9 +32,18 @@ public class BuildingHandler : MonoBehaviour
         if (entity == null) return;
 
         // Check if resource should be used
-        if (useResources)
-            foreach (Entity.Resources resource in entity.resources)
-                if (Resource.active.GetAmount(resource.resource) < resource.amount) return;
+        if (useResources) 
+        {
+            foreach (Entity.Resources resource in entity.resources) 
+            {
+                if (!resource.storage)
+                {
+                    int amount = Resource.active.GetAmount(resource.resource);
+                    if (resource.add && amount + resource.amount > Resource.active.GetStorage(resource.resource)) return;
+                    else if (amount < resource.amount) return;
+                }
+            }
+        }
 
         // Check to make sure the tiles are not being used
         if (!isEnemy && !CheckTiles(entity, position)) return;
@@ -70,6 +79,24 @@ public class BuildingHandler : MonoBehaviour
         {
             foreach (Building.Cell cell in entity.cells)
                 tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, entity, lastBuilding);
+        }
+
+        // Update resource values promptly
+        if (useResources)
+        {
+            foreach (Entity.Resources resource in entity.resources)
+            {
+                if (resource.storage)//
+                {
+                    if (resource.add) Resource.active.AddStorage(resource.resource, resource.amount);
+                    else Resource.active.RemoveStorage(resource.resource, resource.amount);
+                }
+                else
+                {
+                    if (resource.add) Resource.active.Add(resource.resource, resource.amount);
+                    else Resource.active.Remove(resource.resource, resource.amount);
+                }
+            }
         }
 
         // Call buildings setup method

@@ -6,7 +6,6 @@ public class NewInterface : MonoBehaviour
 {
     public GameObject buildingMenu;
     public GameObject quitMenu;
-    private bool generatedBuildables = false;
 
     public void Start()
     {
@@ -29,12 +28,6 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleBuildingMenu()
     {
-        if (!generatedBuildables)
-        {
-            Events.active.SetupBuildables();
-            generatedBuildables = true;
-        }
-
         buildingMenu.SetActive(!buildingMenu.activeInHierarchy);
     }
 }

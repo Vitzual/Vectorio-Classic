@@ -10,6 +10,8 @@ public class Entity : ScriptableObject
     {
         public Resource.CurrencyType resource;
         public int amount;
+        public bool add;
+        public bool storage;
     }
 
     // Cell class
@@ -19,7 +21,6 @@ public class Entity : ScriptableObject
         public float x;
         public float y;
     }
-
 
     // Entity description
     [Header("Entity Info")]

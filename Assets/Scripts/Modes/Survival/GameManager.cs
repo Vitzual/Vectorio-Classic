@@ -9,16 +9,16 @@ public class GameManager
 
     [Header("World Settings")]
     public static string seed;
-    public static float goldSpawnModifier;
-    public static float essenceSpawnModifier;
-    public static float iridiumSpawnModifier;
+    public static float goldSpawnModifier = 0;
+    public static float essenceSpawnModifier = 0;
+    public static float iridiumSpawnModifier = 0;
 
     [Header("Starting Resources")]
-    public static int startingGold;
-    public static int startingEssence;
-    public static int startingIridium;
-    public static int startingPower;
-    public static int startingHeat;
+    public static int startingGold = 0;
+    public static int startingEssence = 0;
+    public static int startingIridium = 0;
+    public static int startingPower = 0;
+    public static int startingHeat = 0;
 
     [Header("Building Difficulty")]
     public static float buildingCostModifier;
@@ -40,20 +40,29 @@ public class GameManager
         GameManager.version = version;
         GameManager.seed = seed;
 
-        // Set modifier variables 
-        goldSpawnModifier = difficulty.goldSpawnModifier;
-        essenceSpawnModifier = difficulty.essenceSpawnModifier;
-        iridiumSpawnModifier = difficulty.iridiumSpawnModifier;
+        // Set resource modifier variables 
+        if (!difficulty.isCreative)
+        {
+            goldSpawnModifier = difficulty.goldSpawnModifier;
+            essenceSpawnModifier = difficulty.essenceSpawnModifier;
+            iridiumSpawnModifier = difficulty.iridiumSpawnModifier;
 
-        // Generate world
-        if (WorldGenerator.active != null)
-            WorldGenerator.active.GenerateWorldData();
+            // Generate world
+            //if (WorldGenerator.active != null)
+            //    WorldGenerator.active.GenerateWorldData();
 
-        startingGold = difficulty.startingGold;
-        startingEssence = difficulty.startingEssence;
-        startingIridium = difficulty.startingIridium;
-        startingPower = difficulty.startingPower;
-        startingHeat = difficulty.startingHeat;
+            startingGold = difficulty.startingGold;
+            startingEssence = difficulty.startingEssence;
+            startingIridium = difficulty.startingIridium;
+            startingPower = difficulty.startingPower;
+            startingHeat = difficulty.startingHeat;
+
+            Resource.active.AddBoth(Resource.CurrencyType.Gold, startingGold);
+            Resource.active.AddBoth(Resource.CurrencyType.Essence, startingEssence);
+            Resource.active.AddBoth(Resource.CurrencyType.Iridium, startingIridium);
+            Resource.active.AddStorage(Resource.CurrencyType.Power, startingPower);
+            Resource.active.AddStorage(Resource.CurrencyType.Heat, startingHeat);
+        }
 
         buildingCostModifier = difficulty.buildingCostModifier;
         buildingHealthModifier = difficulty.buildingHealthModifier;

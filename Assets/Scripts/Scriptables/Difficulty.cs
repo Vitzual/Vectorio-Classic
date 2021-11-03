@@ -8,6 +8,7 @@ public class Difficulty : ScriptableObject
     [Header("Difficulty Settings")]
     public new string name;
     [TextArea] public string description;
+    public bool isCreative;
 
     [Header("World Settings")]
     public float goldSpawnModifier;

@@ -24,12 +24,12 @@ public class Gamemode : MonoBehaviour
     // Register for events
     public void Start()
     {
-        Events.active.setupBuildables += InitEntities;
         GameManager.SetupGame(difficulty);
+        InitGamemode();
     }
 
     // Tells the gamemode how to generate inventory
-    public void InitEntities()
+    public void InitGamemode()
     {
         ScriptableManager.GenerateAllScriptables();
 

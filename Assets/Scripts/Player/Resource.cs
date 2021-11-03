@@ -34,8 +34,10 @@ public class Resource : MonoBehaviour
     public Dictionary<CurrencyType, Currency> currencies;
     public TextMeshProUGUI[] amountElements;
 
+    public void Awake() { Setup(); }
+
     // Get active instance
-    public void Awake()
+    public void Setup()
     {
         active = this;
 
@@ -51,7 +53,7 @@ public class Resource : MonoBehaviour
     // Add a resource
     public void Add(CurrencyType type, int amount)
     {
-        if (currencies.ContainsKey(type)) 
+        if (currencies.ContainsKey(type))
         {
             // Calculate amount
             currencies[type].amount += amount;
@@ -62,6 +64,14 @@ public class Resource : MonoBehaviour
             if (currencies[type].ui != null)
                 currencies[type].ui.text = currencies[type].amount.ToString();
         }
+        else Debug.Log("Could not add " + type);
+    }
+
+    // Add a resource and storage
+    public void AddBoth(CurrencyType type, int amount)
+    {
+        AddStorage(type, amount);
+        Add(type, amount);
     }
 
     // Remove a resource

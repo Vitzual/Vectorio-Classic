@@ -43,6 +43,31 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Get scroll input
+        float scrollData;
+        scrollData = Input.GetAxis("Mouse ScrollWheel");
+
+        // Calculate scorll data
+        targetZoom -= scrollData * zoomFactor;
+        targetZoom = Mathf.Clamp(targetZoom, 15f, 350f);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
+
+        // Determine if grid should be active
+        if (targetZoom >= 100f && gridActive == true)
+        {
+            grid.SetActive(false);
+            gridActive = false;
+        }
+        else if (targetZoom < 100f && gridActive == false)
+        {
+            grid.SetActive(true);
+            gridActive = true;
+        }
+    }
+
+    // Physics update
+    private void FixedUpdate()
+    {
         // Check if research open
         if (Interface.researchOpen) return;
 
@@ -69,27 +94,6 @@ public class CameraController : MonoBehaviour
 
         // Reset movement variable
         allowMovement = true;
-
-        // Get scroll input
-        float scrollData;
-        scrollData = Input.GetAxis("Mouse ScrollWheel");
-
-        // Calculate scorll data
-        targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 15f, 350f);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
-
-        // Determine if grid should be active
-        if (targetZoom >= 100f && gridActive == true)
-        {
-            grid.SetActive(false);
-            gridActive = false;
-        }
-        else if (targetZoom < 100f && gridActive == false)
-        {
-            grid.SetActive(true);
-            gridActive = true;
-        }
     }
 
     public void CalculateFPS()

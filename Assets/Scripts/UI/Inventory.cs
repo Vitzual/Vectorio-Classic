@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     public MenuButton buildable;
     public List<Transform> lists;
 
-    public void Start()
+    public void Awake()
     {
         active = this;
         gameObject.SetActive(false);

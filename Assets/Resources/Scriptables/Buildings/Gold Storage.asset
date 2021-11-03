@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6ab08a5e6a77c42b6910c46d3f4760, type: 3}
+  m_Name: Gold Storage
+  m_EditorClassIdentifier: 
+  name: Gold Storage
+  description: Holds gold collected from drones. The amount of gold you have cannot
+    exceed the amount of storages you have.
+  obj: {fileID: 892923713960991008, guid: 3443fd56d25e59e4c8635dfeecf08aee, type: 3}
+  material: {fileID: 2100000, guid: 255a21e3ec3b6fb4793f6dc0eb4401eb, type: 2}
+  gridSnap: 1
+  hologramSize: 1
+  invOrder: 0
+  invIndex: 1
+  cells:
+  - x: 0
+    y: 0
+  offset: {x: 0, y: 0}
+  health: 10
+  resources:
+  - resource: 0
+    amount: 250
+    add: 0
+    storage: 0
+  - resource: 0
+    amount: 1000
+    add: 1
+    storage: 1
+  - resource: 3
+    amount: 25
+    add: 1
+    storage: 0
+  - resource: 4
+    amount: 10
+    add: 1
+    storage: 0
+  unlockOrder: 0
+  unlockDesc: 
+  isUnlocked: 1

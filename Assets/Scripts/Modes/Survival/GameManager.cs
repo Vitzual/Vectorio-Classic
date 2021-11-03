@@ -57,9 +57,9 @@ public class GameManager
             startingPower = difficulty.startingPower;
             startingHeat = difficulty.startingHeat;
 
-            Resource.active.AddBoth(Resource.CurrencyType.Gold, startingGold);
-            Resource.active.AddBoth(Resource.CurrencyType.Essence, startingEssence);
-            Resource.active.AddBoth(Resource.CurrencyType.Iridium, startingIridium);
+            Resource.active.Add(Resource.CurrencyType.Gold, startingGold, true);
+            Resource.active.Add(Resource.CurrencyType.Essence, startingEssence, true);
+            Resource.active.Add(Resource.CurrencyType.Iridium, startingIridium, true);
             Resource.active.AddStorage(Resource.CurrencyType.Power, startingPower);
             Resource.active.AddStorage(Resource.CurrencyType.Heat, startingHeat);
         }

@@ -151,7 +151,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Updates the active variant (Survival only)
-    public static void UpdateVariant()
+    public void UpdateVariant()
     {
         if (Gamemode.active.useResources)
         {
@@ -161,7 +161,7 @@ public class EnemyHandler : MonoBehaviour
                 if (currentHeat >= variant.minHeat &&
                     currentHeat < variant.maxHeat)
                 {
-                    EnemyHandler.active.variant = variant;
+                    this.variant = variant;
                     return;
                 }
             }

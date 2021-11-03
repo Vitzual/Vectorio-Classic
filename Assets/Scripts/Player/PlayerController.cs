@@ -3,34 +3,20 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // Get the camera
     public Camera cam;
     public GameObject grid;
 
-    // Camera variables
-    public float cameraZoomSpeed;
-    public float cameraZoomFactor;
-    public float cameraMinZoom;
-    public float cameraMaxZoom;
-    private float targetZoom;
-
     // TEMP
     public AudioSource music;
     public GameObject inv;
-
-    public void Start()
-    {
-        targetZoom = cam.orthographicSize;
-    }
 
     public void Update()
     {
         if (!inv.activeSelf)
         {
-            CheckScrollInput();
-
             if (Input.GetKey(Keybinds.lmb))
                 Events.active.LeftMousePressed();
             if (Input.GetKeyUp(Keybinds.rmb))
@@ -89,30 +75,5 @@ public class MovementController : MonoBehaviour
             Events.active.NumberInput(7);
         else if (Input.GetKeyDown(Keybinds.hotbar_9))
             Events.active.NumberInput(8);
-    }
-
-    // Check scroll input
-    public void CheckScrollInput()
-    {
-        float scrollData;
-        scrollData = Input.GetAxis("Mouse ScrollWheel");
-
-        targetZoom -= scrollData * cameraZoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, cameraMinZoom, cameraMaxZoom);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * cameraZoomSpeed);
-
-        if (grid != null)
-        {
-            if (cam.orthographicSize > 120 && grid.activeSelf) grid.SetActive(false);
-            else if (cam.orthographicSize <= 120 && !grid.activeSelf) grid.SetActive(true);
-        }
-
-        /*
-        if (Detail.active != null)
-        {
-            if (cam.orthographicSize > closeLOD && Detail.active.closeEnabled || cam.orthographicSize <= closeLOD && !Detail.active.closeEnabled) Detail.active.ToggleClose();
-            else if (cam.orthographicSize > farLOD && Detail.active.farEnabled || cam.orthographicSize <= farLOD && !Detail.active.farEnabled) Detail.active.ToggleFar();
-        }
-        */
     }
 }

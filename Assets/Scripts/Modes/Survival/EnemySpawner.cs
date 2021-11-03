@@ -16,22 +16,31 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemies()
     {
+        // Check if enemy handler is active
         if (EnemyHandler.active.variant == null) return;
 
+        // Calculate chance and heat percentage
         Vector2 spawnPos;
         float chance = Random.value;
         float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
-        Debug.Log("Attempting to spawn enemies at " + percentage);
         
         // Loop through all enemies
         foreach(Enemy enemy in ScriptableManager.enemies)
         {
             // If spawn percentage is above the chance value, spawn
-            if (enemy.spawnPercentage >= percentage && enemy.spawnChance >= chance)
+            if (enemy.spawnPercentage >= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)
             {
                 // Get location around border
-                if (Random.value > 0.5f) spawnPos = new Vector2(borderSize, Random.Range(-borderSize, borderSize));
-                else spawnPos = new Vector2(Random.Range(-borderSize, borderSize), borderSize);
+                if (Random.value > 0.5f)
+                {
+                    if (Random.value > 0.5f) spawnPos = new Vector2(borderSize, Random.Range(-borderSize, borderSize));
+                    else spawnPos = new Vector2(-borderSize, Random.Range(-borderSize, borderSize));
+                }
+                else
+                {
+                    if (Random.value > 0.5f) spawnPos = new Vector2(Random.Range(-borderSize, borderSize), borderSize);
+                    else spawnPos = new Vector2(Random.Range(-borderSize, borderSize), -borderSize);
+                }
 
                 // Create enemy
                 InstantiationHandler.active.CreateEntity(enemy, spawnPos, Quaternion.identity, true);

@@ -1906,11 +1906,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 114909782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc519458d1ea3b3429cf74f16622c126, type: 3}
+  m_Script: {fileID: 11500000, guid: f8f03b02606af76409f8a439ba4eeb57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyLayer:
-    m_Bits: 512
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!4 &114909784
 Transform:
   m_ObjectHideFlags: 0
@@ -4363,7 +4364,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 280261903}
-  - component: {fileID: 280261904}
   - component: {fileID: 280261902}
   - component: {fileID: 280261901}
   - component: {fileID: 280261900}
@@ -4438,21 +4438,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &280261904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280261898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8f03b02606af76409f8a439ba4eeb57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &280458596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4465,12 +4450,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bfe44b5c037f848bb0bcb6a3979a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountElements:
-  - {fileID: 7377762868116895493}
-  - {fileID: 3341849065504892344}
-  - {fileID: 3341849065614543526}
-  - {fileID: 3341849065171109805}
-  - {fileID: 3341849064026673664}
+  currencyElements:
+  - type: 0
+    amount: 0
+    storage: 0
+    format: ' MAX'
+    resourceUI: {fileID: 7377762868116895493}
+    storageUI: {fileID: 871073775}
+  - type: 1
+    amount: 0
+    storage: 0
+    format: ' MAX'
+    resourceUI: {fileID: 3341849065504892344}
+    storageUI: {fileID: 6168857120675834556}
+  - type: 2
+    amount: 0
+    storage: 0
+    format: ' MAX'
+    resourceUI: {fileID: 3341849065614543526}
+    storageUI: {fileID: 1891558817}
+  - type: 3
+    amount: 0
+    storage: 0
+    format: ' MAX'
+    resourceUI: {fileID: 3341849065171109805}
+    storageUI: {fileID: 6168857121587257569}
+  - type: 4
+    amount: 0
+    storage: 0
+    format: ' MAX'
+    resourceUI: {fileID: 3341849064026673664}
+    storageUI: {fileID: 1323544572}
 --- !u!1 &280663432
 GameObject:
   m_ObjectHideFlags: 0
@@ -9490,7 +9500,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4319752878029938552}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -40311,7 +40321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1527259171}
   grid: {fileID: 1377678690}
-  cameraZoomSpeed: 50
+  cameraZoomSpeed: 25
   cameraZoomFactor: 150
   cameraMinZoom: 10
   cameraMaxZoom: 250
@@ -40697,8 +40707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facacdb237bbc694cb28789cbeac84f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMenu: 0
-  menuTarget: {fileID: 0}
+  variant: {fileID: 0}
   turretHandler: {fileID: 1565219066}
   BuildingGoDeadSound: {fileID: 1113017989}
   enemies: []
@@ -40706,6 +40715,8 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 256
+  isMenu: 0
+  menuTarget: {fileID: 0}
 --- !u!224 &4319244479025000321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40811,9 +40822,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 573627155}
   - {fileID: 5933648615969267413}
   - {fileID: 4405527139217726097}
+  - {fileID: 573627155}
   - {fileID: 4613493295209389471}
   - {fileID: 7377762868867567582}
   - {fileID: 8934170631581143678}
@@ -41491,7 +41502,7 @@ RectTransform:
   - {fileID: 6168857120988689892}
   - {fileID: 686669610}
   m_Father: {fileID: 4319752878029938552}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -49245,7 +49256,7 @@ RectTransform:
   m_Children:
   - {fileID: 5933648616078855705}
   m_Father: {fileID: 4319752878029938552}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

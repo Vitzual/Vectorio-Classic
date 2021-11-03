@@ -42,9 +42,12 @@ public class CameraController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
+        // Check if research open
+        if (Interface.researchOpen) return;
+
         // Get scroll input
-        float scrollData;
+        float scrollData; 
         scrollData = Input.GetAxis("Mouse ScrollWheel");
 
         // Calculate scorll data

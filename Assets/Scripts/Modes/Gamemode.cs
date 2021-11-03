@@ -41,6 +41,6 @@ public class Gamemode : MonoBehaviour
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
 
-        EnemyHandler.UpdateVariant();
+        EnemyHandler.active.UpdateVariant();
     }
 }

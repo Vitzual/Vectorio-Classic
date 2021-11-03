@@ -16,10 +16,10 @@ public class BaseTile : BaseEntity
 
     public override void DestroyEntity()
     {
-        if (BuildingHandler.active != null)
+        if (InstantiationHandler.active != null)
         {
             foreach (Vector2Int cell in cells)
-                BuildingHandler.active.tileGrid.RemoveCell(cell);
+                InstantiationHandler.active.tileGrid.RemoveCell(cell);
         }
 
         if (particle != null)

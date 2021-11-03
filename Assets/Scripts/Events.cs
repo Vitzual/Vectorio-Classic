@@ -53,22 +53,6 @@ public class Events : MonoBehaviour
             onTurretRegistered(turret);
     }
 
-    // Invoked when an enemy spawns
-    public event Action<DefaultEnemy> onEnemySpawned;
-    public void EnemySpawned(DefaultEnemy enemy)
-    {
-        if (onEnemySpawned != null)
-            onEnemySpawned(enemy);
-    }
-
-    // Invoked when a guardian spawns
-    public event Action<DefaultGuardian> onGuardianSpawned;
-    public void GuardianSpawned(DefaultGuardian guardian)
-    {
-        if (onGuardianSpawned != null)
-            onGuardianSpawned(guardian);
-    }
-
     // Invoked when a building is placed
     public event Action onLeftMousePressed;
     public void LeftMousePressed()

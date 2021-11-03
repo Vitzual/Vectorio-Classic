@@ -48,7 +48,7 @@ public class BuildingController : MonoBehaviour
             if (entity != null) CmdCreateBuildable();
             else
             {
-                BaseTile holder = BuildingHandler.active.TryGetBuilding(hologram.position);
+                // BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
                 //if (holder != null) Events.active.BuildingClicked(holder);
             }
         }
@@ -62,8 +62,8 @@ public class BuildingController : MonoBehaviour
     //[Command]
     public void CmdCreateBuildable()
     {
-        if (BuildingHandler.active != null)
-            BuildingHandler.active.CreateBuildable(entity, hologram.position, hologram.rotation, isEnemy);
+        if (InstantiationHandler.active != null)
+            InstantiationHandler.active.CreateEntity(entity, hologram.position, hologram.rotation, isEnemy);
         else Debug.LogError("Scene does not have active building handler!");
     }
 
@@ -71,8 +71,8 @@ public class BuildingController : MonoBehaviour
     //[Command]
     public void CmdDestroyBuilding()
     {
-        if (BuildingHandler.active != null)
-            BuildingHandler.active.RpcDestroyBuilding(hologram.position);
+        if (InstantiationHandler.active != null)
+            InstantiationHandler.active.RpcDestroyBuilding(hologram.position);
         else Debug.LogError("Scene does not have active building handler!");
     }
 

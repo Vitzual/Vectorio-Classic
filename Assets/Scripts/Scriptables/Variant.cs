@@ -8,6 +8,8 @@ public class Variant : ScriptableObject
     // Variant info
     public new string name;
     [TextArea] public string desc;
+    public float minHeat; // Inclusive
+    public float maxHeat; // Exclusive
 
     // Variant modifiers
     public float healthModifier;

@@ -5,17 +5,16 @@ using System.Collections.Generic;
 // This script is ported from Automa.
 // https://github.com/Vitzual/Automa
 
-public class BuildingHandler : MonoBehaviour
+public class InstantiationHandler : MonoBehaviour
 {
     // Grid variable
     [HideInInspector] public Grid tileGrid;
 
     // Building variables
-    public static BuildingHandler active;
-    public static bool useResources;
+    public static InstantiationHandler active;
     public LayerMask enemyLayer;
 
-    public void Start()
+    public void Awake()
     {
         // Get reference to active instance
         active = this;
@@ -26,13 +25,20 @@ public class BuildingHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuildable(Entity entity, Vector2 position, Quaternion rotation, bool isEnemy)
+    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation, bool isEnemy)
     {
         // Check if entity is null
         if (entity == null) return;
 
+        // Check if the entity is an enemy
+        if (isEnemy)
+        {
+            RpcInstantiateEnemy(entity, position, rotation);
+            return;
+        }
+
         // Check if resource should be used
-        if (useResources) 
+        if (Gamemode.active.useResources) 
         {
             foreach (Entity.Resources resource in entity.resources) 
             {
@@ -40,17 +46,16 @@ public class BuildingHandler : MonoBehaviour
                 {
                     int amount = Resource.active.GetAmount(resource.resource);
                     if (resource.add && amount + resource.amount > Resource.active.GetStorage(resource.resource)) return;
-                    else if (amount < resource.amount) return;
+                    else if (!resource.add && amount < resource.amount) return;
                 }
             }
         }
 
         // Check to make sure the tiles are not being used
-        if (!isEnemy && !CheckTiles(entity, position)) return;
+        if (!CheckTiles(entity, position)) return;
 
         // Instantiate the object like usual
-        if (isEnemy) RpcInstantiateEnemy(entity, position, rotation);
-        else RpcInstantiateBuilding(entity, position, rotation);
+        RpcInstantiateBuilding(entity, position, rotation);
     }
 
     //[ClientRpc]
@@ -60,7 +65,7 @@ public class BuildingHandler : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
         foreach (RaycastHit2D hit in hits)
             if (hit.collider != null) return;
-        EnemyHandler.CreateEntity(entity, position, rotation);
+        EnemyHandler.active.CreateEntity(entity, position, rotation);
     }
 
     //[ClientRpc]
@@ -82,11 +87,11 @@ public class BuildingHandler : MonoBehaviour
         }
 
         // Update resource values promptly
-        if (useResources)
+        if (Gamemode.active.useResources)
         {
             foreach (Entity.Resources resource in entity.resources)
             {
-                if (resource.storage)//
+                if (resource.storage)
                 {
                     if (resource.add) Resource.active.AddStorage(resource.resource, resource.amount);
                     else Resource.active.RemoveStorage(resource.resource, resource.amount);

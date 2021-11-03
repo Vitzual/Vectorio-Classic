@@ -10,8 +10,6 @@ public class DefaultGuardian : BaseEntity
     public override void Setup()
     {
         material = guardian.material;
-
-        Events.active.GuardianSpawned(this);
     }
 
     public virtual void MoveTowards(Transform obj, Transform target)

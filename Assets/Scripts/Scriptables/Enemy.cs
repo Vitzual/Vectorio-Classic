@@ -11,6 +11,18 @@ public class Enemy : Entity
     public float explosiveRadius;
     public float explosiveDamage;
     public float rotationSpeed;
+    public float spawnChance;
+
+    // Spawn percentage
+    //
+    // This is what tells the enemy spawner when to spawn this enemy. For example,
+    // say the active variant is phantom enemies. The heat value for that variant
+    // is 25,000 - 50,000. That means there's 25,000 heat to cover. So, if the
+    // player was at 30,000 heat, that would mean they're 20% through the phantom
+    // variant. Thus, if the spawn percentage was below that (say 0.1), the system 
+    // would try and spawn it (based off whatever it's chance variable is above)
+
+    public float spawnPercentage;
 
     // Spawn on death
     [System.Serializable]
@@ -20,7 +32,7 @@ public class Enemy : Entity
         public int amount;
         public float radius;
     }
-    public EnemySpawn[] spawns;
+    public EnemySpawn[] spawnsOnDeath;//
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

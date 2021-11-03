@@ -9,6 +9,9 @@ using Mirror;
 
 public class Gamemode : MonoBehaviour
 {
+    // Active instance
+    public static Gamemode active;
+
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
@@ -24,6 +27,7 @@ public class Gamemode : MonoBehaviour
     // Register for events
     public void Start()
     {
+        active = this;
         GameManager.SetupGame(difficulty);
         InitGamemode();
     }
@@ -36,7 +40,7 @@ public class Gamemode : MonoBehaviour
         if (initBuildings) Inventory.active.GenerateEntities(ScriptableManager.buildings.ToArray());
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
-        
-        BuildingHandler.useResources = useResources;
+
+        EnemyHandler.UpdateVariant();
     }
 }

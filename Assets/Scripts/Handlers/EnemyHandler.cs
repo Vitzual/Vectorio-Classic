@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
 {
-    // Is menu bool
-    public bool isMenu;
-    public Transform menuTarget;
+    // Active instance
+    public static EnemyHandler active;
 
     // Active variant
-    public static Variant variant;
-    public Variant _variant;
+    public Variant variant;
 
     // Holds a reference to turret handler
     public TurretHandler turretHandler;
@@ -19,28 +17,24 @@ public class EnemyHandler : MonoBehaviour
     public AudioSource BuildingGoDeadSound;
 
     // Contains all active enemies in the scene
-    public List<DefaultEnemy> enemies;
-    public List<DefaultGuardian> guardians;
-
+    public List<DefaultEnemy> enemies = new List<DefaultEnemy>();
+    public List<DefaultGuardian> guardians = new List<DefaultGuardian>();
     public LayerMask buildingLayer;
     private bool scan = false;
 
-    public void Start()
-    {
-        variant = _variant;
-        enemies = new List<DefaultEnemy>();
-        Events.active.onEnemySpawned += RegisterEnemy;
-        Events.active.onGuardianSpawned += RegisterGuardian;
-    }
+    // Is menu bool
+    public bool isMenu;
+    public Transform menuTarget;
+
+    public void Awake() { active = this; }
 
     // Handles enemy movement every frame
     public void Update()
     {
         if (Settings.paused) return;
 
-        scan = true;
-
         // Move enemies each frame
+        scan = true;
         if (isMenu)
         {
             for (int a = 0; a < enemies.Count; a++)
@@ -69,7 +63,7 @@ public class EnemyHandler : MonoBehaviour
                     }
                     else if (scan)
                     {
-                        BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
+                        BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
                         if (building != null)
                         {
@@ -98,7 +92,7 @@ public class EnemyHandler : MonoBehaviour
                     }
                     else if (scan)
                     {
-                        BaseTile building = BuildingHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
+                        BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
 
                         if (building != null)
                             guardians[i].target = building;
@@ -122,19 +116,7 @@ public class EnemyHandler : MonoBehaviour
         pos.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
     }
 
-    // Registers an enemy to then be handled by the controller 
-    public void RegisterEnemy(DefaultEnemy enemy)
-    {
-        enemy.isMenu = isMenu;
-        enemies.Add(enemy);
-    }
-
-    public void RegisterGuardian(DefaultGuardian guardian)
-    {
-        guardians.Add(guardian);
-    }
-
-    public static void CreateEntity(Entity entity, Vector2 position, Quaternion rotation)
+    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Create the tile
         GameObject lastObj = Instantiate(entity.obj, position, rotation);
@@ -154,6 +136,8 @@ public class EnemyHandler : MonoBehaviour
 
         // Setup entity
         lastObj.GetComponent<BaseEntity>().Setup();
+        enemy.isMenu = isMenu;
+        enemies.Add(enemy);
     }
 
     // Destroys all active enemies
@@ -164,5 +148,23 @@ public class EnemyHandler : MonoBehaviour
         for (int i = 0; i < guardians.Count; i++)
             Destroy(guardians[i].gameObject);
         enemies = new List<DefaultEnemy>();
+    }
+
+    // Updates the active variant (Survival only)
+    public static void UpdateVariant()
+    {
+        if (Gamemode.active.useResources)
+        {
+            int currentHeat = Resource.active.GetHeat();
+            foreach (Variant variant in ScriptableManager.variants)
+            {
+                if (currentHeat >= variant.minHeat &&
+                    currentHeat < variant.maxHeat)
+                {
+                    EnemyHandler.active.variant = variant;
+                    return;
+                }
+            }
+        }
     }
 }

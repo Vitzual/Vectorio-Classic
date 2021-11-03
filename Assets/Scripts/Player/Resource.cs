@@ -65,6 +65,8 @@ public class Resource : MonoBehaviour
                 currencies[type].ui.text = currencies[type].amount.ToString();
         }
         else Debug.Log("Could not add " + type);
+
+        if (type == CurrencyType.Heat) EnemyHandler.UpdateVariant();
     }
 
     // Add a resource and storage
@@ -88,6 +90,8 @@ public class Resource : MonoBehaviour
             if (currencies[type].ui != null)
                 currencies[type].ui.text = currencies[type].amount.ToString();
         }
+
+        if (type == CurrencyType.Heat) EnemyHandler.UpdateVariant();
     }
 
     // Add storage
@@ -163,4 +167,8 @@ public class Resource : MonoBehaviour
                 return Sprites.GetSprite("Transparent");
         }
     }
+
+    // Get heat or power
+    public int GetHeat() { return currencies[CurrencyType.Heat].amount; }
+    public int GetPower() { return currencies[CurrencyType.Power].amount; }
 }

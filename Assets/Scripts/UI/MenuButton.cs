@@ -31,7 +31,7 @@ public class MenuButton : MonoBehaviour
         building = null;
 
         // Determine if building is unlocked
-        unlocked = Gamemode.active.unlockEverything || entity.unlockable.unlockedByDefault;
+        unlocked = Gamemode.active.unlockEverything || entity.unlockable.unlocked;
         SetVariables(entity);
     }
 
@@ -43,7 +43,7 @@ public class MenuButton : MonoBehaviour
         this.building = building;
 
         // Determine if building is unlocked
-        unlocked = Gamemode.active.unlockEverything || building.unlockable.unlockedByDefault;
+        unlocked = Gamemode.active.unlockEverything || building.unlockable.unlocked;
         SetVariables(building);
 
         // Set resources (if unlocked)
@@ -77,7 +77,7 @@ public class MenuButton : MonoBehaviour
         else
         {
             GetComponent<ButtonManagerBasic>().buttonText = "LOCKED";
-            desc.text = "<size=16>" + entity.unlockable.unlockDescription;
+            desc.text = "<size=16>" + entity.unlockable.description;
             icon.sprite = Sprites.GetSprite("Locked");
         }
     }

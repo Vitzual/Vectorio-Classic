@@ -15,17 +15,24 @@ MonoBehaviour:
   name: Tesla
   description: Fires bolts of lightning that deal massive damage and slow down enemies.
     Consumes extra power while firing.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
   material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
+  health: 100
+  unlockable:
+    type: 0
+    description: Accumulate 25,000 power
+    unlocked: 0
+    resource: 3
+    entity: {fileID: 0}
+    amount: 25000
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 8
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 100
   resources:
   - resource: 0
     amount: 140000
@@ -39,9 +46,6 @@ MonoBehaviour:
     amount: 600
     add: 1
     storage: 0
-  unlockOrder: 9
-  unlockDesc: 
-  isUnlocked: 0
   damage: 150
   range: 60
   rotationSpeed: 200

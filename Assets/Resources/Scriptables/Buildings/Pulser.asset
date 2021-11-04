@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Pulser
   description: Fires plasma bullets that pierce through multiple enemies at a time.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 5638880538173755297, guid: dc49b4d2446cc1b4eb2bbe7796d4ed36, type: 3}
   material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
+  health: 100
+  unlockable:
+    type: 2
+    description: Destroy a Marauder
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 0}
+    amount: 1
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 4
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 100
   resources:
   - resource: 0
     amount: 15000
@@ -38,9 +45,6 @@ MonoBehaviour:
     amount: 80
     add: 1
     storage: 0
-  unlockOrder: 5
-  unlockDesc: Destroy a dropship
-  isUnlocked: 0
   damage: 80
   range: 120
   rotationSpeed: 50

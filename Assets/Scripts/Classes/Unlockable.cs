@@ -8,18 +8,20 @@ public class Unlockable
     // Unlock type
     public enum UnlockType
     {
-        ReachHeat,
-        ReachPower,
-        PlaceBuildings,
-        DestroyEnemies,
-        DestroyGuardian,
-        ReachGoldPerSecond,
-        ReachEssencePerSecond,
-        ReachIridiumPerSecond
+        ReachResourceAmount,
+        PlaceBuildingAmount,
+        DestroyEnemyAmount,
+        DestroyGuardianAmount
     }
 
+    [Header("Unlock Type")]
+    public UnlockType type;
+    public string description;
+    public bool unlocked;
 
-    public string unlockDescription;
-    public bool unlockedByDefault;
-    
+    [Header("Unlock Requirement")]
+    public Resource.CurrencyType resource;
+    public Entity entity;
+    public int amount;
+
 }

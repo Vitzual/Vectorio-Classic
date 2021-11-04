@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shotgunner
   description: Fires multiple projectiles at once to eliminate large groups of enemies
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
   material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
+  health: 15
+  unlockable:
+    type: 2
+    description: Destroy 10x Shuriken's
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 11400000, guid: 996dba43e8bacf941b20edb3ebaf5d43, type: 2}
+    amount: 10
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 1
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 15
   resources:
   - resource: 0
     amount: 750
@@ -38,9 +45,6 @@ MonoBehaviour:
     amount: 15
     add: 1
     storage: 0
-  unlockOrder: 2
-  unlockDesc: Unlocked by destroying 10 triangles
-  isUnlocked: 1
   damage: 2
   range: 35
   rotationSpeed: 60

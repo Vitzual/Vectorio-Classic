@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Turret
   description: Weak early game turret that targets and fires at nearby enemies.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
   material: {fileID: 2100000, guid: b9b0562c110345f47b9878735bb519d1, type: 2}
+  health: 10
+  unlockable:
+    type: 0
+    description: 
+    unlocked: 1
+    resource: 0
+    entity: {fileID: 0}
+    amount: 0
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 0
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 10
   resources:
   - resource: 0
     amount: 150
@@ -38,9 +45,6 @@ MonoBehaviour:
     amount: 5
     add: 1
     storage: 0
-  unlockOrder: 0
-  unlockDesc: Unlocked by default
-  isUnlocked: 1
   damage: 1
   range: 50
   rotationSpeed: 150

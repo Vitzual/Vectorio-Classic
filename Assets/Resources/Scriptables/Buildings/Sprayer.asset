@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sprayer
   description: Fires some bullets idfk ahahaha
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
   material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
+  health: 50
+  unlockable:
+    type: 0
+    description: Destroy 5x Carrier's
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 11400000, guid: c384091c5e0c74d4b93d0cf7de6876d2, type: 2}
+    amount: 5
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 3
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 50
   resources:
   - resource: 0
     amount: 12000
@@ -38,9 +45,6 @@ MonoBehaviour:
     amount: 20
     add: 1
     storage: 0
-  unlockOrder: 4
-  unlockDesc: Destroy 50x Shurikens
-  isUnlocked: 0
   damage: 3
   range: 40
   rotationSpeed: 60

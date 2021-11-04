@@ -15,17 +15,24 @@ MonoBehaviour:
   name: Flamethrower
   description: Unleashes a barrage of flames that deal extremely high damage to nearby
     enemies. Produces extra heat while firing.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: aac8052e92deef54c85db4e9ceab838a, type: 3}
   material: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
+  health: 80
+  unlockable:
+    type: 0
+    description: Accumulate 15,000 heat
+    unlocked: 0
+    resource: 4
+    entity: {fileID: 0}
+    amount: 15000
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 6
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 80
   resources:
   - resource: 0
     amount: 80000
@@ -43,9 +50,6 @@ MonoBehaviour:
     amount: 50
     add: 1
     storage: 0
-  unlockOrder: 7
-  unlockDesc: 
-  isUnlocked: 0
   damage: 50
   range: 40
   rotationSpeed: 120

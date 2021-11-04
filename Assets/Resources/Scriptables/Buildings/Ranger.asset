@@ -15,17 +15,24 @@ MonoBehaviour:
   name: Ranger
   description: Fires long-range high-velocity projectiles that deal massive damage
     upon impact.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: 95110c1fbb72d024392973c39db4354f, type: 3}
   material: {fileID: 2100000, guid: bec28cf577e05814190c34c3fc5dcbe8, type: 2}
+  health: 25
+  unlockable:
+    type: 1
+    description: Place 10x Shotgun's
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 11400000, guid: b45ce3523574d4b4884b6df625bcac7f, type: 2}
+    amount: 10
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 2
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 25
   resources:
   - resource: 0
     amount: 3500
@@ -39,9 +46,6 @@ MonoBehaviour:
     amount: 35
     add: 1
     storage: 0
-  unlockOrder: 3
-  unlockDesc: 
-  isUnlocked: 1
   damage: 35
   range: 80
   rotationSpeed: 50

@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Chiller
   description: A weak defense that freezes nearby enemies. Great for countering speeders.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 420473218063467210, guid: e238797f53eae4649a89e947e9a7124b, type: 3}
   material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
+  health: 60
+  unlockable:
+    type: 0
+    description: Place 10x Area Cooler's
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 11400000, guid: b37abab94270aa948b9136fea7970065, type: 2}
+    amount: 10
   gridSnap: 0
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 5
-  invIndex: 0
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 60
   resources:
   - resource: 0
     amount: 60000
@@ -38,9 +45,6 @@ MonoBehaviour:
     amount: 80
     add: 1
     storage: 0
-  unlockOrder: 6
-  unlockDesc: 
-  isUnlocked: 1
   damage: 5
   range: 50
   rotationSpeed: 70

@@ -20,8 +20,8 @@ public class Entity : ScriptableObject
     public int inventoryIndex;
     public GameObject obj;
     public Material material;
-    public Unlockable unlockable;
     public int health;
+    public Unlockable unlockable;
 
     [Header("Grid Variables")]
     public bool gridSnap;

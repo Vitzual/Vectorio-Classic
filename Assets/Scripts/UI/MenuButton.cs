@@ -43,7 +43,7 @@ public class MenuButton : MonoBehaviour
         this.building = building;
 
         // Determine if building is unlocked
-        unlocked = Gamemode.active.unlockEverything || entity.unlockable.unlockedByDefault;
+        unlocked = Gamemode.active.unlockEverything || building.unlockable.unlockedByDefault;
         SetVariables(building);
 
         // Set resources (if unlocked)

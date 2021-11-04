@@ -15,17 +15,20 @@ MonoBehaviour:
   name: Essence Storage
   description: Holds essence collected from drones. The amount of essence you have
     cannot exceed the amount of storages you have.
+  inventoryHeader: 1
+  inventoryIndex: 0
   obj: {fileID: 892923713960991008, guid: 0af1154fcdda4bf499de31a413d0f13b, type: 3}
   material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
+  unlockable:
+    unlockDescription: 
+    unlockedByDefault: 0
+  health: 10
   gridSnap: 1
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 4
-  invIndex: 1
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 10
   resources:
   - resource: 0
     amount: 25000
@@ -43,6 +46,3 @@ MonoBehaviour:
     amount: 100
     add: 1
     storage: 0
-  unlockOrder: 0
-  unlockDesc: 
-  isUnlocked: 1

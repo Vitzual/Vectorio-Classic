@@ -15,17 +15,20 @@ MonoBehaviour:
   name: Iridium Storage
   description: Holds iridium collected from drones. The amount of iridium you have
     cannot exceed the amount of storages you have.
+  inventoryHeader: 1
+  inventoryIndex: 0
   obj: {fileID: 892923713960991008, guid: 17f165b486509b74d8cdca6c891c3a27, type: 3}
   material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
+  unlockable:
+    unlockDescription: 
+    unlockedByDefault: 0
+  health: 10
   gridSnap: 1
+  gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  invOrder: 0
-  invIndex: 1
   cells:
   - x: 0
     y: 0
-  offset: {x: 0, y: 0}
-  health: 10
   resources:
   - resource: 0
     amount: 500000
@@ -43,6 +46,3 @@ MonoBehaviour:
     amount: 250
     add: 1
     storage: 0
-  unlockOrder: 0
-  unlockDesc: 
-  isUnlocked: 1

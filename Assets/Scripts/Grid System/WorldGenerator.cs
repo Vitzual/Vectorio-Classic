@@ -64,9 +64,7 @@ public class WorldGenerator : MonoBehaviour
     private void TrySpawnResource(Spawnable resource, int x, int y)
     {
         // Get x and y pos
-        int xPos = x * 5;
-        int yPos = y * 5;
-        Vector2Int coords = new Vector2Int(xPos, yPos);
+        Vector2Int coords = new Vector2Int(x, y);
 
         // Check cell to make sure it's empty
         if (!spawnedResources.ContainsKey(coords))

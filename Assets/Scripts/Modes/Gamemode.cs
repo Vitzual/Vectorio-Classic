@@ -20,6 +20,7 @@ public class Gamemode : MonoBehaviour
 
     [Header("Gamemode Settings")]
     public bool useResources;
+    public bool generateWorld;
     public bool unlockEverything;
     public bool initBuildings;
     public bool initEnemies;
@@ -31,7 +32,7 @@ public class Gamemode : MonoBehaviour
         active = this;
     }
 
-    // Register for events
+    // Setup game
     public void Start()
     {
         GameManager.SetupGame(difficulty);
@@ -48,5 +49,7 @@ public class Gamemode : MonoBehaviour
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
 
         EnemyHandler.active.UpdateVariant();
+
+        if (generateWorld) WorldGenerator.active.GenerateWorldData();
     }
 }

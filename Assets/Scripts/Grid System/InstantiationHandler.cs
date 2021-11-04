@@ -24,23 +24,26 @@ public class InstantiationHandler : MonoBehaviour
         tileGrid.cells = new Dictionary<Vector2Int, Cell>();
     }
 
-    // Creates a building
-    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation, bool isEnemy)
+    // Creates an entity
+    public void CreateEnemy(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Check if entity is null
         if (entity == null) return;
 
         // Check if the entity is an enemy
-        if (isEnemy)
-        {
-            RpcInstantiateEnemy(entity, position, rotation);
-            return;
-        }
+        RpcInstantiateEnemy(entity, position, rotation);
+    }
+
+    // Creates a building
+    public void CreateBuilding(Building building, Vector2 position, Quaternion rotation)
+    {
+        // Check if entity is null
+        if (building == null) return;
 
         // Check if resource should be used
         if (Gamemode.active.useResources) 
         {
-            foreach (Entity.Resources resource in entity.resources) 
+            foreach (Building.Resources resource in building.resources) 
             {
                 if (!resource.storage)
                 {
@@ -52,10 +55,10 @@ public class InstantiationHandler : MonoBehaviour
         }
 
         // Check to make sure the tiles are not being used
-        if (!CheckTiles(entity, position)) return;
+        if (!CheckTiles(building, position)) return;
 
         // Instantiate the object like usual
-        RpcInstantiateBuilding(entity, position, rotation);
+        RpcInstantiateBuilding(building, position, rotation);
     }
 
     //[ClientRpc]
@@ -69,27 +72,27 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    private void RpcInstantiateBuilding(Entity entity, Vector2 position, Quaternion rotation)
+    private void RpcInstantiateBuilding(Building building, Vector2 position, Quaternion rotation)
     {
         // Get game objected from scriptable manager
-        GameObject obj = ScriptableManager.RequestBuildingByName(entity.name);
+        GameObject obj = ScriptableManager.RequestBuildingByName(building.name);
         if (obj == null) return;
 
         // Create the tile
         BaseTile lastBuilding = Instantiate(obj, position, rotation).GetComponent<BaseTile>();
-        lastBuilding.name = entity.name;
+        lastBuilding.name = building.name;
 
         // Set the tiles on the grid class
-        if (entity.cells.Length > 0)
+        if (building.cells.Length > 0)
         {
-            foreach (Building.Cell cell in entity.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, entity, lastBuilding);
+            foreach (Building.Cell cell in building.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, building, lastBuilding);
         }
 
         // Update resource values promptly
         if (Gamemode.active.useResources)
         {
-            foreach (Entity.Resources resource in entity.resources)
+            foreach (Building.Resources resource in building.resources)
             {
                 if (resource.storage)
                 {
@@ -117,11 +120,11 @@ public class InstantiationHandler : MonoBehaviour
 
     // Checks to make sure tile(s) isn't occupied
     //[Server]
-    public bool CheckTiles(Entity entity, Vector3 position)
+    public bool CheckTiles(Building building, Vector3 position)
     {
-        if (entity.cells.Length > 0)
+        if (building.cells.Length > 0)
         {
-            foreach (Building.Cell cell in entity.cells)
+            foreach (Building.Cell cell in building.cells)
             {
                 // Check to make sure nothing occupying tile
                 Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));

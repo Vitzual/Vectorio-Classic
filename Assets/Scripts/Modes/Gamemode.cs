@@ -20,14 +20,20 @@ public class Gamemode : MonoBehaviour
 
     [Header("Gamemode Settings")]
     public bool useResources;
+    public bool unlockEverything;
     public bool initBuildings;
     public bool initEnemies;
     public bool initGuardians;
 
+    // Set active instance
+    public void Awake()
+    {
+        active = this;
+    }
+
     // Register for events
     public void Start()
     {
-        active = this;
         GameManager.SetupGame(difficulty);
         InitGamemode();
     }
@@ -37,7 +43,7 @@ public class Gamemode : MonoBehaviour
     {
         ScriptableManager.GenerateAllScriptables();
 
-        if (initBuildings) Inventory.active.GenerateEntities(ScriptableManager.buildings.ToArray());
+        if (initBuildings) Inventory.active.GenerateBuildings(ScriptableManager.buildings.ToArray());
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
         if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
 

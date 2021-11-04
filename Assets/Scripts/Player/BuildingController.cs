@@ -9,7 +9,7 @@ public class BuildingController : MonoBehaviour
     // Selected tile
     public Transform hologram;
     private Entity entity;
-    private bool isEnemy = false;
+    private Building building;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -19,7 +19,8 @@ public class BuildingController : MonoBehaviour
     public void Start()
     {
         // Set event
-        UIEvents.active.onEntityPressed += SetBuildable;
+        UIEvents.active.onEntityPressed += SetEntity;
+        UIEvents.active.onBuildingPressed += SetBuilding;
 
         // Confirm user has authority
         //if (!hasAuthority) return;
@@ -55,7 +56,7 @@ public class BuildingController : MonoBehaviour
         else if (Input.GetKey(Keybinds.rmb)) CmdDestroyBuilding();
         else if (Input.GetKeyDown(Keybinds.rotate)) RotatePosition();
         else if (Input.GetKeyDown(Keybinds.rmb)
-            || Input.GetKeyDown(Keybinds.escape)) SetBuildable(null);
+            || Input.GetKeyDown(Keybinds.escape)) SetEntity(null);
     }
 
     // Create building (command)
@@ -63,7 +64,10 @@ public class BuildingController : MonoBehaviour
     public void CmdCreateBuildable()
     {
         if (InstantiationHandler.active != null)
-            InstantiationHandler.active.CreateEntity(entity, hologram.position, hologram.rotation, isEnemy);
+        {
+            if (building != null) InstantiationHandler.active.CreateBuilding(building, hologram.position, hologram.rotation);
+            else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, hologram.position, hologram.rotation);
+        }
         else Debug.LogError("Scene does not have active building handler!");
     }
 
@@ -76,19 +80,28 @@ public class BuildingController : MonoBehaviour
         else Debug.LogError("Scene does not have active building handler!");
     }
 
-    // Sets the selected building (null to deselect)
-    public void SetBuildable(Entity entity, bool isEnemy = false)
+    // Sets the selected entity (null to deselect)
+    public void SetEntity(Entity entity)
     {
-        // Set tile 
+        building = null;
         this.entity = entity;
-        this.isEnemy = isEnemy;
+        UpdateSprite();
+    }
 
+    // Sets the selected building (null to deselect)
+    public void SetBuilding(Building building)
+    {
+        this.building = building;
+        entity = building;
+        UpdateSprite();
+    }
+
+    // Updates the selected sprite
+    public void UpdateSprite()
+    {
         if (entity != null)
         {
-            // Get the tile sprite and set offset
             spriteRenderer.sprite = Sprites.GetSprite(entity.name);
-
-            // Set the scale
             hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
         }
         else spriteRenderer.sprite = Sprites.GetSprite("Transparent");
@@ -101,9 +114,9 @@ public class BuildingController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 newPosition;
 
-        if (!isEnemy)
+        if (building != null)
         {
-            if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.offset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.offset.y);
+            if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.gridOffset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.gridOffset.y);
             else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
         }
         else newPosition = mousePos;

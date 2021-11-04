@@ -33,8 +33,8 @@ public class Panel : MonoBehaviour
     public void Start()
     {
         UIEvents.active.onEntityPressed += SetPanel;
+        UIEvents.active.onBuildingPressed += SetPanel;
         UIEvents.active.onDisableHotbar += DisableHotbar;
-        //Events.active.onVariantLoaded += AddVariant;
 
         menuObjects = new List<MenuStat>();
         unusedObjects = new List<MenuStat>();
@@ -64,11 +64,8 @@ public class Panel : MonoBehaviour
     }
 
     // Sets the panel information
-    public void SetPanel(Entity entity, bool isEnemy)
+    public void SetPanel(Entity entity)
     {
-        // Toggle variant selection
-        variantSelector.gameObject.SetActive(isEnemy);
-
         // Grab building
         this.entity = entity;
 

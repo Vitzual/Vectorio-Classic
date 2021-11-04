@@ -25,14 +25,13 @@ public class Inventory : MonoBehaviour
         for(int i = 0; i < entities.Length; i++)
         {
             Debug.Log("Setting up " + entities[i].name);
+            int index = (int)entities[i].inventoryHeader;
 
-            if (entities[i].invIndex >= 0 && entities[i].invIndex < lists.Count)
+            if (index >= 0 && index < lists.Count)
             {
-                Debug.Log("Creating entity at " + entities[i].invIndex + " " + entities[i].invOrder);
-
-                MenuButton holder = CreateEntity(entities[i], lists[entities[i].invIndex]);
+                MenuButton holder = CreateBuildable(entities[i], lists[index]);
                 if (holder != null) holders[i] = holder;
-                else Debug.Log("Error");
+                else Debug.Log("Entity " + entities[i].name + "could not be created!");
             }
         }
 
@@ -40,14 +39,41 @@ public class Inventory : MonoBehaviour
         for(int i = 0; i < holders.Length; i++)
         {
             if(holders[i].transform != null)
-                holders[i].transform.SetSiblingIndex(holders[i].entity.invOrder);
+                holders[i].transform.SetSiblingIndex(holders[i].entity.inventoryIndex);
         }
     }
 
-    public MenuButton CreateEntity(Entity entity, Transform list, List<Building.Resources> resources = null)
+    public void GenerateBuildings(Building[] buildings)
+    {
+        // Create a new array of holders
+        MenuButton[] holders = new MenuButton[buildings.Length];
+
+        // Generate buildables
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            Debug.Log("Setting up " + buildings[i].name);
+            int index = (int)buildings[i].inventoryHeader;
+
+            if (index >= 0 && index < lists.Count)
+            {
+                MenuButton holder = CreateBuildable(buildings[i], lists[index], buildings[i]);
+                if (holder != null) holders[i] = holder;
+                else Debug.Log("Entity " + buildings[i].name + "could not be created!");
+            }
+        }
+
+        // Set order of buildables
+        for (int i = 0; i < holders.Length; i++)
+        {
+            if (holders[i].transform != null)
+                holders[i].transform.SetSiblingIndex(holders[i].building.inventoryIndex);
+        }
+    }
+
+    public MenuButton CreateBuildable(Entity entity, Transform list, Building building = null)
     {
         // Create the new buildable object
-        GameObject holder = Instantiate(buildable.obj, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject holder = Instantiate(buildable.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
 
         // Set parent
         holder.transform.SetParent(list);
@@ -58,43 +84,10 @@ public class Inventory : MonoBehaviour
         if (temp != null) temp.localScale = new Vector3(1, 1, 1);
 
         // Set buildable values
-        buildable = holder.GetComponent<MenuButton>();
-        buildable.entity = entity;
+        MenuButton container = holder.GetComponent<MenuButton>();
+        if (building != null) container.SetBuilding(building);
+        else container.SetEntity(entity);
 
-        // Set building level
-        //if (entity.level > 0)
-        //    buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b><size=20> LEVEL " + entity.level;
-        //else
-        //{
-            buildable.button.buttonText = "<b>" + entity.name.ToUpper() + "</b>";
-        //}
-
-        // Set building icon
-        buildable.icon.sprite = Sprites.GetSprite(entity.name);
-
-        // Set building unlock value
-        buildable.desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
-
-        // Add resource icons
-        if (resources != null) {
-            foreach (Building.Resources resource in resources)
-            {
-                if (resource.amount > 0)
-                {
-                    if (resource.resource == Resource.CurrencyType.Power)
-                        buildable.powerIcon.SetActive(true);
-                    else if (resource.resource == Resource.CurrencyType.Heat)
-                        buildable.heatIcon.SetActive(true);
-                    else if (resource.resource == Resource.CurrencyType.Gold)
-                        buildable.goldIcon.SetActive(true);
-                    else if (resource.resource == Resource.CurrencyType.Essence)
-                        buildable.essenceIcon.SetActive(true);
-                    else if (resource.resource == Resource.CurrencyType.Iridium)
-                        buildable.iridiumIcon.SetActive(true);
-                }
-            }
-        }
-
-        return buildable;
+        return container;
     }
 }

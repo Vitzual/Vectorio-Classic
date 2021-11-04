@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                InstantiationHandler.active.CreateEntity(enemy, spawnPos, Quaternion.identity, true);
+                InstantiationHandler.active.CreateEnemy(enemy, spawnPos, Quaternion.identity);
             }
         }
     }

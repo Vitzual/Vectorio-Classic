@@ -4,59 +4,33 @@ using UnityEngine;
 
 public class Entity : ScriptableObject
 {
-    // Resource class
-    [System.Serializable]
-    public class Resources
+    public enum InvHeader
     {
-        public Resource.CurrencyType resource;
-        public int amount;
-        public bool add;
-        public bool storage;
-    }
-
-    // Cell class
-    [System.Serializable]
-    public struct Cell
-    {
-        public float x;
-        public float y;
+        Defense = 0,
+        Building = 1,
+        Enemy = 2,
+        Guardian = 3
     }
 
     // Entity description
-    [Header("Entity Info")]
+    [Header("Entity Variables")]
     public new string name;
     [TextArea] public string description;
+    public InvHeader inventoryHeader;
+    public int inventoryIndex;
     public GameObject obj;
     public Material material;
-    public bool gridSnap;
-    public float hologramSize = 1f;
-
-    // Inventory variables
-    [Header("Interface Ordering")]
-    public int invOrder;
-    public int invIndex;
-
-    // Refers to how many cells this entity will occupy
-    [Header("Tile cells")]
-    public Cell[] cells;
-    public Vector2 offset;
-
-    // Building base variables
-    [Header("Base Stats")]
+    public Unlockable unlockable;
     public int health;
-    public Resources[] resources;
+
+    [Header("Grid Variables")]
+    public bool gridSnap;
+    public Vector2 gridOffset;
+    public float hologramSize = 1f;
 
     // Creates stats
     public virtual void CreateStats(Panel panel)
     {
-        // Resource stats
-        foreach (Resources type in resources)
-        {
-            string name = Resource.active.GetName(type.resource);
-            Sprite sprite = Resource.active.GetSprite(type.resource);
-            panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
-        }
-
         panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
     }
 }

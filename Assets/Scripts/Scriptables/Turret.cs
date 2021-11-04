@@ -9,6 +9,8 @@ public class Turret : Building
     public float range;
     public float rotationSpeed;
     public float cooldown;
+
+    [Header("Bullet Variables")]
     public DefaultBullet bullet;
     public int bulletPierces;
     public int bulletAmount;

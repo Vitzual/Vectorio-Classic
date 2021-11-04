@@ -10,37 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6ab08a5e6a77c42b6910c46d3f4760, type: 3}
-  m_Name: Gold Storage
+  m_Name: Essence Collector
   m_EditorClassIdentifier: 
-  name: Gold Storage
-  description: Holds gold collected from drones. The amount of gold you have cannot
-    exceed the amount of storages you have.
-  obj: {fileID: 892923713960991008, guid: 3443fd56d25e59e4c8635dfeecf08aee, type: 3}
-  material: {fileID: 2100000, guid: 255a21e3ec3b6fb4793f6dc0eb4401eb, type: 2}
+  name: Essence Collector
+  description: Collects essence from essence nodes. Can only be placed on essence
+    nodes.
+  obj: {fileID: 892923713960991008, guid: c2eebc8be4acd174696c700b44eadce2, type: 3}
+  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
   gridSnap: 1
   hologramSize: 1
-  invOrder: 1
+  invOrder: 3
   invIndex: 1
   cells:
   - x: 0
     y: 0
   offset: {x: 0, y: 0}
-  health: 10
+  health: 25
   resources:
   - resource: 0
-    amount: 250
+    amount: 15000
     add: 0
     storage: 0
-  - resource: 0
-    amount: 1000
-    add: 1
-    storage: 1
   - resource: 3
-    amount: 25
+    amount: 50
     add: 1
     storage: 0
   - resource: 4
-    amount: 10
+    amount: 30
     add: 1
     storage: 0
   unlockOrder: 0

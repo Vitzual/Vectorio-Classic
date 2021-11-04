@@ -8,17 +8,18 @@ public class WorldGenerator : MonoBehaviour
     public static WorldGenerator active;
 
     // List of resource tiles
+    public Tilemap resourceGrid;
     public int borderSize = 750;
     public float perlinScale = 500;
-    [SerializeField] protected List<Spawnable> spawnables;
-    [HideInInspector] public Dictionary<Vector2Int, Spawnable> spawnedResources;
+    public Spawnable[] spawnables;
+    [HideInInspector] public Dictionary<Vector2Int, Resource.CurrencyType> spawnedResources;
 
     public void Awake() { active = this; }
 
     public void GenerateWorldData()
     {
         // Create a new resource grid
-        spawnedResources = new Dictionary<Vector2Int, Spawnable>();
+        spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
 
         // Set random seed
         Random.InitState(GameManager.seed.GetHashCode());
@@ -71,9 +72,8 @@ public class WorldGenerator : MonoBehaviour
         if (!spawnedResources.ContainsKey(coords))
         {
             // Create the resource
-            Spawnable temp = Instantiate(resource.gameObject, new Vector3(xPos, yPos, -1), Quaternion.identity).GetComponent<Spawnable>();
-            spawnedResources.Add(coords, temp);
-            temp.name = resource.name;
+            resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), resource.tile);
+            spawnedResources.Add(coords, resource.type);
         }
     }
 }

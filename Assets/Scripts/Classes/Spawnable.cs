@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class Spawnable : MonoBehaviour
+[System.Serializable]
+public class Spawnable
 {
     public Resource.CurrencyType type;
+    public TileBase tile;
     public float spawnScale;
     public float spawnThreshold;
     [HideInInspector] public float spawnOffset;

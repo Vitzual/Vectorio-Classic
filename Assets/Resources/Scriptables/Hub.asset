@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6ab08a5e6a77c42b6910c46d3f4760, type: 3}
-  m_Name: Wall
+  m_Name: Hub
   m_EditorClassIdentifier: 
-  name: Wall
-  description: It's a wall.
-  inventoryHeader: 0
+  name: Hub
+  description: The heart of your base. The hub automatically controls all buildings
+    and drones, without it, the base would fall!
+  inventoryHeader: 1
   inventoryIndex: 0
-  obj: {fileID: 8186868752073983356, guid: b45565eef60fc6c4fba5ffe1841691d7, type: 3}
-  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
-  health: 50
+  obj: {fileID: 5628938638249383938, guid: d4f5265620f10a748a88759a975e86b0, type: 3}
+  material: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
+  health: 250
   unlockable:
     type: 0
     description: 
@@ -30,10 +31,22 @@ MonoBehaviour:
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
   cells:
+  - x: 5
+    y: 5
+  - x: 0
+    y: 5
+  - x: -5
+    y: 5
+  - x: 5
+    y: 0
   - x: 0
     y: 0
-  resources:
-  - resource: 0
-    amount: 50
-    add: 0
-    storage: 0
+  - x: -5
+    y: 0
+  - x: 5
+    y: -5
+  - x: 0
+    y: -5
+  - x: -5
+    y: -5
+  resources: []

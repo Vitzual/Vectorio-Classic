@@ -12,22 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6ab08a5e6a77c42b6910c46d3f4760, type: 3}
   m_Name: Fusion Reactor
   m_EditorClassIdentifier: 
-  name: 
-  description: 
-  inventoryHeader: 0
-  inventoryIndex: 0
-  obj: {fileID: 0}
-  material: {fileID: 0}
-  health: 0
+  name: Fusion Reactor
+  description: An upgraded version of the Turbine. Converts heat from the entire
+    base into power, and is resistant to cooling buildings.
+  inventoryHeader: 1
+  inventoryIndex: 12
+  obj: {fileID: 1711705259399207453, guid: 83f2ee8f79ac85847863a4629351388b, type: 3}
+  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
+  health: 250
   unlockable:
-    type: 0
-    description: 
+    type: 1
+    description: Place 50x Turbine's
     unlocked: 0
     resource: 0
-    entity: {fileID: 0}
-    amount: 0
-  gridSnap: 0
+    entity: {fileID: 11400000, guid: 0938ca3a6eb4c9544ac6b29459d05e9e, type: 2}
+    amount: 50
+  gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  cells: []
-  resources: []
+  cells:
+  - x: 0
+    y: 0
+  resources:
+  - resource: 0
+    amount: 250000
+    add: 0
+    storage: 0
+  - resource: 3
+    amount: 800
+    add: 1
+    storage: 1
+  - resource: 4
+    amount: 250
+    add: 1
+    storage: 0

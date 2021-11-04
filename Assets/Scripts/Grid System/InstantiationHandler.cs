@@ -83,11 +83,7 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.name = building.name;
 
         // Set the tiles on the grid class
-        if (building.cells.Length > 0)
-        {
-            foreach (Building.Cell cell in building.cells)
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(lastBuilding.transform.position.x + cell.x, lastBuilding.transform.position.y + cell.y)), true, building, lastBuilding);
-        }
+        SetCells(building, position, lastBuilding); 
 
         // Update resource values promptly
         if (Gamemode.active.useResources)
@@ -109,6 +105,16 @@ public class InstantiationHandler : MonoBehaviour
 
         // Call buildings setup method
         lastBuilding.Setup();
+    }
+
+    public void SetCells(Building building, Vector2 position, BaseTile obj)
+    {
+        // Set the tiles on the grid class
+        if (building.cells.Length > 0)
+        {
+            foreach (Building.Cell cell in building.cells)
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), true, building, obj);
+        }
     }
 
     // Destroys a buildingg

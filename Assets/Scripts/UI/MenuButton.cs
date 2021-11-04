@@ -77,7 +77,7 @@ public class MenuButton : MonoBehaviour
         else
         {
             GetComponent<ButtonManagerBasic>().buttonText = "LOCKED";
-            desc.text = "<size=16>" + entity.unlockable.description;
+            desc.text = entity.unlockable.description;
             icon.sprite = Sprites.GetSprite("Locked");
         }
     }

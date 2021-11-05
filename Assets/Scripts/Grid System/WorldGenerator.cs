@@ -74,4 +74,14 @@ public class WorldGenerator : MonoBehaviour
             spawnedResources.Add(coords, resource.type);
         }
     }
+
+    // Check if a resource node exists
+    public bool CheckNode(Vector2Int coords, Resource.CurrencyType type)
+    {
+        Vector2Int adjustedCoords = new Vector2Int(coords.x / 5, coords.y / 5);
+
+        if (spawnedResources.ContainsKey(adjustedCoords) &&
+            spawnedResources[adjustedCoords] == type) return true;
+        else return false;
+    }
 }

@@ -136,6 +136,8 @@ public class InstantiationHandler : MonoBehaviour
                 Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));
                 if (tileGrid.RetrieveCell(coords) != null)
                     return false;
+                if (building.restrictPlacement && !WorldGenerator.active.CheckNode(coords, building.placedOn))
+                    return false;
             }
         }
         else
@@ -143,6 +145,8 @@ public class InstantiationHandler : MonoBehaviour
             // Check to make sure nothing occupying tile
             Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
             if (tileGrid.RetrieveCell(coords) != null)
+                return false;
+            if (building.restrictPlacement && !WorldGenerator.active.CheckNode(coords, building.placedOn))
                 return false;
         }
         return true;

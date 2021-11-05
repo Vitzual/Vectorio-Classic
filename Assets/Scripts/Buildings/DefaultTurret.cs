@@ -25,7 +25,7 @@ public class DefaultTurret : BaseTile, IAudible
         if (collider != null)
             collider.radius = turret.range;
         else Debug.LogError("Turret does not have a circle collider!");
-
+        
         material = turret.material;
         cooldown = turret.cooldown;
     }

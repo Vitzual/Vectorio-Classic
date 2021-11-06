@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // Fires the hub laser
+    public event Action fireHubLaser;
+    public void FireHubLaser()
+    {
+        if (fireHubLaser != null)
+            fireHubLaser();
+    }
+
     // Invoked when a bullet is fired
     public event Action<DefaultBullet, BaseEntity> onBulletFired;
     public void BulletFired(DefaultBullet bullet, BaseEntity target)

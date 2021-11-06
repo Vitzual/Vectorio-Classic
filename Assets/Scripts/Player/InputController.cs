@@ -28,6 +28,8 @@ public class InputController : MonoBehaviour
                 Debug.Log("Quit game!");
                 UIEvents.active.QuitGame();
             }
+            if (Input.GetKeyDown(Keybinds.test))
+                Events.active.FireHubLaser();
         }
         else
         {

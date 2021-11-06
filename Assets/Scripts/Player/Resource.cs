@@ -46,6 +46,14 @@ public class Resource : MonoBehaviour
         foreach (Currency currency in currencyElements)
             currencies.Add(currency.type, currency);
     }
+    
+    // Get currency class
+    public Currency GetCurrency(CurrencyType type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type];
+        else return null;
+    }
 
     // Add a resource
     public void Add(CurrencyType type, int amount, bool overrideStorage = false)

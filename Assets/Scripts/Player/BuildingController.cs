@@ -55,8 +55,8 @@ public class BuildingController : MonoBehaviour
         }
         else if (Input.GetKey(Keybinds.rmb)) CmdDestroyBuilding();
         else if (Input.GetKeyDown(Keybinds.rotate)) RotatePosition();
-        else if (Input.GetKeyDown(Keybinds.rmb)
-            || Input.GetKeyDown(Keybinds.escape)) SetEntity(null);
+        else if (Input.GetKeyDown(Keybinds.rmb) ||
+                 Input.GetKeyDown(Keybinds.escape)) SetEntity(null);
     }
 
     // Create building (command)

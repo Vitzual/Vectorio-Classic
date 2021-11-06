@@ -3,7 +3,7 @@
 public class Storage: BaseTile
 {
     // Declare local object variables
-    public int type;
+    public Resource.CurrencyType type;
     public int amount = 0;
     public bool isFull = false;
     public GameObject icon;
@@ -11,116 +11,53 @@ public class Storage: BaseTile
     // On start, invoke repeating SendGold() method
     public void Start()
     {
-        // Default values
         Events.active.StoragePlaced(this);
+        Resource.active.AddStorage(type, Research.GetStorageAmount(type));
+    }
 
-        // Add the storage
-        switch (type)
+    // Add resource to storage
+    public int AddResource(int amount)
+    {
+        // Add amount and grab storage amount
+        this.amount += amount;
+        int storage = Research.GetStorageAmount(type);
+
+        // Determine if amount exceeds storage
+        if (this.amount > storage)
         {
-            case 1:
-                Resource.active.AddStorage(Resource.CurrencyType.Gold, Research.research_gold_storage);
-                return;
-            case 2:
-                Resource.active.AddStorage(Resource.CurrencyType.Essence, Research.research_gold_storage);
-                return;
-            case 3:
-                Resource.active.AddStorage(Resource.CurrencyType.Iridium, Research.research_gold_storage);
-                return;
-        }
-    }
+            // If exceeds, set to max amount
+            int amountToReturn = this.amount - storage;
+            this.amount = storage;
 
-    public void EnableIcon()
-    {
-        icon.SetActive(true);
-    }
+            // Set full variables to true
+            isFull = true;
+            if (icon != null) icon.SetActive(true);
 
-    public void DisableIcon()
-    {
-        icon.SetActive(false);
-    }
-
-    public int TakeResources(int input)
-    {
-        int leftOver;
-
-        if (amount >= input)
-        {
-            amount -= input;
-            leftOver = 0;
+            // Add proper amount and return overflow
+            Resource.active.Add(type, amount - amountToReturn);
+            return amountToReturn;
         }
         else
         {
-            leftOver = input - amount;
-            amount = 0;
-        }     
-        
+            // If does not exceed, add resources and return
+            Resource.active.Add(type, amount);
+            return 0;
+        }
+    }
+
+    // Take resource
+    public int TakeResource()
+    {
+        int amountToReturn = amount;
+        amount = 0;
         isFull = false;
-        DisableIcon();
-        return leftOver;
+        if (icon != null) icon.SetActive(false);
+        return amountToReturn;
     }
 
-    /*
-    public void SendResources(int input)
+    // On destroy, override method and remove storage
+    public override void DestroyEntity()
     {
-        switch(type)
-        {
-            case 1:
-                //SRVSC.AddGold(input);
-                SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
-                return;
-            case 2:
-                //SRVSC.AddEssence(input);
-                SRVSC.UI.CreateResourcePopup("+ " + input, "Essence", transform.position);
-                return;
-            case 3:
-                //SRVSC.AddIridium(input);
-                SRVSC.UI.CreateResourcePopup("+ " + input, "Iridium", transform.position);
-                return;
-            default:
-                //SRVSC.AddGold(input);
-                SRVSC.UI.CreateResourcePopup("+ " + input, "Gold", transform.position);
-                return;
-        }
+        Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
     }
-    */
-
-    public int AddResources(int input, bool fromSave = false)
-    {
-        // Get the correct storage value
-        int storage = Research.research_gold_storage;
-        if (type == 2) storage = Research.research_essence_storage;
-        else if (type == 3) storage = Research.research_iridium_storage;
-
-        // Determine if icon should be enabled
-        // Return the amount not put in storage
-        int holder = amount + input;
-        if (holder > storage)
-        {
-            //if (!fromSave) SendResources(storage - amount);
-            EnableIcon();
-            amount = storage;
-            isFull = true;
-            return holder - storage;
-        }
-        else if (holder == storage)
-        {
-            //if (!fromSave) SendResources(input);
-            amount = holder;
-            EnableIcon();
-            isFull = true;
-            return 0;
-        }
-        else
-        {
-            //if (!fromSave) SendResources(input);
-            amount = holder;
-            return 0;
-        }
-    }
-
-    public Transform GetPosition()
-    {
-        return transform;
-    }
-
 }

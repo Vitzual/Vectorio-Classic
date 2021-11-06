@@ -42,7 +42,7 @@ public class Collector : BaseTile
         {
             if (collected > 0)
             {
-                Resource.active.Add(collectorType, GrabResources());
+                CollectorHandler.active.TransferResources(GrabResources(), collectorType);
                 isFull = false;
             }
         }

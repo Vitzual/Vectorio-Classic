@@ -12,11 +12,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     protected ParticleSystem particle;
     [HideInInspector] public Material material;
 
-    public virtual void Setup()
-    {
-        Debug.LogError("This object has a BaseEntity script attached to it!\n" +
-            "Please use a default script that inherits from BaseEntity instead.");
-    }
+    public virtual void Setup() { }
 
     // Damages the entity (IDamageable interface method)
     public virtual void DamageEntity(float dmg)

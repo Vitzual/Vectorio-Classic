@@ -8,12 +8,11 @@ public class BaseTile : BaseEntity
     [HideInInspector]
     public List<Vector2Int> cells;
 
-    public override void Setup()
+    public virtual void OnClick()
     {
-        Debug.LogError("This object has a BaseTile script attached to it!\n" +
-            "Please use a default script that inherits from BaseTile instead.");
+        // Override this method for on click behaviour
     }
-
+ 
     public override void DestroyEntity()
     {
         if (InstantiationHandler.active != null)

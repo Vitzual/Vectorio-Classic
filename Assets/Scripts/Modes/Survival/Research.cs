@@ -17,8 +17,8 @@ public class Research : MonoBehaviour
     public static float research_range;
     public static float research_firerate;
     public static float research_bulletspeed;
-    public static float research_gold_time;
-    public static int research_gold_yield;
+    public static float research_gold_time = 2f;
+    public static int research_gold_yield = 10;
     public static int research_gold_storage;
     public static float research_essence_time;
     public static int research_essence_yield;

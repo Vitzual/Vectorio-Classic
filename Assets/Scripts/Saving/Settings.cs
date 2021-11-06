@@ -77,9 +77,9 @@ public class Settings : MonoBehaviour
 
     public void LoadSettings()
     {
-        return;
 
-        // Load settings from file
+
+        /* Load settings from file
         SettingsData settings = SaveSystem.LoadSettings();
         if (settings == null)
         {
@@ -115,7 +115,7 @@ public class Settings : MonoBehaviour
         else if (settings.width == 1920 && settings.height == 1080) SetResolution(7);
         else if (settings.width == 2560 && settings.height == 1440) SetResolution(8);
         else SetResolution(7);
-
+        */
     }
 
     public void EnableControls()

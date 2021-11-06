@@ -49,8 +49,8 @@ public class BuildingController : MonoBehaviour
             if (entity != null) CmdCreateBuildable();
             else
             {
-                // BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
-                //if (holder != null) Events.active.BuildingClicked(holder);
+                BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
+                if (holder != null) holder.OnClick();
             }
         }
         else if (Input.GetKey(Keybinds.rmb)) CmdDestroyBuilding();

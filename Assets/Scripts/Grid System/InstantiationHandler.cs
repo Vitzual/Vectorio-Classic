@@ -121,7 +121,7 @@ public class InstantiationHandler : MonoBehaviour
     //[ClientRpc]
     public void RpcDestroyBuilding(Vector3 position)
     {
-        tileGrid.DestroyCell(Vector2Int.RoundToInt(position));
+        tileGrid.DestroyCell(GetCellCoords(position));
     }
 
     // Checks to make sure tile(s) isn't occupied
@@ -174,12 +174,29 @@ public class InstantiationHandler : MonoBehaviour
     // Attempts to return a building
     public BaseTile TryGetBuilding(Vector2 position)
     {
-        Cell cell = tileGrid.RetrieveCell(Vector2Int.RoundToInt(position));
+        Cell cell = tileGrid.RetrieveCell(GetCellCoords(position));
         if (cell != null)
         {
             BaseTile building = cell.obj.GetComponent<BaseTile>();
             return building;
         }
         return null;
+    }
+
+    // Get cell coords function
+    public Vector2Int GetCellCoords(Vector2 position)
+    {
+        // Create adjustment variables
+        float xAdjustment = 2.5f;
+        float yAdjustment = 2.5f;
+
+        // Calculate adjustment amount
+        if (position.x >= 0) xAdjustment = -xAdjustment;
+        if (position.y >= 0) yAdjustment = -yAdjustment;
+
+        // Get cell coordinate
+        position = new Vector2(position.x - xAdjustment, position.y - yAdjustment);
+        Vector2Int cellCoords = new Vector2Int((int)position.x / 5 * 5, (int)position.y / 5 *5);
+        return cellCoords;
     }
 }

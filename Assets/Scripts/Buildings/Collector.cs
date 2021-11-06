@@ -1,43 +1,51 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using UnityEngine;
 
 public class Collector : BaseTile
 {
     // Declare local object variables
-    public int collectorType;
+    public Resource.CurrencyType collectorType;
+    [HideInInspector] public float cooldown;
     [HideInInspector] public int collected;
     [HideInInspector] public bool enhanced;
-    private AnimateThenStop animator;
+    [HideInInspector] public bool isFull;
+    public int collectorStorage = 500;
+    public AnimateThenStop animator;
 
     // On start, invoke repeating SendGold() method
     public void Start()
     {
         Events.active.CollectorPlaced(this);
-
-        /*
-        switch (collectorType) {
-            case 1:
-                if (Research.research_gold_time >= 1 && !isOffset)
-                    InvokeRepeating("IncreaseGold", 0f, Research.research_gold_time);
-                else if (!isOffset) InvokeRepeating("IncreaseGold", 0f, 2f);
-                return;
-            case 2:
-                if (Research.research_essence_time >= 1 && !isOffset)
-                    InvokeRepeating("IncreaseEssence", 0f, Research.research_essence_time);
-                else if (!isOffset) InvokeRepeating("IncreaseEssence", 0f, 2f);
-                return;
-            case 3:
-                if (Research.research_iridium_time >= 1 && !isOffset)
-                    InvokeRepeating("IncreaseIridium", 0f, Research.research_iridium_time);
-                else if (!isOffset) InvokeRepeating("IncreaseIridium", 0f, 2f);
-                return;
-        }
-        */
+        cooldown = Research.research_gold_time;
     }
 
-    public void UpdateCollector()
+    // Add resources to collector
+    public void AddResources()
     {
-        // do stuff
+        if (isFull) return;
+
+        if (enhanced) collected += Research.research_gold_yield * 4;
+        else collected += Research.research_gold_yield;
+        cooldown = Research.research_gold_time;
+
+        if (collected > collectorStorage)
+        {
+            collected = collectorStorage;
+            isFull = true;
+        }
+    }
+
+    // On click override method
+    public override void OnClick()
+    {
+        if (Resource.active.GetAmount(collectorType) + collected < Resource.active.GetStorage(collectorType))
+        {
+            if (collected > 0)
+            {
+                Resource.active.Add(collectorType, GrabResources());
+                isFull = false;
+            }
+        }
     }
 
     public int GrabResources()

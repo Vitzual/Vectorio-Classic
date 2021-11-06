@@ -298,19 +298,19 @@ public class DroneManager : MonoBehaviour
                                 int holder;
                                 switch(drone.targetScript.collectorType)
                                 {
-                                    case 1:
+                                    case Resource.CurrencyType.Gold:
                                         drone.visitedGold = true;
                                         holder = drone.collectedGold;
                                         drone.collectedGold += drone.targetScript.GrabResources();
                                         if (holder != drone.collectedGold) drone.targetsLeft -= 1;
                                         break;
-                                    case 2:
+                                    case Resource.CurrencyType.Essence:
                                         drone.visitedEssence = true;
                                         holder = drone.collectedEssence;
                                         drone.collectedEssence += drone.targetScript.GrabResources();
                                         if(holder != drone.collectedEssence) drone.targetsLeft -= 1;
                                         break;
-                                    case 3:
+                                    case Resource.CurrencyType.Iridium:
                                         drone.visitedIridium = true;
                                         holder = drone.collectedIridium;
                                         drone.collectedIridium += drone.targetScript.GrabResources();

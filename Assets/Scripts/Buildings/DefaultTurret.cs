@@ -28,6 +28,8 @@ public class DefaultTurret : BaseTile, IAudible
         
         material = turret.material;
         cooldown = turret.cooldown;
+
+        base.Setup();
     }
 
     public virtual void RotateTurret()

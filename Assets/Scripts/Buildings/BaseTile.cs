@@ -8,6 +8,23 @@ public class BaseTile : BaseEntity
     [HideInInspector]
     public List<Vector2Int> cells;
 
+    public override void Setup() 
+    {
+        // Loop through all nearby drone ports
+        int adjustment = Research.research_drone_coverage * 5;
+        int xTile = (int)transform.position.x;
+        int yTile = (int)transform.position.y;
+
+        // Loop through all tiles and try to find drones
+        for(int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
+        {
+            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
+            {
+                
+            }
+        }
+    }
+
     public virtual void OnClick()
     {
         // Override this method for on click behaviour

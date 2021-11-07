@@ -26,20 +26,13 @@ public class Research : MonoBehaviour
     public static float research_iridium_time = 5f;
     public static int research_iridium_yield = 1;
     public static int research_iridium_storage = 100;
-    public static float research_construction_speed;
-    public static int research_construction_placements;
-    public static float research_resource_speed;
-    public static int research_resource_collections;
-    public static int research_resource_amount;
-    public static float research_resource_range;
-    public static float research_combat_speed;
-    public static float research_fixer_speed;
-    public static int research_fixer_amount;
-    public static int research_combat_targets;
     public static bool research_explosive_storages;
     public static bool research_explosive_defenses;
     public static bool research_explosive_collectors;
-    public static int research_research_speed;
+
+
+    // Drone research variables
+    public static int research_drone_coverage = 5;
     public static bool research_fixer_drones;
     public static bool research_combat_drones;
 

@@ -30,6 +30,8 @@ public class InputController : MonoBehaviour
             }
             if (Input.GetKeyDown(Keybinds.test))
                 Events.active.FireHubLaser();
+            if (Input.GetKeyDown(Keybinds.debug))
+                InstantiationHandler.active.RemoveDebugCircles();
         }
         else
         {

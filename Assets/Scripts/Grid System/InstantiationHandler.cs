@@ -14,6 +14,10 @@ public class InstantiationHandler : MonoBehaviour
     public static InstantiationHandler active;
     public LayerMask enemyLayer;
 
+    // Debug variables
+    public GameObject debugCircle;
+    public List<GameObject> activeCircles;
+
     public void Awake()
     {
         // Get reference to active instance
@@ -198,5 +202,19 @@ public class InstantiationHandler : MonoBehaviour
         position = new Vector2(position.x - xAdjustment, position.y - yAdjustment);
         Vector2Int cellCoords = new Vector2Int((int)position.x / 5 * 5, (int)position.y / 5 *5);
         return cellCoords;
+    }
+
+    // Spawn a debug circle
+    public void SpawnDebugCircle(Vector2 position)
+    {
+        activeCircles.Add(Instantiate(debugCircle, position, Quaternion.identity));
+    }
+
+    // Remove all debug circles
+    public void RemoveDebugCircles()
+    {
+        foreach (GameObject circle in activeCircles)
+            Recycler.AddRecyclable(circle.transform);
+        activeCircles = new List<GameObject>();
     }
 }

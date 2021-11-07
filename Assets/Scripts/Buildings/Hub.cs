@@ -7,7 +7,7 @@ public class Hub : BaseTile
     public Building hub;
 
     public ParticleSystem chargeParticle;
-    public ParticleSystem[] laserParticle;
+    public ParticleSystem laserParticle;
     public AudioSource laserSound;
     public bool laserFiring;
     public int laserPart;
@@ -20,8 +20,7 @@ public class Hub : BaseTile
         Events.active.fireHubLaser += FireLaser;
 
         chargeParticle.Stop();
-        foreach (ParticleSystem particle in laserParticle)
-            particle.Stop();
+        laserParticle.Stop();
 
         InstantiationHandler.active.SetCells(hub, transform.position, this);
     }
@@ -32,8 +31,7 @@ public class Hub : BaseTile
         laserPart = 1;
         laserFiring = true;
         chargeParticle.Stop();
-        foreach (ParticleSystem particle in laserParticle)
-            particle.Stop();
+        laserParticle.Stop();
         laserSound.Stop();
     }
 
@@ -55,8 +53,7 @@ public class Hub : BaseTile
                     cooldown -= Time.deltaTime;
                     if (cooldown <= 0)
                     {
-                        foreach (ParticleSystem particle in laserParticle)
-                            particle.Play();
+                        laserParticle.Play();
                         cooldown = 10f;
                         laserPart = 3;
                         CameraShake.ShakeAll();

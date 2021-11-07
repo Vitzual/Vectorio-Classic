@@ -44,6 +44,8 @@ public class DefaultWall : BaseTile
         foreach (RaycastHit2D rayHit in rayHits)
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(2, 4, rayHit.collider.GetComponent<DefaultWall>());
+
+        base.Setup();
     }
 
     public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)

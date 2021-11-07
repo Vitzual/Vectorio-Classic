@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostTile : BaseEntity
+public class GhostTile : BaseTile
 {
     // Ghos tile variables
     [HideInInspector] public Building building;
@@ -17,7 +17,7 @@ public class GhostTile : BaseEntity
     }
 
     // Called when drone reaches target
-    public override void Setup()
+    public void CreateBuilding()
     {
         InstantiationHandler.active.CreateBuilding(building, transform.position, transform.rotation);
         Recycler.AddRecyclable(transform);

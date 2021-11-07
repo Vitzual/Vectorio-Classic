@@ -12,7 +12,15 @@ public class BaseEntity : MonoBehaviour, IDamageable
     protected ParticleSystem particle;
     [HideInInspector] public Material material;
 
-    public virtual void Setup() { }
+    public virtual void Setup() 
+    {
+        // Override this method to use Setup() call from Instation Handler
+    }
+
+    public virtual void ApplyMetadata(int data)
+    {
+        // Override this method to use metadata integer from Instation Handler
+    }
 
     // Damages the entity (IDamageable interface method)
     public virtual void DamageEntity(float dmg)

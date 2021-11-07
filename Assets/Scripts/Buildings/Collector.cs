@@ -1,14 +1,11 @@
 ﻿ using System.Collections;
 using UnityEngine;
 
-public class Collector : BaseTile
+public class Collector : BaseResource
 {
     // Declare local object variables
-    public Resource.CurrencyType collectorType;
     [HideInInspector] public float cooldown;
-    [HideInInspector] public int collected;
     [HideInInspector] public bool enhanced;
-    [HideInInspector] public bool isFull;
     public int collectorStorage = 500;
     public AnimateThenStop animator;
 
@@ -24,13 +21,13 @@ public class Collector : BaseTile
     {
         if (isFull) return;
 
-        if (enhanced) collected += Research.research_gold_yield * 4;
-        else collected += Research.research_gold_yield;
+        if (enhanced) amount += Research.research_gold_yield * 4;
+        else amount += Research.research_gold_yield;
         cooldown = Research.research_gold_time;
 
-        if (collected > collectorStorage)
+        if (amount > collectorStorage)
         {
-            collected = collectorStorage;
+            amount = collectorStorage;
             isFull = true;
         }
     }
@@ -38,11 +35,11 @@ public class Collector : BaseTile
     // On click override method
     public override void OnClick()
     {
-        if (Resource.active.GetAmount(collectorType) + collected < Resource.active.GetStorage(collectorType))
+        if (Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
         {
-            if (collected > 0)
+            if (amount > 0)
             {
-                CollectorHandler.active.TransferResources(GrabResources(), collectorType);
+                CollectorHandler.active.TransferResources(GrabResources(), type);
                 isFull = false;
             }
         }
@@ -56,8 +53,8 @@ public class Collector : BaseTile
         animator.enabled = true;
 
         // Set values
-        int holder = collected;
-        collected = 0;
+        int holder = amount;
+        amount = 0;
         return holder;
     }
 

@@ -8,7 +8,7 @@ public class BaseTile : BaseEntity
     [HideInInspector]
     public List<Vector2Int> cells;
 
-    public override void Setup() 
+    public override void Setup()
     {
         // Loop through all nearby drone ports
         int adjustment = Research.research_drone_coverage * 5;
@@ -16,20 +16,22 @@ public class BaseTile : BaseEntity
         int yTile = (int)transform.position.y;
 
         // Loop through all tiles and try to find drones
-        for(int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
+        for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5) 
         {
-            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
+            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5) 
             {
-                
+                Dronehub holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)).GetComponent<Dronehub>();
+                if (holder != null) holder.AddTarget(this);
             }
-        }
+        } 
     }
 
     public virtual void OnClick()
     {
         // Override this method for on click behaviour
     }
- 
+
+
     public override void DestroyEntity()
     {
         if (InstantiationHandler.active != null)

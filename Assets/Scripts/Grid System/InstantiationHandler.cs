@@ -13,6 +13,7 @@ public class InstantiationHandler : MonoBehaviour
     // Building variables
     public static InstantiationHandler active;
     public LayerMask enemyLayer;
+    public int metadata = -1;
 
     // Debug variables
     public GameObject debugCircle;
@@ -107,7 +108,8 @@ public class InstantiationHandler : MonoBehaviour
             }
         }
 
-        // Call buildings setup method
+        // Call buildings setup method and metadata method if metadata is applied
+        if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
     }
 

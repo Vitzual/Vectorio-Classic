@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 
-public class Storage: BaseTile
+public class Storage: BaseResource
 {
     // Declare local object variables
-    public Resource.CurrencyType type;
-    public int amount = 0;
-    public bool isFull = false;
     public GameObject icon;
 
     // On start, invoke repeating SendGold() method

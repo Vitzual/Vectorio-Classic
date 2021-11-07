@@ -8,12 +8,15 @@ public class DroneManager : MonoBehaviour
     public static DroneManager active;
     public void Awake() { active = this; }
 
-    // Drone coverage dictionary
-    public Dictionary<Vector2Int, List<Dronehub>> coverage;
+    // Active drones
+    public List<Drone> drones;
 
+    // Move drones
+    public void Start()
+    {
+        for (int i = 0; i < drones.Count; i++)
+        {
 
-
-
-
-    
+        }
+    }
 }

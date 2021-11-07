@@ -234,7 +234,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
   m_SortingLayer: 11
-  m_SortingOrder: 20
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: eb151544d6cf2a04aa90e14303640371, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -562,7 +562,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
   m_SortingLayer: 11
-  m_SortingOrder: 20
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8bb07d600498f1b48835927c037f1be6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -629,50 +629,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b71c37e1864fe4b893b285ae8b5903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  building: {fileID: 0}
-  droneManager: {fileID: 0}
+  material: {fileID: 0}
+  cells: []
+  droneType: 1
+  nearbyTargets: []
   BlueLight: {fileID: 3306295738215408942}
   YellowLight: {fileID: 269444953848316601}
-  droneActive: 0
-  checkDrone: 0
-  droneType: 1
-  offsetStart: 0
-  activeDrone: {fileID: 0}
-  constructorDrone: {fileID: 8602418881959610668, guid: 4d5dea192be36ab44ba075731ab29756,
-    type: 3}
-  resourceDrone: {fileID: 8602418881959610668, guid: 1a6e616a6ed11394d929af0e1f36128e,
-    type: 3}
-  combatDrone: {fileID: 8602418881959610668, guid: 87c7239e60e60d649a9ec53a0ec95e61,
-    type: 3}
   leftPanel: {fileID: 400359186113548949}
   rightPanel: {fileID: 8437684921361694069}
-  resourcePort: 0
-  resourceScript:
-    plates: []
-    storagesAvailable: 0
-    visitedCollectors: []
-    availableCollectors: []
-    availableStorages: []
-    body: {fileID: 0}
-    port: {fileID: 0}
-    target: {fileID: 0}
-    targetScript: {fileID: 0}
-    collectedGold: 0
-    visitedGold: 0
-    collectedEssence: 0
-    visitedEssence: 0
-    collectedIridium: 0
-    visitedIridium: 0
-    targetsLeft: 0
-    targetType: 0
-    check: 0
-    platesOpening: 0
-    platesClosing: 0
-  isAnimating: 0
-  animSpeed: 1
-  buildingIcon: {fileID: 0}
 --- !u!61 &3437550930469308349
 BoxCollider2D:
   m_ObjectHideFlags: 0

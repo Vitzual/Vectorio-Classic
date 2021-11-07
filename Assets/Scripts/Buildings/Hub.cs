@@ -12,7 +12,7 @@ public class Hub : BaseTile
     public bool laserFiring;
     public int laserPart;
     public float cooldown = 5f;
-
+    public GameObject UI;
 
     // On start, assign weapon variables
     void Start()
@@ -28,6 +28,7 @@ public class Hub : BaseTile
 
     public void FireLaser()
     {
+        UI.SetActive(false);
         laserPart = 1;
         laserFiring = true;
         chargeParticle.Stop();
@@ -67,6 +68,7 @@ public class Hub : BaseTile
                     {
                         laserPart = 1;
                         laserFiring = false;
+                        UI.SetActive(true);
                     }
                     break;
             }

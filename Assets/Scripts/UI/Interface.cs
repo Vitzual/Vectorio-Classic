@@ -207,15 +207,6 @@ public class Interface : MonoBehaviour
         EngineerCooldown.text = a;
     }
 
-    // Activates an engineers UI panel
-    public void OpenDronePort()
-    {
-        builderDronesActive.text = drone.constructionDrones.Count + drone.availableConstructionDrones.Count + " Currently Active";
-        resourceDronesActive.text = drone.resourceDrone.Count + " Currently Active";
-        dronePortUI.SetActive(true);
-        DroneOpen = true;
-    }
-
     // Deactivates an engineers UI panel
     public void CloseDronePort()
     {

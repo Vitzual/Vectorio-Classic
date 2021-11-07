@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drone : MonoBehaviour
+[System.Serializable]
+public class Drone
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // Target variables
+    public GhostTile target;
+    public Sprite targetIcon;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
+    

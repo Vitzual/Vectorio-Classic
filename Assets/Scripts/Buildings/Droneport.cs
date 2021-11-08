@@ -29,7 +29,7 @@ public class Droneport : BaseTile
     public void CreateDrone(Drone.DroneType type)
     {
         // If a drone has been instantiated, remove it
-        if (drone != null) Destroy(drone.gameObject);
+        if (drone != null) drone.Destroy();
 
         // Loop through drones, and create new one
         foreach (Drone newDrone in _drones)
@@ -86,10 +86,17 @@ public class Droneport : BaseTile
         return leftPanel.localPosition.x <= 0;
     }
 
+    // Add a target
+    public void AddTarget(BaseTile tile)
+    {
+        if (drone != null)
+            drone.AddTarget(tile);
+    }
+
     // Destroy entity
     public override void DestroyEntity()
     {
-        Recycler.AddRecyclable(drone.transform);
+        drone.Destroy();
         base.DestroyEntity();
     }
 }

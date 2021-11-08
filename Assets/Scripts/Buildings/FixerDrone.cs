@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class FixerDrone : Drone
 {
-    // Create the drone
-    public void Start()
+    public override void AddTarget(BaseTile tile)
     {
-        drone = Instantiate(_droneObj, transform.position, Quaternion.identity).GetComponent<Drone>();
-        DroneManager.active.fixerDrones.Add(this);
-        drone.type = Drone.Type.Fixer;
-        drone.home = this;
+        if (tile == null) return;
+        else nearbyTargets.Add(tile);
     }
 }

@@ -114,6 +114,52 @@ public class Resource : MonoBehaviour
         }
     }
 
+
+    // Remove a resource based on building
+    public void ApplyResources(Building building)
+    {
+        // Update resource values promptly
+        if (Gamemode.active.useResources)
+        {
+            foreach (Building.Resources resource in building.resources)
+            {
+                if (resource.storage)
+                {
+                    if (resource.add) active.AddStorage(resource.resource, resource.amount);
+                    else active.RemoveStorage(resource.resource, resource.amount);
+                }
+                else
+                {
+                    if (resource.add) active.Add(resource.resource, resource.amount);
+                    else active.Remove(resource.resource, resource.amount);
+                }
+            }
+        }
+    }
+
+
+    // Remove a resource based on building
+    public void RevertResources(Building building)
+    {
+        // Update resource values promptly
+        if (Gamemode.active.useResources)
+        {
+            foreach (Building.Resources resource in building.resources)
+            {
+                if (resource.storage)
+                {
+                    if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
+                    else active.AddStorage(resource.resource, resource.amount);
+                }
+                else
+                {
+                    if (resource.add) active.Remove(resource.resource, resource.amount);
+                    else active.Add(resource.resource, resource.amount);
+                }
+            }
+        }
+    }
+
     // Check a resource amount
     public int GetAmount(CurrencyType type)
     {

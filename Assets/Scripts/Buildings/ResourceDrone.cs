@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class ResourceDrone : Drone
 {
-    // Create the drone
-    public void Start()
-    {
-        drone = Instantiate(_droneObj, transform.position, Quaternion.identity).GetComponent<Drone>();
-        DroneManager.active.resourceDrones.Add(this);
-        drone.type = Drone.Type.Resource;
-        drone.home = this;
-    }
-
+    
     public override void AddTarget(BaseTile tile)
     {
         if (tile == null) return;

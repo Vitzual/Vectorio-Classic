@@ -31,17 +31,22 @@ public class Drone : MonoBehaviour
     // Nearby targets
     [HideInInspector] public List<BaseEntity> nearbyTargets;
 
+    // NOTE ABOUT VIRTUAL METHODS
+    //
+    // For optimization purposes, even though the Drone class
+    // controls a majority of the logic for drones, DroneManager.cs
+    // is the true driver class. Some methods on specific drones
+    // will NOT be called unless a condition is first passed on 
+    // the drone manager. Please be weary of this if you're adding
+    // new drones, and try to use the DroneManager singleton to
+    // optimize logic as much as possible.
+
     // Specifies if the drone should add a certain target
     public virtual void AddTarget(BaseTile tile) 
     { 
         nearbyTargets.Add(tile); 
     }
 
-    // Specifies how drone should check deployment conditions
-    public virtual void CheckConditions()
-    {
-        if (target != null) ExitPort();
-    }
 
     // Specifies what the drone should do when it is deployed
     public virtual void ExitPort()
@@ -66,9 +71,10 @@ public class Drone : MonoBehaviour
     }
 
     // Specifies how the target should move (dont override for straight line)
-    public virtual void Move() 
+    public virtual void Move()
     {
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, target.transform.position) < 0.1f) TargetReached();
     }
 
     // Specifies what the drone should do when it reaches it's target
@@ -103,6 +109,12 @@ public class Drone : MonoBehaviour
     {
         Vector2 lookDirection = new Vector2(target.transform.position.x, target.transform.position.y) - new Vector2(transform.position.x, transform.position.y);
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+    }
+
+    // Destroy drone method
+    public virtual void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
     

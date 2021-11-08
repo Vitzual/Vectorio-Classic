@@ -77,25 +77,10 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.name = building.name;
 
         // Set the tiles on the grid class
-        SetCells(building, position, lastBuilding); 
+        SetCells(building, position, lastBuilding);
 
         // Update resource values promptly
-        if (Gamemode.active.useResources)
-        {
-            foreach (Building.Resources resource in building.resources)
-            {
-                if (resource.storage)
-                {
-                    if (resource.add) Resource.active.AddStorage(resource.resource, resource.amount);
-                    else Resource.active.RemoveStorage(resource.resource, resource.amount);
-                }
-                else
-                {
-                    if (resource.add) Resource.active.Add(resource.resource, resource.amount);
-                    else Resource.active.Remove(resource.resource, resource.amount);
-                }
-            }
-        }
+        Resource.active.ApplyResources(building);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);

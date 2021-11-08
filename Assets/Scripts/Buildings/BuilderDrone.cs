@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class BuilderDrone : Drone
 {
-    // Create the drone
-    public void Start()
+
+
+    public override void AddTarget(BaseTile tile)
     {
-        drone = Instantiate(_droneObj, transform.position, Quaternion.identity).GetComponent<Drone>();
-        DroneManager.active.builderDrones.Add(this);
-        drone.type = Drone.Type.Builder;
-        drone.home = this;
+        if (tile == null) return;
+        else if (tile.GetComponent<GhostTile>() != null) nearbyTargets.Add(tile);
+    }
+
+    public override void Destroy()
+    {
+        if (stage == Stage.ExitingPort || stage == Stage.MovingToTarget)
+            Resource.active.RevertResources(target.GetComponent<GhostTile>().building);
+        base.Destroy();
     }
 }

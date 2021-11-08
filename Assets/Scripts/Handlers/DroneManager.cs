@@ -14,6 +14,7 @@ public class DroneManager : MonoBehaviour
     public List<BaseTile> damagedTiles;
 
     // Available drones 
+    public List<Drone> hubDrones;
     public List<Drone> builderDrones;
     public List<Drone> resourceDrones;
     public List<Drone> fixerDrones;
@@ -25,7 +26,10 @@ public class DroneManager : MonoBehaviour
     public void AddDrone(Drone drone)
     {
         if (drone.type == Drone.DroneType.Builder)
-            builderDrones.Add(drone);
+        {
+            if (drone.home.hubDrone) hubDrones.Add(drone);
+            else builderDrones.Add(drone);
+        }
         else if (drone.type == Drone.DroneType.Resource)
             resourceDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Fixer)
@@ -33,7 +37,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Move drones
-    public void Start()
+    public void Update()
     {
         UpdateConstructionDrones();
         UpdateActiveDrones();
@@ -78,18 +82,24 @@ public class DroneManager : MonoBehaviour
     // Check construction drones
     public void UpdateConstructionDrones()
     {
-        if (ghostTiles.Count > 0 && builderDrones.Count > 0)
+        bool hubDronesAvailable = hubDrones.Count > 0;
+
+        if (ghostTiles.Count > 0 && (builderDrones.Count > 0 || hubDronesAvailable))
         {
             for (int a = 0; a < ghostTiles.Count; a++)
             {
                 if (InstantiationHandler.active.CheckResources(ghostTiles[a].building))
                 {
+                    // Check all active builder ports
                     for (int b = 0; b < builderDrones.Count; b++)
                     {
                         if (builderDrones[b].nearbyTargets.Contains(ghostTiles[a]))
                         {
+                            // Drone assigned
+                            Debug.Log("Drone assigned");
+
                             // Set target
-                            builderDrones[b].target = ghostTiles[a];
+                            builderDrones[b].SetTarget(ghostTiles[a]);
                             builderDrones[b].ExitPort();
 
                             // Take resources
@@ -103,6 +113,25 @@ public class DroneManager : MonoBehaviour
                             // End loop
                             return;
                         }
+                    }
+
+                    // If no builder ports available, default to hub ports
+                    if (hubDronesAvailable)
+                    {
+                        // Set target
+                        hubDrones[0].SetTarget(ghostTiles[a]);
+                        hubDrones[0].ExitPort();
+
+                        // Take resources
+                        Resource.active.ApplyResources(ghostTiles[a].building);
+
+                        // Update lsits
+                        activeDrones.Add(hubDrones[0]);
+                        ghostTiles.RemoveAt(a);
+                        hubDrones.RemoveAt(0);
+
+                        // End loop
+                        return;
                     }
                 }
             }

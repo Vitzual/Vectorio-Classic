@@ -43,16 +43,7 @@ public class Grid
 
     public void RemoveCell(Vector2Int coords)
     {
-        if (cells.TryGetValue(coords, out Cell cell))
-        {
-            BaseTile building = cell.obj.GetComponent<BaseTile>();
-
-            if (building != null)
-            {
-                for (int i = 0; i < building.cells.Count; i++)
-                    cells.Remove(building.cells[i]);
-            }
-        }
+        if (cells.ContainsKey(coords)) cells.Remove(coords);
     }
 
     public void DestroyCell(Vector2Int coords)

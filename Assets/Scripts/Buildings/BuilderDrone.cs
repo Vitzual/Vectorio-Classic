@@ -4,7 +4,31 @@ using UnityEngine;
 
 public class BuilderDrone : Drone
 {
+    public bool buildingPlaced = false;
+    public SpriteRenderer buildingIcon;
 
+    public override void ExitPort()
+    {
+        buildingPlaced = false;
+        base.ExitPort();
+    }
+
+    public override void SetTarget(BaseTile tile)
+    {
+        buildingIcon.sprite = Sprites.GetSprite(tile.name);
+        base.SetTarget(tile);
+    }
+
+    public override void TargetReached()
+    {
+        if (!buildingPlaced)
+        {
+            buildingIcon.sprite = Sprites.GetSprite("Transparent");
+            target.GetComponent<GhostTile>().CreateBuilding();
+            buildingPlaced = true;
+        }
+        base.TargetReached();
+    }
 
     public override void AddTarget(BaseTile tile)
     {
@@ -14,8 +38,7 @@ public class BuilderDrone : Drone
 
     public override void Destroy()
     {
-        if (stage == Stage.ExitingPort || stage == Stage.MovingToTarget)
-            Resource.active.RevertResources(target.GetComponent<GhostTile>().building);
+        if (!buildingPlaced) Resource.active.RevertResources(target.GetComponent<GhostTile>().building);
         base.Destroy();
     }
 }

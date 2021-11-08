@@ -26,7 +26,8 @@ public class Research : MonoBehaviour
 
     // Drone research variables
     public static int drone_tile_coverage = 5;
-    public static float drone_deployment_speed = 4f;
+    public static float drone_deployment_speed = 3f;
+    public static float drone_movement_speed = 15f;
 
     // Currency get variables (I hate this, and will redo it)
     public static int GetStorageAmount(Resource.CurrencyType type)

@@ -20,8 +20,12 @@ public class BaseTile : BaseEntity
         {
             for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5) 
             {
-                Droneport holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)).GetComponent<Droneport>();
-                if (holder != null) holder.AddTarget(this);
+                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
+                if (holder != null)
+                {
+                    Droneport droneport = holder.GetComponent<Droneport>();
+                    if (droneport != null) droneport.AddTarget(this);
+                }
             }
         } 
     }

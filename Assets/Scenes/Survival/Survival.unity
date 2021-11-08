@@ -1814,6 +1814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f03b02606af76409f8a439ba4eeb57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ghostTile: {fileID: 4475251444731035410, guid: 4d77ce30009948444a92dc93e0386a5c,
+    type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 768
@@ -19667,6 +19669,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921657519}
   m_CullTransparentMesh: 1
+--- !u!1 &928739141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8229183522882795461, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237578056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &928739143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928739141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  cells: []
+  hubDrone: 1
+  building: {fileID: 0}
+  drone: {fileID: 0}
+  droneTypes: []
+  leftPanel: {fileID: 0}
+  rightPanel: {fileID: 0}
 --- !u!1 &949711677
 GameObject:
   m_ObjectHideFlags: 0
@@ -25714,6 +25742,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215015198}
   m_CullTransparentMesh: 0
+--- !u!1 &1224990403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3965742487616333586, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237578056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1224990405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224990403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  cells: []
+  hubDrone: 1
+  building: {fileID: 0}
+  drone: {fileID: 0}
+  droneTypes: []
+  leftPanel: {fileID: 0}
+  rightPanel: {fileID: 0}
 --- !u!1 &1225109440
 GameObject:
   m_ObjectHideFlags: 0
@@ -26196,15 +26250,30 @@ PrefabInstance:
       propertyPath: sceneId
       value: 4164717216
       objectReference: {fileID: 0}
+    - target: {fileID: 1017235122848573957, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1039791282524848770, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 1075203941701220971, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1222892686102786391, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278694378824438189, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1282393862464631984, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -26216,6 +26285,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 1419533700854537435, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628823600555258776, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26225,6 +26299,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847540830323231520, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1974938734631433103, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -26251,10 +26330,31 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 2223909831076697474, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: hubDrone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223909831076697474, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223909831076697474, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e,
+        type: 3}
     - target: {fileID: 2325122574587355901, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2384434608587101358, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2501214043556431569, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -26266,6 +26366,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b9b0562c110345f47b9878735bb519d1, type: 2}
+    - target: {fileID: 2626273555590040491, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: hubDrone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626273555590040491, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626273555590040491, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e,
+        type: 3}
     - target: {fileID: 2718501922826145453, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26326,11 +26442,47 @@ PrefabInstance:
       propertyPath: sceneId
       value: 937732889
       objectReference: {fileID: 0}
+    - target: {fileID: 4710055909122468536, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856684761318479546, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856684761318479546, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856684761318479546, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 50330467
+      objectReference: {fileID: 0}
     - target: {fileID: 5011181128688804725, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 5028816642439539730, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: hubDrone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5028816642439539730, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5028816642439539730, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e,
+        type: 3}
     - target: {fileID: 5449982485912265069, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26421,6 +26573,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5670842938317524201, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670842938317524201, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670842938317524201, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 50330467
+      objectReference: {fileID: 0}
     - target: {fileID: 5759442190501786952, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26441,6 +26608,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 6274420229178507607, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6276061774457259090, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26455,6 +26627,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580917713793577961, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580917713793577961, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580917713793577961, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 50330467
       objectReference: {fileID: 0}
     - target: {fileID: 6884907246935451255, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -26602,6 +26789,22 @@ PrefabInstance:
       propertyPath: sceneId
       value: 1291750687
       objectReference: {fileID: 0}
+    - target: {fileID: 7484770743734415653, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: hubDrone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484770743734415653, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484770743734415653, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: droneTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e,
+        type: 3}
     - target: {fileID: 7494829022848196682, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -26611,6 +26814,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609705786000320457, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609705786000320457, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609705786000320457, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 50330467
       objectReference: {fileID: 0}
     - target: {fileID: 7648230570019369343, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -36607,6 +36825,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671183003}
   m_CullTransparentMesh: 0
+--- !u!1 &1673198443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1222892686102786391, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237578056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1673198445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673198443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  cells: []
+  hubDrone: 1
+  building: {fileID: 0}
+  drone: {fileID: 0}
+  droneTypes: []
+  leftPanel: {fileID: 0}
+  rightPanel: {fileID: 0}
 --- !u!1 &1680836450
 GameObject:
   m_ObjectHideFlags: 0
@@ -42985,6 +43229,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2141128581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5011181128688804725, guid: d4f5265620f10a748a88759a975e86b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237578056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2141128583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141128581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  cells: []
+  hubDrone: 1
+  building: {fileID: 0}
+  drone: {fileID: 0}
+  droneTypes: []
+  leftPanel: {fileID: 0}
+  rightPanel: {fileID: 0}
 --- !u!222 &76849155043796875
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46200,6 +46470,7 @@ MonoBehaviour:
   ghostTiles: []
   resourceTiles: []
   damagedTiles: []
+  hubDrones: []
   builderDrones: []
   resourceDrones: []
   fixerDrones: []
@@ -50438,7 +50709,7 @@ MonoBehaviour:
   version: v0.3
   difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   useResources: 0
-  useDroneConstruction: 0
+  useDroneConstruction: 1
   generateWorld: 1
   unlockEverything: 1
   initBuildings: 1

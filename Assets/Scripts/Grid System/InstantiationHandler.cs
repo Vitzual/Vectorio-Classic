@@ -12,6 +12,7 @@ public class InstantiationHandler : MonoBehaviour
 
     // Building variables
     public static InstantiationHandler active;
+    public GhostTile ghostTile;
     public LayerMask enemyLayer;
     public int metadata = -1;
 
@@ -40,7 +41,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Building building, Vector2 position, Quaternion rotation)
+    public void CreateBuilding(Building building, Vector2 position, Quaternion rotation, bool isGhost = true)
     {
         // Check if entity is null
         if (building == null) return;
@@ -52,7 +53,8 @@ public class InstantiationHandler : MonoBehaviour
         if (!CheckTiles(building, position)) return;
 
         // Instantiate the object like usual
-        RpcInstantiateBuilding(building, position, rotation);
+        if (Gamemode.active.useDroneConstruction && isGhost) RpcInstatiateGhost(building, position, rotation);
+        else RpcInstantiateBuilding(building, position, rotation);
     }
 
     //[ClientRpc]
@@ -80,11 +82,27 @@ public class InstantiationHandler : MonoBehaviour
         SetCells(building, position, lastBuilding);
 
         // Update resource values promptly
-        Resource.active.ApplyResources(building);
+        if (!Gamemode.active.useDroneConstruction)
+            Resource.active.ApplyResources(building);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
+    }
+
+    //[ClientRpc]
+    private void RpcInstatiateGhost(Building building, Vector2 position, Quaternion rotation)
+    {
+        // Create the tile
+        GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
+        holder.name = building.name;
+
+        // Setup the ghost tile
+        holder.SetBuilding(building);
+        DroneManager.active.ghostTiles.Add(holder);
+
+        // Set the tiles on the grid class
+        SetCells(building, position, holder);
     }
 
     public bool CheckResources(Building building)

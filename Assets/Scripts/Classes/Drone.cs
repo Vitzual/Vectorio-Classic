@@ -21,12 +21,13 @@ public class Drone : MonoBehaviour
         ReturningToPort,
         EnteringPort
     }
-    [HideInInspector] public Stage stage;
+    public Stage stage;
 
     // Drone variables
     [HideInInspector] public Droneport home;
     [HideInInspector] public BaseEntity target;
     [HideInInspector] public float droneSpeed;
+    public SpriteRenderer droneIcon;
 
     // Nearby targets
     [HideInInspector] public List<BaseEntity> nearbyTargets;
@@ -47,6 +48,11 @@ public class Drone : MonoBehaviour
         nearbyTargets.Add(tile); 
     }
 
+    // Specifies if the drone should do anything while setting target
+    public virtual void SetTarget(BaseTile tile)
+    {
+        target = tile;
+    }
 
     // Specifies what the drone should do when it is deployed
     public virtual void ExitPort()
@@ -66,27 +72,39 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do when it starts it's route
     public virtual void StartRoute()
     {
-        if (stage == Stage.ReadyToDeploy) ExitPort();
-        else stage = Stage.MovingToTarget;
+        droneSpeed = Research.drone_movement_speed;
+        droneIcon.sortingOrder = 2;
+        stage = Stage.MovingToTarget;
     }
 
     // Specifies how the target should move (dont override for straight line)
     public virtual void Move()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, target.transform.position) < 0.1f) TargetReached();
+        if (target != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, target.transform.position) < 0.1f) TargetReached();
+        }
+        else if (home != null) target = home;
+        else Destroy();
     }
 
     // Specifies what the drone should do when it reaches it's target
     public virtual void TargetReached() 
     {
-        stage = Stage.ReturningToPort;
-        target = home;
+        if (stage == Stage.MovingToTarget)
+        {
+            stage = Stage.ReturningToPort;
+            target = home;
+            RotateToTarget();
+        }
+        else EnterPort();
     }
 
     // Specifies what the drone should do when it reaches home
     public virtual void EnterPort()
     {
+        droneIcon.sortingOrder = 0;
         stage = Stage.EnteringPort;
     }
 

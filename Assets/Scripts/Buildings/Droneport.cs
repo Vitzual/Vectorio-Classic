@@ -4,18 +4,28 @@ using System.Collections.Generic;
 
 public class Droneport : BaseTile
 {
+    // Hub drone boolean
+    public bool hubDrone = false;
+
     // Holds a reference to scriptable object
     public Building building;
 
     // Holds the drone type and object
-    public Drone drone;
+    [HideInInspector] public Drone drone;
 
     // List of drones
-    public List<Drone> _drones;
+    public List<Drone> droneTypes;
 
     // Side panels 
     public Transform leftPanel;
     public Transform rightPanel;
+
+    // Only for hub drones
+    public void Start()
+    {
+        if (hubDrone)
+            CreateDrone(Drone.DroneType.Builder);
+    }
 
     // Apply metadata
     public override void ApplyMetadata(int data)
@@ -32,7 +42,7 @@ public class Droneport : BaseTile
         if (drone != null) drone.Destroy();
 
         // Loop through drones, and create new one
-        foreach (Drone newDrone in _drones)
+        foreach (Drone newDrone in droneTypes)
             if (newDrone.type == type)
                 drone = Instantiate(newDrone, transform.position, Quaternion.identity).GetComponent<Drone>();
 
@@ -40,8 +50,11 @@ public class Droneport : BaseTile
         if (drone == null)
         {
             Debug.Log("A drone with a specified type could not be created. Please add it to Drone list");
-            drone = Instantiate(_drones[0], transform.position, Quaternion.identity).GetComponent<Drone>();
+            drone = Instantiate(droneTypes[0], transform.position, Quaternion.identity).GetComponent<Drone>();
         }
+
+        // Set home
+        drone.home = this;
 
         // Add drone to active drone list
         DroneManager.active.AddDrone(drone);
@@ -68,6 +81,9 @@ public class Droneport : BaseTile
 
         // Set material
         material = building.material;
+
+        // Call base method
+        base.Setup();
     }
 
     // Open doors
@@ -75,7 +91,7 @@ public class Droneport : BaseTile
     {
         leftPanel.Translate(Vector3.left * Time.deltaTime * Research.drone_deployment_speed);
         rightPanel.Translate(Vector3.right * Time.deltaTime * Research.drone_deployment_speed);
-        return leftPanel.localPosition.x >= 2;
+        return rightPanel.localPosition.x >= 2;
     }
 
     // Close doors
@@ -83,7 +99,7 @@ public class Droneport : BaseTile
     {
         leftPanel.Translate(Vector3.right * Time.deltaTime * Research.drone_deployment_speed);
         rightPanel.Translate(Vector3.left * Time.deltaTime * Research.drone_deployment_speed);
-        return leftPanel.localPosition.x <= 0;
+        return rightPanel.localPosition.x <= 0;
     }
 
     // Add a target
@@ -96,6 +112,7 @@ public class Droneport : BaseTile
     // Destroy entity
     public override void DestroyEntity()
     {
+        if (hubDrone) return;
         drone.Destroy();
         base.DestroyEntity();
     }

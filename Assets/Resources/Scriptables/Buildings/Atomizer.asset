@@ -12,31 +12,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
   m_Name: Atomizer
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  name: Atomizer
+  description: Fires a high concentrated beam of energy that cuts through multiple
+    enemies at a time.
   inventoryHeader: 0
-  inventoryIndex: 0
-  obj: {fileID: 0}
-  material: {fileID: 0}
-  health: 0
+  inventoryIndex: 11
+  obj: {fileID: 5638880538173755297, guid: 8078de50deca97a49ad5c62edf9d4c90, type: 3}
+  material: {fileID: 2100000, guid: 029e7c28c5c5f4448bee537618163b77, type: 2}
+  health: 500
   unlockable:
-    type: 0
-    description: 
+    type: 3
+    description: Defeat the Atlas (third guardian)
     unlocked: 0
     resource: 0
-    entity: {fileID: 0}
-    amount: 0
-  gridSnap: 0
+    entity: {fileID: 11400000, guid: 272832b6750785a4c940ca9db15f0757, type: 2}
+    amount: 1
+  gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  cells: []
-  resources: []
+  cells:
+  - x: 0
+    y: 0
+  resources:
+  - resource: 0
+    amount: 800000
+    add: 0
+    storage: 0
+  - resource: 1
+    amount: 40000
+    add: 0
+    storage: 0
+  - resource: 2
+    amount: 2000
+    add: 0
+    storage: 0
+  - resource: 3
+    amount: 950
+    add: 1
+    storage: 0
+  - resource: 4
+    amount: 650
+    add: 1
+    storage: 0
   restrictPlacement: 0
   placedOn: 0
-  damage: 0
-  range: 0
-  rotationSpeed: 0
-  cooldown: 0
+  damage: 800
+  range: 80
+  rotationSpeed: 30
+  cooldown: 6
   bullet: {fileID: 0}
   bulletPierces: 0
   bulletAmount: 0
@@ -45,7 +68,7 @@ MonoBehaviour:
   bulletTime: 0
   bulletLock: 0
   bulletParticle: {fileID: 0}
-  sound: {fileID: 0}
+  sound: {fileID: 8300000, guid: b47937426fd334cbb9bcd463e67e5744, type: 3}
   damageModifier: 0
   rangeModifier: 0
   rotationSpeedModifier: 0

@@ -28,8 +28,8 @@ public class CollectorHandler : MonoBehaviour
                 collectors[i].cooldown -= Time.deltaTime;
                 if (collectors[i].cooldown < 0f)
                 {
-                    collectors[i].amount += Research.research_gold_yield;
-                    collectors[i].cooldown = Research.research_gold_time;
+                    collectors[i].amount += Research.gold_yield;
+                    collectors[i].cooldown = Research.gold_time;
                 }
             }
             else

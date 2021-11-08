@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceDrone : BaseDrone
+public class ResourceDrone : Drone
 {
     // Create the drone
     public void Start()

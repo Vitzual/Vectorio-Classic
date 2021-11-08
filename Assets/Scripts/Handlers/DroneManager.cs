@@ -14,39 +14,34 @@ public class DroneManager : MonoBehaviour
     public List<BaseTile> damagedTiles;
 
     // Available drones 
-    public List<BuilderDrone> builderDrones;
-    public List<ResourceDrone> resourceDrones;
-    public List<FixerDrone> fixerDrones;
+    public List<Drone> builderDrones;
+    public List<Drone> resourceDrones;
+    public List<Drone> fixerDrones;
 
     // Drones actively moving
     public List<Drone> activeDrones;
+
+    // Add a drone
+    public void AddDrone(Drone drone)
+    {
+        if (drone.type == Drone.DroneType.Builder)
+            builderDrones.Add(drone);
+        else if (drone.type == Drone.DroneType.Resource)
+            resourceDrones.Add(drone);
+        else if (drone.type == Drone.DroneType.Fixer)
+            fixerDrones.Add(drone);
+    }
 
     // Move drones
     public void Start()
     {
         UpdateConstructionDrones();
     }
-    
+
     // Check construction drones
     public void UpdateConstructionDrones()
     {
 
-
-
-
-
-
-        /*
-        if (ghostTiles.Count > 0 && constructionDrones.Count > 0)
-            for (int a = 0; a < ghostTiles.Count; a++)
-                if (InstantiationHandler.active.CheckResources(ghostTiles[a].building))
-                    for (int b = 0; b < constructionDrones.Count; b++)
-                        if (constructionDrones[b].home.nearbyTargets.Contains(ghostTiles[a]))
-                        {
-                            SetConstructionDroneTarget(constructionDrones[b], ghostTiles[a]);
-                            a--; b--;
-                        }
-        */
     }
 
 }

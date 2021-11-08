@@ -11,7 +11,7 @@ public class BaseTile : BaseEntity
     public override void Setup()
     {
         // Loop through all nearby drone ports
-        int adjustment = Research.research_drone_coverage * 5;
+        int adjustment = Research.drone_tile_coverage * 5;
         int xTile = (int)transform.position.x;
         int yTile = (int)transform.position.y;
 
@@ -20,7 +20,7 @@ public class BaseTile : BaseEntity
         {
             for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5) 
             {
-                BaseDrone holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)).GetComponent<BaseDrone>();
+                Droneport holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)).GetComponent<Droneport>();
                 if (holder != null) holder.AddTarget(this);
             }
         } 

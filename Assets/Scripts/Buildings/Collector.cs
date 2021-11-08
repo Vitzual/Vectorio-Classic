@@ -13,7 +13,7 @@ public class Collector : ResourceTile
     public void Start()
     {
         Events.active.CollectorPlaced(this);
-        cooldown = Research.research_gold_time;
+        cooldown = Research.gold_time;
     }
 
     // Add resources to collector
@@ -21,9 +21,9 @@ public class Collector : ResourceTile
     {
         if (isFull) return;
 
-        if (enhanced) amount += Research.research_gold_yield * 4;
-        else amount += Research.research_gold_yield;
-        cooldown = Research.research_gold_time;
+        if (enhanced) amount += Research.gold_yield * 4;
+        else amount += Research.gold_yield;
+        cooldown = Research.gold_time;
 
         if (amount > collectorStorage)
         {

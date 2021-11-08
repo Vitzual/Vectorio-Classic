@@ -36,9 +36,9 @@ public class DefaultBullet : MonoBehaviour
             particle.trailMaterial = turret.material;
         }
 
-        damage = turret.damage + Research.research_damage;
+        damage = turret.damage + Research.damage;
         speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
-        pierces = turret.bulletPierces + Research.research_pierce;
+        pierces = turret.bulletPierces + Research.pierce;
 
         time = turret.bulletTime;
     }

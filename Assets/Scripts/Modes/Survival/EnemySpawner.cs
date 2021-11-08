@@ -5,7 +5,6 @@ using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
     // Active instance
-    public float borderSize = 750f;
     public static EnemySpawner active;
 
     public void Start()
@@ -33,13 +32,13 @@ public class EnemySpawner : MonoBehaviour
                 // Get location around border
                 if (Random.value > 0.5f)
                 {
-                    if (Random.value > 0.5f) spawnPos = new Vector2(borderSize, Random.Range(-borderSize, borderSize));
-                    else spawnPos = new Vector2(-borderSize, Random.Range(-borderSize, borderSize));
+                    if (Random.value > 0.5f) spawnPos = new Vector2(Border.west, Random.Range(Border.south, Border.north));
+                    else spawnPos = new Vector2(Border.east, Random.Range(Border.south, Border.north));
                 }
                 else
                 {
-                    if (Random.value > 0.5f) spawnPos = new Vector2(Random.Range(-borderSize, borderSize), borderSize);
-                    else spawnPos = new Vector2(Random.Range(-borderSize, borderSize), -borderSize);
+                    if (Random.value > 0.5f) spawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.north);
+                    else spawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.south);
                 }
 
                 // Create enemy

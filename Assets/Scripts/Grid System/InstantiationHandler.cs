@@ -144,24 +144,29 @@ public class InstantiationHandler : MonoBehaviour
         if (building.cells.Length > 0)
         {
             foreach (Building.Cell cell in building.cells)
-            {
-                // Check to make sure nothing occupying tile
-                Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));
-                if (tileGrid.RetrieveCell(coords) != null)
-                    return false;
-                if (building.restrictPlacement && !WorldGenerator.active.CheckNode(coords, building.placedOn))
-                    return false;
-            }
+                if (!CheckTile(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), building)) return false;
         }
-        else
-        {
-            // Check to make sure nothing occupying tile
-            Vector2Int coords = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
-            if (tileGrid.RetrieveCell(coords) != null)
-                return false;
-            if (building.restrictPlacement && !WorldGenerator.active.CheckNode(coords, building.placedOn))
-                return false;
-        }
+        else if (!CheckTile(Vector2Int.RoundToInt(new Vector2(position.x, position.y)), building)) return false;
+        return true;
+    }
+
+    // Check a specific tile
+    public bool CheckTile(Vector2Int coords, Building building)
+    {
+        // Check if tile is in bounds
+        if (coords.y > Border.north || coords.y < Border.south ||
+            coords.x > Border.east || coords.x < Border.west)
+            return false;
+
+        // Check if tile already occupied
+        if (tileGrid.RetrieveCell(coords) != null)
+            return false;
+
+        // Check if tile is restricted to a specific node
+        if (building.restrictPlacement && !WorldGenerator.active.CheckNode(coords, building.placedOn))
+            return false;
+
+        // If all checks passed, return true
         return true;
     }
 

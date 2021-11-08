@@ -20,6 +20,7 @@ public class Gamemode : MonoBehaviour
 
     [Header("Gamemode Settings")]
     public bool useResources;
+    public bool useDroneConstruction;
     public bool generateWorld;
     public bool unlockEverything;
     public bool initBuildings;

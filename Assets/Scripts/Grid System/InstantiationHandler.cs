@@ -46,18 +46,7 @@ public class InstantiationHandler : MonoBehaviour
         if (building == null) return;
 
         // Check if resource should be used
-        if (Gamemode.active.useResources) 
-        {
-            foreach (Building.Resources resource in building.resources) 
-            {
-                if (!resource.storage)
-                {
-                    int amount = Resource.active.GetAmount(resource.resource);
-                    if (resource.add && amount + resource.amount > Resource.active.GetStorage(resource.resource)) return;
-                    else if (!resource.add && amount < resource.amount) return;
-                }
-            }
-        }
+        if (!CheckResources(building)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(building, position)) return;
@@ -111,6 +100,24 @@ public class InstantiationHandler : MonoBehaviour
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
+    }
+
+    public bool CheckResources(Building building)
+    {
+        // Check if resource should be used
+        if (Gamemode.active.useResources)
+        {
+            foreach (Building.Resources resource in building.resources)
+            {
+                if (!resource.storage)
+                {
+                    int amount = Resource.active.GetAmount(resource.resource);
+                    if (resource.add && amount + resource.amount > Resource.active.GetStorage(resource.resource)) return false;
+                    else if (!resource.add && amount < resource.amount) return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void SetCells(Building building, Vector2 position, BaseTile obj)

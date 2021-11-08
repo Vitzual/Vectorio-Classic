@@ -1,7 +1,7 @@
 ﻿ using System.Collections;
 using UnityEngine;
 
-public class Collector : BaseResource
+public class Collector : ResourceTile
 {
     // Declare local object variables
     [HideInInspector] public float cooldown;

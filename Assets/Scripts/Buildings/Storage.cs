@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Storage: BaseResource
+public class Storage: ResourceTile
 {
     // Declare local object variables
     public GameObject icon;

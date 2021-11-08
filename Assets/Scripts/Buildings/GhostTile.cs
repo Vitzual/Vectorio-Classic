@@ -6,7 +6,6 @@ public class GhostTile : BaseTile
 {
     // Ghos tile variables
     [HideInInspector] public Building building;
-    [HideInInspector] public bool droneAssigned;
     [HideInInspector] public SpriteRenderer icon;
 
     // Sets the ghost tile building

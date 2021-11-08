@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
+    // Drone type
+    public enum Type
+    {
+        Builder,
+        Resource,
+        Fixer
+    }
+    [HideInInspector] public Type type;
+
     // Stage of the current drone
     public enum Stage
     {
@@ -12,42 +21,13 @@ public class Drone : MonoBehaviour
         ReturningToPort,
         EnteringPort
     }
-    public Stage stage;
+    [HideInInspector] public Stage stage;
 
     // Drone variables
-    public Dronehub home;
-    public BaseEntity target;
+    [HideInInspector] public BaseDrone home;
+    [HideInInspector] public BaseEntity target;
+    [HideInInspector] public float droneSpeed;
     public SpriteRenderer droneIcon;
     public SpriteRenderer targetIcon;
-    public float droneSpeed;
-    public int droneVariable;
-
-    // Setup drone
-    public void SetupDrone()
-    {
-        if (home.droneType == Dronehub.DroneType.Construction)
-            droneIcon.sprite = Sprites.GetSprite("Construction Drone");
-        else if (home.droneType == Dronehub.DroneType.Resource)
-            droneIcon.sprite = Sprites.GetSprite("Resource Drone");
-        else if (home.droneType == Dronehub.DroneType.Fixer)
-            droneIcon.sprite = Sprites.GetSprite("Fixer Drone");
-        
-        ResetDrone();
-    }
-
-    // Resets a drone
-    public void ResetDrone()
-    {
-        transform.position = home.transform.position;
-        droneIcon.sortingOrder = 0;
-        stage = Stage.ReadyToDeploy;
-    }
-
-    // Reach target method
-    public virtual void TargetReached()
-    {
-        stage = Stage.ReturningToPort;
-        target = home;
-    }
 }
     

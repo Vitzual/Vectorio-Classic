@@ -8,5 +8,7 @@ public class Spawnable
     public TileBase tile;
     public float spawnScale;
     public float spawnThreshold;
+    public float minSpawnDistance;
+    public float maxSpawnDistance;
     [HideInInspector] public float spawnOffset;
 }

@@ -4417,16 +4417,22 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 571e31d74f7191f4da8254f8fdf32c82, type: 2}
     spawnScale: 15
     spawnThreshold: 0.82
+    minSpawnDistance: 5
+    maxSpawnDistance: 200
     spawnOffset: 0
   - type: 1
     tile: {fileID: 11400000, guid: 0fe6331eb1fa59c488298c94a27a53c1, type: 2}
     spawnScale: 17
     spawnThreshold: 0.84
+    minSpawnDistance: 50
+    maxSpawnDistance: 300
     spawnOffset: 0
   - type: 2
     tile: {fileID: 11400000, guid: 9b83f65825ad2e0478fb38db269e766f, type: 2}
     spawnScale: 20
     spawnThreshold: 0.86
+    minSpawnDistance: 180
+    maxSpawnDistance: 300
     spawnOffset: 0
 --- !u!4 &292738431
 Transform:
@@ -14940,7 +14946,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: aaf23ec63aa1abb4aa75296a16fb9134, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

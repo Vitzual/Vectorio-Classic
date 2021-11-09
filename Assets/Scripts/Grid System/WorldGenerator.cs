@@ -67,12 +67,20 @@ public class WorldGenerator : MonoBehaviour
         Vector2Int coords = new Vector2Int(x, y);
 
         // Check cell to make sure it's empty
-        if (!spawnedResources.ContainsKey(coords))
+        if (!spawnedResources.ContainsKey(coords) && CheckDistance(resource, coords))
         {
             // Create the resource
             resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), resource.tile);
             spawnedResources.Add(coords, resource.type);
         }
+    }
+
+    public bool CheckDistance(Spawnable resource, Vector2Int coords)
+    {
+        return (coords.x > resource.minSpawnDistance || coords.x < -resource.minSpawnDistance ||
+               coords.y > resource.minSpawnDistance || coords.y < -resource.minSpawnDistance) &&
+               coords.x < resource.maxSpawnDistance && coords.x > -resource.maxSpawnDistance &&
+               coords.y < resource.maxSpawnDistance && coords.y > -resource.maxSpawnDistance;
     }
 
     // Check if a resource node exists

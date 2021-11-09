@@ -7,11 +7,13 @@ public class GhostTile : BaseTile
     // Ghos tile variables
     [HideInInspector] public Building building;
     [HideInInspector] public SpriteRenderer icon;
+    public List<Droneport> nearbyPorts;
 
     // Get the sprite renderer
     public void Awake()
     {
         icon = GetComponent<SpriteRenderer>();
+        nearbyPorts = DroneManager.active.GetNearbyPorts(transform.position);
     }
 
     // Sets the ghost tile building

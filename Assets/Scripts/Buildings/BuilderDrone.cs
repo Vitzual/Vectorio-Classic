@@ -9,8 +9,15 @@ public class BuilderDrone : Drone
 
     public override void ExitPort()
     {
+        buildingIcon.sortingOrder = 0;
         buildingPlaced = false;
         base.ExitPort();
+    }
+
+    public override void StartRoute()
+    {
+        buildingIcon.sortingOrder = 2;
+        base.StartRoute();
     }
 
     public override void SetTarget(BaseTile tile)
@@ -24,7 +31,8 @@ public class BuilderDrone : Drone
         if (!buildingPlaced)
         {
             buildingIcon.sprite = Sprites.GetSprite("Transparent");
-            target.GetComponent<GhostTile>().CreateBuilding();
+            GhostTile tile = target.GetComponent<GhostTile>();
+            if (tile != null) tile.CreateBuilding();
             buildingPlaced = true;
         }
         base.TargetReached();

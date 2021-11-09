@@ -42,6 +42,12 @@ public class Drone : MonoBehaviour
     // new drones, and try to use the DroneManager singleton to
     // optimize logic as much as possible.
 
+    // Adjust size
+    public void Start()
+    {
+        transform.localScale = new Vector3(0.4f, 0.4f, 0f);
+    }
+
     // Specifies if the drone should add a certain target
     public virtual void AddTarget(BaseTile tile) 
     { 
@@ -64,7 +70,7 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do as it exits the port
     public virtual void ExitingPort()
     {
-        if (transform.localScale.x <= 1.4f)
+        if (transform.localScale.x <= 0.7f)
             transform.localScale += new Vector3(0.002f, 0.002f, 0f);
         if (home.OpenDoors()) StartRoute();
     }
@@ -73,7 +79,7 @@ public class Drone : MonoBehaviour
     public virtual void StartRoute()
     {
         droneSpeed = Research.drone_movement_speed;
-        droneIcon.sortingOrder = 2;
+        droneIcon.sortingOrder = 3;
         stage = Stage.MovingToTarget;
     }
 
@@ -104,14 +110,14 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do when it reaches home
     public virtual void EnterPort()
     {
-        droneIcon.sortingOrder = 0;
+        droneIcon.sortingOrder = 1;
         stage = Stage.EnteringPort;
     }
 
     // Specifies what the drone should do as it enters the port
     public virtual void EnteringPort()
     {
-        if (transform.localScale.x >= 1.2f)
+        if (transform.localScale.x >= 0.4f)
             transform.localScale -= new Vector3(0.002f, 0.002f, 0f);
         if (home.CloseDoors()) FinishRoute();
     }
@@ -119,6 +125,7 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do when it finishes 
     public virtual void FinishRoute()
     {
+        transform.localScale = new Vector3(0.4f, 0.4f, 0f);
         stage = Stage.ReadyToDeploy;
     }
 

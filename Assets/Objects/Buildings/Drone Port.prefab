@@ -234,7 +234,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
   m_SortingLayer: 11
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: eb151544d6cf2a04aa90e14303640371, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -562,7 +562,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
   m_SortingLayer: 11
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 8bb07d600498f1b48835927c037f1be6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -631,12 +631,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 0}
   cells: []
+  hubDrone: 0
   building: {fileID: 11400000, guid: 866d7607c70fe26429470ba44cf7ebde, type: 2}
   drone: {fileID: 0}
-  _drones:
-  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
   leftPanel: {fileID: 400359186113548949}
   rightPanel: {fileID: 8437684921361694069}
+  blueLight: {fileID: 3306295738215408942}
+  yellowLight: {fileID: 269444953848316601}
+  greenLight: {fileID: 1219777704286311817}
 --- !u!61 &3437550930469308349
 BoxCollider2D:
   m_ObjectHideFlags: 0

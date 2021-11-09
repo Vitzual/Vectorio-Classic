@@ -89,10 +89,10 @@ public class CameraController : MonoBehaviour
             moveSpeed = 150f;
 
         // Determine if movement should be allowed
-        if (movement.x > 0 && cameraRB.position.x + movement.x > maxRange) { allowMovement = false; movement.x = 0; }
-        if (movement.x < 0 && cameraRB.position.x + movement.x < -maxRange) { allowMovement = false; movement.x = 0; }
-        if (movement.y > 0 && cameraRB.position.y + movement.y > maxRange) { allowMovement = false; movement.y = 0; }
-        if (movement.y < 0 && cameraRB.position.y + movement.y < -maxRange) { allowMovement = false; movement.y = 0; }
+        if (movement.x > 0 && cameraRB.position.x + movement.x > Border.east) { allowMovement = false; movement.x = 0; }
+        if (movement.x < 0 && cameraRB.position.x + movement.x < Border.west) { allowMovement = false; movement.x = 0; }
+        if (movement.y > 0 && cameraRB.position.y + movement.y > Border.north) { allowMovement = false; movement.y = 0; }
+        if (movement.y < 0 && cameraRB.position.y + movement.y < Border.south) { allowMovement = false; movement.y = 0; }
         if (allowMovement) cameraRB.MovePosition(cameraRB.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // Reset movement variable

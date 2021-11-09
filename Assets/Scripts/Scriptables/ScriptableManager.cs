@@ -71,7 +71,7 @@ public static class ScriptableManager
     }
 
     // Retrieves a building object by name
-    public static GameObject RequestBuildingByName(string name)
+    public static GameObject RequestObjectByName(string name)
     {
         foreach (Building building in buildings)
             if (building.name == name) return building.obj;
@@ -80,7 +80,7 @@ public static class ScriptableManager
     }
 
     // Retrieves a tile scriptable by name
-    public static Building RequestTileByName(string name)
+    public static Building RequestBuildingByName(string name)
     {
         foreach (Building building in buildings)
             if (building.name == name) return building;

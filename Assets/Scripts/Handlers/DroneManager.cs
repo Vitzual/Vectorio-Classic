@@ -4,6 +4,27 @@ using UnityEngine;
 
 public class DroneManager : MonoBehaviour
 {
+    // Builder mode
+    public enum BuildPriority
+    {
+        closest,
+        furthest,
+        cheapest,
+        expensive,
+        droneport,
+        energizer,
+        defense,
+        resource,
+        power,
+        cooling
+    }
+    public BuildPriority buildPriority;
+    public bool ignorePriority = false;
+
+    // Priority buildings
+    public Building droneport;
+    public Building energizer;
+
     // Get active instance
     public static DroneManager active;
     public void Awake() { active = this; }
@@ -17,18 +38,25 @@ public class DroneManager : MonoBehaviour
     public List<BaseTile> damagedTiles;
 
     // Available drones 
-    public List<Drone> hubDrones;
+    public List<Drone> builderDrones;
     public List<Drone> resourceDrones;
     public List<Drone> fixerDrones;
 
     // Drones actively moving
     public List<Drone> activeDrones;
 
+    // Add a ghost
+    public void AddGhost(GhostTile ghost)
+    {
+        ghostTiles.Add(ghost);
+        ignorePriority = false;
+    }
+
     // Add a drone
     public void AddDrone(Drone drone)
     {
-        if (drone.type == Drone.DroneType.Builder && drone.home.hubDrone)
-            hubDrones.Add(drone);
+        if (drone.type == Drone.DroneType.Builder) 
+            builderDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Resource)
             resourceDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Fixer)
@@ -81,63 +109,242 @@ public class DroneManager : MonoBehaviour
     // Check construction drones
     public void UpdateConstructionDrones()
     {
+        // Local variables 
+        Drone drone = null;
+        GhostTile ghostTile = null;
+        float valueOne = 0;
+        float valueTwo = Mathf.Infinity;
+
+        // Check to make sure enough build drones and ghost tiles exist
         if (ghostTiles.Count > 0)
         {
-            for (int a = 0; a < ghostTiles.Count; a++)
+            if (builderDrones.Count > 0)
             {
-                if (ghostTiles[a] != null)
+                // Loop through all ghost tiles
+                for (int a = 0; a < ghostTiles.Count; a++)
                 {
-                    if (InstantiationHandler.active.CheckResources(ghostTiles[a].building))
+                    // Check if null
+                    if (ghostTiles[a] != null)
                     {
-                        // Check all active builder ports
-                        for (int b = 0; b < ghostTiles[a].nearbyPorts.Count; b++)
+                        // Check resources
+                        if (Resource.active.CheckResources(ghostTiles[a].building))
                         {
-                            // Get droneport
-                            Drone drone = ghostTiles[a].nearbyPorts[b].drone;
-                            if (drone.stage != Drone.Stage.ReadyToDeploy) continue;
+                            // Check if priority should be ignored
+                            if (ignorePriority)
+                            {
+                                // Assign closest drone found
+                                drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                return;
+                            }
+                            else
+                            {
+                                // Switch build priority
+                                switch (buildPriority)
+                                {
+                                    // CLOSEST PRIORITY
+                                    case BuildPriority.closest:
 
-                            // Set target
-                            drone.SetTarget(ghostTiles[a]);
-                            drone.ExitPort();
+                                        // Assign closest drone found
+                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                        return;
 
-                            // Take resources
-                            Resource.active.ApplyResources(ghostTiles[a].building);
+                                    // CHEAPEST PRIORITY
+                                    case BuildPriority.cheapest:
 
-                            // Update lsits
-                            activeDrones.Add(drone);
-                            ghostTiles.RemoveAt(a);
+                                        // Calculate total cost
+                                        foreach (Building.Resources resource in ghostTiles[a].building.resources)
+                                            if (resource.add) { valueOne -= resource.amount; }
+                                            else { valueOne += resource.amount; }
 
-                            // End loop
-                            return;
-                        }
+                                        // Compare to current cheapest
+                                        if (valueOne < valueTwo)
+                                        {
+                                            valueTwo = valueOne;
+                                            ghostTile = ghostTiles[a];
+                                        }
 
-                        // If no builder ports available, default to hub ports
-                        if (hubDrones.Count > 0)
-                        {
-                            // Set target
-                            hubDrones[0].SetTarget(ghostTiles[a]);
-                            hubDrones[0].ExitPort();
+                                        break;
 
-                            // Take resources
-                            Resource.active.ApplyResources(ghostTiles[a].building);
+                                    // EXPENSIVE PRIORITY
+                                    case BuildPriority.expensive:
 
-                            // Update lsits
-                            activeDrones.Add(hubDrones[0]);
-                            ghostTiles.RemoveAt(a);
-                            hubDrones.RemoveAt(0);
+                                        // Calculate total cost
+                                        foreach (Building.Resources resource in ghostTiles[a].building.resources)
+                                            if (resource.add) { valueTwo -= resource.amount; }
+                                            else { valueTwo += resource.amount; }
 
-                            // End loop
-                            return;
+                                        // Compare to current cheapest
+                                        if (valueTwo > valueOne)
+                                        {
+                                            valueOne = valueTwo;
+                                            ghostTile = ghostTiles[a];
+                                        }
+
+                                        break;
+
+                                    // DRONEPORT PRIORITY
+                                    case BuildPriority.droneport:
+
+                                        // See if building is a droneport (yay magic strings)
+                                        if (ghostTiles[a].building == droneport)
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+
+                                    // ENERGIZER PRIORITY
+                                    case BuildPriority.energizer:
+
+                                        // See if building is a energizer
+                                        if (ghostTiles[a].building == energizer)
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+
+                                    // DEFENSE PRIORITY
+                                    case BuildPriority.defense:
+
+                                        // See if building is a defense
+                                        if (ghostTiles[a].building.inventoryHeader == Entity.InvHeader.Defense)
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+
+                                    // RESOURCE PRIORITY
+                                    case BuildPriority.resource:
+
+                                        // See if building is a defense
+                                        if (!ghostTiles[a].building.obj.GetComponent<ResourceTile>())
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+
+                                    // POWER PRIORITY
+                                    case BuildPriority.power:
+
+                                        // See if building produces power
+                                        foreach (Building.Resources resource in ghostTiles[a].building.resources)
+                                        {
+                                            if (resource.resource == Resource.CurrencyType.Power && !resource.add)
+                                            {
+                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                                return;
+                                            }
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+
+                                    // COOLING PRIORITY
+                                    case BuildPriority.cooling:
+
+                                        // See if building produces power
+                                        foreach (Building.Resources resource in ghostTiles[a].building.resources)
+                                        {
+                                            if (resource.resource == Resource.CurrencyType.Heat && !resource.add)
+                                            {
+                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                                return;
+                                            }
+                                        }
+
+                                        // If no building found, set ghost tile for closest
+                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+
+                                        break;
+                                }
+                            }
                         }
                     }
+                    else
+                    {
+                        ghostTiles.RemoveAt(a);
+                        a--;
+                    }
                 }
-                else
+
+                // After loop, check if index was assigned
+                if (ghostTile != null)
                 {
-                    ghostTiles.RemoveAt(a);
-                    a--;
+                    drone = FindClosestDrone(ghostTile.transform.position);
+                    if (drone != null) SetBuilderTarget(drone, ghostTile);
+
+                    if (buildPriority != BuildPriority.cheapest ||
+                        buildPriority != BuildPriority.expensive) ignorePriority = true;
                 }
             }
         }
+    }
+    
+    // Find closest drone port
+    public Drone FindClosestDrone(Vector2 position)
+    {
+        // Find closest
+        Drone drone = null;
+        float closest = Mathf.Infinity;
+
+        // Loop through all drones and use closest one
+        for (int i = 0; i < builderDrones.Count; i++)
+        {
+            float distance = Vector2.Distance(builderDrones[i].transform.position, position);
+            if (distance < closest)
+            {
+                drone = builderDrones[i];
+                closest = distance;
+            }
+        }
+
+        // Return drone
+        return drone;
+    }
+
+    // Sets a target
+    public void SetBuilderTarget(Drone drone, GhostTile ghostTile)
+    {
+        // Set target
+        drone.SetTarget(ghostTile);
+        drone.ExitPort();
+
+        // Take resources
+        Resource.active.ApplyResources(ghostTile.building);
+
+        // Update lists
+        activeDrones.Add(drone);
+        builderDrones.Remove(drone);
+        ghostTiles.Remove(ghostTile);
     }
 
     // Return a drone
@@ -147,57 +354,6 @@ public class DroneManager : MonoBehaviour
             if (drone.type == type)
                 return drone;
         return null;
-    }
-
-    // Attempts to return all nearby ghosts
-    public void UpdateNearbyGhosts(Droneport port, Vector2 position)
-    {
-        // Loop through all nearby drone ports
-        int adjustment = Research.drone_tile_coverage * 5;
-        int xTile = (int)position.x;
-        int yTile = (int)position.y;
-
-        // Loop through all tiles and try to find drones
-        for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
-        {
-            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
-            {
-                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
-                if (holder != null)
-                {
-                    GhostTile ghost = holder.GetComponent<GhostTile>();
-                    if (ghost != null) ghost.nearbyPorts.Add(port);
-                }
-            }
-        }
-    }
-
-    // Attempts to return all nearby ports
-    public List<Droneport> GetNearbyPorts(Vector2 position)
-    {
-        // Create new list
-        List<Droneport> nearbyPorts = new List<Droneport>();
-
-        // Loop through all nearby drone ports
-        int adjustment = Research.drone_tile_coverage * 5;
-        int xTile = (int)position.x;
-        int yTile = (int)position.y;
-
-        // Loop through all tiles and try to find drones
-        for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
-        {
-            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
-            {
-                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
-                if (holder != null)
-                {
-                    Droneport droneport = holder.GetComponent<Droneport>();
-                    if (droneport != null) nearbyPorts.Add(droneport);
-                }
-            }
-        }
-
-        return nearbyPorts;
     }
 
     // Attempts to set targets for all nearby ports

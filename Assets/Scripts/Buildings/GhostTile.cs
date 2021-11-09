@@ -13,7 +13,6 @@ public class GhostTile : BaseTile
     public void Awake()
     {
         icon = GetComponent<SpriteRenderer>();
-        nearbyPorts = DroneManager.active.GetNearbyPorts(transform.position);
     }
 
     // Sets the ghost tile building

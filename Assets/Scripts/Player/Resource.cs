@@ -114,6 +114,25 @@ public class Resource : MonoBehaviour
         }
     }
 
+    // Check resources
+    public bool CheckResources(Building building)
+    {
+        // Check if resource should be used
+        if (Gamemode.active.useResources)
+        {
+            foreach (Building.Resources resource in building.resources)
+            {
+                if (!resource.storage)
+                {
+                    int amount = GetAmount(resource.resource);
+                    if (resource.add && amount + resource.amount > GetStorage(resource.resource)) return false;
+                    else if (!resource.add && amount < resource.amount) return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     // Remove a resource based on building
     public void ApplyResources(Building building)

@@ -47,7 +47,7 @@ public class InstantiationHandler : MonoBehaviour
         if (building == null) return;
 
         // Check if resource should be used
-        if (!CheckResources(building)) return;
+        if (!Resource.active.CheckResources(building)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(building, position)) return;
@@ -71,7 +71,7 @@ public class InstantiationHandler : MonoBehaviour
     private void RpcInstantiateBuilding(Building building, Vector2 position, Quaternion rotation)
     {
         // Get game objected from scriptable manager
-        GameObject obj = ScriptableManager.RequestBuildingByName(building.name);
+        GameObject obj = ScriptableManager.RequestObjectByName(building.name);
         if (obj == null) return;
 
         // Create the tile
@@ -99,28 +99,10 @@ public class InstantiationHandler : MonoBehaviour
 
         // Setup the ghost tile
         holder.SetBuilding(building);
-        DroneManager.active.ghostTiles.Add(holder);
+        DroneManager.active.AddGhost(holder);
 
         // Set the tiles on the grid class
         SetCells(building, position, holder);
-    }
-
-    public bool CheckResources(Building building)
-    {
-        // Check if resource should be used
-        if (Gamemode.active.useResources)
-        {
-            foreach (Building.Resources resource in building.resources)
-            {
-                if (!resource.storage)
-                {
-                    int amount = Resource.active.GetAmount(resource.resource);
-                    if (resource.add && amount + resource.amount > Resource.active.GetStorage(resource.resource)) return false;
-                    else if (!resource.add && amount < resource.amount) return false;
-                }
-            }
-        }
-        return true;
     }
 
     public void SetCells(Building building, Vector2 position, BaseTile obj)

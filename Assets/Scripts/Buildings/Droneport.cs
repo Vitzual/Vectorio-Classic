@@ -60,9 +60,6 @@ public class Droneport : BaseTile
                     drone.AddTarget(InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)));
         }
 
-        // If builder, only update ghost tiles
-        else DroneManager.active.UpdateNearbyGhosts(this, transform.position);
-
         // Set material
         material = building.material;
     }

@@ -30,7 +30,7 @@ public class Border : MonoBehaviour
     public static int west = -750;
 
     // Border adjustment values
-    public int borderIncrement = 750;
+    public int borderIncrement;
 
     // Grab event
     public void Start()
@@ -41,7 +41,7 @@ public class Border : MonoBehaviour
     // Activate push
     public void PushBorder()
     {
-        borders[activatedBorder].position = Vector2.Lerp(borders[activatedBorder].position, newPosition, Time.deltaTime * pushSpeed);
+        borders[activatedBorder].position = Vector2.MoveTowards(borders[activatedBorder].position, newPosition, pushSpeed * Time.deltaTime);
     }
 
     // Progress stage
@@ -56,7 +56,7 @@ public class Border : MonoBehaviour
                 borderStage = Stage.Kraken;
                 north += borderIncrement;
                 activatedBorder = 0;
-                newPosition = new Vector2(0, borders[0].position.y + 750);
+                newPosition = new Vector2(0, borders[0].position.y + borderIncrement);
                 hub.FireLaser(0);
                 break;
 
@@ -65,7 +65,7 @@ public class Border : MonoBehaviour
                 borderStage = Stage.Atlas;
                 south -= borderIncrement;
                 activatedBorder = 2;
-                newPosition = new Vector2(0, borders[2].position.y - 750);
+                newPosition = new Vector2(0, borders[2].position.y - borderIncrement);
                 hub.FireLaser(2);
                 break;
 
@@ -74,7 +74,7 @@ public class Border : MonoBehaviour
                 borderStage = Stage.Serpent;
                 west -= borderIncrement;
                 activatedBorder = 3;
-                newPosition = new Vector2(borders[3].position.x - 750, 0);
+                newPosition = new Vector2(borders[3].position.x - borderIncrement, 0);
                 hub.FireLaser(3);
                 break;
 
@@ -82,7 +82,7 @@ public class Border : MonoBehaviour
             case Stage.Serpent:
                 east += borderIncrement;
                 activatedBorder = 1;
-                newPosition = new Vector2(borders[1].position.x + 750, 0);
+                newPosition = new Vector2(borders[1].position.x + borderIncrement, 0);
                 hub.FireLaser(1);
                 break;
         }

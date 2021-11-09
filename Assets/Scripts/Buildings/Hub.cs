@@ -69,7 +69,7 @@ public class Hub : BaseTile
                     if (cooldown <= 0)
                     {
                         laserParticles[laserIndex].Play();
-                        cooldown = 4f;
+                        cooldown = 2.5f;
                         laserPart = 3;
                         CameraShake.ShakeAll();
                     }
@@ -78,7 +78,7 @@ public class Hub : BaseTile
                     cooldown -= Time.deltaTime;
                     if (cooldown <= 0)
                     {
-                        cooldown = 6f;
+                        cooldown = 11f;
                         laserPart = 4;
                     }
                     break;

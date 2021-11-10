@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy/Enemy")]
 public class Enemy : Entity
 {
+    // Loot table
+    public Table table;
+
     // Enemy stats
     public float damage;
     public float moveSpeed;

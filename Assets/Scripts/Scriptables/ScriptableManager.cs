@@ -32,11 +32,13 @@ public static class ScriptableManager
     {
         buildings = new List<Building>();
         buildings = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
-        Debug.Log("Loaded " + buildings.Count + " buildings from " + BuildingPath);
+        Debug.Log("Loading " + buildings.Count + " buildings from " + BuildingPath + "...");
+        foreach (Building building in buildings)
+            Debug.Log("Loaded " + building.name + " with UUID " + building.InternalID);
     }
 
     // Generates enemies on run
-    public static void GenerateEnemies()
+    public static void GenerateEnemies()//
     {
         enemies = new List<Enemy>();
         enemies = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();

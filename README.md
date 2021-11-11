@@ -13,9 +13,9 @@ Though the current setup of the game works fine, it does not support extensive m
 https://github.com/Vitzual/Vectorio/projects/2
 
 # Required Assets
-In order to fully build the game, you'll need the following assets. If you do not want to pay for these assets, you can modify your fork to work without them, but make sure when you make a PR you do not include these changes (it will be denied), or simply just send us a link to your fork. If you have obtained these assets, create a folder called `Blacklist` inside the `External` folder and place the asset folders inside of it. 
+**HEAVY DEPENDENCIES** (Project relies heavily on these assets)
+- [**Modern UI Pack |** $30 (Required)](https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-150824)
 
-**NOTE:** We are talking with the asset developers to see if we can include the required parts of each asset so the game can be built without them, but until then, this is a temporary workaround. Sorry!
-
-- [**Modern UI Pack |** $29.99 (Required)](https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-150824)
-- [**MK Glow Lite |** $9.99 (Optional)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/mk-glow-lite-155643)
+**LIGHT DEPENDENCIES** (Project can easily be changed to work without these assets)
+- [**MK Glow Lite |** $10 (Optional)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/mk-glow-lite-155643)
+- [**Odin Inspector |** $55 (Optional)](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)

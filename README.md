@@ -16,6 +16,6 @@ https://github.com/Vitzual/Vectorio/projects/2
 **HEAVY DEPENDENCIES** (Project relies heavily on these assets)
 - [**Modern UI Pack |** $30 (Required)](https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-150824)
 
-**LIGHT DEPENDENCIES** (Project can easily be changed to work without these assets)
+**LIGHT DEPENDENCIES** (Project can be changed to work without these assets)
 - [**MK Glow Lite |** $10 (Optional)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/mk-glow-lite-155643)
 - [**Odin Inspector |** $55 (Optional)](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)

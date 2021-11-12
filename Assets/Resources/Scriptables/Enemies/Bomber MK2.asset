@@ -12,29 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
   m_Name: Bomber MK2
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  internalId: c66f9823-ef0b-412f-8867-7b515451f062
+  createdAtTicks: 637722267009427967
   name: Bomber MK2
   description: A stronger version of the bomber. Larger explosion radius and drops
     a bunch of small bombers when destroyed.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 6065519297016329530, guid: 6c2d52d5018f2de409d5d0a82b3deda7, type: 3}
   material: {fileID: 0}
-  tile:
-    cells: []
-    offset: {x: 0, y: 0}
-  snap: 0
-  size: 1
   health: 5
-  level: -1
-  maxHealth: 0
-  healthModifier: 0
-  invOrder: 4
-  invIndex: 2
-  active: 0
+  unlockable:
+    type: 0
+    description: 
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 0}
+    amount: 0
+  gridSnap: 0
+  gridOffset: {x: 0, y: 0}
+  hologramSize: 1
+  table: {fileID: 0}
   damage: 30
   moveSpeed: 6
   explosiveRadius: 10
   explosiveDamage: 15
   rotationSpeed: 0
-  spawns:
-  - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
-    amount: 5
-    radius: 5
+  spawnChance: 0
+  spawnPercentage: 0
+  spawnsOnDeath: []

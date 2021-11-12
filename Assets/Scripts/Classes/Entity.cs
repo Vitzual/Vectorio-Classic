@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Entity : IdentifiableScriptableObject
@@ -13,19 +14,31 @@ public class Entity : IdentifiableScriptableObject
     }
 
     // Entity description
-    [Header("Entity Variables")]
-    public new string name;
-    [TextArea] public string description;
-    public InvHeader inventoryHeader;
-    public int inventoryIndex;
+    [FoldoutGroup("Entity Info")]
     public GameObject obj;
-    public Material material;
+    [FoldoutGroup("Entity Info")]
+    public new string name;
+    [FoldoutGroup("Entity Info")]
+    [TextArea] public string description;
+    [FoldoutGroup("Entity Info")]
     public int health;
+    [FoldoutGroup("Entity Info")]
+    public Material material;
+
+    // Inventory variables
+    [FoldoutGroup("Inventory Variables")]
+    public InvHeader inventoryHeader;
+    [FoldoutGroup("Inventory Variables")]
+    public int inventoryIndex;
+    [FoldoutGroup("Inventory Variables")]
     public Unlockable unlockable;
 
-    [Header("Grid Variables")]
+    // Grid variables
+    [FoldoutGroup("Grid Variables")]
     public bool gridSnap;
+    [FoldoutGroup("Grid Variables")]
     public Vector2 gridOffset;
+    [FoldoutGroup("Grid Variables")]
     public float hologramSize = 1f;
 
     // Creates stats

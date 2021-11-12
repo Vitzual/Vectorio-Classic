@@ -1,25 +1,26 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Turret", menuName = "Building/Turret")]
 public class Turret : Building
 {
     // Base turret stat variables
-    [Header("Turret Variables")]
-    public float damage;
-    public float range;
-    public float rotationSpeed;
-    public float cooldown;
-
-    [Header("Bullet Variables")]
-    public DefaultBullet bullet;
-    public int bulletPierces;
-    public int bulletAmount;
-    public float bulletSpeed;
-    public float bulletSpread;
-    public float bulletTime;
-    public bool bulletLock;
-    public ParticleSystem bulletParticle;
+    [FoldoutGroup("Turret Variables")]
+    public float damage, range, rotationSpeed, cooldown;
+    [FoldoutGroup("Turret Variables")]
     public AudioClip sound;
+    
+    // Bullet variables
+    [FoldoutGroup("Bullet Variables")]
+    public DefaultBullet bullet;
+    [FoldoutGroup("Bullet Variables")]
+    public int bulletPierces, bulletAmount;
+    [FoldoutGroup("Bullet Variables")]
+    public float bulletSpeed, bulletSpread, bulletTime;
+    [FoldoutGroup("Bullet Variables")]
+    public bool bulletLock;
+    [FoldoutGroup("Bullet Variables")]
+    public ParticleSystem bulletParticle;
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

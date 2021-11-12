@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
   m_Name: Tesla
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  internalId: 9d871637-5778-4339-afa4-01f5e0932067
+  createdAtTicks: 637722267068261521
   name: Tesla
   description: Fires bolts of lightning that deal massive damage and slow down enemies.
     Consumes extra power while firing.
@@ -46,6 +57,8 @@ MonoBehaviour:
     amount: 600
     add: 1
     storage: 0
+  restrictPlacement: 0
+  placedOn: 0
   damage: 150
   range: 60
   rotationSpeed: 200
@@ -60,11 +73,3 @@ MonoBehaviour:
   bulletParticle: {fileID: 274222557884159627, guid: 20ca77f1ed76de54dbf34ec846a9d6d2,
     type: 3}
   sound: {fileID: 0}
-  damageModifier: 0
-  rangeModifier: 0
-  rotationSpeedModifier: 0
-  fireRateModifier: 0
-  bulletPiercesModifier: 0
-  bulletAmountModifier: 0
-  bulletSpeedModifier: 0
-  bulletSpreadModifier: 0

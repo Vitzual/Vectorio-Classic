@@ -12,32 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
   m_Name: Carrier
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  internalId: f8ef1559-7352-4dc1-94c6-c6808cc56c70
+  createdAtTicks: 637722267009287841
   name: Carrier
   description: Slow moving enemy with a lot of health. Carries smaller enemies which
     get dropped when destroyed.
+  inventoryHeader: 0
+  inventoryIndex: 0
   obj: {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
   material: {fileID: 0}
-  tile:
-    cells: []
-    offset: {x: 0, y: 0}
-  snap: 0
-  size: 2
   health: 50
-  level: -1
-  maxHealth: 0
-  healthModifier: 0
-  invOrder: 3
-  invIndex: 2
-  active: 0
+  unlockable:
+    type: 0
+    description: 
+    unlocked: 0
+    resource: 0
+    entity: {fileID: 0}
+    amount: 0
+  gridSnap: 0
+  gridOffset: {x: 0, y: 0}
+  hologramSize: 1
+  table: {fileID: 0}
   damage: 15
   moveSpeed: 2
   explosiveRadius: 0
   explosiveDamage: 0
   rotationSpeed: 0
-  spawns:
-  - enemy: {fileID: 11400000, guid: 7ba95261bd61b914fb36f91b96bbf0e7, type: 2}
-    amount: 3
-    radius: 10
-  - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
-    amount: 2
-    radius: 5
+  spawnChance: 0
+  spawnPercentage: 0
+  spawnsOnDeath: []

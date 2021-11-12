@@ -8,7 +8,7 @@ public class CollectorHandler : MonoBehaviour
     public static CollectorHandler active;
 
     // Class lists
-    public List<Collector> collectors;
+    public List<DefaultCollector> collectors;
     public List<Storage> storages;
 
     public void Awake() { active = this; }
@@ -58,7 +58,7 @@ public class CollectorHandler : MonoBehaviour
         }
     }
 
-    public void AddCollector(Collector collector)
+    public void AddCollector(DefaultCollector collector)
     {
         collectors.Add(collector);
     }

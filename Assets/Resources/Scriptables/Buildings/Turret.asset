@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
   m_Name: Turret
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  internalId: ff354882-1fde-43ed-9279-3fcc36fde165
+  createdAtTicks: 637722267069242414
   name: Turret
   description: Weak early game turret that targets and fires at nearby enemies.
   inventoryHeader: 0
@@ -45,6 +56,8 @@ MonoBehaviour:
     amount: 5
     add: 1
     storage: 0
+  restrictPlacement: 0
+  placedOn: 0
   damage: 1
   range: 50
   rotationSpeed: 150
@@ -59,11 +72,3 @@ MonoBehaviour:
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
   sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
-  damageModifier: 0
-  rangeModifier: 0
-  rotationSpeedModifier: 0
-  fireRateModifier: 0
-  bulletPiercesModifier: 0
-  bulletAmountModifier: 0
-  bulletSpeedModifier: 0
-  bulletSpreadModifier: 0

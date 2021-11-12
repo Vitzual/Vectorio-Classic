@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
 public class Building : Entity
@@ -24,10 +25,13 @@ public class Building : Entity
         public float y;
     }
 
-    [Header("Building Variables")]
+    [FoldoutGroup("Building Variables")]
     public Cell[] cells;
+    [FoldoutGroup("Building Variables")]
     public Resources[] resources;
+    [FoldoutGroup("Building Variables")]
     public bool restrictPlacement;
+    [FoldoutGroup("Building Variables")]
     public Resource.CurrencyType placedOn;
 
     // Creates stats

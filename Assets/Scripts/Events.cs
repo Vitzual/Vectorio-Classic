@@ -38,8 +38,8 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a collector script is placed
-    public event Action<Collector> onCollectorPlaced;
-    public void CollectorPlaced(Collector collector)
+    public event Action<DefaultCollector> onCollectorPlaced;
+    public void CollectorPlaced(DefaultCollector collector)
     {
         if (onCollectorPlaced != null)
             onCollectorPlaced(collector);

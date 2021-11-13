@@ -4,6 +4,7 @@ public class ShrinkGrow : MonoBehaviour
 {
     public Transform body;
     public float grow = 1f;
+    public float change = 0.001f;
     public bool growEnd = false;
 
     // Start is called before the first frame update
@@ -18,13 +19,13 @@ public class ShrinkGrow : MonoBehaviour
         body.localScale = new Vector2(grow, grow);
         if (growEnd)
         {
-            grow += 0.004f;
+            change += 0.004f;
             if (grow >= 1f)
                 growEnd = false;
         }
         else
         {
-            grow -= 0.004f;
+            change -= 0.004f;
             if (grow <= 0.8f)
                 growEnd = true;
         }

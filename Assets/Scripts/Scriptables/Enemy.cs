@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,17 @@ using UnityEngine;
 public class Enemy : Entity
 {
     // Enemy stats
+    [FoldoutGroup("Enemy Stats")]
     public float damage;
+    [FoldoutGroup("Enemy Stats")]
     public float moveSpeed;
+    [FoldoutGroup("Enemy Stats")]
     public float explosiveRadius;
+    [FoldoutGroup("Enemy Stats")]
     public float explosiveDamage;
+    [FoldoutGroup("Enemy Stats")]
     public float rotationSpeed;
+    [FoldoutGroup("Enemy Stats")]
     public float spawnChance;
 
     // Spawn percentage
@@ -22,10 +29,8 @@ public class Enemy : Entity
     // variant. Thus, if the spawn percentage was below that (say 0.1), the system 
     // would try and spawn it (based off whatever it's chance variable is above)
 
+    [FoldoutGroup("Enemy Stats")]
     public float spawnPercentage;
-
-    // Loot table
-    public List<Blueprint> drops;
 
     // Spawn on death
     [System.Serializable]
@@ -35,7 +40,12 @@ public class Enemy : Entity
         public int amount;
         public float radius;
     }
+    [FoldoutGroup("Enemy Stats")]
     public EnemySpawn[] spawnsOnDeath;
+
+    // Loot table
+    [FoldoutGroup("Enemy Stats")]
+    public List<Blueprint> drops;
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

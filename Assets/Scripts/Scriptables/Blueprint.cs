@@ -1,9 +1,10 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Blueprint", menuName = "Building/Blueprint")]
-public class Blueprint : ScriptableObject
+public class Blueprint : IdentifiableScriptableObject
 {
     public enum Effect
     {
@@ -19,7 +20,9 @@ public class Blueprint : ScriptableObject
         BulletTracking,
         BulletSticking,
         BulletExplosion,
-        Resource,
+        Discount,
+        Power,
+        Heat,
         CollectAmount,
         CollectRate,
         AutoStorage
@@ -31,8 +34,7 @@ public class Blueprint : ScriptableObject
         Uncommon,
         Rare,
         Epic,
-        Legendary,
-        Mythic
+        Legendary
     }
 
     public enum Type
@@ -43,8 +45,36 @@ public class Blueprint : ScriptableObject
         All
     }
 
-    [Header("Blueprint Info")]
+    [System.Serializable]
+    public class EffectType
+    {
+        [TableColumnWidth(30)]
+        public Effect effect;
+        [TableColumnWidth(85)]
+        [Range(0f, 5f)]
+        public float modifier;
+        [TableColumnWidth(5)]
+        public bool negative;
+    }
+
+    [System.Serializable]
+    public class Rarity
+    {
+        public RarityType rarity;
+        [TableList(AlwaysExpanded = true, DrawScrollView = false)]
+        public List<EffectType> effects = new List<EffectType>();
+        [Range(0f, 0.1f)]
+        public float dropChance;
+    }
+
+    [FoldoutGroup("Blueprint Info")]
     public new string name;
+    [FoldoutGroup("Blueprint Info")]
     [TextArea] public string description;
-    
+    [FoldoutGroup("Blueprint Info")]
+    public Type type;
+    [FoldoutGroup("Blueprint Info")]
+    public Sprite icon;
+    [FoldoutGroup("Effects")]
+    public List<Rarity> rarities;
 }

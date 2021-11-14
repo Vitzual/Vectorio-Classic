@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy/Enemy")]
 public class Enemy : Entity
 {
-    // Loot table
-    public Table table;
-
     // Enemy stats
     public float damage;
     public float moveSpeed;
@@ -27,6 +24,9 @@ public class Enemy : Entity
 
     public float spawnPercentage;
 
+    // Loot table
+    public List<Blueprint> drops;
+
     // Spawn on death
     [System.Serializable]
     public class EnemySpawn
@@ -35,7 +35,7 @@ public class Enemy : Entity
         public int amount;
         public float radius;
     }
-    public EnemySpawn[] spawnsOnDeath;//
+    public EnemySpawn[] spawnsOnDeath;
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

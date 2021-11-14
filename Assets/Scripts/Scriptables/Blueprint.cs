@@ -48,12 +48,9 @@ public class Blueprint : IdentifiableScriptableObject
     [System.Serializable]
     public class EffectType
     {
-        [TableColumnWidth(30)]
+        [TableColumnWidth(110)]
         public Effect effect;
-        [TableColumnWidth(85)]
-        [Range(0f, 5f)]
-        public float modifier;
-        [TableColumnWidth(5)]
+        [TableColumnWidth(10)]
         public bool negative;
     }
 
@@ -61,10 +58,11 @@ public class Blueprint : IdentifiableScriptableObject
     public class Rarity
     {
         public RarityType rarity;
-        [TableList(AlwaysExpanded = true, DrawScrollView = false)]
-        public List<EffectType> effects = new List<EffectType>();
+        public float[] modifier;
         [Range(0f, 0.1f)]
         public float dropChance;
+        public Resource.Cost applicationCost;
+        public Resource.Cost removalCost;
     }
 
     [FoldoutGroup("Blueprint Info")]
@@ -75,6 +73,11 @@ public class Blueprint : IdentifiableScriptableObject
     public Type type;
     [FoldoutGroup("Blueprint Info")]
     public Sprite icon;
-    [FoldoutGroup("Effects")]
+
+    [FoldoutGroup("Blueprint Effect")]
+    public List<EffectType> effects;
+    
+    [FoldoutGroup("Blueprint Rarities")]
     public List<Rarity> rarities;
 }
+//

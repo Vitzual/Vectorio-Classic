@@ -31,6 +31,14 @@ public class Resource : MonoBehaviour
         public TextMeshProUGUI storageUI;
     }
 
+    [System.Serializable]
+    public class Cost
+    {
+        // Cost variables
+        public CurrencyType type;
+        public int amount;
+    }
+
     // Dictionary of all currencies
     public Dictionary<CurrencyType, Currency> currencies;
     public Currency[] currencyElements;

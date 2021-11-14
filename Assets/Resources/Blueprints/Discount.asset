@@ -23,8 +23,38 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: d43035ad-0a3a-4b0b-b4b0-2ce2eadbb19a
   createdAtTicks: 637724801445636648
-  name: 
-  description: 
+  name: Discount
+  description: Lowers the cost of creating new instances of the building. Do note
+    the higher scrubbing costs however, so take caution when applying this blueprint.
   type: 0
-  icon: {fileID: 0}
-  rarities: []
+  icon: {fileID: 21300000, guid: 5b24b5ced7a8f544eb56801f706484eb, type: 3}
+  applicationCost:
+  - type: 0
+    amount: 25000
+  removalCost:
+  - type: 0
+    amount: 1000000
+  effects:
+  - effect: 12
+    negative: 0
+  rarities:
+  - rarity: 0
+    modifier:
+    - 0.9
+    dropChance: 0.01
+  - rarity: 1
+    modifier:
+    - 0.8
+    dropChance: 0.005
+  - rarity: 2
+    modifier:
+    - 0.7
+    dropChance: 0.002
+  - rarity: 3
+    modifier:
+    - 0.6
+    dropChance: 0.001
+  - rarity: 4
+    modifier:
+    - 0.5
+    dropChance: 0.0005

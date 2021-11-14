@@ -23,8 +23,48 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 24a217fb-4712-404b-b19e-64b9c35e6771
   createdAtTicks: 637724802248911998
-  name: 
-  description: 
-  type: 0
-  icon: {fileID: 0}
-  rarities: []
+  name: Piercing
+  description: Increases bullet integrity to allow for additional pierces. However
+    this does require a slight sacrifice in overall bullet damage.
+  type: 2
+  icon: {fileID: 21300000, guid: 92045935c8cb36048b3731ed8d4bcb54, type: 3}
+  blacklist: []
+  effects:
+  - effect: 4
+    negative: 0
+  - effect: 1
+    negative: 1
+  rarities:
+  - rarity: 0
+    modifier:
+    - 2
+    - 0.9
+    dropChance: 0.01
+    applicationCost:
+      type: 0
+      amount: 5000
+    removalCost:
+      type: 0
+      amount: 1000
+  - rarity: 1
+    modifier:
+    - 3
+    - 0.8
+    dropChance: 0.005
+    applicationCost:
+      type: 0
+      amount: 25000
+    removalCost:
+      type: 0
+      amount: 10000
+  - rarity: 2
+    modifier:
+    - 4
+    - 0.7
+    dropChance: 0.001
+    applicationCost:
+      type: 0
+      amount: 50000
+    removalCost:
+      type: 0
+      amount: 20000

@@ -23,8 +23,49 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 934376a8-2800-4a8a-826d-0dc887dc6350
   createdAtTicks: 637724802391062369
-  name: 
-  description: 
+  name: Splinter
+  description: Adds a divider at the end of the barrel, splitting bullets into multiple
+    segments when fired. Split bullets have reduced damage and cannot track targets.
   type: 0
-  icon: {fileID: 0}
-  rarities: []
+  icon: {fileID: 21300000, guid: 190e7bc9f6931974cb12b65cff01f801, type: 3}
+  blacklist:
+  - {fileID: 11400000, guid: 3e89185f7b8b18741bcf4273edc38e1b, type: 2}
+  effects:
+  - effect: 6
+    negative: 0
+  - effect: 1
+    negative: 1
+  rarities:
+  - rarity: 2
+    modifier:
+    - 2
+    - 0.8
+    dropChance: 0.005
+    applicationCost:
+      type: 1
+      amount: 10000
+    removalCost:
+      type: 1
+      amount: 2500
+  - rarity: 3
+    modifier:
+    - 3
+    - 0.7
+    dropChance: 0.001
+    applicationCost:
+      type: 1
+      amount: 25000
+    removalCost:
+      type: 1
+      amount: 5000
+  - rarity: 4
+    modifier:
+    - 4
+    - 0.6
+    dropChance: 0.0001
+    applicationCost:
+      type: 2
+      amount: 10000
+    removalCost:
+      type: 2
+      amount: 2500

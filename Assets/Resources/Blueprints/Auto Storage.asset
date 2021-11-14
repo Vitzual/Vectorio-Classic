@@ -28,8 +28,7 @@ MonoBehaviour:
     to your storage array. This eliminates the need for resource drones.
   type: 1
   icon: {fileID: 21300000, guid: 05eee3ecb0cc08041a365d85053cc16c, type: 3}
-  applicationCost: []
-  removalCost: []
+  blacklist: []
   effects:
   - effect: 17
     negative: 0
@@ -37,3 +36,9 @@ MonoBehaviour:
   - rarity: 4
     modifier: []
     dropChance: 0.001
+    applicationCost:
+      type: 0
+      amount: 0
+    removalCost:
+      type: 0
+      amount: 0

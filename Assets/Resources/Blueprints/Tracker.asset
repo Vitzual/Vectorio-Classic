@@ -23,11 +23,23 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 868f8a66-1244-4106-bb13-d50b3b1f0b75
   createdAtTicks: 637724802117701682
-  name: 
-  description: 
+  name: Tracker
+  description: Bullets gain homing functionality, allowing them to track their targets
+    and never miss. Note the higher scrub cost and blacklisted blueprints.
   type: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1e86031094673c54498bc369fcd40145, type: 3}
   blacklist:
   - {fileID: 11400000, guid: 82a8e69200f36404280e3a49bdee50a4, type: 2}
-  effects: []
-  rarities: []
+  effects:
+  - effect: 10
+    negative: 0
+  rarities:
+  - rarity: 3
+    modifier: []
+    dropChance: 0.0005
+    applicationCost:
+      type: 0
+      amount: 50000
+    removalCost:
+      type: 0
+      amount: 100000

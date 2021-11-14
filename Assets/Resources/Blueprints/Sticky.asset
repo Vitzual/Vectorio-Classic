@@ -23,8 +23,27 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: c45a1640-eb5f-4f4d-a944-8e768ad2f5a2
   createdAtTicks: 637724802613625656
-  name: 
-  description: 
+  name: Sticky
+  description: Bullet material is replaced with a magnetic counterpart that causes
+    nearby enemies to stick to it. Due note that as a result of this, bullets do
+    not do damage to enemies.
   type: 0
-  icon: {fileID: 0}
-  rarities: []
+  icon: {fileID: 21300000, guid: 6457e4909ae036245adda5f092623965, type: 3}
+  blacklist: []
+  effects:
+  - effect: 11
+    negative: 0
+  - effect: 1
+    negative: 1
+  rarities:
+  - rarity: 4
+    modifier:
+    - 0
+    - 0
+    dropChance: 0.0001
+    applicationCost:
+      type: 2
+      amount: 10000
+    removalCost:
+      type: 2
+      amount: 2500

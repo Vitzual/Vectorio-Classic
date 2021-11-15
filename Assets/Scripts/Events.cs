@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // On enemy destroyed
+    public event Action<DefaultEnemy> onEnemyDestroyed;
+    public void EnemyDestroyed(DefaultEnemy enemy)
+    {
+        if (onEnemyDestroyed != null)
+            onEnemyDestroyed(enemy);
+    }
+
     // Fires the hub laser
     public event Action fireHubLaser;
     public void FireHubLaser()

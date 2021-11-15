@@ -28,7 +28,6 @@ public class DefaultEnemy : BaseEntity
 
         foreach (TrailRenderer a in trail)
             a.material = variant.trail;
-
     }
 
     public virtual void GiveDamage(BaseTile building)
@@ -38,10 +37,16 @@ public class DefaultEnemy : BaseEntity
 
     public override void DestroyEntity()
     {
+        // Create particle and set material / trail material
         ParticleSystemRenderer holder = Instantiate(variant.particle, transform.position,
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
         holder.material = variant.border;
         holder.trailMaterial = variant.border;
+
+        // Invoke enemy death event
+        Events.active.EnemyDestroyed(this);
+
+        // Destroy game object
         Destroy(gameObject);
     }
 

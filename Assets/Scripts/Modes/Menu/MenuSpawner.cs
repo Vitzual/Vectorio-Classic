@@ -4,6 +4,8 @@ using TMPro;
 
 public class MenuSpawner : MonoBehaviour
 {
+    public Variant variant;
+
     private void Start() { InvokeRepeating("SpawnEnemies", 0f, 0.5f); }
 
     [System.Serializable]
@@ -37,6 +39,9 @@ public class MenuSpawner : MonoBehaviour
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = OGP;
 
-        holder.GetComponent<DefaultEnemy>().Setup();
+        DefaultEnemy newEnemy = holder.GetComponent<DefaultEnemy>();
+        newEnemy.variant = variant;
+        newEnemy.isMenu = true;//
+        newEnemy.Setup();
     }
 }

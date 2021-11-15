@@ -37,6 +37,7 @@ public class EnemyHandler : MonoBehaviour
         scan = true;
         if (isMenu)
         {
+            // Move enemies upward on meun
             for (int a = 0; a < enemies.Count; a++)
             {
                 if (enemies[a] != null)
@@ -53,6 +54,7 @@ public class EnemyHandler : MonoBehaviour
         }
         else
         {
+            // Move enemies each frame towards their target
             for (int a = 0; a < enemies.Count; a++)
             {
                 if (enemies[a] != null)
@@ -81,7 +83,7 @@ public class EnemyHandler : MonoBehaviour
             }
 
 
-            // Move guardians each frame
+            // Move guardians each frame towards their target
             for (int i = 0; i < guardians.Count; i++)
             {
                 if (guardians[i] != null)
@@ -153,7 +155,7 @@ public class EnemyHandler : MonoBehaviour
     // Updates the active variant (Survival only)
     public void UpdateVariant()
     {
-        if (Gamemode.active.useResources)
+        if (Gamemode.active.useHeat)
         {
             int currentHeat = Resource.active.GetHeat();
             foreach (Variant variant in ScriptableManager.variants)
@@ -165,6 +167,10 @@ public class EnemyHandler : MonoBehaviour
                     return;
                 }
             }
+        }
+        else
+        {
+            variant = ScriptableManager.variants[0];
         }
     }
 }

@@ -126,16 +126,17 @@ public class Resource : MonoBehaviour
     public bool CheckResources(Building building)
     {
         // Check if resource should be used
-        if (Gamemode.active.useResources)
+        foreach (Building.Resources resource in building.resources)
         {
-            foreach (Building.Resources resource in building.resources)
+            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
+            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
+            else if (!Gamemode.active.useResources) continue;
+
+            if (!resource.storage)
             {
-                if (!resource.storage)
-                {
-                    int amount = GetAmount(resource.resource);
-                    if (resource.add && amount + resource.amount > GetStorage(resource.resource)) return false;
-                    else if (!resource.add && amount < resource.amount) return false;
-                }
+                int amount = GetAmount(resource.resource);
+                if (resource.add && amount + resource.amount > GetStorage(resource.resource)) return false;
+                else if (!resource.add && amount < resource.amount) return false;
             }
         }
         return true;
@@ -146,20 +147,21 @@ public class Resource : MonoBehaviour
     public void ApplyResources(Building building)
     {
         // Update resource values promptly
-        if (Gamemode.active.useResources)
+        foreach (Building.Resources resource in building.resources)
         {
-            foreach (Building.Resources resource in building.resources)
+            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
+            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
+            else if (!Gamemode.active.useResources) continue;
+
+            if (resource.storage)
             {
-                if (resource.storage)
-                {
-                    if (resource.add) active.AddStorage(resource.resource, resource.amount);
-                    else active.RemoveStorage(resource.resource, resource.amount);
-                }
-                else
-                {
-                    if (resource.add) active.Add(resource.resource, resource.amount);
-                    else active.Remove(resource.resource, resource.amount);
-                }
+                if (resource.add) active.AddStorage(resource.resource, resource.amount);
+                else active.RemoveStorage(resource.resource, resource.amount);
+            }
+            else
+            {
+                if (resource.add) active.Add(resource.resource, resource.amount);
+                else active.Remove(resource.resource, resource.amount);
             }
         }
     }
@@ -169,20 +171,21 @@ public class Resource : MonoBehaviour
     public void RevertResources(Building building)
     {
         // Update resource values promptly
-        if (Gamemode.active.useResources)
+        foreach (Building.Resources resource in building.resources)
         {
-            foreach (Building.Resources resource in building.resources)
+            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
+            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
+            else if (!Gamemode.active.useResources) continue;
+
+            if (resource.storage)
             {
-                if (resource.storage)
-                {
-                    if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
-                    else active.AddStorage(resource.resource, resource.amount);
-                }
-                else
-                {
-                    if (resource.add) active.Remove(resource.resource, resource.amount);
-                    else active.Add(resource.resource, resource.amount);
-                }
+                if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
+                else active.AddStorage(resource.resource, resource.amount);
+            }
+            else
+            {
+                if (resource.add) active.Remove(resource.resource, resource.amount);
+                else active.Add(resource.resource, resource.amount);
             }
         }
     }

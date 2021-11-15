@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     // Active instance
     public static EnemySpawner active;
+    public int maxEnemiesAllowed = 200;
 
     public void Start()
     {
@@ -16,11 +17,18 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         // Check if enemy handler is active
-        if (EnemyHandler.active.variant == null) return;
+        if (EnemyHandler.active.variant == null ||
+            EnemyHandler.active.enemies.Count > maxEnemiesAllowed) return;
 
-        // Calculate chance and heat percentage
+        // Setup variables
         Vector2 spawnPos;
-        float chance = Random.value;
+        float chance;
+
+        // Calculate chance (or ignore)
+        if (Gamemode.active.ignoreSpawnValues) chance = 0f;
+        else chance = Random.value;
+
+        // Calculate heat percen tage
         float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
         
         // Loop through all enemies

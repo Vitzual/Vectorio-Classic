@@ -18,6 +18,7 @@ public class Border : MonoBehaviour
     public Hub hub;
 
     // Borders
+    public int borderStartSize = 750;
     public Transform[] borders;
     public int activatedBorder;
     public Vector2 newPosition;
@@ -36,6 +37,11 @@ public class Border : MonoBehaviour
     public void Start()
     {
         Events.active.fireHubLaser += NextStage;
+
+        north = borderStartSize;
+        east = borderStartSize;
+        south = -borderStartSize;
+        west = -borderStartSize;
     }
 
     // Activate push

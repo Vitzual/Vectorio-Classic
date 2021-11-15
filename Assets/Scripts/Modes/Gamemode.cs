@@ -20,12 +20,19 @@ public class Gamemode : MonoBehaviour
 
     [Header("Gamemode Settings")]
     public bool useResources;
+    public bool useHeat; 
+    public bool usePower;
     public bool useDroneConstruction;
+    public bool useEngineering;
+    public bool spawnBlueprints;
     public bool generateWorld;
     public bool unlockEverything;
     public bool initBuildings;
     public bool initEnemies;
     public bool initGuardians;
+
+    [Header("Debug Settings")]
+    public bool ignoreSpawnValues;
 
     // Set active instance
     public void Awake()

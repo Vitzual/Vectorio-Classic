@@ -62,9 +62,9 @@ public class Blueprint : IdentifiableScriptableObject
         [Title("Rarity Modifier")]
         public RarityType rarity;
         public float[] modifier;
-        [Range(0f, 0.1f)]
+        [Range(0f, 0.01f)]
         public float dropChance;
-        public Resource.Cost applicationCost;
+        public Resource.Cost applicationCost;//
         [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
         public Resource.Cost removalCost;
     }

@@ -11,14 +11,26 @@ public class BlueprintHandler : MonoBehaviour
     // Register events and setup dictionary
     public void Start()
     {
-        foreach (BlueprintObj obj in _blueprintObjs)
-            blueprintObjs.Add(obj.rarity, obj);
-        Events.active.onEnemyDestroyed += TrySpawnBlueprint;
+        if (Gamemode.active.spawnBlueprints)
+        {
+            Debug.Log("Setting up blueprints...");
+
+            blueprintObjs = new Dictionary<Blueprint.RarityType, BlueprintObj>();
+            foreach (BlueprintObj obj in _blueprintObjs)
+                blueprintObjs.Add(obj.rarity, obj);
+
+            Debug.Log("Added " + blueprintObjs.Count + " blueprint rartities");
+
+            Events.active.onEnemyDestroyed += TrySpawnBlueprint;
+        }
     }
 
     // Iterate through blueprint table and try to spawn 
     public void TrySpawnBlueprint(DefaultEnemy enemy)
     {
+        // Check if blueprint spawning is enabled
+        if (!Gamemode.active.spawnBlueprints) return;
+
         // Grab list of drops
         List<Blueprint> blueprints = enemy.enemy.drops;
         

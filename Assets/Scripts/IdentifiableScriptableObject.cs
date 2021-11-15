@@ -54,12 +54,12 @@ public class IdentifiableScriptableObject : SerializedScriptableObject
         internalId = null;
     }
 
-    public void OnAfterDeserialize()
+    protected override void OnAfterDeserialize()
     {
         base.OnAfterDeserialize();
         ProcessRegistration(this);
     }
-    public void OnBeforeSerialize()
+    protected override void OnBeforeSerialize()
     {
         base.OnBeforeSerialize();
         ProcessRegistration(this);

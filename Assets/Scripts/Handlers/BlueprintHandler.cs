@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class BlueprintHandler : MonoBehaviour
 {
-    // Get blueprint object 
-    public List<BlueprintObj> _blueprintObjs;
-    public Dictionary<Blueprint.RarityType, BlueprintObj> blueprintObjs;
+    // Get blueprint object /
+    public BlueprintObj blueprintObj;
 
     // Register events and setup dictionary
     public void Start()
     {
-        if (Gamemode.active.spawnBlueprints)
-        {
-            Debug.Log("Setting up blueprints...");
-
-            blueprintObjs = new Dictionary<Blueprint.RarityType, BlueprintObj>();
-            foreach (BlueprintObj obj in _blueprintObjs)
-                blueprintObjs.Add(obj.rarity, obj);
-
-            Debug.Log("Added " + blueprintObjs.Count + " blueprint rartities");
-
-            Events.active.onEnemyDestroyed += TrySpawnBlueprint;
-        }
+        Events.active.onEnemyDestroyed += TrySpawnBlueprint;
     }
 
     // Iterate through blueprint table and try to spawn 
@@ -49,8 +37,8 @@ public class BlueprintHandler : MonoBehaviour
                 // If value lower then drop chance, spawn and return
                 if (random < rarity.dropChance)
                 {
-                    BlueprintObj newBlueprint = Instantiate(blueprintObjs[rarity.rarity], enemy.transform.position, Quaternion.identity).GetComponent<BlueprintObj>();
-                    newBlueprint.Setup(blueprint);
+                    BlueprintObj newBlueprint = Instantiate(blueprintObj, enemy.transform.position, Quaternion.identity).GetComponent<BlueprintObj>();
+                    newBlueprint.Setup(blueprint, rarity.rarity);
                     return;
                 }
             }

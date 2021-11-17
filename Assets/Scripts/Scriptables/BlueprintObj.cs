@@ -1,3 +1,4 @@
+using Michsky.UI.ModernUIPack;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,8 @@ public class BlueprintObj : MonoBehaviour
     }
     public BlueprintModel[] blueprintModels;
 
-    // Icon value
+    // Blueprint icon value
+    public TooltipManager tooltipManager;
     public SpriteRenderer blueprintModel;
     public SpriteRenderer blueprintIcon;
     public Blueprint.RarityType rarity;
@@ -42,5 +44,10 @@ public class BlueprintObj : MonoBehaviour
                 model.particle.gameObject.SetActive(true);
             }
         }
+    }
+
+    public void SetTooltip()
+    {
+
     }
 }

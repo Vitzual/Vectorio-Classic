@@ -61,6 +61,8 @@ public class Blueprint : IdentifiableScriptableObject
         [PropertySpace(SpaceBefore = 10, SpaceAfter = 0)]
         [Title("Rarity Modifier")]
         public RarityType rarity;
+        [ColorPalette("Rarity Colors")]
+        public Color color;
         public float[] modifier;
         [Range(0f, 0.01f)]
         public float dropChance;

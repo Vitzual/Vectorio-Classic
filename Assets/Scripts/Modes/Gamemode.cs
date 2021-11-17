@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Mirror;
+//using Mirror;
 
 // TODO:
 // - Fix building creation in MenuButton and Hotbar (commented out)

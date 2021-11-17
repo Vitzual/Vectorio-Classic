@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -5713973663981871051}
   - component: {fileID: -4701179397496839742}
   - component: {fileID: 8908887280986931000}
-  - component: {fileID: 2646264540998280449}
   m_Layer: 8
   m_Name: Tesla
   m_TagString: Defense
@@ -50,15 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e468b05154f7147a52bf9742a2b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   material: {fileID: 0}
   cells: []
   turret: {fileID: 11400000, guid: 71e3d068e705e5442af9d23d9818d28c, type: 2}
   firePoints:
   - {fileID: 3069989843565101140}
   cannon: {fileID: 4558331692551859083}
-  bullet: {fileID: 4535947825145661497, guid: a1f86ff9cf138dc4e871f2d2dbc067db, type: 3}
   target: {fileID: 0}
   cooldown: 0
 --- !u!61 &-4701179397496839742
@@ -103,23 +99,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2646264540998280449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: f7fecc94fdad2e94f87e4989dbfb9a49
-  hasSpawned: 0
 --- !u!1 &2360406291137728608
 GameObject:
   m_ObjectHideFlags: 0

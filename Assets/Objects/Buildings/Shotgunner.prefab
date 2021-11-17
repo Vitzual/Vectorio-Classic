@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: -1930811943359663110}
   - component: {fileID: 6867253957611795612}
   - component: {fileID: 8368875532741909379}
-  - component: {fileID: 6374826527683784704}
   m_Layer: 8
   m_Name: Shotgunner
   m_TagString: Defense
@@ -133,14 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e468b05154f7147a52bf9742a2b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  material: {fileID: 0}
   cells: []
   turret: {fileID: 11400000, guid: b45ce3523574d4b4884b6df625bcac7f, type: 2}
   firePoints:
   - {fileID: 3069989843565101140}
   cannon: {fileID: 2055557111240337833}
-  bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
 --- !u!61 &6867253957611795612
@@ -185,23 +182,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6374826527683784704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 75f5a0c010e7d6a4dab70e4cee3c3a93
-  hasSpawned: 0
 --- !u!1 &761494578340605626
 GameObject:
   m_ObjectHideFlags: 0

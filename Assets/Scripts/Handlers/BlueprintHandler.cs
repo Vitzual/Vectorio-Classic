@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlueprintHandler : MonoBehaviour
 {
-    // Get blueprint object /
+    // Get blueprint object
     public BlueprintObj blueprintObj;
 
     // Register events and setup dictionary
@@ -38,7 +38,7 @@ public class BlueprintHandler : MonoBehaviour
                 if (random < rarity.dropChance)
                 {
                     BlueprintObj newBlueprint = Instantiate(blueprintObj, enemy.transform.position, Quaternion.identity).GetComponent<BlueprintObj>();
-                    newBlueprint.Setup(blueprint, rarity.rarity);
+                    newBlueprint.Setup(blueprint, rarity);
                     return;
                 }
             }

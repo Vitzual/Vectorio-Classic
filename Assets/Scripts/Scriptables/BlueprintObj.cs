@@ -20,34 +20,39 @@ public class BlueprintObj : MonoBehaviour
     public BlueprintModel[] blueprintModels;
 
     // Blueprint icon value
+    public EngineerTooltip tooltip;
     public TooltipManager tooltipManager;
     public SpriteRenderer blueprintModel;
     public SpriteRenderer blueprintIcon;
-    public Blueprint.RarityType rarity;
 
     // Internal values
     private Blueprint blueprint;
+    private Blueprint.Rarity rarity;
 
-    public void Setup(Blueprint blueprint, Blueprint.RarityType rarity)
+    public void Setup(Blueprint blueprint, Blueprint.Rarity rarity)
     {
         // Set internal values
         this.blueprint = blueprint;
         this.rarity = rarity;
+
+        // Set sprite
         blueprintIcon.sprite = blueprint.icon;
 
         // Set correct particle and model (brain dead from studies when making this)
         foreach(BlueprintModel model in blueprintModels)
         {
-            if (model.rarity == rarity)
+            if (model.rarity == rarity.rarity)
             {
                 blueprintModel.sprite = model.icon;
                 model.particle.gameObject.SetActive(true);
             }
         }
+
+        tooltip.SetTooltip(blueprint, rarity);
     }
 
-    public void SetTooltip()
+    public void Collect()
     {
-
+        Debug.Log("COllect lol");
     }
 }

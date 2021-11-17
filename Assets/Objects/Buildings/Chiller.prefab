@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 509225813860951908}
   - component: {fileID: 1127411178701097423}
   - component: {fileID: 2427496693388507814}
-  - component: {fileID: 8719966026514517779}
   m_Layer: 8
   m_Name: Chiller
   m_TagString: Defense
@@ -132,14 +131,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e468b05154f7147a52bf9742a2b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  material: {fileID: 0}
   cells: []
   turret: {fileID: 11400000, guid: dd21b823a6622ed46bfe0c73f82a8265, type: 2}
   firePoints:
   - {fileID: 3069989843565101140}
   cannon: {fileID: 868748940344737781}
-  bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
 --- !u!61 &1127411178701097423
@@ -184,23 +181,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 90
---- !u!114 &8719966026514517779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: e238797f53eae4649a89e947e9a7124b
-  hasSpawned: 0
 --- !u!1 &1688262179590608685
 GameObject:
   m_ObjectHideFlags: 0

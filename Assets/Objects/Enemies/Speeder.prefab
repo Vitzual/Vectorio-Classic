@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 1336258943511152950}
   - component: {fileID: 7712961956477012175}
   - component: {fileID: -8918919344895654701}
-  - component: {fileID: 190938129114924223}
   m_Layer: 9
   m_Name: Speeder
   m_TagString: Enemy
@@ -185,11 +184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e284bd9b7a8c9541a098a0be0dbe973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  material: {fileID: 0}
   enemy: {fileID: 11400000, guid: 677983c6a4b3b5348800b8381ec609d0, type: 2}
+  isMenu: 0
   variant: {fileID: 0}
-  rotator: {fileID: 9158153135774200929}
   target: {fileID: 0}
   border:
   - {fileID: 5832737299910026401}
@@ -198,7 +196,6 @@ MonoBehaviour:
   - {fileID: 684519158091133727}
   trail:
   - {fileID: 6691676716186077070}
-  raycastCooldown: 5
 --- !u!58 &7712961956477012175
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -236,23 +233,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &190938129114924223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 64d117e3437f51b4f8b4c831f89f29ed
-  hasSpawned: 0
 --- !u!1 &6155902334490107135
 GameObject:
   m_ObjectHideFlags: 0

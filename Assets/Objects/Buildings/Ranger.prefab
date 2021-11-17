@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 6262783014596858131}
   - component: {fileID: 1142422021314723077}
   - component: {fileID: 2585992636332932193}
-  - component: {fileID: 8760723246658779022}
   m_Layer: 8
   m_Name: Ranger
   m_TagString: Defense
@@ -134,14 +133,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e468b05154f7147a52bf9742a2b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  material: {fileID: 0}
   cells: []
   turret: {fileID: 11400000, guid: 44df288e7d949c34398d10f842ec50ad, type: 2}
   firePoints:
   - {fileID: 1714094987215728718}
   cannon: {fileID: 7464498898754835155}
-  bullet: {fileID: 4535947825145661497, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   target: {fileID: 0}
   cooldown: 0
 --- !u!61 &1142422021314723077
@@ -186,23 +183,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &8760723246658779022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420473218063467210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 95110c1fbb72d024392973c39db4354f
-  hasSpawned: 0
 --- !u!1 &1875704098029860693
 GameObject:
   m_ObjectHideFlags: 0

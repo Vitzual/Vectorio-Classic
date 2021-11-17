@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// The entire blueprint system is currently a WIP,
+// it will take a few iterations to get it exactly
+// how I want, so please keep that in mind!
+
 [CreateAssetMenu(fileName = "New Blueprint", menuName = "Building/Blueprint")]
 public class Blueprint : IdentifiableScriptableObject
 {

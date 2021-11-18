@@ -3487,8 +3487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 364, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &255591110
 MonoBehaviour:
@@ -6306,8 +6306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378215873
 MonoBehaviour:
@@ -45102,7 +45102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   borderStage: 0
   hub: {fileID: 649071564}
-  borderStartSize: 750
+  borderStartSize: 200
   borders:
   - {fileID: 365655533}
   - {fileID: 631039237}
@@ -47667,8 +47667,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873019623
 MonoBehaviour:
@@ -57552,6 +57552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1385682163154323319}
   - component: {fileID: 5879613802669319989}
+  - component: {fileID: 1385682163154323314}
   - component: {fileID: 280458596}
   m_Layer: 0
   m_Name: Survival Manager
@@ -57560,6 +57561,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1385682163154323314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385682163154323313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7652adeed8deb7f4eb56114da203f21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawTargetLines: 1
+  ignoreSpawnValues: 1
 --- !u!4 &1385682163154323319
 Transform:
   m_ObjectHideFlags: 0
@@ -64119,7 +64134,6 @@ MonoBehaviour:
   initBuildings: 1
   initEnemies: 0
   initGuardians: 0
-  ignoreSpawnValues: 0
 --- !u!114 &5894347640321729736
 MonoBehaviour:
   m_ObjectHideFlags: 0

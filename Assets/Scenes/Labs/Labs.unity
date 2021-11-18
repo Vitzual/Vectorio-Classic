@@ -12548,6 +12548,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -14382,6 +14383,7 @@ GameObject:
   - component: {fileID: 1110028613}
   - component: {fileID: 1110028612}
   - component: {fileID: 1110028611}
+  - component: {fileID: 1110028617}
   m_Layer: 12
   m_Name: Main Menu
   m_TagString: Untagged
@@ -14452,7 +14454,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!114 &1110028615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14497,6 +14499,24 @@ Canvas:
   m_SortingLayerID: -25789473
   m_SortingOrder: 10000
   m_TargetDisplay: 0
+--- !u!114 &1110028617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110028610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f19134e58375904997403782e906829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttons:
+  - buttonName: Back
+    action: 1
+    activateObjects: []
+    deactivateObjects: []
+    argument: Menu
 --- !u!224 &1110028618
 RectTransform:
   m_ObjectHideFlags: 0

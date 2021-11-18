@@ -31,9 +31,6 @@ public class Gamemode : MonoBehaviour
     public bool initEnemies;
     public bool initGuardians;
 
-    [Header("Debug Settings")]
-    public bool ignoreSpawnValues;
-
     // Set active instance
     public void Awake()
     {

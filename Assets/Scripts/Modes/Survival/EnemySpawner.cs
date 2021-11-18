@@ -25,10 +25,10 @@ public class EnemySpawner : MonoBehaviour
         float chance;
 
         // Calculate chance (or ignore)
-        if (Gamemode.active.ignoreSpawnValues) chance = 0f;
+        if (Debugger.active.ignoreSpawnValues) chance = 0f;
         else chance = Random.value;
 
-        // Calculate heat percen tage
+        // Calculate heat percentage
         float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
         
         // Loop through all enemies

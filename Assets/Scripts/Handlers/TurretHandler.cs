@@ -22,7 +22,7 @@ public class TurretHandler : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (Settings.paused) return;
 

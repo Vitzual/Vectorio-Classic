@@ -9,7 +9,7 @@ public class BuildingController : MonoBehaviour
     // Selected tile
     public Transform hologram;
     private Entity entity;
-    private Building building;
+    private Buildable buildable;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -39,7 +39,7 @@ public class BuildingController : MonoBehaviour
         if (UIEvents.active != null) 
         { 
             UIEvents.active.onEntityPressed += SetEntity;
-            UIEvents.active.onBuildingPressed += SetBuilding;
+            UIEvents.active.onBuildablePressed += SetBuilding;
         }
     }
 
@@ -55,7 +55,7 @@ public class BuildingController : MonoBehaviour
 
     public void TryCreateEntity()
     {
-        if (entity != null) CmdCreateBuildable();
+        if (entity != null || buildable != null) CmdCreateBuildable();
         else
         {
             BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
@@ -69,7 +69,7 @@ public class BuildingController : MonoBehaviour
     {
         if (InstantiationHandler.active != null)
         {
-            if (building != null) InstantiationHandler.active.CreateBuilding(building, hologram.position, hologram.rotation);
+            if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation);
             else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, hologram.position, hologram.rotation);
         }
         else Debug.LogError("Scene does not have active building handler!");
@@ -87,16 +87,16 @@ public class BuildingController : MonoBehaviour
     // Sets the selected entity (null to deselect)
     public void SetEntity(Entity entity)
     {
-        building = null;
+        buildable = null;
         this.entity = entity;
         UpdateSprite();
     }
 
     // Sets the selected building (null to deselect)
-    public void SetBuilding(Building building)
+    public void SetBuilding(Buildable buildable)
     {
-        this.building = building;
-        entity = building;
+        this.buildable = buildable;
+        entity = buildable.building;
         UpdateSprite();
     }
 
@@ -118,7 +118,7 @@ public class BuildingController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 newPosition;
 
-        if (building != null)
+        if (buildable != null)
         {
             if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.gridOffset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.gridOffset.y);
             else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));

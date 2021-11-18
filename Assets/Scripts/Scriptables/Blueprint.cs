@@ -70,9 +70,9 @@ public class Blueprint : IdentifiableScriptableObject
         public float[] modifier;
         [Range(0f, 0.01f)]
         public float dropChance;
-        public Resource.Cost applicationCost;//
+        public Cost applicationCost;
         [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
-        public Resource.Cost removalCost;
+        public Cost removalCost;
     }
 
     [FoldoutGroup("Blueprint Info")]

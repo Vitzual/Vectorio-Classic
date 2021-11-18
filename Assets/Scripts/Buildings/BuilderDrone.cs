@@ -46,7 +46,7 @@ public class BuilderDrone : Drone
 
     public override void Destroy()
     {
-        if (!buildingPlaced) Resource.active.RevertResources(target.GetComponent<GhostTile>().building);
+        if (!buildingPlaced) Resource.active.RevertResources(target.GetComponent<GhostTile>().buildable);
         base.Destroy();
     }
 }

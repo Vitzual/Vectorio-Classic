@@ -1877,6 +1877,7 @@ GameObject:
   - component: {fileID: 114909784}
   - component: {fileID: 114909783}
   - component: {fileID: 114909785}
+  - component: {fileID: 114909787}
   m_Layer: 0
   m_Name: Building Handler
   m_TagString: Untagged
@@ -1933,6 +1934,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectors: []
   storages: []
+--- !u!114 &114909787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114909782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8803b0ce495474a46b0b99e1d9aecda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretEntities: []
 --- !u!1 &116214459
 GameObject:
   m_ObjectHideFlags: 0
@@ -7271,7 +7285,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &448974631
 GameObject:
@@ -7616,7 +7630,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &483797772
 GameObject:
@@ -19483,6 +19497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprintObj: {fileID: 2532016593206399543, guid: 88f9e5e2156d05e4baabc92af9526c62,
     type: 3}
+  collectedBlueprints: []
 --- !u!1 &866831060
 GameObject:
   m_ObjectHideFlags: 0
@@ -26420,7 +26435,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047709309
 GameObject:
@@ -32601,7 +32616,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1118897144
 GameObject:
@@ -35887,7 +35902,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311363564
 GameObject:
@@ -44066,50 +44081,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1565219065
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1565219067}
-  - component: {fileID: 1565219066}
-  m_Layer: 0
-  m_Name: Turret Handler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1565219066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565219065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8803b0ce495474a46b0b99e1d9aecda0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretEntities: []
---- !u!4 &1565219067
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565219065}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1565647167
 GameObject:
   m_ObjectHideFlags: 0
@@ -49441,7 +49412,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947060282
 GameObject:
@@ -56773,7 +56744,7 @@ Transform:
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!225 &284137050427782935
 CanvasGroup:
@@ -57562,7 +57533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawTargetLines: 0
-  ignoreSpawnValues: 1
+  ignoreSpawnValues: 0
 --- !u!114 &1385682163154323315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59936,7 +59907,7 @@ RectTransform:
   - {fileID: 2089888049856434899}
   - {fileID: 882056273787627291}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -62251,7 +62222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variant: {fileID: 0}
-  turretHandler: {fileID: 1565219066}
+  turretHandler: {fileID: 0}
   BuildingGoDeadSound: {fileID: 1113017989}
   enemies: []
   guardians: []
@@ -62383,7 +62354,7 @@ RectTransform:
   - {fileID: 854207470}
   - {fileID: 1980656031887171361}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -63673,7 +63644,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &5580029973786280222
 RectTransform:
@@ -64140,11 +64111,11 @@ MonoBehaviour:
   useResources: 0
   useHeat: 1
   usePower: 1
-  useDroneConstruction: 1
+  useDroneConstruction: 0
   useEngineering: 1
   spawnBlueprints: 1
   generateWorld: 1
-  unlockEverything: 1
+  unlockEverything: 0
   initBuildings: 1
   initEnemies: 0
   initGuardians: 0
@@ -73248,7 +73219,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &6709775166659505079
 CanvasRenderer:
@@ -74989,7 +74960,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &8413901851610442763
 RectTransform:

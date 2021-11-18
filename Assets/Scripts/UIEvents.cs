@@ -31,10 +31,18 @@ public class UIEvents : MonoBehaviour
 
     // Invoked when a building is clicked
     public event Action<Building> onBuildingPressed;
-    public void BuildingPressed(Building building)
+    public void BuildablePressed(Building building)
     {
         if (onBuildingPressed != null)
             onBuildingPressed(building);
+    }
+
+    // Invoked when a building is clicked
+    public event Action<Buildable> onBuildablePressed;
+    public void BuildablePressed(Buildable buildable)
+    {
+        if (onBuildablePressed != null)
+            onBuildablePressed(buildable);
     }
 
     public event Action<int> onHotbarPressed;

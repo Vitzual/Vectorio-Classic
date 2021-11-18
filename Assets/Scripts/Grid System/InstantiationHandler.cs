@@ -41,20 +41,24 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Building building, Vector2 position, Quaternion rotation, bool isGhost = true)
+    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = true)
     {
-        // Check if entity is null
-        if (building == null) return;
+        // Get buildable
+        if (buildable == null)
+        {
+            Debug.Log("Could not retrieve buildable " + buildable.building.name);
+            return;
+        }
 
         // Check if resource should be used
-        if (!Resource.active.CheckResources(building)) return;
+        if (!Resource.active.CheckResources(buildable)) return;
 
         // Check to make sure the tiles are not being used
-        if (!CheckTiles(building, position)) return;
+        if (!CheckTiles(buildable.building, position)) return;
 
         // Instantiate the object like usual
-        if (Gamemode.active.useDroneConstruction && isGhost) RpcInstatiateGhost(building, position, rotation);
-        else RpcInstantiateBuilding(building, position, rotation);
+        if (Gamemode.active.useDroneConstruction && isGhost) RpcInstatiateGhost(buildable, position, rotation);
+        else RpcInstantiateBuilding(buildable, position, rotation);
     }
 
     //[ClientRpc]
@@ -68,22 +72,18 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    private void RpcInstantiateBuilding(Building building, Vector2 position, Quaternion rotation)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation)
     {
-        // Get game objected from scriptable manager
-        GameObject obj = ScriptableManager.RequestObjectByName(building.name);
-        if (obj == null) return;
-
         // Create the tile
-        BaseTile lastBuilding = Instantiate(obj, position, rotation).GetComponent<BaseTile>();
-        lastBuilding.name = building.name;
+        BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
+        lastBuilding.name = buildable.building.name;
 
         // Set the tiles on the grid class
-        SetCells(building, position, lastBuilding);
+        SetCells(buildable.building, position, lastBuilding);
 
         // Update resource values promptly
         if (!Gamemode.active.useDroneConstruction)
-            Resource.active.ApplyResources(building);
+            Resource.active.ApplyResources(buildable);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
@@ -91,18 +91,18 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    private void RpcInstatiateGhost(Building building, Vector2 position, Quaternion rotation)
+    private void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
-        holder.name = building.name;
+        holder.name = buildable.building.name;
 
         // Setup the ghost tile
-        holder.SetBuilding(building);
+        holder.SetBuilding(buildable);
         DroneManager.active.AddGhost(holder);
 
         // Set the tiles on the grid class
-        SetCells(building, position, holder);
+        SetCells(buildable.building, position, holder);
     }
 
     public void SetCells(Building building, Vector2 position, BaseTile obj)

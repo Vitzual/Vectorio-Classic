@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
         float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
         
         // Loop through all enemies
-        foreach(Enemy enemy in ScriptableManager.enemies)
+        foreach(Enemy enemy in ScriptableLoader.enemies)
         {
             // If spawn percentage is above the chance value, spawn
             if (enemy.spawnPercentage >= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)

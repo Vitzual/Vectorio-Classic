@@ -33,7 +33,7 @@ public class Panel : MonoBehaviour
     public void Start()
     {
         UIEvents.active.onEntityPressed += SetPanel;
-        UIEvents.active.onBuildingPressed += SetPanel;
+        UIEvents.active.onBuildablePressed += SetPanel;
         UIEvents.active.onDisableHotbar += DisableHotbar;
 
         menuObjects = new List<MenuStat>();
@@ -63,15 +63,32 @@ public class Panel : MonoBehaviour
         settingHotbar = false;
     }
 
-    // Sets the panel information
+    // Sets the panel information based on entity data
     public void SetPanel(Entity entity)
     {
-        // Grab building
+        // Grab entity
         this.entity = entity;
 
         // Set panel description
         name.text = entity.name.ToUpper();
         desc.text = entity.description;
+        icon.sprite = Sprites.GetSprite(entity.name);
+
+        // Create stats for the building
+        SetUnused();
+        entity.CreateStats(this);
+        ResetUnused();
+    }
+
+    // Sets the panel information based on buildable data
+    public void SetPanel(Buildable buildable)
+    {
+        // Grab entity
+        entity = buildable.building;
+
+        // Set panel description
+        name.text = buildable.building.name.ToUpper();
+        desc.text = buildable.building.description;
         icon.sprite = Sprites.GetSprite(entity.name);
 
         // Create stats for the building

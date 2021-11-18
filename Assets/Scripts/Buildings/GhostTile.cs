@@ -5,7 +5,7 @@ using UnityEngine;
 public class GhostTile : BaseTile
 {
     // Ghos tile variables
-    [HideInInspector] public Building building;
+    [HideInInspector] public Buildable buildable;
     [HideInInspector] public SpriteRenderer icon;
     public List<Droneport> nearbyPorts;
 
@@ -16,10 +16,10 @@ public class GhostTile : BaseTile
     }
 
     // Sets the ghost tile building
-    public void SetBuilding(Building building)
+    public void SetBuilding(Buildable buildable)
     {
-        this.building = building;
-        icon.sprite = Sprites.GetSprite(building.name);
+        this.buildable = buildable;
+        icon.sprite = Sprites.GetSprite(buildable.building.name);
     }
 
     // Called when drone reaches target
@@ -32,7 +32,8 @@ public class GhostTile : BaseTile
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
 
             // Create building and destroy this game object
-            InstantiationHandler.active.CreateBuilding(building, transform.position, transform.rotation, false);
+            if(Resource.active.CheckResources(buildable))
+                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
         }
         Destroy(gameObject);
     }

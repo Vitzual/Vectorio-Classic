@@ -158,7 +158,7 @@ public class EnemyHandler : MonoBehaviour
         if (Gamemode.active.useHeat)
         {
             int currentHeat = Resource.active.GetHeat();
-            foreach (Variant variant in ScriptableManager.variants)
+            foreach (Variant variant in ScriptableLoader.variants)
             {
                 if (currentHeat >= variant.minHeat &&
                     currentHeat < variant.maxHeat)
@@ -170,7 +170,7 @@ public class EnemyHandler : MonoBehaviour
         }
         else
         {
-            variant = ScriptableManager.variants[0];
+            variant = ScriptableLoader.variants[0];
         }
     }
 }

@@ -9,10 +9,9 @@ public class MenuButton : MonoBehaviour
 {
     // Building holder
     public Entity entity;
-    public Building building;
+    public Buildable buildable;
 
     // Button variables
-    public bool unlocked;
     public TextMeshProUGUI desc;
     public Image icon;
 
@@ -22,34 +21,32 @@ public class MenuButton : MonoBehaviour
     public GameObject goldIcon;
     public GameObject heatIcon;
     public GameObject powerIcon;
-
+    
     // Set entity
     public void SetEntity(Entity entity)
     {
         // Set scriptables
         this.entity = entity;
-        building = null;
+        buildable = null;
 
         // Determine if building is unlocked
-        unlocked = Gamemode.active.unlockEverything || entity.unlockable.unlocked;
         SetVariables(entity);
     }
 
     // Set building
-    public void SetBuilding(Building building)
+    public void SetBuilding(Buildable buildable)
     {
         // Set scriptables
         entity = null;
-        this.building = building;
+        this.buildable = buildable;
 
         // Determine if building is unlocked
-        unlocked = Gamemode.active.unlockEverything || building.unlockable.unlocked;
-        SetVariables(building);
+        SetVariables(buildable.building);
 
         // Set resources (if unlocked)
-        if (unlocked)
+        if (buildable.isUnlocked)
         {
-            foreach (Building.Resources resource in building.resources)
+            foreach (Cost resource in buildable.resources)
             {
                 if (resource.resource == Resource.CurrencyType.Power)
                     powerIcon.SetActive(true);
@@ -68,7 +65,7 @@ public class MenuButton : MonoBehaviour
     // Set vairable stats
     public void SetVariables(Entity entity)
     {
-        if (unlocked)
+        if (buildable.isUnlocked)
         {
             GetComponent<ButtonManagerBasic>().buttonText = entity.name;
             desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
@@ -86,10 +83,10 @@ public class MenuButton : MonoBehaviour
     // Show stats
     public void DisplayStats()
     {
-        if (unlocked)
+        if (buildable.isUnlocked)
         {
             if (entity != null) UIEvents.active.EntityPressed(entity);
-            else if (building != null) UIEvents.active.BuildingPressed(building);
+            else if (buildable != null) UIEvents.active.BuildablePressed(buildable);
         }
     }
 }

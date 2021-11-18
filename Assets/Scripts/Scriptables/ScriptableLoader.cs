@@ -4,15 +4,14 @@ using UnityEngine;
 
 // Loads scriptables at runtime which can then be accesed from anywhere.
 
-public static class ScriptableManager
+public static class ScriptableLoader
 {
     // Resource paths
     public static string BuildingPath = "Scriptables/Buildings";
     public static string EnemyPath = "Scriptables/Enemies";
-    public static string GuardianPath = "Scriptables/Guardian";
+    public static string GuardianPath = "Scriptables/Guardians";
     public static string VariantPath = "Scriptables/Variants";
 
-    // Scriptable lists
     public static List<Building> buildings;
     public static List<Enemy> enemies;
     public static List<Guardian> guardians;
@@ -21,6 +20,8 @@ public static class ScriptableManager
     // Generate all scriptables
     public static void GenerateAllScriptables()
     {
+        Buildables.active = new Dictionary<Entity, Buildable>();
+
         GenerateBuildings();
         GenerateEnemies();
         GenerateGuardians();
@@ -30,63 +31,44 @@ public static class ScriptableManager
     // Generates buildings on run
     public static void GenerateBuildings()
     {
-        buildings = new List<Building>();
         buildings = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
         Debug.Log("Loading " + buildings.Count + " buildings from " + BuildingPath + "...");
         foreach (Building building in buildings)
+        {
             Debug.Log("Loaded " + building.name + " with UUID " + building.InternalID);
+            if (Gamemode.active.initBuildings)
+                Buildables.Register(building);
+        }
+        if (Gamemode.active.initBuildings)
+            Inventory.active.GenerateBuildings(buildings.ToArray());
     }
 
     // Generates enemies on run
-    public static void GenerateEnemies()//
+    public static void GenerateEnemies()
     {
-        enemies = new List<Enemy>();
         enemies = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();
         Debug.Log("Loaded " + enemies.Count + " enemies from " + EnemyPath);
+        foreach (Enemy enemy in enemies)
+            Debug.Log("Loaded " + enemy.name + " with UUID " + enemy.InternalID);
+        if (Gamemode.active.initEnemies)
+            Inventory.active.GenerateEntities(enemies.ToArray());
     }
 
     // Generates guardians on run
     public static void GenerateGuardians()
     {
-        guardians = new List<Guardian>();
         guardians = Resources.LoadAll(GuardianPath, typeof(Guardian)).Cast<Guardian>().ToList();
         Debug.Log("Loaded " + guardians.Count + " guardians from " + GuardianPath);
+        foreach (Guardian guardian in guardians)
+            Debug.Log("Loaded " + guardian.name + " with UUID " + guardian.InternalID);
+        if (Gamemode.active.initGuardians)
+            Inventory.active.GenerateEntities(guardians.ToArray());
     }
 
     // Generates guardians on run
     public static void GenerateVariants()
     {
-        variants = new List<Variant>();
         variants = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
         Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
-    }
-
-    // Retrieves an enemy or guardian by name
-    public static GameObject RequestEnemyByName(string name)
-    {
-        foreach (Enemy enemy in enemies)
-            if (enemy.name == name) return enemy.obj;
-        foreach (Guardian guardian in guardians)
-            if (guardian.name == name) return guardian.obj;
-        Debug.Log("Could not retrieve object with name " + name);
-        return null;
-    }
-
-    // Retrieves a building object by name
-    public static GameObject RequestObjectByName(string name)
-    {
-        foreach (Building building in buildings)
-            if (building.name == name) return building.obj;
-        Debug.Log("Could not retrieve object with name " + name);
-        return null;
-    }
-
-    // Retrieves a tile scriptable by name
-    public static Building RequestBuildingByName(string name)
-    {
-        foreach (Building building in buildings)
-            if (building.name == name) return building;
-        Debug.Log("Could not retrieve scriptable with name " + name);
-        return null;
     }
 }

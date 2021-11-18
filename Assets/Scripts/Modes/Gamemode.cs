@@ -47,12 +47,7 @@ public class Gamemode : MonoBehaviour
     // Tells the gamemode how to generate inventory
     public void InitGamemode()
     {
-        ScriptableManager.GenerateAllScriptables();
-
-        if (initBuildings) Inventory.active.GenerateBuildings(ScriptableManager.buildings.ToArray());
-        if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.enemies.ToArray());
-        if (initGuardians) Inventory.active.GenerateEntities(ScriptableManager.guardians.ToArray());
-
+        ScriptableLoader.GenerateAllScriptables();
         EnemyHandler.active.UpdateVariant();
 
         if (generateWorld) WorldGenerator.active.GenerateWorldData();

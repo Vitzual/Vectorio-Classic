@@ -31,14 +31,6 @@ public class Resource : MonoBehaviour
         public TextMeshProUGUI storageUI;
     }
 
-    [System.Serializable]
-    public class Cost
-    {
-        // Cost variables
-        public CurrencyType type;
-        public int amount;
-    }
-
     // Dictionary of all currencies
     public Dictionary<CurrencyType, Currency> currencies;
     public Currency[] currencyElements;
@@ -123,10 +115,10 @@ public class Resource : MonoBehaviour
     }
 
     // Check resources
-    public bool CheckResources(Building building)
+    public bool CheckResources(Buildable buildable)
     {
         // Check if resource should be used
-        foreach (Building.Resources resource in building.resources)
+        foreach (Cost resource in buildable.resources)
         {
             if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
             else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
@@ -144,10 +136,10 @@ public class Resource : MonoBehaviour
 
 
     // Remove a resource based on building
-    public void ApplyResources(Building building)
+    public void ApplyResources(Buildable buildable)
     {
         // Update resource values promptly
-        foreach (Building.Resources resource in building.resources)
+        foreach (Cost resource in buildable.resources)
         {
             if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
             else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
@@ -168,10 +160,10 @@ public class Resource : MonoBehaviour
 
 
     // Remove a resource based on building
-    public void RevertResources(Building building)
+    public void RevertResources(Buildable buildable)
     {
         // Update resource values promptly
-        foreach (Building.Resources resource in building.resources)
+        foreach (Cost resource in buildable.resources)
         {
             if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
             else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;

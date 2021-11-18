@@ -632,7 +632,7 @@ RectTransform:
   m_LocalScale: {x: 0.56017655, y: 0.56017655, z: 0.56017655}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1035,7 +1035,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &63396461
 GameObject:
@@ -2370,6 +2370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 163732852}
   grow: 1
+  change: 0.001
   growEnd: 0
 --- !u!114 &163732854
 MonoBehaviour:
@@ -5562,6 +5563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83504486d9491641934bf8ee878b848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMenu: 0
   Rotators: []
 --- !u!4 &354645913
 Transform:
@@ -9789,7 +9791,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &656087152
 GameObject:
@@ -10114,6 +10116,7 @@ GameObject:
   - component: {fileID: 684719199}
   - component: {fileID: 684719198}
   - component: {fileID: 684719196}
+  - component: {fileID: 684719202}
   m_Layer: 0
   m_Name: Creative Manager
   m_TagString: Untagged
@@ -10137,6 +10140,13 @@ MonoBehaviour:
   version: v0.1
   difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   useResources: 0
+  useHeat: 0
+  usePower: 0
+  useDroneConstruction: 0
+  useEngineering: 0
+  spawnBlueprints: 0
+  generateWorld: 0
+  unlockEverything: 1
   initBuildings: 1
   initEnemies: 1
   initGuardians: 1
@@ -10202,12 +10212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bfe44b5c037f848bb0bcb6a3979a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountElements:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  currencyElements: []
 --- !u!114 &684719201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10221,6 +10226,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _emptySprite: {fileID: 21300000, guid: ad50e7d5254124246b6fb3e16120f440, type: 3}
+--- !u!114 &684719202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684719194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8d52c74605dbe4ca318a9c1a441831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &692478939
 GameObject:
   m_ObjectHideFlags: 0
@@ -10841,7 +10858,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 741988625}
   m_HandleRect: {fileID: 741988624}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11479,7 +11496,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085082675}
   m_HandleRect: {fileID: 2085082674}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12197,50 +12214,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &798355006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 798355008}
-  - component: {fileID: 798355007}
-  m_Layer: 0
-  m_Name: Turret Handler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &798355007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798355006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8803b0ce495474a46b0b99e1d9aecda0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretEntities: []
---- !u!4 &798355008
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798355006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &804859209
 GameObject:
   m_ObjectHideFlags: 0
@@ -12958,6 +12931,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850041613}
+  - component: {fileID: 850041615}
+  - component: {fileID: 850041614}
   - component: {fileID: 850041612}
   m_Layer: 0
   m_Name: Building Handler
@@ -12975,12 +12950,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 850041611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc519458d1ea3b3429cf74f16622c126, type: 3}
+  m_Script: {fileID: 11500000, guid: 4407546929abd5e41af99f1f27c8f54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  collectors: []
+  storages: []
 --- !u!4 &850041613
 Transform:
   m_ObjectHideFlags: 0
@@ -12993,8 +12967,40 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850041614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850041611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8803b0ce495474a46b0b99e1d9aecda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretEntities: []
+--- !u!114 &850041615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850041611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f03b02606af76409f8a439ba4eeb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostTile: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  metadata: -1
+  debugCircle: {fileID: 0}
+  activeCircles: []
 --- !u!1 &865736393
 GameObject:
   m_ObjectHideFlags: 0
@@ -15869,7 +15875,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1004353875
 GameObject:
@@ -20880,7 +20886,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285941005
 GameObject:
@@ -21333,7 +21339,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311031349
 GameObject:
@@ -22021,7 +22027,7 @@ RectTransform:
   - {fileID: 2145635730}
   - {fileID: 1101579050}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -27144,16 +27150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facacdb237bbc694cb28789cbeac84f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMenu: 0
-  menuTarget: {fileID: 0}
-  _variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}
-  turretHandler: {fileID: 798355007}
+  variant: {fileID: 0}
+  turretHandler: {fileID: 0}
   BuildingGoDeadSound: {fileID: 655988622}
   enemies: []
   guardians: []
   buildingLayer:
     serializedVersion: 2
     m_Bits: 256
+  isMenu: 0
+  menuTarget: {fileID: 0}
 --- !u!4 &1663495716
 Transform:
   m_ObjectHideFlags: 0
@@ -27417,7 +27423,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1478515052}
   m_HandleRect: {fileID: 1478515051}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

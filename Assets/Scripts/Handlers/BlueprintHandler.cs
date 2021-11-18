@@ -26,6 +26,7 @@ public class BlueprintHandler : MonoBehaviour
     // Register events and setup dictionary
     public void Start()
     {
+        activeBlueprints = new List<ActiveBlueprint>();
         Events.active.onEnemyDestroyed += TrySpawnBlueprint;
     }
 

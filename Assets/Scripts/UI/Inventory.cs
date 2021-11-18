@@ -6,6 +6,7 @@ using Michsky.UI.ModernUIPack;
 
 public class Inventory : MonoBehaviour
 {
+    // Inventory variables
     public static Inventory active;
     public MenuButton buildable;
     public List<Transform> lists;
@@ -24,7 +25,6 @@ public class Inventory : MonoBehaviour
         // Generate buildables
         for(int i = 0; i < entities.Length; i++)
         {
-            Debug.Log("Setting up " + entities[i].name);
             int index = (int)entities[i].inventoryHeader;
 
             if (index >= 0 && index < lists.Count)
@@ -51,12 +51,11 @@ public class Inventory : MonoBehaviour
         // Generate buildables
         for (int i = 0; i < buildings.Length; i++)
         {
-            Debug.Log("Setting up " + buildings[i].name);
             int index = (int)buildings[i].inventoryHeader;
 
             if (index >= 0 && index < lists.Count)
             {
-                MenuButton holder = CreateBuildable(buildings[i], lists[index], buildings[i]);
+                MenuButton holder = CreateBuildable(buildings[i], lists[index]);
                 if (holder != null) holders[i] = holder;
                 else Debug.Log("Entity " + buildings[i].name + "could not be created!");
             }
@@ -66,14 +65,14 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < holders.Length; i++)
         {
             if (holders[i].transform != null)
-                holders[i].transform.SetSiblingIndex(holders[i].building.inventoryIndex);
+                holders[i].transform.SetSiblingIndex(holders[i].buildable.building.inventoryIndex);
         }
     }
 
-    public MenuButton CreateBuildable(Entity entity, Transform list, Building building = null)
+    public MenuButton CreateBuildable(Entity entity, Transform list)
     {
         // Create the new buildable object
-        GameObject holder = Instantiate(buildable.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject holder = Instantiate(this.buildable.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
 
         // Set parent
         holder.transform.SetParent(list);
@@ -83,9 +82,10 @@ public class Inventory : MonoBehaviour
         RectTransform temp = holder.GetComponent<RectTransform>();
         if (temp != null) temp.localScale = new Vector3(1, 1, 1);
 
-        // Set buildable values
+        // Set buildable values and retrieve buildable
         MenuButton container = holder.GetComponent<MenuButton>();
-        if (building != null) container.SetBuilding(building);
+        Buildable buildable = Buildables.RequestBuildable(entity);
+        if (buildable != null) container.SetBuilding(buildable);
         else container.SetEntity(entity);
 
         return container;

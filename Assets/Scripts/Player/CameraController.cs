@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 {
     // Camera Variable
     protected Camera cam;
+    public bool isMenu;
     public TextMeshProUGUI fps;
 
     // Movement variables
@@ -29,6 +30,9 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Menu
+        if (isMenu) return;
+
         // Get camera components
         cam = GetComponent<Camera>();
         cameraRB = GetComponent<Rigidbody2D>();
@@ -42,7 +46,10 @@ public class CameraController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        // Menu
+        if (isMenu) return;
+
         // Check if research open
         if (Interface.researchOpen) return;
 

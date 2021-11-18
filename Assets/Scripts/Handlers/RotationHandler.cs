@@ -5,6 +5,7 @@ using UnityEngine;
 public class RotationHandler : MonoBehaviour
 {
     public static bool isEnabled = true;
+    public bool isMenu = false;
 
     // Contains all active enemies in the scene
     [System.Serializable]
@@ -23,12 +24,11 @@ public class RotationHandler : MonoBehaviour
 
     }
 
-    [HideInInspector]
     public List<ActiveRotators> Rotators;
 
     public static RotationHandler active;
 
-    public void Start()
+    public void Awake()
     {
         if (this != null)
             active = this;
@@ -37,7 +37,7 @@ public class RotationHandler : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Settings.paused || !isEnabled) return;
+        if (!isMenu && (Settings.paused || !isEnabled)) return;
 
         for(int i=0; i<Rotators.Count; i++)
         {

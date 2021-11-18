@@ -29,7 +29,7 @@ public class EnemyHandler : MonoBehaviour
     public void Awake() { active = this; }
 
     // Handles enemy movement every frame
-    public void Update()
+    public void FixedUpdate()
     {
         if (Settings.paused) return;
 
@@ -42,7 +42,7 @@ public class EnemyHandler : MonoBehaviour
             {
                 if (enemies[a] != null)
                 {
-                    float step = enemies[a].enemy.moveSpeed * Time.deltaTime;
+                    float step = enemies[a].enemy.moveSpeed * Time.fixedDeltaTime;
                     enemies[a].transform.position = Vector2.MoveTowards(enemies[a].transform.position, menuTarget.position, step);
                 }
                 else

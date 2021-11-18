@@ -10,7 +10,7 @@ public class Hotbar : MonoBehaviour
 
     public void Start()
     {
-        Events.active.onNumberInput += UseSlot;
+        InputEvents.active.onNumberInput += UseSlot;
         UIEvents.active.onHotbarPressed += UseSlot;
     }
 

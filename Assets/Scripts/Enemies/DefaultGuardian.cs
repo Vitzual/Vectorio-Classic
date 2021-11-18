@@ -14,7 +14,7 @@ public class DefaultGuardian : BaseEntity
 
     public virtual void MoveTowards(Transform obj, Transform target)
     {
-        float step = guardian.moveSpeed * Time.fixedDeltaTime;
+        float step = guardian.moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
 
         Vector3 targetDir = target.position - transform.position;

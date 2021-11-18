@@ -21,14 +21,6 @@ public class UIEvents : MonoBehaviour
             onAddResource(currency, amount);
     }
 
-    // Invoked when a bullet is fired
-    public event Action onBuildingMenuPressed;
-    public void MenuOpened()
-    {
-        if (onBuildingMenuPressed != null)
-            onBuildingMenuPressed();
-    }
-
     // Invoked when a building is clicked
     public event Action<Entity> onEntityPressed;
     public void EntityPressed(Entity entity)
@@ -57,12 +49,5 @@ public class UIEvents : MonoBehaviour
     {
         if (onDisableHotbar != null)
             onDisableHotbar();
-    }
-
-    public event Action onQuitGame;
-    public void QuitGame()
-    {
-        if (onQuitGame != null)
-            onQuitGame();
     }
 }

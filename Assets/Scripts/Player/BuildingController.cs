@@ -16,17 +16,31 @@ public class BuildingController : MonoBehaviour
     private float alphaAdjust = 0.005f;
     private float alphaHolder;
 
+    bool justDeselected = false;
+
     public void Start()
     {
-        // Set event
-        UIEvents.active.onEntityPressed += SetEntity;
-        UIEvents.active.onBuildingPressed += SetBuilding;
-
         // Confirm user has authority
         //if (!hasAuthority) return;
 
         // Grab sprite renderer component
         spriteRenderer = hologram.GetComponent<SpriteRenderer>();
+
+        // Set input events
+        if (InputEvents.active != null)
+        {
+            InputEvents.active.onLeftMousePressed += TryCreateEntity;
+            InputEvents.active.onRightMousePressed += TryDestroyBuilding;
+            InputEvents.active.onRightMouseReleased += DisableJustDeselected;
+            InputEvents.active.onEscapePressed += TryDeselectEntity;
+        }
+
+        // Set UI events
+        if (UIEvents.active != null) 
+        { 
+            UIEvents.active.onEntityPressed += SetEntity;
+            UIEvents.active.onBuildingPressed += SetBuilding;
+        }
     }
 
     public void Update()
@@ -37,26 +51,16 @@ public class BuildingController : MonoBehaviour
         // Update position and sprite transparency
         UpdatePosition();
         AdjustTransparency();
-        CheckInput();
     }
 
-    //[Client]
-    public void CheckInput()
+    public void TryCreateEntity()
     {
-        // Clicking input check
-        if (Input.GetKey(Keybinds.lmb))
+        if (entity != null) CmdCreateBuildable();
+        else
         {
-            if (entity != null) CmdCreateBuildable();
-            else
-            {
-                BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
-                if (holder != null) holder.OnClick();
-            }
+            BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
+            if (holder != null) holder.OnClick();
         }
-        else if (Input.GetKey(Keybinds.rmb)) CmdDestroyBuilding();
-        else if (Input.GetKeyDown(Keybinds.rotate)) RotatePosition();
-        else if (Input.GetKeyDown(Keybinds.rmb) ||
-                 Input.GetKeyDown(Keybinds.escape)) SetEntity(null);
     }
 
     // Create building (command)
@@ -142,4 +146,18 @@ public class BuildingController : MonoBehaviour
         // Set alpha
         spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a + alphaHolder);
     }
+
+    public void TryDestroyBuilding()
+    {
+        if (entity != null)
+        {
+            justDeselected = true;
+            TryDeselectEntity();
+        }
+        else if (!justDeselected) CmdDestroyBuilding();
+    }
+
+    public void TryDeselectEntity() { if (!NewInterface.isOpen) SetEntity(null); }
+    public void DeselectEntity() { SetEntity(null); }
+    public void DisableJustDeselected() { justDeselected = false; }
 }

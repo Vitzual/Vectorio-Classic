@@ -69,30 +69,6 @@ public class Events : MonoBehaviour
             onTurretRegistered(turret);
     }
 
-    // Invoked when a building is placed
-    public event Action onLeftMousePressed;
-    public void LeftMousePressed()
-    {
-        if (onLeftMousePressed != null)
-            onLeftMousePressed();
-    }
-
-    // Invoked when a building is placed
-    public event Action onRightMousePressed;
-    public void RightMousePressed()
-    {
-        if (onRightMousePressed != null)
-            onRightMousePressed();
-    }
-
-    // Invoked when a building is placed
-    public event Action onRightMouseReleased;
-    public void RightMouseReleased()
-    {
-        if (onRightMouseReleased != null)
-            onRightMouseReleased();
-    }
-
     // Invoked when a survival save is loaded
     public event Action<SurvivalData> onSurvivalLoaded;
     public void SurvivalLoaded(SurvivalData data)
@@ -107,14 +83,6 @@ public class Events : MonoBehaviour
     {
         if (onHotbarSet != null)
             onHotbarSet(tile, slot);
-    }
-
-    // Invoked when input from the keyboard is detected
-    public event Action<int> onNumberInput;
-    public void NumberInput(int number)
-    {
-        if (onNumberInput != null)
-            onNumberInput(number);
     }
 
     // Initializes variants

@@ -4,13 +4,55 @@ using UnityEngine;
 
 public class BlueprintHandler : MonoBehaviour
 {
+    // Active blueprint class
+    public class ActiveBlueprint
+    {
+        // Constructor
+        public ActiveBlueprint(BlueprintObj blueprint)
+        {
+            this.blueprint = blueprint;
+            timer = 60f;
+        }
+
+        public BlueprintObj blueprint;
+        public float timer;
+    }
+
     // Get blueprint object
     public BlueprintObj blueprintObj;
+    public List<ActiveBlueprint> activeBlueprints;
+    public List<Blueprint> collectedBlueprints;
 
     // Register events and setup dictionary
     public void Start()
     {
         Events.active.onEnemyDestroyed += TrySpawnBlueprint;
+    }
+
+    // Update active blueprints
+    public void Update()
+    {
+        if (!Settings.paused)
+        {
+            for(int i = 0; i < activeBlueprints.Count; i++)
+            {
+                if (activeBlueprints[i].blueprint != null)
+                {
+                    activeBlueprints[i].timer -= Time.deltaTime;
+                    if (activeBlueprints[i].timer <= 0f)
+                    {
+                        Destroy(activeBlueprints[i].blueprint);
+                        activeBlueprints.RemoveAt(i);
+                        i--;
+                    }
+                }
+                else
+                {
+                    activeBlueprints.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 
     // Iterate through blueprint table and try to spawn 
@@ -38,6 +80,7 @@ public class BlueprintHandler : MonoBehaviour
                 if (random < rarity.dropChance)
                 {
                     BlueprintObj newBlueprint = Instantiate(blueprintObj, enemy.transform.position, Quaternion.identity).GetComponent<BlueprintObj>();
+                    activeBlueprints.Add(new ActiveBlueprint(newBlueprint));
                     newBlueprint.Setup(blueprint, rarity);
                     return;
                 }

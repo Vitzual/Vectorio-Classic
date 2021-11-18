@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class NewInterface : MonoBehaviour
 {
+    public static bool isOpen;
     public GameObject buildingMenu;
     public GameObject quitMenu;
 
     public void Start()
     {
-        UIEvents.active.onBuildingMenuPressed += ToggleBuildingMenu;
-        UIEvents.active.onQuitGame += ToggleQuitMenu;
+        InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
+        InputEvents.active.onEscapePressed += ToggleQuitMenu;
     }
 
     public void ToggleQuitMenu()
     {
-        quitMenu.SetActive(!quitMenu.activeSelf);
+        if (buildingMenu.activeSelf)
+            ToggleBuildingMenu();
+        else
+        {
+            quitMenu.SetActive(!quitMenu.activeSelf);
+            isOpen = quitMenu.activeSelf;
 
-        if (quitMenu.activeSelf) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
+            if (quitMenu.activeSelf) Time.timeScale = 0f;
+            else Time.timeScale = 1f;
+        }
     }
 
     public void QuitGame()
@@ -29,5 +36,6 @@ public class NewInterface : MonoBehaviour
     public void ToggleBuildingMenu()
     {
         buildingMenu.SetActive(!buildingMenu.activeInHierarchy);
+        isOpen = buildingMenu.activeSelf;
     }
 }

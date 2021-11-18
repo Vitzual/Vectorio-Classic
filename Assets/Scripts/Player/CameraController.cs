@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
     public GameObject grid;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         // Menu
         if (isMenu) return;
@@ -38,20 +38,21 @@ public class CameraController : MonoBehaviour
         cameraRB = GetComponent<Rigidbody2D>();
         targetZoom = cam.orthographicSize;
 
-        // Determine if FPS should be calculated
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 1000;
-        if (fps != null) InvokeRepeating("CalculateFPS", 1, 1);
+        // Set input events
+        if (InputEvents.active != null)
+        {
+            InputEvents.active.onShiftPressed += SetFastSpeed;
+            InputEvents.active.onShifReleased += SetNormalSpeed;
+            InputEvents.active.onLeftControlPressed += SetSlowSpeed;
+            InputEvents.active.onLeftControlReleased += SetNormalSpeed;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        // Menu
-        if (isMenu) return;
-
         // Check if research open
-        if (Interface.researchOpen) return;
+        if (NewInterface.isOpen || isMenu) return;
 
         // Get scroll input
         float scrollData; 
@@ -79,21 +80,11 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         // Check if research open
-        if (Interface.researchOpen) return;
+        if (isMenu || NewInterface.isOpen) return;
 
         // Get directional movement
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
-        // Calculate move speed
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            moveSpeed = 600f;
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-            moveSpeed = 150f;
-        else if (Input.GetKeyDown(KeyCode.LeftControl))
-            moveSpeed = 20f;
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-            moveSpeed = 150f;
 
         // Determine if movement should be allowed
         if (movement.x > 0 && cameraRB.position.x + movement.x > Border.east) { allowMovement = false; movement.x = 0; }
@@ -106,8 +97,7 @@ public class CameraController : MonoBehaviour
         allowMovement = true;
     }
 
-    public void CalculateFPS()
-    {
-        fps.text = (int)(1f / Time.unscaledDeltaTime) + " fps";
-    }
+    public void SetFastSpeed() { moveSpeed = 600f;}
+    public void SetNormalSpeed() { moveSpeed = 150f; }
+    public void SetSlowSpeed() { moveSpeed = 20f;}
 }

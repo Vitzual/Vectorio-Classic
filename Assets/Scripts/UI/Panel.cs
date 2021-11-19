@@ -40,6 +40,16 @@ public class Panel : MonoBehaviour
         unusedObjects = new List<MenuStat>();
     }
 
+    // Applies a blueprint to the active entity
+    public void ApplyBlueprint(Blueprint blueprint)
+    {
+        if (entity != null)
+        {
+            Buildable buildable = Buildables.RequestBuildable(entity);
+            buildable.ApplyBlueprint(blueprint);
+        }
+    }
+
     // Toggles the hotbar
     public void ToggleHotbar()
     {

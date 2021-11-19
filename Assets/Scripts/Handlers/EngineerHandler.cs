@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlueprintHandler : MonoBehaviour
+public class EngineerHandler : MonoBehaviour
 {
     // Active blueprint class
     public class ActiveBlueprint
@@ -43,7 +43,7 @@ public class BlueprintHandler : MonoBehaviour
                     if (activeBlueprints[i].timer <= 0f)
                     {
                         Destroy(activeBlueprints[i].blueprint);
-                        activeBlueprints.RemoveAt(i);
+                        activeBlueprints[i].blueprint.Recycle();
                         i--;
                     }
                 }

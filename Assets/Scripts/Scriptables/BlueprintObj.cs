@@ -53,6 +53,13 @@ public class BlueprintObj : MonoBehaviour
 
     public void Collect()
     {
-        Debug.Log("COllect lol");
+        Events.active.BlueprintCollected(blueprint, rarity);
+        Destroy(gameObject);
+    }
+
+    public void Recycle()
+    {
+        Resource.active.Add(rarity.applicationCost.resource, rarity.applicationCost.amount / 10);
+        Destroy(gameObject);
     }
 }

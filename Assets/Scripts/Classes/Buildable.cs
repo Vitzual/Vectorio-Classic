@@ -23,4 +23,12 @@ public class Buildable
     public GameObject obj;
     public bool isUnlocked;
     public Blueprint[] blueprintSlots;
+
+    // Applies a blueprint
+    public void ApplyBlueprint(Blueprint blueprint)
+    {
+        for(int i = 0; i < blueprintSlots.Length; i++)
+            if (blueprintSlots[i] == null)
+                blueprintSlots[i] = blueprint;
+    }
 }

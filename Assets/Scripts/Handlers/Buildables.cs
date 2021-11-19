@@ -19,11 +19,8 @@ public static class Buildables
     public static Buildable RequestBuildable(Entity entity)
     {
         if (active.ContainsKey(entity))
-        {
-            if (active[entity].isUnlocked)
             return active[entity];
-        }
-        Debug.Log("Could not retrieve object" + entity.name);
+        Debug.Log("Could not retrieve object " + entity.name);
         return null;
     }
 }

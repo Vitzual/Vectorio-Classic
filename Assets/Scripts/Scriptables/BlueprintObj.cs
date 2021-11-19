@@ -53,7 +53,7 @@ public class BlueprintObj : MonoBehaviour
 
     public void Collect()
     {
-        Events.active.BlueprintCollected(blueprint, rarity);
+        Events.active.BlueprintCollected(new CollectedBlueprint(blueprint, rarity));
         Destroy(gameObject);
     }
 

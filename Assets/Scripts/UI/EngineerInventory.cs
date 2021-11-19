@@ -11,10 +11,10 @@ public class EngineerInventory : MonoBehaviour
         Events.active.onBlueprintCollected += AddBlueprint;
     }
 
-    public void AddBlueprint(Blueprint blueprint, Blueprint.Rarity rarity)
+    public void AddBlueprint(CollectedBlueprint blueprint)
     {
         foreach(EngineerButton slot in slots)
             if (slot.blueprint == null)
-                slot.SetButton(blueprint, rarity);
+                slot.SetButton(blueprint);
     }
 }

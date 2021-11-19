@@ -14,11 +14,11 @@ public class Events : MonoBehaviour
     }
 
     // On blueprint collected
-    public event Action<Blueprint, Blueprint.Rarity> onBlueprintCollected;
-    public void BlueprintCollected(Blueprint blueprint, Blueprint.Rarity rarity)
+    public event Action<CollectedBlueprint> onBlueprintCollected;
+    public void BlueprintCollected(CollectedBlueprint blueprint)
     {
         if (onBlueprintCollected != null)
-            onBlueprintCollected(blueprint, rarity);
+            onBlueprintCollected(blueprint);
     }
 
     // On enemy destroyed

@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
+    // Active instance (temporary)
+    public static Panel active;
+
     // List of stats
     private List<MenuStat> menuObjects;
     private List<MenuStat> unusedObjects;
@@ -30,6 +33,9 @@ public class Panel : MonoBehaviour
     // Building
     public Entity entity;
 
+    // Active instance (temporary solution to engineering problem)
+    public void Awake() { active = this; }
+
     public void Start()
     {
         UIEvents.active.onEntityPressed += SetPanel;
@@ -41,13 +47,14 @@ public class Panel : MonoBehaviour
     }
 
     // Applies a blueprint to the active entity
-    public void ApplyBlueprint(Blueprint blueprint)
+    public bool ApplyBlueprint(CollectedBlueprint blueprint)
     {
         if (entity != null)
         {
             Buildable buildable = Buildables.RequestBuildable(entity);
-            buildable.ApplyBlueprint(blueprint);
+            return buildable.ApplyBlueprint(blueprint);
         }
+        return false;
     }
 
     // Toggles the hotbar

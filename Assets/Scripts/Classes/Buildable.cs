@@ -12,23 +12,39 @@ public class Buildable
         resources = building.resources;
         obj = building.obj;
         isUnlocked = building.unlockable.unlocked;
-        blueprintSlots = new Blueprint[building.engineeringSlots];
+        blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
 
         Debug.Log("Registered " + building.name);
     }
 
+    // Buildable variables
     public Building building;
     public float discount;
     public Cost[] resources;
     public GameObject obj;
     public bool isUnlocked;
-    public Blueprint[] blueprintSlots;
+
+    // Blueprints applied to this buildable
+    public CollectedBlueprint[] blueprintSlots;
+
+    // Update stats
+    public void UpdateStats()
+    {
+
+    }
 
     // Applies a blueprint
-    public void ApplyBlueprint(Blueprint blueprint)
+    public bool ApplyBlueprint(CollectedBlueprint blueprint)
     {
-        for(int i = 0; i < blueprintSlots.Length; i++)
+        for (int i = 0; i < blueprintSlots.Length; i++)
+        {
             if (blueprintSlots[i] == null)
+            {
                 blueprintSlots[i] = blueprint;
+                UpdateStats();
+                return true;
+            }
+        }
+        return false;
     }
 }

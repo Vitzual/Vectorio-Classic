@@ -11,8 +11,7 @@ public class EngineerButton : MonoBehaviour
     public Image blueprintIcon;
 
     // Internal values
-    public Blueprint blueprint;
-    public Blueprint.Rarity rarity;
+    public CollectedBlueprint blueprint;
 
     // Get BMBI reference
     public void Awake()
@@ -21,17 +20,24 @@ public class EngineerButton : MonoBehaviour
     }
 
     // Set button
-    public void SetButton(Blueprint blueprint, Blueprint.Rarity rarity)
+    public void SetButton(CollectedBlueprint blueprint)
     {
         this.blueprint = blueprint;
-        this.rarity = rarity;
+        blueprintIcon.sprite = blueprint.blueprint.icon;
+    }
 
-        blueprintIcon.sprite = blueprint.icon;
+    // Clear button
+    public void ClearButton()
+    {
+        blueprint = null;
+        Sprite emptySprite = Sprites.GetSprite("Transparent");
+        blueprintIcon.sprite = emptySprite;
+        button.buttonIcon = emptySprite;
     }
 
     // Apply blueprint
     public void ApplyBlueprint()
     {
-
+        if (Panel.active.ApplyBlueprint(blueprint)) ClearButton();
     }
 }

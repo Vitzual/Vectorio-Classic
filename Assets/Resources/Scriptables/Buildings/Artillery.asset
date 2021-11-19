@@ -20,23 +20,66 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: _health
+      Entry: 7
+      Data: 0|System.Tuple`2[[Effect, Assembly-CSharp],[System.Single, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 3
+      Data: 0
+    - Name: m_Item2
+      Entry: 4
+      Data: 500
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: damage_
+      Entry: 6
+      Data: 
+    - Name: range_
+      Entry: 6
+      Data: 
+    - Name: rotation_
+      Entry: 6
+      Data: 
+    - Name: cooldown_
+      Entry: 6
+      Data: 
+    - Name: bulletPierces_
+      Entry: 6
+      Data: 
+    - Name: bulletAmount_
+      Entry: 6
+      Data: 
+    - Name: bulletSpeed_
+      Entry: 6
+      Data: 
+    - Name: bulletSpread_
+      Entry: 6
+      Data: 
+    - Name: bulletTime_
+      Entry: 6
+      Data: 
+    - Name: bulletLock_
+      Entry: 6
+      Data: 
   internalId: 5349ae69-d773-45be-89ea-403670aca562
   createdAtTicks: 637722267034921172
+  obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
   name: Artillery
   description: The first 2x2 defense. Fires explosive proximity shells that deal
     huge area damage. Downside is the reload time.
+  health: 500
+  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
   inventoryHeader: 0
   inventoryIndex: 8
-  obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
-  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
-  health: 500
   unlockable:
     type: 0
     description: Accumulate 30,000 heat
     unlocked: 0
     resource: 4
-    entity: {fileID: 0}
+    entity: {fileID: 11400000}
     amount: 30000
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
@@ -69,10 +112,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 500
   range: 250
   rotationSpeed: 40
   cooldown: 5
+  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
@@ -82,4 +127,3 @@ MonoBehaviour:
   bulletLock: 1
   bulletParticle: {fileID: 918402723469912044, guid: 17a602cb45ef54f42b927552d300dcbe,
     type: 3}
-  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}

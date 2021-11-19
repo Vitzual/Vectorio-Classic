@@ -20,16 +20,29 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: _health
+      Entry: 7
+      Data: 0|System.Tuple`2[[Effect, Assembly-CSharp],[System.Single, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 3
+      Data: 0
+    - Name: m_Item2
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
   internalId: 231ee9ba-46a0-4a4f-9128-42b93f20ccd7
   createdAtTicks: 637722267031588138
+  obj: {fileID: 1711705259399207453, guid: 7f897a11c02e24b4fb31469ac8bc9851, type: 3}
   name: Area Freezer
   description: 'Removes a large percentile of heat off adjacent tiles in a 5x5 area. '
+  health: 150
+  material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
   inventoryHeader: 1
   inventoryIndex: 9
-  obj: {fileID: 1711705259399207453, guid: 7f897a11c02e24b4fb31469ac8bc9851, type: 3}
-  material: {fileID: 2100000, guid: cd6d9f675c200df408e19179cf3efd76, type: 2}
-  health: 0
   unlockable:
     type: 1
     description: Place 50x Area Cooler's
@@ -58,3 +71,4 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0

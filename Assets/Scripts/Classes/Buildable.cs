@@ -26,11 +26,11 @@ public class Buildable
 
     // Blueprints applied to this buildable
     public CollectedBlueprint[] blueprintSlots;
-
+    
     // Update stats
-    public void UpdateStats()
+    public void GetModifier(string name)
     {
-
+        
     }
 
     // Applies a blueprint
@@ -41,7 +41,7 @@ public class Buildable
             if (blueprintSlots[i] == null)
             {
                 blueprintSlots[i] = blueprint;
-                UpdateStats();
+                Panel.active.SetPanel(building);
                 return true;
             }
         }

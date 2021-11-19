@@ -10,29 +10,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Blueprint", menuName = "Building/Blueprint")]
 public class Blueprint : IdentifiableScriptableObject
 {
-    public enum Effect
-    {
-        Health,
-        Damage,
-        Range,
-        RotationSpeed,
-        ReloadRate,
-        BulletPierces,
-        BulletAmount,
-        BulletSpeed,
-        BulletSpread,
-        BulletLifetime,
-        BulletTracking,
-        BulletSticking,
-        BulletExplosion,
-        Discount,
-        Power,
-        Heat,
-        CollectAmount,
-        CollectRate,
-        AutoStorage
-    }
-
     public enum RarityType
     {
         Common,

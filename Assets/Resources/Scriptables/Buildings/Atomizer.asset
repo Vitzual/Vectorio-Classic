@@ -20,17 +20,60 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: _health
+      Entry: 6
+      Data: 
+    - Name: damage_
+      Entry: 7
+      Data: 0|System.Tuple`2[[Effect, Assembly-CSharp],[System.Single, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 3
+      Data: 0
+    - Name: m_Item2
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: range_
+      Entry: 6
+      Data: 
+    - Name: rotation_
+      Entry: 6
+      Data: 
+    - Name: cooldown_
+      Entry: 6
+      Data: 
+    - Name: bulletPierces_
+      Entry: 6
+      Data: 
+    - Name: bulletAmount_
+      Entry: 6
+      Data: 
+    - Name: bulletSpeed_
+      Entry: 6
+      Data: 
+    - Name: bulletSpread_
+      Entry: 6
+      Data: 
+    - Name: bulletTime_
+      Entry: 6
+      Data: 
+    - Name: bulletLock_
+      Entry: 6
+      Data: 
   internalId: a373d99a-bc42-4bf7-bb6a-a648a4ef64b0
   createdAtTicks: 637722267037833824
+  obj: {fileID: 5638880538173755297, guid: 8078de50deca97a49ad5c62edf9d4c90, type: 3}
   name: Atomizer
   description: Fires a high concentrated beam of energy that cuts through multiple
     enemies at a time.
+  health: 500
+  material: {fileID: 2100000, guid: 029e7c28c5c5f4448bee537618163b77, type: 2}
   inventoryHeader: 0
   inventoryIndex: 11
-  obj: {fileID: 5638880538173755297, guid: 8078de50deca97a49ad5c62edf9d4c90, type: 3}
-  material: {fileID: 2100000, guid: 029e7c28c5c5f4448bee537618163b77, type: 2}
-  health: 500
   unlockable:
     type: 3
     description: Defeat the Atlas (third guardian)
@@ -67,10 +110,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 800
   range: 80
   rotationSpeed: 30
   cooldown: 6
+  sound: {fileID: 8300000, guid: b47937426fd334cbb9bcd463e67e5744, type: 3}
   bullet: {fileID: 0}
   bulletPierces: 0
   bulletAmount: 0
@@ -79,4 +124,3 @@ MonoBehaviour:
   bulletTime: 0
   bulletLock: 0
   bulletParticle: {fileID: 0}
-  sound: {fileID: 8300000, guid: b47937426fd334cbb9bcd463e67e5744, type: 3}

@@ -26,8 +26,8 @@ public class EngineerTooltip : MonoBehaviour
         for(int i = 0; i < blueprint.effects.Count; i++)
         {
             if (blueprint.effects[i].negative)
-                negativeEffect.text += Enum.GetName(typeof(Blueprint.Effect), blueprint.effects[i].effect).ToUpper() + " (" + rarity.modifier[i]*100 + "%)\n";
-            else positiveEffect.text += Enum.GetName(typeof(Blueprint.Effect), blueprint.effects[i].effect).ToUpper() + " (" + rarity.modifier[i]*100 + "%)\n";
+                negativeEffect.text += Enum.GetName(typeof(Effect), blueprint.effects[i].effect).ToUpper() + " (" + rarity.modifier[i]*100 + "%)\n";
+            else positiveEffect.text += Enum.GetName(typeof(Effect), blueprint.effects[i].effect).ToUpper() + " (" + rarity.modifier[i]*100 + "%)\n";
         }
 
         if (negativeEffect.text == "") negativeEffect.text = "None";

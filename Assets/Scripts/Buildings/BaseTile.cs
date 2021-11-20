@@ -2,7 +2,6 @@
 //using Mirror;
 using System.Collections.Generic;
 
-[HideInInspector]
 public class BaseTile : BaseEntity
 {
     [HideInInspector]

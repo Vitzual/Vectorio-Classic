@@ -22,7 +22,7 @@ public class Buildable
     public Building building;
     public MenuButton button;
     public Unlockable unlockable;
-    public GameObject obj;
+    public BaseEntity obj;
     public bool isUnlocked;
 
     // Building variables

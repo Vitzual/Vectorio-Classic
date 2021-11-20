@@ -106,6 +106,10 @@ public class Resource : MonoBehaviour
         if (currencies[type].resourceUI != null)
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
+        // Update unlockables
+        Buildables.UpdateResourceUnlockables(type, amount);
+
+        // Update variant if heat passed
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
 

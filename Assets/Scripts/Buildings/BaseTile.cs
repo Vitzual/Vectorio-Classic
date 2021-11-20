@@ -4,12 +4,16 @@ using System.Collections.Generic;
 
 public class BaseTile : BaseEntity
 {
-    [HideInInspector]
-    public List<Vector2Int> cells;
+    [HideInInspector] public List<Vector2Int> cells;
+    [HideInInspector] public Buildable buildable;
 
     public override void Setup()
     {
+        buildable = Buildables.RequestBuildable(this);
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
+
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
     }
 
     public virtual void OnClick()
@@ -19,6 +23,9 @@ public class BaseTile : BaseEntity
 
     public override void DestroyEntity()
     {
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, -1);
+
         if (InstantiationHandler.active != null)
         {
             foreach (Vector2Int cell in cells)

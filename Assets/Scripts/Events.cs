@@ -29,6 +29,14 @@ public class Events : MonoBehaviour
             onEnemyDestroyed(enemy);
     }
 
+    // On guardian destroyed
+    public event Action<DefaultGuardian> onGuardianDestroyed;
+    public void GuardianDestroyed(DefaultGuardian guardian)
+    {
+        if (onGuardianDestroyed != null)
+            onGuardianDestroyed(guardian);
+    }
+
     // Fires the hub laser
     public event Action fireHubLaser;
     public void FireHubLaser()

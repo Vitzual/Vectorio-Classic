@@ -33,12 +33,22 @@ public static class Buildables
         else Debug.Log("There is already a buildable registered for " + building.name);
     }
 
-    // Retrieves a building object by name
+    // Retrieves a buildable by name
     public static Buildable RequestBuildable(Entity entity)
     {
         if (active.ContainsKey(entity))
             return active[entity];
-        Debug.Log("Could not retrieve object " + entity.name);
+        Debug.Log("Could not retrieve object " + entity.name + " via entity request");
+        return null;
+    }
+
+    // Retrieves a buildable by object
+    public static Buildable RequestBuildable(BaseEntity obj)
+    {
+        foreach (KeyValuePair<Entity, Buildable> buildable in active)
+            if (buildable.Value.obj == obj)
+                return buildable.Value;
+        Debug.Log("Could not retrieve object " + obj.name + " via object request");
         return null;
     }
 
@@ -80,7 +90,7 @@ public static class Buildables
     }
 
     // Update placement unlocks
-    public static void UpdateEntityUnlockables(Unlockable.UnlockType unlockType, Entity entity)
+    public static void UpdateEntityUnlockables(Unlockable.UnlockType unlockType, Entity entity, int amount)
     {
         // Check if unlock is enabled
         if (Gamemode.active.unlockEverything ||
@@ -93,7 +103,7 @@ public static class Buildables
             unlockable = unlockables[unlockType][i].unlockable;
             if (unlockable.entity == entity)
             {
-                unlockable.tracked += 1;
+                unlockable.tracked += amount;
                 if (unlockable.tracked >= unlockable.amount)
                     UnlockBuildable(unlockables[unlockType][i]);
             }

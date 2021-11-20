@@ -121,7 +121,7 @@ public class EnemyHandler : MonoBehaviour
     public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation)
     {
         // Create the tile
-        GameObject lastObj = Instantiate(entity.obj, position, rotation);
+        GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
         lastObj.name = entity.name;
 
         // Attempt to set enemy variant

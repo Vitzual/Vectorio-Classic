@@ -46,6 +46,9 @@ public class DefaultEnemy : BaseEntity
         // Invoke enemy death event
         Events.active.EnemyDestroyed(this);
 
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyEnemyAmount, enemy, 1);
+
         // Destroy game object
         Destroy(gameObject);
     }
@@ -57,7 +60,7 @@ public class DefaultEnemy : BaseEntity
     }
 
     // If a collision is detected, destroy the other entity and apply damage to self
-    public void OnTriggerEnter2D(Collider2D other)
+    public virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (isMenu)
         {

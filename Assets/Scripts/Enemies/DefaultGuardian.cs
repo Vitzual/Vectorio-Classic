@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultGuardian : BaseEntity
+public class DefaultGuardian : DefaultEnemy
 {
     public Guardian guardian;
-    [HideInInspector] public BaseTile target;
     
     public override void Setup()
     {
         material = guardian.material;
     }
 
-    public virtual void MoveTowards(Transform obj, Transform target)
+    // Move towards target
+    public override void MoveTowards(Transform obj, Transform target)
     {
         float step = guardian.moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
@@ -23,8 +23,27 @@ public class DefaultGuardian : BaseEntity
         transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * guardian.rotationSpeed);
     }
 
+    // Destroy entity
+    public override void DestroyEntity()
+    {
+        // Create particle and set material / trail material
+        ParticleSystemRenderer holder = Instantiate(guardian.particleEffect, transform.position,
+            Quaternion.identity).GetComponent<ParticleSystemRenderer>();
+        holder.material = material;
+        holder.trailMaterial = material;
+
+        // Invoke enemy death event
+        Events.active.GuardianDestroyed(this);
+
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyGuardianAmount, guardian, 1);
+
+        // Destroy object
+        Destroy(gameObject);
+    }
+
     // If a collision is detected, destroy the other entity and apply damage to self
-    public virtual void OnTriggerEnter2D(Collider2D other)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
         if (other is BoxCollider2D)
         {
@@ -43,7 +62,7 @@ public class DefaultGuardian : BaseEntity
     }
 
     // If entity leaves defense range, remove self from target list
-    public virtual void OnTriggerExit2D(Collider2D other)
+    public override void OnTriggerExit2D(Collider2D other)
     {
         DefaultTurret turret = other.GetComponent<DefaultTurret>();
 

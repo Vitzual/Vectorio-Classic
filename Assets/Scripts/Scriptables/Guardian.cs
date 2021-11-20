@@ -6,4 +6,5 @@ using UnityEngine;
 public class Guardian : Enemy
 {
     public int heat;
+    public ParticleSystem particleEffect;
 }

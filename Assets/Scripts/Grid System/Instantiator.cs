@@ -15,7 +15,7 @@ public class Instantiator : MonoBehaviour
     public GameObject CreateEntity(Entity entity, Transform transform)
     {
         // Create the tile
-        GameObject lastObj = Instantiate(entity.obj, transform.position, transform.rotation);
+        GameObject lastObj = Instantiate(entity.obj.gameObject, transform.position, transform.rotation);
         lastObj.name = entity.name;
 
         // Attempt to set enemy variant

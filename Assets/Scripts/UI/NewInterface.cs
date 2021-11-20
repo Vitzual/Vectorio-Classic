@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewInterface : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class NewInterface : MonoBehaviour
     public static bool isOpen;
     public GameObject buildingMenu;
     public GameObject quitMenu;
+    public Button saveButton;
 
     public void Awake()
     {
@@ -22,6 +24,7 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleQuitMenu()
     {
+        saveButton.interactable = true;
         quitMenu.SetActive(!quitMenu.activeSelf);
         isOpen = quitMenu.activeSelf;
 

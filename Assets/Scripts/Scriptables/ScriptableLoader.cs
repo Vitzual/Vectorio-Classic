@@ -85,8 +85,9 @@ public static class ScriptableLoader
     // Generates guardians on run
     public static void GenerateVariants()
     {
+        variants = new Dictionary<string, Variant>();
         List<Variant> loaded = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
-        Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
+        Debug.Log("Loaded " + loaded.Count + " variants from " + VariantPath);
 
         foreach (Variant variant in loaded)
         {

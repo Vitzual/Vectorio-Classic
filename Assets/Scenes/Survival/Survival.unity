@@ -38722,6 +38722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
+      propertyPath: saveBuilding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
       propertyPath: amountOverride
       value: 10000
       objectReference: {fileID: 0}
@@ -38872,6 +38877,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2223909831076697474, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
+      propertyPath: saveBuilding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223909831076697474, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
       propertyPath: droneTypes.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -38905,6 +38915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: hubDrone
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626273555590040491, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: saveBuilding
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2626273555590040491, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -39016,6 +39031,11 @@ PrefabInstance:
         type: 3}
       propertyPath: hubDrone
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5028816642439539730, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: saveBuilding
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5028816642439539730, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -39276,6 +39296,11 @@ PrefabInstance:
       objectReference: {fileID: 2704181008654025861}
     - target: {fileID: 7303908323709254979, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
+      propertyPath: saveBuilding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303908323709254979, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
       propertyPath: warningSound
       value: 
       objectReference: {fileID: 543131122}
@@ -39378,6 +39403,11 @@ PrefabInstance:
         type: 3}
       propertyPath: hubDrone
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484770743734415653, guid: d4f5265620f10a748a88759a975e86b0,
+        type: 3}
+      propertyPath: saveBuilding
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7484770743734415653, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
@@ -70159,10 +70189,22 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Save
+      - m_Target: {fileID: 5879613802669319989}
+        m_TargetAssemblyTypeName: Gamemode, Assembly-CSharp
+        m_MethodName: SaveGame
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8693618248484216774}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -70868,6 +70910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingMenu: {fileID: 5933648615969267414}
   quitMenu: {fileID: 2827566203894034133}
+  saveButton: {fileID: 8693618248484216774}
 --- !u!114 &4319752878029938310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72694,7 +72737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Survival
   version: v0.3
-  difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
+  _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   useResources: 1
   useHeat: 1
   usePower: 1
@@ -82112,6 +82155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b5b4143c796fe4695cf465c8e8334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   maxEnemiesAllowed: 200
 --- !u!222 &7322291723776228392
 CanvasRenderer:

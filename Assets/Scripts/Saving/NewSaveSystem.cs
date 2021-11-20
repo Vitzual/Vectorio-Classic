@@ -23,18 +23,26 @@ public class NewSaveSystem : MonoBehaviour
         // Loop through entities and assign to corresponding list
         for(int i = 0; i < activeEntities.Length; i++)
         {
+            // Check if tile should be saved
             BaseTile tile = activeEntities[i].GetComponent<BaseTile>();
+
             if (tile != null)
             {
+                // Check if tile should be saved
+                if (!tile.saveBuilding) continue;
+
                 // Building data struct
                 SaveData.BuildingData buildingData = new SaveData.BuildingData();
 
                 buildingData.id = tile.buildable.building.InternalID;
-                buildingData.coords = new System.Tuple<int, int>((int)tile.transform.position.x, (int)tile.transform.position.y);
+                buildingData.coords = new Tuple<int, int>((int)tile.transform.position.x, (int)tile.transform.position.y);
                 buildingData.health = tile.health;
                 buildingData.metadata = new int[1];
                 buildingData.metadata[0] = tile.metadata;
                 buildingData.blueprintIDs = new string[0];
+
+                Debug.Log("Saving...\nBuilding ID: " + buildingData.id + "\nCoordinates: " + buildingData.coords.Item1 + " " +
+                    buildingData.coords.Item2 + "\nHealth: " + buildingData.health + "\nMetadata: " + buildingData.metadata);
 
                 buildings.Add(buildingData);
             }
@@ -48,15 +56,20 @@ public class NewSaveSystem : MonoBehaviour
                     SaveData.EnemyData enemyData = new SaveData.EnemyData();
 
                     enemyData.id = enemy.enemy.InternalID;
-                    enemyData.coords = new System.Tuple<int, int>((int)enemy.transform.position.x, (int)enemy.transform.position.y);
+                    enemyData.coords = new Tuple<int, int>((int)enemy.transform.position.x, (int)enemy.transform.position.y);
                     enemyData.health = enemy.health;
-                    enemyData.metadata = new int[0];
+                    enemyData.metadata = new int[1];
+                    enemyData.metadata[0] = enemy.metadata;
                     enemyData.variantID = enemy.variant.InternalID;
 
                     enemies.Add(enemyData);
                 }
             }
         }
+
+        // Set lists
+        saveData.buildings = buildings.ToArray();
+        saveData.enemies = enemies.ToArray();
 
         // Set the rest of the data
         saveData.stage = Border.active.borderStage;
@@ -66,7 +79,7 @@ public class NewSaveSystem : MonoBehaviour
                 saveData.resources.Add(currency.Key, currency.Value.amount);
 
         // Set string variables
-        saveData.worldName = Gamemode.worldName;
+        saveData.worldName = Gamemode.saveName;
         saveData.worldMode = Gamemode.active.name + " (" + Resource.active.GetAmount(Resource.CurrencyType.Heat) / 1000000 * 100 + "%)";
         saveData.worldSeed = Gamemode.seed;
         saveData.worldVersion = Gamemode.active.version;
@@ -87,6 +100,13 @@ public class NewSaveSystem : MonoBehaviour
         // Try loop
         try
         {
+            // Check save location
+            if (!File.Exists(Application.persistentDataPath + path))
+            {
+                Debug.Log("A save file could not be located at " + Application.persistentDataPath + path);
+                return;
+            }
+
             // Load json file
             string data = File.ReadAllText(Application.persistentDataPath + path);
             SaveData saveData = JsonUtility.FromJson<SaveData>(data);
@@ -97,7 +117,7 @@ public class NewSaveSystem : MonoBehaviour
                 Resource.active.Add(currency.Key, currency.Value);
 
             // Set string variables
-            Gamemode.worldName = saveData.worldName;
+            Gamemode.saveName = saveData.worldName;
             Gamemode.seed = saveData.worldSeed;
             Gamemode.time = saveData.worldPlaytime;
 
@@ -112,9 +132,10 @@ public class NewSaveSystem : MonoBehaviour
                 if (ScriptableLoader.buildings.ContainsKey(buildingData.id))
                 {
                     Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[buildingData.id]);
-                    if (buildingData.metadata.Length > 0) InstantiationHandler.active.metadata = buildingData.metadata[0];
+                    InstantiationHandler.active.metadata = buildingData.metadata[0];
                     InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.coords.Item1, buildingData.coords.Item2),
                         Quaternion.identity, buildingData.health);
+                    InstantiationHandler.active.metadata = -1;
                 }
                 else Debug.Log("Building with ID " + buildingData.id + " could not be found!");
             }
@@ -130,13 +151,14 @@ public class NewSaveSystem : MonoBehaviour
                 else Debug.Log("Enemy with ID " + enemyData.id + " could not be found!");
             }
         }
-        catch (Exception e) { Debug.Log("Save system ran into a critical error!\nError: " + e); }
+        catch (Exception e)
+        { 
+            Debug.Log("Save system ran into a critical error!\nError: " + e); 
+        }
 
         // Set back to 
         Gamemode.active.useResources = useResources;
     }
-
-
 
     // Delete save file
     public static void DeleteGame(int a)

@@ -11,17 +11,18 @@ public class Gamemode : MonoBehaviour
 {
     // Active instance
     public static Gamemode active;
-    public static bool loadGame;
-    public static string loadLocation;
+    public static bool loadGame = false;
 
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
-    public static string worldName;
+    public static string saveName = "Unnamed Save";
+    public static string savePath = "/world_1.vectorio";
     public string version;
+    public Difficulty _difficulty;
     public static Difficulty difficulty;
-    public static string seed;
-    public static float time;
+    public static string seed = "Vectorio";
+    public static float time = 0;
 
     [Header("Gamemode Settings")]
     public bool useResources;
@@ -45,8 +46,17 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public void Start()
     {
+        if (difficulty == null) difficulty = _difficulty;
         GameManager.SetupGame(difficulty, loadGame);
         InitGamemode();
+
+        if (loadGame) NewSaveSystem.LoadGame(savePath);
+    }
+
+    // Save game
+    public void SaveGame()
+    {
+        NewSaveSystem.SaveGame(savePath);
     }
 
     // Update playtime

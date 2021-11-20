@@ -77,6 +77,7 @@ public class InstantiationHandler : MonoBehaviour
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
         lastBuilding.name = buildable.building.name;
+        lastBuilding.buildable = buildable;
 
         // Set the tiles on the grid class
         SetCells(buildable.building, position, lastBuilding);

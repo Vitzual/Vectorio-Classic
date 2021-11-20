@@ -7,7 +7,8 @@ using UnityEngine;
 public class SaveData
 {
     // Building struct
-    public struct BuildingData
+    [Serializable]
+    public class BuildingData
     {
         public string id;
         public Tuple<int, int> coords;
@@ -15,9 +16,10 @@ public class SaveData
         public int[] metadata;
         public string[] blueprintIDs;
     }
-    
+
     // Enemy struct
-    public struct EnemyData
+    [Serializable]
+    public class EnemyData
     {
         public string id;
         public Tuple<int, int> coords;
@@ -27,7 +29,8 @@ public class SaveData
     }
 
     // Difficulty struct
-    public struct DifficultyData
+    [Serializable]
+    public class DifficultyData
     {
         public Dictionary<string, int> integerValues;
         public Dictionary<string, float> floatValues;

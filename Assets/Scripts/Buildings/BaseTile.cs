@@ -6,18 +6,11 @@ public class BaseTile : BaseEntity
 {
     [HideInInspector] public List<Vector2Int> cells;
     [HideInInspector] public Buildable buildable;
+    public bool saveBuilding = true;
 
     public override void Setup()
     {
-        buildable = Buildables.RequestBuildable(name);
-        if (buildable == null)
-        {
-            Debug.Log("The buildable for this object could not be retrieved!");
-            DestroyEntity();
-        }
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
-
-        // Update unlockables
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
     }
 

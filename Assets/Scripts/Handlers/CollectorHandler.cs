@@ -47,7 +47,7 @@ public class CollectorHandler : MonoBehaviour
             if (storages[i] != null)
             {
                 if (storages[i].type == type)
-                    amount = storages[i].AddResource(amount);
+                    amount = storages[i].AddResources(amount);
                 if (amount <= 0) return;
             }
             else

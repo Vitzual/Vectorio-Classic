@@ -13,7 +13,7 @@ public class Storage: ResourceTile
     }
 
     // Add resource to storage
-    public int AddResource(int amount)
+    public override int AddResources(int amount)
     {
         // Add amount and grab storage amount
         this.amount += amount;
@@ -43,7 +43,7 @@ public class Storage: ResourceTile
     }
 
     // Take resource
-    public int TakeResource()
+    public override int TakeResource()
     {
         int amountToReturn = amount;
         amount = 0;

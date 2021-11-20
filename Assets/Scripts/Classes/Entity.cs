@@ -21,7 +21,6 @@ public class Entity : IdentifiableScriptableObject
     [TextArea] public string description;
     [FoldoutGroup("Entity Info")]
     public int health;
-    public Tuple<Effect, float> _health;
     [FoldoutGroup("Entity Info")]
     public Material material;
 

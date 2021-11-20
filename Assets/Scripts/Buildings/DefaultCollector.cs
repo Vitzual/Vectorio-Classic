@@ -39,13 +39,13 @@ public class DefaultCollector : ResourceTile
         {
             if (amount > 0)
             {
-                CollectorHandler.active.TransferResources(GrabResources(), type);
+                CollectorHandler.active.TransferResources(TakeResource(), type);
                 isFull = false;
             }
         }
     }
 
-    public int GrabResources()
+    public override int TakeResource()
     {
         // Set animation
         animator.resetAnim();

@@ -8,7 +8,6 @@ public class Turret : Building
     // Base turret stat variables
     [FoldoutGroup("Turret Variables")]
     public float damage, range, rotationSpeed, cooldown;
-    public Tuple<Effect, float> damage_, range_, rotation_, cooldown_;
     [FoldoutGroup("Turret Variables")]
     public AudioClip sound;
     
@@ -17,13 +16,10 @@ public class Turret : Building
     public DefaultBullet bullet;
     [FoldoutGroup("Bullet Variables")]
     public int bulletPierces, bulletAmount;
-    public Tuple<Effect, int> bulletPierces_, bulletAmount_;
     [FoldoutGroup("Bullet Variables")]
     public float bulletSpeed, bulletSpread, bulletTime;
-    public Tuple<Effect, float> bulletSpeed_, bulletSpread_, bulletTime_;
     [FoldoutGroup("Bullet Variables")]
     public bool bulletLock;
-    public Tuple<Effect, bool> bulletLock_;
     [FoldoutGroup("Bullet Variables")]
     public ParticleSystem bulletParticle;
 

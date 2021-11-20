@@ -31,6 +31,7 @@ public class Drone : MonoBehaviour
 
     // Nearby targets
     [HideInInspector] public List<BaseEntity> nearbyTargets;
+    [HideInInspector] public List<BaseEntity> visitedTargets;
 
     // NOTE ABOUT VIRTUAL METHODS
     //
@@ -46,6 +47,8 @@ public class Drone : MonoBehaviour
     public void Start()
     {
         transform.localScale = new Vector3(0.4f, 0.4f, 0f);
+        nearbyTargets = new List<BaseEntity>();
+        visitedTargets = new List<BaseEntity>();
     }
 
     // Specifies if the drone should add a certain target
@@ -58,6 +61,17 @@ public class Drone : MonoBehaviour
     public virtual void SetTarget(BaseTile tile)
     {
         target = tile;
+    }
+
+    // Tells a port to find a new target
+    public virtual bool FindTarget()
+    {
+        if (nearbyTargets.Count > 0)
+        {
+            target = nearbyTargets[0];
+            return true;
+        }
+        return false;
     }
 
     // Specifies what the drone should do when it is deployed
@@ -98,13 +112,16 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do when it reaches it's target
     public virtual void TargetReached() 
     {
-        if (stage == Stage.MovingToTarget)
-        {
-            stage = Stage.ReturningToPort;
-            target = home;
-            RotateToTarget();
-        }
+        if (stage == Stage.MovingToTarget) ReturnHome();
         else EnterPort();
+    }
+
+    // Specifies what the drone should do when it reaches it's target
+    public virtual void ReturnHome()
+    {
+        stage = Stage.ReturningToPort;
+        target = home;
+        RotateToTarget();
     }
 
     // Specifies what the drone should do when it reaches home

@@ -19,6 +19,7 @@ public class DroneManager : MonoBehaviour
         cooling
     }
     public BuildPriority buildPriority;
+
     public bool ignorePriority = false;
 
     // Priority buildings
@@ -67,6 +68,7 @@ public class DroneManager : MonoBehaviour
     public void Update()
     {
         UpdateConstructionDrones();
+        UpdateResourceDrones();
         UpdateActiveDrones();
     }
 
@@ -79,7 +81,7 @@ public class DroneManager : MonoBehaviour
             {
                 // Reset drone
                 case Drone.Stage.ReadyToDeploy:
-                    active.AddDrone(activeDrones[i]);
+                    AddDrone(activeDrones[i]);
                     activeDrones.RemoveAt(i);
                     break;
 
@@ -304,6 +306,31 @@ public class DroneManager : MonoBehaviour
 
                     if (buildPriority != BuildPriority.cheapest ||
                         buildPriority != BuildPriority.expensive) ignorePriority = true;
+                }
+            }
+        }
+    }
+
+    // Check resource drones
+    public void UpdateResourceDrones()
+    {
+        // Check to make sure enough build drones and ghost tiles exist
+        if (resourceDrones.Count > 0)
+        {
+            for(int a = 0; a < resourceDrones.Count; a++)
+            {
+                if (resourceDrones[a] != null)
+                {
+                    if (resourceDrones[a].FindTarget())
+                    {
+                        activeDrones.Add(resourceDrones[a]);
+                        resourceDrones.RemoveAt(a);
+                    }
+                }
+                else
+                {
+                    resourceDrones.RemoveAt(a);
+                    a--;
                 }
             }
         }

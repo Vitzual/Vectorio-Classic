@@ -8,7 +8,8 @@ public static class Buildables
     public static Dictionary<Entity, Buildable> active;
 
     // List of all buildable unlockables
-    public static Dictionary<Unlockable.UnlockType, List<Buildable>> unlockables;
+    public static Dictionary<Unlockable.UnlockType, List<Buildable>> unlockables =
+              new Dictionary<Unlockable.UnlockType, List<Buildable>>();
 
     // Generate buildables
     public static void Register(Building building)
@@ -46,7 +47,7 @@ public static class Buildables
     public static Buildable RequestBuildable(BaseEntity obj)
     {
         foreach (KeyValuePair<Entity, Buildable> buildable in active)
-            if (buildable.Value.obj == obj)
+            if (buildable.Value.obj == obj.gameObject)
                 return buildable.Value;
         Debug.Log("Could not retrieve object " + obj.name + " via object request");
         return null;

@@ -14,7 +14,7 @@ public class Entity : IdentifiableScriptableObject
 
     // Entity description
     [FoldoutGroup("Entity Info")]
-    public BaseEntity obj;
+    public GameObject obj;
     [FoldoutGroup("Entity Info")]
     public new string name;
     [FoldoutGroup("Entity Info")]

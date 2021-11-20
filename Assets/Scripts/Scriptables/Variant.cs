@@ -11,6 +11,9 @@ public class Variant : ScriptableObject
     public float minHeat; // Inclusive
     public float maxHeat; // Exclusive
 
+    // Guardian
+    public Guardian guardian;
+
     // Variant modifiers
     public float healthModifier;
     public float damageModifier;

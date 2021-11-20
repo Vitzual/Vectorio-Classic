@@ -6,5 +6,9 @@ using UnityEngine;
 public class Guardian : Enemy
 {
     public int heat;
+    public int newMaxHeat;
     public ParticleSystem particleEffect;
+    public string directionName;
+    public Vector2 guardianSpawnPosition;
+    public Vector2 guardianLerpPosition;
 }

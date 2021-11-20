@@ -15,6 +15,8 @@ public class Hub : BaseTile
     public ParticleSystem chargeParticle;
     public ParticleSystem[] laserParticles;
     public AudioSource laserSound;
+    public AudioSource warningSound;
+    public AudioSource music;
     public GameObject UI;
 
     // Laser variables
@@ -39,10 +41,11 @@ public class Hub : BaseTile
         UI.SetActive(false);
 
         // Initiate laser sequence 
-        laserPart = 1;
+        laserPart = 0;
         laserFiring = true;
         chargeParticle.Stop();
         laserSound.Stop();
+        music.Pause();
         laserIndex = index;
 
         // Reset all lasers
@@ -58,38 +61,58 @@ public class Hub : BaseTile
             // Controls laser animation
             switch (laserPart)
             {
+                case 0:
+                    cooldown = 7.5f;
+                    warningSound.Play();
+                    laserPart = 1;
+                    break;
                 case 1:
+                    cooldown -= Time.deltaTime;
+                    if (cooldown <= 0)
+                    {
+                        cooldown = 3f;
+                        laserPart = 2;
+                        warningSound.Stop();
+                    }
+                    break;
+                case 2:
+                    cooldown -= Time.deltaTime;
+                    if (cooldown <= 0) laserPart = 3;
+                    break;
+                case 3:
                     chargeParticle.Play();
                     laserSound.Play();
                     cooldown = 2.3f;
-                    laserPart = 2;
+                    laserPart = 4;
                     break;
-                case 2:
+                case 4:
                     cooldown -= Time.deltaTime;
                     if (cooldown <= 0)
                     {
                         laserParticles[laserIndex].Play();
                         cooldown = 2.5f;
-                        laserPart = 3;
+                        laserPart = 5;
                         CameraShake.ShakeAll();
                     }
                     break;
-                case 3:
+                case 5:
                     cooldown -= Time.deltaTime;
                     if (cooldown <= 0)
                     {
                         cooldown = 11f;
-                        laserPart = 4;
+                        laserPart = 6;
                     }
                     break;
-                case 4:
+                case 6:
                     cooldown -= Time.deltaTime;
                     if (border != null) border.PushBorder();
                     if (cooldown <= 0)
                     {
-                        laserPart = 1;
                         laserFiring = false;
                         UI.SetActive(true);
+                        music.Play();
+                        laserPart = 0;
+                        EnemyHandler.active.SpawnGuardian();
                     }
                     break;
             }

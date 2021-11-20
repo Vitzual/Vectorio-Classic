@@ -27,6 +27,7 @@ public class Resource : MonoBehaviour
         public int amount;
         public int storage;
         public string format;
+        public bool allowOverflow;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
     }
@@ -50,11 +51,11 @@ public class Resource : MonoBehaviour
             currencies.Add(currency.type, currency);
 
         // Setup events
-        Events.active.onStoragePlaced += AddStorage;
+        Events.active.onStoragePlaced += AddStorageObj;
     }
     
     // Add collector or storage
-    public void AddStorage(DefaultStorage storage) { storages.Add(storage); }
+    public void AddStorageObj(DefaultStorage storage) { storages.Add(storage); }
 
     // Update storages 
     public void UpdateStorages(CurrencyType type, int amount, bool add)
@@ -98,9 +99,13 @@ public class Resource : MonoBehaviour
         if (updateStorages) UpdateStorages(type, amount, true);
 
         // Calculate amount
-        currencies[type].amount += amount;
-        if (currencies[type].amount >= currencies[type].storage)
-            currencies[type].amount = currencies[type].storage;
+        if (type != CurrencyType.Heat && type != CurrencyType.Power)
+        {
+            currencies[type].amount += amount;
+            if (currencies[type].amount >= currencies[type].storage)
+                currencies[type].amount = currencies[type].storage;
+        }
+        else currencies[type].amount += amount; 
 
         // Display to UI
         if (currencies[type].resourceUI != null)
@@ -138,6 +143,13 @@ public class Resource : MonoBehaviour
         currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
     }
 
+    // Set storage
+    public void SetStorage(CurrencyType type, int amount)
+    {
+        currencies[type].storage = amount;
+        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
+    }
+
     // Remove storage
     public void RemoveStorage(CurrencyType type, int amount)
     {
@@ -161,7 +173,12 @@ public class Resource : MonoBehaviour
             if (!resource.storage)
             {
                 int amount = GetAmount(resource.resource);
-                if (resource.add && amount + resource.amount > GetStorage(resource.resource)) return false;
+                if (resource.add)
+                {
+                    Currency currency = GetCurrency(resource.resource);
+                    if (currency.allowOverflow && amount > GetStorage(resource.resource)) return false;
+                    else if (!currency.allowOverflow && amount + resource.amount > GetStorage(resource.resource)) return false;
+                }
                 else if (!resource.add && amount < resource.amount) return false;
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DefaultGuardian : DefaultEnemy
 {
     public Guardian guardian;
-    
+
     public override void Setup()
     {
         material = guardian.material;

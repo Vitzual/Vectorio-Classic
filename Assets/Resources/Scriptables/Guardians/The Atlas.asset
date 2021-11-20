@@ -23,16 +23,17 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 605b5bb2-343f-4feb-84e6-6c9f912d69b2
   createdAtTicks: 637722267036832930
-  obj: {fileID: 0}
-  name: 
+  obj: {fileID: 1060508649476885122, guid: fac98f96dde70b14aa8288f67c39ad58, type: 3}
+  name: The Atlas
   description: 'The third guardian. Can deploy attack drones to '
-  health: 0
+  health: 2500000
   material: {fileID: 0}
   inventoryHeader: 3
   inventoryIndex: 2
   unlockable:
     type: 0
     description: 
+    requirement: {fileID: 0}
     unlocked: 0
     resource: 0
     entity: {fileID: 0}
@@ -40,8 +41,8 @@ MonoBehaviour:
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
-  damage: 0
-  moveSpeed: 0
+  damage: 500000
+  moveSpeed: 6
   explosiveRadius: 0
   explosiveDamage: 0
   rotationSpeed: 0
@@ -50,3 +51,8 @@ MonoBehaviour:
   spawnsOnDeath: []
   drops: []
   heat: 50000
+  newMaxHeat: 1000000
+  particleEffect: {fileID: 0}
+  directionName: West
+  guardianSpawnPosition: {x: 1200, y: 0}
+  guardianLerpPosition: {x: 1000, y: 0}

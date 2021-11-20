@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 public class EnemyHandler : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class EnemyHandler : MonoBehaviour
 
     // Holds a reference to turret handler
     public TurretHandler turretHandler;
+
+    // Holds a reference to guardian button
+    public GuardianButton guardianButton;
+    public bool guardianSpawned;
 
     // If the enemy destroys a building, play this sound
     public AudioSource BuildingGoDeadSound;
@@ -155,22 +160,47 @@ public class EnemyHandler : MonoBehaviour
     // Updates the active variant (Survival only)
     public void UpdateVariant()
     {
-        if (Gamemode.active.useHeat)
+        // Get heat currency
+        Resource.Currency currency = Resource.active.currencies[Resource.CurrencyType.Heat];
+
+        // Check currency
+        if (currency.amount > currency.storage)
         {
-            int currentHeat = Resource.active.GetHeat();
+            guardianButton.SetConfirmScreen(variant.guardian);
+            guardianButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (guardianButton.gameObject.activeSelf)
+                guardianButton.gameObject.SetActive(false);
+
             foreach (Variant variant in ScriptableLoader.variants)
             {
-                if (currentHeat >= variant.minHeat &&
-                    currentHeat < variant.maxHeat)
+                if (currency.amount >= variant.minHeat &&
+                    currency.amount < variant.maxHeat)
                 {
                     this.variant = variant;
                     return;
                 }
             }
-        }
-        else
-        {
-            variant = ScriptableLoader.variants[0];
-        }
+        }    
+    }
+
+    // Spawn guardian (NEEDS WORK)
+    public void SpawnGuardian()
+    {
+        // Create the tile
+        GameObject lastObj = Instantiate(variant.guardian.obj.gameObject, variant.guardian.guardianSpawnPosition, Quaternion.identity);
+        lastObj.name = variant.guardian.name;
+
+        // Move to next stage
+        Resource.active.SetStorage(Resource.CurrencyType.Heat, variant.guardian.newMaxHeat);
+
+        // Get guardian stuff
+        DefaultGuardian guardian = lastObj.GetComponent<DefaultGuardian>();
+        guardian.Setup();
+
+        // Add to active guardians
+        guardians.Add(guardian);
     }
 }

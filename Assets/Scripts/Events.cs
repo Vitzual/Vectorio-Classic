@@ -62,8 +62,8 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a storage script is placed
-    public event Action<Storage> onStoragePlaced;
-    public void StoragePlaced(Storage storage)
+    public event Action<DefaultStorage> onStoragePlaced;
+    public void StoragePlaced(DefaultStorage storage)
     {
         if (onStoragePlaced != null)
             onStoragePlaced(storage);

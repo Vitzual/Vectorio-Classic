@@ -30,8 +30,8 @@ public class Drone : MonoBehaviour
     public SpriteRenderer droneIcon;
 
     // Nearby targets
-    [HideInInspector] public List<BaseEntity> nearbyTargets;
-    [HideInInspector] public List<BaseEntity> visitedTargets;
+    public List<BaseEntity> nearbyTargets = new List<BaseEntity>();
+    [HideInInspector] public List<BaseEntity> visitedTargets = new List<BaseEntity>();
 
     // NOTE ABOUT VIRTUAL METHODS
     //
@@ -47,8 +47,6 @@ public class Drone : MonoBehaviour
     public void Start()
     {
         transform.localScale = new Vector3(0.4f, 0.4f, 0f);
-        nearbyTargets = new List<BaseEntity>();
-        visitedTargets = new List<BaseEntity>();
     }
 
     // Specifies if the drone should add a certain target

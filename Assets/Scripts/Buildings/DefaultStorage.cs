@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Storage: ResourceTile
+public class DefaultStorage : ResourceTile
 {
     // Declare local object variables
     public GameObject icon;
@@ -31,13 +31,13 @@ public class Storage: ResourceTile
             if (icon != null) icon.SetActive(true);
 
             // Add proper amount and return overflow
-            Resource.active.Add(type, amount - amountToReturn);
+            Resource.active.Add(type, amount - amountToReturn, false);
             return amountToReturn;
         }
         else
         {
             // If does not exceed, add resources and return
-            Resource.active.Add(type, amount);
+            Resource.active.Add(type, amount, false);
             return 0;
         }
     }
@@ -55,6 +55,7 @@ public class Storage: ResourceTile
     // On destroy, override method and remove storage
     public override void DestroyEntity()
     {
+        Resource.active.Remove(type, amount, false);
         Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
     }
 }

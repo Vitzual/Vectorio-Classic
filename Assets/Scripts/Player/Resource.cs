@@ -35,18 +35,54 @@ public class Resource : MonoBehaviour
     public Dictionary<CurrencyType, Currency> currencies;
     public Currency[] currencyElements;
 
-    public void Awake() { Setup(); }
+    // List of all collectors and storages
+    public List<DefaultStorage> storages;
 
     // Get active instance
-    public void Setup()
+    public void Awake()
     {
+        // Get active instance
         active = this;
 
+        // Setup currencies
         currencies = new Dictionary<CurrencyType, Currency>();
         foreach (Currency currency in currencyElements)
             currencies.Add(currency.type, currency);
+
+        // Setup events
+        Events.active.onStoragePlaced += AddStorage;
     }
     
+    // Add collector or storage
+    public void AddStorage(DefaultStorage storage) { storages.Add(storage); }
+
+    // Update storages 
+    public void UpdateStorages(CurrencyType type, int amount, bool add)
+    {
+        // Setup local loop variables
+        int amountToAdd = amount;
+        if (!add) amountToAdd = -amountToAdd;
+
+        // Updates all storages
+        for(int i = 0; i < storages.Count; i++)
+        {
+            if (storages[i] != null)
+            {
+                if (add) amountToAdd = storages[i].AddResources(amountToAdd);
+                else
+                {
+                    amountToAdd += storages[i].TakeResource();
+                    if (amountToAdd > 0) storages[i].AddResources(amountToAdd);
+                }
+            }
+            else
+            {
+                storages.RemoveAt(i);
+                i--;
+            }
+        }
+    }
+
     // Get currency class
     public Currency GetCurrency(CurrencyType type)
     {
@@ -56,38 +92,37 @@ public class Resource : MonoBehaviour
     }
 
     // Add a resource
-    public void Add(CurrencyType type, int amount, bool overrideStorage = false)
+    public void Add(CurrencyType type, int amount, bool updateStorages = true)
     {
-        if (currencies.ContainsKey(type))
-        {
-            // Calculate amount
-            currencies[type].amount += amount;
-            if (!overrideStorage && currencies[type].amount >= currencies[type].storage)
-                currencies[type].amount = currencies[type].storage;
+        // Update storages
+        if (updateStorages) UpdateStorages(type, amount, true);
 
-            // Display to UI
-            if (currencies[type].resourceUI != null)
-                currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
-        }
-        else Debug.Log("Could not add " + type);
+        // Calculate amount
+        currencies[type].amount += amount;
+        if (currencies[type].amount >= currencies[type].storage)
+            currencies[type].amount = currencies[type].storage;
+
+        // Display to UI
+        if (currencies[type].resourceUI != null)
+            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
 
     // Remove a resource
-    public void Remove(CurrencyType type, int amount)
+    public void Remove(CurrencyType type, int amount, bool updateStorages = true)
     {
-        if (currencies.ContainsKey(type))
-        {
-            // Calculate amount
-            currencies[type].amount -= amount;
-            if (currencies[type].amount <= 0)
-                currencies[type].amount = 0;
+        // Update storages
+        if (updateStorages) UpdateStorages(type, amount, false);
 
-            // Display to UI
-            if (currencies[type].resourceUI != null)
-                currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
-        }
+        // Calculate amount
+        currencies[type].amount -= amount;
+        if (currencies[type].amount <= 0)
+            currencies[type].amount = 0;
+
+        // Display to UI
+        if (currencies[type].resourceUI != null)
+            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
@@ -95,23 +130,18 @@ public class Resource : MonoBehaviour
     // Add storage
     public void AddStorage(CurrencyType type, int amount)
     {
-        if (currencies.ContainsKey(type))
-        {
-            currencies[type].storage += amount;
-            currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
-        }
+        currencies[type].storage += amount;
+        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
     }
 
     // Remove storage
     public void RemoveStorage(CurrencyType type, int amount)
     {
-        if (currencies.ContainsKey(type))
-        {
-            currencies[type].storage -= amount;
-            if (currencies[type].storage <= 0)
-                currencies[type].storage = 0;
-            currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
-        }
+        // Revert the storage
+        currencies[type].storage -= amount;
+        if (currencies[type].storage <= 0)
+            currencies[type].storage = 0;
+        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
     }
 
     // Check resources

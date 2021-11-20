@@ -32,7 +32,7 @@ public class Droneport : BaseTile
     // Apply metadata
     public override void ApplyMetadata(int data)
     {
-        if (data == 0) CreateDrone(Drone.DroneType.Builder);
+        if (data == 0) CreateDrone(Drone.DroneType.Resource);
         else if (data == 1) CreateDrone(Drone.DroneType.Resource);
         else if (data == 2) CreateDrone(Drone.DroneType.Fixer);
     }
@@ -41,7 +41,7 @@ public class Droneport : BaseTile
     public override void Setup()
     {
         // Check if drone was set via metadata
-        if (!droneCreated) CreateDrone(Drone.DroneType.Builder);
+        if (!droneCreated) CreateDrone(Drone.DroneType.Resource);
 
         // Reset nearby targets
         drone.nearbyTargets = new List<BaseEntity>();
@@ -52,7 +52,7 @@ public class Droneport : BaseTile
         int yTile = (int)transform.position.y;
 
         // If not builder, update nearby buildings
-        if (drone.type != Drone.DroneType.Builder)
+        if (drone.type != Drone.DroneType.Resource)
         {
             // Loop through all tiles and try to find drones
             for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
@@ -62,6 +62,9 @@ public class Droneport : BaseTile
 
         // Set material
         material = building.material;
+
+        // Update nearby targets
+        UpdateNearbyTargets();
     }
 
     // Create drone method
@@ -107,6 +110,25 @@ public class Droneport : BaseTile
                 blueLight.SetActive(false);
                 yellowLight.SetActive(false);
                 greenLight.SetActive(true);
+            }
+        }
+    }
+
+    // Check for nearby targets
+    public void UpdateNearbyTargets()
+    {
+        // Loop through all nearby drone ports
+        int adjustment = Research.drone_tile_coverage * 5;
+        int xTile = (int)transform.position.x;
+        int yTile = (int)transform.position.y;
+
+        // Loop through all tiles and try to find drones
+        for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
+        {
+            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
+            {
+                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
+                if (holder != null) AddTarget(holder);
             }
         }
     }

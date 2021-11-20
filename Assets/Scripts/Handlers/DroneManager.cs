@@ -77,33 +77,41 @@ public class DroneManager : MonoBehaviour
     {
         for(int i = 0; i < activeDrones.Count; i++)
         {
-            switch(activeDrones[i].stage)
+            if (activeDrones[i] != null)
             {
-                // Reset drone
-                case Drone.Stage.ReadyToDeploy:
-                    AddDrone(activeDrones[i]);
-                    activeDrones.RemoveAt(i);
-                    break;
+                switch (activeDrones[i].stage)
+                {
+                    // Reset drone
+                    case Drone.Stage.ReadyToDeploy:
+                        AddDrone(activeDrones[i]);
+                        activeDrones.RemoveAt(i);
+                        break;
 
-                // Open plates
-                case Drone.Stage.ExitingPort:
-                    activeDrones[i].ExitingPort();
-                    break;
+                    // Open plates
+                    case Drone.Stage.ExitingPort:
+                        activeDrones[i].ExitingPort();
+                        break;
 
-                // Move to target
-                case Drone.Stage.MovingToTarget:
-                    activeDrones[i].Move();
-                    break;
+                    // Move to target
+                    case Drone.Stage.MovingToTarget:
+                        activeDrones[i].Move();
+                        break;
 
-                // Target reached
-                case Drone.Stage.ReturningToPort:
-                    activeDrones[i].Move();
-                    break;
+                    // Target reached
+                    case Drone.Stage.ReturningToPort:
+                        activeDrones[i].Move();
+                        break;
 
-                // Entering port
-                case Drone.Stage.EnteringPort:
-                    activeDrones[i].EnteringPort();
-                    break;
+                    // Entering port
+                    case Drone.Stage.EnteringPort:
+                        activeDrones[i].EnteringPort();
+                        break;
+                }
+            }
+            else
+            {
+                activeDrones.RemoveAt(i);
+                i--;
             }
         }
     }

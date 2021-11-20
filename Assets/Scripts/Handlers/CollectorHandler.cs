@@ -9,7 +9,7 @@ public class CollectorHandler : MonoBehaviour
 
     // Class lists
     public List<DefaultCollector> collectors;
-    public List<Storage> storages;
+    public List<DefaultStorage> storages;
 
     public void Awake() { active = this; }
 
@@ -63,7 +63,7 @@ public class CollectorHandler : MonoBehaviour
         collectors.Add(collector);
     }
 
-    public void AddStorage(Storage storage)
+    public void AddStorage(DefaultStorage storage)
     {
         storages.Add(storage);
     }

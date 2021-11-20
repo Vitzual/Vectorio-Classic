@@ -17,12 +17,11 @@ public class Unlockable
     [Header("Unlock Type")]
     public UnlockType type;
     public string description;
+    public Building requirement;
     public bool unlocked;
 
     [Header("Unlock Requirement")]
     public Resource.CurrencyType resource;
     public Entity entity;
     public int amount;
-    [HideInInspector]
-    public int tracked;
 }

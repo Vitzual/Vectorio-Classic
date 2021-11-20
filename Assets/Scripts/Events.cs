@@ -14,6 +14,22 @@ public class Events : MonoBehaviour
     }
 
     // On blueprint collected
+    public event Action<Buildable> onBuildingUnlocked;
+    public void BuildingUnlocked(Buildable buildable)
+    {
+        if (onBuildingUnlocked != null)
+            onBuildingUnlocked(buildable);
+    }
+
+    // On blueprint collected
+    public event Action<Enemy> onEnemyDiscovered;
+    public void EnemyDiscovered(Enemy enemy)
+    {
+        if (onEnemyDiscovered != null)
+            onEnemyDiscovered(enemy);
+    }
+
+    // On blueprint collected
     public event Action<CollectedBlueprint> onBlueprintCollected;
     public void BlueprintCollected(CollectedBlueprint blueprint)
     {

@@ -23,21 +23,23 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: df8a7770-3e2f-4cac-801a-dcddf139d145
   createdAtTicks: 637722267045200530
+  obj: {fileID: 420473218063467210, guid: 39ba00b36b630e34bb56cef838c68c30, type: 3}
   name: Disintegrator
   description: 'The Pulser''s older sibling. Fires piercing shots that break apart
     as they travel. '
+  health: 250
+  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   inventoryHeader: 0
   inventoryIndex: 10
-  obj: {fileID: 420473218063467210, guid: 39ba00b36b630e34bb56cef838c68c30, type: 3}
-  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
-  health: 250
   unlockable:
     type: 1
     description: Place 25x Pulser's
+    requirement: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: 87e6e2d09fbb6554886a98ead54edf04, type: 2}
     amount: 25
+    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -67,10 +69,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 500
   range: 120
   rotationSpeed: 50
   cooldown: 4
+  sound: {fileID: 8300000, guid: b71edef5d6eb84fe0b6837f05a411bd4, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 10
   bulletAmount: 1
@@ -80,4 +84,3 @@ MonoBehaviour:
   bulletLock: 1
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
-  sound: {fileID: 8300000, guid: b71edef5d6eb84fe0b6837f05a411bd4, type: 3}

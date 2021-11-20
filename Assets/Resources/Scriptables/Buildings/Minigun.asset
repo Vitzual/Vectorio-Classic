@@ -23,21 +23,23 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 55098b33-ec87-426f-8283-07a890d8f94d
   createdAtTicks: 637722267061515380
+  obj: {fileID: 420473218063467210, guid: 0117140630b641d4b894099ff605286d, type: 3}
   name: Minigun
   description: Low accuracy turret that fires a storm of high-damaging bullets. All
     around good early/mid game turret.
+  health: 120
+  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
   inventoryHeader: 0
   inventoryIndex: 9
-  obj: {fileID: 420473218063467210, guid: 0117140630b641d4b894099ff605286d, type: 3}
-  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
-  health: 120
   unlockable:
     type: 2
     description: 'Destroy a Dropship '
+    requirement: {fileID: 11400000, guid: 507b500e238e4f5489866cbefad7f108, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: 502e408b471788d468bd9962ab25477a, type: 2}
     amount: 1
+    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -63,10 +65,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 50
   range: 80
   rotationSpeed: 90
   cooldown: 0.15
+  sound: {fileID: 8300000, guid: e5f0a762c652f4065a1238d2febd38c6, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
@@ -76,4 +80,3 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
-  sound: {fileID: 8300000, guid: e5f0a762c652f4065a1238d2febd38c6, type: 3}

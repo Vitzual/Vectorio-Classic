@@ -41,6 +41,10 @@ public static class ScriptableLoader
         }
         if (Gamemode.active.initBuildings)
             Inventory.active.GenerateBuildings(buildings.ToArray());
+        
+        // Set requirements
+        if (!Gamemode.active.unlockEverything)
+            Buildables.HideUnmetRequirements();
     }
 
     // Generates enemies on run

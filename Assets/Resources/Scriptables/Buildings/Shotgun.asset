@@ -23,20 +23,22 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 0e16604b-921d-46db-bc2d-f5b8efe9c72d
   createdAtTicks: 637722267064438048
+  obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
   name: Shotgunner
   description: Fires multiple projectiles at once to eliminate large groups of enemies
+  health: 15
+  material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   inventoryHeader: 0
   inventoryIndex: 2
-  obj: {fileID: 420473218063467210, guid: 75f5a0c010e7d6a4dab70e4cee3c3a93, type: 3}
-  material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
-  health: 15
   unlockable:
-    type: 2
-    description: Destroy 10x Shuriken's
+    type: 1
+    description: Place 5x Turret's
+    requirement: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
     unlocked: 0
     resource: 0
-    entity: {fileID: 11400000, guid: 996dba43e8bacf941b20edb3ebaf5d43, type: 2}
-    amount: 10
+    entity: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
+    amount: 5
+    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -58,10 +60,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 2
   range: 35
   rotationSpeed: 60
   cooldown: 1
+  sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 4
@@ -71,4 +75,3 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
-  sound: {fileID: 8300000, guid: 81764b23e5b364bcdbebf662664d45f4, type: 3}

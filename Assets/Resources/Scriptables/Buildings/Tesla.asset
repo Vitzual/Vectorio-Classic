@@ -23,21 +23,23 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 9d871637-5778-4339-afa4-01f5e0932067
   createdAtTicks: 637722267068261521
+  obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
   name: Tesla
   description: Fires bolts of lightning that deal massive damage and slow down enemies.
     Consumes extra power while firing.
+  health: 100
+  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
   inventoryHeader: 0
   inventoryIndex: 11
-  obj: {fileID: 420473218063467210, guid: f7fecc94fdad2e94f87e4989dbfb9a49, type: 3}
-  material: {fileID: 2100000, guid: 33c92dd6912d4ac469b7ce2fe388c163, type: 2}
-  health: 100
   unlockable:
     type: 0
     description: Accumulate 25,000 power
+    requirement: {fileID: 0}
     unlocked: 0
     resource: 3
-    entity: {fileID: 0}
+    entity: {fileID: 11400000, guid: 54f60d7651f2b6245a89ac92b87efc96, type: 2}
     amount: 25000
+    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -59,10 +61,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 150
   range: 60
   rotationSpeed: 200
   cooldown: 0.1
+  sound: {fileID: 0}
   bullet: {fileID: -1636311487633401878, guid: a1f86ff9cf138dc4e871f2d2dbc067db, type: 3}
   bulletPierces: 1
   bulletAmount: 1
@@ -72,4 +76,3 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 274222557884159627, guid: 20ca77f1ed76de54dbf34ec846a9d6d2,
     type: 3}
-  sound: {fileID: 0}

@@ -20,7 +20,7 @@ public static class Buildables
             active.Add(building, newBuildable);
 
             // Setup unlockable
-            if (building.unlockable.unlocked || Gamemode.active.unlockEverything)
+            if (!building.unlockable.unlocked && !Gamemode.active.unlockEverything)
             {
                 if (unlockables.ContainsKey(building.unlockable.type))
                     unlockables[building.unlockable.type].Add(newBuildable);
@@ -34,9 +34,29 @@ public static class Buildables
         else Debug.Log("There is already a buildable registered for " + building.name);
     }
 
+    // Iterate over dictionary and disable buttons that have requirements
+    public static void HideUnmetRequirements()
+    {
+        foreach (KeyValuePair<Entity, Buildable> buildable in active)
+        {
+            Buildable requirement = RequestBuildable(buildable.Value.building.unlockable.requirement);
+
+            if (requirement != null) Debug.Log(buildable.Value.building.name + " requires " + buildable.Value.building.unlockable.requirement.name);
+            else Debug.Log(buildable.Value.building.name + " has no requirement!");
+
+            if (requirement != null && !requirement.unlockable.unlocked)
+            {
+                buildable.Value.button.gameObject.SetActive(false);
+                requirement.showButtons.Add(buildable.Value.button);
+            }
+        }
+    }
+
     // Retrieves a buildable by name
     public static Buildable RequestBuildable(Entity entity)
     {
+        if (entity == null) return null;
+
         if (active.ContainsKey(entity))
             return active[entity];
         Debug.Log("Could not retrieve object " + entity.name + " via entity request");
@@ -44,12 +64,12 @@ public static class Buildables
     }
 
     // Retrieves a buildable by object
-    public static Buildable RequestBuildable(BaseEntity obj)
+    public static Buildable RequestBuildable(string name)
     {
         foreach (KeyValuePair<Entity, Buildable> buildable in active)
-            if (buildable.Value.obj == obj.gameObject)
+            if (buildable.Value.building.name == name)
                 return buildable.Value;
-        Debug.Log("Could not retrieve object " + obj.name + " via object request");
+        Debug.Log("Could not retrieve object " + name + " via name request");
         return null;
     }
 
@@ -59,8 +79,16 @@ public static class Buildables
         buildable.isUnlocked = true;
         buildable.button.SetBuilding(buildable);
 
+        // Remove from unlockable list
         if (unlockables.ContainsKey(buildable.unlockable.type))
             unlockables[buildable.unlockable.type].Remove(buildable);
+
+        // Show requirements
+        foreach (MenuButton button in buildable.showButtons)
+            button.gameObject.SetActive(true);
+
+        // Display notification
+        Events.active.BuildingUnlocked(buildable);
     }
 
     // Update resource unlocks
@@ -79,8 +107,8 @@ public static class Buildables
             unlockable = unlockables[unlockType][i].unlockable;
             if (unlockable.resource == resourceType)
             {
-                unlockable.tracked = amount;
-                if (unlockable.tracked >= unlockable.amount)
+                unlockables[unlockType][i].tracked += amount;
+                if (unlockables[unlockType][i].tracked >= unlockable.amount)
                     UnlockBuildable(unlockables[unlockType][i]);
             }
             else
@@ -102,10 +130,11 @@ public static class Buildables
         for (int i = 0; i < unlockables[unlockType].Count; i++)
         {
             unlockable = unlockables[unlockType][i].unlockable;
+
             if (unlockable.entity == entity)
             {
-                unlockable.tracked += amount;
-                if (unlockable.tracked >= unlockable.amount)
+                unlockables[unlockType][i].tracked += amount;
+                if (unlockables[unlockType][i].tracked >= unlockable.amount)
                     UnlockBuildable(unlockables[unlockType][i]);
             }
             else

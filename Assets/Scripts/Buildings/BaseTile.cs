@@ -9,7 +9,12 @@ public class BaseTile : BaseEntity
 
     public override void Setup()
     {
-        buildable = Buildables.RequestBuildable(this);
+        buildable = Buildables.RequestBuildable(name);
+        if (buildable == null)
+        {
+            Debug.Log("The buildable for this object could not be retrieved!");
+            DestroyEntity();
+        }
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
 
         // Update unlockables

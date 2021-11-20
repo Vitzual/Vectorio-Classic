@@ -23,20 +23,22 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 4ec68623-acd7-4678-93f6-638ab95d21b0
   createdAtTicks: 637722267067100464
+  obj: {fileID: 420473218063467210, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
   name: Sprayer
   description: Fires some bullets idfk ahahaha
+  health: 50
+  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
   inventoryHeader: 0
   inventoryIndex: 4
-  obj: {fileID: 420473218063467210, guid: fba5a8caffb68254e858989d7dfdaa6d, type: 3}
-  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
-  health: 50
   unlockable:
     type: 0
     description: Destroy 5x Carrier's
+    requirement: {fileID: 11400000}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: c384091c5e0c74d4b93d0cf7de6876d2, type: 2}
     amount: 5
+    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -58,10 +60,12 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0
   damage: 3
   range: 40
   rotationSpeed: 60
   cooldown: 0.1
+  sound: {fileID: 8300000, guid: 67ff0f1f4f6f24ad5ac07ccfd34636fd, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
@@ -71,4 +75,3 @@ MonoBehaviour:
   bulletLock: 0
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
-  sound: {fileID: 8300000, guid: 67ff0f1f4f6f24ad5ac07ccfd34636fd, type: 3}

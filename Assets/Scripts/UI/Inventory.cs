@@ -61,7 +61,12 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // Set order of buildables
+        // Set order of buildables twice
+        for (int i = 0; i < holders.Length; i++)
+        {
+            if (holders[i].transform != null)
+                holders[i].transform.SetSiblingIndex(holders[i].buildable.building.inventoryIndex);
+        }
         for (int i = 0; i < holders.Length; i++)
         {
             if (holders[i].transform != null)

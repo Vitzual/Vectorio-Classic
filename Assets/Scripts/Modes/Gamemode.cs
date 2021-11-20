@@ -11,12 +11,17 @@ public class Gamemode : MonoBehaviour
 {
     // Active instance
     public static Gamemode active;
+    public static bool loadGame;
+    public static string loadLocation;
 
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
+    public static string worldName;
     public string version;
-    public Difficulty difficulty;
+    public static Difficulty difficulty;
+    public static string seed;
+    public static float time;
 
     [Header("Gamemode Settings")]
     public bool useResources;
@@ -40,8 +45,14 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public void Start()
     {
-        GameManager.SetupGame(difficulty);
+        GameManager.SetupGame(difficulty, loadGame);
         InitGamemode();
+    }
+
+    // Update playtime
+    public void Update()
+    {
+        time += Time.deltaTime;
     }
 
     // Tells the gamemode how to generate inventory
@@ -50,6 +61,8 @@ public class Gamemode : MonoBehaviour
         ScriptableLoader.GenerateAllScriptables();
         EnemyHandler.active.UpdateVariant();
 
-        if (generateWorld) WorldGenerator.active.GenerateWorldData();
+        #pragma warning disable CS0612
+        if (!loadGame && generateWorld) WorldGenerator.active.GenerateWorldData(seed);
+        #pragma warning restore CS0612
     }
 }

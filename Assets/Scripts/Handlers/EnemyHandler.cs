@@ -123,7 +123,7 @@ public class EnemyHandler : MonoBehaviour
         pos.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
     }
 
-    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation)
+    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation, float health = -1)
     {
         // Create the tile
         GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
@@ -137,7 +137,8 @@ public class EnemyHandler : MonoBehaviour
         BaseEntity holder = lastObj.GetComponent<BaseEntity>();
         if (entity != null)
         {
-            holder.health = entity.health;
+            if (health != -1) holder.health = health;
+            else holder.health = entity.health;
             holder.maxHealth = holder.health;
         }
 
@@ -174,7 +175,7 @@ public class EnemyHandler : MonoBehaviour
             if (guardianButton.gameObject.activeSelf)
                 guardianButton.gameObject.SetActive(false);
 
-            foreach (Variant variant in ScriptableLoader.variants)
+            foreach (Variant variant in ScriptableLoader.variants.Values)
             {
                 if (currency.amount >= variant.minHeat &&
                     currency.amount < variant.maxHeat)

@@ -16,13 +16,14 @@ public class WorldGenerator : MonoBehaviour
 
     public void Awake() { active = this; }
 
-    public void GenerateWorldData()
+    [System.Obsolete]
+    public void GenerateWorldData(string seed)
     {
         // Create a new resource grid
         spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
 
         // Set random seed
-        Random.InitState(GameManager.seed.GetHashCode());
+        Random.seed = seed.GetHashCode();
 
         // Iterate through offset values
         int startingRange = 0;

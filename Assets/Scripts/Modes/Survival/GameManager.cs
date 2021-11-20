@@ -32,14 +32,8 @@ public class GameManager
     public static float enemySpawnrateModifier;
 
     // Sets up a game
-    public static void SetupGame(Difficulty difficulty, string name = "Unnamed Save", string mode = "Survival", string version = "v0.3", string seed = "")
+    public static void SetupGame(Difficulty difficulty, bool loadingGame)
     {
-        // Set save variables
-        GameManager.name = name;
-        GameManager.mode = mode;
-        GameManager.version = version;
-        GameManager.seed = seed;
-
         // Set resource modifier variables 
         if (!difficulty.isCreative)
         {
@@ -47,21 +41,20 @@ public class GameManager
             essenceSpawnModifier = difficulty.essenceSpawnModifier;
             iridiumSpawnModifier = difficulty.iridiumSpawnModifier;
 
-            // Generate world
-            //if (WorldGenerator.active != null)
-            //    WorldGenerator.active.GenerateWorldData();
-
             startingGold = difficulty.startingGold;
             startingEssence = difficulty.startingEssence;
             startingIridium = difficulty.startingIridium;
             startingPower = difficulty.startingPower;
             startingHeat = difficulty.startingHeat;
 
-            Resource.active.Add(Resource.CurrencyType.Gold, startingGold, true);
-            Resource.active.Add(Resource.CurrencyType.Essence, startingEssence, true);
-            Resource.active.Add(Resource.CurrencyType.Iridium, startingIridium, true);
-            Resource.active.AddStorage(Resource.CurrencyType.Power, startingPower);
-            Resource.active.AddStorage(Resource.CurrencyType.Heat, startingHeat);
+            if (!loadingGame)
+            {
+                Resource.active.Add(Resource.CurrencyType.Gold, startingGold, true);
+                Resource.active.Add(Resource.CurrencyType.Essence, startingEssence, true);
+                Resource.active.Add(Resource.CurrencyType.Iridium, startingIridium, true);
+                Resource.active.AddStorage(Resource.CurrencyType.Power, startingPower);
+                Resource.active.AddStorage(Resource.CurrencyType.Heat, startingHeat);
+            }
         }
 
         buildingCostModifier = difficulty.buildingCostModifier;

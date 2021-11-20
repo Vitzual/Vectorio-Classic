@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using TMPro;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
     // Active instance
+    public List<Enemy> enemies;
     public static EnemySpawner active;
     public int maxEnemiesAllowed = 200;
 
@@ -12,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     {
         active = this;
         InvokeRepeating("SpawnEnemies", 1, 1);
+
+        enemies.AddRange(ScriptableLoader.enemies.Values);
     }
 
     public void SpawnEnemies()
@@ -32,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
         
         // Loop through all enemies
-        foreach(Enemy enemy in ScriptableLoader.enemies)
+        foreach(Enemy enemy in enemies)
         {
             // If spawn percentage is above the chance value, spawn
             if (enemy.spawnPercentage >= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)

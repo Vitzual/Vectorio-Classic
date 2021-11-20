@@ -72,7 +72,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, float health = -1)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -88,6 +88,9 @@ public class InstantiationHandler : MonoBehaviour
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
+
+        // Apply health override
+        if (health != -1) lastBuilding.health = health;
     }
 
     //[ClientRpc]

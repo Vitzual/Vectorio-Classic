@@ -33,6 +33,14 @@ public class Border : MonoBehaviour
     // Border adjustment values
     public int borderIncrement;
 
+    // Active border instance
+    public static Border active;
+
+    public void Awake()
+    {
+        active = this;
+    }
+
     // Grab event
     public void Start()
     {

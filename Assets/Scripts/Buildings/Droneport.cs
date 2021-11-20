@@ -35,6 +35,8 @@ public class Droneport : BaseTile
         if (data == 0) CreateDrone(Drone.DroneType.Builder);
         else if (data == 1) CreateDrone(Drone.DroneType.Resource);
         else if (data == 2) CreateDrone(Drone.DroneType.Fixer);
+
+        base.ApplyMetadata(data);
     }
 
     // Locate nearby buildings for drone

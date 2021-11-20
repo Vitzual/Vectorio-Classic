@@ -8,6 +8,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     // IDamageable interface variables
     public float health { get; set; }
     public float maxHealth { get; set; }
+    public int metadata = -1;
 
     protected ParticleSystem particle;
     [HideInInspector] public Material material;
@@ -19,7 +20,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
 
     public virtual void ApplyMetadata(int data)
     {
-        // Override this method to use metadata integer from Instation Handler
+        metadata = data;
     }
 
     // Damages the entity (IDamageable interface method)

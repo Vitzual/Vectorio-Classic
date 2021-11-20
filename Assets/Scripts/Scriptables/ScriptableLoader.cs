@@ -12,10 +12,10 @@ public static class ScriptableLoader
     public static string GuardianPath = "Scriptables/Guardians";
     public static string VariantPath = "Scriptables/Variants";
 
-    public static List<Building> buildings;
-    public static List<Enemy> enemies;
-    public static List<Guardian> guardians;
-    public static List<Variant> variants;
+    public static Dictionary<string, Building> buildings;
+    public static Dictionary<string, Enemy> enemies;
+    public static Dictionary<string, Guardian> guardians;
+    public static Dictionary<string, Variant> variants;
 
     // Generate all scriptables
     public static void GenerateAllScriptables()
@@ -31,16 +31,19 @@ public static class ScriptableLoader
     // Generates buildings on run
     public static void GenerateBuildings()
     {
-        buildings = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
-        Debug.Log("Loading " + buildings.Count + " buildings from " + BuildingPath + "...");
-        foreach (Building building in buildings)
+        buildings = new Dictionary<string, Building>();
+        List<Building> loaded = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
+
+        Debug.Log("Loading " + loaded.Count + " buildings from " + BuildingPath + "...");
+        foreach (Building building in loaded)
         {
+            buildings.Add(building.InternalID, building);
             Debug.Log("Loaded " + building.name + " with UUID " + building.InternalID);
             if (Gamemode.active.initBuildings)
                 Buildables.Register(building);
         }
         if (Gamemode.active.initBuildings)
-            Inventory.active.GenerateBuildings(buildings.ToArray());
+            Inventory.active.GenerateBuildings(loaded.ToArray());
         
         // Set requirements
         if (!Gamemode.active.unlockEverything)
@@ -50,29 +53,45 @@ public static class ScriptableLoader
     // Generates enemies on run
     public static void GenerateEnemies()
     {
-        enemies = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();
-        Debug.Log("Loaded " + enemies.Count + " enemies from " + EnemyPath);
-        foreach (Enemy enemy in enemies)
+        enemies = new Dictionary<string, Enemy>();
+        List<Enemy> loaded = Resources.LoadAll(EnemyPath, typeof(Enemy)).Cast<Enemy>().ToList();
+
+        Debug.Log("Loaded " + loaded.Count + " enemies from " + EnemyPath);
+        foreach (Enemy enemy in loaded)
+        {
+            enemies.Add(enemy.InternalID, enemy);
             Debug.Log("Loaded " + enemy.name + " with UUID " + enemy.InternalID);
+        }
         if (Gamemode.active.initEnemies)
-            Inventory.active.GenerateEntities(enemies.ToArray());
+            Inventory.active.GenerateEntities(loaded.ToArray());
     }
 
     // Generates guardians on run
     public static void GenerateGuardians()
     {
-        guardians = Resources.LoadAll(GuardianPath, typeof(Guardian)).Cast<Guardian>().ToList();
-        Debug.Log("Loaded " + guardians.Count + " guardians from " + GuardianPath);
-        foreach (Guardian guardian in guardians)
+        guardians = new Dictionary<string, Guardian>();
+        List<Guardian> loaded = Resources.LoadAll(GuardianPath, typeof(Guardian)).Cast<Guardian>().ToList();
+
+        Debug.Log("Loaded " + loaded.Count + " guardians from " + GuardianPath);
+        foreach (Guardian guardian in loaded)
+        {
+            guardians.Add(guardian.InternalID, guardian);
             Debug.Log("Loaded " + guardian.name + " with UUID " + guardian.InternalID);
+        }
         if (Gamemode.active.initGuardians)
-            Inventory.active.GenerateEntities(guardians.ToArray());
+            Inventory.active.GenerateEntities(loaded.ToArray());
     }
 
     // Generates guardians on run
     public static void GenerateVariants()
     {
-        variants = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
+        List<Variant> loaded = Resources.LoadAll(VariantPath, typeof(Variant)).Cast<Variant>().ToList();
         Debug.Log("Loaded " + variants.Count + " guardians from " + VariantPath);
+
+        foreach (Variant variant in loaded)
+        {
+            variants.Add(variant.InternalID, variant);
+            Debug.Log("Loaded " + variant.name + " with UUID " + variant.InternalID);
+        }
     }
 }

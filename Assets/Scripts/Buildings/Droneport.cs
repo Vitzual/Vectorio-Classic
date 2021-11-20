@@ -26,7 +26,7 @@ public class Droneport : BaseTile
     // Only for hub drones
     public void Start()
     {
-        if (hubDrone) CreateDrone(Drone.DroneType.Builder);
+        if (hubDrone) CreateDrone(Drone.DroneType.Resource);
     }
 
     // Apply metadata

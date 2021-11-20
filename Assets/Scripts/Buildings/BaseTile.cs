@@ -18,7 +18,6 @@ public class BaseTile : BaseEntity
         // Override this method for on click behaviour
     }
 
-
     public override void DestroyEntity()
     {
         if (InstantiationHandler.active != null)

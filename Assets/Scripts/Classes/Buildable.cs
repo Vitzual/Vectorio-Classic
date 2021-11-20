@@ -11,7 +11,7 @@ public class Buildable
         discount = 1f;
         resources = building.resources;
         obj = building.obj;
-        isUnlocked = building.unlockable.unlocked;
+        isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
 
         Debug.Log("Registered " + building.name);

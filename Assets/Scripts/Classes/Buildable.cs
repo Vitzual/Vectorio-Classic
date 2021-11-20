@@ -8,6 +8,7 @@ public class Buildable
     public Buildable(Building building)
     {
         this.building = building;
+        unlockable = building.unlockable;
         discount = 1f;
         resources = building.resources;
         obj = building.obj;
@@ -19,10 +20,14 @@ public class Buildable
 
     // Buildable variables
     public Building building;
-    public float discount;
-    public Cost[] resources;
+    public MenuButton button;
+    public Unlockable unlockable;
     public GameObject obj;
     public bool isUnlocked;
+
+    // Building variables
+    public float discount;
+    public Cost[] resources;
 
     // Blueprints applied to this buildable
     public CollectedBlueprint[] blueprintSlots;

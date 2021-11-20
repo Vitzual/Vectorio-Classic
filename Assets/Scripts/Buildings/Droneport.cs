@@ -26,13 +26,13 @@ public class Droneport : BaseTile
     // Only for hub drones
     public void Start()
     {
-        if (hubDrone) CreateDrone(Drone.DroneType.Resource);
+        if (hubDrone) CreateDrone(Drone.DroneType.Builder);
     }
 
     // Apply metadata
     public override void ApplyMetadata(int data)
     {
-        if (data == 0) CreateDrone(Drone.DroneType.Resource);
+        if (data == 0) CreateDrone(Drone.DroneType.Builder);
         else if (data == 1) CreateDrone(Drone.DroneType.Resource);
         else if (data == 2) CreateDrone(Drone.DroneType.Fixer);
     }
@@ -41,7 +41,7 @@ public class Droneport : BaseTile
     public override void Setup()
     {
         // Check if drone was set via metadata
-        if (!droneCreated) CreateDrone(Drone.DroneType.Resource);
+        if (!droneCreated) CreateDrone(Drone.DroneType.Builder);
 
         // Reset nearby targets
         drone.nearbyTargets = new List<BaseEntity>();
@@ -52,7 +52,7 @@ public class Droneport : BaseTile
         int yTile = (int)transform.position.y;
 
         // If not builder, update nearby buildings
-        if (drone.type != Drone.DroneType.Resource)
+        if (drone.type != Drone.DroneType.Builder)
         {
             // Loop through all tiles and try to find drones
             for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)

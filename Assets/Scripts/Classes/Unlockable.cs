@@ -23,5 +23,6 @@ public class Unlockable
     public Resource.CurrencyType resource;
     public Entity entity;
     public int amount;
-
+    [HideInInspector]
+    public int tracked;
 }

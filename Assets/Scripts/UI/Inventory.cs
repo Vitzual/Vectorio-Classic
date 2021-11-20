@@ -85,7 +85,11 @@ public class Inventory : MonoBehaviour
         // Set buildable values and retrieve buildable
         MenuButton container = holder.GetComponent<MenuButton>();
         Buildable buildable = Buildables.RequestBuildable(entity);
-        if (buildable != null) container.SetBuilding(buildable);
+        if (buildable != null)
+        {
+            container.SetBuilding(buildable);
+            buildable.button = container;
+        }
         else container.SetEntity(entity);
 
         return container;

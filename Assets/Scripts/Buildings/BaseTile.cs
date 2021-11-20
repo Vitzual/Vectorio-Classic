@@ -29,14 +29,19 @@ public class BaseTile : BaseEntity
     public override void DestroyEntity()
     {
         // Update unlockables
-        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, -1);
+        if(buildable != null) Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, -1);
 
+        // Remove cells
         if (InstantiationHandler.active != null)
         {
             foreach (Vector2Int cell in cells)
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
         }
 
+        // Refund cost
+        Resource.active.ApplyResources(buildable, true);
+
+        // Create particle and destroy
         if (particle != null)
             Instantiate(particle, transform.position, transform.rotation);
         Destroy(gameObject);

@@ -5,9 +5,9 @@ using UnityEngine;
 public class GhostTile : BaseTile
 {
     // Ghos tile variables
-    [HideInInspector] public Buildable buildable;
     [HideInInspector] public SpriteRenderer icon;
     public List<Droneport> nearbyPorts;
+    public bool droneAssigned = false;
 
     // Get the sprite renderer
     public void Awake()
@@ -28,12 +28,12 @@ public class GhostTile : BaseTile
         // Remove cells from Tile grid
         if (InstantiationHandler.active != null)
         {
+            // Remove ghost cells
             foreach (Vector2Int cell in cells)
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
 
             // Create building and destroy this game object
-            if(Resource.active.CheckResources(buildable))
-                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
+            InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
         }
         Destroy(gameObject);
     }
@@ -41,4 +41,21 @@ public class GhostTile : BaseTile
     // Override all methods so as to not call them on Ghost tiles
     public override void DamageEntity(float dmg) { }
     public override void HealEntity(float amount) { }
+
+    // Override destroy entity
+    public override void DestroyEntity()
+    {
+        // Remove cells
+        if (InstantiationHandler.active != null)
+        {
+            foreach (Vector2Int cell in cells)
+                InstantiationHandler.active.tileGrid.RemoveCell(cell);
+        }
+
+        // Refund cost
+        if (droneAssigned) Resource.active.ApplyResources(buildable, true);
+
+        // Create particle and destroy
+        Destroy(gameObject);
+    }
 }

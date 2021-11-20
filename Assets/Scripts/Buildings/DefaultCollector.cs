@@ -35,13 +35,10 @@ public class DefaultCollector : ResourceTile
     // On click override method
     public override void OnClick()
     {
-        if (Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
+        if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
         {
-            if (amount > 0)
-            {
-                CollectorHandler.active.TransferResources(TakeResource(), type);
-                isFull = false;
-            }
+            Resource.active.Add(type, TakeResource(), true);
+            isFull = false;
         }
     }
 

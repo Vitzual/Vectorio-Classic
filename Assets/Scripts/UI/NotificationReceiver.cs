@@ -27,6 +27,7 @@ public class NotificationReceiver : MonoBehaviour
             notification.icon = Sprites.GetSprite(buildable.building.name);
             notification.title = "NEW UNLOCK!";
             notification.description = buildable.building.name.ToUpper();
+            notification.UpdateUI();
             notification.OpenNotification();
             notficiationSound.Play();
         }

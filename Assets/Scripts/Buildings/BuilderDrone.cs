@@ -33,7 +33,7 @@ public class BuilderDrone : Drone
             buildingIcon.sprite = Sprites.GetSprite("Transparent");
             GhostTile tile = target.GetComponent<GhostTile>();
             if (tile != null) tile.CreateBuilding();
-            buildingPlaced = true;
+            buildingPlaced = true;//
         }
         base.TargetReached();
     }

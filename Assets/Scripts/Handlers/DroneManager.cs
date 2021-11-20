@@ -371,6 +371,7 @@ public class DroneManager : MonoBehaviour
     {
         // Set target
         drone.SetTarget(ghostTile);
+        ghostTile.droneAssigned = true;
         drone.ExitPort();
 
         // Take resources

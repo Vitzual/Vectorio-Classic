@@ -9,14 +9,12 @@ public class CollectorHandler : MonoBehaviour
 
     // Class lists
     public List<DefaultCollector> collectors;
-    public List<DefaultStorage> storages;
 
     public void Awake() { active = this; }
 
     public void Start()
     {
         Events.active.onCollectorPlaced += AddCollector;
-        Events.active.onStoragePlaced += AddStorage;
     }
 
     public void Update()
@@ -40,31 +38,8 @@ public class CollectorHandler : MonoBehaviour
         }
     }
 
-    public void TransferResources(int amount, Resource.CurrencyType type)
-    {
-        for(int i =0; i < storages.Count; i++)
-        {
-            if (storages[i] != null)
-            {
-                if (storages[i].type == type)
-                    amount = storages[i].AddResources(amount);
-                if (amount <= 0) return;
-            }
-            else
-            {
-                storages.RemoveAt(i);
-                i--;
-            }
-        }
-    }
-
     public void AddCollector(DefaultCollector collector)
     {
         collectors.Add(collector);
-    }
-
-    public void AddStorage(DefaultStorage storage)
-    {
-        storages.Add(storage);
     }
 }

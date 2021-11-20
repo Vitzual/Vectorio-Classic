@@ -4,12 +4,14 @@ public class DefaultStorage : ResourceTile
 {
     // Declare local object variables
     public GameObject icon;
+    public int amountOverride = 0;
 
     // On start, invoke repeating SendGold() method
     public void Start()
     {
         Events.active.StoragePlaced(this);
-        Resource.active.AddStorage(type, Research.GetStorageAmount(type));
+        if (amountOverride == 0) Resource.active.AddStorage(type, Research.GetStorageAmount(type));
+        else Resource.active.AddStorage(type, amountOverride);
     }
 
     // Add resource to storage
@@ -57,5 +59,6 @@ public class DefaultStorage : ResourceTile
     {
         Resource.active.Remove(type, amount, false);
         Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
+        base.DestroyEntity();
     }
 }

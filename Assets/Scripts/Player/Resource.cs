@@ -67,7 +67,7 @@ public class Resource : MonoBehaviour
         // Updates all storages
         for(int i = 0; i < storages.Count; i++)
         {
-            if (storages[i] != null)
+            if (storages[i] != null && storages[i].type == type)
             {
                 if (add) amountToAdd = storages[i].AddResources(amountToAdd);
                 else
@@ -187,7 +187,7 @@ public class Resource : MonoBehaviour
 
 
     // Remove a resource based on building
-    public void ApplyResources(Buildable buildable)
+    public void ApplyResources(Buildable buildable, bool refund = false)
     {
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
@@ -196,15 +196,23 @@ public class Resource : MonoBehaviour
             else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
             else if (!Gamemode.active.useResources) continue;
 
-            if (resource.storage)
+            if (refund)
             {
-                if (resource.add) active.AddStorage(resource.resource, resource.amount);
-                else active.RemoveStorage(resource.resource, resource.amount);
+                if (resource.add) active.Remove(resource.resource, resource.amount);
+                else active.Add(resource.resource, resource.amount);
             }
             else
             {
-                if (resource.add) active.Add(resource.resource, resource.amount);
-                else active.Remove(resource.resource, resource.amount);
+                if (resource.storage)
+                {
+                    if (resource.add) active.AddStorage(resource.resource, resource.amount);
+                    else active.RemoveStorage(resource.resource, resource.amount);
+                }
+                else
+                {
+                    if (resource.add) active.Add(resource.resource, resource.amount);
+                    else active.Remove(resource.resource, resource.amount);
+                }
             }
         }
     }

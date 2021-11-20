@@ -17,7 +17,7 @@ public class NewInterface : MonoBehaviour
     public void Start()
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
-        InputEvents.active.onEscapePressed += ToggleQuitMenu;
+        //InputEvents.active.onEscapePressed += ToggleQuitMenu;
     }
 
     public void ToggleQuitMenu()

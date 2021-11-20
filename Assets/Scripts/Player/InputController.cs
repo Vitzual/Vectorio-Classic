@@ -27,18 +27,17 @@ public class InputController : MonoBehaviour
                 InputEvents.active.RightMouseReleased();
             if (Input.GetKeyDown(Keybinds.inventory))
                 InputEvents.active.InventoryPressed();
-            if (Input.GetKeyDown(Keybinds.sprint))
-                InputEvents.active.ShiftPressed();
-            if (Input.GetKeyUp(Keybinds.sprint))
-                InputEvents.active.ShiftReleased();
-            if (Input.GetKeyDown(Keybinds.test))
-                Events.active.FireHubLaser();
             if (Input.GetKeyDown(Keybinds.pause))
                 Settings.paused = !Settings.paused;
         }
 
+        if (Input.GetKeyDown(Keybinds.sprint))
+            InputEvents.active.ShiftPressed();
+        if (Input.GetKeyUp(Keybinds.sprint))
+            InputEvents.active.ShiftReleased();
         if (Input.GetKeyDown(Keybinds.escape))
             InputEvents.active.EscapePressed();
+
         CheckNumberInput();
     }
 

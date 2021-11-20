@@ -42,6 +42,7 @@ public class Hub : BaseTile
 
         // Initiate laser sequence 
         laserPart = 0;
+        cooldown = 0.5f;
         laserFiring = true;
         chargeParticle.Stop();
         laserSound.Stop();
@@ -62,15 +63,19 @@ public class Hub : BaseTile
             switch (laserPart)
             {
                 case 0:
-                    cooldown = 7.5f;
-                    warningSound.Play();
-                    laserPart = 1;
+                    cooldown -= Time.deltaTime;
+                    if (cooldown <= 0)
+                    {
+                        cooldown = 8f;
+                        warningSound.Play();
+                        laserPart = 1;
+                    }
                     break;
                 case 1:
                     cooldown -= Time.deltaTime;
                     if (cooldown <= 0)
                     {
-                        cooldown = 3f;
+                        cooldown = 2f;
                         laserPart = 2;
                         warningSound.Stop();
                     }

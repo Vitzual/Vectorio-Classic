@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class NewInterface : MonoBehaviour
 {
+    public static NewInterface active;
     public static bool isOpen;
     public GameObject buildingMenu;
     public GameObject quitMenu;
+
+    public void Awake()
+    {
+        active = this;
+    }
 
     public void Start()
     {
@@ -16,16 +22,11 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleQuitMenu()
     {
-        if (buildingMenu.activeSelf)
-            ToggleBuildingMenu();
-        else
-        {
-            quitMenu.SetActive(!quitMenu.activeSelf);
-            isOpen = quitMenu.activeSelf;
+        quitMenu.SetActive(!quitMenu.activeSelf);
+        isOpen = quitMenu.activeSelf;
 
-            if (quitMenu.activeSelf) Time.timeScale = 0f;
-            else Time.timeScale = 1f;
-        }
+        if (quitMenu.activeSelf) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
     }
 
     public void QuitGame()

@@ -157,7 +157,15 @@ public class BuildingController : MonoBehaviour
         else if (!justDeselected) CmdDestroyBuilding();
     }
 
-    public void TryDeselectEntity() { if (!NewInterface.isOpen) SetEntity(null); }
+    public void TryDeselectEntity() 
+    {
+        if (!NewInterface.isOpen)
+        {
+            if (entity != null) SetEntity(null);
+            else NewInterface.active.ToggleQuitMenu();
+        }
+        else NewInterface.active.ToggleBuildingMenu();
+    }
     public void DeselectEntity() { SetEntity(null); }
     public void DisableJustDeselected() { justDeselected = false; }
 }

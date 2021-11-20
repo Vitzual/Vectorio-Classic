@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         // Check if research open
-        if (isMenu || NewInterface.isOpen) return;
+        if (isMenu) return;
 
         // Get directional movement
         movement.x = Input.GetAxisRaw("Horizontal");

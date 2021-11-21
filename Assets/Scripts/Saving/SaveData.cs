@@ -38,7 +38,9 @@ public class SaveData
     public DifficultyData difficultyData; 
 
     // Resource data
-    public Dictionary<Resource.CurrencyType, int> resources;
+    public int gold;
+    public int essence;
+    public int iridium;
 
     // Save data
     public string worldName;

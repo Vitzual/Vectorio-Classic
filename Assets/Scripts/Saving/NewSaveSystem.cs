@@ -70,10 +70,9 @@ public class NewSaveSystem : MonoBehaviour
 
         // Set the rest of the data
         saveData.stage = Border.active.borderStage;
-        saveData.resources = new Dictionary<Resource.CurrencyType, int>();
-        foreach (KeyValuePair<Resource.CurrencyType, Resource.Currency> currency in Resource.active.currencies)
-            if (currency.Key != Resource.CurrencyType.Heat && currency.Key != Resource.CurrencyType.Power)
-                saveData.resources.Add(currency.Key, currency.Value.amount);
+        saveData.gold = Resource.active.GetAmount(Resource.CurrencyType.Gold);
+        saveData.essence = Resource.active.GetAmount(Resource.CurrencyType.Essence);
+        saveData.iridium = Resource.active.GetAmount(Resource.CurrencyType.Iridium);
 
         // Set string variables
         saveData.worldName = Gamemode.saveName;
@@ -99,11 +98,9 @@ public class NewSaveSystem : MonoBehaviour
         Border.active.SetBorder(saveData.stage);
 
         // Check resources
-        if (saveData.resources != null)
-        {
-            foreach (KeyValuePair<Resource.CurrencyType, int> currency in saveData.resources)
-                Resource.active.Add(currency.Key, currency.Value);
-        }
+        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold);
+        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence);
+        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium);
 
         // Set string variables
         Gamemode.saveName = saveData.worldName;

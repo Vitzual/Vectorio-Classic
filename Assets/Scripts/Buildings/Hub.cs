@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Thinksquirrel.CShake;
+using Michsky.UI.ModernUIPack;
 
 // This script is a WIP. Working on functionality first,
 // then will clean it up to keep in sync with refactor.
@@ -9,6 +10,7 @@ public class Hub : BaseTile
 {
     // Building scriptable
     public Building hub;
+    public ModalWindowManager endScreen;
 
     // Other componenets
     public Border border;
@@ -33,6 +35,15 @@ public class Hub : BaseTile
             laser.Stop();
 
         InstantiationHandler.active.SetCells(hub, transform.position, this);
+
+        health = hub.health;
+        maxHealth = health;
+    }
+
+    public override void DestroyEntity()
+    {
+        endScreen.OpenWindow();
+        base.DestroyEntity();
     }
 
     public void FireLaser(int index)

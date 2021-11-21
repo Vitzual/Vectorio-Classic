@@ -11,8 +11,15 @@ public class BaseTile : BaseEntity
 
     public override void Setup()
     {
+        // Update nearby ports and unlockables
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
+    }
+
+    public void CheckNearbyEnergizers()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, InstantiationHandler.active.aocbLayer);
+        if (hit.collider == null) DestroyEntity();
     }
 
     public virtual void OnClick()

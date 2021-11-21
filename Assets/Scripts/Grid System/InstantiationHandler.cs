@@ -53,7 +53,7 @@ public class InstantiationHandler : MonoBehaviour
         }
 
         // Check if resource should be used
-        if (!Resource.active.CheckResources(buildable)) return;
+        if (isGhost || !Resource.active.CheckResources(buildable)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return;
@@ -112,10 +112,10 @@ public class InstantiationHandler : MonoBehaviour
         DroneManager.active.AddGhost(holder);
 
         // Set the tiles on the grid class
-        SetCells(buildable.building, position, holder);
+        SetCells(buildable.building, position, holder, true);
     }
 
-    public void SetCells(Building building, Vector2 position, BaseTile obj)
+    public void SetCells(Building building, Vector2 position, BaseTile obj, bool isGhost = false)
     {
         // Set the tiles on the grid class
         if (building.cells.Length > 0)
@@ -123,7 +123,7 @@ public class InstantiationHandler : MonoBehaviour
             foreach (Building.Cell cell in building.cells)
             {
                 if (debug) SpawnDebugCircle(new Vector2(position.x + cell.x, position.y + cell.y));
-                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), true, building, obj);
+                tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), true, building, obj, isGhost);
             }
         }
     }
@@ -201,6 +201,8 @@ public class InstantiationHandler : MonoBehaviour
 
         foreach (KeyValuePair<Vector2Int, Cell> cell in tileGrid.cells)
         {
+            if (cell.Value.ghostTile) continue;
+
             float holder = Vector2Int.Distance(position, cell.Key);
             if (holder < distance)
             {

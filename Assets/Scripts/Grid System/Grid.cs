@@ -29,7 +29,7 @@ public class Grid
         else return null;
     }
 
-    public void SetCell(Vector2Int coords, bool occupy, Entity entity = null, BaseTile obj = null)
+    public void SetCell(Vector2Int coords, bool occupy, Entity entity = null, BaseTile obj = null, bool isGhost = false)
     {
         if (cells.TryGetValue(coords, out Cell cell))
         {
@@ -37,7 +37,7 @@ public class Grid
             cell.entity = entity;
             cell.obj = obj;
         }
-        else cells.Add(coords, new Cell(occupy, entity, obj));
+        else cells.Add(coords, new Cell(entity, obj, occupy, isGhost));
         if (obj != null) obj.cells.Add(coords);
     }
 

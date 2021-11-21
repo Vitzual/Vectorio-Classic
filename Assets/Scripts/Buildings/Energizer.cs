@@ -7,6 +7,7 @@ public class Energizer : BaseTile
     public Collider2D[] colliders;
 
     // Internal placement variables
+    public float radialCheck;
     public Transform AOCB;
     public Transform rotator;
     public float speed;
@@ -17,33 +18,24 @@ public class Energizer : BaseTile
         GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().RegisterRotator(rotator, speed);
     }
 
-    /*
-    public override void UpdateEnergizer()
+    // OUTDATED
+    public override void DestroyEntity()
     {
-        // Check if there is still an AOCB tile under each building
-        var colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Building"));
-        for (int i = 0; i < colliders.Length; i++)
-            if (colliders[i].name != "Energizer" && colliders[i].name != "Hub")
-                colliders[i].GetComponent<DefaultBuilding>().UpdatePower(transform.GetChild(0));
+        // Run a check around surrounding tiles
+        int xTile = (int)transform.position.x;
+        int yTile = (int)transform.position.y;
 
-        // Destroy ghost buildings in the area
-        DroneManager droneManager = GameObject.Find("Drone Handler").GetComponent<DroneManager>();
-        colliders = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y), new Vector2(50, 50), 0, 1 << LayerMask.NameToLayer("Ghost"));
-        bool holder;
-        for (int i = 0; i < colliders.Length; i++)
+        // Loop through all tiles and try to find drones
+        for (int x = xTile - 30; x <= xTile + 30; x += 5)
         {
-            try
+            for (int y = yTile - 30; y <= yTile + 30; y += 5)
             {
-                holder = droneManager.dequeueBuilding(colliders[i].transform);
-                if (!holder) Destroy(colliders[i].transform.gameObject);
-            }
-            catch
-            {
-                continue;
+                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
+                if (holder != null) holder.CheckNearbyEnergizers();
             }
         }
 
-        transform.GetChild(0).gameObject.SetActive(false);
+        // Run base destroy
+        base.DestroyEntity();
     }
-    */
 }

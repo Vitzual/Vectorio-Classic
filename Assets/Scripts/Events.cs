@@ -70,6 +70,14 @@ public class Events : MonoBehaviour
     }
 
     // On guardian destroyed
+    public event Action<DefaultGuardian> onGuardianSpawned;
+    public void GuardianSpawned(DefaultGuardian guardian)
+    {
+        if (onGuardianSpawned != null)
+            onGuardianSpawned(guardian);
+    }
+
+    // On guardian destroyed
     public event Action<DefaultGuardian> onGuardianDestroyed;
     public void GuardianDestroyed(DefaultGuardian guardian)
     {

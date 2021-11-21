@@ -11,6 +11,8 @@ public class DefaultGuardian : DefaultEnemy
         material = guardian.material;
         health = guardian.health;
         maxHealth = guardian.health;
+
+        Events.active.GuardianSpawned(this);
     }
 
     // Move towards target

@@ -21,7 +21,7 @@ public class Gamemode : MonoBehaviour
     public static string savePath = "/world_1.vectorio";
     public string version;
     public Difficulty _difficulty;
-    public static Difficulty difficulty;
+    public static DifficultyData difficulty;
     public static string seed = "Vectorio";
     public static float time = 0;
 
@@ -50,7 +50,11 @@ public class Gamemode : MonoBehaviour
     {
         if (isMenu) return;
 
-        if (difficulty == null) difficulty = _difficulty;
+        if (difficulty == null)
+        {
+            Debug.Log("Difficulty data missing. Creating new one");
+            difficulty = _difficulty.SetData(new DifficultyData());
+        }
         GameManager.SetupGame(difficulty, loadGame);
         InitGamemode();
 

@@ -28,14 +28,6 @@ public class SaveData
         public string variantID;
     }
 
-    // Difficulty struct
-    [Serializable]
-    public class DifficultyData
-    {
-        public Dictionary<string, int> integerValues;
-        public Dictionary<string, float> floatValues;
-    }
-
     // Location data
     public BuildingData[] buildings;
     public EnemyData[] enemies;

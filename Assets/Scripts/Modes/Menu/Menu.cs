@@ -51,10 +51,6 @@ public class Menu : MonoBehaviour
     public List<MenuButton> _buttons;
     private Dictionary<string, MenuButton> buttons;
 
-    // Save stuff
-    public TextMeshProUGUI saveName;
-    public TextMeshProUGUI saveSeed;
-
     public void Awake() { active = this; }
 
     // Start method
@@ -177,12 +173,6 @@ public class Menu : MonoBehaviour
         StartGame(button.mode, number);
     }
 
-    // Create new game
-    public void CreateGame(string mode)
-    {
-        StartGame(mode);
-    }
-
     // Starts a game
     public void StartGame(string mode, int number = -1)
     {
@@ -190,10 +180,6 @@ public class Menu : MonoBehaviour
         {
             if (availableSave != -1) Gamemode.savePath = "/world_" + availableSave + ".vectorio";
             else Gamemode.savePath = "/world_1.vectorio";
-            if (saveName.text != "") Gamemode.saveName = saveName.text;
-            else Gamemode.saveName = "New Save";
-            if (saveSeed.text != "") Gamemode.seed = saveSeed.text;
-            else Gamemode.seed = "Vectorio";
         }
 
         loadingScreen.SetActive(true);

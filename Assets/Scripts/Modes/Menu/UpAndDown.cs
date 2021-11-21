@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class UpAndDown : MonoBehaviour
 {
-    private float rotation = 5;
-    private int amountToRotate = 0;
+    private float rotation = 2;
     private Vector3 scaleChange;
-    private Vector3 originalSize;
     private bool growing = true;
 
     private void Start()
     {
-        originalSize = transform.localScale;
-        scaleChange = new Vector3(0.0005f, 0.0005f, 0.0005f);
+        scaleChange = new Vector3(0.0003f, 0.0003f, 0.0003f);
     }
 
     // Update is called once per frame
@@ -23,21 +20,15 @@ public class UpAndDown : MonoBehaviour
         {
             transform.localScale += scaleChange;
             transform.Rotate(0, 0, rotation * Time.deltaTime);
-            amountToRotate++;
 
-            if (amountToRotate >= 250) growing = false;
+            if (transform.localScale.x >= 1.15) growing = false;
         }
         else
         {
             transform.localScale -= scaleChange;
             transform.Rotate(0, 0, -rotation * Time.deltaTime);
-            amountToRotate--;
 
-            if (amountToRotate <= 0)
-            {
-                transform.localScale = originalSize;
-                growing = true;
-            }
+            if (transform.localScale.x <= 1) growing = true;
         }
     }
 }

@@ -6,6 +6,7 @@ public class DefaultEnemy : BaseEntity
 {
     // Class variables
     public Enemy enemy;
+    public float moveSpeed;
     [HideInInspector] public bool isMenu;
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
@@ -29,6 +30,8 @@ public class DefaultEnemy : BaseEntity
 
         foreach (TrailRenderer a in trail)
             a.material = variant.trail;
+
+        moveSpeed = enemy.moveSpeed * variant.speedModifier;
     }
 
     public virtual void GiveDamage(BaseTile building)
@@ -56,7 +59,7 @@ public class DefaultEnemy : BaseEntity
 
     public virtual void MoveTowards(Transform obj, Transform target)
     {
-        float step = enemy.moveSpeed * Time.deltaTime;
+        float step = moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
     }
 

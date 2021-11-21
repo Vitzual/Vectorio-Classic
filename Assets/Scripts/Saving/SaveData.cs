@@ -54,4 +54,5 @@ public class SaveData
     public string worldSeed;
     public string worldVersion;
     public float worldPlaytime;
+    public float worldCompletion;
 }

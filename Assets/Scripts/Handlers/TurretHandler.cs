@@ -9,12 +9,10 @@ public class TurretHandler : MonoBehaviour
     public static TurretHandler active;
 
     // Barrel class
-    public List<DefaultTurret> turretEntities;
+    public List<DefaultTurret> turretEntities = new List<DefaultTurret>();
 
     public void Start()
     {
-        turretEntities = new List<DefaultTurret>();
-
         if (this != null)
         {
             active = this;

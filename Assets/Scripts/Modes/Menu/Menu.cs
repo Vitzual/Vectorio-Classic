@@ -7,17 +7,35 @@ using Michsky.UI.ModernUIPack;
 using TMPro;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using System;
 
 public class Menu : MonoBehaviour
 {
+    // Active instance
+    public static Menu active;
+
     // Button actions enumerator
     public enum ButtonActions
     {
-        ActivateDeactivate,
         LoadScene,
         OpenLink,
         Exit
     }
+
+    // Camera target
+    public Camera cam;
+    [HideInInspector]
+    public Transform camTarget;
+    public Transform newSaveLocation, mainLocation;
+    public List<GameObject> newSaveVariables, mainVariables;
+    public bool cameraMoving;
+
+    // Save variabels
+    public Dictionary<int, SaveButton> saveButtons = new Dictionary<int, SaveButton>();
+    public SaveButton saveButton;
+    public Transform saveList;
+    public GameObject loadingScreen;
+    public int availableSave = -1;
 
     [System.Serializable]
     public class MenuButton
@@ -26,10 +44,6 @@ public class Menu : MonoBehaviour
         [FoldoutGroup("Button Variables")]
         public ButtonActions action;
         [FoldoutGroup("Button Variables")]
-        public List<GameObject> activateObjects;
-        [FoldoutGroup("Button Variables")]
-        public List<GameObject> deactivateObjects;
-        [FoldoutGroup("Button Variables")]
         public string argument;
     }
 
@@ -37,15 +51,153 @@ public class Menu : MonoBehaviour
     public List<MenuButton> _buttons;
     private Dictionary<string, MenuButton> buttons;
 
+    // Save stuff
+    public TextMeshProUGUI saveName;
+    public TextMeshProUGUI saveSeed;
+
+    public void Awake() { active = this; }
 
     // Start method
     public void Start()
     {
+        // Set camera target
+        camTarget = mainLocation;
+
         // Setup dictionary
         buttons = new Dictionary<string, MenuButton>();
         foreach(MenuButton button in _buttons)
             buttons.Add(button.buttonName, button);
         _buttons = new List<MenuButton>();
+
+        CheckSaves();
+    }
+
+    // Update method
+    public void Update()
+    {
+        if (cameraMoving)
+        {
+            cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, 3f * Time.deltaTime);
+            if (camTarget == newSaveLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 1f)
+            {
+                cameraMoving = false;
+                EnableNewGameMenu();
+            } 
+            else if (camTarget == mainLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 1)
+            {
+                cameraMoving = false;
+                EnableMainMenu();
+            }
+        }
+    }
+
+    // Start new game
+    public void StartNewGame()
+    {
+        foreach (GameObject obj in mainVariables)
+            obj.SetActive(false);
+
+        camTarget = newSaveLocation;
+        cameraMoving = true;
+    }
+
+    // Enable new game menu
+    public void EnableNewGameMenu()
+    {
+        foreach(GameObject obj in newSaveVariables)
+            obj.SetActive(true);
+    }
+
+    // Go back to menu
+    public void BackToMenu()
+    {
+        foreach (GameObject obj in newSaveVariables)
+            obj.SetActive(false);
+
+        camTarget = mainLocation;
+        cameraMoving = true;
+    }
+
+    // Enable new game menu
+    public void EnableMainMenu()
+    {
+        foreach (GameObject obj in mainVariables)
+            obj.SetActive(true);
+    }
+
+    // Check saves
+    public void CheckSaves()
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            string path = Application.persistentDataPath + "/world_" + (i + 1) + ".vectorio";
+            if (File.Exists(path))
+            {
+                // Load json file
+                string data = File.ReadAllText(path);
+                SaveData saveData = JsonUtility.FromJson<SaveData>(data);
+
+                // Create new save button
+                SaveButton button = Instantiate(saveButton, Vector3.zero, Quaternion.identity);
+                button.transform.SetParent(saveList);
+                button.transform.SetSiblingIndex(i);
+                button.rect.localScale = new Vector3(1, 1, 1);
+
+                // Apply to save buttons
+                button.name.text = saveData.worldName;
+                button.seed = saveData.worldSeed;
+
+                // Apply playtime
+                TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);
+                string output = string.Format("{0:D2}d {1:D2}h {2:D2}m", time.Days, time.Hours, time.Minutes);
+                button.timeAndVersion.text = "<b>" + output + "</b>\n" + saveData.worldVersion;
+
+                // Apply version
+                button.worldMode.text = saveData.worldMode + " (" + saveData.worldCompletion * 100 + ")";
+                button.pathNumber = i + 1;
+
+                // Set active
+                button.obj.SetActive(true);
+                saveButtons.Add(i + 1, button);
+            }
+            else availableSave = i;
+        }
+    }
+
+    // Load a save
+    public void LoadSave(int number)
+    {
+        SaveButton button = saveButtons[number];
+
+        Gamemode.saveName = button.name.text;
+        Gamemode.savePath = "/world_" + button.pathNumber + ".vectorio";
+        Gamemode.seed = button.seed;
+        Gamemode.loadGame = true;
+
+        StartGame(button.mode, number);
+    }
+
+    // Create new game
+    public void CreateGame(string mode)
+    {
+        StartGame(mode);
+    }
+
+    // Starts a game
+    public void StartGame(string mode, int number = -1)
+    {
+        if (number == -1)
+        {
+            if (availableSave != -1) Gamemode.savePath = "/world_" + availableSave + ".vectorio";
+            else Gamemode.savePath = "/world_1.vectorio";
+            if (saveName.text != "") Gamemode.saveName = saveName.text;
+            else Gamemode.saveName = "New Save";
+            if (saveSeed.text != "") Gamemode.seed = saveSeed.text;
+            else Gamemode.seed = "Vectorio";
+        }
+
+        loadingScreen.SetActive(true);
+        SceneManager.LoadScene(mode);
     }
 
     // Menu button event
@@ -60,10 +212,6 @@ public class Menu : MonoBehaviour
         {
             switch(button.action)
             {
-                case ButtonActions.ActivateDeactivate:
-                    foreach(GameObject obj in button.activateObjects) obj.SetActive(true);
-                    foreach (GameObject obj in button.deactivateObjects) obj.SetActive(false);
-                    break;
                 case ButtonActions.LoadScene:
                     SceneManager.LoadScene(button.argument);
                     break;

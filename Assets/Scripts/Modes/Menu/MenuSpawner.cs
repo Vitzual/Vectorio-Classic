@@ -41,7 +41,9 @@ public class MenuSpawner : MonoBehaviour
 
         DefaultEnemy newEnemy = holder.GetComponent<DefaultEnemy>();
         newEnemy.variant = variant;
-        newEnemy.isMenu = true;//
+        newEnemy.isMenu = true;
         newEnemy.Setup();
+
+        EnemyHandler.active.enemies.Add(newEnemy);
     }
 }

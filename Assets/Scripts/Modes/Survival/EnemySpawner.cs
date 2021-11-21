@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
         else chance = Random.value;
 
         // Calculate heat percentage
-        float percentage = (float)Resource.active.GetHeat() / (EnemyHandler.active.variant.maxHeat - EnemyHandler.active.variant.minHeat);
+        float percentage = (float)Resource.active.GetHeat() / EnemyHandler.active.variant.maxHeat;
         
         // Loop through all enemies
         foreach(Enemy enemy in enemies)
@@ -54,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                InstantiationHandler.active.CreateEnemy(enemy, spawnPos, Quaternion.identity);
+                EnemyHandler.active.CreateEntity(enemy, spawnPos, Quaternion.identity);
             }
         }
     }

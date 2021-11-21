@@ -12,6 +12,7 @@ public class Gamemode : MonoBehaviour
     // Active instance
     public static Gamemode active;
     public static bool loadGame = false;
+    public bool isMenu;
 
     // Gamemode information
     [Header("Gamemode Info")]
@@ -47,6 +48,8 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public void Start()
     {
+        if (isMenu) return;
+
         if (difficulty == null) difficulty = _difficulty;
         GameManager.SetupGame(difficulty, loadGame);
         InitGamemode();
@@ -57,18 +60,22 @@ public class Gamemode : MonoBehaviour
     // Save game
     public void SaveGame()
     {
+        if (isMenu) return;
         NewSaveSystem.SaveGame(savePath);
     }
 
     // Update playtime
     public void Update()
     {
+        if (isMenu) return;
         time += Time.deltaTime;
     }
 
     // Tells the gamemode how to generate inventory
     public void InitGamemode()
     {
+        if (isMenu) return;
+
         ScriptableLoader.GenerateAllScriptables();
         EnemyHandler.active.UpdateVariant();
 

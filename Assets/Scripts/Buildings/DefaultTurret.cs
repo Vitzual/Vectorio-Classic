@@ -58,8 +58,8 @@ public class DefaultTurret : BaseTile, IAudible
     // Create a bullet object
     public virtual void CreateBullet(Vector2 position)
     {
-        //if (turret.sound != null)
-        //    AudioSource.PlayClipAtPoint(turret.sound, transform.position);
+        if (turret.sound != null)
+            AudioSource.PlayClipAtPoint(turret.sound, transform.position, 0.2f);
 
         GameObject holder = Instantiate(turret.bullet.gameObject, position, cannon.rotation);
         holder.transform.rotation = cannon.rotation;

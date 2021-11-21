@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // On building clicked
+    public event Action<BaseEntity> onEntityClicked;
+    public void EntityClicked(BaseEntity entity)
+    {
+        if (onEntityClicked != null)
+            onEntityClicked(entity);
+    }
+
     // On blueprint collected
     public event Action<Buildable> onBuildingUnlocked;
     public void BuildingUnlocked(Buildable buildable)

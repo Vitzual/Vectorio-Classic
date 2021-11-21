@@ -14,14 +14,14 @@ public class UpAndDown : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (growing)
         {
             transform.localScale += scaleChange;
             transform.Rotate(0, 0, rotation * Time.deltaTime);
 
-            if (transform.localScale.x >= 1.15) growing = false;
+            if (transform.localScale.x >= 1.1) growing = false;
         }
         else
         {

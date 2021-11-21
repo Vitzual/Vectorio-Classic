@@ -69,17 +69,17 @@ public class Menu : MonoBehaviour
     }
 
     // Update method
-    public void Update()
+    public void FixedUpdate()
     {
         if (cameraMoving)
         {
-            cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, 3f * Time.deltaTime);
-            if (camTarget == newSaveLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 1f)
+            cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, 4f * Time.deltaTime);
+            if (camTarget == newSaveLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 3f)
             {
                 cameraMoving = false;
                 EnableNewGameMenu();
             } 
-            else if (camTarget == mainLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 1)
+            else if (camTarget == mainLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 3f)
             {
                 cameraMoving = false;
                 EnableMainMenu();

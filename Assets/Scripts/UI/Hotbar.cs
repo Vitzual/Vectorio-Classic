@@ -36,11 +36,9 @@ public class Hotbar : MonoBehaviour
         }
         else
         {
-            /*
             if (index < slots.Length && index >= 0)
-                BuildingHandler.active.SetBuilding(slots[index].entity);
+                UIEvents.active.EntityPressed(slots[index].entity);
             else Debug.LogError("Slot number was outside the bounds of the hotbar!");
-            */
         }
     }
 }

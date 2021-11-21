@@ -180,6 +180,10 @@ public class EnemyHandler : MonoBehaviour
                     currency.amount < variant.maxHeat)
                 {
                     this.variant = variant;
+
+                    // Update borders
+                    Border.active.UpdateBorderColor(variant);
+
                     return;
                 }
             }

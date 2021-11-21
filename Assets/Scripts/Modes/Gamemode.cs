@@ -56,20 +56,15 @@ public class Gamemode : MonoBehaviour
 
         Application.targetFrameRate = 999;
 
-        if (!isCreative)
+        if (difficulty == null)
         {
-
-            if (difficulty == null)
-            {
-                Debug.Log("Difficulty data missing. Creating new one");
-                difficulty = _difficulty.SetData(new DifficultyData());
-            }
-            GameManager.SetupGame(difficulty, loadGame);
-
-            useDroneConstruction = !difficulty.enableInstaPlace;
-            naturalHeatGrowth = difficulty.naturalHeatGrowth;
-
+            Debug.Log("Difficulty data missing. Creating new one");
+            difficulty = _difficulty.SetData(new DifficultyData());
         }
+        GameManager.SetupGame(difficulty, loadGame);
+
+        useDroneConstruction = !difficulty.enableInstaPlace;
+        naturalHeatGrowth = difficulty.naturalHeatGrowth;
 
         InitGamemode();
 

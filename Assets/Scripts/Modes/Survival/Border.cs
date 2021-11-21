@@ -24,6 +24,10 @@ public class Border : MonoBehaviour
     public Vector2 newPosition;
     public float pushSpeed = 50f;
 
+    // Colors
+    public List<SpriteRenderer> frontColors;
+    public List<SpriteRenderer> backColors;
+
     // Border values
     public static int north = 750;
     public static int east = 750;
@@ -96,6 +100,15 @@ public class Border : MonoBehaviour
         }
 
         if (!maxHeatSet) Resource.active.AddStorage(Resource.CurrencyType.Heat, 10000);
+    }
+
+    // Update border
+    public void UpdateBorderColor(Variant variant)
+    {
+        foreach (SpriteRenderer color in frontColors)
+            color.material = variant.border;
+        foreach (SpriteRenderer color in backColors)
+            color.material = variant.fill;
     }
 
     // Activate push

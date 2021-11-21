@@ -87,6 +87,13 @@ public class BuildingController : MonoBehaviour
     // Sets the selected entity (null to deselect)
     public void SetEntity(Entity entity)
     {
+        Buildable buildable = Buildables.RequestBuildable(entity);
+        if (buildable != null)
+        {
+            SetBuilding(buildable);
+            return;
+        }
+
         circleRadius.gameObject.SetActive(false);
         squareRadius.gameObject.SetActive(false);
 

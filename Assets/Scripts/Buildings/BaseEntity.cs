@@ -18,9 +18,19 @@ public class BaseEntity : MonoBehaviour, IDamageable
         // Override this method to use Setup() call from Instation Handler
     }
 
+    public virtual void OnClick()
+    {
+        Events.active.EntityClicked(this);
+    }
+
     public virtual void ApplyMetadata(int data)
     {
         metadata = data;
+    }
+
+    public virtual void ApplySettings(int settingType, int newSetting)
+    {
+        Debug.Log("This building has no settings to apply");
     }
 
     // Damages the entity (IDamageable interface method)

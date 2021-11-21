@@ -354,11 +354,19 @@ public class DroneManager : MonoBehaviour
         // Loop through all drones and use closest one
         for (int i = 0; i < builderDrones.Count; i++)
         {
-            float distance = Vector2.Distance(builderDrones[i].transform.position, position);
-            if (distance < closest)
+            if (builderDrones[i] != null)
             {
-                drone = builderDrones[i];
-                closest = distance;
+                float distance = Vector2.Distance(builderDrones[i].transform.position, position);
+                if (distance < closest)
+                {
+                    drone = builderDrones[i];
+                    closest = distance;
+                }
+            }
+            else
+            {
+                builderDrones.RemoveAt(i);
+                i--;
             }
         }
 

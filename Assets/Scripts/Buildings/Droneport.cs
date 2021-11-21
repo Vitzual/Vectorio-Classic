@@ -39,6 +39,44 @@ public class Droneport : BaseTile
         base.ApplyMetadata(data);
     }
 
+    // Settings
+    public override void ApplySettings(int settingType, int newSetting)
+    {
+        if (settingType == 0)
+        {
+            switch (newSetting)
+            {
+                case 0:
+                    ChangeDrone(Drone.DroneType.Builder);
+                    break;
+                case 1:
+                    ChangeDrone(Drone.DroneType.Resource);
+                    break;
+            }
+        }
+    }
+
+    // Change drone 
+    public void ChangeDrone(Drone.DroneType type)
+    {
+        // Return if hub drone
+        if (hubDrone) return;
+
+        // Reset drone
+        droneCreated = false;
+        drone.Destroy();
+
+        // Reset doors
+        leftPanel.transform.localPosition = new Vector2(0, 0);
+        rightPanel.transform.localPosition = new Vector2(0, 0);
+
+        // Create new drone
+        CreateDrone(type);
+
+        // Setup drone again
+        Setup();
+    }
+
     // Locate nearby buildings for drone
     public override void Setup()
     {

@@ -13,6 +13,13 @@ public class InputEvents : MonoBehaviour
         active = this;
     }
 
+    public event Action onLeftMouseTapped;
+    public void LeftMouseTapped()
+    {
+        if (onLeftMouseTapped != null)
+            onLeftMouseTapped();
+    }
+
     public event Action onLeftMousePressed;
     public void LeftMousePressed()
     {

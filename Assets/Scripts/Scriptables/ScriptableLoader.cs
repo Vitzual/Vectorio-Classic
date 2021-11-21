@@ -17,10 +17,18 @@ public static class ScriptableLoader
     public static Dictionary<string, Guardian> guardians;
     public static Dictionary<string, Variant> variants;
 
+    public static Dictionary<string, Entity> allLoadedEntities = 
+              new Dictionary<string, Entity>();
+
     // Generate all scriptables
     public static void GenerateAllScriptables()
     {
+        allLoadedEntities = new Dictionary<string, Entity>();
         Buildables.active = new Dictionary<Entity, Buildable>();
+
+        Building hub = Resources.Load<Building>("Scriptables/Hub");
+        if (hub != null) allLoadedEntities.Add(hub.name, hub);
+        else Debug.Log("The hub scriptable could not be parsed");
 
         GenerateBuildings();
         GenerateEnemies();
@@ -37,7 +45,11 @@ public static class ScriptableLoader
         Debug.Log("Loading " + loaded.Count + " buildings from " + BuildingPath + "...");
         foreach (Building building in loaded)
         {
+            BaseEntity baseEntity = building.obj.GetComponent<BaseEntity>();
+            if (baseEntity == null) Debug.Log("Entity " + building.name + "'s object has no BaseEntity script!\nBecause of this, it will not load properly.");
+            allLoadedEntities.Add(building.name, building);
             buildings.Add(building.InternalID, building);
+            
             Debug.Log("Loaded " + building.name + " with UUID " + building.InternalID);
             if (Gamemode.active.initBuildings)
                 Buildables.Register(building);
@@ -59,6 +71,9 @@ public static class ScriptableLoader
         Debug.Log("Loaded " + loaded.Count + " enemies from " + EnemyPath);
         foreach (Enemy enemy in loaded)
         {
+            BaseEntity baseEntity = enemy.obj.GetComponent<BaseEntity>();
+            if (baseEntity == null) Debug.Log("Entity " + enemy.name + "'s object has no BaseEntity script!\nBecause of this, it will not load properly.");
+            allLoadedEntities.Add(enemy.name, enemy);
             enemies.Add(enemy.InternalID, enemy);
             Debug.Log("Loaded " + enemy.name + " with UUID " + enemy.InternalID);
         }
@@ -75,6 +90,9 @@ public static class ScriptableLoader
         Debug.Log("Loaded " + loaded.Count + " guardians from " + GuardianPath);
         foreach (Guardian guardian in loaded)
         {
+            BaseEntity baseEntity = guardian.obj.GetComponent<BaseEntity>();
+            if (baseEntity == null) Debug.Log("Entity " + guardian.name + "'s object has no BaseEntity script!\nBecause of this, it will not load properly.");
+            allLoadedEntities.Add(guardian.name, guardian);
             guardians.Add(guardian.InternalID, guardian);
             Debug.Log("Loaded " + guardian.name + " with UUID " + guardian.InternalID);
         }

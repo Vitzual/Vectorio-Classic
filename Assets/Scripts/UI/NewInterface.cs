@@ -24,6 +24,12 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleQuitMenu()
     {
+        if (StatsPanel.isActive)
+        {
+            StatsPanel.CloseMenu();
+            return;
+        }
+
         saveButton.interactable = true;
         quitMenu.SetActive(!quitMenu.activeSelf);
         isOpen = quitMenu.activeSelf;
@@ -39,6 +45,9 @@ public class NewInterface : MonoBehaviour
 
     public void ToggleBuildingMenu()
     {
+        if (StatsPanel.isActive)
+            StatsPanel.CloseMenu();
+
         buildingMenu.SetActive(!buildingMenu.activeInHierarchy);
         isOpen = buildingMenu.activeSelf;
     }

@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
+    // Entity selected
+    public static bool entitySelected = false;
+
     // Selected tile
     public Transform hologram, squareRadius, circleRadius;
     private Entity entity;
@@ -29,6 +32,7 @@ public class BuildingController : MonoBehaviour
         // Set input events
         if (InputEvents.active != null)
         {
+            InputEvents.active.onLeftMouseTapped += TryClickBuilding;
             InputEvents.active.onLeftMousePressed += TryCreateEntity;
             InputEvents.active.onRightMousePressed += TryDestroyBuilding;
             InputEvents.active.onRightMouseReleased += DisableJustDeselected;
@@ -53,14 +57,19 @@ public class BuildingController : MonoBehaviour
         AdjustTransparency();
     }
 
+    public void TryClickBuilding()
+    {
+        if (StatsPanel.isActive) return;
+
+        BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
+        if (holder != null) holder.OnClick();
+    }
+
     public void TryCreateEntity()
     {
+        if (StatsPanel.isActive) return;
+
         if (entity != null || buildable != null) CmdCreateBuildable();
-        else
-        {
-            BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
-            if (holder != null) holder.OnClick();
-        }
     }
 
     // Create building (command)
@@ -87,6 +96,8 @@ public class BuildingController : MonoBehaviour
     // Sets the selected entity (null to deselect)
     public void SetEntity(Entity entity)
     {
+        entitySelected = entity != null;
+
         Buildable buildable = Buildables.RequestBuildable(entity);
         if (buildable != null)
         {
@@ -105,6 +116,8 @@ public class BuildingController : MonoBehaviour
     // Sets the selected building (null to deselect)
     public void SetBuilding(Buildable buildable)
     {
+        entitySelected = buildable != null;
+
         DefaultTurret turret = buildable.obj.GetComponent<DefaultTurret>();
         if (turret != null)
         {

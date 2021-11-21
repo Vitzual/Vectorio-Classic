@@ -22,11 +22,6 @@ public class BaseTile : BaseEntity
         if (hit.collider == null) DestroyEntity();
     }
 
-    public virtual void OnClick()
-    {
-        // Override this method for on click behaviour
-    }
-
     public override void DestroyEntity()
     {
         // Update unlockables

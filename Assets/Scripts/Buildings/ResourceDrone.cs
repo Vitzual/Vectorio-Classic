@@ -153,7 +153,6 @@ public class ResourceDrone : Drone
     // Collects or store resources
     public override void TargetReached()
     {
-        Debug.Log("Reached " + target.name);
         if (target == home)
         {
             EnterPort();
@@ -171,8 +170,6 @@ public class ResourceDrone : Drone
             tile.hasAssignedDrone = false;
             maxTrips -= 1;
 
-            Debug.Log("Collected " + collected[tile.type] + ", " + maxTrips + " remaining");
-
             if (maxTrips <= 0) collecting = false;
             FindTarget();
         }
@@ -181,7 +178,6 @@ public class ResourceDrone : Drone
             if (collected.ContainsKey(tile.type))
             {
                 collected[tile.type] = tile.AddResources(collected[tile.type]);
-                Debug.Log("Stored " + collected[tile.type]);
                 if (collected[tile.type] <= 0)
                 {
                     collected.Remove(tile.type);

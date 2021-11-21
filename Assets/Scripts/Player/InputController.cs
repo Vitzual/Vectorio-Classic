@@ -17,6 +17,8 @@ public class InputController : MonoBehaviour
     {
         if (!NewInterface.isOpen)
         {
+            if (Input.GetKeyDown(Keybinds.lmb))
+                InputEvents.active.LeftMouseTapped();
             if (Input.GetKey(Keybinds.lmb))
                 InputEvents.active.LeftMousePressed();
             if (Input.GetKeyUp(Keybinds.lmb))

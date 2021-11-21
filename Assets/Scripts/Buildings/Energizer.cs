@@ -7,7 +7,6 @@ public class Energizer : BaseTile
     public Collider2D[] colliders;
 
     // Internal placement variables
-    public float radialCheck;
     public Transform AOCB;
     public Transform rotator;
     public float speed;
@@ -21,6 +20,9 @@ public class Energizer : BaseTile
     // OUTDATED
     public override void DestroyEntity()
     {
+        // Remove AOCB
+        Destroy(AOCB.gameObject);
+
         // Run a check around surrounding tiles
         int xTile = (int)transform.position.x;
         int yTile = (int)transform.position.y;
@@ -31,7 +33,7 @@ public class Energizer : BaseTile
             for (int y = yTile - 30; y <= yTile + 30; y += 5)
             {
                 BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
-                if (holder != null) holder.CheckNearbyEnergizers();
+                if (holder != null && holder != this && holder.isSellable) holder.CheckNearbyEnergizers();
             }
         }
 

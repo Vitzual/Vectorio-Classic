@@ -143,7 +143,7 @@ public class Resource : MonoBehaviour
         currencies[type].storage += amount;
 
         // Display to UI
-        UpdateUI(type);
+        UpdateUI(type, true);
     }
 
     // Set storage
@@ -152,7 +152,7 @@ public class Resource : MonoBehaviour
         currencies[type].storage = amount;
 
         // Display to UI
-        UpdateUI(type);
+        UpdateUI(type, true);
     }
 
     // Remove storage
@@ -164,15 +164,19 @@ public class Resource : MonoBehaviour
             currencies[type].storage = 0;
 
         // Display to UI
-        UpdateUI(type);
+        UpdateUI(type, true);
     }
 
     // Update UI
-    public void UpdateUI(CurrencyType type)
+    public void UpdateUI(CurrencyType type, bool updateStorage = false)
     {
         // Display to UI
         if (currencies[type].resourceUI != null)
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
+
+        if (updateStorage && currencies[type].storageUI != null)
+            currencies[type].storageUI.text = FormatNumber(currencies[type].storage);
+
         if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
         {
             currencies[type].resourceBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;

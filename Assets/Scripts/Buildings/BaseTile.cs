@@ -7,6 +7,7 @@ public class BaseTile : BaseEntity
     [HideInInspector] public List<Vector2Int> cells;
     [HideInInspector] public Buildable buildable;
     public bool saveBuilding = true;
+    public bool isSellable = true;
 
     public override void Setup()
     {

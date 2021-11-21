@@ -27,7 +27,7 @@ MonoBehaviour:
   name: Turbine
   description: Converts heat from adjacent tiles into power. Due note if a Turbine
     is placed near a cooling building, it's power output will be reduced drastically.
-  health: 100
+  health: 500
   material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
   inventoryHeader: 1
   inventoryIndex: 7
@@ -59,7 +59,7 @@ MonoBehaviour:
     add: 0
     storage: 0
   - resource: 3
-    amount: 150
+    amount: 250
     add: 1
     storage: 1
   - resource: 4
@@ -68,5 +68,7 @@ MonoBehaviour:
     storage: 0
   radialCheck: 0
   restrictPlacement: 0
+  isSellable: 0
+  isSaveable: 0
   placedOn: 0
   engineeringSlots: 0

@@ -92,6 +92,10 @@ public class InstantiationHandler : MonoBehaviour
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
 
+        // Set sellable values
+        lastBuilding.saveBuilding = buildable.building.isSaveable;
+        lastBuilding.isSellable = buildable.building.isSellable;
+
         // Apply health override
         if (health != -1) lastBuilding.health = health;
     }

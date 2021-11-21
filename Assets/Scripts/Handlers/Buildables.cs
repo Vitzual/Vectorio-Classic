@@ -5,11 +5,18 @@ using UnityEngine;
 public static class Buildables
 {
     // List of all buildables
-    public static Dictionary<Entity, Buildable> active;
+    public static Dictionary<Entity, Buildable> active = new Dictionary<Entity, Buildable>();
 
     // List of all buildable unlockables
     public static Dictionary<Unlockable.UnlockType, List<Buildable>> unlockables =
               new Dictionary<Unlockable.UnlockType, List<Buildable>>();
+
+    // Reset buildables
+    public static void ClearRegistry()
+    {
+        active = new Dictionary<Entity, Buildable>();
+        unlockables = new Dictionary<Unlockable.UnlockType, List<Buildable>>();
+    }
 
     // Generate buildables
     public static void Register(Building building)

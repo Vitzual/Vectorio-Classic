@@ -56,6 +56,9 @@ public class Menu : MonoBehaviour
     // Start method
     public void Start()
     {
+        // Clear registry
+        Buildables.ClearRegistry();
+
         // Reset gamemode shit
         Gamemode.saveData = null;
         Gamemode.difficulty = null;

@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
 
         // Calculate heat percentage
         float percentage = (float)Resource.active.GetHeat() / EnemyHandler.active.variant.maxHeat;
+        Debug.Log(percentage);
         
         // Loop through all enemies
         foreach(Enemy enemy in enemies)

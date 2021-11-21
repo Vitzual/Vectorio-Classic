@@ -92,15 +92,14 @@ public class NewSaveSystem : MonoBehaviour
     {
         // Set use resources
         bool useResources = Gamemode.active.useResources;
-        Gamemode.active.useResources = false;
 
         // Set normal data
         Border.active.SetBorder(saveData.stage);
 
         // Check resources
-        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold);
-        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence);
-        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium);
+        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
+        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);
+        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium, true);
 
         // Set string variables
         Gamemode.saveName = saveData.worldName;
@@ -122,6 +121,7 @@ public class NewSaveSystem : MonoBehaviour
                 InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord),
                     Quaternion.identity, buildingData.health);
                 InstantiationHandler.active.metadata = -1;
+                Resource.active.ApplyResources(buildable);
             }
             else Debug.Log("Building with ID " + buildingData.id + " could not be found!");
         }
@@ -136,9 +136,6 @@ public class NewSaveSystem : MonoBehaviour
             }
             else Debug.Log("Enemy with ID " + enemyData.id + " could not be found!");
         }
-
-        // Set back to 
-        Gamemode.active.useResources = useResources;
     }
 
     // Delete save file

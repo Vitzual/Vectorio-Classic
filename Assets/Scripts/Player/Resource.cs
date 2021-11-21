@@ -196,6 +196,8 @@ public class Resource : MonoBehaviour
             else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
             else if (!Gamemode.active.useResources) continue;
 
+            if (Gamemode.loadGame && resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power) continue;
+
             if (refund)
             {
                 if (resource.add) active.Remove(resource.resource, resource.amount);

@@ -20,6 +20,8 @@ public class Building : Entity
     [FoldoutGroup("Building Variables")]
     public Cost[] resources;
     [FoldoutGroup("Building Variables")]
+    public float radialCheck = 0;
+    [FoldoutGroup("Building Variables")]
     public bool restrictPlacement;
     [FoldoutGroup("Building Variables")]
     public Resource.CurrencyType placedOn;

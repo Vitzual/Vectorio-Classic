@@ -205,6 +205,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(mode);
     }
 
+    public void ExitGame()
+    {
+        Application.Quit(0);
+    }
+
     // Menu button event
     public void ButtonClicked(string name)
     {

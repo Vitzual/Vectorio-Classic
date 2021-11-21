@@ -53,6 +53,8 @@ public class Gamemode : MonoBehaviour
     {
         if (isMenu) return;
 
+        Application.targetFrameRate = 999;
+
         if (difficulty == null)
         {
             Debug.Log("Difficulty data missing. Creating new one");
@@ -67,9 +69,12 @@ public class Gamemode : MonoBehaviour
 
         if (loadGame)
         {
+            Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
             if (saveData != null) NewSaveSystem.LoadGame(saveData);
             else Debug.Log("Save data could not be passed!");
         }
+
+        loadGame = false;
     }
 
     // Update playtime

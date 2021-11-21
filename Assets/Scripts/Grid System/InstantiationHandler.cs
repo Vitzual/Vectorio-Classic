@@ -131,16 +131,24 @@ public class InstantiationHandler : MonoBehaviour
     //[Server]
     public bool CheckTiles(Building building, Vector3 position)
     {
+        bool aocbCheck = false;
+
+        if (building.radialCheck > 0)
+        {
+            Collider2D[] aocbColliders = Physics2D.OverlapBoxAll(position, new Vector2(building.radialCheck, building.radialCheck), 0f, aocbLayer);
+            if (aocbColliders.Length > 0) aocbCheck = true;
+            else return false;
+        }
         if (building.cells.Length > 0)
         {
             foreach (Building.Cell cell in building.cells)
             {
                 Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
                 if (!CheckTile(checkTile, building)) return false;
-                else if (Gamemode.active.useEnergizers)
+                else if (Gamemode.active.useEnergizers && !aocbCheck)
                 {
                     RaycastHit2D hit = Physics2D.Raycast(checkTile, Vector2.zero, Mathf.Infinity, aocbLayer);
-                    return hit.collider != null;
+                    if (hit.collider == null) return false;
                 }
             }
         }
@@ -148,10 +156,10 @@ public class InstantiationHandler : MonoBehaviour
         {
             Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
             if (!CheckTile(checkTile, building)) return false;
-            else if (Gamemode.active.useEnergizers)
+            else if (Gamemode.active.useEnergizers && !aocbCheck)
             {
                 RaycastHit2D hit = Physics2D.Raycast(checkTile, Vector2.zero, Mathf.Infinity, aocbLayer);
-                return hit.collider != null;
+                if (hit.collider == null) return false;
             }
         }
         return true;

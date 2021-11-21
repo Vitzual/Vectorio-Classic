@@ -57,24 +57,45 @@ public class Border : MonoBehaviour
     {
         borderStage = stage;
         Stage holder = stage;
+        bool maxHeatSet = false;
 
         if (holder == Stage.Serpent)
         {
+            if (!maxHeatSet)
+            {
+                Resource.active.AddStorage(Resource.CurrencyType.Heat, 1000000);
+                maxHeatSet = true;
+            }
+
             west -= borderIncrement;
             borders[3].position = new Vector2(borders[3].position.x + borderIncrement, 0);
             holder = Stage.Atlas;
         }
         if (holder == Stage.Atlas)
         {
+            if (!maxHeatSet)
+            {
+                Resource.active.AddStorage(Resource.CurrencyType.Heat, 50000);
+                maxHeatSet = true;
+            }
+
             south -= borderIncrement;
             borders[2].position = new Vector2(0, borders[2].position.y - borderIncrement);
             holder = Stage.Revenant;
         }
         if (holder == Stage.Kraken)
         {
+            if (!maxHeatSet)
+            {
+                Resource.active.AddStorage(Resource.CurrencyType.Heat, 25000);
+                maxHeatSet = true;
+            }
+
             north += borderIncrement;
             borders[0].position = new Vector2(0, borders[0].position.y + borderIncrement);
         }
+
+        if (!maxHeatSet) Resource.active.AddStorage(Resource.CurrencyType.Heat, 10000);
     }
 
     // Activate push

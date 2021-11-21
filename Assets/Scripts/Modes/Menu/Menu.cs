@@ -64,6 +64,9 @@ public class Menu : MonoBehaviour
         Gamemode.seed = "Vectorio";
         Gamemode.loadGame = false;
 
+        // Reset time scale
+        Time.timeScale = 1f;
+
         // Set camera target
         camTarget = mainLocation;
 

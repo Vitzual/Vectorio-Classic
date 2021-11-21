@@ -11,7 +11,7 @@ public class SaveData
     public class BuildingData
     {
         public string id;
-        public Tuple<int, int> coords;
+        public int xCoord, yCoord;
         public float health;
         public int[] metadata;
         public string[] blueprintIDs;
@@ -22,7 +22,7 @@ public class SaveData
     public class EnemyData
     {
         public string id;
-        public Tuple<int, int> coords;
+        public int xCoord, yCoord;
         public float health;
         public int[] metadata;
         public string variantID;

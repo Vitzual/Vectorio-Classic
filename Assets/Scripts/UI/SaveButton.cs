@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class SaveButton : MonoBehaviour
 {
+    [HideInInspector]
+    public SaveData saveData;
+
     public GameObject obj;
     public RectTransform rect;
     public Image icon;

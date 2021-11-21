@@ -52,6 +52,31 @@ public class Border : MonoBehaviour
         west = -borderStartSize;
     }
 
+    // Set border
+    public void SetBorder(Stage stage)
+    {
+        borderStage = stage;
+        Stage holder = stage;
+
+        if (holder == Stage.Serpent)
+        {
+            west -= borderIncrement;
+            borders[3].position = new Vector2(borders[3].position.x + borderIncrement, 0);
+            holder = Stage.Atlas;
+        }
+        if (holder == Stage.Atlas)
+        {
+            south -= borderIncrement;
+            borders[2].position = new Vector2(0, borders[2].position.y - borderIncrement);
+            holder = Stage.Revenant;
+        }
+        if (holder == Stage.Kraken)
+        {
+            north += borderIncrement;
+            borders[0].position = new Vector2(0, borders[0].position.y + borderIncrement);
+        }
+    }
+
     // Activate push
     public void PushBorder()
     {

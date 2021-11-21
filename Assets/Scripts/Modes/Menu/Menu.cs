@@ -56,6 +56,14 @@ public class Menu : MonoBehaviour
     // Start method
     public void Start()
     {
+        // Reset gamemode shit
+        Gamemode.saveData = null;
+        Gamemode.difficulty = null;
+        Gamemode.saveName = "Unnamed Save";
+        Gamemode.savePath = "/world_0.vectorio";
+        Gamemode.seed = "Vectorio";
+        Gamemode.loadGame = false;
+
         // Set camera target
         camTarget = mainLocation;
 
@@ -126,7 +134,7 @@ public class Menu : MonoBehaviour
     {
         for(int i = 0; i < 100; i++)
         {
-            string path = Application.persistentDataPath + "/world_" + (i + 1) + ".vectorio";
+            string path = Application.persistentDataPath + "/world_" + i + ".vectorio";
             if (File.Exists(path))
             {
                 // Load json file
@@ -135,13 +143,17 @@ public class Menu : MonoBehaviour
 
                 // Create new save button
                 SaveButton button = Instantiate(saveButton, Vector3.zero, Quaternion.identity);
+                Debug.Log("Save button created for slot " + i);
                 button.transform.SetParent(saveList);
                 button.transform.SetSiblingIndex(i);
                 button.rect.localScale = new Vector3(1, 1, 1);
 
                 // Apply to save buttons
+                button.saveData = saveData;
                 button.name.text = saveData.worldName;
+                button.pathNumber = i;
                 button.seed = saveData.worldSeed;
+                button.mode = saveData.worldMode;
 
                 // Apply playtime
                 TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);
@@ -149,14 +161,13 @@ public class Menu : MonoBehaviour
                 button.timeAndVersion.text = "<b>" + output + "</b>\n" + saveData.worldVersion;
 
                 // Apply version
-                button.worldMode.text = saveData.worldMode + " (" + saveData.worldCompletion * 100 + ")";
-                button.pathNumber = i + 1;
+                button.worldMode.text = saveData.worldMode + " (" + saveData.worldCompletion * 100 + "%)";
 
                 // Set active
                 button.obj.SetActive(true);
-                saveButtons.Add(i + 1, button);
+                saveButtons.Add(i, button);
             }
-            else availableSave = i;
+            else if (availableSave == -1) availableSave = i;
         }
     }
 
@@ -165,6 +176,14 @@ public class Menu : MonoBehaviour
     {
         SaveButton button = saveButtons[number];
 
+        if (button == null)
+        {
+            Debug.Log("Save button could not be found, please report!");
+            return;
+        }
+
+        Gamemode.saveData = button.saveData;
+        Gamemode.difficulty = button.saveData.difficultyData;
         Gamemode.saveName = button.name.text;
         Gamemode.savePath = "/world_" + button.pathNumber + ".vectorio";
         Gamemode.seed = button.seed;

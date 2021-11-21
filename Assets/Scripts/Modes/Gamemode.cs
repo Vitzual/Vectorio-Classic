@@ -11,6 +11,7 @@ public class Gamemode : MonoBehaviour
 {
     // Active instance
     public static Gamemode active;
+    public static SaveData saveData;
     public static bool loadGame = false;
     public bool isMenu;
 
@@ -24,8 +25,10 @@ public class Gamemode : MonoBehaviour
     public static DifficultyData difficulty;
     public static string seed = "Vectorio";
     public static float time = 0;
+    private static float heatTimer = 1f;
 
     [Header("Gamemode Settings")]
+    public bool naturalHeatGrowth;
     public bool useEnergizers;
     public bool useResources;
     public bool useHeat; 
@@ -56,9 +59,37 @@ public class Gamemode : MonoBehaviour
             difficulty = _difficulty.SetData(new DifficultyData());
         }
         GameManager.SetupGame(difficulty, loadGame);
+
+        useDroneConstruction = !difficulty.enableInstaPlace;
+        naturalHeatGrowth = difficulty.naturalHeatGrowth;
+
         InitGamemode();
 
-        if (loadGame) NewSaveSystem.LoadGame(savePath);
+        if (loadGame)
+        {
+            if (saveData != null) NewSaveSystem.LoadGame(saveData);
+            else Debug.Log("Save data could not be passed!");
+        }
+    }
+
+    // Update playtime
+    public void Update()
+    {
+        if (isMenu) return;
+
+        // Increment time
+        time += Time.deltaTime;
+
+        // Check heat growth
+        if (naturalHeatGrowth)
+        {
+            heatTimer -= Time.deltaTime;
+            if (heatTimer <= 0)
+            {
+                Resource.active.Add(Resource.CurrencyType.Heat, 1);
+                heatTimer = 1f;
+            }
+        }
     }
 
     // Save game
@@ -66,13 +97,6 @@ public class Gamemode : MonoBehaviour
     {
         if (isMenu) return;
         NewSaveSystem.SaveGame(savePath);
-    }
-
-    // Update playtime
-    public void Update()
-    {
-        if (isMenu) return;
-        time += Time.deltaTime;
     }
 
     // Tells the gamemode how to generate inventory

@@ -34,6 +34,7 @@ MonoBehaviour:
   unlockable:
     type: 0
     description: 
+    requirement: {fileID: 0}
     unlocked: 0
     resource: 0
     entity: {fileID: 0}
@@ -41,13 +42,15 @@ MonoBehaviour:
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   damage: 500
   moveSpeed: 1
   explosiveRadius: 0
   explosiveDamage: 0
   rotationSpeed: 0
-  spawnChance: 0
-  spawnPercentage: 0
+  spawnChance: 0.001
+  spawnPercentage: 0.7
   spawnsOnDeath: []
   drops:
   - {fileID: 11400000, guid: 799fbd716c7193d49a8411dd7a608312, type: 2}

@@ -23,17 +23,18 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 6023d0a6-d2ac-45d7-a7cf-e7b28c2a2b6f
   createdAtTicks: 637722267056210552
+  obj: {fileID: 1711705259399207453, guid: 981b14a184b67e24ab424c98bd63904a, type: 3}
   name: Turbine
   description: Converts heat from adjacent tiles into power. Due note if a Turbine
     is placed near a cooling building, it's power output will be reduced drastically.
+  health: 100
+  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
   inventoryHeader: 1
   inventoryIndex: 7
-  obj: {fileID: 1711705259399207453, guid: 981b14a184b67e24ab424c98bd63904a, type: 3}
-  material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
-  health: 100
   unlockable:
     type: 0
     description: Reach maximum power
+    requirement: {fileID: 11400000, guid: deddec3d3ffcd574385129f087556fff, type: 2}
     unlocked: 0
     resource: 3
     entity: {fileID: 0}
@@ -41,6 +42,8 @@ MonoBehaviour:
   gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -59,3 +62,4 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0

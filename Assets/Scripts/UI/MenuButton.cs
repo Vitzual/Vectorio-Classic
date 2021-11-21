@@ -67,7 +67,9 @@ public class MenuButton : MonoBehaviour
     {
         if (buildable.isUnlocked)
         {
-            GetComponent<ButtonManagerBasic>().buttonText = entity.name;
+            ButtonManagerBasic button = GetComponent<ButtonManagerBasic>();
+            button.buttonText = entity.name.ToUpper();
+            button.UpdateUI();
             desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
             icon.sprite = Sprites.GetSprite(entity.name);
         }

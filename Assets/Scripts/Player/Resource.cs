@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 public class Resource : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class Resource : MonoBehaviour
         public bool allowOverflow;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
+        public bool useResourceBar;
+        public ProgressBar resourceBar;
     }
 
     // Dictionary of all currencies
@@ -105,11 +108,10 @@ public class Resource : MonoBehaviour
             if (currencies[type].amount >= currencies[type].storage)
                 currencies[type].amount = currencies[type].storage;
         }
-        else currencies[type].amount += amount; 
+        else currencies[type].amount += amount;
 
         // Display to UI
-        if (currencies[type].resourceUI != null)
-            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
+        UpdateUI(type);
 
         // Update unlockables
         Buildables.UpdateResourceUnlockables(type, amount);
@@ -130,8 +132,7 @@ public class Resource : MonoBehaviour
             currencies[type].amount = 0;
 
         // Display to UI
-        if (currencies[type].resourceUI != null)
-            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
+        UpdateUI(type);
 
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
@@ -140,14 +141,18 @@ public class Resource : MonoBehaviour
     public void AddStorage(CurrencyType type, int amount)
     {
         currencies[type].storage += amount;
-        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
+
+        // Display to UI
+        UpdateUI(type);
     }
 
     // Set storage
     public void SetStorage(CurrencyType type, int amount)
     {
         currencies[type].storage = amount;
-        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
+
+        // Display to UI
+        UpdateUI(type);
     }
 
     // Remove storage
@@ -157,7 +162,22 @@ public class Resource : MonoBehaviour
         currencies[type].storage -= amount;
         if (currencies[type].storage <= 0)
             currencies[type].storage = 0;
-        currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + currencies[type].format;
+
+        // Display to UI
+        UpdateUI(type);
+    }
+
+    // Update UI
+    public void UpdateUI(CurrencyType type)
+    {
+        // Display to UI
+        if (currencies[type].resourceUI != null)
+            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
+        if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
+        {
+            currencies[type].resourceBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;
+            currencies[type].resourceBar.UpdateUI();
+        }
     }
 
     // Check resources
@@ -200,8 +220,16 @@ public class Resource : MonoBehaviour
 
             if (refund)
             {
-                if (resource.add) active.Remove(resource.resource, resource.amount);
-                else active.Add(resource.resource, resource.amount);
+                if (resource.storage)
+                {
+                    if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
+                    else active.AddStorage(resource.resource, resource.amount);
+                }
+                else
+                {
+                    if (resource.add) active.Remove(resource.resource, resource.amount);
+                    else active.Add(resource.resource, resource.amount);
+                }
             }
             else
             {
@@ -306,14 +334,8 @@ public class Resource : MonoBehaviour
     // Number formatter
     static string FormatNumber(int number)
     {
-        if (number < 1000)
-            return number.ToString();
-
-        if (number < 10000)
-            return String.Format("{0:#,.##}K", number - 5);
-
         if (number < 100000)
-            return String.Format("{0:#,.#}K", number - 50);
+            return number.ToString();
 
         if (number < 1000000)
             return String.Format("{0:#,.}K", number - 500);

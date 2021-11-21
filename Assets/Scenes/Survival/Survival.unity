@@ -4883,8 +4883,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 364, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &255591110
 MonoBehaviour:
@@ -5586,6 +5586,8 @@ MonoBehaviour:
     allowOverflow: 0
     resourceUI: {fileID: 7377762868116895493}
     storageUI: {fileID: 871073775}
+    useResourceBar: 0
+    resourceBar: {fileID: 0}
   - type: 1
     amount: 0
     storage: 0
@@ -5593,6 +5595,8 @@ MonoBehaviour:
     allowOverflow: 0
     resourceUI: {fileID: 3341849065504892344}
     storageUI: {fileID: 6168857120675834556}
+    useResourceBar: 0
+    resourceBar: {fileID: 0}
   - type: 2
     amount: 0
     storage: 0
@@ -5600,6 +5604,8 @@ MonoBehaviour:
     allowOverflow: 0
     resourceUI: {fileID: 3341849065614543526}
     storageUI: {fileID: 1891558817}
+    useResourceBar: 0
+    resourceBar: {fileID: 0}
   - type: 3
     amount: 0
     storage: 0
@@ -5607,6 +5613,8 @@ MonoBehaviour:
     allowOverflow: 1
     resourceUI: {fileID: 3341849065171109805}
     storageUI: {fileID: 6168857121587257569}
+    useResourceBar: 1
+    resourceBar: {fileID: 1877824913}
   - type: 4
     amount: 0
     storage: 0
@@ -5614,6 +5622,8 @@ MonoBehaviour:
     allowOverflow: 1
     resourceUI: {fileID: 3341849064026673664}
     storageUI: {fileID: 1323544572}
+    useResourceBar: 1
+    resourceBar: {fileID: 823823935}
   storages: []
 --- !u!1 &280663432
 GameObject:
@@ -8025,8 +8035,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378215873
 MonoBehaviour:
@@ -53045,10 +53055,10 @@ RectTransform:
   m_Father: {fileID: 598772621}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1035.4, y: -282}
-  m_SizeDelta: {x: 128.967, y: 128.967}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 237}
+  m_SizeDelta: {x: 128.96704, y: 128.96698}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1784471188
 GameObject:
@@ -55022,8 +55032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873019623
 MonoBehaviour:
@@ -55346,8 +55356,8 @@ MonoBehaviour:
   maxValue: 100
   loadingBar: {fileID: 1598169625}
   textPercent: {fileID: 901748160}
-  isOn: 1
-  restart: 1
+  isOn: 0
+  restart: 0
   invert: 0
   addPrefix: 0
   addSuffix: 1
@@ -72856,7 +72866,7 @@ MonoBehaviour:
   _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   naturalHeatGrowth: 0
   useEnergizers: 1
-  useResources: 1
+  useResources: 0
   useHeat: 1
   usePower: 1
   useDroneConstruction: 1

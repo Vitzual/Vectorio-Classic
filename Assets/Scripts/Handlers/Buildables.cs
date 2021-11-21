@@ -14,6 +14,7 @@ public static class Buildables
     // Reset buildables
     public static void ClearRegistry()
     {
+        Debug.Log("Building registry cleared");
         active = new Dictionary<Entity, Buildable>();
         unlockables = new Dictionary<Unlockable.UnlockType, List<Buildable>>();
     }
@@ -47,9 +48,6 @@ public static class Buildables
         foreach (KeyValuePair<Entity, Buildable> buildable in active)
         {
             Buildable requirement = RequestBuildable(buildable.Value.building.unlockable.requirement);
-
-            if (requirement != null) Debug.Log(buildable.Value.building.name + " requires " + buildable.Value.building.unlockable.requirement.name);
-            else Debug.Log(buildable.Value.building.name + " has no requirement!");
 
             if (requirement != null && !requirement.unlockable.unlocked)
             {

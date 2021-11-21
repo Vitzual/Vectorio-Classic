@@ -59,13 +59,16 @@ public class Menu : MonoBehaviour
         // Clear registry
         Buildables.ClearRegistry();
 
-        // Reset gamemode shit
+        // Reset gamemode static variables
         Gamemode.saveData = null;
         Gamemode.difficulty = null;
         Gamemode.saveName = "Unnamed Save";
         Gamemode.savePath = "/world_0.vectorio";
         Gamemode.seed = "Vectorio";
         Gamemode.loadGame = false;
+
+        // Reset interface variables
+        NewInterface.isOpen = false;
 
         // Reset time scale
         Time.timeScale = 1f;

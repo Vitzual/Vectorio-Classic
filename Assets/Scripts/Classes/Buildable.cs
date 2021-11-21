@@ -16,7 +16,7 @@ public class Buildable
         isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
 
-        Debug.Log("Registered " + building.name);
+        Debug.Log("Registered " + building.name + " buildable and linked to " + building.InternalID);
     }
 
     // Buildable variables

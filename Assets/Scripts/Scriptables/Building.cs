@@ -24,9 +24,9 @@ public class Building : Entity
     [FoldoutGroup("Building Variables")]
     public bool restrictPlacement;
     [FoldoutGroup("Building Variables")]
-    public bool isSellable;
+    public bool isSellable = true;
     [FoldoutGroup("Building Variables")]
-    public bool isSaveable;
+    public bool isSaveable = true;
     [FoldoutGroup("Building Variables")]
     public Resource.CurrencyType placedOn;
     [FoldoutGroup("Building Variables")]

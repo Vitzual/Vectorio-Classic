@@ -14,6 +14,7 @@ public class InstantiationHandler : MonoBehaviour
     public static InstantiationHandler active;
     public GhostTile ghostTile;
     public LayerMask enemyLayer;
+    public LayerMask aocbLayer;
     public int metadata = -1;
 
     // Debug variables
@@ -133,9 +134,26 @@ public class InstantiationHandler : MonoBehaviour
         if (building.cells.Length > 0)
         {
             foreach (Building.Cell cell in building.cells)
-                if (!CheckTile(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), building)) return false;
+            {
+                Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
+                if (!CheckTile(checkTile, building)) return false;
+                else if (Gamemode.active.useEnergizers)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(checkTile, Vector2.zero, Mathf.Infinity, aocbLayer);
+                    return hit.collider != null;
+                }
+            }
         }
-        else if (!CheckTile(Vector2Int.RoundToInt(new Vector2(position.x, position.y)), building)) return false;
+        else
+        {
+            Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
+            if (!CheckTile(checkTile, building)) return false;
+            else if (Gamemode.active.useEnergizers)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(checkTile, Vector2.zero, Mathf.Infinity, aocbLayer);
+                return hit.collider != null;
+            }
+        }
         return true;
     }
 

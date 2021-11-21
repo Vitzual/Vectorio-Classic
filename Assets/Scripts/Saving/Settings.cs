@@ -34,7 +34,6 @@ public class Settings : MonoBehaviour
     public static float soundVolume = 1f;
     public AudioSource music;
     //public MKGlowLite glowing;
-    public Interface ui;
     public int glowMode = 2;
 
     // UI Elements (get set on start)
@@ -120,18 +119,18 @@ public class Settings : MonoBehaviour
 
     public void EnableControls()
     {
-        ui.SettingsOpen = false;
-        ui.ControlsOpen = true;
-        ui.SetOverlayStatus("Settings", false);
-        ui.SetOverlayStatus("Controls", true);
+        //ui.SettingsOpen = false;
+       // ui.ControlsOpen = true;
+        //ui.SetOverlayStatus("Settings", false);
+       // ui.SetOverlayStatus("Controls", true);
     }
 
     public void DisableControls()
     {
-        ui.SettingsOpen = true;
-        ui.ControlsOpen = false;
-        ui.SetOverlayStatus("Controls", false);
-        ui.SetOverlayStatus("Settings", true);
+        //ui.SettingsOpen = true;
+        //ui.ControlsOpen = false;
+        //ui.SetOverlayStatus("Controls", false);
+        //ui.SetOverlayStatus("Settings", true);
     }
 
     public void SetMusic(float a)
@@ -177,16 +176,16 @@ public class Settings : MonoBehaviour
 
     public void EnableMenuAndPaused()
     {
-        ui.SettingsOpen = true;
-        ui.SetOverlayStatus("Settings", true);
-        ui.SetOverlayStatus("Paused", false);
+        //ui.SettingsOpen = true;
+       // ui.SetOverlayStatus("Settings", true);
+       // ui.SetOverlayStatus("Paused", false);
     }
 
     public void DisableMenuAndPaused()
     {
-        ui.SettingsOpen = false;
-        ui.SetOverlayStatus("Settings", false);
-        ui.SetOverlayStatus("Paused", true);
+        //ui.SettingsOpen = false;
+        //ui.SetOverlayStatus("Settings", false);
+        //ui.SetOverlayStatus("Paused", true);
     }
 
     public void EnableMenu()

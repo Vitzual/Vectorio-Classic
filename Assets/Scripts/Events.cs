@@ -38,6 +38,30 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
+    public event Action<BaseEntity> onBuildingHurt;
+    public void BuildingHurt(BaseEntity tile)
+    {
+        if (onBuildingHurt != null)
+            onBuildingHurt(tile);
+    }
+
+    // On enemy destroyed
+    public event Action<BaseEntity> onEnemyHurt;
+    public void EnemyHurt(BaseEntity enemy)
+    {
+        if (onEnemyHurt != null)
+            onEnemyHurt(enemy);
+    }
+
+    // On enemy destroyed
+    public event Action<BaseTile> onBuildingDestroyed;
+    public void BuildingDestroyed(BaseTile tile)
+    {
+        if (onBuildingDestroyed != null)
+            onBuildingDestroyed(tile);
+    }
+
+    // On enemy destroyed
     public event Action<DefaultEnemy> onEnemyDestroyed;
     public void EnemyDestroyed(DefaultEnemy enemy)
     {

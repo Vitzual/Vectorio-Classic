@@ -75,7 +75,7 @@ public class EnemyHandler : MonoBehaviour
                         if (building != null)
                         {
                             enemies[a].target = building;
-                            RotateTowards(enemies[a].transform, building.transform);
+                            RotateTowards(enemies[a].rotator, building.transform);
                         }
                         else scan = false;
                     }
@@ -86,7 +86,6 @@ public class EnemyHandler : MonoBehaviour
                     a--;
                 }
             }
-
 
             // Move guardians each frame towards their target
             for (int i = 0; i < guardians.Count; i++)

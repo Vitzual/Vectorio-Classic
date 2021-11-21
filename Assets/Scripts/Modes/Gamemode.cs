@@ -25,6 +25,7 @@ public class Gamemode : MonoBehaviour
     public static float time = 0;
 
     [Header("Gamemode Settings")]
+    public bool useEnergizers;
     public bool useResources;
     public bool useHeat; 
     public bool usePower;

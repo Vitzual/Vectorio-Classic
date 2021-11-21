@@ -39,7 +39,7 @@ public class SurvivalData
     public string worldVersion;
     public int worldPlaytime;
 
-    public SurvivalData (Technology data_2, EnemySpawner data_3, Research data_4, int worldPlaytime = 0) 
+    public SurvivalData (/*Technology data_2,*/ EnemySpawner data_3, Research data_4, int worldPlaytime = 0) 
     {
         // Location data
         // buildings = data_1.GetLocationData();
@@ -54,7 +54,7 @@ public class SurvivalData
         power = Resource.active.GetAmount(Resource.CurrencyType.Power);
         
         // Progress data
-        unlocked = data_2.GetSaveData();
+        //unlocked = data_2.GetSaveData();
         //researchTechs = data_4.GetResearchData();
         //bossesDefeated = data_3.bossesDefeated;
 

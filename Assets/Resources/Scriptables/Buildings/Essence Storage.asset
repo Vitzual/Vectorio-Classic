@@ -23,17 +23,18 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 12ad3487-7a8e-4e40-8299-65670dcf7793
   createdAtTicks: 637722267050845671
+  obj: {fileID: 892923713960991008, guid: 0af1154fcdda4bf499de31a413d0f13b, type: 3}
   name: Essence Storage
   description: Holds essence collected from drones. The amount of essence you have
     cannot exceed the amount of storages you have.
+  health: 10
+  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
   inventoryHeader: 1
   inventoryIndex: 6
-  obj: {fileID: 892923713960991008, guid: 0af1154fcdda4bf499de31a413d0f13b, type: 3}
-  material: {fileID: 2100000, guid: c58f546a35e05df4788ffb58dbd900b9, type: 2}
-  health: 10
   unlockable:
     type: 1
     description: Place an Essence Collector
+    requirement: {fileID: 11400000, guid: c55f17a8784181649a3511e4917d6730, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: c55f17a8784181649a3511e4917d6730, type: 2}
@@ -41,6 +42,8 @@ MonoBehaviour:
   gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -63,3 +66,4 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0

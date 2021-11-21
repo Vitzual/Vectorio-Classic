@@ -40,6 +40,13 @@ public class Entity : IdentifiableScriptableObject
     [FoldoutGroup("Grid Variables")]
     public float hologramSize = 1f;
 
+
+    // TEMP
+    [FoldoutGroup("Grid Variables")]
+    public bool useSquareRange;
+    [FoldoutGroup("Grid Variables")]
+    public float squareRange;
+
     // Creates stats
     public virtual void CreateStats(Panel panel)
     {

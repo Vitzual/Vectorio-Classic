@@ -33,12 +33,14 @@ public class DefaultStorage : ResourceTile
             if (icon != null) icon.SetActive(true);
 
             // Add proper amount and return overflow
+            PopupHandler.active.CreatePopup(transform.position, type, "+" + (amount - amountToReturn));
             Resource.active.Add(type, amount - amountToReturn, false);
             return amountToReturn;
         }
         else
         {
             // If does not exceed, add resources and return
+            PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
             Resource.active.Add(type, amount, false);
             return 0;
         }

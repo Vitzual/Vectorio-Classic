@@ -37,7 +37,9 @@ public class DefaultCollector : ResourceTile
     {
         if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
         {
-            Resource.active.Add(type, TakeResource(), true);
+            int amount = TakeResource();
+            Resource.active.Add(type, amount, true);
+            PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
             isFull = false;
         }
     }

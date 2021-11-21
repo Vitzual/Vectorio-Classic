@@ -7,7 +7,7 @@ using UnityEngine;
 public class BuildingController : MonoBehaviour
 {
     // Selected tile
-    public Transform hologram;
+    public Transform hologram, squareRadius, circleRadius;
     private Entity entity;
     private Buildable buildable;
 
@@ -87,6 +87,9 @@ public class BuildingController : MonoBehaviour
     // Sets the selected entity (null to deselect)
     public void SetEntity(Entity entity)
     {
+        circleRadius.gameObject.SetActive(false);
+        squareRadius.gameObject.SetActive(false);
+
         buildable = null;
         this.entity = entity;
         UpdateSprite();
@@ -95,6 +98,28 @@ public class BuildingController : MonoBehaviour
     // Sets the selected building (null to deselect)
     public void SetBuilding(Buildable buildable)
     {
+        DefaultTurret turret = buildable.obj.GetComponent<DefaultTurret>();
+        if (turret != null)
+        {
+            circleRadius.localScale = new Vector3(turret.turret.range, 0, turret.turret.range);
+            circleRadius.gameObject.SetActive(true);
+            squareRadius.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (buildable.building.useSquareRange)
+            {
+                squareRadius.localScale = new Vector2(buildable.building.squareRange, buildable.building.squareRange);
+                circleRadius.gameObject.SetActive(false);
+                squareRadius.gameObject.SetActive(true);
+            }
+            else
+            {
+                circleRadius.gameObject.SetActive(false);
+                squareRadius.gameObject.SetActive(false);
+            }
+        }
+
         this.buildable = buildable;
         entity = buildable.building;
         UpdateSprite();

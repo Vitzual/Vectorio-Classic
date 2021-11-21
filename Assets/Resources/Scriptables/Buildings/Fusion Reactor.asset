@@ -23,17 +23,18 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 38c3b9da-8bd7-4d89-a401-c75c9d7a3080
   createdAtTicks: 637722267057022201
+  obj: {fileID: 1711705259399207453, guid: 83f2ee8f79ac85847863a4629351388b, type: 3}
   name: Fusion Reactor
   description: An upgraded version of the Turbine. Converts heat from the entire
     base into power, and is resistant to cooling buildings.
+  health: 250
+  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
   inventoryHeader: 1
   inventoryIndex: 12
-  obj: {fileID: 1711705259399207453, guid: 83f2ee8f79ac85847863a4629351388b, type: 3}
-  material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
-  health: 250
   unlockable:
     type: 1
     description: Place 50x Turbine's
+    requirement: {fileID: 11400000, guid: 0938ca3a6eb4c9544ac6b29459d05e9e, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: 0938ca3a6eb4c9544ac6b29459d05e9e, type: 2}
@@ -41,6 +42,8 @@ MonoBehaviour:
   gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -59,3 +62,4 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 0
   placedOn: 0
+  engineeringSlots: 0

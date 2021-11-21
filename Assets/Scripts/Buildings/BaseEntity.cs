@@ -30,6 +30,11 @@ public class BaseEntity : MonoBehaviour, IDamageable
 
         if (health <= 0)
             DestroyEntity();
+        else
+        {
+            // Update damage handler
+            Events.active.BuildingHurt(this);
+        }
     }
 
     // Destroys the entity (IDamageable interface method)

@@ -9,6 +9,7 @@ public class DefaultEnemy : BaseEntity
     [HideInInspector] public bool isMenu;
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
+    public Transform rotator;
 
     // Sprite info
     public SpriteRenderer[] border;

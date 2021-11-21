@@ -23,17 +23,18 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: 3505e7a8-581b-4db4-bcc9-ecce264cc25b
   createdAtTicks: 637722267059063150
+  obj: {fileID: 892923713960991008, guid: 938c8be2868513445af6028f86adb7bf, type: 3}
   name: Iridium Collector
   description: Collects iridium from iridium nodes. Can only be placed on iridium
     nodes.
+  health: 25
+  material: {fileID: 2100000, guid: 2a32fb1dc58856b4792eee589c0052d7, type: 2}
   inventoryHeader: 1
   inventoryIndex: 10
-  obj: {fileID: 892923713960991008, guid: 938c8be2868513445af6028f86adb7bf, type: 3}
-  material: {fileID: 2100000, guid: 2a32fb1dc58856b4792eee589c0052d7, type: 2}
-  health: 25
   unlockable:
     type: 3
     description: Defeat the Kraken (second guardian)
+    requirement: {fileID: 11400000, guid: ef20e742d3824b041b92050a0fbe2b11, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: e105d5aab5ae9e746a596432cddc1af5, type: 2}
@@ -41,6 +42,8 @@ MonoBehaviour:
   gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -63,3 +66,4 @@ MonoBehaviour:
     storage: 0
   restrictPlacement: 1
   placedOn: 2
+  engineeringSlots: 0

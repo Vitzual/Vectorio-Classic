@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class NewSaveSystem : MonoBehaviour
 {
-    private static string SaveLocation;
-
     // Save a game
     public static void SaveGame(string name)
     {
@@ -161,9 +159,9 @@ public class NewSaveSystem : MonoBehaviour
     }
 
     // Delete save file
-    public static void DeleteGame(int a)
+    public static void DeleteGame(string path)
     {
-        if (File.Exists(Application.persistentDataPath + "/world_" + a + ".save"))
-            File.Delete(Application.persistentDataPath + "/world_" + a + ".save");
+        if (File.Exists(Application.persistentDataPath + path))
+            File.Delete(Application.persistentDataPath + path);
     }
 }

@@ -9,18 +9,18 @@ public class Popup : MonoBehaviour
     public Image icon;
     public int moveUp;
 
-    // Update is called once per frame
-    void Update()
+    public bool MovePopup()
     {
-        transform.position = new Vector2(transform.position.x, transform.position.y + 0.02f);
         moveUp += 1;
+        transform.position = new Vector2(transform.position.x, transform.position.y + 0.02f);
         if (moveUp > 100) transparency.alpha -= 0.02f;
-        if (transparency.alpha <= 0) Destroy(gameObject);
+        if (transparency.alpha <= 0) return true;
+        return false;
     }
 
-    public void SetPopup(string amount, string name)
+    public void SetPopup(string amount, Resource.CurrencyType type)
     {
         amountText.text = amount;
-        icon.sprite = Resources.Load<Sprite>("Sprites/" + name);
+        icon.sprite = Resource.active.GetSprite(type);
     }
 }

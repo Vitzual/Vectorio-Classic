@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         foreach(Enemy enemy in enemies)
         {
             // If spawn percentage is above the chance value, spawn
-            if (enemy.spawnPercentage >= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)
+            if (enemy.spawnPercentage <= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)
             {
                 // Get location around border
                 if (Random.value > 0.5f)

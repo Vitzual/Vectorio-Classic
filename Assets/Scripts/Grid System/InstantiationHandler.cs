@@ -18,6 +18,7 @@ public class InstantiationHandler : MonoBehaviour
     public int metadata = -1;
 
     // Debug variables
+    public bool debug = false;
     public GameObject debugCircle;
     public List<GameObject> activeCircles;
 
@@ -116,7 +117,10 @@ public class InstantiationHandler : MonoBehaviour
         if (building.cells.Length > 0)
         {
             foreach (Building.Cell cell in building.cells)
+            {
+                if (debug) SpawnDebugCircle(new Vector2(position.x + cell.x, position.y + cell.y));
                 tileGrid.SetCell(Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y)), true, building, obj);
+            }
         }
     }
 
@@ -143,7 +147,7 @@ public class InstantiationHandler : MonoBehaviour
         {
             foreach (Building.Cell cell in building.cells)
             {
-                Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x, position.y));
+                Vector2Int checkTile = Vector2Int.RoundToInt(new Vector2(position.x + cell.x, position.y + cell.y));
                 if (!CheckTile(checkTile, building)) return false;
                 else if (Gamemode.active.useEnergizers && !aocbCheck)
                 {

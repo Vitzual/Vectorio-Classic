@@ -9,6 +9,8 @@ public class DefaultGuardian : DefaultEnemy
     public override void Setup()
     {
         material = guardian.material;
+        health = guardian.health;
+        maxHealth = guardian.health;
     }
 
     // Move towards target
@@ -27,10 +29,13 @@ public class DefaultGuardian : DefaultEnemy
     public override void DestroyEntity()
     {
         // Create particle and set material / trail material
-        ParticleSystemRenderer holder = Instantiate(guardian.particleEffect, transform.position,
-            Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-        holder.material = material;
-        holder.trailMaterial = material;
+        if (guardian.particleEffect != null)
+        {
+            ParticleSystemRenderer holder = Instantiate(guardian.particleEffect, transform.position,
+                Quaternion.identity).GetComponent<ParticleSystemRenderer>();
+            holder.material = material;
+            holder.trailMaterial = material;
+        }
 
         // Invoke enemy death event
         Events.active.GuardianDestroyed(this);

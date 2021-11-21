@@ -25,6 +25,13 @@ public class GhostTile : BaseTile
     // Called when drone reaches target
     public void CreateBuilding()
     {
+        // Check buildable
+        if (buildable == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // Remove cells from Tile grid
         if (InstantiationHandler.active != null)
         {
@@ -33,7 +40,8 @@ public class GhostTile : BaseTile
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
 
             // Create building and destroy this game object
-            InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
+            if (InstantiationHandler.active != null)
+                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
         }
         Destroy(gameObject);
     }

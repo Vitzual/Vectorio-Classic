@@ -45,6 +45,7 @@ public class Gamemode : MonoBehaviour
     // Set active instance
     public void Awake()
     {
+        // Get active instance
         active = this;
     }
 
@@ -55,6 +56,9 @@ public class Gamemode : MonoBehaviour
         Application.targetFrameRate = 999;
         if (isMenu) return;
 
+        // Generate all scriptables
+        ScriptableLoader.GenerateAllScriptables();
+
         // Check difficulty variable
         if (difficulty == null)
         {
@@ -62,6 +66,7 @@ public class Gamemode : MonoBehaviour
             difficulty = _difficulty.SetData(new DifficultyData());
         }
 
+        // Initialize gamemode
         InitGamemode();
 
         if (loadGame && saveData != null) NewSaveSystem.LoadGame(saveData);
@@ -102,13 +107,11 @@ public class Gamemode : MonoBehaviour
     {
         if (isMenu) return;
 
+        EnemyHandler.active.UpdateVariant();
         SetupStartingResources();
 
         useDroneConstruction = !difficulty.enableInstaPlace;
         naturalHeatGrowth = difficulty.naturalHeatGrowth;
-
-        ScriptableLoader.GenerateAllScriptables();
-        EnemyHandler.active.UpdateVariant();
 
         #pragma warning disable CS0612
         if (!loadGame && generateWorld) WorldGenerator.active.GenerateWorldData(seed);

@@ -46,8 +46,8 @@ public class InstantiationHandler : MonoBehaviour
     public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = false)
     {
         // Determine if the building is free
-        bool isFree = CheckFreebie(buildable);
-        Debug.Log(isFree);
+        bool isFree = Resource.active.CheckFreebie(buildable);
+        //Debug.Log(isFree);
 
         // Get buildable
         if (buildable == null)
@@ -261,23 +261,5 @@ public class InstantiationHandler : MonoBehaviour
         foreach (GameObject circle in activeCircles)
             Recycler.AddRecyclable(circle.transform);
         activeCircles = new List<GameObject>();
-    }
-
-    // Check freebie [NEEDS IMPROVEMENTS]
-    public bool CheckFreebie(Buildable buildable)
-    {
-        if (buildable.isCollector)
-        {
-            foreach (DefaultCollector collector in CollectorHandler.active.collectors)
-                if (collector != null) return false;
-            return true;
-        }
-        else if (buildable.isStorage)
-        {
-            foreach (DefaultStorage storage in Resource.active.storages)
-                if (storage != null) return false;
-            return true;
-        }
-        else return false;
     }
 }

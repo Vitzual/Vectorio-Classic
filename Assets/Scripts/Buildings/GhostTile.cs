@@ -7,6 +7,7 @@ public class GhostTile : BaseTile
     // Ghos tile variables
     [HideInInspector] public SpriteRenderer icon;
     public List<Droneport> nearbyPorts;
+    public bool isFree = false;
     public bool droneAssigned = false;
 
     // Get the sprite renderer
@@ -41,9 +42,15 @@ public class GhostTile : BaseTile
 
             // Create building and destroy this game object
             if (InstantiationHandler.active != null)
-                InstantiationHandler.active.CreateBuilding(buildable, transform.position, transform.rotation);
+                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation, true);
         }
         Destroy(gameObject);
+    }
+
+    // Override onClick
+    public override void OnClick()
+    {
+        // Disable
     }
 
     // Override all methods so as to not call them on Ghost tiles

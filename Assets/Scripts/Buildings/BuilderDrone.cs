@@ -33,7 +33,7 @@ public class BuilderDrone : Drone
             buildingIcon.sprite = Sprites.GetSprite("Transparent");
             GhostTile tile = target.GetComponent<GhostTile>();
             if (tile != null) tile.CreateBuilding();
-            buildingPlaced = true;//
+            buildingPlaced = true;
         }
         base.TargetReached();
     }
@@ -52,5 +52,12 @@ public class BuilderDrone : Drone
             Resource.active.RevertResources(target.GetComponent<GhostTile>().buildable);
         }
         base.Destroy();
+    }
+
+    public override bool CheckTarget()
+    {
+        GhostTile tile = target.GetComponent<GhostTile>();
+        if (tile != null && tile.isFree) return true;
+        else return false;
     }
 }

@@ -71,7 +71,7 @@ public class Settings : MonoBehaviour
     public void SaveSettings()
     {
         // Save user settings
-        SaveSystem.SaveSettings(Screen.width, Screen.height, music.volume, soundVolume, Screen.fullScreen, glowMode);
+        //SaveSystem.SaveSettings(Screen.width, Screen.height, music.volume, soundVolume, Screen.fullScreen, glowMode);
     }
 
     public void LoadSettings()

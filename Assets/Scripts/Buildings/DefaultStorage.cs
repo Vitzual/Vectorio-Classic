@@ -9,14 +9,18 @@ public class DefaultStorage : ResourceTile
     // On start, invoke repeating SendGold() method
     public void Awake()
     {
-        Events.active.StoragePlaced(this);
-
         if (Resource.active != null)
         {
             if (amountOverride == 0) Resource.active.AddStorage(type, Research.GetStorageAmount(type));
             else Resource.active.AddStorage(type, amountOverride);
         }
         else Debug.Log("No active resource controller!");
+    }
+
+    // Start method
+    public void Start()
+    {
+        Events.active.StoragePlaced(this);
     }
 
     // Add resource to storage

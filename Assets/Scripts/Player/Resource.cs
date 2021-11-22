@@ -40,7 +40,7 @@ public class Resource : MonoBehaviour
     public Currency[] currencyElements;
 
     // List of all collectors and storages
-    public List<DefaultStorage> storages;
+    public List<DefaultStorage> storages = new List<DefaultStorage>();
 
     // Get active instance
     public void Awake()
@@ -58,7 +58,10 @@ public class Resource : MonoBehaviour
     }
     
     // Add collector or storage
-    public void AddStorageObj(DefaultStorage storage) { if (!storages.Contains(storage)) storages.Add(storage); }
+    public void AddStorageObj(DefaultStorage storage) 
+    { 
+        storages.Add(storage);
+    }
 
     // Update storages 
     public void UpdateStorages(CurrencyType type, int amount, bool add)
@@ -98,17 +101,12 @@ public class Resource : MonoBehaviour
     // Add a resource
     public void Add(CurrencyType type, int amount, bool updateStorages = true)
     {
-        if (type == CurrencyType.Gold)
-            Debug.Log("Received " + amount);
-
         // Update storages
         if (updateStorages) UpdateStorages(type, amount, true);
 
         // Calculate amount
         if (type != CurrencyType.Heat && type != CurrencyType.Power)
         {
-            if (type == CurrencyType.Gold)
-                Debug.Log("Setting with " + currencies[type].storage);
             currencies[type].amount += amount;
             if (currencies[type].amount >= currencies[type].storage)
                 currencies[type].amount = currencies[type].storage;
@@ -163,6 +161,8 @@ public class Resource : MonoBehaviour
     // Remove storage
     public void RemoveStorage(CurrencyType type, int amount)
     {
+        Debug.Log("Removing " + amount);
+
         // Revert the storage
         currencies[type].storage -= amount;
         if (currencies[type].storage <= 0)
@@ -180,7 +180,7 @@ public class Resource : MonoBehaviour
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
         if (updateStorage && currencies[type].storageUI != null)
-            currencies[type].storageUI.text = FormatNumber(currencies[type].storage);
+            currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
 
         if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
         {
@@ -192,11 +192,12 @@ public class Resource : MonoBehaviour
     // Check resources
     public bool CheckResources(Buildable buildable)
     {
+        // Use gamemode resource check
+        if (!Gamemode.active.useResources) return true;
+
         // Check if resource should be used
         foreach (Cost resource in buildable.resources)
         {
-            if (!Gamemode.active.useResources) continue;
-
             if (!resource.storage)
             {
                 int amount = GetAmount(resource.resource);
@@ -212,6 +213,14 @@ public class Resource : MonoBehaviour
         return true;
     }
 
+    // Check freebie [NEEDS IMPROVEMENTS]
+    public bool CheckFreebie(Buildable buildable)
+    {
+        // Check active instances
+        if (buildable.isCollector) return CollectorHandler.active.collectors.Count < 1;
+        else if (buildable.isStorage) return storages.Count < 1;
+        else return false;
+    }
 
     // Remove a resource based on building
     public void ApplyResources(Buildable buildable, bool isFree = false)

@@ -103,7 +103,7 @@ public class Drone : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, target.transform.position) < 0.1f) TargetReached();
         }
-        else if (home != null) target = home;
+        else if (home != null) SetTarget(home);
         else Destroy();
     }
 
@@ -149,6 +149,12 @@ public class Drone : MonoBehaviour
     {
         Vector2 lookDirection = new Vector2(target.transform.position.x, target.transform.position.y) - new Vector2(transform.position.x, transform.position.y);
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);
+    }
+
+    // Checks a targets status
+    public virtual bool CheckTarget()
+    {
+        return true;
     }
 
     // Destroy drone method

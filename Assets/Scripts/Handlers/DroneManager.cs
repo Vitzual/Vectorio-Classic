@@ -117,6 +117,7 @@ public class DroneManager : MonoBehaviour
     }
 
     // Check construction drones
+    // THIS NEEDS TO BE MOVED TO THE DRONES THEMSELVES
     public void UpdateConstructionDrones()
     {
         // Local variables 
@@ -137,7 +138,7 @@ public class DroneManager : MonoBehaviour
                     if (ghostTiles[a] != null)
                     {
                         // Check resources
-                        if (Resource.active.CheckResources(ghostTiles[a].buildable))
+                        if (CheckResources(ghostTiles[a]))
                         {
                             // Check if priority should be ignored
                             if (ignorePriority)
@@ -343,7 +344,20 @@ public class DroneManager : MonoBehaviour
             }
         }
     }
-    
+
+    // Resource check
+    public bool CheckResources(GhostTile ghost)
+    {
+        if (Resource.active.CheckResources(ghost.buildable)) return true;
+        else if (Resource.active.CheckFreebie(ghost.buildable))
+        {
+            if (activeDrones.Count > 0) return false;
+            return true;
+        }
+        else return false;
+    }
+
+
     // Find closest drone port
     public Drone FindClosestDrone(Vector2 position)
     {

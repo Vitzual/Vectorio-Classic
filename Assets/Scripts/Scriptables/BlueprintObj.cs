@@ -59,7 +59,7 @@ public class BlueprintObj : MonoBehaviour
 
     public void Recycle()
     {
-        Resource.active.Add(rarity.applicationCost.resource, rarity.applicationCost.amount / 10);
+        Resource.active.Add(rarity.applicationCost.resource, rarity.applicationCost.amount / 10, true);
         Destroy(gameObject);
     }
 }

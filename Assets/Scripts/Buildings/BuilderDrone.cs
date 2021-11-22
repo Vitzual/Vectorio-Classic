@@ -49,7 +49,7 @@ public class BuilderDrone : Drone
         if (!buildingPlaced && target != null)
         {
             DroneManager.active.ghostTiles.Add(target.GetComponent<GhostTile>());
-            Resource.active.RevertResources(target.GetComponent<GhostTile>().buildable);
+            Resource.active.RevertResources(target.GetComponent<GhostTile>().buildable, true);
         }
         base.Destroy();
     }

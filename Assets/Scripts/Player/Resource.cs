@@ -75,11 +75,27 @@ public class Resource : MonoBehaviour
         {
             if (storages[i] != null && storages[i].type == type)
             {
-                if (add) amountToAdd = storages[i].AddResources(amountToAdd);
+                // If add, add resources
+                if (add)
+                {
+                    if (!storages[i].isFull)
+                    {
+                        amountToAdd = storages[i].AddResources(amountToAdd);
+                        if (amountToAdd <= 0) return;
+                    }
+                }
                 else
                 {
-                    amountToAdd += storages[i].TakeResource();
-                    if (amountToAdd > 0) storages[i].AddResources(amountToAdd);
+                    // Update resources
+                    int resourcesTaken = storages[i].TakeResource();
+                    amountToAdd += resourcesTaken;
+                    currencies[type].amount -= resourcesTaken;
+
+                    if (amountToAdd > 0)
+                    {
+                        storages[i].AddResources(amountToAdd);
+                        return;
+                    }
                 }
             }
             else
@@ -99,18 +115,11 @@ public class Resource : MonoBehaviour
     }
 
     // Add a resource
-    public void Add(CurrencyType type, int amount, bool updateStorages = true)
+    public void Add(CurrencyType type, int amount, bool useStorages)
     {
-        // Update storages
-        if (updateStorages) UpdateStorages(type, amount, true);
-
-        // Calculate amount
-        if (type != CurrencyType.Heat && type != CurrencyType.Power)
-        {
-            currencies[type].amount += amount;
-            if (currencies[type].amount >= currencies[type].storage)
-                currencies[type].amount = currencies[type].storage;
-        }
+        // Heat and power update
+        if (currencies[type].allowOverflow) currencies[type].amount += amount;
+        else if (useStorages) UpdateStorages(type, amount, true);
         else currencies[type].amount += amount;
 
         // Display to UI
@@ -124,18 +133,18 @@ public class Resource : MonoBehaviour
     }
 
     // Remove a resource
-    public void Remove(CurrencyType type, int amount, bool updateStorages = true)
+    public void Remove(CurrencyType type, int amount, bool useStorages)
     {
         // Update storages
-        if (updateStorages) UpdateStorages(type, amount, false);
-
-        // Calculate amount
-        currencies[type].amount -= amount;
-        if (currencies[type].amount <= 0)
-            currencies[type].amount = 0;
+        if (currencies[type].allowOverflow) currencies[type].amount -= amount;
+        else if (useStorages) UpdateStorages(type, amount, false);
+        else currencies[type].amount += amount;
 
         // Display to UI
         UpdateUI(type);
+
+        // Update unlockables
+        Buildables.UpdateResourceUnlockables(type, amount);
 
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
@@ -161,8 +170,6 @@ public class Resource : MonoBehaviour
     // Remove storage
     public void RemoveStorage(CurrencyType type, int amount)
     {
-        Debug.Log("Removing " + amount);
-
         // Revert the storage
         currencies[type].storage -= amount;
         if (currencies[type].storage <= 0)
@@ -240,15 +247,15 @@ public class Resource : MonoBehaviour
                 }
                 else
                 {
-                    if (resource.add) active.Add(resource.resource, resource.amount);
-                    else active.Remove(resource.resource, resource.amount);
+                    if (resource.add) active.Add(resource.resource, resource.amount, true);
+                    else active.Remove(resource.resource, resource.amount, true);
                 }
             }
         }
     }
 
     // Remove a resource based on building
-    public void RevertResources(Buildable buildable)
+    public void RevertResources(Buildable buildable, bool refund = false)
     {
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
@@ -260,10 +267,10 @@ public class Resource : MonoBehaviour
                 if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
                 else active.AddStorage(resource.resource, resource.amount);
             }
-            else
+            else if (refund)
             {
-                if (resource.add) active.Remove(resource.resource, resource.amount);
-                else active.Add(resource.resource, resource.amount);
+                if (resource.add) active.Remove(resource.resource, resource.amount, true);
+                else active.Add(resource.resource, resource.amount, true);
             }
         }
     }

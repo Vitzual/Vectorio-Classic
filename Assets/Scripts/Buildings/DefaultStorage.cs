@@ -6,17 +6,6 @@ public class DefaultStorage : ResourceTile
     public GameObject icon;
     public int amountOverride = 0;
 
-    // On start, invoke repeating SendGold() method
-    public void Awake()
-    {
-        if (Resource.active != null)
-        {
-            if (amountOverride == 0) Resource.active.AddStorage(type, Research.GetStorageAmount(type));
-            else Resource.active.AddStorage(type, amountOverride);
-        }
-        else Debug.Log("No active resource controller!");
-    }
-
     // Start method
     public void Start()
     {
@@ -68,8 +57,8 @@ public class DefaultStorage : ResourceTile
     // On destroy, override method and remove storage
     public override void DestroyEntity()
     {
+        Debug.Log("Passing remove with " + amount);
         Resource.active.Remove(type, amount, false);
-        Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
         base.DestroyEntity();
     }
 }

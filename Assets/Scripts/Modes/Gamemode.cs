@@ -88,7 +88,7 @@ public class Gamemode : MonoBehaviour
             heatTimer -= Time.deltaTime;
             if (heatTimer <= 0)
             {
-                Resource.active.Add(Resource.CurrencyType.Heat, 1);
+                Resource.active.Add(Resource.CurrencyType.Heat, 1, false);
                 difficulty.startingHeat += 1;
                 heatTimer = 1f;
             }
@@ -126,7 +126,7 @@ public class Gamemode : MonoBehaviour
         else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);
 
         // Setup heat storage
-        Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat);
+        Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat, false);
         Resource.active.SetStorage(Resource.CurrencyType.Heat, 10000);
     }
 }

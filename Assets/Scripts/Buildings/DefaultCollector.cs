@@ -35,13 +35,17 @@ public class DefaultCollector : ResourceTile
     // On click override method
     public override void OnClick()
     {
-        if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
+        if (InputController.shiftHeld)
         {
-            int amount = TakeResource();
-            Resource.active.Add(type, amount, true);
-            PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
-            isFull = false;
+            if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
+            {
+                int amount = TakeResource();
+                Resource.active.Add(type, amount, true);
+                PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+                isFull = false;
+            }
         }
+        else base.OnClick();
     }
 
     public override int TakeResource()

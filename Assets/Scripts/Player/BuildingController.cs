@@ -32,7 +32,6 @@ public class BuildingController : MonoBehaviour
         // Set input events
         if (InputEvents.active != null)
         {
-            InputEvents.active.onLeftMouseTapped += TryClickBuilding;
             InputEvents.active.onLeftMousePressed += TryCreateEntity;
             InputEvents.active.onRightMousePressed += TryDestroyBuilding;
             InputEvents.active.onRightMouseReleased += DisableJustDeselected;
@@ -70,6 +69,7 @@ public class BuildingController : MonoBehaviour
         if (StatsPanel.isActive) return;
 
         if (entity != null || buildable != null) CmdCreateBuildable();
+        else TryClickBuilding();
     }
 
     // Create building (command)
@@ -78,7 +78,7 @@ public class BuildingController : MonoBehaviour
     {
         if (InstantiationHandler.active != null)
         {
-            if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation);
+            if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation, Gamemode.active.useDroneConstruction);
             else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, hologram.position, hologram.rotation);
         }
         else Debug.LogError("Scene does not have active building handler!");
@@ -98,11 +98,14 @@ public class BuildingController : MonoBehaviour
     {
         entitySelected = entity != null;
 
-        Buildable buildable = Buildables.RequestBuildable(entity);
-        if (buildable != null)
+        if (entitySelected)
         {
-            SetBuilding(buildable);
-            return;
+            Buildable buildable = Buildables.RequestBuildable(entity);
+            if (buildable != null)
+            {
+                SetBuilding(buildable);
+                return;
+            }
         }
 
         circleRadius.gameObject.SetActive(false);
@@ -118,30 +121,40 @@ public class BuildingController : MonoBehaviour
     {
         entitySelected = buildable != null;
 
-        DefaultTurret turret = buildable.obj.GetComponent<DefaultTurret>();
-        if (turret != null)
+        if (entitySelected)
         {
-            circleRadius.localScale = new Vector3(turret.turret.range, 0, turret.turret.range);
-            circleRadius.gameObject.SetActive(true);
-            squareRadius.gameObject.SetActive(false);
-        }
-        else
-        {
-            if (buildable.building.useSquareRange)
+            DefaultTurret turret = buildable.obj.GetComponent<DefaultTurret>();
+            if (turret != null)
             {
-                squareRadius.localScale = new Vector2(buildable.building.squareRange, buildable.building.squareRange);
-                circleRadius.gameObject.SetActive(false);
-                squareRadius.gameObject.SetActive(true);
+                circleRadius.localScale = new Vector3(turret.turret.range, 0, turret.turret.range);
+                circleRadius.gameObject.SetActive(true);
+                squareRadius.gameObject.SetActive(false);
             }
             else
             {
-                circleRadius.gameObject.SetActive(false);
-                squareRadius.gameObject.SetActive(false);
+                if (buildable.building.useSquareRange)
+                {
+                    squareRadius.localScale = new Vector2(buildable.building.squareRange, buildable.building.squareRange);
+                    circleRadius.gameObject.SetActive(false);
+                    squareRadius.gameObject.SetActive(true);
+                }
+                else
+                {
+                    circleRadius.gameObject.SetActive(false);
+                    squareRadius.gameObject.SetActive(false);
+                }
             }
+            this.buildable = buildable;
+            entity = buildable.building;
+        }
+        else
+        {
+            entity = null;
+            this.buildable = null;
+            circleRadius.gameObject.SetActive(false);
+            squareRadius.gameObject.SetActive(false);
         }
 
-        this.buildable = buildable;
-        entity = buildable.building;
         UpdateSprite();
     }
 

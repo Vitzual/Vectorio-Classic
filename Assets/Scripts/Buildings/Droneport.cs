@@ -114,6 +114,9 @@ public class Droneport : BaseTile
         if (droneCreated) return;
         else droneCreated = true;
 
+        // Set metadata based on drone type
+        metadata = (int)type;
+
         // Loop through drones, and create new one
         drone = Instantiate(DroneManager.active.GetDrone(type), transform.position, Quaternion.identity).GetComponent<Drone>();
 

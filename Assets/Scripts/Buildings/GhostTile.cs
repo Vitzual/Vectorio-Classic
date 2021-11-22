@@ -41,7 +41,7 @@ public class GhostTile : BaseTile
 
             // Create building and destroy this game object
             if (InstantiationHandler.active != null)
-                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
+                InstantiationHandler.active.CreateBuilding(buildable, transform.position, transform.rotation);
         }
         Destroy(gameObject);
     }

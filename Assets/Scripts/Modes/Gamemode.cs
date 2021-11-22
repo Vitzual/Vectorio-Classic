@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 //using Mirror;
 
 // TODO:
@@ -32,8 +33,6 @@ public class Gamemode : MonoBehaviour
     public bool naturalHeatGrowth;
     public bool useEnergizers;
     public bool useResources;
-    public bool useHeat; 
-    public bool usePower;
     public bool useDroneConstruction;
     public bool useEngineering;
     public bool spawnBlueprints;
@@ -56,26 +55,34 @@ public class Gamemode : MonoBehaviour
 
         Application.targetFrameRate = 999;
 
-        if (difficulty == null)
+        try
         {
-            Debug.Log("Difficulty data missing. Creating new one");
-            difficulty = _difficulty.SetData(new DifficultyData());
+            if (difficulty == null)
+            {
+                Debug.Log("Difficulty data missing. Creating new one");
+                difficulty = _difficulty.SetData(new DifficultyData());
+            }
+            GameManager.SetupGame(difficulty, loadGame);
+
+            useDroneConstruction = !difficulty.enableInstaPlace;
+            naturalHeatGrowth = difficulty.naturalHeatGrowth;
+
+            InitGamemode();
+
+            if (loadGame)
+            {
+                Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
+                if (saveData != null) NewSaveSystem.LoadGame(saveData);
+                else Debug.Log("Save data could not be passed!");
+            }
+
+            loadGame = false;
         }
-        GameManager.SetupGame(difficulty, loadGame);
-
-        useDroneConstruction = !difficulty.enableInstaPlace;
-        naturalHeatGrowth = difficulty.naturalHeatGrowth;
-
-        InitGamemode();
-
-        if (loadGame)
+        catch (Exception e)
         {
-            Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
-            if (saveData != null) NewSaveSystem.LoadGame(saveData);
-            else Debug.Log("Save data could not be passed!");
+            Debug.Log("System encountered an error while loading!\n" + e.Message);
+            loadGame = false; 
         }
-
-        loadGame = false;
     }
 
     // Update playtime

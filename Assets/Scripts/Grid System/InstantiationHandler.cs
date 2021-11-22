@@ -43,7 +43,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = true)
+    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = false)
     {
         // Get buildable
         if (buildable == null)
@@ -132,7 +132,9 @@ public class InstantiationHandler : MonoBehaviour
     //[ClientRpc]
     public void RpcDestroyBuilding(Vector3 position)
     {
-        tileGrid.DestroyCell(GetCellCoords(position));
+        Vector2Int coords = GetCellCoords(position);
+        BaseTile tile = tileGrid.RetrieveTile(coords);
+        if (tile != null && tile.isSellable) tileGrid.DestroyCell(coords);
     }
 
     // Checks to make sure tile(s) isn't occupied

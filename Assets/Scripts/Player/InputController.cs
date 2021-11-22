@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    // Shift held
+    public static bool shiftHeld;
+
     // Get the camera
     public Camera cam;
     public GameObject grid;
@@ -34,9 +37,15 @@ public class InputController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(Keybinds.sprint))
+        {
+            shiftHeld = true;
             InputEvents.active.ShiftPressed();
+        }
         if (Input.GetKeyUp(Keybinds.sprint))
+        {
+            shiftHeld = false;
             InputEvents.active.ShiftReleased();
+        }
         if (Input.GetKeyDown(Keybinds.escape))
             InputEvents.active.EscapePressed();
 

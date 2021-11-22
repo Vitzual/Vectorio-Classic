@@ -190,9 +190,7 @@ public class Resource : MonoBehaviour
         // Check if resource should be used
         foreach (Cost resource in buildable.resources)
         {
-            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
-            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
-            else if (!Gamemode.active.useResources) continue;
+            if (!Gamemode.active.useResources) continue;
 
             if (!resource.storage)
             {
@@ -203,7 +201,7 @@ public class Resource : MonoBehaviour
                     if (currency.allowOverflow && amount > GetStorage(resource.resource)) return false;
                     else if (!currency.allowOverflow && amount + resource.amount > GetStorage(resource.resource)) return false;
                 }
-                else if (!resource.add && amount < resource.amount) return false;
+                else if (amount < resource.amount) return false;
             }
         }
         return true;
@@ -216,9 +214,7 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
-            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
-            else if (!Gamemode.active.useResources) continue;
+            if (!Gamemode.active.useResources) continue;
 
             if (Gamemode.loadGame && resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power) continue;
 
@@ -258,9 +254,7 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            if (resource.resource == CurrencyType.Heat && !Gamemode.active.useHeat) continue;
-            else if (resource.resource == CurrencyType.Power && !Gamemode.active.usePower) continue;
-            else if (!Gamemode.active.useResources) continue;
+            if (!Gamemode.active.useResources) continue;
 
             if (resource.storage)
             {

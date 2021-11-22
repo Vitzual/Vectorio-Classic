@@ -6,9 +6,9 @@ public class Drone : MonoBehaviour
     // Drone type
     public enum DroneType
     {
-        Builder,
-        Resource,
-        Fixer
+        Builder = 0,
+        Resource = 1,
+        Fixer = 2
     }
     public DroneType type;
 

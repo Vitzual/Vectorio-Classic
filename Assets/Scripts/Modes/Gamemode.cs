@@ -51,40 +51,22 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public void Start()
     {
+        // Set target frame rate
+        Application.targetFrameRate = 999;
         if (isMenu) return;
 
-        Application.targetFrameRate = 999;
-
-        try
+        // Check difficulty variable
+        if (difficulty == null)
         {
-            if (difficulty == null)
-            {
-                Debug.Log("Difficulty data missing. Creating new one");
-                difficulty = _difficulty.SetData(new DifficultyData());
-            }
-
-            useDroneConstruction = !difficulty.enableInstaPlace;
-            naturalHeatGrowth = difficulty.naturalHeatGrowth;
-
-            InitGamemode();
-
-            if (loadGame)
-            {
-                if (difficulty.startingPower == 0) Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
-                else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);
-                Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat);
-
-                if (saveData != null) NewSaveSystem.LoadGame(saveData);
-                else Debug.Log("Save data could not be passed!");
-            }
-
-            loadGame = false;
+            Debug.Log("Difficulty data missing. Creating new one");
+            difficulty = _difficulty.SetData(new DifficultyData());
         }
-        catch (Exception e)
-        {
-            Debug.Log("System encountered an error while loading!\n" + e.Message);
-            loadGame = false; 
-        }
+
+        InitGamemode();
+
+        if (loadGame && saveData != null) NewSaveSystem.LoadGame(saveData);
+
+        loadGame = false;
     }
 
     // Update playtime
@@ -120,11 +102,28 @@ public class Gamemode : MonoBehaviour
     {
         if (isMenu) return;
 
+        SetupStartingResources();
+
+        useDroneConstruction = !difficulty.enableInstaPlace;
+        naturalHeatGrowth = difficulty.naturalHeatGrowth;
+
         ScriptableLoader.GenerateAllScriptables();
         EnemyHandler.active.UpdateVariant();
 
         #pragma warning disable CS0612
         if (!loadGame && generateWorld) WorldGenerator.active.GenerateWorldData(seed);
         #pragma warning restore CS0612
+    }
+
+    // Setup starting resources
+    public void SetupStartingResources()
+    {
+        // Adjust power storage
+        if (difficulty.startingPower == 0) Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
+        else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);
+
+        // Setup heat storage
+        Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat);
+        Resource.active.SetStorage(Resource.CurrencyType.Heat, 10000);
     }
 }

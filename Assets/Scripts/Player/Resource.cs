@@ -138,7 +138,7 @@ public class Resource : MonoBehaviour
         // Update storages
         if (currencies[type].allowOverflow) currencies[type].amount -= amount;
         else if (useStorages) UpdateStorages(type, amount, false);
-        else currencies[type].amount += amount;
+        else currencies[type].amount -= amount;
 
         // Display to UI
         UpdateUI(type);

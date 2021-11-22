@@ -23,7 +23,7 @@ public class DifficultyData
     public int startingEssence = 0;
     public int startingIridium = 0;
     public int startingPower;
-    //public int startingHeat;
+    public int startingHeat;
 
     // Cost modifiers
     public float buildingCostModifier;

@@ -141,14 +141,6 @@ public class Events : MonoBehaviour
             onTurretRegistered(turret);
     }
 
-    // Invoked when a survival save is loaded
-    public event Action<SurvivalData> onSurvivalLoaded;
-    public void SurvivalLoaded(SurvivalData data)
-    {
-        if (onSurvivalLoaded != null)
-            onSurvivalLoaded(data);
-    }
-
     // Invoked when a hotbar is set
     public event Action<Tile, int> onHotbarSet;
     public void HotbarSet(Tile tile, int slot)

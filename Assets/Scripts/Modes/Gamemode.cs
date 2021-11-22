@@ -12,22 +12,23 @@ public class Gamemode : MonoBehaviour
 {
     // Active instance
     public static Gamemode active;
+    public static Stage stage;
     public static SaveData saveData;
     public static bool loadGame = false;
-    public bool isMenu;
-    public bool isCreative = false;
+
+    // Static save variables
+    public static string saveName = "Unnamed Save";
+    public static string savePath = "/world_1.vectorio";
+    public static DifficultyData difficulty;
+    public static string seed = "Vectorio";
+    public static float time = 0;
 
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
-    public static string saveName = "Unnamed Save";
-    public static string savePath = "/world_1.vectorio";
     public string version;
     public Difficulty _difficulty;
-    public static DifficultyData difficulty;
-    public static string seed = "Vectorio";
-    public static float time = 0;
-    private static float heatTimer = 1f;
+    public float naturalHeatTimer = 1f;
 
     [Header("Gamemode Settings")]
     public bool naturalHeatGrowth;
@@ -54,7 +55,6 @@ public class Gamemode : MonoBehaviour
     {
         // Set target frame rate
         Application.targetFrameRate = 999;
-        if (isMenu) return;
 
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
@@ -77,20 +77,18 @@ public class Gamemode : MonoBehaviour
     // Update playtime
     public void Update()
     {
-        if (isMenu) return;
-
         // Increment time
         time += Time.deltaTime;
 
         // Check heat growth
         if (naturalHeatGrowth)
         {
-            heatTimer -= Time.deltaTime;
-            if (heatTimer <= 0)
+            naturalHeatTimer -= Time.deltaTime;
+            if (naturalHeatTimer <= 0)
             {
                 Resource.active.Add(Resource.CurrencyType.Heat, 1, false);
                 difficulty.startingHeat += 1;
-                heatTimer = 1f;
+                naturalHeatTimer = 1f;
             }
         }
     }
@@ -98,15 +96,12 @@ public class Gamemode : MonoBehaviour
     // Save game
     public void SaveGame()
     {
-        if (isMenu) return;
         NewSaveSystem.SaveGame(savePath);
     }
 
     // Tells the gamemode how to generate inventory
-    public void InitGamemode()
+    public virtual void InitGamemode()
     {
-        if (isMenu) return;
-
         EnemyHandler.active.UpdateVariant();
         SetupStartingResources();
 

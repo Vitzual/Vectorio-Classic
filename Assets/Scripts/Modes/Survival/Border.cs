@@ -4,102 +4,46 @@ using UnityEngine;
 
 public class Border : MonoBehaviour
 {
-    // Border stage
-    public enum Stage
-    {
-        Revenant,
-        Kraken,
-        Atlas,
-        Serpent
-    }
-    public Stage borderStage;
-
-    // Hub
-    public Hub hub;
-
     // Borders
+    public enum Direction
+    {
+        North = 0,
+        East = 1,
+        South = 2,
+        West = 3
+    }
+
+    // Borders variables
+    public Transform[] _borders;
+    public static Transform[] borders;
     public int borderStartSize = 750;
-    public Transform[] borders;
-    public int activatedBorder;
-    public Vector2 newPosition;
-    public float pushSpeed = 50f;
+
+    // Border values
+    public static int north = 750;
+    public static int east = 750;
+    public static int south = 750;
+    public static int west = 750;
 
     // Colors
     public List<SpriteRenderer> frontColors;
     public List<SpriteRenderer> backColors;
 
-    // Border values
-    public static int north = 750;
-    public static int east = 750;
-    public static int south = -750;
-    public static int west = -750;
-
-    // Border adjustment values
-    public int borderIncrement;
-
-    // Active border instance
-    public static Border active;
-
-    public void Awake()
-    {
-        active = this;
-    }
-
     // Grab event
     public void Start()
     {
-        Events.active.fireHubLaser += NextStage;
+        borders = _borders;
 
         north = borderStartSize;
+        borders[(int)Direction.North].position = new Vector2(0, north);
+
         east = borderStartSize;
+        borders[(int)Direction.East].position = new Vector2(east, 0);
+
         south = -borderStartSize;
+        borders[(int)Direction.South].position = new Vector2(0, -south);
+
         west = -borderStartSize;
-    }
-
-    // Set border
-    public void SetBorder(Stage stage)
-    {
-        borderStage = stage;
-        Stage holder = stage;
-        bool maxHeatSet = false;
-
-        if (holder == Stage.Serpent)
-        {
-            if (!maxHeatSet)
-            {
-                Resource.active.AddStorage(Resource.CurrencyType.Heat, 1000000);
-                maxHeatSet = true;
-            }
-
-            west -= borderIncrement;
-            borders[3].position = new Vector2(borders[3].position.x + borderIncrement, 0);
-            holder = Stage.Atlas;
-        }
-        if (holder == Stage.Atlas)
-        {
-            if (!maxHeatSet)
-            {
-                Resource.active.AddStorage(Resource.CurrencyType.Heat, 50000);
-                maxHeatSet = true;
-            }
-
-            south -= borderIncrement;
-            borders[2].position = new Vector2(0, borders[2].position.y - borderIncrement);
-            holder = Stage.Revenant;
-        }
-        if (holder == Stage.Kraken)
-        {
-            if (!maxHeatSet)
-            {
-                Resource.active.AddStorage(Resource.CurrencyType.Heat, 25000);
-                maxHeatSet = true;
-            }
-
-            north += borderIncrement;
-            borders[0].position = new Vector2(0, borders[0].position.y + borderIncrement);
-        }
-
-        if (!maxHeatSet) Resource.active.AddStorage(Resource.CurrencyType.Heat, 10000);
+        borders[(int)Direction.West].position = new Vector2(-west, 0);
     }
 
     // Update border
@@ -112,53 +56,27 @@ public class Border : MonoBehaviour
     }
 
     // Activate push
-    public void PushBorder()
+    public static void PushBorder(Direction direction, float pushSpeed)
     {
-        borders[activatedBorder].position = Vector2.MoveTowards(borders[activatedBorder].position, newPosition, pushSpeed * Time.deltaTime);
+        borders[(int)direction].position = Vector2.MoveTowards(borders[(int)direction].position, GetBorderPosition(direction), pushSpeed * Time.deltaTime);
     }
 
-    // Progress stage
-    public void NextStage()
+    // Get position
+    public static Vector2 GetBorderPosition(Direction direction)
     {
-        if (hub == null) return;
-
-        switch(borderStage)
+        switch(direction)
         {
-            // FIRST GUARDIAN
-            case Stage.Revenant:
-                borderStage = Stage.Kraken;
-                north += borderIncrement;
-                activatedBorder = 0;
-                newPosition = new Vector2(0, borders[0].position.y + borderIncrement);
-                hub.FireLaser(0);
-                break;
-
-            // SECOND GUARDIAN
-            case Stage.Kraken:
-                borderStage = Stage.Atlas;
-                south -= borderIncrement;
-                activatedBorder = 2;
-                newPosition = new Vector2(0, borders[2].position.y - borderIncrement);
-                hub.FireLaser(2);
-                break;
-
-            // THIRD GUARDIAN
-            case Stage.Atlas:
-                borderStage = Stage.Serpent;
-                west -= borderIncrement;
-                activatedBorder = 3;
-                newPosition = new Vector2(borders[3].position.x - borderIncrement, 0);
-                hub.FireLaser(3);
-                break;
-
-            // FOURTH GUARDIAN
-            case Stage.Serpent:
-                east += borderIncrement;
-                activatedBorder = 1;
-                newPosition = new Vector2(borders[1].position.x + borderIncrement, 0);
-                hub.FireLaser(1);
-                break;
+            case Direction.North:
+                return new Vector2(0, north);
+            case Direction.East:
+                return new Vector2(east, 0);
+            case Direction.South:
+                return new Vector2(0, -south);
+            case Direction.West:
+                return new Vector2(-west, 0);
+            default:
+                Debug.Log("Invalid direction passed!");
+                return Vector2.zero;
         }
-       
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine;
 public class Guardian : Enemy
 {
     // Variable stuff
-    public int heat;
-    public int newMaxHeat;
+    public int minimumHeatValue;
+    public int newMaximumHeat;
 
     // Colors
     public Color barBackgroundColor;
@@ -16,6 +16,4 @@ public class Guardian : Enemy
     // Directional stuff
     public ParticleSystem particleEffect;
     public string directionName;
-    public Vector2 guardianSpawnPosition;
-    public Vector2 guardianLerpPosition;
 }

@@ -8,8 +8,6 @@ public class Variant : IdentifiableScriptableObject
     // Variant info
     public new string name;
     [TextArea] public string desc;
-    public float minHeat; // Inclusive
-    public float maxHeat; // Exclusive
 
     // Guardian
     public Guardian guardian;

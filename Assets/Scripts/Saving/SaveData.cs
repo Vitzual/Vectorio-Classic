@@ -33,7 +33,7 @@ public class SaveData
     public BuildingData[] buildings;
     public EnemyData[] enemies;
     public string[] hotbar;
-    public Border.Stage stage;
+    public string stage;
 
     // Difficulty data
     public DifficultyData difficultyData; 

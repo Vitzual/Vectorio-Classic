@@ -73,7 +73,7 @@ public class NewSaveSystem : MonoBehaviour
         saveData.enemies = enemies.ToArray();
 
         // Set the rest of the data
-        saveData.stage = Border.active.borderStage;
+        saveData.stage = Gamemode.stage.InternalID;
         saveData.gold = Resource.active.GetAmount(Resource.CurrencyType.Gold);
         saveData.essence = Resource.active.GetAmount(Resource.CurrencyType.Essence);
         saveData.iridium = Resource.active.GetAmount(Resource.CurrencyType.Iridium);

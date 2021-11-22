@@ -11,11 +11,13 @@ public static class ScriptableLoader
     public static string EnemyPath = "Scriptables/Enemies";
     public static string GuardianPath = "Scriptables/Guardians";
     public static string VariantPath = "Scriptables/Variants";
+    public static string StagePath = "Scriptables/Variants";
 
     public static Dictionary<string, Building> buildings;
     public static Dictionary<string, Enemy> enemies;
     public static Dictionary<string, Guardian> guardians;
     public static Dictionary<string, Variant> variants;
+    public static Dictionary<string, Stage> stages;
 
     public static Dictionary<string, Entity> allLoadedEntities = 
               new Dictionary<string, Entity>();
@@ -111,6 +113,20 @@ public static class ScriptableLoader
         {
             variants.Add(variant.InternalID, variant);
             Debug.Log("Loaded " + variant.name + " with UUID " + variant.InternalID);
+        }
+    }
+
+    // Generates guardians on run
+    public static void GenerateStages()
+    {
+        stages = new Dictionary<string, Stage>();
+        List<Stage> loaded = Resources.LoadAll(StagePath, typeof(Stage)).Cast<Stage>().ToList();
+        Debug.Log("Loaded " + loaded.Count + " stages from " + StagePath);
+
+        foreach (Stage stage in loaded)
+        {
+            stages.Add(stage.InternalID, stage);
+            Debug.Log("Loaded " + stage.name + " with UUID " + stage.InternalID);
         }
     }
 }

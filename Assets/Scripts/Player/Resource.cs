@@ -58,7 +58,7 @@ public class Resource : MonoBehaviour
     }
     
     // Add collector or storage
-    public void AddStorageObj(DefaultStorage storage) { storages.Add(storage); }
+    public void AddStorageObj(DefaultStorage storage) { if (!storages.Contains(storage)) storages.Add(storage); }
 
     // Update storages 
     public void UpdateStorages(CurrencyType type, int amount, bool add)
@@ -98,12 +98,17 @@ public class Resource : MonoBehaviour
     // Add a resource
     public void Add(CurrencyType type, int amount, bool updateStorages = true)
     {
+        if (type == CurrencyType.Gold)
+            Debug.Log("Received " + amount);
+
         // Update storages
         if (updateStorages) UpdateStorages(type, amount, true);
 
         // Calculate amount
         if (type != CurrencyType.Heat && type != CurrencyType.Power)
         {
+            if (type == CurrencyType.Gold)
+                Debug.Log("Setting with " + currencies[type].storage);
             currencies[type].amount += amount;
             if (currencies[type].amount >= currencies[type].storage)
                 currencies[type].amount = currencies[type].storage;
@@ -209,28 +214,14 @@ public class Resource : MonoBehaviour
 
 
     // Remove a resource based on building
-    public void ApplyResources(Buildable buildable, bool refund = false)
+    public void ApplyResources(Buildable buildable, bool isFree = false)
     {
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
             if (!Gamemode.active.useResources) continue;
 
-            if (Gamemode.loadGame && resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power) continue;
-
-            if (refund)
-            {
-                if (resource.storage)
-                {
-                    if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
-                    else active.AddStorage(resource.resource, resource.amount);
-                }
-                else
-                {
-                    if (resource.add) active.Remove(resource.resource, resource.amount);
-                    else active.Add(resource.resource, resource.amount);
-                }
-            }
+            if (isFree && (!resource.add || (resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power))) continue;
             else
             {
                 if (resource.storage)
@@ -246,7 +237,6 @@ public class Resource : MonoBehaviour
             }
         }
     }
-
 
     // Remove a resource based on building
     public void RevertResources(Buildable buildable)

@@ -128,14 +128,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metadata: -1
   material: {fileID: 0}
   cells: []
+  saveBuilding: 1
+  isSellable: 1
+  droneCreated: 0
+  hubDrone: 0
   building: {fileID: 11400000, guid: ab3b3be9f85513c42a77399d97112f00, type: 2}
   drone: {fileID: 0}
-  _drones:
-  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
   leftPanel: {fileID: 4945689485672269130}
   rightPanel: {fileID: 5767218208579133241}
+  blueLight: {fileID: 0}
+  yellowLight: {fileID: 0}
+  greenLight: {fileID: 0}
 --- !u!1 &1342226018653652856
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +211,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -369,7 +375,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -451,7 +457,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -510,14 +516,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metadata: -1
   material: {fileID: 0}
   cells: []
+  saveBuilding: 1
+  isSellable: 1
+  droneCreated: 0
+  hubDrone: 0
   building: {fileID: 11400000, guid: ab3b3be9f85513c42a77399d97112f00, type: 2}
   drone: {fileID: 0}
-  _drones:
-  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
   leftPanel: {fileID: 5628721945482800216}
   rightPanel: {fileID: 1455566175975398763}
+  blueLight: {fileID: 0}
+  yellowLight: {fileID: 0}
+  greenLight: {fileID: 0}
 --- !u!1 &5011181128688804725
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,14 +576,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metadata: -1
   material: {fileID: 0}
   cells: []
+  saveBuilding: 1
+  isSellable: 1
+  droneCreated: 0
+  hubDrone: 0
   building: {fileID: 11400000, guid: ab3b3be9f85513c42a77399d97112f00, type: 2}
   drone: {fileID: 0}
-  _drones:
-  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
   leftPanel: {fileID: 7483824076929737705}
   rightPanel: {fileID: 3925339132707073627}
+  blueLight: {fileID: 0}
+  yellowLight: {fileID: 0}
+  greenLight: {fileID: 0}
 --- !u!1 &5449982485912265069
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +682,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5628938638249383948}
   - component: {fileID: 7303908323709254979}
-  - component: {fileID: -9077095117432642599}
   - component: {fileID: 5628938638249383939}
   - component: {fileID: -7012002355572215757}
   m_Layer: 8
@@ -713,34 +730,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8ac603957231146b7ec8d914d8b476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metadata: -1
   material: {fileID: 0}
   cells: []
+  saveBuilding: 1
+  isSellable: 1
   hub: {fileID: 0}
+  endScreen: {fileID: 0}
+  border: {fileID: 0}
   chargeParticle: {fileID: 0}
-  laserParticle: {fileID: 0}
+  laserParticles: []
   laserSound: {fileID: 0}
+  warningSound: {fileID: 0}
+  music: {fileID: 0}
+  UI: {fileID: 0}
   laserFiring: 0
   laserPart: 0
+  laserIndex: 0
   cooldown: 5
-  UI: {fileID: 0}
---- !u!114 &-9077095117432642599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628938638249383938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da35ec5b04c1e40429e67f3bcde01e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  cells: []
-  type: 0
-  amount: 0
-  isFull: 0
-  icon: {fileID: 0}
 --- !u!212 &5628938638249383939
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1133,7 +1140,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1215,7 +1222,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6271,7 +6278,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6353,7 +6360,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 4209790674dd05548b0d4c0d3df200e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6412,14 +6419,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metadata: -1
   material: {fileID: 0}
   cells: []
+  saveBuilding: 1
+  isSellable: 1
+  droneCreated: 0
+  hubDrone: 0
   building: {fileID: 11400000, guid: ab3b3be9f85513c42a77399d97112f00, type: 2}
   drone: {fileID: 0}
-  _drones:
-  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
   leftPanel: {fileID: 3240315256273102134}
   rightPanel: {fileID: 8289581150143912529}
+  blueLight: {fileID: 0}
+  yellowLight: {fileID: 0}
+  greenLight: {fileID: 0}
 --- !u!1 &8288612179102417783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6489,7 +6502,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 50330467
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9133891441b9e734d893281075f0cff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7184,15 +7197,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 828965319868509043, guid: 69671afc7e7bdcb48a079c77597519a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 69671afc7e7bdcb48a079c77597519a0, type: 3}
---- !u!4 &357406743588010076 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6557126719268855711, guid: 69671afc7e7bdcb48a079c77597519a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 6776329232073779139}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5326258853363536907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1720647451701490632, guid: 69671afc7e7bdcb48a079c77597519a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6776329232073779139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &357406743588010076 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6557126719268855711, guid: 69671afc7e7bdcb48a079c77597519a0,
     type: 3}
   m_PrefabInstance: {fileID: 6776329232073779139}
   m_PrefabAsset: {fileID: 0}

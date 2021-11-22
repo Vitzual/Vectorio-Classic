@@ -8,13 +8,17 @@ public class Buildable
     public Buildable(Building building)
     {
         this.building = building;
+        obj = building.obj;
+        discount = 1f;
+
         showButtons = new List<MenuButton>();
         unlockable = building.unlockable;
-        discount = 1f;
         resources = building.resources;
-        obj = building.obj;
         isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
+
+        isCollector = obj.GetComponent<DefaultCollector>() != null;
+        isStorage = obj.GetComponent<DefaultStorage>() != null;
 
         Debug.Log("Registered " + building.name + " buildable and linked to " + building.InternalID);
     }
@@ -27,6 +31,10 @@ public class Buildable
     public Unlockable unlockable;
     public int tracked;
     public bool isUnlocked;
+
+    // Resource variables (THIS NEEDS TO BE CHANGED)
+    public bool isCollector;
+    public bool isStorage;
 
     // Building variables
     public float discount;

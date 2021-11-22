@@ -45,6 +45,10 @@ public class InstantiationHandler : MonoBehaviour
     // Creates a building
     public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = false)
     {
+        // Determine if the building is free
+        bool isFree = CheckFreebie(buildable);
+        Debug.Log(isFree);
+
         // Get buildable
         if (buildable == null)
         {
@@ -53,14 +57,14 @@ public class InstantiationHandler : MonoBehaviour
         }
 
         // Check if resource should be used
-        if (!isGhost && !Resource.active.CheckResources(buildable)) return;
+        if (!isFree && !isGhost && !Resource.active.CheckResources(buildable)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return;
 
         // Instantiate the object like usual
         if (Gamemode.active.useDroneConstruction && isGhost) RpcInstatiateGhost(buildable, position, rotation);
-        else RpcInstantiateBuilding(buildable, position, rotation);
+        else RpcInstantiateBuilding(buildable, position, rotation, isFree);
     }
 
     //[ClientRpc]
@@ -74,7 +78,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, float health = -1)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free = false, float health = -1)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -85,8 +89,8 @@ public class InstantiationHandler : MonoBehaviour
         SetCells(buildable.building, position, lastBuilding);
 
         // Update resource values promptly
-        if (!Gamemode.active.useDroneConstruction)
-            Resource.active.ApplyResources(buildable);
+        if (!Gamemode.active.useDroneConstruction || Gamemode.loadGame)
+            Resource.active.ApplyResources(buildable, free);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
@@ -101,7 +105,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    private void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation)
+    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
@@ -257,5 +261,23 @@ public class InstantiationHandler : MonoBehaviour
         foreach (GameObject circle in activeCircles)
             Recycler.AddRecyclable(circle.transform);
         activeCircles = new List<GameObject>();
+    }
+
+    // Check freebie [NEEDS IMPROVEMENTS]
+    public bool CheckFreebie(Buildable buildable)
+    {
+        if (buildable.isCollector)
+        {
+            foreach (DefaultCollector collector in CollectorHandler.active.collectors)
+                if (collector != null) return false;
+            return true;
+        }
+        else if (buildable.isStorage)
+        {
+            foreach (DefaultStorage storage in Resource.active.storages)
+                if (storage != null) return false;
+            return true;
+        }
+        else return false;
     }
 }

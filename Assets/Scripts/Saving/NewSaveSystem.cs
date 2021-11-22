@@ -39,6 +39,7 @@ public class NewSaveSystem : MonoBehaviour
                 buildingData.metadata = new int[1];
                 buildingData.metadata[0] = tile.metadata;
                 buildingData.blueprintIDs = new string[0];
+                buildingData.ghostBuilding = tile.GetComponent<GhostTile>() != null;
 
                 buildings.Add(buildingData);
             }
@@ -63,6 +64,9 @@ public class NewSaveSystem : MonoBehaviour
                 }
             }
         }
+
+        // Set difficulty
+        saveData.difficultyData = Gamemode.difficulty;
 
         // Set lists
         saveData.buildings = buildings.ToArray();
@@ -90,16 +94,8 @@ public class NewSaveSystem : MonoBehaviour
     // Load a game 
     public static void LoadGame(SaveData saveData)
     {
-        // Set use resources
-        bool useResources = Gamemode.active.useResources;
-
         // Set normal data
         Border.active.SetBorder(saveData.stage);
-
-        // Check resources
-        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
-        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);
-        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium, true);
 
         // Set string variables
         Gamemode.saveName = saveData.worldName;
@@ -116,12 +112,27 @@ public class NewSaveSystem : MonoBehaviour
         {
             if (ScriptableLoader.buildings.ContainsKey(buildingData.id))
             {
+                // Get buildable
                 Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[buildingData.id]);
+
+                // Set metadata and create building / ghost tile
                 InstantiationHandler.active.metadata = buildingData.metadata[0];
-                InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord),
-                    Quaternion.identity, buildingData.health);
+
+                // Create ghost building if data exists
+                #pragma warning disable CS0472 
+                if (buildingData.ghostBuilding != null && buildingData.ghostBuilding) InstantiationHandler.active.RpcInstatiateGhost(buildable, 
+                    new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity);
+                #pragma warning restore CS0472
+
+                // If data doesn't exist or is not a ghost building, create it
+                else
+                {
+                    InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord), 
+                        Quaternion.identity, true, buildingData.health);
+                }
+
+                // Reset metadat
                 InstantiationHandler.active.metadata = -1;
-                Resource.active.ApplyResources(buildable);
             }
             else Debug.Log("Building with ID " + buildingData.id + " could not be found!");
         }
@@ -136,6 +147,12 @@ public class NewSaveSystem : MonoBehaviour
             }
             else Debug.Log("Enemy with ID " + enemyData.id + " could not be found!");
         }
+
+        // Check resources
+        Debug.Log("Adding " + saveData.gold);
+        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
+        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);
+        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium, true);
     }
 
     // Delete save file

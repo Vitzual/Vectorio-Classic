@@ -15,6 +15,7 @@ public class SaveData
         public float health;
         public int[] metadata;
         public string[] blueprintIDs;
+        public bool ghostBuilding;
     }
 
     // Enemy struct

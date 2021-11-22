@@ -11704,7 +11704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 0
   m_VerticalFit: 0
 --- !u!222 &448974634
 CanvasRenderer:
@@ -11731,7 +11731,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 236.21, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &450919720
 GameObject:
@@ -45262,26 +45262,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
-        type: 3}
-      propertyPath: isStorage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
-        type: 3}
-      propertyPath: isSellable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
-        type: 3}
-      propertyPath: saveBuilding
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -9077095117432642599, guid: d4f5265620f10a748a88759a975e86b0,
-        type: 3}
-      propertyPath: amountOverride
-      value: 10000
-      objectReference: {fileID: 0}
     - target: {fileID: -7012002355572215757, guid: d4f5265620f10a748a88759a975e86b0,
         type: 3}
       propertyPath: m_Size.x
@@ -77205,9 +77185,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -77447,9 +77427,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -79255,9 +79235,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -81619,9 +81599,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -81914,9 +81894,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -82238,9 +82218,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -82929,7 +82909,7 @@ MonoBehaviour:
   _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   naturalHeatGrowth: 0
   useEnergizers: 1
-  useResources: 0
+  useResources: 1
   useDroneConstruction: 0
   useEngineering: 0
   spawnBlueprints: 0
@@ -90232,7 +90212,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!225 &6168857120735640659
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -90339,7 +90319,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!223 &6168857120966564240
 Canvas:
   m_ObjectHideFlags: 0
@@ -90817,7 +90797,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!114 &6168857122118992664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90834,7 +90814,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!225 &6168857122118992666
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -90905,7 +90885,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!225 &6168857122164120339
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -91024,7 +91004,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!225 &6168857122406815022
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -91095,7 +91075,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6274871
 --- !u!225 &6168857122460289171
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -91984,9 +91964,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -92302,9 +92282,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -92527,9 +92507,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SelectHotbar
+      - m_Target: {fileID: 7000838121099770666}
+        m_TargetAssemblyTypeName: Hotbar, Assembly-CSharp
+        m_MethodName: UseSlot
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

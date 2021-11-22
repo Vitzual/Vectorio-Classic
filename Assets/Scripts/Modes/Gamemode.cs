@@ -71,7 +71,10 @@ public class Gamemode : MonoBehaviour
 
             if (loadGame)
             {
-                Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
+                if (difficulty.startingPower == 0) Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
+                else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);
+                Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat);
+
                 if (saveData != null) NewSaveSystem.LoadGame(saveData);
                 else Debug.Log("Save data could not be passed!");
             }
@@ -100,6 +103,7 @@ public class Gamemode : MonoBehaviour
             if (heatTimer <= 0)
             {
                 Resource.active.Add(Resource.CurrencyType.Heat, 1);
+                difficulty.startingHeat += 1;
                 heatTimer = 1f;
             }
         }

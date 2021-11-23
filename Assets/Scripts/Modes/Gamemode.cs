@@ -77,13 +77,16 @@ public class Gamemode : MonoBehaviour
         // Initialize gamemode
         InitGamemode();
 
+        // Load game 
         if (loadGame && saveData != null)
         {
             NewSaveSystem.LoadGame(saveData);
             Border.UpdateStage();
             Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
-            Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
         }
+
+        // Setup starting resources
+        SetupStartingResources();
 
         loadGame = false;
     }
@@ -116,8 +119,6 @@ public class Gamemode : MonoBehaviour
     // Tells the gamemode how to generate inventory
     public virtual void InitGamemode()
     {
-        SetupStartingResources();
-
         useDroneConstruction = !difficulty.enableInstaPlace;
         naturalHeatGrowth = difficulty.naturalHeatGrowth;
 
@@ -129,6 +130,9 @@ public class Gamemode : MonoBehaviour
     // Setup starting resources
     public void SetupStartingResources()
     {
+        // Set heat
+        Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
+
         // Adjust power storage
         if (difficulty.startingPower == 0) Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
         else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);

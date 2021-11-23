@@ -150,6 +150,9 @@ public class NewSaveSystem : MonoBehaviour
             else Debug.Log("Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
         }
 
+        // Get value
+        Debug.Log("There is " + saveData.gold + " gold you stupid moron");
+
         // Check resources
         Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
         Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);

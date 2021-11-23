@@ -6,8 +6,8 @@ public class DefaultStorage : ResourceTile
     public GameObject icon;
     public int amountOverride = 0;
 
-    // Start method
-    public void Start()
+    // Awake method
+    public void Awake()
     {
         Events.active.StoragePlaced(this);
 

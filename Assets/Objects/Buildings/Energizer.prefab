@@ -49,7 +49,7 @@ GameObject:
   m_TagString: Production
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &165687244735643869
 Transform:
@@ -82,9 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32cd14240c700c84ab1f4155e337b882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  building: {fileID: 0}
+  metadata: -1
+  material: {fileID: 0}
+  cells: []
+  saveBuilding: 1
+  isSellable: 1
   TileLayer:
     serializedVersion: 2
     m_Bits: 256

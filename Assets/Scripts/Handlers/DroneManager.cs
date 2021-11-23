@@ -1,4 +1,5 @@
 ﻿// This script handles all active drones each frame
+using Michsky.UI.ModernUIPack;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +47,9 @@ public class DroneManager : MonoBehaviour
     // Drones actively moving
     public List<Drone> activeDrones;
 
+    // Builder drone UI element
+    public ProgressBar dronesAvailable;
+
     // Add a ghost
     public void AddGhost(GhostTile ghost)
     {
@@ -56,8 +60,11 @@ public class DroneManager : MonoBehaviour
     // Add a drone
     public void AddDrone(Drone drone)
     {
-        if (drone.type == Drone.DroneType.Builder) 
+        if (drone.type == Drone.DroneType.Builder)
+        {
             builderDrones.Add(drone);
+            UpdateDroneBar();
+        }
         else if (drone.type == Drone.DroneType.Resource)
             resourceDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Fixer)
@@ -67,9 +74,17 @@ public class DroneManager : MonoBehaviour
     // Move drones
     public void Update()
     {
+        if (Settings.paused) return;
+
         UpdateConstructionDrones();
         UpdateResourceDrones();
         UpdateActiveDrones();
+    }
+
+    // Update drone bar
+    public void UpdateDroneBar()
+    {
+        dronesAvailable.currentPercent = 1f;
     }
 
     // Update active drones

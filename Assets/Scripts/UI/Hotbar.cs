@@ -27,14 +27,12 @@ public class Hotbar : MonoBehaviour
     // Broadcasts to building handler
     public void UseSlot(int index)
     {
-        Debug.Log("Using slot " + index);
-
         if (panel != null && panel.settingHotbar)
         {
             SetSlot(panel.entity, index);
             panel.DisableHotbar();
         }
-        else
+        else if (slots[index].entity != null)
         {
             if (index < slots.Length && index >= 0)
                 UIEvents.active.EntityPressed(slots[index].entity);

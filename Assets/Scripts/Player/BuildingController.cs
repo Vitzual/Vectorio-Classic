@@ -9,6 +9,9 @@ public class BuildingController : MonoBehaviour
     // Entity selected
     public static bool entitySelected = false;
 
+    // UI layer
+    public LayerMask UI;
+
     // Selected tile
     public Transform hologram, squareRadius, circleRadius;
     private Entity entity;

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -20,9 +22,9 @@ public class InputController : MonoBehaviour
     {
         if (!NewInterface.isOpen)
         {
-            if (Input.GetKeyDown(Keybinds.lmb))
+            if (Input.GetKeyDown(Keybinds.lmb) && !InterfaceCheck())
                 InputEvents.active.LeftMouseTapped();
-            if (Input.GetKey(Keybinds.lmb))
+            if (Input.GetKey(Keybinds.lmb) && !InterfaceCheck())
                 InputEvents.active.LeftMousePressed();
             if (Input.GetKeyUp(Keybinds.lmb))
                 InputEvents.active.LeftMouseReleased();
@@ -50,6 +52,17 @@ public class InputController : MonoBehaviour
             InputEvents.active.EscapePressed();
 
         CheckNumberInput();
+    }
+
+    // Check UI elements 
+    private bool InterfaceCheck()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 
     // Checks if for numeric input

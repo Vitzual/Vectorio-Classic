@@ -43,6 +43,9 @@ public class GuardianHandler : MonoBehaviour
         // Check if animation playnig
         if (laserFiring) GuardianAnimation();
 
+        // Check if paused
+        if (Settings.paused) return;
+
         // Move guardians each frame towards their target
         for (int i = 0; i < guardians.Count; i++)
         {

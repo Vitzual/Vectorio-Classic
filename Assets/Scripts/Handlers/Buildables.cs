@@ -31,9 +31,13 @@ public static class Buildables
             if (!building.unlockable.unlocked && !Gamemode.active.unlockEverything)
             {
                 if (unlockables.ContainsKey(building.unlockable.type))
+                {
+                    Debug.Log("Setting " + building.name + " status to locked with requirement: [" + building.unlockable.amount + "]: " + building.unlockable.description);
                     unlockables[building.unlockable.type].Add(newBuildable);
+                }
                 else
                 {
+                    Debug.Log("Setting " + building.name + " status to locked with requirement [" + building.unlockable.amount + "]: " + building.unlockable.description);
                     unlockables.Add(building.unlockable.type, new List<Buildable>());
                     unlockables[building.unlockable.type].Add(newBuildable);
                 }
@@ -97,7 +101,7 @@ public static class Buildables
     }
 
     // Update resource unlocks
-    public static void UpdateResourceUnlockables(Resource.CurrencyType resourceType, int amount)
+    public static void UpdateResourceUnlockables(Resource.CurrencyType resourceType)
     {
         // Get unlock type
         Unlockable.UnlockType unlockType = Unlockable.UnlockType.ReachResourceAmount;
@@ -113,7 +117,7 @@ public static class Buildables
             unlockable = unlockables[unlockType][i].unlockable;
             if (unlockable.resource == resourceType)
             {
-                unlockables[unlockType][i].tracked = amount;
+                unlockables[unlockType][i].tracked = Resource.active.currencies[resourceType].amount;
                 if (unlockables[unlockType][i].tracked >= unlockable.amount)
                 {
                     UnlockBuildable(unlockables[unlockType][i]);

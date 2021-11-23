@@ -126,7 +126,7 @@ public class Resource : MonoBehaviour
         UpdateUI(type);
 
         // Update unlockables
-        Buildables.UpdateResourceUnlockables(type, amount);
+        Buildables.UpdateResourceUnlockables(type);
 
         // Update variant if heat passed
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
@@ -144,7 +144,7 @@ public class Resource : MonoBehaviour
         UpdateUI(type);
 
         // Update unlockables
-        Buildables.UpdateResourceUnlockables(type, amount);
+        Buildables.UpdateResourceUnlockables(type);
 
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }

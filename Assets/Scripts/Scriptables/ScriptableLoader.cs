@@ -11,7 +11,7 @@ public static class ScriptableLoader
     public static string EnemyPath = "Scriptables/Enemies";
     public static string GuardianPath = "Scriptables/Guardians";
     public static string VariantPath = "Scriptables/Variants";
-    public static string StagePath = "Scriptables/Variants";
+    public static string StagePath = "Scriptables/Stages";
 
     public static Dictionary<string, Building> buildings;
     public static Dictionary<string, Enemy> enemies;
@@ -36,6 +36,7 @@ public static class ScriptableLoader
         GenerateEnemies();
         GenerateGuardians();
         GenerateVariants();
+        GenerateStages();
     }
 
     // Generates buildings on run

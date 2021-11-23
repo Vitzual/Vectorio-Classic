@@ -5,25 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Stage", menuName = "Stage")]
 public class Stage : IdentifiableScriptableObject
 {
-    // Guardian stage
-    public enum GuardianStage
-    {
-        Revenant,
-        Kraken,
-        Atlas,
-        Serpent
-    }
-
     // Stage variables
     public Variant variant;
     public Guardian guardian;
     public Vector2 guardianSpawnPos;
-    public GuardianStage type;
-    public Border.Direction direction;
+    public Border.Direction guardianDirection;
+
+    // Materials
+    public Material borderOutline;
+    public Color borderFill;
 
     // Heat variables
     public int heat; // Exclusive
 
     // Next stage
+    public Stage previousStage;
     public Stage nextStage;
 }

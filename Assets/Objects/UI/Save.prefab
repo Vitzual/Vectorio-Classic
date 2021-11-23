@@ -66,7 +66,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577181d3a761597429286862ff8cdbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveData:
+    buildings: []
+    enemies: []
+    hotbar: []
+    stage: 
+    difficultyData:
+      name: 
+      description: 
+      enableInstaPlace: 0
+      naturalHeatGrowth: 0
+      goldSpawnModifier: 0
+      essenceSpawnModifier: 0
+      iridiumSpawnModifier: 0
+      startingGold: 0
+      startingEssence: 0
+      startingIridium: 0
+      startingPower: 0
+      startingHeat: 0
+      buildingCostModifier: 0
+      buildingHealthModifier: 0
+      buildingDamageModifier: 0
+      enemyHealthModifier: 0
+      enemyDamageModifier: 0
+      enemySpeedModifier: 0
+      enemySpawnrateModifier: 0
+    gold: 0
+    essence: 0
+    iridium: 0
+    worldName: 
+    worldMode: 
+    worldSeed: 
+    worldVersion: 
+    worldPlaytime: 0
+    worldCompletion: 0
+  savePath: 
   obj: {fileID: 3492721017999740769}
+  outdated: 0
   rect: {fileID: 3492721017999740768}
   icon: {fileID: 4462306277798893772}
   name: {fileID: 4462306277195392007}
@@ -1701,7 +1737,19 @@ MonoBehaviour:
   buttonText: DELETE SAVE
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5814663109470627148}
+        m_TargetAssemblyTypeName: SaveButton, Assembly-CSharp
+        m_MethodName: DeleteSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
       m_Calls: []

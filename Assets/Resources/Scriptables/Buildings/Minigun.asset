@@ -39,10 +39,11 @@ MonoBehaviour:
     resource: 0
     entity: {fileID: 11400000, guid: 502e408b471788d468bd9962ab25477a, type: 2}
     amount: 1
-    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -56,14 +57,17 @@ MonoBehaviour:
     add: 0
     storage: 0
   - resource: 4
-    amount: 200
-    add: 1
-    storage: 0
-  - resource: 3
     amount: 150
     add: 1
     storage: 0
+  - resource: 3
+    amount: 180
+    add: 1
+    storage: 0
+  radialCheck: 0
   restrictPlacement: 0
+  isSellable: 1
+  isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
   damage: 50

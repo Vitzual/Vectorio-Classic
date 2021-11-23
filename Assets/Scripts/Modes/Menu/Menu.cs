@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System;
+using Michsky.UI.ModernUIPack;
 
 public class Menu : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class Menu : MonoBehaviour
     public Transform saveList;
     public GameObject loadingScreen;
     public int availableSave = -1;
+
+    // Outdated info
+    public int deleteIndex = -1;
+    public string deletePath = "";
+    public ModalWindowManager confirmDelete;
+    public int outdatedIndex = -1;
+    public ModalWindowManager outdated;
 
     [System.Serializable]
     public class MenuButton
@@ -110,6 +118,17 @@ public class Menu : MonoBehaviour
         cameraMoving = true;
     }
 
+    // Delete agame
+    public void DeleteGame()
+    {
+        if (deletePath != "" && deleteIndex != -1)
+        {
+            NewSaveSystem.DeleteGame(deletePath);
+            Destroy(saveButtons[deleteIndex].gameObject);
+            confirmDelete.CloseWindow();
+        }
+    }
+
     // Enable new game menu
     public void EnableNewGameMenu()
     {
@@ -155,10 +174,14 @@ public class Menu : MonoBehaviour
 
                 // Apply to save buttons
                 button.saveData = saveData;
+                button.savePath = path;
                 button.name.text = saveData.worldName;
                 button.pathNumber = i;
                 button.seed = saveData.worldSeed;
                 button.mode = saveData.worldMode;
+
+                // Check for outdated thing
+                if (saveData.worldVersion == "v0.3") button.outdated = true;
 
                 // Apply playtime
                 TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);
@@ -177,8 +200,15 @@ public class Menu : MonoBehaviour
     }
 
     // Load a save
-    public void LoadSave(int number)
+    public void LoadSave(int number, bool warning)
     {
+        if (warning)
+        {
+            outdatedIndex = number;
+            outdated.OpenWindow();
+            return;
+        }
+
         SaveButton button = saveButtons[number];
 
         if (button == null)
@@ -195,6 +225,12 @@ public class Menu : MonoBehaviour
         Gamemode.loadGame = true;
 
         StartGame(button.mode, number);
+    }
+
+    // Confirm load
+    public void ConfirmLoad()
+    {
+        LoadSave(outdatedIndex, false);
     }
 
     // Starts a game

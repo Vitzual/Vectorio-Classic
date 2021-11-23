@@ -94,13 +94,14 @@ public class NewSaveSystem : MonoBehaviour
     // Load a game 
     public static void LoadGame(SaveData saveData)
     {
-        // Set normal data
-        Border.active.SetBorder(saveData.stage);
-
         // Set string variables
         Gamemode.saveName = saveData.worldName;
         Gamemode.seed = saveData.worldSeed;
         Gamemode.time = saveData.worldPlaytime;
+
+        // Get active border stage
+        if (ScriptableLoader.stages.ContainsKey(saveData.stage))
+            Gamemode.stage = ScriptableLoader.stages[saveData.stage];
 
         // Generate world data
         #pragma warning disable CS0612 
@@ -140,16 +141,16 @@ public class NewSaveSystem : MonoBehaviour
         // Apply enemies
         foreach (SaveData.EnemyData enemyData in saveData.enemies)
         {
-            if (ScriptableLoader.enemies.ContainsKey(enemyData.id))
+            if (ScriptableLoader.enemies.ContainsKey(enemyData.id) && ScriptableLoader.variants.ContainsKey(enemyData.variantID))
             {
                 Enemy enemy = ScriptableLoader.enemies[enemyData.id];
-                EnemyHandler.active.CreateEntity(enemy, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
+                Variant variant = ScriptableLoader.variants[enemyData.variantID];
+                EnemyHandler.active.CreateEntity(enemy, variant, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
             }
-            else Debug.Log("Enemy with ID " + enemyData.id + " could not be found!");
+            else Debug.Log("Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
         }
 
         // Check resources
-        Debug.Log("Adding " + saveData.gold);
         Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
         Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);
         Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium, true);
@@ -158,7 +159,8 @@ public class NewSaveSystem : MonoBehaviour
     // Delete save file
     public static void DeleteGame(string path)
     {
-        if (File.Exists(Application.persistentDataPath + path))
-            File.Delete(Application.persistentDataPath + path);
+        if (File.Exists(path)) 
+            File.Delete(path);
+        else Debug.Log("The file " + path + " does not exist!");
     }
 }

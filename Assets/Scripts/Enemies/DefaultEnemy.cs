@@ -19,7 +19,14 @@ public class DefaultEnemy : BaseEntity
 
     public override void Setup()
     {
-        variant = EnemyHandler.active.variant;
+        // Check applied variant
+        if (variant == null)
+        {
+            Debug.Log("Enemy was instantiated with a null variant!");
+            Destroy(gameObject);
+            return;
+        }
+
         material = variant.border;
 
         foreach (SpriteRenderer a in border)

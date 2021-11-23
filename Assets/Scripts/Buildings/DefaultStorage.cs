@@ -57,7 +57,6 @@ public class DefaultStorage : ResourceTile
     // On destroy, override method and remove storage
     public override void DestroyEntity()
     {
-        Debug.Log("Passing remove with " + amount);
         Resource.active.Remove(type, amount, false);
         base.DestroyEntity();
     }

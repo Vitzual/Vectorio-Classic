@@ -11,26 +11,21 @@ public class GuardianHandler : MonoBehaviour
     public Hub hub;
 
     // Contains all active guardians in the scene
-    public List<DefaultGuardian> guardians = new List<DefaultGuardian>();
+    [HideInInspector] public List<DefaultGuardian> guardians = new List<DefaultGuardian>();
 
     // Holds a reference to guardian button
     public GuardianButton guardianButton;
-    public bool guardianSpawned;
-
-    // Layering and scanning
-    public LayerMask buildingLayer;
-    private bool scan = false;
+    [HideInInspector] public bool guardianSpawned;
 
     // Guardian animation components
-    public AudioSource laserSound;
     public AudioSource warningSound;
     public AudioSource music;
     public GameObject UI;
 
     // Laser variables
-    public bool laserFiring;
-    public int laserPart;
-    public float cooldown = 5f;
+    [HideInInspector] public bool laserFiring;
+    [HideInInspector] public int laserPart;
+    [HideInInspector] public float cooldown = 5f;
 
     // Get active instance
     public void Awake() { active = this; }
@@ -38,7 +33,8 @@ public class GuardianHandler : MonoBehaviour
     // Start method
     public void Start()
     {
-
+        Events.active.onStartGuardianBattle += StartGuardianBattle;
+        Events.active.onGuardianDestroyed += GuardianDestroyed;
     }
 
     // Update guardians
@@ -56,13 +52,12 @@ public class GuardianHandler : MonoBehaviour
                 {
                     guardians[i].MoveTowards(guardians[i].transform, guardians[i].target.transform);
                 }
-                else if (scan)
+                else
                 {
                     BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(guardians[i].transform.position));
 
                     if (building != null)
                         guardians[i].target = building;
-                    else scan = false;
                 }
             }
             else
@@ -76,6 +71,9 @@ public class GuardianHandler : MonoBehaviour
     // Start animation
     public void StartGuardianBattle()
     {
+        // Check to make sure there's not an active guardian
+        if (guardians.Count > 0) return;
+
         // Disable UI
         UI.SetActive(false);
 
@@ -83,7 +81,6 @@ public class GuardianHandler : MonoBehaviour
         laserPart = 0;
         cooldown = 0.5f;
         laserFiring = true;
-        laserSound.Stop();
         music.Pause();
 
         // Reset all lasers
@@ -127,7 +124,7 @@ public class GuardianHandler : MonoBehaviour
                 cooldown -= Time.deltaTime;
                 if (cooldown <= 0)
                 {
-                    hub.FireLaser(Gamemode.stage.direction);
+                    hub.FireLaser(Gamemode.stage.guardianDirection);
                     cooldown = 2.5f;
                     laserPart = 5;
                 }
@@ -136,15 +133,17 @@ public class GuardianHandler : MonoBehaviour
                 cooldown -= Time.deltaTime;
                 if (cooldown <= 0)
                 {
+                    Border.IncreaseBorderSize(Gamemode.stage.guardianDirection);
                     cooldown = 11f;
                     laserPart = 6;
                 }
                 break;
             case 6:
                 cooldown -= Time.deltaTime;
-                Border.PushBorder(Gamemode.stage.direction, 50f);
+                Border.PushBorder(Gamemode.stage.guardianDirection, 50f);
                 if (cooldown <= 0)
                 {
+                    Border.SetBorderPositions();
                     laserFiring = false;
                     UI.SetActive(true);
                     music.Play();
@@ -155,17 +154,18 @@ public class GuardianHandler : MonoBehaviour
         }
     }
 
-    // Proc guardian warning
+    // Open guardian warning
     public void OpenGuardianWarning()
     {
         guardianButton.SetConfirmScreen(Gamemode.stage.guardian);
         guardianButton.gameObject.SetActive(true);
     }
 
-    // Proc guardian warning
+    // Close guardian warning
     public void CloseGuardianWarning()
     {
-        guardianButton.gameObject.SetActive(false);
+        if(guardianButton != null)
+            guardianButton.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -183,10 +183,25 @@ public class GuardianHandler : MonoBehaviour
 
         // Get guardian stuff
         DefaultGuardian guardian = lastObj.GetComponent<DefaultGuardian>();
+        guardian.guardian = stage.guardian;
         guardian.Setup();
 
         // Add to active guardians
         guardians.Add(guardian);
+    }
+
+    // Guardian destroyed method
+    public void GuardianDestroyed(DefaultGuardian guardian)
+    {
+        // Guardian destroyed
+        Debug.Log("Guardian destroyed. Setting stage " + Gamemode.stage.variant.name + " to " + Gamemode.stage.nextStage.variant.name);
+
+        // Begin transition to next stage
+        Gamemode.stage = Gamemode.stage.nextStage;
+        Events.active.ChangeBorderColor(Gamemode.stage.borderOutline, Gamemode.stage.borderFill);
+
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyGuardianAmount, guardian.guardian, 1);
     }
 
     // Destroys all active enemies

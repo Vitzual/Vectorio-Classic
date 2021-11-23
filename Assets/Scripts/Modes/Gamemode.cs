@@ -27,6 +27,7 @@ public class Gamemode : MonoBehaviour
     [Header("Gamemode Info")]
     public new string name;
     public string version;
+    public Stage _stage;
     public Difficulty _difficulty;
     public float naturalHeatTimer = 1f;
 
@@ -66,10 +67,23 @@ public class Gamemode : MonoBehaviour
             difficulty = _difficulty.SetData(new DifficultyData());
         }
 
+        // Check stage variable
+        if (stage == null)
+        {
+            Debug.Log("Stage data missing. Setting to default");
+            stage = _stage;
+        }
+
         // Initialize gamemode
         InitGamemode();
 
-        if (loadGame && saveData != null) NewSaveSystem.LoadGame(saveData);
+        if (loadGame && saveData != null)
+        {
+            NewSaveSystem.LoadGame(saveData);
+            Border.UpdateStage();
+            Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
+            Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
+        }
 
         loadGame = false;
     }
@@ -102,7 +116,6 @@ public class Gamemode : MonoBehaviour
     // Tells the gamemode how to generate inventory
     public virtual void InitGamemode()
     {
-        EnemyHandler.active.UpdateVariant();
         SetupStartingResources();
 
         useDroneConstruction = !difficulty.enableInstaPlace;
@@ -121,7 +134,7 @@ public class Gamemode : MonoBehaviour
         else Resource.active.AddStorage(Resource.CurrencyType.Power, difficulty.startingPower);
 
         // Setup heat storage
+        Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
         Resource.active.Add(Resource.CurrencyType.Heat, difficulty.startingHeat, false);
-        Resource.active.SetStorage(Resource.CurrencyType.Heat, 10000);
     }
 }

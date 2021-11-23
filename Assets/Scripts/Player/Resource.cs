@@ -199,12 +199,12 @@ public class Resource : MonoBehaviour
     // Check resources
     public bool CheckResources(Buildable buildable)
     {
-        // Use gamemode resource check
-        if (!Gamemode.active.useResources) return true;
-
         // Check if resource should be used
         foreach (Cost resource in buildable.resources)
         {
+            // Use gamemode resource check
+            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
+
             if (!resource.storage)
             {
                 int amount = GetAmount(resource.resource);
@@ -235,7 +235,8 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            if (!Gamemode.active.useResources) continue;
+            // Use gamemode resource check
+            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
 
             if (isFree && (!resource.add || (resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power))) continue;
             else
@@ -260,14 +261,15 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            if (!Gamemode.active.useResources) continue;
+            // Use gamemode resource check
+            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
 
             if (resource.storage)
             {
                 if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
                 else active.AddStorage(resource.resource, resource.amount);
             }
-            else if (refund)
+            else if (refund || currencies[resource.resource].allowOverflow)
             {
                 if (resource.add) active.Remove(resource.resource, resource.amount, true);
                 else active.Add(resource.resource, resource.amount, true);

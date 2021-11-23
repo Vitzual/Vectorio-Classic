@@ -14,6 +14,23 @@ public class Events : MonoBehaviour
     }
 
     // On building clicked
+    public event Action onStartGuardianBattle;
+    public void StartGuardianBattle()
+    {
+        if (onStartGuardianBattle != null)
+            onStartGuardianBattle();
+    }
+
+    // On building clicked
+    public event Action<Material, Color> onChangeBorderColor;
+    public void ChangeBorderColor(Material border, Color fill)
+    {
+        if (onChangeBorderColor != null)
+            onChangeBorderColor(border, fill);
+    }
+
+
+    // On building clicked
     public event Action<BaseEntity> onEntityClicked;
     public void EntityClicked(BaseEntity entity)
     {

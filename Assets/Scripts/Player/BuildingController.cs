@@ -12,6 +12,7 @@ public class BuildingController : MonoBehaviour
     // Selected tile
     public Transform hologram, squareRadius, circleRadius;
     private Entity entity;
+    public Variant variant;
     private Buildable buildable;
 
     // Sprite values
@@ -79,7 +80,7 @@ public class BuildingController : MonoBehaviour
         if (InstantiationHandler.active != null)
         {
             if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation, Gamemode.active.useDroneConstruction);
-            else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, hologram.position, hologram.rotation);
+            else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, variant, hologram.position, hologram.rotation);
         }
         else Debug.LogError("Scene does not have active building handler!");
     }

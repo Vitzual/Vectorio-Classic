@@ -8,9 +8,6 @@ public class EnemyHandler : MonoBehaviour
     // Active instance
     public static EnemyHandler active;
 
-    // Active variant
-    public Variant variant;
-
     // Holds a reference to turret handler
     public TurretHandler turretHandler;
 
@@ -108,7 +105,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Create a new active enemy instance
-    public void CreateEntity(Entity entity, Vector2 position, Quaternion rotation, float health = -1)
+    public void CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1)
     {
         // Create the tile
         GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
@@ -149,5 +146,6 @@ public class EnemyHandler : MonoBehaviour
 
         // Check currency
         if (currency.amount > currency.storage) GuardianHandler.active.OpenGuardianWarning();
+        else GuardianHandler.active.CloseGuardianWarning();
     }
 }

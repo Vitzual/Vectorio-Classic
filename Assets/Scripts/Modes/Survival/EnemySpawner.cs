@@ -21,8 +21,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         // Check if enemy handler is active
-        if (EnemyHandler.active.variant == null ||
-            EnemyHandler.active.enemies.Count > maxEnemiesAllowed) return;
+        if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed) return;
 
         // Setup variables
         Vector2 spawnPos;
@@ -33,8 +32,10 @@ public class EnemySpawner : MonoBehaviour
         else chance = Random.value;
 
         // Calculate heat percentage
-        float percentage = (float)Resource.active.GetHeat() / EnemyHandler.active.variant.maxHeat;
-        
+        float percentage;
+        if (Gamemode.stage.heat > 0) percentage = (float)Resource.active.GetHeat() / Gamemode.stage.heat;
+        else percentage = 1;
+
         // Loop through all enemies
         foreach(Enemy enemy in enemies)
         {
@@ -54,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                EnemyHandler.active.CreateEntity(enemy, spawnPos, Quaternion.identity);
+                EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, spawnPos, Quaternion.identity);
             }
         }
     }

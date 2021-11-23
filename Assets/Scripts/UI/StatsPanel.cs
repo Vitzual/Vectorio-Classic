@@ -59,7 +59,7 @@ public class StatsPanel : MonoBehaviour
     // Set panel
     public void SetPanel(BaseEntity baseEntity)
     {
-        if (BuildingController.entitySelected || NewInterface.isOpen) return;
+        if (BuildingController.entitySelected || NewInterface.isOpen || InputController.shiftHeld) return;
 
         if (baseEntity == null)
         {

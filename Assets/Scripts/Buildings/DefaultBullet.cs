@@ -66,8 +66,6 @@ public class DefaultBullet : MonoBehaviour
     // If a collision is detected, apply damage
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
-
         BaseEntity entity = other.GetComponent<BaseEntity>();
         entity.DamageEntity(damage);
 

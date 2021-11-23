@@ -20,9 +20,7 @@ public class Hub : BaseTile
     // On start, assign weapon variables
     public void Start()
     {
-        chargeParticle.Stop();
-        foreach(ParticleSystem laser in laserParticles) 
-            laser.Stop();
+        ResetLasers();
 
         InstantiationHandler.active.SetCells(hub, transform.position, this);
 
@@ -48,8 +46,19 @@ public class Hub : BaseTile
     public void ResetLasers()
     {
         // Reset all lasers
+        laserSound.Stop();
+        chargeParticle.Stop();
         foreach (ParticleSystem laser in laserParticles)
             laser.Stop();
+    }
+
+    // Damages the entity (IDamageable interface method)
+    public override void DamageEntity(float dmg)
+    {
+        health -= dmg;
+
+        if (health <= 0)
+            DestroyEntity();
     }
 
     public override void DestroyEntity()

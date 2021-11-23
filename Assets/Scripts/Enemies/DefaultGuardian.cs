@@ -42,9 +42,6 @@ public class DefaultGuardian : DefaultEnemy
         // Invoke enemy death event
         Events.active.GuardianDestroyed(this);
 
-        // Update unlockables
-        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyGuardianAmount, guardian, 1);
-
         // Destroy object
         Destroy(gameObject);
     }

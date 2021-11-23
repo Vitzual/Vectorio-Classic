@@ -33,13 +33,13 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates an entity
-    public void CreateEnemy(Entity entity, Vector2 position, Quaternion rotation)
+    public void CreateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
     {
         // Check if entity is null
         if (entity == null) return;
 
         // Check if the entity is an enemy
-        RpcInstantiateEnemy(entity, position, rotation);
+        RpcInstantiateEnemy(entity, variant, position, rotation);
     }
 
     // Creates a building
@@ -68,13 +68,13 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    private void RpcInstantiateEnemy(Entity entity, Vector2 position, Quaternion rotation)
+    private void RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
     {
         // Use enemy handler thing
         RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
         foreach (RaycastHit2D hit in hits)
             if (hit.collider != null) return;
-        EnemyHandler.active.CreateEntity(entity, position, rotation);
+        EnemyHandler.active.CreateEntity(entity, variant, position, rotation);
     }
 
     //[ClientRpc]

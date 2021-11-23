@@ -115,11 +115,14 @@ public static class Buildables
             {
                 unlockables[unlockType][i].tracked = amount;
                 if (unlockables[unlockType][i].tracked >= unlockable.amount)
+                {
                     UnlockBuildable(unlockables[unlockType][i]);
-            }
-            else
-            {
-                // Update bar
+                }
+                else
+                {
+                    unlockables[unlockType][i].button.progress.currentPercent = (float)unlockables[unlockType][i].tracked / (float)unlockable.amount;
+                    unlockables[unlockType][i].button.progress.UpdateUI();
+                }
             }
         }
     }
@@ -141,11 +144,14 @@ public static class Buildables
             {
                 unlockables[unlockType][i].tracked += amount;
                 if (unlockables[unlockType][i].tracked >= unlockable.amount)
+                {
                     UnlockBuildable(unlockables[unlockType][i]);
-            }
-            else
-            {
-                // Update bar
+                }
+                else
+                {
+                    unlockables[unlockType][i].button.progress.currentPercent = (float)unlockables[unlockType][i].tracked / (float)unlockable.amount;
+                    unlockables[unlockType][i].button.progress.UpdateUI();
+                }
             }
         }
     }

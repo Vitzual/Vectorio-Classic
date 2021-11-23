@@ -235,22 +235,44 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            // Use gamemode resource check
-            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
-            if (isFree && (!resource.add || (resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power))) continue;
+            // Check if gamemode is using resources
+            if (!Gamemode.active.useResources)
+            {
+                // Validity check
+                bool valid = false;
 
+                // Check if resource adds storage
+                if (resource.add && resource.storage) valid = true;
+                else if (resource.resource == CurrencyType.Heat) valid = true;
+                else if (resource.resource == CurrencyType.Power) valid = true;
+
+                // Check if valid
+                if (!valid) continue;
+            }
+            else if (isFree)
+            {
+                // Validity check
+                bool valid = false;
+
+                // Check if resources add storage
+                if (resource.add) valid = true;
+                else if (resource.resource == CurrencyType.Heat) valid = true;
+                else if (resource.resource == CurrencyType.Power) valid = true;
+
+                // Check if valid
+                if (!valid) continue;
+            }
+
+            // Apply resources like usual
+            if (resource.storage)
+            {
+                if (resource.add) active.AddStorage(resource.resource, resource.amount);
+                else active.RemoveStorage(resource.resource, resource.amount);
+            }
             else
             {
-                if (resource.storage)
-                {
-                    if (resource.add) active.AddStorage(resource.resource, resource.amount);
-                    else active.RemoveStorage(resource.resource, resource.amount);
-                }
-                else
-                {
-                    if (resource.add) active.Add(resource.resource, resource.amount, true);
-                    else active.Remove(resource.resource, resource.amount, true);
-                }
+                if (resource.add) active.Add(resource.resource, resource.amount, true);
+                else active.Remove(resource.resource, resource.amount, true);
             }
         }
     }
@@ -261,8 +283,20 @@ public class Resource : MonoBehaviour
         // Update resource values promptly
         foreach (Cost resource in buildable.resources)
         {
-            // Use gamemode resource check
-            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
+            // Check if gamemode is using resources
+            if (!Gamemode.active.useResources)
+            {
+                // Validity check
+                bool valid = false;
+
+                // Check if resource adds storage
+                if (resource.add && resource.storage) valid = true;
+                else if (resource.resource == CurrencyType.Heat) valid = true;
+                else if (resource.resource == CurrencyType.Power) valid = true;
+
+                // Check if valid
+                if (!valid) continue;
+            }
 
             if (resource.storage)
             {

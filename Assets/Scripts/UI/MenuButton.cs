@@ -21,6 +21,9 @@ public class MenuButton : MonoBehaviour
     public GameObject goldIcon;
     public GameObject heatIcon;
     public GameObject powerIcon;
+
+    // Progress
+    public ProgressBar progress;
     
     // Set entity
     public void SetEntity(Entity entity)
@@ -72,6 +75,7 @@ public class MenuButton : MonoBehaviour
             button.UpdateUI();
             desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
             icon.sprite = Sprites.GetSprite(entity.name);
+            progress.gameObject.SetActive(false);
         }
         else
         {

@@ -80,7 +80,7 @@ public class DefaultTurret : BaseTile, IAudible
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - 0.25f);
     }
 
-    public void AddTarget(BaseEntity enemy)
+    public virtual void AddTarget(BaseEntity enemy)
     {
         if (!targets.Contains(enemy))
         {
@@ -90,13 +90,13 @@ public class DefaultTurret : BaseTile, IAudible
         }
     }
 
-    public void RemoveTarget(BaseEntity enemy)
+    public virtual void RemoveTarget(BaseEntity enemy)
     {
         targets = new Queue<BaseEntity>(targets.Where(x => x != enemy));
         if (target == enemy) { target = null; GetNewTarget(); }
     }
 
-    public bool GetNewTarget()
+    public virtual bool GetNewTarget()
     {
         if (targets.Count > 0)
         {

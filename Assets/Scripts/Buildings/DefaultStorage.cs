@@ -13,6 +13,7 @@ public class DefaultStorage : ResourceTile
 
         if (Resource.active != null)
             Resource.active.AddStorage(type, Research.GetStorageAmount(type));
+        else Debug.Log("Storage could not successfully add to list");
     }
 
     // Add resource to storage

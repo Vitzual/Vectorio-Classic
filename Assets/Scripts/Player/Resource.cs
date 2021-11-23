@@ -59,7 +59,7 @@ public class Resource : MonoBehaviour
     
     // Add collector or storage
     public void AddStorageObj(DefaultStorage storage) 
-    { 
+    {
         storages.Add(storage);
     }
 
@@ -98,7 +98,7 @@ public class Resource : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (!Gamemode.loadGame)
             {
                 storages.RemoveAt(i);
                 i--;

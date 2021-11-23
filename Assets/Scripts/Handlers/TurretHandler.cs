@@ -20,7 +20,7 @@ public class TurretHandler : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
         if (Settings.paused) return;
 

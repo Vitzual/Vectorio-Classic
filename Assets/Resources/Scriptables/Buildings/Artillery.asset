@@ -39,10 +39,11 @@ MonoBehaviour:
     resource: 4
     entity: {fileID: 0}
     amount: 30000
-    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
@@ -54,7 +55,7 @@ MonoBehaviour:
     y: 0
   resources:
   - resource: 0
-    amount: 100000
+    amount: 125000
     add: 0
     storage: 0
   - resource: 1
@@ -62,14 +63,17 @@ MonoBehaviour:
     add: 0
     storage: 0
   - resource: 4
-    amount: 450
+    amount: 120
     add: 1
     storage: 0
   - resource: 3
-    amount: 300
-    add: 0
+    amount: 150
+    add: 1
     storage: 0
+  radialCheck: 0
   restrictPlacement: 0
+  isSellable: 1
+  isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
   damage: 500

@@ -47,7 +47,6 @@ public class InstantiationHandler : MonoBehaviour
     {
         // Determine if the building is free
         bool isFree = Resource.active.CheckFreebie(buildable);
-        //Debug.Log(isFree);
 
         // Get buildable
         if (buildable == null)

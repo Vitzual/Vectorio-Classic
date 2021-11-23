@@ -10,6 +10,9 @@ public class DefaultStorage : ResourceTile
     public void Start()
     {
         Events.active.StoragePlaced(this);
+
+        if (Resource.active != null)
+            Resource.active.Add(type, Research.GetStorageAmount(type), false);
     }
 
     // Add resource to storage
@@ -57,7 +60,12 @@ public class DefaultStorage : ResourceTile
     // On destroy, override method and remove storage
     public override void DestroyEntity()
     {
-        Resource.active.Remove(type, amount, false);
+        if (Resource.active != null)
+        {
+            Resource.active.Remove(type, amount, false);
+            Resource.active.Remove(type, Research.GetStorageAmount(type), false);
+        }
+
         base.DestroyEntity();
     }
 }

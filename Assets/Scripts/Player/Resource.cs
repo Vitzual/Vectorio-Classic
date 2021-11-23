@@ -237,8 +237,8 @@ public class Resource : MonoBehaviour
         {
             // Use gamemode resource check
             if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
-
             if (isFree && (!resource.add || (resource.resource != CurrencyType.Heat && resource.resource != CurrencyType.Power))) continue;
+
             else
             {
                 if (resource.storage)

@@ -83,7 +83,7 @@ public class StatsPanel : MonoBehaviour
                 Debug.Log("Settings found on  "+ entity.name + ", applying");
                 foreach (HorizontalSelector selector in settings[entity].selectors)
                 {
-                    selector.index = 0;
+                    selector.index = baseEntity.metadata;
                     selector.UpdateUI();
                 }
                 settings[entity].settingObj.SetActive(true);

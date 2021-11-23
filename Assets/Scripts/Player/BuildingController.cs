@@ -127,7 +127,7 @@ public class BuildingController : MonoBehaviour
             DefaultTurret turret = buildable.obj.GetComponent<DefaultTurret>();
             if (turret != null)
             {
-                circleRadius.localScale = new Vector3(turret.turret.range, 0, turret.turret.range);
+                circleRadius.localScale = new Vector3(turret.turret.range * 2, 0, turret.turret.range * 2);
                 circleRadius.gameObject.SetActive(true);
                 squareRadius.gameObject.SetActive(false);
             }

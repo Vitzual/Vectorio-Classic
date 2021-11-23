@@ -12,7 +12,7 @@ public class DefaultStorage : ResourceTile
         Events.active.StoragePlaced(this);
 
         if (Resource.active != null)
-            Resource.active.Add(type, Research.GetStorageAmount(type), false);
+            Resource.active.AddStorage(type, Research.GetStorageAmount(type));
     }
 
     // Add resource to storage
@@ -63,7 +63,7 @@ public class DefaultStorage : ResourceTile
         if (Resource.active != null)
         {
             Resource.active.Remove(type, amount, false);
-            Resource.active.Remove(type, Research.GetStorageAmount(type), false);
+            Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
         }
 
         base.DestroyEntity();

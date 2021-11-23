@@ -5,6 +5,7 @@ using UnityEngine;
 public class DefaultGuardian : DefaultEnemy
 {
     public Guardian guardian;
+    bool entityDestroyed = false;
 
     public override void Setup()
     {
@@ -30,6 +31,10 @@ public class DefaultGuardian : DefaultEnemy
     // Destroy entity
     public override void DestroyEntity()
     {
+        // Check if entity destroyed
+        if (entityDestroyed) return;
+        else entityDestroyed = true;
+
         // Create particle and set material / trail material
         if (guardian.particleEffect != null)
         {

@@ -99,7 +99,6 @@ public class Border : MonoBehaviour
     {
         if (CheckBorderPosition(direction))
             borders[(int)direction].position = Vector2.MoveTowards(borders[(int)direction].position, GetBorderPosition(direction), pushSpeed * Time.deltaTime);
-        else Debug.Log("Border passed size check");
     }
 
     // Check border posotion

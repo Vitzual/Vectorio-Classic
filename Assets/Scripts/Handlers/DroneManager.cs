@@ -91,7 +91,7 @@ public class DroneManager : MonoBehaviour
     // Update drone bar
     public void UpdateDroneBar()
     {
-        dronesAvailable.currentPercent = 1f;
+        //dronesAvailable.currentPercent = 1f;
     }
 
     // Update active drones

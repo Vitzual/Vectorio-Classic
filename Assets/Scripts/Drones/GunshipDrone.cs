@@ -42,13 +42,21 @@ public class GunshipDrone : Drone
         // Move around
         if (target != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
-            float dot = Vector3.Dot(transform.forward, (target.transform.position - transform.position).normalized);
-            if (dot < 0.99f) transform.Rotate(Vector3.up * 2f * Time.deltaTime);
+            RotateToTarget();
+            transform.Translate(Vector3.right * 8f * Time.deltaTime);
         }
+        else FindNewTarget();
 
         // Close port layers
         if (!doorsClosed) doorsClosed = homePort.CloseDoors();
+    }
+
+    // Rotate gunship
+    public override void RotateToTarget()
+    {
+        float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 7f * Time.deltaTime);
     }
 
     // Get new target

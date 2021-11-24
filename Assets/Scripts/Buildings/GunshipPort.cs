@@ -40,8 +40,8 @@ public class GunshipPort : BaseTile
     // Change panel layers
     public void ChangePanelLayers()
     {
-        topPanel.GetComponent<SpriteRenderer>().sortingLayerID = 90;
-        bottomPanel.GetComponent<SpriteRenderer>().sortingLayerID = 90;
+        topPanel.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        bottomPanel.GetComponent<SpriteRenderer>().sortingOrder = 10;
     }
 
     // Open doors
@@ -49,7 +49,7 @@ public class GunshipPort : BaseTile
     {
         topPanel.Translate(Vector3.up * Time.deltaTime * 2f);
         bottomPanel.Translate(Vector3.down * Time.deltaTime * 2f);
-        return topPanel.localPosition.x >= 5;
+        return topPanel.localPosition.y >= 5;
     }
 
     // Close doors
@@ -57,6 +57,6 @@ public class GunshipPort : BaseTile
     {
         topPanel.Translate(Vector3.down * Time.deltaTime * 2f);
         bottomPanel.Translate(Vector3.up * Time.deltaTime * 2f);
-        return topPanel.localPosition.x <= 0;
+        return topPanel.localPosition.y <= 0;
     }
 }

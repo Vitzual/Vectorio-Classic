@@ -9,6 +9,8 @@ public class Turret : Building
     [FoldoutGroup("Turret Variables")]
     public float damage, range, rotationSpeed, cooldown;
     [FoldoutGroup("Turret Variables")]
+    public bool randomizeCooldown;
+    [FoldoutGroup("Turret Variables")]
     public AudioClip sound;
     
     // Bullet variables

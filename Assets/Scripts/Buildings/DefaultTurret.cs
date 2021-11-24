@@ -43,7 +43,10 @@ public class DefaultTurret : BaseTile, IAudible
         else
         {
             Shoot();
-            cooldown = turret.cooldown;
+
+            if (turret.randomizeCooldown)
+                cooldown = Random.Range(turret.cooldown, turret.cooldown + turret.cooldown);
+            else cooldown = turret.cooldown;
         }
     }
 

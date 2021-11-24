@@ -26,7 +26,7 @@ public class Drone : MonoBehaviour
 
     // Drone variables
     [HideInInspector] public Droneport home;
-    [HideInInspector] public BaseEntity target;
+    public BaseEntity target;
     [HideInInspector] public float droneSpeed;
     public SpriteRenderer droneIcon;
 
@@ -146,7 +146,7 @@ public class Drone : MonoBehaviour
     }
 
     // Rotate towards target
-    public void RotateToTarget()
+    public virtual void RotateToTarget()
     {
         Vector2 lookDirection = new Vector2(target.transform.position.x, target.transform.position.y) - new Vector2(transform.position.x, transform.position.y);
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f);

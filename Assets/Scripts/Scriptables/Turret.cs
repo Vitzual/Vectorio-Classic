@@ -21,7 +21,9 @@ public class Turret : Building
     [FoldoutGroup("Bullet Variables")]
     public float bulletSpeed, bulletSpread, bulletTime;
     [FoldoutGroup("Bullet Variables")]
-    public bool bulletLock;
+    public bool bulletLock, useBulletSprite;
+    [FoldoutGroup("Bullet Variables")]
+    public string bulletSpriteName;
     [FoldoutGroup("Bullet Variables")]
     public ParticleSystem bulletParticle;
 

@@ -18,23 +18,28 @@ public class DefaultBullet : MonoBehaviour
     [HideInInspector] public bool recycling = false;
 
     // Renderering variables
-    [HideInInspector] private TrailRenderer trail;
-    [HideInInspector] private ParticleSystemRenderer particle;
+    [HideInInspector] public SpriteRenderer model;
+    [HideInInspector] public TrailRenderer trail;
+
+    // Ignore list
+    [HideInInspector]
+    public List<BaseEntity> ignoreList = new List<BaseEntity>();
 
     // Setup bullet
-    public virtual void Setup(Turret turret)
+    public virtual void Setup(Turret turret, Sprite model = null)
     {
         this.turret = turret;
 
+        this.model = GetComponent<SpriteRenderer>();
         trail = GetComponent<TrailRenderer>();
-        particle = GetComponent<ParticleSystemRenderer>();
 
-        if (trail != null) trail.material = turret.material;
-        if (particle != null)
+        if (model != null)
         {
-            particle.material = turret.material;
-            particle.trailMaterial = turret.material;
+            this.model.sprite = model;
+            this.model.material = turret.material;
         }
+
+        trail.material = turret.material;
 
         damage = turret.damage + Research.damage;
         speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
@@ -44,7 +49,7 @@ public class DefaultBullet : MonoBehaviour
     }
 
     // Hold info
-    public virtual void DestroyBullet(Material material)
+    public virtual void DestroyBullet(Material material, BaseEntity entity = null)
     {
         recycling = true;
         CreateParticle(material);
@@ -52,27 +57,30 @@ public class DefaultBullet : MonoBehaviour
     }
 
     // Creates a particle and sets the material
-    public ParticleSystemRenderer CreateParticle(Material material)
+    public void CreateParticle(Material material)
     {
         ParticleSystemRenderer holder = Instantiate(turret.bulletParticle, transform.position,
                 transform.rotation).GetComponent<ParticleSystemRenderer>();
         holder.transform.rotation *= Quaternion.Euler(0, 0, 180f);
         holder.material = material;
         holder.trailMaterial = material;
-
-        return holder;
     }
 
     // If a collision is detected, apply damage
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         BaseEntity entity = other.GetComponent<BaseEntity>();
-        entity.DamageEntity(damage);
 
-        pierces -= 1;
-        if (pierces <= 0)
-            DestroyBullet(entity.material);
+        if (!ignoreList.Contains(entity))
+        {
+            entity.DamageEntity(damage);
 
-        tracking = false;
+            pierces -= 1;
+            if (pierces <= 0)
+                DestroyBullet(entity.material, entity);
+            else ignoreList.Add(entity);
+
+            tracking = false;
+        }
     }
 }

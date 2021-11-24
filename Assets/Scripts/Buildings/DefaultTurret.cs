@@ -17,6 +17,10 @@ public class DefaultTurret : BaseTile, IAudible
     public Queue<BaseEntity> targets = new Queue<BaseEntity>();
     [HideInInspector] public float cooldown;
 
+    // Bullet model
+    [HideInInspector] public bool useBulletModel = false;
+    [HideInInspector] public Sprite bulletModel;
+
     public override void Setup()
     {
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
@@ -26,7 +30,12 @@ public class DefaultTurret : BaseTile, IAudible
         else Debug.LogError("Turret does not have a circle collider!");
         
         material = turret.material;
-        cooldown = turret.cooldown;
+
+        if (turret.bulletSpriteName != "")
+        {
+            bulletModel = Sprites.GetSprite(turret.bulletSpriteName);
+            useBulletModel = bulletModel != null;
+        }
 
         base.Setup();
     }
@@ -70,7 +79,10 @@ public class DefaultTurret : BaseTile, IAudible
 
         // Set bullet variables
         DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
-        if (bullet != null) bullet.Setup(turret);
+        
+        // Setup bullet
+        if (turret.useBulletSprite) bullet.Setup(turret, bulletModel);
+        else bullet.Setup(turret);
 
         // Dependent on the bullet, register under the correct master script
         if (turret.bulletLock) Events.active.BulletFired(bullet, target);

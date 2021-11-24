@@ -3,6 +3,11 @@ using Michsky.UI.ModernUIPack;
 using System.Collections.Generic;
 using UnityEngine;
 
+// IMPORTANT: DroneManager.cs is one of the largest scripts in
+// the entire game. For optimization purposes, it handles deployment
+// logic for each seperate drone type. Once deployed however, what
+// the drone does is completely handled through itself.
+
 public class DroneManager : MonoBehaviour
 {
     // Builder mode
@@ -69,6 +74,8 @@ public class DroneManager : MonoBehaviour
             resourceDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Fixer)
             fixerDrones.Add(drone);
+        else if (drone.type == Drone.DroneType.Gunship)
+            activeDrones.Add(drone);
     }
 
     // Move drones
@@ -132,7 +139,6 @@ public class DroneManager : MonoBehaviour
     }
 
     // Check construction drones
-    // THIS NEEDS TO BE MOVED TO THE DRONES THEMSELVES
     public void UpdateConstructionDrones()
     {
         // Local variables 

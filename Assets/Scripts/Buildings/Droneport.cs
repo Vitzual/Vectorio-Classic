@@ -10,6 +10,7 @@ public class Droneport : BaseTile
 
     // Holds a reference to scriptable object
     public Building building;
+    public Drone.DroneType defaultDrone;
 
     // Holds the drone type and object
     [HideInInspector] public Drone drone;
@@ -26,7 +27,7 @@ public class Droneport : BaseTile
     // Only for hub drones
     public void Start()
     {
-        if (hubDrone) CreateDrone(Drone.DroneType.Builder);
+        if (hubDrone) CreateDrone(defaultDrone);
     }
 
     // Apply metadata
@@ -81,7 +82,7 @@ public class Droneport : BaseTile
     public override void Setup()
     {
         // Check if drone was set via metadata
-        if (!droneCreated) CreateDrone(Drone.DroneType.Builder);
+        if (!droneCreated) CreateDrone(defaultDrone);
 
         // Reset nearby targets
         drone.nearbyTargets = new List<BaseEntity>();

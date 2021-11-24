@@ -8,7 +8,8 @@ public class Drone : MonoBehaviour
     {
         Builder = 0,
         Resource = 1,
-        Fixer = 2
+        Fixer = 2,
+        Gunship = 3
     }
     public DroneType type;
 

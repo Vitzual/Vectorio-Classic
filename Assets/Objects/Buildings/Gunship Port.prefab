@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 476817561338513337}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 5
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 2623617063084715091}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 4
@@ -190,7 +190,7 @@ Transform:
   m_GameObject: {fileID: 3042757434560148568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 1
@@ -272,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 4873498856639235753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 2
@@ -337,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5953026572162587893}
-  - component: {fileID: 1543810532550268035}
+  - component: {fileID: -3255965441138174409}
   - component: {fileID: 6282290465497829577}
   m_Layer: 8
   m_Name: Gunship Port
@@ -355,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 5953026572162587890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3788245052323472904}
   - {fileID: 8575364647559854431}
@@ -366,7 +366,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1543810532550268035
+--- !u!114 &-3255965441138174409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5953026572162587890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f2b8e3ac54a0c44a8f83c9d5ec8937, type: 3}
+  m_Script: {fileID: 11500000, guid: c3f056b2f79257240a63bec4a7f0f7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
@@ -383,15 +383,8 @@ MonoBehaviour:
   cells: []
   saveBuilding: 1
   isSellable: 1
-  droneCreated: 0
-  hubDrone: 0
-  building: {fileID: 11400000, guid: 866d7607c70fe26429470ba44cf7ebde, type: 2}
-  drone: {fileID: 0}
-  leftPanel: {fileID: 3410558915575692129}
-  rightPanel: {fileID: 5403234067624635213}
-  blueLight: {fileID: 0}
-  yellowLight: {fileID: 0}
-  greenLight: {fileID: 0}
+  topPanel: {fileID: 5403234067624635213}
+  bottomPanel: {fileID: 3410558915575692129}
 --- !u!61 &6282290465497829577
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -416,7 +409,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 15}
+  m_Size: {x: 40, y: 30}
   m_EdgeRadius: 0
 --- !u!1 &8464926990881795521
 GameObject:
@@ -444,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 8464926990881795521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 0
@@ -526,7 +519,7 @@ Transform:
   m_GameObject: {fileID: 8926793191713410977}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5953026572162587893}
   m_RootOrder: 3

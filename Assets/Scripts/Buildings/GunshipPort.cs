@@ -59,4 +59,11 @@ public class GunshipPort : BaseTile
         bottomPanel.Translate(Vector3.up * Time.deltaTime * 2f);
         return topPanel.localPosition.y <= 0;
     }
+
+    // Destroy port
+    public override void DestroyEntity()
+    {
+        drone.Destroy();
+        base.DestroyEntity();
+    }
 }

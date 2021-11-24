@@ -43,7 +43,7 @@ public class GunshipDrone : Drone
         if (target != null)
         {
             RotateToTarget();
-            transform.Translate(Vector3.right * 8f * Time.deltaTime);
+            transform.Translate(Vector3.right * 10f * Time.deltaTime);
         }
         else FindNewTarget();
 

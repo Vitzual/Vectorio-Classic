@@ -17,6 +17,9 @@ public class Hub : BaseTile
     public ParticleSystem chargeParticle;
     public ParticleSystem[] laserParticles;
 
+    // Mini turrets
+    public DefaultTurret[] miniTurrets;
+
     // On start, assign weapon variables
     public void Start()
     {
@@ -26,6 +29,9 @@ public class Hub : BaseTile
 
         health = hub.health;
         maxHealth = health;
+
+        foreach (DefaultTurret turret in miniTurrets)
+            if (turret != null) turret.Setup();
     }
 
     // Display charge particle

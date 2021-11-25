@@ -33,6 +33,11 @@ public class Resource : MonoBehaviour
         public TextMeshProUGUI storageUI;
         public bool useResourceBar;
         public ProgressBar resourceBar;
+
+        // Default variables
+        public float collectionRate;
+        public int collectionAmount;
+        public int storageAmount;
     }
 
     // Dictionary of all currencies
@@ -51,7 +56,10 @@ public class Resource : MonoBehaviour
         // Setup currencies
         currencies = new Dictionary<CurrencyType, Currency>();
         foreach (Currency currency in currencyElements)
+        {
             currencies.Add(currency.type, currency);
+            Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
+        }
 
         // Setup events
         Events.active.onStoragePlaced += AddStorageObj;

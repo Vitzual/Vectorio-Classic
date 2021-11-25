@@ -91,7 +91,7 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do when it starts it's route
     public virtual void StartRoute()
     {
-        droneSpeed = Research.drone_movement_speed;
+        droneSpeed = Research.droneMoveSpeed;
         droneIcon.sortingOrder = 3;
         stage = Stage.MovingToTarget;
     }

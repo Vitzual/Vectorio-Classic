@@ -14,6 +14,10 @@ public class BaseTile : BaseEntity
         // Update nearby ports and unlockables
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
+
+        // Set health
+        health = buildable.building.health * Research.healthBoost;
+        maxHealth = health;
     }
 
     public void CheckNearbyEnergizers()

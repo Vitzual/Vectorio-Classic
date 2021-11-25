@@ -1,58 +1,79 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+// Still needs to be refactored
 
 public class Research : MonoBehaviour
 {
-    // Research variables
-    public static int damage;
-    public static int burning;
-    public static int freezing;
-    public static int poisoning;
-    public static int shield;
-    public static int health;
-    public static int wall_health;
-    public static int pierce;
-    public static float range;
-    public static float firerate;
-    public static float bulletspeed;
-    public static float gold_time = 1f;
-    public static int gold_yield = 5;
-    public static int gold_storage = 1000;
-    public static float essence_time = 2f;
-    public static int essence_yield = 5;
-    public static int essence_storage = 500;
-    public static float iridium_time = 5f;
-    public static int iridium_yield = 1;
-    public static int iridium_storage = 100;
+    // Turret variables
+    public static float damageBoost = 1;
+    public static float healthBoost = 1;
+    public static float wallBoost = 1;
+    public static int pierceBoost = 0;
+    public static int bulletBoost = 0;
+    public static float firerateBoost = 1;
+
+    // Resource boosts
+    public class ResourceBoost
+    {
+        public float extractionRate;
+        public int extractionYield;
+        public int storageAmount;
+    }
+    public static Dictionary<Resource.CurrencyType, ResourceBoost> resource;
 
     // Drone research variables
     public static int drone_tile_coverage = 5;
     public static float drone_deployment_speed = 3f;
-    public static float drone_movement_speed = 25f;
+    public static float droneMoveSpeed = 25f;
 
     // Currency get variables (I hate this, and will redo it)
-    public static int GetStorageAmount(Resource.CurrencyType type)
+    public static ResourceBoost GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
     {
-        if (type == Resource.CurrencyType.Gold) return gold_storage;
-        else if (type == Resource.CurrencyType.Essence) return essence_storage;
-        else if (type == Resource.CurrencyType.Iridium) return iridium_storage;
-        else return -1;
+        ResourceBoost newResource = new ResourceBoost();
+        newResource.extractionRate = defaultRate;
+        newResource.extractionYield = defaultYield;
+        newResource.storageAmount = defaultStorage;
+        resource.Add(type, newResource);
+        return newResource;
     }
 
-    // Currency get variables (I hate this, and will redo it)
-    public static int GetCollectionAmount(Resource.CurrencyType type)
+    // Apply research
+    // THIS IS GONNA BE REDONE
+    public static void ApplyResearch(ResearchType type, float amount, Resource.CurrencyType currency = Resource.CurrencyType.Power)
     {
-        if (type == Resource.CurrencyType.Gold) return gold_yield;
-        else if (type == Resource.CurrencyType.Essence) return essence_yield;
-        else if (type == Resource.CurrencyType.Iridium) return iridium_yield;
-        else return -1;
-    }
-
-    // Currency get variables (I hate this, and will redo it)
-    public static float GetCollectionRate(Resource.CurrencyType type)
-    {
-        if (type == Resource.CurrencyType.Gold) return gold_time;
-        else if (type == Resource.CurrencyType.Essence) return essence_time;
-        else if (type == Resource.CurrencyType.Iridium) return iridium_time;
-        else return -1;
+        switch(type)
+        {
+            case ResearchType.DamageBoost:
+                damageBoost += amount;
+                break;
+            case ResearchType.HealthBoost:
+                healthBoost += amount;
+                break;
+            case ResearchType.WallBoost:
+                wallBoost += amount;
+                break;
+            case ResearchType.PierceBoost:
+                pierceBoost += (int)amount;
+                break;
+            case ResearchType.BulletBoost:
+                bulletBoost += (int)amount;
+                break;
+            case ResearchType.FirerateBoost:
+                firerateBoost += amount;
+                break;
+            case ResearchType.DroneSpeed:
+                droneMoveSpeed += amount;
+                break;
+            case ResearchType.ExtractionRate:
+                resource[currency].extractionRate += amount;
+                break;
+            case ResearchType.ExtractionYield:
+                resource[currency].extractionRate += amount;
+                break;
+            case ResearchType.StorageAmount:
+                resource[currency].extractionRate += amount;
+                break;
+        }
     }
 }

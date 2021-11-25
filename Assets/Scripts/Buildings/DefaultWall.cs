@@ -45,7 +45,13 @@ public class DefaultWall : BaseTile
             if (rayHit.collider != null && rayHit.collider.name.Contains("Wall"))
                 SetWallStatus(2, 4, rayHit.collider.GetComponent<DefaultWall>());
 
-        base.Setup();
+        // Update nearby ports and unlockables
+        DroneManager.active.UpdateNearbyPorts(this, transform.position);
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
+
+        // Set health
+        health = buildable.building.health * Research.wallBoost;
+        maxHealth = health;
     }
 
     public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)

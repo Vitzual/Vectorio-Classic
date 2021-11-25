@@ -26,8 +26,8 @@ public class CollectorHandler : MonoBehaviour
                 collectors[i].cooldown -= Time.deltaTime;
                 if (collectors[i].cooldown < 0f)
                 {
-                    collectors[i].amount += Research.gold_yield;
-                    collectors[i].cooldown = Research.gold_time;
+                    collectors[i].amount += Research.resource[collectors[i].type].extractionYield;
+                    collectors[i].cooldown = Research.resource[collectors[i].type].extractionRate;
                 }
             }
             else

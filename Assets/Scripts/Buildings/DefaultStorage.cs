@@ -12,7 +12,7 @@ public class DefaultStorage : ResourceTile
         Events.active.StoragePlaced(this);
 
         if (Resource.active != null)
-            Resource.active.AddStorage(type, Research.GetStorageAmount(type));
+            Resource.active.AddStorage(type, Research.resource[type].storageAmount);
         else Debug.Log("Storage could not successfully add to list");
     }
 
@@ -21,7 +21,7 @@ public class DefaultStorage : ResourceTile
     {
         // Add amount and grab storage amount
         this.amount += amount;
-        int storage = Research.GetStorageAmount(type);
+        int storage = Research.resource[type].storageAmount;
 
         // Determine if amount exceeds storage
         if (this.amount > storage)
@@ -64,7 +64,7 @@ public class DefaultStorage : ResourceTile
         if (Resource.active != null)
         {
             Resource.active.Remove(type, amount, false);
-            Resource.active.RemoveStorage(type, Research.GetStorageAmount(type));
+            Resource.active.RemoveStorage(type, Research.resource[type].storageAmount);
         }
 
         base.DestroyEntity();

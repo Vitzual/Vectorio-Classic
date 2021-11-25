@@ -25,6 +25,9 @@ public class SuperWeapon : DefaultTurret
             bulletModel = Sprites.GetSprite(turret.bulletSpriteName);
             useBulletModel = bulletModel != null;
         }
+
+        health = turret.health;
+        maxHealth = health;
     }
 
     public override void RotateTurret()

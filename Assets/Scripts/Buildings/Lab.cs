@@ -13,7 +13,7 @@ public class Lab : BaseTile
 
     public override void OnClick()
     {
-        Events.active.EntityClicked(this);
+        Events.active.LabClicked(this);
     }
 
     public void ApplyResearch(ResearchBoost type)
@@ -77,13 +77,13 @@ public class Lab : BaseTile
                     }
                 }
             }
-        }
 
-        if (!working)
-        {
-            Debug.Log("Lab gained resources to continue operating");
-            Research.ApplyResearch(activeBoost.type, activeBoost.amount, activeBoost.currency);
-            working = true;
+            if (!working)
+            {
+                Debug.Log("Lab gained resources to continue operating");
+                Research.ApplyResearch(activeBoost.type, activeBoost.amount, activeBoost.currency);
+                working = true;
+            }
         }
     }
 

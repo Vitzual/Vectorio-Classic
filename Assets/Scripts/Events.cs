@@ -38,6 +38,30 @@ public class Events : MonoBehaviour
             onEntityClicked(entity);
     }
 
+    // On building clicked
+    public event Action<Lab> onLabClicked;
+    public void LabClicked(Lab lab)
+    {
+        if (onLabClicked != null)
+            onLabClicked(lab);
+    }
+
+    // On building clicked
+    public event Action onCloseResearch;
+    public void CloseResearch()
+    {
+        if (onCloseResearch != null)
+            onCloseResearch();
+    }
+
+    // On building clicked
+    public event Action<ResearchBoost> onResearchButtonClicked;
+    public void ResearchButtonClicked(ResearchBoost tech)
+    {
+        if (onResearchButtonClicked != null)
+            onResearchButtonClicked(tech);
+    }
+
     // On blueprint collected
     public event Action<Buildable> onBuildingUnlocked;
     public void BuildingUnlocked(Buildable buildable)

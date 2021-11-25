@@ -77,4 +77,33 @@ public class Research : MonoBehaviour
                 break;
         }
     }
+
+    public static string GetAmount(ResearchType type, Resource.CurrencyType currency = Resource.CurrencyType.Gold)
+    {
+        switch (type)
+        {
+            case ResearchType.DamageBoost:
+                return "+%" + damageBoost;
+            case ResearchType.HealthBoost:
+                return "+%" + healthBoost;
+            case ResearchType.WallBoost:
+                return "+%" + wallBoost;
+            case ResearchType.PierceBoost:
+                return "+" + pierceBoost;
+            case ResearchType.BulletBoost:
+                return "+" + bulletBoost;
+            case ResearchType.FirerateBoost:
+                return "+%" + firerateBoost;
+            case ResearchType.DroneSpeed:
+                return "+%" + droneMoveSpeed;
+            case ResearchType.ExtractionRate:
+                return "+%" + resource[currency].extractionRate;
+            case ResearchType.ExtractionYield:
+                return "+%" + resource[currency].extractionRate;
+            case ResearchType.StorageAmount:
+                return "+%" + resource[currency].extractionRate;
+            default:
+                return "";
+        }
+    }
 }

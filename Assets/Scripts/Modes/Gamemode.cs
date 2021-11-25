@@ -88,6 +88,9 @@ public class Gamemode : MonoBehaviour
         // Setup starting resources
         SetupStartingResources();
 
+        // Initialize research
+        ResearchHandler.active.Setup();
+
         loadGame = false;
     }
 

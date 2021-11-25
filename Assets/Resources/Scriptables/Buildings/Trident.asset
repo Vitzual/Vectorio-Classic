@@ -26,19 +26,19 @@ MonoBehaviour:
   obj: {fileID: 420473218063467210, guid: d5eb952b9e4a4c349a862a9c548bb0e1, type: 3}
   name: The Trident
   description: The first super weapon. Fires huge beams of high concentrated energy
-    that pierce through almost anything it touches. <b>Only one allowed per world</b>
+    that pierce through anything it touches. <b>Only one per world</b>
   health: 10000
   material: {fileID: 2100000, guid: 2a5b3d17fa24fb845917fd10f25a38c7, type: 2}
-  inventoryHeader: 0
-  inventoryIndex: 2
+  inventoryHeader: 2
+  inventoryIndex: 0
   unlockable:
     type: 3
-    description: Defeat the Atlas
+    description: Defeat the Revenant
     requirement: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
     unlocked: 0
     resource: 0
-    entity: {fileID: 11400000, guid: 272832b6750785a4c940ca9db15f0757, type: 2}
-    amount: 0
+    entity: {fileID: 11400000, guid: 6990c0f406e511c4eb028b26659f3db6, type: 2}
+    amount: 1
   gridSnap: 1
   gridOffset: {x: 0, y: 5}
   hologramSize: 2
@@ -97,15 +97,15 @@ MonoBehaviour:
     y: 10
   resources:
   - resource: 0
-    amount: 10000000
+    amount: 100000
     add: 0
     storage: 0
   - resource: 3
-    amount: 5000
+    amount: 1500
     add: 1
     storage: 0
   - resource: 4
-    amount: 500
+    amount: 250
     add: 1
     storage: 0
   radialCheck: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
-  damage: 1500
+  damage: 15000
   range: 0
   rotationSpeed: 5
   cooldown: 10
@@ -125,7 +125,7 @@ MonoBehaviour:
   bulletAmount: 1
   bulletSpeed: 120
   bulletSpread: 0
-  bulletTime: 5
+  bulletTime: 8
   bulletLock: 0
   useBulletSprite: 0
   bulletSpriteName: 

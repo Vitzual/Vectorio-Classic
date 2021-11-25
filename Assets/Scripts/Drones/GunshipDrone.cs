@@ -62,7 +62,8 @@ public class GunshipDrone : Drone
     // Get new target
     public void FindNewTarget()
     {
-        target = EnemyHandler.active.enemies[Random.Range(0, EnemyHandler.active.enemies.Count)];
+        if (EnemyHandler.active.enemies.Count > 0)
+            target = EnemyHandler.active.enemies[Random.Range(0, EnemyHandler.active.enemies.Count)];
     }
 
     // If a collision is detected, add taget

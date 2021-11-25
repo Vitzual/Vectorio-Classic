@@ -12,12 +12,14 @@ public static class ScriptableLoader
     public static string GuardianPath = "Scriptables/Guardians";
     public static string VariantPath = "Scriptables/Variants";
     public static string StagePath = "Scriptables/Stages";
+    public static string ResearchPath = "Scriptables/Research";
 
     public static Dictionary<string, Building> buildings;
     public static Dictionary<string, Enemy> enemies;
     public static Dictionary<string, Guardian> guardians;
     public static Dictionary<string, Variant> variants;
     public static Dictionary<string, Stage> stages;
+    public static Dictionary<string, ResearchBoost> researchTechs;
 
     public static Dictionary<string, Entity> allLoadedEntities = 
               new Dictionary<string, Entity>();
@@ -37,6 +39,7 @@ public static class ScriptableLoader
         GenerateGuardians();
         GenerateVariants();
         GenerateStages();
+        GenerateResearch();
     }
 
     // Generates buildings on run
@@ -128,6 +131,20 @@ public static class ScriptableLoader
         {
             stages.Add(stage.InternalID, stage);
             Debug.Log("Loaded " + stage.name + " with UUID " + stage.InternalID);
+        }
+    }
+
+    // Generates guardians on run
+    public static void GenerateResearch()
+    {
+        researchTechs = new Dictionary<string, ResearchBoost>();
+        List<ResearchBoost> loaded = Resources.LoadAll(ResearchPath, typeof(ResearchBoost)).Cast<ResearchBoost>().ToList();
+        Debug.Log("Loaded " + loaded.Count + " research techs from " + ResearchPath);
+
+        foreach (ResearchBoost tech in loaded)
+        {
+            researchTechs.Add(tech.InternalID, tech);
+            Debug.Log("Loaded " + tech.name + " with UUID " + tech.InternalID);
         }
     }
 }

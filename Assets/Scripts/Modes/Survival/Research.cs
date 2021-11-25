@@ -20,7 +20,8 @@ public class Research : MonoBehaviour
         public int extractionYield;
         public int storageAmount;
     }
-    public static Dictionary<Resource.CurrencyType, ResourceBoost> resource;
+    public static Dictionary<Resource.CurrencyType, ResourceBoost> resource = 
+        new Dictionary<Resource.CurrencyType, ResourceBoost>();
 
     // Drone research variables
     public static int drone_tile_coverage = 5;

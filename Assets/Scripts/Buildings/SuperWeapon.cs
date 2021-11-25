@@ -13,6 +13,7 @@ public class SuperWeapon : DefaultTurret
             else if (EnemyHandler.active.enemies.Count > 0)
                 target = EnemyHandler.active.GetStrongestEnemy();
         }
+        else RotateTurret();
     }
 
     public override void Setup()
@@ -24,8 +25,6 @@ public class SuperWeapon : DefaultTurret
             bulletModel = Sprites.GetSprite(turret.bulletSpriteName);
             useBulletModel = bulletModel != null;
         }
-
-        base.Setup();
     }
 
     public override void RotateTurret()

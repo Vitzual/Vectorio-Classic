@@ -18,8 +18,14 @@ public class NewSaveSystem : MonoBehaviour
         List<SaveData.BuildingData> buildings = new List<SaveData.BuildingData>();
         List<SaveData.EnemyData> enemies = new List<SaveData.EnemyData>();
 
+        // Generate all unlocks
+        List<string> unlocks = new List<string>();
+        foreach (KeyValuePair<Entity, Buildable> buildable in Buildables.active)
+            if (buildable.Value.isUnlocked) unlocks.Add(buildable.Value.building.InternalID);
+        saveData.unlocked = unlocks.ToArray();
+
         // Loop through entities and assign to corresponding list
-        for(int i = 0; i < activeEntities.Length; i++)
+        for (int i = 0; i < activeEntities.Length; i++)
         {
             // Check if tile should be saved
             BaseTile tile = activeEntities[i].GetComponent<BaseTile>();
@@ -106,7 +112,18 @@ public class NewSaveSystem : MonoBehaviour
         // Generate world data
         #pragma warning disable CS0612 
         WorldGenerator.active.GenerateWorldData(Gamemode.seed);
-        #pragma warning restore CS0612 
+        #pragma warning restore CS0612
+
+        // Generate all unlocks
+        if (saveData.unlocked != null) 
+        {
+            foreach (string unlock in saveData.unlocked)
+            {
+                // Get buildable
+                Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[unlock]);
+                Buildables.UnlockBuildable(buildable);
+            }
+        }
 
         // Apply data
         foreach (SaveData.BuildingData buildingData in saveData.buildings)

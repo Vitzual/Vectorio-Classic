@@ -32,6 +32,7 @@ public class SaveData
     // Location data
     public BuildingData[] buildings;
     public EnemyData[] enemies;
+    public string[] unlocked;
     public string[] hotbar;
     public string stage;
 

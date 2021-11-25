@@ -77,6 +77,31 @@ public class EnemyHandler : MonoBehaviour
         }
     }
 
+    public DefaultEnemy GetStrongestEnemy()
+    {
+        // Strongest
+        DefaultEnemy strongest = null;
+        float health = 0;
+
+        // Move enemies each frame towards their target
+        int max = enemies.Count;
+        if (max > 50) max = 50;
+        for (int a = 0; a < max; a++)
+        {
+            if (enemies[a] != null && enemies[a].health > health)
+            {
+                strongest = enemies[a];
+            }
+            else
+            {
+                enemies.RemoveAt(a);
+                a--;
+            }
+        }
+
+        return strongest;
+    }
+
     // Move menu enemies
     public void MoveMenuEnemies()
     {

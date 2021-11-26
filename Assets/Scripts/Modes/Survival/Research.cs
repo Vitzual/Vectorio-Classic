@@ -87,12 +87,18 @@ public class Research : MonoBehaviour
                 break;
             case ResearchTypeEnum.ExtractionRate:
                 resource[tech.currency].extractionRate += tech.amount;
+                Resource.active.currencies[tech.currency].perSecond = 0;
+                if (CollectorHandler.active != null)
+                    CollectorHandler.active.RecalculateAllCollectors(tech.currency);
                 break;
             case ResearchTypeEnum.ExtractionYield:
-                resource[tech.currency].extractionRate += tech.amount;
+                resource[tech.currency].extractionYield += (int)tech.amount;
+                Resource.active.currencies[tech.currency].perSecond = 0;
+                if (CollectorHandler.active != null)
+                    CollectorHandler.active.RecalculateAllCollectors(tech.currency);
                 break;
             case ResearchTypeEnum.StorageAmount:
-                resource[tech.currency].extractionRate += tech.amount;
+                resource[tech.currency].storageAmount += (int)tech.amount;
                 break;
         }
 

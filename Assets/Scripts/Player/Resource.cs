@@ -27,10 +27,12 @@ public class Resource : MonoBehaviour
         public CurrencyType type;
         public int amount;
         public int storage;
+        public int perSecond;
         public string format;
         public bool allowOverflow;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
+        public TextMeshProUGUI resourcePS;
         public bool useResourceBar;
         public ProgressBar resourceBar;
 

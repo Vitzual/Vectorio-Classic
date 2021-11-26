@@ -28,6 +28,10 @@ public class CollectorHandler : MonoBehaviour
             }
             else
             {
+                Resource.active.currencies[collectors[i].type].perSecond -=
+                    (int)Research.resource[collectors[i].type].extractionRate /
+                         Research.resource[collectors[i].type].extractionYield;
+
                 collectors.RemoveAt(i);
                 i--;
             }
@@ -36,6 +40,19 @@ public class CollectorHandler : MonoBehaviour
 
     public void AddCollector(DefaultCollector collector)
     {
+        Resource.active.currencies[collector.type].perSecond +=
+            (int)Research.resource[collector.type].extractionRate / 
+                 Research.resource[collector.type].extractionYield;
+
         collectors.Add(collector);
+    }
+
+    public void RecalculateAllCollectors(Resource.CurrencyType currency)
+    {
+        foreach(DefaultCollector collector in collectors)
+            if (collector.type == currency)
+                Resource.active.currencies[collector.type].perSecond +=
+                    (int)Research.resource[collector.type].extractionRate /
+                         Research.resource[collector.type].extractionYield;
     }
 }

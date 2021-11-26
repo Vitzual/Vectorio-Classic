@@ -50,6 +50,7 @@ public class ResearchUI : MonoBehaviour
     {
         // Iterate through research techs
         Debug.Log("Research handler grabbing research boosts");
+        Research.techs = new Dictionary<ResearchTech, Research.Tech>();
         foreach (KeyValuePair<string, ResearchTech> tech in ScriptableLoader.researchTechs)
         {
             ResearchButton button = Instantiate(researchButton, new Vector2(0, 0), Quaternion.identity).GetComponent<ResearchButton>();

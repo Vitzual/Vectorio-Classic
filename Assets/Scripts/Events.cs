@@ -29,6 +29,13 @@ public class Events : MonoBehaviour
             onChangeBorderColor(border, fill);
     }
 
+    // On building clicked
+    public event Action<ResearchTech> onResearchUnlocked;
+    public void ResearchUnlocked(ResearchTech research)
+    {
+        if (onResearchUnlocked != null)
+            onResearchUnlocked(research);
+    }
 
     // On building clicked
     public event Action<BaseEntity> onEntityClicked;
@@ -39,11 +46,19 @@ public class Events : MonoBehaviour
     }
 
     // On building clicked
-    public event Action<Lab> onLabClicked;
-    public void LabClicked(Lab lab)
+    public event Action<ResearchLab> onLabClicked;
+    public void LabClicked(ResearchLab lab)
     {
         if (onLabClicked != null)
             onLabClicked(lab);
+    }
+
+    // On building clicked
+    public event Action<ResearchLab> onLabDestroyed;
+    public void LabDestroyed(ResearchLab lab)
+    {
+        if (onLabDestroyed != null)
+            onLabDestroyed(lab);
     }
 
     // On building clicked
@@ -55,8 +70,8 @@ public class Events : MonoBehaviour
     }
 
     // On building clicked
-    public event Action<ResearchBoost> onResearchButtonClicked;
-    public void ResearchButtonClicked(ResearchBoost tech)
+    public event Action<ResearchTech> onResearchButtonClicked;
+    public void ResearchButtonClicked(ResearchTech tech)
     {
         if (onResearchButtonClicked != null)
             onResearchButtonClicked(tech);

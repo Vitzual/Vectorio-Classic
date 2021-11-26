@@ -77,7 +77,7 @@ public class DefaultBullet : MonoBehaviour
 
             pierces -= 1;
             if (pierces <= 0)
-                DestroyBullet(entity.material, entity);
+                DestroyBullet(entity.GetMaterial(), entity);
             else ignoreList.Add(entity);
 
             tracking = false;

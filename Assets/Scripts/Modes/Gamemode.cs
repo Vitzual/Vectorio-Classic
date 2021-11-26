@@ -84,12 +84,10 @@ public class Gamemode : MonoBehaviour
             Border.UpdateStage();
             Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
         }
+        else ResearchUI.active.Setup();
 
         // Setup starting resources
         SetupStartingResources();
-
-        // Initialize research
-        ResearchHandler.active.Setup();
 
         loadGame = false;
     }

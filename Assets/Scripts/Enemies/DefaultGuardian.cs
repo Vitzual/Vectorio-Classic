@@ -9,7 +9,6 @@ public class DefaultGuardian : DefaultEnemy
 
     public override void Setup()
     {
-        material = guardian.material;
         health = guardian.health;
         maxHealth = guardian.health;
 
@@ -40,8 +39,8 @@ public class DefaultGuardian : DefaultEnemy
         {
             ParticleSystemRenderer holder = Instantiate(guardian.particleEffect, transform.position,
                 Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-            holder.material = material;
-            holder.trailMaterial = material;
+            holder.material = guardian.material;
+            holder.trailMaterial = guardian.material;
         }
 
         // Invoke enemy death event
@@ -77,5 +76,11 @@ public class DefaultGuardian : DefaultEnemy
 
         if (turret != null)
             turret.RemoveTarget(this);
+    }
+
+    // Get material
+    public override Material GetMaterial()
+    {
+        return guardian.material;
     }
 }

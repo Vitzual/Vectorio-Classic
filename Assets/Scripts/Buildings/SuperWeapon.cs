@@ -18,8 +18,6 @@ public class SuperWeapon : DefaultTurret
 
     public override void Setup()
     {
-        material = turret.material;
-
         if (turret.bulletSpriteName != "")
         {
             bulletModel = Sprites.GetSprite(turret.bulletSpriteName);

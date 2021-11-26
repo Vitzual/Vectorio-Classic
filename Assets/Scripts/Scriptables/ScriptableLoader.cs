@@ -19,7 +19,7 @@ public static class ScriptableLoader
     public static Dictionary<string, Guardian> guardians;
     public static Dictionary<string, Variant> variants;
     public static Dictionary<string, Stage> stages;
-    public static Dictionary<string, ResearchBoost> researchTechs;
+    public static Dictionary<string, ResearchTech> researchTechs;
 
     public static Dictionary<string, Entity> allLoadedEntities = 
               new Dictionary<string, Entity>();
@@ -137,11 +137,11 @@ public static class ScriptableLoader
     // Generates guardians on run
     public static void GenerateResearch()
     {
-        researchTechs = new Dictionary<string, ResearchBoost>();
-        List<ResearchBoost> loaded = Resources.LoadAll(ResearchPath, typeof(ResearchBoost)).Cast<ResearchBoost>().ToList();
+        researchTechs = new Dictionary<string, ResearchTech>();
+        List<ResearchTech> loaded = Resources.LoadAll(ResearchPath, typeof(ResearchTech)).Cast<ResearchTech>().ToList();
         Debug.Log("Loaded " + loaded.Count + " research techs from " + ResearchPath);
 
-        foreach (ResearchBoost tech in loaded)
+        foreach (ResearchTech tech in loaded)
         {
             researchTechs.Add(tech.InternalID, tech);
             Debug.Log("Loaded " + tech.name + " with UUID " + tech.InternalID);

@@ -11,7 +11,6 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public int metadata = -1;
 
     protected ParticleSystem particle;
-    [HideInInspector] public Material material;
 
     public virtual void Setup() 
     {
@@ -60,5 +59,11 @@ public class BaseEntity : MonoBehaviour, IDamageable
     {
         health += amount;
         if (health > maxHealth) health = maxHealth;
+    }
+
+    // Get material
+    public virtual Material GetMaterial()
+    {
+        return null;
     }
 }

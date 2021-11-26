@@ -9,48 +9,55 @@ public class ResearchButton : MonoBehaviour
 {
     // UI elements
     public ButtonManagerBasic button;
-    public TextMeshProUGUI level;
     public Image researchIcon;
     public TextMeshProUGUI description;
-    public TextMeshProUGUI essence;
+    public TextMeshProUGUI level;
     public TextMeshProUGUI heat;
-    public TextMeshProUGUI power;
+    public TextMeshProUGUI heatTitle;
+    public Image heatIcon;
+    public bool isUnlocked = false;
 
     // Research holder
-    public ResearchBoost boost;
+    public ResearchTech effect;
 
     // Setup research 
-    public void Setup(ResearchBoost boost)
+    public void Setup(ResearchTech boost)
     {
-        this.boost = boost;
-        button.buttonText = boost.name;
-        researchIcon.sprite = boost.icon;
-        description.text = boost.description;
-        essence.text = boost.essenceRequirement.ToString() + "/s";
-        heat.text = boost.heatRequirement.ToString();
-        power.text = boost.powerRequirement.ToString();
-        UpdateResearch();
+        this.effect = boost;
+        heat.text = Resource.FormatNumber(boost.heatUnlockCost).ToString();
     }
 
-    // Update research 
-    public void UpdateResearch()
+    // Check if unlocked
+    public void CheckUnlock(int amount)
     {
-        level.text = Research.GetAmount(boost.type);
+        if (amount >= effect.heatUnlockCost)
+            UnlockResearch();
+    }
+
+    // Unlock research
+    public void UnlockResearch()
+    {
+        if (!isUnlocked)
+        {
+            isUnlocked = true;
+
+            researchIcon.sprite = effect.icon;
+            button.buttonText = effect.name;
+            description.text = effect.description;
+
+            heat.gameObject.SetActive(false);
+            heatTitle.gameObject.SetActive(false);
+            heatIcon.gameObject.SetActive(false);
+
+            level.text = Research.GetAmount(effect);
+
+            Events.active.ResearchUnlocked(effect);
+        }
     }
 
     // Set on click
     public void OnClick()
     {
-        foreach (Cost cost in boost.cost)
-        {
-            if (cost.storage)
-            {
-                Resource.Currency currency = Resource.active.currencies[cost.resource];
-                if (cost.add) if (currency.amount + cost.amount > currency.storage) return;
-                else if (currency.amount - cost.amount < currency.storage) return;
-            }
-        }
-
-        Events.active.ResearchButtonClicked(boost);
+        if (isUnlocked) Events.active.ResearchButtonClicked(effect);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class NewSaveSystem : MonoBehaviour
@@ -124,6 +125,11 @@ public class NewSaveSystem : MonoBehaviour
                 Buildables.UnlockBuildable(buildable);
             }
         }
+
+        // Generate all research
+        if (saveData.research != null)
+            ResearchUI.active.Setup(saveData.research.ToList());
+        else ResearchUI.active.Setup();
 
         // Apply data
         foreach (SaveData.BuildingData buildingData in saveData.buildings)

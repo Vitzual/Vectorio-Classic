@@ -228,6 +228,13 @@ public class Resource : MonoBehaviour
         return true;
     }
 
+    // Check resources
+    public bool CheckResource(Cost cost)
+    {
+        if (cost.add) return GetAmount(cost.resource) + cost.amount < GetStorage(cost.resource);
+        else return GetAmount(cost.resource) - cost.amount > GetStorage(cost.resource);
+    }
+
     // Check freebie [NEEDS IMPROVEMENTS]
     public bool CheckFreebie(Buildable buildable)
     {
@@ -380,7 +387,7 @@ public class Resource : MonoBehaviour
     public int GetPower() { return currencies[CurrencyType.Power].amount; }
 
     // Number formatter
-    static string FormatNumber(int number)
+    public static string FormatNumber(int number)
     {
         if (number < 100000)
             return number.ToString();

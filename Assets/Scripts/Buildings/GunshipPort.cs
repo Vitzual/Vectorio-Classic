@@ -16,9 +16,6 @@ public class GunshipPort : BaseTile
     {
         // Spawn ship
         CreateDrone(Drone.DroneType.Gunship);
-
-        // Set material
-        material = buildable.building.material;
     }
 
     // Create drone method

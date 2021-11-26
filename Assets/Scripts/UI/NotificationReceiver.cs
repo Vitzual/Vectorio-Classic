@@ -8,7 +8,8 @@ public class NotificationReceiver : MonoBehaviour
     public enum NotificationType
     {
         NewBuilding,
-        NewEnemy
+        NewEnemy,
+        LabGoBoom
     }
     public NotificationType notificationType;
     public NotificationManager notification;
@@ -18,6 +19,7 @@ public class NotificationReceiver : MonoBehaviour
     {
         Events.active.onEnemyDiscovered += ShowEnemyNotification;
         Events.active.onBuildingUnlocked += ShowBuildingNotification;
+        Events.active.onLabDestroyed += ShowLabBoomBoom;
     }
 
     public void ShowBuildingNotification(Buildable buildable)
@@ -40,6 +42,15 @@ public class NotificationReceiver : MonoBehaviour
             notification.icon = Sprites.GetSprite(enemy.name);
             notification.title = "NEW ENEMY!";
             notification.description = enemy.name.ToUpper();
+            notification.OpenNotification();
+            notficiationSound.Play();
+        }
+    }
+
+    public void ShowLabBoomBoom(ResearchLab lab)
+    {
+        if (notificationType == NotificationType.LabGoBoom)
+        {
             notification.OpenNotification();
             notficiationSound.Play();
         }

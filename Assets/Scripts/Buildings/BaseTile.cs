@@ -16,6 +16,9 @@ public class BaseTile : BaseEntity
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
         // Set health
+        if (buildable.building.deathParticle != null) 
+            particle = buildable.building.deathParticle;
+
         health = buildable.building.health * Research.healthBoost;
         maxHealth = health;
     }
@@ -47,7 +50,17 @@ public class BaseTile : BaseEntity
 
         // Create particle and destroy
         if (particle != null)
-            Instantiate(particle, transform.position, transform.rotation);
+        {
+            ParticleSystemRenderer newParticle = Instantiate(particle, transform.position, transform.rotation).GetComponent<ParticleSystemRenderer>();
+            newParticle.material = buildable.building.material;
+            newParticle.trailMaterial = buildable.building.material;
+        }
         Destroy(gameObject);
+    }
+
+    // Get material
+    public override Material GetMaterial()
+    {
+        return buildable.building.material;
     }
 }

@@ -29,6 +29,11 @@ public class NewInterface : MonoBehaviour
             StatsPanel.CloseMenu();
             return;
         }
+        else if (ResearchUI.isOpen)
+        {
+            ResearchUI.active.CloseResearch();
+            return;
+        }
 
         saveButton.interactable = true;
         quitMenu.SetActive(!quitMenu.activeSelf);

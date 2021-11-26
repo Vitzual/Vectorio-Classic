@@ -101,9 +101,6 @@ public class Droneport : BaseTile
                     drone.AddTarget(InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)));
         }
 
-        // Set material
-        material = building.material;
-
         // Update nearby targets
         UpdateNearbyTargets();
     }

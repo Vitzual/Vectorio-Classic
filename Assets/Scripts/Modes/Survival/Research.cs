@@ -5,6 +5,25 @@ using UnityEngine;
 
 public class Research : MonoBehaviour
 {
+    // Class
+    [System.Serializable]
+    public class Tech
+    {
+        public int totalLabs = 0;
+        public int totalBooms = 0;
+        public float totalEffect = 0;
+
+        public Dictionary<Resource.CurrencyType, float> costs =
+            new Dictionary<Resource.CurrencyType, float>();
+    }
+
+    // Create new lsit of techs
+    public static Dictionary<ResearchTech, Tech> techs = 
+              new Dictionary<ResearchTech, Tech>();
+
+    // Active labs in scene
+    public static List<ResearchLab> activeLabs = new List<ResearchLab>();
+
     // Turret variables
     public static float damageBoost = 1;
     public static float healthBoost = 1;
@@ -21,7 +40,7 @@ public class Research : MonoBehaviour
         public int storageAmount;
     }
     public static Dictionary<Resource.CurrencyType, ResourceBoost> resource = 
-        new Dictionary<Resource.CurrencyType, ResourceBoost>();
+              new Dictionary<Resource.CurrencyType, ResourceBoost>();
 
     // Drone research variables
     public static int drone_tile_coverage = 5;
@@ -41,67 +60,100 @@ public class Research : MonoBehaviour
 
     // Apply research
     // THIS IS GONNA BE REDONE
-    public static void ApplyResearch(ResearchType type, float amount, Resource.CurrencyType currency = Resource.CurrencyType.Power)
+    public static void ApplyResearch(ResearchTech tech, bool revoke = true)
     {
-        switch(type)
+        switch(tech.type)
         {
-            case ResearchType.DamageBoost:
-                damageBoost += amount;
+            case ResearchTypeEnum.DamageBoost:
+                damageBoost += tech.amount;
                 break;
-            case ResearchType.HealthBoost:
-                healthBoost += amount;
+            case ResearchTypeEnum.HealthBoost:
+                healthBoost += tech.amount;
                 break;
-            case ResearchType.WallBoost:
-                wallBoost += amount;
+            case ResearchTypeEnum.WallBoost:
+                wallBoost += tech.amount;
                 break;
-            case ResearchType.PierceBoost:
-                pierceBoost += (int)amount;
+            case ResearchTypeEnum.PierceBoost:
+                pierceBoost += (int)tech.amount;
                 break;
-            case ResearchType.BulletBoost:
-                bulletBoost += (int)amount;
+            case ResearchTypeEnum.BulletBoost:
+                bulletBoost += (int)tech.amount;
                 break;
-            case ResearchType.FirerateBoost:
-                firerateBoost += amount;
+            case ResearchTypeEnum.FirerateBoost:
+                firerateBoost += tech.amount;
                 break;
-            case ResearchType.DroneSpeed:
-                droneMoveSpeed += amount;
+            case ResearchTypeEnum.DroneSpeed:
+                droneMoveSpeed += tech.amount;
                 break;
-            case ResearchType.ExtractionRate:
-                resource[currency].extractionRate += amount;
+            case ResearchTypeEnum.ExtractionRate:
+                resource[tech.currency].extractionRate += tech.amount;
                 break;
-            case ResearchType.ExtractionYield:
-                resource[currency].extractionRate += amount;
+            case ResearchTypeEnum.ExtractionYield:
+                resource[tech.currency].extractionRate += tech.amount;
                 break;
-            case ResearchType.StorageAmount:
-                resource[currency].extractionRate += amount;
+            case ResearchTypeEnum.StorageAmount:
+                resource[tech.currency].extractionRate += tech.amount;
                 break;
+        }
+
+        if (techs.ContainsKey(tech)) 
+        {
+            if (revoke)
+            {
+                foreach (Cost cost in tech.cost)
+                    if (techs[tech].costs.ContainsKey(cost.resource))
+                        techs[tech].costs[cost.resource] -= cost.amount;
+                techs[tech].totalEffect -= tech.amount;
+                techs[tech].totalLabs -= 1;
+            }
+            else
+            {
+                foreach (Cost cost in tech.cost)
+                    if (techs[tech].costs.ContainsKey(cost.resource))
+                        techs[tech].costs[cost.resource] += cost.amount;
+                techs[tech].totalEffect += tech.amount;
+                techs[tech].totalLabs += 1;
+            }
+        }
+        else
+        {
+            if (!revoke)
+            {
+                techs.Add(tech, new Tech());
+
+                foreach (Cost cost in tech.cost)
+                    if (techs[tech].costs.ContainsKey(cost.resource))
+                        techs[tech].costs.Add(cost.resource, cost.amount);
+                techs[tech].totalEffect = tech.amount;
+                techs[tech].totalLabs = 1;
+            }
         }
     }
 
-    public static string GetAmount(ResearchType type, Resource.CurrencyType currency = Resource.CurrencyType.Gold)
+    public static string GetAmount(ResearchTech tech)
     {
-        switch (type)
+        switch (tech.type)
         {
-            case ResearchType.DamageBoost:
+            case ResearchTypeEnum.DamageBoost:
                 return "+%" + damageBoost;
-            case ResearchType.HealthBoost:
+            case ResearchTypeEnum.HealthBoost:
                 return "+%" + healthBoost;
-            case ResearchType.WallBoost:
+            case ResearchTypeEnum.WallBoost:
                 return "+%" + wallBoost;
-            case ResearchType.PierceBoost:
+            case ResearchTypeEnum.PierceBoost:
                 return "+" + pierceBoost;
-            case ResearchType.BulletBoost:
+            case ResearchTypeEnum.BulletBoost:
                 return "+" + bulletBoost;
-            case ResearchType.FirerateBoost:
+            case ResearchTypeEnum.FirerateBoost:
                 return "+%" + firerateBoost;
-            case ResearchType.DroneSpeed:
+            case ResearchTypeEnum.DroneSpeed:
                 return "+%" + droneMoveSpeed;
-            case ResearchType.ExtractionRate:
-                return "+%" + resource[currency].extractionRate;
-            case ResearchType.ExtractionYield:
-                return "+%" + resource[currency].extractionRate;
-            case ResearchType.StorageAmount:
-                return "+%" + resource[currency].extractionRate;
+            case ResearchTypeEnum.ExtractionRate:
+                return "+%" + resource[tech.currency].extractionRate;
+            case ResearchTypeEnum.ExtractionYield:
+                return "+%" + resource[tech.currency].extractionRate;
+            case ResearchTypeEnum.StorageAmount:
+                return "+%" + resource[tech.currency].extractionRate;
             default:
                 return "";
         }

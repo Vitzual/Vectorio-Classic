@@ -27,8 +27,6 @@ public class DefaultEnemy : BaseEntity
             return;
         }
 
-        material = variant.border;
-
         foreach (SpriteRenderer a in border)
             a.material = variant.border;
 
@@ -108,5 +106,11 @@ public class DefaultEnemy : BaseEntity
 
         if (turret != null)
             turret.RemoveTarget(this);
+    }
+
+    // Get material
+    public override Material GetMaterial()
+    {
+        return enemy.material;
     }
 }

@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Lab : BaseTile
+public class ResearchLab : BaseTile
 {
-    public bool working = false;
     public SpriteRenderer boostIcon;
-    public ResearchBoost activeBoost;
+    public ResearchTech activeBoost;
+    public AudioClip boomSound;
 
     public void Start()
     {
@@ -16,10 +17,9 @@ public class Lab : BaseTile
         Events.active.LabClicked(this);
     }
 
-    public void ApplyResearch(ResearchBoost type)
+    public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
-        if (activeBoost == type) CancelResearch();
-        else
+        if (!overrideCost)
         {
             foreach (Cost cost in type.cost)
             {
@@ -29,18 +29,21 @@ public class Lab : BaseTile
                     else Resource.active.Remove(cost.resource, cost.amount, false);
                 }
             }
-
-            working = true;
-            activeBoost = type;
-            Research.ApplyResearch(type.type, type.amount, type.currency);
         }
+
+        activeBoost = type;
+        boostIcon.gameObject.SetActive(true);
+        boostIcon.sprite = type.icon;
+        Research.ApplyResearch(type);
+
+        metadata = type.metadataID;
     }
 
     public void CancelResearch()
     {
         if (activeBoost != null)
         {
-            if (working) Research.ApplyResearch(activeBoost.type, -activeBoost.amount, activeBoost.currency);
+            Research.ApplyResearch(activeBoost, true);
 
             foreach (Cost cost in activeBoost.cost)
             {
@@ -51,7 +54,9 @@ public class Lab : BaseTile
                 }
             }
 
+            boostIcon.gameObject.SetActive(false);
             activeBoost = null;
+            metadata = -1;
         }
     }
 
@@ -68,23 +73,28 @@ public class Lab : BaseTile
                         if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);
                         else Resource.active.Remove(cost.resource, cost.amount, false);
                     }
-                    else if (working)
+                    else
                     {
-                        working = false;
                         Debug.Log("Lab no longer has reasources to continue operating, stopping");
-                        Research.ApplyResearch(activeBoost.type, -activeBoost.amount, activeBoost.currency);
+                        Debug.Log("Failed on " + cost.resource);
+                        Events.active.LabDestroyed(this);
+
+                        AudioSource.PlayClipAtPoint(boomSound, transform.position, 0.5f);
+                        if (Research.techs.ContainsKey(activeBoost))
+                            Research.techs[activeBoost].totalBooms += 1;
+                        if (ResearchUI.active != null) ResearchUI.active.CloseResearch();
+                        DestroyEntity();
                         return;
                     }
                 }
             }
-
-            if (!working)
-            {
-                Debug.Log("Lab gained resources to continue operating");
-                Research.ApplyResearch(activeBoost.type, activeBoost.amount, activeBoost.currency);
-                working = true;
-            }
         }
+    }
+
+    public override void ApplyMetadata(int data)
+    {
+        foreach (KeyValuePair<string, ResearchTech> tech in ScriptableLoader.researchTechs)
+            if (tech.Value.metadataID == data) ApplyResearch(tech.Value, true);
     }
 
     public override void DestroyEntity()

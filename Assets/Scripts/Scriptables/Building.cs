@@ -31,6 +31,8 @@ public class Building : Entity
     public Resource.CurrencyType placedOn;
     [FoldoutGroup("Building Variables")]
     public int engineeringSlots;
+    [FoldoutGroup("Building Variables")]
+    public ParticleSystem deathParticle;
 
 
     // Creates stats

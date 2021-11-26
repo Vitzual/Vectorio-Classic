@@ -33,6 +33,7 @@ public class SaveData
     public BuildingData[] buildings;
     public EnemyData[] enemies;
     public string[] unlocked;
+    public string[] research;
     public string[] hotbar;
     public string stage;
 

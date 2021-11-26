@@ -9,7 +9,7 @@ public class ResearchUI : MonoBehaviour
 {
     // Active instance
     public static ResearchUI active;
-
+    
     // Index lists
     public enum IndexLists
     {
@@ -145,8 +145,9 @@ public class ResearchUI : MonoBehaviour
     {
         // Update all research
         int heat = Resource.active.GetAmount(Resource.CurrencyType.Heat);
+        Debug.Log("Lab opened with " + heat + " heat");
         foreach (ResearchButton button in researchButtons)
-            if (!button.isUnlocked && button.researchTech.heatUnlockCost >= heat)
+            if (!button.isUnlocked && button.researchTech.heatUnlockCost <= heat)
                 button.UnlockResearch();
 
         // Set research panel true

@@ -13,8 +13,8 @@ public class DamageHandler : MonoBehaviour
     public void Start()
     {
         Events.active.onEnemyHurt += UpdateDamage;
-        Events.active.onBuildingHurt += UpdateDamage;
-        Events.active.onBuildingDestroyed += RemoveBar;
+        //Events.active.onBuildingHurt += UpdateDamage;
+        //Events.active.onBuildingDestroyed += RemoveBar;
         Events.active.onEnemyDestroyed += RemoveBar;
     }
 

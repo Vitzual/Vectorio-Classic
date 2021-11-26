@@ -27,23 +27,20 @@ public class ResearchButton : MonoBehaviour
         heat.text = Resource.FormatNumber(boost.heatUnlockCost).ToString();
     }
 
-    // Check if unlocked
-    public void CheckUnlock(int amount)
-    {
-        if (amount >= researchTech.heatUnlockCost)
-            UnlockResearch();
-    }
-
     // Unlock research
     public void UnlockResearch()
     {
         if (!isUnlocked)
         {
+            Debug.Log("Unlocking " + researchTech.name + " with requirement "+ researchTech.heatUnlockCost);
+
             isUnlocked = true;
 
             researchIcon.sprite = researchTech.icon;
-            button.buttonText = researchTech.name;
+            button.buttonText = researchTech.name.ToUpper();
             description.text = researchTech.description;
+
+            button.UpdateUI();
 
             heat.gameObject.SetActive(false);
             heatTitle.gameObject.SetActive(false);

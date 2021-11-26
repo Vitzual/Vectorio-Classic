@@ -372,29 +372,6 @@ public class DroneManager : MonoBehaviour
         }
     }
 
-    // For a resource update
-    public void ForceResourceUpdate(Vector2 position)
-    {
-        // Loop through all nearby drone ports
-        int adjustment = Research.drone_tile_coverage * 5;
-        int xTile = (int)position.x;
-        int yTile = (int)position.y;
-
-        // Loop through all tiles and try to find drones
-        for (int x = xTile - adjustment; x <= xTile + adjustment; x += 5)
-        {
-            for (int y = yTile - adjustment; y <= yTile + adjustment; y += 5)
-            {
-                BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
-                if (holder != null)
-                {
-                    Droneport droneport = holder.GetComponent<Droneport>();
-                    if (droneport != null && droneport.drone.type == Drone.DroneType.Resource) droneport.AddTarget;
-                }
-            }
-        }
-    }
-
     // Resource check
     public bool CheckResources(GhostTile ghost)
     {

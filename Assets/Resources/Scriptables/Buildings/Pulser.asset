@@ -31,9 +31,9 @@ MonoBehaviour:
   inventoryHeader: 0
   inventoryIndex: 5
   unlockable:
-    type: 2
-    description: Destroy a Marauder
-    requirement: {fileID: 11400000, guid: 805b3e015b81c3141b7199d6f24ce43e, type: 2}
+    type: 0
+    description: Accumulate 5,000 heat
+    requirement: {fileID: 11400000, guid: 44df288e7d949c34398d10f842ec50ad, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 0}
@@ -65,10 +65,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 80
   range: 120
   rotationSpeed: 50
   cooldown: 4
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: 46e4002e4b6074361a58bbd232a2cfd5, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 5
@@ -77,5 +79,7 @@ MonoBehaviour:
   bulletSpread: 0
   bulletTime: 3
   bulletLock: 1
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

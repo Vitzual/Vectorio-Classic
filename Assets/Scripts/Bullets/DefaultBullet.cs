@@ -66,6 +66,9 @@ public class DefaultBullet : MonoBehaviour
     // Hold info
     public virtual void DestroyBullet(Material material, BaseEntity entity = null)
     {
+        if (entity != null)
+            material = entity.GetMaterial();
+
         recycling = true;
         CreateParticle(material);
         Recycler.AddRecyclable(transform);

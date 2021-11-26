@@ -31,9 +31,9 @@ MonoBehaviour:
   inventoryHeader: 0
   inventoryIndex: 4
   unlockable:
-    type: 2
-    description: Destroy 5x Carrier's
-    requirement: {fileID: 11400000, guid: 44df288e7d949c34398d10f842ec50ad, type: 2}
+    type: 1
+    description: Place 10x Reclaimer's
+    requirement: {fileID: 11400000, guid: deddec3d3ffcd574385129f087556fff, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: c384091c5e0c74d4b93d0cf7de6876d2, type: 2}
@@ -65,10 +65,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 3
   range: 40
   rotationSpeed: 60
   cooldown: 0.1
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: 67ff0f1f4f6f24ad5ac07ccfd34636fd, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
@@ -77,5 +79,7 @@ MonoBehaviour:
   bulletSpread: 20
   bulletTime: 0.8
   bulletLock: 0
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Energizer : BaseTile
+public class Reclaimer : BaseTile
 {
     // Internal placement variables
     [SerializeField] private LayerMask TileLayer;

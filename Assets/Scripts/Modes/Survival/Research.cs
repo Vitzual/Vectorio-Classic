@@ -50,6 +50,8 @@ public class Research : MonoBehaviour
     // Currency get variables (I hate this, and will redo it)
     public static ResourceBoost GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
     {
+        resource = new Dictionary<Resource.CurrencyType, ResourceBoost>();
+
         ResourceBoost newResource = new ResourceBoost();
         newResource.extractionRate = defaultRate;
         newResource.extractionYield = defaultYield;

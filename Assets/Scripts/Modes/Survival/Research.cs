@@ -48,16 +48,13 @@ public class Research : MonoBehaviour
     public static float droneMoveSpeed = 25f;
 
     // Currency get variables (I hate this, and will redo it)
-    public static ResourceBoost GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
+    public static void GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
     {
-        resource = new Dictionary<Resource.CurrencyType, ResourceBoost>();
-
         ResourceBoost newResource = new ResourceBoost();
         newResource.extractionRate = defaultRate;
         newResource.extractionYield = defaultYield;
         newResource.storageAmount = defaultStorage;
         resource.Add(type, newResource);
-        return newResource;
     }
 
     // Apply research

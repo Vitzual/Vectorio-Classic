@@ -43,8 +43,8 @@ public class Resource : MonoBehaviour
     }
 
     // Dictionary of all currencies
-    public Dictionary<CurrencyType, Currency> currencies = new Dictionary<CurrencyType, Currency>();
-    private Dictionary<Currency, int> lastCalculation = new Dictionary<Currency, int>();
+    public Dictionary<CurrencyType, Currency> currencies;
+    private Dictionary<Currency, int> lastCalculation;
     public Currency[] currencyElements;
 
     // List of all collectors and storages
@@ -53,10 +53,17 @@ public class Resource : MonoBehaviour
     // Get active instance
     public void Awake()
     {
-        // Get active instance
         active = this;
+        Setup();
+    }
 
+    // Generate resources
+    public void Setup() 
+    {
         // Setup currencies
+        currencies = new Dictionary<CurrencyType, Currency>();
+        lastCalculation = new Dictionary<Currency, int>();
+        Research.resource = new Dictionary<CurrencyType, Research.ResourceBoost>();
         foreach (Currency currency in currencyElements)
         {
             currencies.Add(currency.type, currency);

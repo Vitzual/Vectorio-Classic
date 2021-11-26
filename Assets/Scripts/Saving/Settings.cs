@@ -5,7 +5,7 @@ using Michsky.UI.ModernUIPack;
 public class Settings : MonoBehaviour
 {
     public static bool paused = false;
-
+    public static bool autoSave = true;
 
 
 

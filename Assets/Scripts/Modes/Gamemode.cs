@@ -88,8 +88,10 @@ public class Gamemode : MonoBehaviour
 
         // Setup starting resources
         SetupStartingResources();
-
         loadGame = false;
+
+        // Invoke auto saving
+        InvokeRepeating("AutoSave", 360f, 360f);
     }
 
     // Update playtime
@@ -115,6 +117,13 @@ public class Gamemode : MonoBehaviour
     public void SaveGame()
     {
         NewSaveSystem.SaveGame(savePath);
+    }
+
+    // Auto save
+    public void AutoSave()
+    {
+        if (Settings.autoSave)
+            SaveGame();
     }
 
     // Tells the gamemode how to generate inventory

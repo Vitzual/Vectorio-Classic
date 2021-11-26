@@ -37,6 +37,8 @@ public class DefaultEnemy : BaseEntity
             a.material = variant.trail;
 
         moveSpeed = enemy.moveSpeed * variant.speedModifier;
+        health = enemy.health * variant.healthModifier;
+        maxHealth = health;
     }
 
     public virtual void GiveDamage(BaseTile building)

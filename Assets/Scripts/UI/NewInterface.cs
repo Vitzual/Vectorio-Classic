@@ -36,7 +36,6 @@ public class NewInterface : MonoBehaviour
 
         saveButton.interactable = true;
         quitMenu.SetActive(!quitMenu.activeSelf);
-        isOpen = quitMenu.activeSelf;
 
         if (quitMenu.activeSelf) Time.timeScale = 0f;
         else Time.timeScale = 1f;

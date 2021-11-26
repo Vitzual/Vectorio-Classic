@@ -161,6 +161,7 @@ public class ResearchUI : MonoBehaviour
     public void OpenResearch()
     {
         isOpen = true;
+        NewInterface.isOpen = true;
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -170,6 +171,7 @@ public class ResearchUI : MonoBehaviour
     public void CloseResearch()
     {
         isOpen = false;
+        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

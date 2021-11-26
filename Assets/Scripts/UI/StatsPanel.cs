@@ -128,6 +128,7 @@ public class StatsPanel : MonoBehaviour
     public static void OpenMenu()
     {
         isActive = true;
+        NewInterface.isOpen = true;
 
         if (canvasGroup != null)
         {
@@ -142,6 +143,7 @@ public class StatsPanel : MonoBehaviour
     public static void CloseMenu()
     {
         isActive = false;
+        NewInterface.isOpen = false;
 
         if (canvasGroup != null)
         {

@@ -108,6 +108,7 @@ public class Inventory : MonoBehaviour
     public static void Open()
     {
         isOpen = true;
+        NewInterface.isOpen = true;
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -117,6 +118,7 @@ public class Inventory : MonoBehaviour
     public static void Close()
     {
         isOpen = false;
+        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

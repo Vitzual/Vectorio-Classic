@@ -29,7 +29,7 @@ public class DefaultBullet : MonoBehaviour
     public virtual void Setup(Turret turret, Sprite model = null)
     {
         this.turret = turret;
-
+        
         this.model = GetComponent<SpriteRenderer>();
         trail = GetComponent<TrailRenderer>();
 

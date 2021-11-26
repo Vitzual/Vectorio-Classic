@@ -11,10 +11,14 @@ public class Inventory : MonoBehaviour
     public MenuButton buildable;
     public List<Transform> lists;
 
+    public static CanvasGroup canvasGroup;
+    public static bool isOpen = false;
+
     public void Awake()
     {
         active = this;
-        gameObject.SetActive(false);
+        canvasGroup = GetComponent<CanvasGroup>();
+        Close();
     }
 
     public void GenerateEntities(Entity[] entities)
@@ -98,5 +102,23 @@ public class Inventory : MonoBehaviour
         else container.SetEntity(entity);
 
         return container;
+    }
+
+    // Close UI
+    public static void Open()
+    {
+        isOpen = true;
+        canvasGroup.alpha = 1f;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+    }
+
+    // Close UI
+    public static void Close()
+    {
+        isOpen = false;
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 }

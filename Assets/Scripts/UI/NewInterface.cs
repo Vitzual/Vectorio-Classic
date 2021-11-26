@@ -7,7 +7,6 @@ public class NewInterface : MonoBehaviour
 {
     public static NewInterface active;
     public static bool isOpen;
-    public GameObject buildingMenu;
     public GameObject quitMenu;
     public Button saveButton;
 
@@ -53,7 +52,7 @@ public class NewInterface : MonoBehaviour
         if (StatsPanel.isActive)
             StatsPanel.CloseMenu();
 
-        buildingMenu.SetActive(!buildingMenu.activeInHierarchy);
-        isOpen = buildingMenu.activeSelf;
+        if (Inventory.isOpen) Inventory.Close();
+        else Inventory.Open();
     }
 }

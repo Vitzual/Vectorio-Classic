@@ -54,15 +54,18 @@ public class ResearchUI : MonoBehaviour
         {
             ResearchButton button = Instantiate(researchButton, new Vector2(0, 0), Quaternion.identity).GetComponent<ResearchButton>();
             button.transform.SetParent(listTypes[(int)tech.Value.indexList]);
-            button.transform.SetSiblingIndex(tech.Value.indexNumber);
             button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             button.Setup(tech.Value);
             researchButtons.Add(button);
             Research.techs.Add(tech.Value, new Research.Tech());
 
-            if (unlocked != null && unlocked.Contains(button.effect.InternalID))
+            if (unlocked != null && unlocked.Contains(button.researchTech.InternalID))
                 button.UnlockResearch();
         }
+
+        // Set sibling index
+        foreach(ResearchButton newButton in researchButtons)
+            newButton.transform.SetSiblingIndex(newButton.researchTech.indexNumber);
 
         // Parse on lab clicked event
         Events.active.onLabClicked += OnLabClicked;
@@ -140,6 +143,12 @@ public class ResearchUI : MonoBehaviour
     // On lab clicked
     public void OnLabClicked(ResearchLab lab)
     {
+        // Update all research
+        int heat = Resource.active.GetAmount(Resource.CurrencyType.Heat);
+        foreach (ResearchButton button in researchButtons)
+            if (!button.isUnlocked && button.researchTech.heatUnlockCost >= heat)
+                button.UnlockResearch();
+
         // Set research panel true
         selectedLab = lab;
         isOpen = true;

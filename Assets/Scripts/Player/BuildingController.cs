@@ -221,7 +221,7 @@ public class BuildingController : MonoBehaviour
 
     public void TryDeselectEntity() 
     {
-        if (!NewInterface.active.buildingMenu.activeSelf)
+        if (!Inventory.isOpen)
         {
             if (entity != null) SetEntity(null);
             else NewInterface.active.ToggleQuitMenu();

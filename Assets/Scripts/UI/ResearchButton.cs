@@ -18,19 +18,19 @@ public class ResearchButton : MonoBehaviour
     public bool isUnlocked = false;
 
     // Research holder
-    public ResearchTech effect;
+    public ResearchTech researchTech;
 
     // Setup research 
     public void Setup(ResearchTech boost)
     {
-        this.effect = boost;
+        this.researchTech = boost;
         heat.text = Resource.FormatNumber(boost.heatUnlockCost).ToString();
     }
 
     // Check if unlocked
     public void CheckUnlock(int amount)
     {
-        if (amount >= effect.heatUnlockCost)
+        if (amount >= researchTech.heatUnlockCost)
             UnlockResearch();
     }
 
@@ -41,23 +41,23 @@ public class ResearchButton : MonoBehaviour
         {
             isUnlocked = true;
 
-            researchIcon.sprite = effect.icon;
-            button.buttonText = effect.name;
-            description.text = effect.description;
+            researchIcon.sprite = researchTech.icon;
+            button.buttonText = researchTech.name;
+            description.text = researchTech.description;
 
             heat.gameObject.SetActive(false);
             heatTitle.gameObject.SetActive(false);
             heatIcon.gameObject.SetActive(false);
 
-            level.text = Research.GetAmount(effect);
+            level.text = Research.GetAmount(researchTech);
 
-            Events.active.ResearchUnlocked(effect);
+            Events.active.ResearchUnlocked(researchTech);
         }
     }
 
     // Set on click
     public void OnClick()
     {
-        if (isUnlocked) Events.active.ResearchButtonClicked(effect);
+        if (isUnlocked) Events.active.ResearchButtonClicked(researchTech);
     }
 }

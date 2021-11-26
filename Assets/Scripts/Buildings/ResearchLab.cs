@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResearchLab : BaseTile
 {
     public SpriteRenderer boostIcon;
-    public ResearchTech activeBoost;
+    public ResearchTech researchTech;
     public AudioClip boomSound;
 
     public void Start()
@@ -31,7 +31,7 @@ public class ResearchLab : BaseTile
             }
         }
 
-        activeBoost = type;
+        researchTech = type;
         boostIcon.gameObject.SetActive(true);
         boostIcon.sprite = type.icon;
         Research.ApplyResearch(type);
@@ -41,11 +41,11 @@ public class ResearchLab : BaseTile
 
     public void CancelResearch()
     {
-        if (activeBoost != null)
+        if (researchTech != null)
         {
-            Research.ApplyResearch(activeBoost, true);
+            Research.ApplyResearch(researchTech, true);
 
-            foreach (Cost cost in activeBoost.cost)
+            foreach (Cost cost in researchTech.cost)
             {
                 if (cost.storage)
                 {
@@ -55,16 +55,16 @@ public class ResearchLab : BaseTile
             }
 
             boostIcon.gameObject.SetActive(false);
-            activeBoost = null;
+            researchTech = null;
             metadata = -1;
         }
     }
 
     public void UpdateResources()
     {
-        if (activeBoost != null)
+        if (researchTech != null)
         {
-            foreach (Cost cost in activeBoost.cost)
+            foreach (Cost cost in researchTech.cost)
             {
                 if (!cost.storage)
                 {
@@ -80,8 +80,8 @@ public class ResearchLab : BaseTile
                         Events.active.LabDestroyed(this);
 
                         AudioSource.PlayClipAtPoint(boomSound, transform.position, 0.5f);
-                        if (Research.techs.ContainsKey(activeBoost))
-                            Research.techs[activeBoost].totalBooms += 1;
+                        if (Research.techs.ContainsKey(researchTech))
+                            Research.techs[researchTech].totalBooms += 1;
                         if (ResearchUI.active != null) ResearchUI.active.CloseResearch();
                         DestroyEntity();
                         return;

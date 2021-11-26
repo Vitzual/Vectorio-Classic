@@ -75,7 +75,7 @@ public class ResearchUI : MonoBehaviour
     // Set lab information
     public void SetPanel(ResearchTech type)
     {
-        bool preview = type != selectedLab.activeBoost;
+        bool preview = type != selectedLab.researchTech;
 
         Research.Tech tech = Research.techs[type];
         selectedTech = type;
@@ -178,7 +178,7 @@ public class ResearchUI : MonoBehaviour
     {
         if (selectedTech == null) return;
 
-        if (selectedTech == selectedLab.activeBoost)
+        if (selectedTech == selectedLab.researchTech)
         {
             selectedLab.CancelResearch();
             SetPanel(selectedTech);

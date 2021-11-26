@@ -27,12 +27,12 @@ public class Resource : MonoBehaviour
         public CurrencyType type;
         public int amount;
         public int storage;
-        public int perSecond;
+        public bool calcPerSecond;
         public string format;
         public bool allowOverflow;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
-        public TextMeshProUGUI resourcePS;
+        public TextMeshProUGUI perSecond;
         public bool useResourceBar;
         public ProgressBar resourceBar;
 
@@ -43,7 +43,8 @@ public class Resource : MonoBehaviour
     }
 
     // Dictionary of all currencies
-    public Dictionary<CurrencyType, Currency> currencies;
+    public Dictionary<CurrencyType, Currency> currencies = new Dictionary<CurrencyType, Currency>();
+    private Dictionary<Currency, int> lastCalculation = new Dictionary<Currency, int>();
     public Currency[] currencyElements;
 
     // List of all collectors and storages
@@ -56,17 +57,36 @@ public class Resource : MonoBehaviour
         active = this;
 
         // Setup currencies
-        currencies = new Dictionary<CurrencyType, Currency>();
         foreach (Currency currency in currencyElements)
         {
             currencies.Add(currency.type, currency);
             Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
+
+            if (currency.calcPerSecond)
+                lastCalculation.Add(currency, 0);
         }
 
         // Setup events
         Events.active.onStoragePlaced += AddStorageObj;
+        InvokeRepeating("UpdatePerSecond", 1, 1);
     }
-    
+
+    // Update resources
+    public void UpdatePerSecond()
+    {
+        foreach(Currency currency in currencyElements)
+        {
+            if (currency.calcPerSecond)
+            {
+                int amount = currency.amount - lastCalculation[currency];
+                if (amount == 0) currency.perSecond.text = "<color=white>" + amount + " / second";
+                else if (amount > 0) currency.perSecond.text = "<color=green>+" + amount + " / second";
+                else currency.perSecond.text = "<color=red>" + amount + " / second";
+                lastCalculation[currency] = currency.amount;
+            }
+        }
+    }
+
     // Add collector or storage
     public void AddStorageObj(DefaultStorage storage) 
     {

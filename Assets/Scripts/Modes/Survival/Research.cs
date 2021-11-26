@@ -62,43 +62,40 @@ public class Research : MonoBehaviour
     // THIS IS GONNA BE REDONE
     public static void ApplyResearch(ResearchTech tech, bool revoke = true)
     {
+        float amount = tech.amount;
+        if (revoke) amount = -amount;
+
         switch(tech.type)
         {
             case ResearchTypeEnum.DamageBoost:
-                damageBoost += tech.amount;
+                damageBoost += amount;
                 break;
             case ResearchTypeEnum.HealthBoost:
-                healthBoost += tech.amount;
+                healthBoost += amount;
                 break;
             case ResearchTypeEnum.WallBoost:
-                wallBoost += tech.amount;
+                wallBoost += amount;
                 break;
             case ResearchTypeEnum.PierceBoost:
-                pierceBoost += (int)tech.amount;
+                pierceBoost += (int)amount;
                 break;
             case ResearchTypeEnum.BulletBoost:
-                bulletBoost += (int)tech.amount;
+                bulletBoost += (int)amount;
                 break;
             case ResearchTypeEnum.FirerateBoost:
-                firerateBoost += tech.amount;
+                firerateBoost += amount;
                 break;
             case ResearchTypeEnum.DroneSpeed:
-                droneMoveSpeed += tech.amount;
+                droneMoveSpeed += amount;
                 break;
             case ResearchTypeEnum.ExtractionRate:
-                resource[tech.currency].extractionRate += tech.amount;
-                Resource.active.currencies[tech.currency].perSecond = 0;
-                if (CollectorHandler.active != null)
-                    CollectorHandler.active.RecalculateAllCollectors(tech.currency);
+                resource[tech.currency].extractionRate += amount;
                 break;
             case ResearchTypeEnum.ExtractionYield:
-                resource[tech.currency].extractionYield += (int)tech.amount;
-                Resource.active.currencies[tech.currency].perSecond = 0;
-                if (CollectorHandler.active != null)
-                    CollectorHandler.active.RecalculateAllCollectors(tech.currency);
+                resource[tech.currency].extractionYield += (int)amount;
                 break;
             case ResearchTypeEnum.StorageAmount:
-                resource[tech.currency].storageAmount += (int)tech.amount;
+                resource[tech.currency].storageAmount += (int)amount;
                 break;
         }
 

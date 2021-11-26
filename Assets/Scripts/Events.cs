@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // Auto save
+    public event Action onAutoSave;
+    public void AutoSave()
+    {
+        if (onAutoSave != null)
+            onAutoSave();
+    }
+
     // On building clicked
     public event Action onStartGuardianBattle;
     public void StartGuardianBattle()

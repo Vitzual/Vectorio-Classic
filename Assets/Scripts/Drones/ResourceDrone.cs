@@ -102,7 +102,7 @@ public class ResourceDrone : Drone
     public bool CheckDeploymentConditions()
     {
         // Setup storages available boolean
-        if (!storagesAvailable) return false;
+        if (!DroneManager.overrideResourceCheck && !storagesAvailable) return false;
         else storagesAvailable = false;
 
         // Set target to null

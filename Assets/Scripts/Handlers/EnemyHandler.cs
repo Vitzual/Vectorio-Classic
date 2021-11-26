@@ -140,15 +140,6 @@ public class EnemyHandler : MonoBehaviour
         DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
         if (enemy != null) enemy.variant = variant;
 
-        // Set the health for the entity
-        BaseEntity holder = lastObj.GetComponent<BaseEntity>();
-        if (entity != null)
-        {
-            if (health != -1) holder.health = health;
-            else holder.health = entity.health;
-            holder.maxHealth = holder.health;
-        }
-
         // Setup entity
         lastObj.GetComponent<BaseEntity>().Setup();
         enemy.isMenu = isMenu;

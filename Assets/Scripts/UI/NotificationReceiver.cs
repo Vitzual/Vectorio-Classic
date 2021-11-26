@@ -9,7 +9,8 @@ public class NotificationReceiver : MonoBehaviour
     {
         NewBuilding,
         NewEnemy,
-        LabGoBoom
+        LabGoBoom,
+        AutoSave
     }
     public NotificationType notificationType;
     public NotificationManager notification;
@@ -20,6 +21,7 @@ public class NotificationReceiver : MonoBehaviour
         Events.active.onEnemyDiscovered += ShowEnemyNotification;
         Events.active.onBuildingUnlocked += ShowBuildingNotification;
         Events.active.onLabDestroyed += ShowLabBoomBoom;
+        Events.active.onAutoSave += AutoSave;
     }
 
     public void ShowBuildingNotification(Buildable buildable)
@@ -50,6 +52,15 @@ public class NotificationReceiver : MonoBehaviour
     public void ShowLabBoomBoom(ResearchLab lab)
     {
         if (notificationType == NotificationType.LabGoBoom)
+        {
+            notification.OpenNotification();
+            notficiationSound.Play();
+        }
+    }
+
+    public void AutoSave()
+    {
+        if (notificationType == NotificationType.AutoSave)
         {
             notification.OpenNotification();
             notficiationSound.Play();

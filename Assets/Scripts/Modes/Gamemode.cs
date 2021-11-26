@@ -123,7 +123,10 @@ public class Gamemode : MonoBehaviour
     public void AutoSave()
     {
         if (Settings.autoSave)
+        {
+            Events.active.AutoSave();
             SaveGame();
+        }
     }
 
     // Tells the gamemode how to generate inventory

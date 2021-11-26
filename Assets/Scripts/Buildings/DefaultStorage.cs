@@ -51,10 +51,16 @@ public class DefaultStorage : ResourceTile
     // Take resource
     public override int TakeResource()
     {
+        // Calculate return amount
         int amountToReturn = amount;
         amount = 0;
         isFull = false;
         if (icon != null) icon.SetActive(false);
+
+        // Update nearby resource ports
+        DroneManager.overrideResourceCheck = true;
+
+        // Return
         return amountToReturn;
     }
 

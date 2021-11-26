@@ -21,6 +21,7 @@ public class GhostTile : BaseTile
     {
         this.buildable = buildable;
         icon.sprite = Sprites.GetSprite(buildable.building.name);
+        transform.localScale = new Vector2(buildable.building.hologramSize, buildable.building.hologramSize);
     }
 
     // Called when drone reaches target

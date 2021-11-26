@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 165687244735643869}
   - component: {fileID: -6969623431808320532}
   - component: {fileID: 1846800301959431833}
+  - component: {fileID: 1153182881678030799}
   - component: {fileID: 1740312508442694215}
   m_Layer: 8
   m_Name: Rocket Pod
@@ -60,7 +61,7 @@ MonoBehaviour:
   cells: []
   saveBuilding: 1
   isSellable: 1
-  turret: {fileID: 0}
+  turret: {fileID: 11400000, guid: ec1a39dfee80f4540b29dc9499bd025d, type: 2}
   firePoints:
   - {fileID: 8896944115630778267}
   - {fileID: 602998576385717954}
@@ -87,6 +88,22 @@ MonoBehaviour:
   animEnabled: 1
   animSize: 1.5
   animOriginal: 1
+--- !u!58 &1153182881678030799
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711705259399207453}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!61 &1740312508442694215
 BoxCollider2D:
   m_ObjectHideFlags: 0

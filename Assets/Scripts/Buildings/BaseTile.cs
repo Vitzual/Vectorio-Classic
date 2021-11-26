@@ -9,14 +9,16 @@ public class BaseTile : BaseEntity
     public bool saveBuilding = true;
     public bool isSellable = true;
 
-    public override void Setup()
+    public override void Setup() { SetupBase(); }
+
+    public void SetupBase() 
     {
         // Update nearby ports and unlockables
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
         // Set health
-        if (buildable.building.deathParticle != null) 
+        if (buildable.building.deathParticle != null)
             particle = buildable.building.deathParticle;
 
         health = buildable.building.health * Research.healthBoost;

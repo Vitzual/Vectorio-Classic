@@ -10,11 +10,10 @@ public class RocketPod : DefaultTurret
     {
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
 
-        if (collider != null)
-            collider.radius = turret.range;
+        if (collider != null) collider.radius = turret.range;
         else Debug.LogError("Turret does not have a circle collider!");
 
-        GetComponent<BaseEntity>().Setup();
+        SetupBase();
     }
 
     public override void RotateTurret()
@@ -38,5 +37,32 @@ public class RocketPod : DefaultTurret
         podIndex += 1;
         if (podIndex >= firePoints.Length)
             podIndex = 0;
+    }
+
+    // Create a bullet object
+    public override void CreateBullet(Vector2 position)
+    {
+        if (turret.sound != null)
+            AudioSource.PlayClipAtPoint(turret.sound, transform.position, 0.5f);
+
+        GameObject holder = Instantiate(turret.bullet.gameObject, position, firePoints[podIndex].rotation);
+        holder.transform.rotation = firePoints[podIndex].rotation;
+        holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
+
+        // Set bullet variables
+        DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
+
+        // Setup bullet
+        if (turret.useBulletSprite) bullet.Setup(turret, bulletModel);
+        else bullet.Setup(turret);
+
+        // Dependent on the bullet, register under the correct master script
+        if (turret.bulletLock)
+        {
+            bullet.target = target;
+            bullet.tracking = true;
+            Events.active.BulletFired(bullet);
+        }
+        else Events.active.BulletFired(bullet);
     }
 }

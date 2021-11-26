@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6205d6120548ed44a5821a757b84572, type: 3}
-  m_Name: Artillery
+  m_Name: Rocket Pod
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,27 +21,28 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  internalId: 5349ae69-d773-45be-89ea-403670aca562
-  createdAtTicks: 637722267034921172
-  obj: {fileID: 420473218063467210, guid: b49d18de1c71cd6418328d36e95ec706, type: 3}
-  name: Artillery
-  description: The first 2x2 defense. Fires explosive proximity shells that deal
-    huge area damage. Downside is the reload time.
+  internalId: 140dbcec-a426-44f0-8b1c-6b4d2c6b26d6
+  createdAtTicks: 637735141364125416
+  obj: {fileID: 1711705259399207453, guid: 4b86902a6081a5a4e80ac98ed6847a94, type: 3}
+  name: Rocket Pod
+  description: Fires homing missiles that explode on impact, knocking enemies back.
+    Do note rockets have an extremely slow turn rate, and will have a hard time hitting
+    smaller enemies
   health: 500
   material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
   inventoryHeader: 0
-  inventoryIndex: 8
+  inventoryIndex: 14
   unlockable:
     type: 0
-    description: Accumulate 30,000 heat
-    requirement: {fileID: 11400000, guid: dd21b823a6622ed46bfe0c73f82a8265, type: 2}
+    description: Place 10x Artillery Cannons
+    requirement: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
     unlocked: 0
-    resource: 4
-    entity: {fileID: 0}
-    amount: 30000
+    resource: 0
+    entity: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
+    amount: 10
   gridSnap: 1
   gridOffset: {x: -2.5, y: 2.5}
-  hologramSize: 1
+  hologramSize: 2
   useSquareRange: 0
   squareRange: 0
   cells:
@@ -55,11 +56,15 @@ MonoBehaviour:
     y: -2.5
   resources:
   - resource: 0
-    amount: 125000
+    amount: 350000
     add: 0
     storage: 0
   - resource: 1
-    amount: 2500
+    amount: 5000
+    add: 0
+    storage: 0
+  - resource: 2
+    amount: 100
     add: 0
     storage: 0
   - resource: 4
@@ -76,14 +81,15 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
-  deathParticle: {fileID: 0}
-  damage: 500
-  range: 250
-  rotationSpeed: 40
-  cooldown: 5
+  deathParticle: {fileID: 3550228087821177641, guid: 2d3a8ea28f08862428de84c77ce77389,
+    type: 3}
+  damage: 350
+  range: 150
+  rotationSpeed: 0
+  cooldown: 1
   randomizeCooldown: 0
-  sound: {fileID: 8300000, guid: 6063de929982848818da46b675640842, type: 3}
-  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
+  sound: {fileID: 8300000, guid: 08d5810d653eb4ab0ba625cd6017606b, type: 3}
+  bullet: {fileID: -4819853352452993283, guid: 280b50590a178fe4e978a255f40efd4a, type: 3}
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 45

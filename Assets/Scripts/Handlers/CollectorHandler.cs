@@ -24,11 +24,7 @@ public class CollectorHandler : MonoBehaviour
             if (collectors[i] != null)
             {
                 collectors[i].cooldown -= Time.deltaTime;
-                if (collectors[i].cooldown < 0f)
-                {
-                    collectors[i].amount += Research.resource[collectors[i].type].extractionYield;
-                    collectors[i].cooldown = Research.resource[collectors[i].type].extractionRate;
-                }
+                if (collectors[i].cooldown < 0f) collectors[i].AddResources();
             }
             else
             {

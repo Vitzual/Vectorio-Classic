@@ -14,6 +14,7 @@ public class DefaultBullet : MonoBehaviour
     [HideInInspector] public float time;
 
     // Bullet movement variables
+    [HideInInspector] public BaseEntity target;
     [HideInInspector] public bool tracking = false;
     [HideInInspector] public bool recycling = false;
 
@@ -46,6 +47,20 @@ public class DefaultBullet : MonoBehaviour
         pierces = turret.bulletPierces + Research.pierceBoost;
 
         time = turret.bulletTime;
+    }
+
+    // Move bullet
+    public virtual void Move()
+    {
+        if (tracking && target != null)
+        {
+            float step = speed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
+        }
+        else
+        {
+            transform.position += transform.up * speed * Time.deltaTime;
+        }
     }
 
     // Hold info

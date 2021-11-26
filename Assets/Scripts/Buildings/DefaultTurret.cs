@@ -83,8 +83,12 @@ public class DefaultTurret : BaseTile, IAudible
         else bullet.Setup(turret);
 
         // Dependent on the bullet, register under the correct master script
-        if (turret.bulletLock) Events.active.BulletFired(bullet, target);
-        else Events.active.BulletFired(bullet, null);
+        if (turret.bulletLock)
+        {
+            bullet.target = target;
+            Events.active.BulletFired(bullet);
+        }
+        else Events.active.BulletFired(bullet);
     }
 
     // IAudible sound method

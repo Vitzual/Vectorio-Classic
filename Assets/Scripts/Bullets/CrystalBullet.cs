@@ -36,7 +36,7 @@ public class CrystalBullet : DefaultBullet
             holder.transform.Rotate(0f, 0f, Random.Range(0, 360));
             holder.Setup(turret, model.sprite);
             if (entity != null) holder.ignoreList.Add(entity);
-            Events.active.BulletFired(holder, null);
+            Events.active.BulletFired(holder);
         }
 
         base.DestroyBullet(material);

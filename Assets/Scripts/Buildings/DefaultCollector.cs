@@ -6,7 +6,7 @@ public class DefaultCollector : ResourceTile
     // Declare local object variables
     [HideInInspector] public float cooldown;
     [HideInInspector] public bool enhanced;
-    public int collectorStorage = 500;
+    public int collectorStorage = 100;
     public AnimateThenStop animator;
 
     // Lights
@@ -35,6 +35,7 @@ public class DefaultCollector : ResourceTile
         {
             amount = collectorStorage;
             isFull = true;
+            SetLight();
         }
     }
 

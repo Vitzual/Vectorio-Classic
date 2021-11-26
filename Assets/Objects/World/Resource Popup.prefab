@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7695638643956146458}
   - component: {fileID: 2093402515591468534}
   - component: {fileID: 841311815360835317}
-  m_Layer: 5
+  m_Layer: 22
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.16920474, y: 0.16920474, z: 0.16920474}
   m_Children: []
-  m_Father: {fileID: 5542316865307318698}
+  m_Father: {fileID: 1023216888894948137}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -145,7 +146,7 @@ GameObject:
   - component: {fileID: 2044615622391354483}
   - component: {fileID: 2115727210016861735}
   - component: {fileID: 6524117243052826614}
-  m_Layer: 5
+  m_Layer: 22
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +164,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.16920474, y: 0.16920474, z: 0.16920474}
   m_Children: []
-  m_Father: {fileID: 5542316865307318698}
+  m_Father: {fileID: 1023216888894948137}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -216,18 +218,19 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5542316865307318698}
+  - component: {fileID: 1023216888894948137}
   - component: {fileID: 4259469596875681493}
   - component: {fileID: 5848334107071546355}
-  m_Layer: 0
+  - component: {fileID: 5657797569524724670}
+  m_Layer: 22
   m_Name: Resource Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5542316865307318698
-Transform:
+--- !u!224 &1023216888894948137
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -242,6 +245,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4259469596875681493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,14 +259,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6749746907000094083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11642bd0511406141b30a6ed905e6c9b, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a3afd8094696049a9f6a650591496a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transparency: {fileID: 5848334107071546355}
   amountText: {fileID: 841311815360835317}
+  icon: {fileID: 6524117243052826614}
   moveUp: 0
-  isAnim: 0
-  originalPos: {x: 0, y: 0, z: 0}
 --- !u!225 &5848334107071546355
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -267,7 +274,28 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6749746907000094083}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!223 &5657797569524724670
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749746907000094083}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -25789473
+  m_SortingOrder: 10
+  m_TargetDisplay: 0

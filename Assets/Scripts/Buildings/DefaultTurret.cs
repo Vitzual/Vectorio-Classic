@@ -86,6 +86,7 @@ public class DefaultTurret : BaseTile, IAudible
         if (turret.bulletLock)
         {
             bullet.target = target;
+            bullet.tracking = true;
             Events.active.BulletFired(bullet);
         }
         else Events.active.BulletFired(bullet);

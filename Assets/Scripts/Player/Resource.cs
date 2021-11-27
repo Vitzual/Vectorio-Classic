@@ -231,18 +231,11 @@ public class Resource : MonoBehaviour
 
         if (updateStorage && currencies[type].storageUI != null)
         {
+            // Change color based on storage value
             if (currencies[type].amount > currencies[type].storage)
-            {
-                var newColor = Color.red;
-                newColor.a = 100f;
-                currencies[type].background.color = newColor;
-            }
-            else
-            {
-                var newColor = Color.white;
-                newColor.a = 20f;
-                currencies[type].background.color = newColor;
-            }
+                currencies[type].background.color = new Color(1, 0, 0, 0.3f);
+            else currencies[type].background.color = new Color(1, 1, 1, 0.1f);
+
             currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
         }
 

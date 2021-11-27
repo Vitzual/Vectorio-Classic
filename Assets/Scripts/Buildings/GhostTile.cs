@@ -22,6 +22,8 @@ public class GhostTile : BaseTile
         this.buildable = buildable;
         icon.sprite = Sprites.GetSprite(buildable.building.name);
         transform.localScale = new Vector2(buildable.building.hologramSize, buildable.building.hologramSize);
+
+        Events.active.GhostPlaced(this);
     }
 
     // Called when drone reaches target
@@ -70,6 +72,7 @@ public class GhostTile : BaseTile
 
         // Refund cost
         if (droneAssigned) Resource.active.RevertResources(buildable);
+        Events.active.GhostDestroyed(this);
 
         // Create particle and destroy
         Destroy(gameObject);

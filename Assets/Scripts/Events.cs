@@ -134,6 +134,22 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
+    public event Action<GhostTile> onGhostPlaced;
+    public void GhostPlaced(GhostTile building)
+    {
+        if (onGhostPlaced != null)
+            onGhostPlaced(building);
+    }
+
+    // On enemy destroyed
+    public event Action<GhostTile> onGhostDestroyed;
+    public void GhostDestroyed(GhostTile building)
+    {
+        if (onGhostDestroyed != null)
+            onGhostDestroyed(building);
+    }
+
+    // On enemy destroyed
     public event Action<BaseTile> onBuildingDestroyed;
     public void BuildingDestroyed(BaseTile tile)
     {

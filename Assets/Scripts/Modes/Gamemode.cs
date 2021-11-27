@@ -29,7 +29,7 @@ public class Gamemode : MonoBehaviour
     public string version;
     public Stage _stage;
     public Difficulty _difficulty;
-    public float naturalHeatTimer = 1f;
+    public float naturalHeatTimer = 5f;
 
     [Header("Gamemode Settings")]
     public bool naturalHeatGrowth;
@@ -109,7 +109,7 @@ public class Gamemode : MonoBehaviour
             {
                 Resource.active.Add(Resource.CurrencyType.Heat, 1, false);
                 difficulty.startingHeat += 1;
-                naturalHeatTimer = 1f;
+                naturalHeatTimer = 5f;
             }
         }
     }

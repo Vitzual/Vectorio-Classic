@@ -6443,6 +6443,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 159925184}
+  - component: {fileID: 159925186}
+  - component: {fileID: 159925185}
   m_Layer: 21
   m_Name: Build Plans
   m_TagString: Untagged
@@ -6477,6 +6479,38 @@ RectTransform:
   m_AnchoredPosition: {x: -125, y: 0}
   m_SizeDelta: {x: 250, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &159925185
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159925183}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &159925186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159925183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f102942b3fe704eabc7f0c155951e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 159925185}
+  totalQueued: {fileID: 274714621}
+  buildCosts:
+  - {fileID: 1804652669}
+  - {fileID: 1253520806}
+  - {fileID: 1664843543}
+  - {fileID: 1870666647}
+  - {fileID: 2074581224}
 --- !u!1 &161380610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10877,7 +10911,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <b>QUEUED:</b> 5241
+  m_text: <b>QUEUED:</b> 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -15524,8 +15558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378215873
 MonoBehaviour:
@@ -48858,6 +48892,7 @@ GameObject:
   - component: {fileID: 1253520803}
   - component: {fileID: 1253520805}
   - component: {fileID: 1253520804}
+  - component: {fileID: 1253520806}
   m_Layer: 20
   m_Name: Essence
   m_TagString: Untagged
@@ -48983,6 +49018,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253520802}
   m_CullTransparentMesh: 0
+--- !u!114 &1253520806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253520802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c452bd7874463b24e93bd85cea6f5460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 1
+  element: {fileID: 1253520804}
+  name: ESSENCE
 --- !u!1 &1257850888
 GameObject:
   m_ObjectHideFlags: 0
@@ -63917,6 +63967,7 @@ GameObject:
   - component: {fileID: 1664843540}
   - component: {fileID: 1664843542}
   - component: {fileID: 1664843541}
+  - component: {fileID: 1664843543}
   m_Layer: 20
   m_Name: Iridium
   m_TagString: Untagged
@@ -64042,6 +64093,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664843539}
   m_CullTransparentMesh: 0
+--- !u!114 &1664843543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664843539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c452bd7874463b24e93bd85cea6f5460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 2
+  element: {fileID: 1664843541}
+  name: IRIDIUM
 --- !u!1 &1667454473
 GameObject:
   m_ObjectHideFlags: 0
@@ -68841,6 +68907,7 @@ GameObject:
   - component: {fileID: 1804652666}
   - component: {fileID: 1804652668}
   - component: {fileID: 1804652667}
+  - component: {fileID: 1804652669}
   m_Layer: 20
   m_Name: Gold
   m_TagString: Untagged
@@ -68966,6 +69033,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804652665}
   m_CullTransparentMesh: 0
+--- !u!114 &1804652669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804652665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c452bd7874463b24e93bd85cea6f5460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 0
+  element: {fileID: 1804652667}
+  name: GOLD
 --- !u!1 &1805162881
 GameObject:
   m_ObjectHideFlags: 0
@@ -71874,6 +71956,7 @@ GameObject:
   - component: {fileID: 1870666644}
   - component: {fileID: 1870666646}
   - component: {fileID: 1870666645}
+  - component: {fileID: 1870666647}
   m_Layer: 20
   m_Name: Power
   m_TagString: Untagged
@@ -71999,6 +72082,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870666643}
   m_CullTransparentMesh: 0
+--- !u!114 &1870666647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870666643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c452bd7874463b24e93bd85cea6f5460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 3
+  element: {fileID: 1870666645}
+  name: POWER
 --- !u!1 &1873019621
 GameObject:
   m_ObjectHideFlags: 0
@@ -72034,8 +72132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873019623
 MonoBehaviour:
@@ -80221,6 +80319,7 @@ GameObject:
   - component: {fileID: 2074581221}
   - component: {fileID: 2074581223}
   - component: {fileID: 2074581222}
+  - component: {fileID: 2074581224}
   m_Layer: 20
   m_Name: Heat
   m_TagString: Untagged
@@ -80346,6 +80445,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074581220}
   m_CullTransparentMesh: 0
+--- !u!114 &2074581224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074581220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c452bd7874463b24e93bd85cea6f5460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 4
+  element: {fileID: 2074581222}
+  name: HEAT
 --- !u!1 &2077791855
 GameObject:
   m_ObjectHideFlags: 0
@@ -86801,6 +86915,7 @@ MonoBehaviour:
   - {fileID: 3058485147585300152, guid: 9cd5b90d9b052974fa852412b776dc32, type: 3}
   - {fileID: 3059082339734481019, guid: 305000a195c291440ae7b8f93678e022, type: 3}
   - {fileID: 3895683157982825778, guid: 96d0266b67e319044b2be79a5726ddda, type: 3}
+  dronesAvailable: {fileID: 0}
   ghostTiles: []
   resourceTiles: []
   damagedTiles: []
@@ -86808,7 +86923,6 @@ MonoBehaviour:
   resourceDrones: []
   fixerDrones: []
   activeDrones: []
-  dronesAvailable: {fileID: 0}
 --- !u!114 &2747573613239661797
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,6 @@ public class DroneManager : MonoBehaviour
         cooling
     }
     public BuildPriority buildPriority;
-
     public bool ignorePriority = false;
 
     // Priority buildings
@@ -42,21 +41,21 @@ public class DroneManager : MonoBehaviour
     // List of all drone types
     public List<Drone> droneTypes;
 
-    // Target lists
-    public List<GhostTile> ghostTiles;
-    public List<ResourceTile> resourceTiles;
-    public List<BaseTile> damagedTiles;
-
-    // Available drones 
-    public List<Drone> builderDrones;
-    public List<Drone> resourceDrones;
-    public List<Drone> fixerDrones;
-
-    // Drones actively moving
-    public List<Drone> activeDrones;
-
     // Builder drone UI element
     public ProgressBar dronesAvailable;
+
+    // Target lists
+    [HideInInspector] public List<GhostTile> ghostTiles;
+    [HideInInspector] public List<ResourceTile> resourceTiles;
+    [HideInInspector] public List<BaseTile> damagedTiles;
+
+    // Available drones 
+    [HideInInspector] public List<Drone> builderDrones;
+    [HideInInspector] public List<Drone> resourceDrones;
+    [HideInInspector] public List<Drone> fixerDrones;
+
+    // Drones actively moving
+    [HideInInspector] public List<Drone> activeDrones;
 
     // Add a ghost
     public void AddGhost(GhostTile ghost)

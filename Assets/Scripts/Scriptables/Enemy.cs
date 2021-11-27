@@ -19,6 +19,8 @@ public class Enemy : Entity
     public float rotationSpeed;
     [FoldoutGroup("Enemy Stats")]
     public float spawnChance;
+    [FoldoutGroup("Enemy Stats")]
+    public bool largeEnemy;
 
     // Spawn percentage
     //

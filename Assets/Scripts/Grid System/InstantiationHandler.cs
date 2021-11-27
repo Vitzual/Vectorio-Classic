@@ -99,7 +99,7 @@ public class InstantiationHandler : MonoBehaviour
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
-
+        
         // Set sellable values
         lastBuilding.saveBuilding = buildable.building.isSaveable;
         lastBuilding.isSellable = buildable.building.isSellable;

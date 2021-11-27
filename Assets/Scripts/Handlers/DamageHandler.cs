@@ -27,7 +27,7 @@ public class DamageHandler : MonoBehaviour
         { 
             DamageBar newBar = Instantiate(damageBar, enemy.transform.position, Quaternion.identity).GetComponent<DamageBar>();
             newBar.rect.SetParent(enemy.transform);
-            newBar.rect.localPosition = new Vector2(0, -2.5f);
+            newBar.rect.localPosition = new Vector2(0, -3.5f);
             newBar.entity = enemy;
             newBar.UpdateDamage();
             newBar.SetBarColor(enemy.variant);

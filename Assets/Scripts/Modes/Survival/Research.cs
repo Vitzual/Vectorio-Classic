@@ -76,10 +76,12 @@ public class Research : MonoBehaviour
                 wallBoost += amount;
                 break;
             case ResearchTypeEnum.PierceBoost:
-                pierceBoost += (int)amount;
+                if (revoke) pierceBoost -= 1;
+                else pierceBoost += 1;
                 break;
             case ResearchTypeEnum.BulletBoost:
-                bulletBoost += (int)amount;
+                if (revoke) bulletBoost -= 1;
+                else bulletBoost += 1;
                 break;
             case ResearchTypeEnum.FirerateBoost:
                 firerateBoost += amount;

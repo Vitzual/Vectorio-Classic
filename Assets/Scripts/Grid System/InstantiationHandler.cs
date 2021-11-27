@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 public class InstantiationHandler : MonoBehaviour
 {
+    // Amount placed
+    public int amountPlaced = 0;
+
     // Grid variable
     [HideInInspector] public Grid tileGrid;
 
@@ -83,6 +86,7 @@ public class InstantiationHandler : MonoBehaviour
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
         lastBuilding.name = buildable.building.name;
         lastBuilding.buildable = buildable;
+        amountPlaced += 1;
 
         // Set the tiles on the grid class
         SetCells(buildable.building, position, lastBuilding);

@@ -3,34 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class Enhancer : BaseTile
 {
-    // Internal placement variables
-    [SerializeField] private LayerMask TileLayer;
-    public int IncreaseAmount;
-    public Collider2D[] colliders;
-
-    // Internal placement variables
-    public Transform rotator;
-    public float speed;
-
-    private void Start()
+    public override void Setup()
     {
-        try
-        {
-            GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().RegisterRotator(rotator, speed);
-        }
-        catch { }
-        if (SceneManager.GetActiveScene().name != "Menu")
-            InvokeRepeating("CheckAdjacentTiles", 0f, 1f);
-    }
 
-
-    // Check for collectors
-    private void CheckAdjacentTiles()
-    {
-        var colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(7, 7), 1 << LayerMask.NameToLayer("Building"));
-        for (int i = 0; i < colliders.Length; i++)
-            if (colliders[i].name.Contains("Collector"))
-                colliders[i].GetComponent<DefaultCollector>().EnhanceCollector();
+        base.Setup();
     }
 
     /*

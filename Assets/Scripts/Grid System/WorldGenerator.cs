@@ -34,6 +34,29 @@ public class WorldGenerator : MonoBehaviour
         GenerateWorld();
     }
 
+    // Regenerate a world
+    [System.Obsolete]
+    public void Reseed()
+    {
+        // Clear previous data
+        resourceGrid.ClearAllTiles();
+        spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
+
+        // Set new random variables
+        Random.seed = Random.Range(0, 999999999);
+        Gamemode.seed = Random.seed.ToString();
+
+        // Create offset for spawnables
+        int startingRange = 0;
+        foreach (Spawnable spawnable in spawnables)
+            spawnable.spawnOffset = Random.Range(startingRange, startingRange += 10000);
+
+        // Generate world
+        GenerateWorld();
+
+        // Close menu
+        NewInterface.active.ToggleQuitMenu();
+}
 
     // Loops through a new chunk and spawns resources based on perlin noise values
     private void GenerateWorld()

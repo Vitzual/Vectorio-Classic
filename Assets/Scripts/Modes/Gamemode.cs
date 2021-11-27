@@ -116,7 +116,7 @@ public class Gamemode : MonoBehaviour
     // Save game
     public void SaveGame()
     {
-        NewSaveSystem.SaveGame(savePath);
+        saveData = NewSaveSystem.SaveGame(savePath);
     }
 
     // Auto save

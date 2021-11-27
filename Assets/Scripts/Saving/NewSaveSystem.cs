@@ -7,7 +7,7 @@ using UnityEngine;
 public class NewSaveSystem : MonoBehaviour
 {
     // Save a game
-    public static void SaveGame(string name)
+    public static SaveData SaveGame(string name)
     {
         // Create new save data instance
         SaveData saveData = new SaveData();
@@ -96,6 +96,9 @@ public class NewSaveSystem : MonoBehaviour
         // Convert to json and save
         string data = JsonUtility.ToJson(saveData);
         File.WriteAllText(Application.persistentDataPath + name, data);
+
+        // Return newly create save data
+        return saveData;
     }
 
     // Load a game 

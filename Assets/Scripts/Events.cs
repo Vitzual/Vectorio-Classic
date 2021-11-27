@@ -21,6 +21,14 @@ public class Events : MonoBehaviour
             onAutoSave();
     }
 
+    // Auto save
+    public event Action onRefreshSound;
+    public void RefreshSound()
+    {
+        if (onRefreshSound != null)
+            onRefreshSound();
+    }
+
     // On building clicked
     public event Action onStartGuardianBattle;
     public void StartGuardianBattle()

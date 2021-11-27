@@ -95,7 +95,7 @@ public class DefaultTurret : BaseTile, IAudible
     // IAudible sound method
     public void PlaySound()
     {
-        AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.soundVolume - 0.25f);
+        AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.sound);
     }
 
     public virtual void AddTarget(BaseEntity enemy)

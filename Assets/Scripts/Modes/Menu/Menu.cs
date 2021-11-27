@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
     {
         // Clear registry
         Buildables.ClearRegistry();
-
+         
         // Reset gamemode static variables
         Gamemode.saveData = null;
         Gamemode.difficulty = null;

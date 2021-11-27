@@ -22,15 +22,15 @@ public class InputController : MonoBehaviour
     {
         if (!NewInterface.isOpen)
         {
-            if (Input.GetKeyDown(Keybinds.lmb) && !InterfaceCheck())
+            if (Input.GetKeyDown(Keybinds.construct) && !InterfaceCheck())
                 InputEvents.active.LeftMouseTapped();
-            if (Input.GetKey(Keybinds.lmb) && !InterfaceCheck())
+            if (Input.GetKey(Keybinds.construct) && !InterfaceCheck())
                 InputEvents.active.LeftMousePressed();
-            if (Input.GetKeyUp(Keybinds.lmb))
+            if (Input.GetKeyUp(Keybinds.construct))
                 InputEvents.active.LeftMouseReleased();
-            if (Input.GetKey(Keybinds.rmb))
+            if (Input.GetKey(Keybinds.delete))
                 InputEvents.active.RightMousePressed();
-            if (Input.GetKeyUp(Keybinds.rmb))
+            if (Input.GetKeyUp(Keybinds.delete))
                 InputEvents.active.RightMouseReleased();
             if (Input.GetKeyDown(Keybinds.inventory))
                 InputEvents.active.InventoryPressed();

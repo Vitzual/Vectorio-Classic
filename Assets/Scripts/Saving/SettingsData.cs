@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SettingsData
+public class SettingsDataOld
 {
     public int width;
     public int height;
@@ -12,7 +12,7 @@ public class SettingsData
     public bool fullscreen;
     public int glowMode;
 
-    public SettingsData(int width, int height, float volume, float sound, bool fullscreen, int glowMode) 
+    public SettingsDataOld(int width, int height, float volume, float sound, bool fullscreen, int glowMode) 
     {
         this.width = width;
         this.height = height;

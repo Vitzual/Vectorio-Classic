@@ -72,6 +72,12 @@ public class NewSaveSystem : MonoBehaviour
             }
         }
 
+        // Get hotbar data
+        saveData.hotbar = new string[Hotbar.slots.Length];
+        for (int i = 0; i < Hotbar.slots.Length; i++)
+            if (Hotbar.slots[i].entity != null)
+                saveData.hotbar[i] = Hotbar.slots[i].entity.InternalID;
+
         // Set difficulty
         saveData.difficultyData = Gamemode.difficulty;
 
@@ -174,6 +180,19 @@ public class NewSaveSystem : MonoBehaviour
                 EnemyHandler.active.CreateEntity(enemy, variant, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
             }
             else Debug.Log("Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
+        }
+
+        // Set hotbar
+        if (saveData.hotbar != null && saveData.hotbar.Length > 0) 
+        {
+            Hotbar.slots = new HotbarSlot[saveData.hotbar.Length];
+            for (int i = 0; i < saveData.hotbar.Length; i++) 
+            {
+                Entity entity = null;
+                if (ScriptableLoader.buildings.ContainsKey(saveData.hotbar[i]))
+                    entity = ScriptableLoader.buildings[saveData.hotbar[i]];
+                if (entity != null) Hotbar.slots[i].SetSlot(entity, Sprites.GetSprite(entity.name));
+            }
         }
 
         // Check resources

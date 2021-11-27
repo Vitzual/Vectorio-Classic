@@ -6,7 +6,12 @@ public class Hotbar : MonoBehaviour
     public Panel panel;
 
     // Hotbar variables
-    public HotbarSlot[] slots;
+    public static HotbarSlot[] slots;
+
+    public void Awake()
+    {
+        slots = new HotbarSlot[10];
+    }
 
     public void Start()
     {

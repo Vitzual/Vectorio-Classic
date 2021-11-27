@@ -148,8 +148,7 @@ public class Gamemode : MonoBehaviour
         Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
 
         // Adjust power storage
-        if (difficulty.startingPower == 0) Resource.active.SetStorage(Resource.CurrencyType.Power, 5000);
-        else Resource.active.SetStorage(Resource.CurrencyType.Power, difficulty.startingPower);
+        Resource.active.SetStorage(Resource.CurrencyType.Power, 5000);
 
         // Setup heat storage
         Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);

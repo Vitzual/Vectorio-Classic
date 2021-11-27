@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Michsky.UI.ModernUIPack;
+using UnityEngine.UI;
 
 public class Resource : MonoBehaviour
 {
@@ -30,9 +31,14 @@ public class Resource : MonoBehaviour
         public bool calcPerSecond;
         public string format;
         public bool allowOverflow;
+
+        // UI elements
+        public Image background;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
         public TextMeshProUGUI perSecond;
+
+        // Resource bar
         public bool useResourceBar;
         public ProgressBar resourceBar;
 
@@ -224,7 +230,21 @@ public class Resource : MonoBehaviour
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
         if (updateStorage && currencies[type].storageUI != null)
+        {
+            if (currencies[type].amount > currencies[type].storage)
+            {
+                var newColor = Color.red;
+                newColor.a = 100f;
+                currencies[type].background.color = newColor;
+            }
+            else
+            {
+                var newColor = Color.white;
+                newColor.a = 20f;
+                currencies[type].background.color = newColor;
+            }
             currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
+        }
 
         if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
         {

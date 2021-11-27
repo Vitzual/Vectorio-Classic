@@ -14,6 +14,7 @@ public class BuildPlans : MonoBehaviour
     // Amount tracked
     public Dictionary<Resource.CurrencyType, BuildCost> tracked;
     public TextMeshProUGUI totalQueued;
+    public TextMeshProUGUI dronesAvailable;
     public List<BuildCost> buildCosts;
 
     // Create new dictionary
@@ -41,6 +42,7 @@ public class BuildPlans : MonoBehaviour
 
         canvasGroup.alpha = 1f;
         totalQueued.text = "<b>QUEUED:</b> " + DroneManager.active.ghostTiles.Count;
+        dronesAvailable.text = "<b>DRONES:</b> " + DroneManager.active.builderDrones.Count;
     }
 
     // Update plans (Remove)
@@ -53,5 +55,6 @@ public class BuildPlans : MonoBehaviour
         if (DroneManager.active.ghostTiles.Count == 0)
             canvasGroup.alpha = 0f;
         totalQueued.text = "<b>QUEUED:</b> " + DroneManager.active.ghostTiles.Count;
+        dronesAvailable.text = "<b>DRONES:</b> " + DroneManager.active.builderDrones.Count;
     }
 }

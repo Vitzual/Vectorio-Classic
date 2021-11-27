@@ -6,11 +6,14 @@ public class Hotbar : MonoBehaviour
     public Panel panel;
 
     // Hotbar variables
+    public HotbarSlot[] _slots;
     public static HotbarSlot[] slots;
 
     public void Awake()
     {
-        slots = new HotbarSlot[10];
+        slots = new HotbarSlot[_slots.Length];
+        for (int i = 0; i < slots.Length; i++)
+            slots[i] = _slots[i];
     }
 
     public void Start()

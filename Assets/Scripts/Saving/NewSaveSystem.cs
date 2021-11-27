@@ -185,9 +185,16 @@ public class NewSaveSystem : MonoBehaviour
         // Set hotbar
         if (saveData.hotbar != null && saveData.hotbar.Length > 0) 
         {
-            Hotbar.slots = new HotbarSlot[saveData.hotbar.Length];
-            for (int i = 0; i < saveData.hotbar.Length; i++) 
+            for (int i = 0; i < Hotbar.slots.Length; i++) 
             {
+                if (saveData.hotbar.Length == i)
+                {
+                    Debug.Log("Saved hotbar exceeded length of in-game hotbar. Breaking loop");
+                    break;
+                }
+                else if (saveData.hotbar[i] == "") continue;
+
+                // Set slot
                 Entity entity = null;
                 if (ScriptableLoader.buildings.ContainsKey(saveData.hotbar[i]))
                     entity = ScriptableLoader.buildings[saveData.hotbar[i]];

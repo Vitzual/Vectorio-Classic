@@ -33,6 +33,8 @@ public class NotificationReceiver : MonoBehaviour
             notification.description = buildable.building.name.ToUpper();
             notification.UpdateUI();
             notification.OpenNotification();
+
+            notficiationSound.volume = Settings.sound;
             notficiationSound.Play();
         }
     }
@@ -45,6 +47,8 @@ public class NotificationReceiver : MonoBehaviour
             notification.title = "NEW ENEMY!";
             notification.description = enemy.name.ToUpper();
             notification.OpenNotification();
+
+            notficiationSound.volume = Settings.sound;
             notficiationSound.Play();
         }
     }
@@ -54,6 +58,7 @@ public class NotificationReceiver : MonoBehaviour
         if (notificationType == NotificationType.LabGoBoom)
         {
             notification.OpenNotification();
+            notficiationSound.volume = Settings.sound;
             notficiationSound.Play();
         }
     }
@@ -63,6 +68,7 @@ public class NotificationReceiver : MonoBehaviour
         if (notificationType == NotificationType.AutoSave)
         {
             notification.OpenNotification();
+            notficiationSound.volume = Settings.sound;
             notficiationSound.Play();
         }
     }

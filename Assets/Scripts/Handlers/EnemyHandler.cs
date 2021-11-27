@@ -130,7 +130,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Create a new active enemy instance
-    public void CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1)
+    public void CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
     {
         // Create the tile
         GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
@@ -139,9 +139,13 @@ public class EnemyHandler : MonoBehaviour
         // Attempt to set enemy variant
         DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
         if (enemy != null) enemy.variant = variant;
+        enemy.Setup();
+
+        // Override health
+        if (health != -1) enemy.health = health;
+        if (speed != -1) enemy.moveSpeed = speed;
 
         // Setup entity
-        lastObj.GetComponent<BaseEntity>().Setup();
         enemy.isMenu = isMenu;
         enemies.Add(enemy);
     }

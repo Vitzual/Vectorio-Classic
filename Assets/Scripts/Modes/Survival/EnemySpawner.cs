@@ -8,19 +8,24 @@ public class EnemySpawner : MonoBehaviour
     // Active instance
     public List<Enemy> enemies;
     public static EnemySpawner active;
-    public TextMeshProUGUI enemiesAmount;
     public int maxEnemiesAllowed = 250;
+    public TextMeshProUGUI enemiesAmount;
 
     // Group spawning
+    public NotificationManager groupNotif;
+    public AudioSource groupSound;
     public TextMeshProUGUI groupTimer;
     public float groupSpeed = 5f;
-    public float timeUntilNextGroup = 360f;
-    public Vector2 groupSpawnPos;
-    public int groupEnemies = 0;
+    public int groupCooldown = 360;
+    private int timeUntilNextGroup;
+    private Vector2 groupSpawnPos;
+    private int groupEnemies = 0;
 
     public void Start()
     {
         active = this;
+        timeUntilNextGroup = groupCooldown;
+
         InvokeRepeating("SpawnEnemies", 1, 1);
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
 
@@ -40,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
             if (!enemy.largeEnemy)
             {
                 Vector2 calcPos = new Vector2(groupSpawnPos.x + Random.Range(-20, 20), groupSpawnPos.y + Random.Range(-20, 20));
-                EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, calcPos, Quaternion.identity);
+                EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, calcPos, Quaternion.identity, -1, groupSpeed);
             }
 
             // Lower group spawn value
@@ -90,35 +95,66 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Update attacking enemies
-        enemiesAmount.text = "<b>ENEMIES ATTACKING:</b> " + enemies.Count;
+        enemiesAmount.text = "<b>ENEMIES ATTACKING:</b> " + EnemyHandler.active.enemies.Count;
     }
 
     // Check if group spawning still active
     public void CheckGroupSpawning()
     {
-        timeUntilNextGroup -= Time.deltaTime;
+        if (!Gamemode.active.useGroupSpawning) return;
+        timeUntilNextGroup -= 1;
 
         if (timeUntilNextGroup <= 0)
         {
             // Get location around border
             if (Random.value > 0.5f)
             {
-                if (Random.value > 0.5f) groupSpawnPos = new Vector2(Border.west, Random.Range(Border.south, Border.north));
-                else groupSpawnPos = new Vector2(Border.east, Random.Range(Border.south, Border.north));
+                if (Random.value > 0.5f)
+                {
+                    groupSpawnPos = new Vector2(Border.west, Random.Range(Border.south, Border.north));
+                    groupNotif.description = "Attack coming from <b>West</b>";
+                }
+                else
+                {
+                    groupSpawnPos = new Vector2(Border.east, Random.Range(Border.south, Border.north));
+                    groupNotif.description = "Attack coming from <b>East</b>";
+                }
             }
             else
             {
-                if (Random.value > 0.5f) groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.north);
-                else groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.south);
+                if (Random.value > 0.5f)
+                {
+                    groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.north);
+                    groupNotif.description = "Attack coming from <b>North</b>";
+                }
+                else
+                {
+                    groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.south);
+                    groupNotif.description = "Attack coming from <b>South</b>";
+                }
             }
 
+            // Get amount to spawn
             groupEnemies = Resource.active.GetHeat() / 1000;
             if (groupEnemies < 20) groupEnemies = 20;
             else if (groupEnemies > 100) groupEnemies = 100;
-            timeUntilNextGroup = 360f;
+            timeUntilNextGroup = groupCooldown;
+            groupSpeed = 5f * Gamemode.stage.variant.speedModifier;
+
+            // Display group notification
+            if (groupNotif != null)
+            {
+                groupNotif.UpdateUI();
+                groupNotif.OpenNotification();
+            }
+            if (groupSound != null)
+            {
+                groupSound.volume = Settings.sound;
+                groupSound.Play();
+            }
         }
 
         // Update attacking enemies
-        groupTimer.text = "<b>NEXT GROUP ATTACK:</b> " + (int)timeUntilNextGroup + "s";
+        groupTimer.text = "<b>NEXT GROUP ATTACK:</b> " + timeUntilNextGroup + "s";
     }
 }

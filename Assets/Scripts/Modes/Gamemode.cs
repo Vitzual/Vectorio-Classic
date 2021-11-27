@@ -33,6 +33,7 @@ public class Gamemode : MonoBehaviour
 
     [Header("Gamemode Settings")]
     public bool naturalHeatGrowth;
+    public bool useGroupSpawning;
     public bool useEnergizers;
     public bool useResources;
     public bool useDroneConstruction;

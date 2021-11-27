@@ -42139,7 +42139,7 @@ GameObject:
   - component: {fileID: 1076920189}
   - component: {fileID: 1076920188}
   m_Layer: 5
-  m_Name: Popup Notification
+  m_Name: Attack Notif
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42291,7 +42291,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076920186}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -89764,6 +89764,7 @@ MonoBehaviour:
   _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   naturalHeatTimer: 1
   naturalHeatGrowth: 0
+  useGroupSpawning: 1
   useEnergizers: 1
   useResources: 1
   useDroneConstruction: 1
@@ -97365,13 +97366,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies: []
-  enemiesAmount: {fileID: 0}
-  maxEnemiesAllowed: 200
-  groupTimer: {fileID: 0}
+  maxEnemiesAllowed: 250
+  enemiesAmount: {fileID: 1110953491}
+  groupNotif: {fileID: 1076920191}
+  groupSound: {fileID: 1076920188}
+  groupTimer: {fileID: 1556824524}
   groupSpeed: 5
-  timeUntilNextGroup: 360
-  groupSpawnPos: {x: 0, y: 0}
-  groupEnemies: 0
+  groupCooldown: 10
 --- !u!114 &7272387753956076418
 MonoBehaviour:
   m_ObjectHideFlags: 0

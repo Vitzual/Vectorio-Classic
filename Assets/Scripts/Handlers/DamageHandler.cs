@@ -14,25 +14,24 @@ public class DamageHandler : MonoBehaviour
     {
         damagedEntities = new Dictionary<BaseEntity, DamageBar>();
 
-        Events.active.onEnemyHurt += UpdateDamage;
+        Events.active.onEnemyHurt += UpdateEnemyDamage;
         Events.active.onEnemyDestroyed += RemoveBar;
     }
 
     // Create damaged bar
-    public void UpdateDamage(BaseEntity entity)
+    public void UpdateEnemyDamage(DefaultEnemy enemy)
     {
-        if (entity.GetComponent<DefaultGuardian>() != null) return;
-
-        if (damagedEntities.ContainsKey(entity))
-            damagedEntities[entity].UpdateDamage();
+        if (damagedEntities.ContainsKey(enemy))
+            damagedEntities[enemy].UpdateDamage();
         else 
         { 
-            DamageBar newBar = Instantiate(damageBar, entity.transform.position, Quaternion.identity).GetComponent<DamageBar>();
-            newBar.rect.SetParent(entity.transform);
+            DamageBar newBar = Instantiate(damageBar, enemy.transform.position, Quaternion.identity).GetComponent<DamageBar>();
+            newBar.rect.SetParent(enemy.transform);
             newBar.rect.localPosition = new Vector2(0, -2.5f);
-            newBar.entity = entity;
+            newBar.entity = enemy;
             newBar.UpdateDamage();
-            damagedEntities.Add(entity, newBar);
+            newBar.SetBarColor(enemy.variant);
+            damagedEntities.Add(enemy, newBar);
         }
     }
 

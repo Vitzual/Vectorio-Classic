@@ -16,6 +16,7 @@ public class StatsPanel : MonoBehaviour
     {
         public GameObject settingObj;
         public Entity entity;
+        public bool useButton;
         public HorizontalSelector[] selectors;
     }
 
@@ -88,7 +89,7 @@ public class StatsPanel : MonoBehaviour
                     selector.UpdateUI();
                 }
                 settings[entity].settingObj.SetActive(true);
-                button.SetActive(false);
+                button.SetActive(settings[entity].useButton);
                 noSettings.SetActive(false);
             }
             else
@@ -142,14 +143,9 @@ public class StatsPanel : MonoBehaviour
     public static void OpenMenu()
     {
         isOpen = true;
-
-        if (canvasGroup != null)
-        {
-            canvasGroup.alpha = 1f;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-        }
-        else Debug.Log("Stat panel CG is null!");
+        canvasGroup.alpha = 1f;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
     }
 
     // Close menu

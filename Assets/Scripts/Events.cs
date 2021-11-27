@@ -126,8 +126,8 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
-    public event Action<BaseEntity> onEnemyHurt;
-    public void EnemyHurt(BaseEntity enemy)
+    public event Action<DefaultEnemy> onEnemyHurt;
+    public void EnemyHurt(DefaultEnemy enemy)
     {
         if (onEnemyHurt != null)
             onEnemyHurt(enemy);

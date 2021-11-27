@@ -8,12 +8,21 @@ public class EnemySpawner : MonoBehaviour
     // Active instance
     public List<Enemy> enemies;
     public static EnemySpawner active;
-    public int maxEnemiesAllowed = 200;
+    public int maxEnemiesAllowed = 250;
+
+    // Group spawning
+    public TextMeshProUGUI enemiesAmount;
+    public TextMeshProUGUI groupTimer;
+    public float groupSpeed = 5f;
+    public float timeUntilNextGroup = 360f;
+    public int groupEnemies = 0;
+    
 
     public void Start()
     {
         active = this;
         InvokeRepeating("SpawnEnemies", 1, 1);
+        InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
 
         enemies.AddRange(ScriptableLoader.enemies.Values);
     }
@@ -57,6 +66,18 @@ public class EnemySpawner : MonoBehaviour
                 // Create enemy
                 EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, spawnPos, Quaternion.identity);
             }
+        }
+    }
+
+    // Check if group spawning still active
+    public void CheckGroupSpawning()
+    {
+        timeUntilNextGroup -= Time.deltaTime;
+
+        if (timeUntilNextGroup <= 0)
+        {
+
+            timeUntilNextGroup = 360f;
         }
     }
 }

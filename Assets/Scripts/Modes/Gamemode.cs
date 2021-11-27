@@ -94,7 +94,7 @@ public class Gamemode : MonoBehaviour
         // Invoke auto saving
         InvokeRepeating("AutoSave", 360f, 360f);
     }
-
+    
     // Update playtime
     public void Update()
     {
@@ -123,10 +123,10 @@ public class Gamemode : MonoBehaviour
     // Auto save
     public void AutoSave()
     {
-        if (Settings.autoSave)
+        if (Settings.autoSave && GuardianHandler.active.guardians.Count == 0)
         {
-            Events.active.AutoSave();
             SaveGame();
+            Events.active.AutoSave();
         }
     }
 

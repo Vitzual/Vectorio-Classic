@@ -85,9 +85,12 @@ public class NewInterface : MonoBehaviour
     // Save game
     public void Save()
     {
-        Gamemode.active.SaveGame();
-        saveButton.buttonText = "SAVED";
-        saveButton.UpdateUI();
+        if (GuardianHandler.active.guardians.Count == 0)
+        {
+            Gamemode.active.SaveGame();
+            saveButton.buttonText = "SAVED";
+            saveButton.UpdateUI();
+        }
     }
 
     // Reload game

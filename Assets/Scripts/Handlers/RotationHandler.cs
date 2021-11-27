@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RotationHandler : MonoBehaviour
 {
-    public static bool isEnabled = true;
     public bool isMenu = false;
 
     // Contains all active enemies in the scene
@@ -37,7 +36,7 @@ public class RotationHandler : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (!isMenu && (Settings.paused || !isEnabled)) return;
+        if (Settings.disableRotatingObjects || Settings.paused) return;
 
         for(int i=0; i<Rotators.Count; i++)
         {

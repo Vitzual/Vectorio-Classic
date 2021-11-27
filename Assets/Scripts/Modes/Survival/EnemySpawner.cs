@@ -44,12 +44,13 @@ public class EnemySpawner : MonoBehaviour
             // If enemy is not a large enemy, spawn it
             if (!enemy.largeEnemy)
             {
+                // Get position
                 Vector2 calcPos = new Vector2(groupSpawnPos.x + Random.Range(-20, 20), groupSpawnPos.y + Random.Range(-20, 20));
                 EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, calcPos, Quaternion.identity, -1, groupSpeed);
-            }
 
-            // Lower group spawn value
-            groupEnemies -= 1;
+                // Lower group spawn value
+                groupEnemies -= 1;
+            }
         }
     }
 

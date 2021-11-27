@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class NewInterface : MonoBehaviour
 {
     public static NewInterface active;
-    public static bool isOpen;
     public GameObject quitMenu;
     public GameObject loadingScreen;
     public ButtonManager saveButton;
@@ -99,7 +98,6 @@ public class NewInterface : MonoBehaviour
             Buildables.ClearRegistry();
 
             // Reset interface variables
-            isOpen = false;
             Time.timeScale = 1f;
 
             // Load last save

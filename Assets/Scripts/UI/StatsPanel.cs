@@ -60,7 +60,7 @@ public class StatsPanel : MonoBehaviour
     // Set panel
     public void SetPanel(BaseEntity baseEntity)
     {
-        if (BuildingController.entitySelected || NewInterface.isOpen || InputController.shiftHeld) return;
+        if (BuildingController.entitySelected || Inventory.isOpen || ResearchUI.isOpen || isOpen || InputController.shiftHeld) return;
 
         if (baseEntity == null)
         {
@@ -142,7 +142,6 @@ public class StatsPanel : MonoBehaviour
     public static void OpenMenu()
     {
         isOpen = true;
-        NewInterface.isOpen = true;
 
         if (canvasGroup != null)
         {
@@ -157,7 +156,6 @@ public class StatsPanel : MonoBehaviour
     public static void CloseMenu()
     {
         isOpen = false;
-        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

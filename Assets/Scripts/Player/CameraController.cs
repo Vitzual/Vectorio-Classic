@@ -52,7 +52,7 @@ public class CameraController : MonoBehaviour
     public void Update()
     {
         // Check if research open
-        if (NewInterface.isOpen || isMenu) return;
+        if (Inventory.isOpen || ResearchUI.isOpen || StatsPanel.isOpen || isMenu) return;
 
         // Get scroll input
         float scrollData; 

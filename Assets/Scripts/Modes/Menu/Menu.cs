@@ -71,9 +71,6 @@ public class Menu : MonoBehaviour
         Gamemode.seed = "Vectorio";
         Gamemode.loadGame = false;
 
-        // Reset interface variables
-        NewInterface.isOpen = false;
-
         // Reset time scale
         Time.timeScale = 1f;
 

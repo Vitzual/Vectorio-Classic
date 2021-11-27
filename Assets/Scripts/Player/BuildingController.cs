@@ -221,7 +221,11 @@ public class BuildingController : MonoBehaviour
 
     public void TryDeselectEntity() 
     {
-        if (!NewInterface.isOpen && entity != null) SetEntity(null);
+        if (entity != null) 
+        {
+            if (NewInterface.active.CheckPanels())
+                SetEntity(null);
+        }
         else NewInterface.active.ToggleQuitMenu();
     }
     public void DeselectEntity() { SetEntity(null); }

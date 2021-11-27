@@ -9,18 +9,12 @@ public class DamageHandler : MonoBehaviour
     public DamageBar damageBar;
     public Dictionary<BaseEntity, DamageBar> damagedEntities;
 
-    // Awake
-    public void Awake()
-    {
-        damagedEntities = new Dictionary<BaseEntity, DamageBar>();
-    }
-
     // Start thing
     public void Start()
     {
+        damagedEntities = new Dictionary<BaseEntity, DamageBar>();
+
         Events.active.onEnemyHurt += UpdateDamage;
-        //Events.active.onBuildingHurt += UpdateDamage;
-        //Events.active.onBuildingDestroyed += RemoveBar;
         Events.active.onEnemyDestroyed += RemoveBar;
     }
 
@@ -30,9 +24,7 @@ public class DamageHandler : MonoBehaviour
         if (entity.GetComponent<DefaultGuardian>() != null) return;
 
         if (damagedEntities.ContainsKey(entity))
-        {
             damagedEntities[entity].UpdateDamage();
-        }
         else 
         { 
             DamageBar newBar = Instantiate(damageBar, entity.transform.position, Quaternion.identity).GetComponent<DamageBar>();

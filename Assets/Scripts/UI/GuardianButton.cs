@@ -34,6 +34,10 @@ public class GuardianButton : MonoBehaviour
     // Begin battle
     public void StartBattle()
     {
+        // Save game
+        Gamemode.active.SaveGame();
+
+        // Spawn guardian
         CloseConfirmScreen();
         Events.active.StartGuardianBattle();
         gameObject.SetActive(false);

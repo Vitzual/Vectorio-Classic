@@ -9,7 +9,6 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
     public int metadata = -1;
-
     protected ParticleSystem particle;
 
     public virtual void Setup() 

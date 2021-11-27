@@ -46,6 +46,14 @@ public class DefaultEnemy : BaseEntity
         building.DamageEntity(enemy.damage);
     }
 
+    // Damages the entity (IDamageable interface method)
+    public override void DamageEntity(float dmg)
+    {
+        health -= dmg;
+        if (health <= 0) DestroyEntity();
+        else Events.active.EnemyHurt(this);
+    }
+
     public override void DestroyEntity()
     {
         // Create particle and set material / trail material

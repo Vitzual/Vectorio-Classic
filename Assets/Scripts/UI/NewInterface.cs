@@ -64,19 +64,16 @@ public class NewInterface : MonoBehaviour
         if (Inventory.isOpen)
         {
             Inventory.CloseMenu();
-            isOpen = false;
             return false;
         }
         else if (StatsPanel.isOpen)
         {
             StatsPanel.CloseMenu();
-            isOpen = false;
             return false;
         }
         else if (ResearchUI.isOpen)
         {
             ResearchUI.CloseMenu();
-            isOpen = false;
             return false;
         }
         return true;

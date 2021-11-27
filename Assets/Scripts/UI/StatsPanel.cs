@@ -155,6 +155,7 @@ public class StatsPanel : MonoBehaviour
     public static void CloseMenu()
     {
         isOpen = false;
+        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

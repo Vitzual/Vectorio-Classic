@@ -34,7 +34,7 @@ public class NewInterface : MonoBehaviour
         if (quitMenu.activeSelf)
         {
             quitMenu.SetActive(false);
-            Time.timeScale = 0f;
+            Time.timeScale = 1f;
         }
         else
         {

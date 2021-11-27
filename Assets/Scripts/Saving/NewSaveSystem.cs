@@ -192,7 +192,7 @@ public class NewSaveSystem : MonoBehaviour
                     Debug.Log("Saved hotbar exceeded length of in-game hotbar. Breaking loop");
                     break;
                 }
-                else if (saveData.hotbar[i] == "") continue;
+                else if (saveData.hotbar[i] == null || saveData.hotbar[i] == "") continue;
 
                 // Set slot
                 Entity entity = null;

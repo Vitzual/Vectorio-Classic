@@ -105,7 +105,7 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.isSellable = buildable.building.isSellable;
 
         // Create sound effect
-        if (!Gamemode.loadGame)
+        if (!Gamemode.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 

@@ -45,17 +45,17 @@ public class DroneManager : MonoBehaviour
     public ProgressBar dronesAvailable;
 
     // Target lists
-    [HideInInspector] public List<GhostTile> ghostTiles;
-    [HideInInspector] public List<ResourceTile> resourceTiles;
-    [HideInInspector] public List<BaseTile> damagedTiles;
+    public List<GhostTile> ghostTiles;
+    public List<ResourceTile> resourceTiles;
+    public List<BaseTile> damagedTiles;
 
     // Available drones 
-    [HideInInspector] public List<Drone> builderDrones;
-    [HideInInspector] public List<Drone> resourceDrones;
-    [HideInInspector] public List<Drone> fixerDrones;
+    public List<Drone> builderDrones;
+    public List<Drone> resourceDrones;
+    public List<Drone> fixerDrones;
 
     // Drones actively moving
-    [HideInInspector] public List<Drone> activeDrones;
+    public List<Drone> activeDrones;
 
     // Add a ghost
     public void AddGhost(GhostTile ghost)

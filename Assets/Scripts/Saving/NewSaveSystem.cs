@@ -40,8 +40,8 @@ public class NewSaveSystem : MonoBehaviour
                 SaveData.BuildingData buildingData = new SaveData.BuildingData();
 
                 buildingData.id = tile.buildable.building.InternalID;
-                buildingData.xCoord = (int)tile.transform.position.x;
-                buildingData.yCoord = (int)tile.transform.position.y;
+                buildingData.xCoord = tile.transform.position.x;
+                buildingData.yCoord = tile.transform.position.y;
                 buildingData.health = tile.health;
                 buildingData.metadata = new int[1];
                 buildingData.metadata[0] = tile.metadata;

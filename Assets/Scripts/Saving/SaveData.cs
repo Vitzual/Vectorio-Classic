@@ -11,7 +11,7 @@ public class SaveData
     public class BuildingData
     {
         public string id;
-        public int xCoord, yCoord;
+        public float xCoord, yCoord;
         public float health;
         public int[] metadata;
         public string[] blueprintIDs;

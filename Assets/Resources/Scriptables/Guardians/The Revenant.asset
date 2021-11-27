@@ -27,7 +27,7 @@ MonoBehaviour:
   name: The Revenant
   description: 'The first guardian. Can withstand massive amounts of firepower and
     push through defenses without taking any damage. '
-  health: 25000
+  health: 15000
   material: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
   inventoryHeader: 3
   inventoryIndex: 0
@@ -50,15 +50,14 @@ MonoBehaviour:
   explosiveDamage: 0
   rotationSpeed: 1
   spawnChance: 0
+  largeEnemy: 0
   spawnPercentage: 0
   spawnsOnDeath: []
   drops: []
-  heat: 10000
-  newMaxHeat: 25000
+  minimumHeatValue: 0
+  newMaximumHeat: 0
   barBackgroundColor: {r: 0.8679245, g: 0.24973297, b: 0.24973297, a: 0.19607843}
   barForegroundColor: {r: 0.9339623, g: 0.24230155, b: 0.24230155, a: 1}
   particleEffect: {fileID: 7172306552677707968, guid: 9bc68f08b1b8cb84b9f9f660dc37a42e,
     type: 3}
   directionName: North
-  guardianSpawnPosition: {x: 0, y: 1200}
-  guardianLerpPosition: {x: 0, y: 1000}

@@ -7,7 +7,13 @@ public class DamageHandler : MonoBehaviour
 {
     // Damage bar
     public DamageBar damageBar;
-    public Dictionary<BaseEntity, DamageBar> damagedEntities = new Dictionary<BaseEntity, DamageBar>();
+    public Dictionary<BaseEntity, DamageBar> damagedEntities;
+
+    // Awake
+    public void Awake()
+    {
+        damagedEntities = new Dictionary<BaseEntity, DamageBar>();
+    }
 
     // Start thing
     public void Start()

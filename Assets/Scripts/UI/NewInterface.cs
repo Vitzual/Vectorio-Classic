@@ -43,7 +43,6 @@ public class NewInterface : MonoBehaviour
             reloadButton.UpdateUI();
 
             saveButton.buttonText = "SAVE";
-            saveButton.buttonVar.interactable = true;
             saveButton.UpdateUI();
 
             quitMenu.SetActive(true);
@@ -88,7 +87,6 @@ public class NewInterface : MonoBehaviour
     {
         Gamemode.active.SaveGame();
         saveButton.buttonText = "SAVED";
-        saveButton.buttonVar.interactable = false;
         saveButton.UpdateUI();
     }
 

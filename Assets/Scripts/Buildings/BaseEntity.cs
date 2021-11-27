@@ -31,6 +31,12 @@ public class BaseEntity : MonoBehaviour, IDamageable
         Debug.Log("This building has no settings to apply");
     }
 
+    // If entity has button click available, override here
+    public virtual void ButtonClicked()
+    {
+        Debug.Log("This building has no button to use");
+    }
+
     // Damages the entity (IDamageable interface method)
     public virtual void DamageEntity(float dmg)
     {

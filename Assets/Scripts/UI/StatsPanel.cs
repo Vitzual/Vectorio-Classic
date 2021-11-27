@@ -124,6 +124,18 @@ public class StatsPanel : MonoBehaviour
         else Debug.Log("No settings available for " + entity.name);
     }
 
+    // Button clicked
+    public void ButtonClicked()
+    {
+        if (entity == null)
+        {
+            Debug.Log("No selected entity");
+            return;
+        }
+
+        if (selectedEntity != null && settings.ContainsKey(entity)) selectedEntity.ButtonClicked();
+    }
+
     // Open menu
     public static void OpenMenu()
     {

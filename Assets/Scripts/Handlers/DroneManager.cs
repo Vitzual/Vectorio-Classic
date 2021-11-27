@@ -362,7 +362,7 @@ public class DroneManager : MonoBehaviour
     // Resource check
     public bool CheckResources(GhostTile ghost)
     {
-        if (Resource.active.CheckResources(ghost.buildable)) return true;
+        if (Resource.active.CheckResources(ghost.buildable.resources)) return true;
         else if (Resource.active.CheckFreebie(ghost.buildable))
         {
             if (activeDrones.Count > 0) return false;

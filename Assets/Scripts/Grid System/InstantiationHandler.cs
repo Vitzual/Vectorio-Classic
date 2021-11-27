@@ -60,7 +60,7 @@ public class InstantiationHandler : MonoBehaviour
         }
 
         // Check if resource should be used
-        if (!isFree && !isGhost && !Resource.active.CheckResources(buildable)) return;
+        if (!isFree && !isGhost && !Resource.active.CheckResources(buildable.resources)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return;

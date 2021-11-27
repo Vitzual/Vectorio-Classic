@@ -6,6 +6,7 @@ public class ResearchLab : BaseTile
     public SpriteRenderer boostIcon;
     public ResearchTech researchTech;
     public AudioClip boomSound;
+    public int strikes = 3;
 
     public void Start()
     {
@@ -20,16 +21,8 @@ public class ResearchLab : BaseTile
     public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
         if (!overrideCost)
-        {
             foreach (Cost cost in type.cost)
-            {
-                if (cost.storage)
-                {
-                    if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);
-                    else Resource.active.Remove(cost.resource, cost.amount, false);
-                }
-            }
-        }
+                if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);
 
         researchTech = type;
         boostIcon.gameObject.SetActive(true);
@@ -46,13 +39,7 @@ public class ResearchLab : BaseTile
             Research.ApplyResearch(researchTech, true);
 
             foreach (Cost cost in researchTech.cost)
-            {
-                if (cost.storage)
-                {
-                    if (cost.add) Resource.active.Remove(cost.resource, cost.amount, false);
-                    else Resource.active.Add(cost.resource, cost.amount, false);
-                }
-            }
+                if (cost.add) Resource.active.Remove(cost.resource, cost.amount, false);
 
             boostIcon.gameObject.SetActive(false);
             researchTech = null;
@@ -66,16 +53,15 @@ public class ResearchLab : BaseTile
         {
             foreach (Cost cost in researchTech.cost)
             {
-                if (!cost.storage)
+                if (!cost.add)
                 {
-                    if (Resource.active.currencies[cost.resource].amount >= cost.amount) 
-                    { 
-                        if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);
-                        else Resource.active.Remove(cost.resource, cost.amount, false);
-                    }
-                    else
+                    if (Resource.active.currencies[cost.resource].amount >= cost.amount)
                     {
-                        Debug.Log("Lab no longer has reasources to continue operating, stopping");
+                        Resource.active.Remove(cost.resource, cost.amount, false);
+                    }
+                    else if (strikes == 0)
+                    {
+                        Debug.Log("Lab no longer has resources to continue operating, stopping");
                         Debug.Log("Failed on " + cost.resource);
                         Events.active.LabDestroyed(this);
 
@@ -86,9 +72,16 @@ public class ResearchLab : BaseTile
                         DestroyEntity();
                         return;
                     }
+                    else
+                    {
+                        strikes -= 1;
+                        return;
+                    }
                 }
             }
         }
+
+        strikes = 3;
     }
 
     public override void ApplyMetadata(int data)

@@ -247,10 +247,10 @@ public class Resource : MonoBehaviour
     }
 
     // Check resources
-    public bool CheckResources(Buildable buildable)
+    public bool CheckResources(Cost[] costs)
     {
         // Check if resource should be used
-        foreach (Cost resource in buildable.resources)
+        foreach (Cost resource in costs)
         {
             // Use gamemode resource check
             if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
@@ -268,13 +268,6 @@ public class Resource : MonoBehaviour
             }
         }
         return true;
-    }
-
-    // Check resources
-    public bool CheckResource(Cost cost)
-    {
-        if (cost.add) return GetAmount(cost.resource) + cost.amount < GetStorage(cost.resource);
-        else return GetAmount(cost.resource) - cost.amount > GetStorage(cost.resource);
     }
 
     // Check freebie [NEEDS IMPROVEMENTS]

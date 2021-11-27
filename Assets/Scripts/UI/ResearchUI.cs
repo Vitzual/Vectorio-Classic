@@ -140,7 +140,35 @@ public class ResearchUI : MonoBehaviour
             applyButton.buttonText = "CANCEL RESEARCH";
         }
     }
-    
+
+    // On research button clicked
+    public void ApplyResarch()
+    {
+        if (selectedTech == null)
+        {
+            Debug.Log("No tech selected");
+            return;
+        }
+
+        if (selectedTech == selectedLab.researchTech)
+        {
+            Debug.Log("Cancelling research");
+            selectedLab.CancelResearch();
+            SetPanel(selectedTech);
+        }
+
+        if (selectedLab != null)
+        {
+            Debug.Log("Checking lab costs");
+
+            if (!Resource.active.CheckResources(selectedTech.cost.ToArray())) return;
+
+            Debug.Log("Cost check passed, applying research");
+
+            selectedLab.ApplyResearch(selectedTech);
+            CloseMenu();
+        }
+    }
 
     // On lab clicked
     public void OnLabClicked(ResearchLab lab)
@@ -176,26 +204,5 @@ public class ResearchUI : MonoBehaviour
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
-    }
-
-    // On research button clicked
-    public void ApplyResarch()
-    {
-        if (selectedTech == null) return;
-
-        if (selectedTech == selectedLab.researchTech)
-        {
-            selectedLab.CancelResearch();
-            SetPanel(selectedTech);
-        }
-
-        if (selectedLab != null)
-        {
-            foreach (Cost cost in selectedTech.cost)
-                if (!Resource.active.CheckResource(cost)) return;
-
-            selectedLab.ApplyResearch(selectedTech);
-            CloseMenu();
-        }
     }
 }

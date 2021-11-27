@@ -33,12 +33,12 @@ MonoBehaviour:
   inventoryIndex: 10
   unlockable:
     type: 1
-    description: Place 25x Pulser's
-    requirement: {fileID: 11400000, guid: b931b7a9522cc0e41ad3441a32c00f17, type: 2}
+    description: Place 50x Pulser's
+    requirement: {fileID: 11400000, guid: dd21b823a6622ed46bfe0c73f82a8265, type: 2}
     unlocked: 0
     resource: 0
     entity: {fileID: 11400000, guid: 87e6e2d09fbb6554886a98ead54edf04, type: 2}
-    amount: 25
+    amount: 50
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -74,10 +74,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 500
   range: 120
   rotationSpeed: 50
   cooldown: 4
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: b71edef5d6eb84fe0b6837f05a411bd4, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 10
@@ -86,5 +88,7 @@ MonoBehaviour:
   bulletSpread: 0
   bulletTime: 5
   bulletLock: 1
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

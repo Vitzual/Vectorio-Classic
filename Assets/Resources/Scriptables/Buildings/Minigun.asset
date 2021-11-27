@@ -32,13 +32,13 @@ MonoBehaviour:
   inventoryHeader: 0
   inventoryIndex: 9
   unlockable:
-    type: 2
-    description: 'Destroy a Dropship '
+    type: 0
+    description: Accumulate 20,000 heat
     requirement: {fileID: 11400000, guid: 507b500e238e4f5489866cbefad7f108, type: 2}
     unlocked: 0
-    resource: 0
+    resource: 4
     entity: {fileID: 11400000, guid: 502e408b471788d468bd9962ab25477a, type: 2}
-    amount: 1
+    amount: 20000
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
@@ -70,10 +70,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 50
   range: 80
   rotationSpeed: 90
   cooldown: 0.15
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: e5f0a762c652f4065a1238d2febd38c6, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
@@ -82,5 +84,7 @@ MonoBehaviour:
   bulletSpread: 20
   bulletTime: 1
   bulletLock: 0
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

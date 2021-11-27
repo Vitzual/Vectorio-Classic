@@ -32,11 +32,11 @@ MonoBehaviour:
   inventoryIndex: 6
   unlockable:
     type: 1
-    description: Place 10x Area Cooler's
-    requirement: {fileID: 11400000, guid: 87e6e2d09fbb6554886a98ead54edf04, type: 2}
+    description: Place 10x Flamethrower's
+    requirement: {fileID: 11400000, guid: 507b500e238e4f5489866cbefad7f108, type: 2}
     unlocked: 0
     resource: 0
-    entity: {fileID: 11400000, guid: b37abab94270aa948b9136fea7970065, type: 2}
+    entity: {fileID: 11400000, guid: 507b500e238e4f5489866cbefad7f108, type: 2}
     amount: 10
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
@@ -61,10 +61,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 5
   range: 50
   rotationSpeed: 70
   cooldown: 0.3
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
@@ -73,5 +75,7 @@ MonoBehaviour:
   bulletSpread: 0
   bulletTime: 0.8
   bulletLock: 1
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

@@ -28,6 +28,7 @@ public class StatsPanel : MonoBehaviour
     public TextMeshProUGUI buildingName;
     public TextMeshProUGUI buildingDesc;
     public ProgressBar buildingHealth;
+    public GameObject button;
     public GameObject noSettings;
     public AdditionalSetting[] additionalSettings;
     public static CanvasGroup canvasGroup;
@@ -87,6 +88,7 @@ public class StatsPanel : MonoBehaviour
                     selector.UpdateUI();
                 }
                 settings[entity].settingObj.SetActive(true);
+                button.SetActive(false);
                 noSettings.SetActive(false);
             }
             else

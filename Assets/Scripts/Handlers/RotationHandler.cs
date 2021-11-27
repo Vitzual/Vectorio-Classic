@@ -20,7 +20,6 @@ public class RotationHandler : MonoBehaviour
         // Class variables
         public Transform rotator { get; set; }
         public float speed { get; set; }
-
     }
 
     public List<ActiveRotators> Rotators;

@@ -41,9 +41,6 @@ public class DroneManager : MonoBehaviour
     // List of all drone types
     public List<Drone> droneTypes;
 
-    // Builder drone UI element
-    public ProgressBar dronesAvailable;
-
     // Target lists
     public List<GhostTile> ghostTiles;
     public List<ResourceTile> resourceTiles;
@@ -56,7 +53,7 @@ public class DroneManager : MonoBehaviour
 
     // Drones actively moving
     public List<Drone> activeDrones;
-
+    
     // Add a ghost
     public void AddGhost(GhostTile ghost)
     {
@@ -68,10 +65,7 @@ public class DroneManager : MonoBehaviour
     public void AddDrone(Drone drone)
     {
         if (drone.type == Drone.DroneType.Builder)
-        {
             builderDrones.Add(drone);
-            UpdateDroneBar();
-        }
         else if (drone.type == Drone.DroneType.Resource)
             resourceDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Fixer)
@@ -91,12 +85,6 @@ public class DroneManager : MonoBehaviour
 
         if (overrideResourceCheck)
             overrideResourceCheck = false;
-    }
-
-    // Update drone bar
-    public void UpdateDroneBar()
-    {
-        //dronesAvailable.currentPercent = 1f;
     }
 
     // Update active drones

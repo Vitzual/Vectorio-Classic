@@ -19,7 +19,7 @@ public class DefaultCollector : ResourceTile
     public void Start()
     {
         Events.active.CollectorPlaced(this);
-        cooldown = Research.resource[type].extractionRate;
+        cooldown = Random.Range(0, Research.resource[type].extractionRate);
     }
 
     // Add resources to collector

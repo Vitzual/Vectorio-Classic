@@ -39,16 +39,17 @@ MonoBehaviour:
     resource: 0
     entity: {fileID: 11400000, guid: b45ce3523574d4b4884b6df625bcac7f, type: 2}
     amount: 10
-    tracked: 0
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
   cells:
   - x: 0
     y: 0
   resources:
   - resource: 0
-    amount: 3500
+    amount: 2500
     add: 0
     storage: 0
   - resource: 4
@@ -56,16 +57,21 @@ MonoBehaviour:
     add: 1
     storage: 0
   - resource: 3
-    amount: 35
+    amount: 30
     add: 1
     storage: 0
+  radialCheck: 0
   restrictPlacement: 0
+  isSellable: 1
+  isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
-  damage: 35
+  deathParticle: {fileID: 0}
+  damage: 25
   range: 80
   rotationSpeed: 50
   cooldown: 2
+  randomizeCooldown: 0
   sound: {fileID: 8300000, guid: df0e60887b63f45c7801a38fccae1f8f, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
@@ -74,5 +80,7 @@ MonoBehaviour:
   bulletSpread: 0
   bulletTime: 1.5
   bulletLock: 1
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

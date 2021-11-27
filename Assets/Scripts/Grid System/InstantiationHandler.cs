@@ -16,6 +16,7 @@ public class InstantiationHandler : MonoBehaviour
     // Building variables
     public static InstantiationHandler active;
     public GhostTile ghostTile;
+    public AudioClip placementSound;
     public LayerMask enemyLayer;
     public LayerMask aocbLayer;
     public int metadata = -1;
@@ -103,8 +104,9 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.saveBuilding = buildable.building.isSaveable;
         lastBuilding.isSellable = buildable.building.isSellable;
 
-        // Apply health override
-        if (health != -1) lastBuilding.health = health;
+        // Create sound effect
+        if (!Gamemode.loadGame)
+            AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 
     //[ClientRpc]

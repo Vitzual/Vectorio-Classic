@@ -62,7 +62,7 @@ public class BuildingController : MonoBehaviour
 
     public void TryClickBuilding()
     {
-        if (StatsPanel.isActive) return;
+        if (StatsPanel.isOpen) return;
 
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
         if (holder != null) holder.OnClick();
@@ -70,7 +70,7 @@ public class BuildingController : MonoBehaviour
 
     public void TryCreateEntity()
     {
-        if (StatsPanel.isActive) return;
+        if (StatsPanel.isOpen) return;
 
         if (entity != null || buildable != null) CmdCreateBuildable();
         else TryClickBuilding();
@@ -221,15 +221,8 @@ public class BuildingController : MonoBehaviour
 
     public void TryDeselectEntity() 
     {
-        if (!Inventory.isOpen)
-        {
-            if (entity != null) SetEntity(null);
-            else NewInterface.active.ToggleQuitMenu();
-        }
-        else
-        {
-            NewInterface.active.ToggleBuildingMenu();
-        }
+        if (!NewInterface.isOpen && entity != null) SetEntity(null);
+        else NewInterface.active.ToggleQuitMenu();
     }
     public void DeselectEntity() { SetEntity(null); }
     public void DisableJustDeselected() { justDeselected = false; }

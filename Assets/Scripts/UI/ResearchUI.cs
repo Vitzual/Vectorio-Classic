@@ -30,7 +30,7 @@ public class ResearchUI : MonoBehaviour
 
     // UI lists
     public List<Transform> listTypes;
-    public CanvasGroup canvasGroup;
+    public static CanvasGroup canvasGroup;
 
     // All UI elements
     public Image techIcon;
@@ -44,6 +44,7 @@ public class ResearchUI : MonoBehaviour
     public void Awake()
     {
         active = this;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void Setup(List<string> unlocked = null)
@@ -158,7 +159,7 @@ public class ResearchUI : MonoBehaviour
     }
 
     // Close UI
-    public void OpenResearch()
+    public static void OpenResearch()
     {
         isOpen = true;
         NewInterface.isOpen = true;
@@ -168,10 +169,9 @@ public class ResearchUI : MonoBehaviour
     }
 
     // Close UI
-    public void CloseResearch()
+    public static void CloseMenu()
     {
         isOpen = false;
-        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
@@ -194,7 +194,7 @@ public class ResearchUI : MonoBehaviour
                 if (!Resource.active.CheckResource(cost)) return;
 
             selectedLab.ApplyResearch(selectedTech);
-            CloseResearch();
+            CloseMenu();
         }
     }
 }

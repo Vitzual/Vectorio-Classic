@@ -113,6 +113,6 @@ public class DefaultEnemy : BaseEntity
     // Get material
     public override Material GetMaterial()
     {
-        return enemy.material;
+        return variant.border;
     }
 }

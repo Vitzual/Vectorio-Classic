@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     {
         active = this;
         canvasGroup = GetComponent<CanvasGroup>();
-        Close();
+        CloseMenu();
     }
 
     public void GenerateEntities(Entity[] entities)
@@ -115,10 +115,9 @@ public class Inventory : MonoBehaviour
     }
 
     // Close UI
-    public static void Close()
+    public static void CloseMenu()
     {
         isOpen = false;
-        NewInterface.isOpen = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

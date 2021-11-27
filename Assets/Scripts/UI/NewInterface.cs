@@ -22,41 +22,77 @@ public class NewInterface : MonoBehaviour
     public void Start()
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
-        //InputEvents.active.onEscapePressed += ToggleQuitMenu;
     }
 
+    // Toggle the quit menu
     public void ToggleQuitMenu()
     {
-        if (StatsPanel.isActive)
+        // Check if other panels open
+        if (!CheckPanels()) return;
+
+        // Check if menu open. If so, reset and open
+        if (quitMenu.activeSelf)
+        {
+            quitMenu.SetActive(false);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            if (InstantiationHandler.active.amountPlaced > 0) reloadButton.buttonText = "RELOAD";
+            else reloadButton.buttonText = "RESEED";
+            reloadButton.UpdateUI();
+
+            saveButton.buttonText = "SAVE";
+            saveButton.buttonVar.interactable = true;
+            saveButton.UpdateUI();
+
+            quitMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+
+    // Toggle the building menu
+    public void ToggleBuildingMenu()
+    {
+        // Check if other panels open
+        if (!CheckPanels()) return;
+        else Inventory.Open();
+    }
+
+    // Check all UI panels
+    public bool CheckPanels()
+    {
+        if (Inventory.isOpen)
+        {
+            Inventory.CloseMenu();
+            isOpen = false;
+            return false;
+        }
+        else if (StatsPanel.isOpen)
         {
             StatsPanel.CloseMenu();
-            return;
+            isOpen = false;
+            return false;
         }
         else if (ResearchUI.isOpen)
         {
-            ResearchUI.active.CloseResearch();
-            return;
+            ResearchUI.CloseMenu();
+            isOpen = false;
+            return false;
         }
-
-        if (InstantiationHandler.active.amountPlaced > 0) reloadButton.buttonText = "RELOAD";
-        else reloadButton.buttonText = "RESEED";
-        reloadButton.UpdateUI();
-
-        saveButton.buttonText = "SAVE";
-        saveButton.UpdateUI();
-        quitMenu.SetActive(!quitMenu.activeSelf);
-
-        if (quitMenu.activeSelf) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
+        return true;
     }
 
+    // Save game
     public void Save()
     {
-        saveButton.buttonText = "SAVED";
-        saveButton.UpdateUI();
         Gamemode.active.SaveGame();
+        saveButton.buttonText = "SAVED";
+        saveButton.buttonVar.interactable = false;
+        saveButton.UpdateUI();
     }
 
+    // Reload game
     public void Reload()
     {
         if (InstantiationHandler.active.amountPlaced > 0)
@@ -79,17 +115,9 @@ public class NewInterface : MonoBehaviour
         #pragma warning restore CS0612
     }
 
+    // Quit the game
     public void QuitGame()
     {
         Application.Quit();
-    }
-
-    public void ToggleBuildingMenu()
-    {
-        if (StatsPanel.isActive)
-            StatsPanel.CloseMenu();
-
-        if (Inventory.isOpen) Inventory.Close();
-        else Inventory.Open();
     }
 }

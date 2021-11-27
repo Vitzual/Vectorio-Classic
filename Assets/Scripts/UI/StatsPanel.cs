@@ -8,7 +8,7 @@ using Michsky.UI.ModernUIPack;
 public class StatsPanel : MonoBehaviour
 {
     // Active or not
-    public static bool isActive = false;
+    public static bool isOpen = false;
 
     // Additional settings
     [System.Serializable]
@@ -127,7 +127,7 @@ public class StatsPanel : MonoBehaviour
     // Open menu
     public static void OpenMenu()
     {
-        isActive = true;
+        isOpen = true;
         NewInterface.isOpen = true;
 
         if (canvasGroup != null)
@@ -142,15 +142,9 @@ public class StatsPanel : MonoBehaviour
     // Close menu
     public static void CloseMenu()
     {
-        isActive = false;
-        NewInterface.isOpen = false;
-
-        if (canvasGroup != null)
-        {
-            canvasGroup.alpha = 0f;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-        }
-        else Debug.Log("Stat panel CG is null!");
+        isOpen = false;
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 }

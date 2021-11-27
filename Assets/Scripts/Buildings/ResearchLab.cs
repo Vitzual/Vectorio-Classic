@@ -82,7 +82,7 @@ public class ResearchLab : BaseTile
                         AudioSource.PlayClipAtPoint(boomSound, transform.position, 0.5f);
                         if (Research.techs.ContainsKey(researchTech))
                             Research.techs[researchTech].totalBooms += 1;
-                        if (ResearchUI.active != null) ResearchUI.active.CloseResearch();
+                        if (ResearchUI.active != null) ResearchUI.CloseMenu();
                         DestroyEntity();
                         return;
                     }

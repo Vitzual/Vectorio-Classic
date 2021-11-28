@@ -35,7 +35,7 @@ public class RotationHandler : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Settings.rotatingObjects || Settings.paused) return;
+        if (!Settings.rotatingObjects || Settings.paused) return;
 
         for(int i=0; i<Rotators.Count; i++)
         {

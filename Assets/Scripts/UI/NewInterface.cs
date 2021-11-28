@@ -1,6 +1,7 @@
 using Michsky.UI.ModernUIPack;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,14 +14,26 @@ public class NewInterface : MonoBehaviour
     public ButtonManager saveButton;
     public ButtonManager reloadButton;
 
+    public int fps;
+    public TextMeshProUGUI fpsText;
+
     public void Awake()
     {
         active = this;
+
+        if (fpsText != null)
+            InvokeRepeating("UpdateFPS", 0.2f, 1f);
     }
 
     public void Start()
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
+    }
+
+    public void UpdateFPS()
+    {
+        fps = (int)(1f / Time.unscaledDeltaTime);
+        fpsText.text = fps + "fps";
     }
 
     // Toggle the quit menu
@@ -37,7 +50,7 @@ public class NewInterface : MonoBehaviour
         }
         else
         {
-            if (InstantiationHandler.active.amountPlaced > 0) reloadButton.buttonText = "RELOAD";
+            if (InstantiationHandler.amountPlaced > 0) reloadButton.buttonText = "RELOAD";
             else reloadButton.buttonText = "RESEED";
             reloadButton.UpdateUI();
 
@@ -97,7 +110,7 @@ public class NewInterface : MonoBehaviour
     // Reload game
     public void Reload()
     {
-        if (InstantiationHandler.active.amountPlaced > 0)
+        if (InstantiationHandler.amountPlaced > 0)
         {
             // Clear registry
             Buildables.ClearRegistry();

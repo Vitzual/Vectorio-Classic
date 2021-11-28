@@ -15,16 +15,14 @@ public class DroneManager : MonoBehaviour
     // Builder mode
     public enum BuildPriority
     {
-        closest = 0,
-        furthest = 1,
-        cheapest = 2,
-        expensive = 3,
-        droneport = 4,
-        energizer = 5,
-        defense = 6,
-        resource = 7,
-        power = 8,
-        cooling = 9
+        cheapest = 0,
+        expensive = 1,
+        droneport = 2,
+        energizer = 3,
+        defense = 4,
+        resource = 5,
+        power = 6,
+        cooling = 7
     }
     public BuildPriority buildPriority;
     public bool ignorePriority = false;
@@ -156,166 +154,158 @@ public class DroneManager : MonoBehaviour
                     // Check if null
                     if (ghostTiles[a] != null)
                     {
-                        // Check resources
-                        if (CheckResources(ghostTiles[a]))
+                        // Check if priority should be ignored
+                        if (ignorePriority)
                         {
-                            // Check if priority should be ignored
-                            if (ignorePriority)
+                            // Assign closest drone found
+                            if (CheckResources(ghostTiles[a]))
                             {
-                                // Assign closest drone found
                                 drone = FindClosestDrone(ghostTiles[a].transform.position);
                                 if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
                                 return;
                             }
-                            else
+                        }
+                        else
+                        {
+                            // Switch build priority
+                            switch (buildPriority)
                             {
-                                // Switch build priority
-                                switch (buildPriority)
-                                {
-                                    // CLOSEST PRIORITY
-                                    case BuildPriority.closest:
 
-                                        // Assign closest drone found
+                                // CHEAPEST PRIORITY
+                                case BuildPriority.cheapest:
+
+                                    // Calculate total cost
+                                    foreach (Cost resource in ghostTiles[a].buildable.resources)
+                                        if (resource.add) { valueOne -= resource.amount; }
+                                        else { valueOne += resource.amount; }
+
+                                    // Compare to current cheapest
+                                    if (valueOne < valueTwo)
+                                    {
+                                        valueTwo = valueOne;
+                                        ghostTile = ghostTiles[a];
+                                    }
+
+                                    break;
+
+                                // EXPENSIVE PRIORITY
+                                case BuildPriority.expensive:
+
+                                    // Calculate total cost
+                                    foreach (Cost resource in ghostTiles[a].buildable.resources)
+                                        if (resource.add) { valueTwo -= resource.amount; }
+                                        else { valueTwo += resource.amount; }
+
+                                    // Compare to current cheapest
+                                    if (valueTwo > valueOne)
+                                    {
+                                        valueOne = valueTwo;
+                                        ghostTile = ghostTiles[a];
+                                    }
+
+                                    break;
+
+                                // DRONEPORT PRIORITY
+                                case BuildPriority.droneport:
+
+                                    // See if building is a droneport (yay magic strings)
+                                    if (ghostTiles[a].buildable.building == droneport)
+                                    {
                                         drone = FindClosestDrone(ghostTiles[a].transform.position);
                                         if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
                                         return;
+                                    }
 
-                                    // CHEAPEST PRIORITY
-                                    case BuildPriority.cheapest:
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        // Calculate total cost
-                                        foreach (Cost resource in ghostTiles[a].buildable.resources)
-                                            if (resource.add) { valueOne -= resource.amount; }
-                                            else { valueOne += resource.amount; }
+                                    break;
 
-                                        // Compare to current cheapest
-                                        if (valueOne < valueTwo)
-                                        {
-                                            valueTwo = valueOne;
-                                            ghostTile = ghostTiles[a];
-                                        }
+                                // ENERGIZER PRIORITY
+                                case BuildPriority.energizer:
 
-                                        break;
+                                    // See if building is a energizer
+                                    if (ghostTiles[a].buildable.building == energizer)
+                                    {
+                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                        return;
+                                    }
 
-                                    // EXPENSIVE PRIORITY
-                                    case BuildPriority.expensive:
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        // Calculate total cost
-                                        foreach (Cost resource in ghostTiles[a].buildable.resources)
-                                            if (resource.add) { valueTwo -= resource.amount; }
-                                            else { valueTwo += resource.amount; }
+                                    break;
 
-                                        // Compare to current cheapest
-                                        if (valueTwo > valueOne)
-                                        {
-                                            valueOne = valueTwo;
-                                            ghostTile = ghostTiles[a];
-                                        }
+                                // DEFENSE PRIORITY
+                                case BuildPriority.defense:
 
-                                        break;
+                                    // See if building is a defense
+                                    if (ghostTiles[a].buildable.building.inventoryHeader == Entity.InvHeader.Defense)
+                                    {
+                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                        return;
+                                    }
 
-                                    // DRONEPORT PRIORITY
-                                    case BuildPriority.droneport:
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        // See if building is a droneport (yay magic strings)
-                                        if (ghostTiles[a].buildable.building == droneport)
-                                        {
-                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                            return;
-                                        }
+                                    break;
 
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+                                // RESOURCE PRIORITY
+                                case BuildPriority.resource:
 
-                                        break;
+                                    // See if building is a defense
+                                    if (!ghostTiles[a].buildable.building.obj.GetComponent<ResourceTile>())
+                                    {
+                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                        return;
+                                    }
 
-                                    // ENERGIZER PRIORITY
-                                    case BuildPriority.energizer:
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        // See if building is a energizer
-                                        if (ghostTiles[a].buildable.building == energizer)
-                                        {
-                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                            return;
-                                        }
+                                    break;
 
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+                                // POWER PRIORITY
+                                case BuildPriority.power:
 
-                                        break;
-
-                                    // DEFENSE PRIORITY
-                                    case BuildPriority.defense:
-
-                                        // See if building is a defense
-                                        if (ghostTiles[a].buildable.building.inventoryHeader == Entity.InvHeader.Defense)
+                                    // See if building produces power
+                                    foreach (Cost resource in ghostTiles[a].buildable.resources)
+                                    {
+                                        if (resource.resource == Resource.CurrencyType.Power && !resource.add)
                                         {
                                             drone = FindClosestDrone(ghostTiles[a].transform.position);
                                             if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
                                             return;
                                         }
+                                    }
 
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        break;
+                                    break;
 
-                                    // RESOURCE PRIORITY
-                                    case BuildPriority.resource:
+                                // COOLING PRIORITY
+                                case BuildPriority.cooling:
 
-                                        // See if building is a defense
-                                        if (!ghostTiles[a].buildable.building.obj.GetComponent<ResourceTile>())
+                                    // See if building produces power
+                                    foreach (Cost resource in ghostTiles[a].buildable.resources)
+                                    {
+                                        if (resource.resource == Resource.CurrencyType.Heat && !resource.add)
                                         {
                                             drone = FindClosestDrone(ghostTiles[a].transform.position);
                                             if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
                                             return;
                                         }
+                                    }
 
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
+                                    // If no building found, set ghost tile for closest
+                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
-                                        break;
-
-                                    // POWER PRIORITY
-                                    case BuildPriority.power:
-
-                                        // See if building produces power
-                                        foreach (Cost resource in ghostTiles[a].buildable.resources)
-                                        {
-                                            if (resource.resource == Resource.CurrencyType.Power && !resource.add)
-                                            {
-                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                                return;
-                                            }
-                                        }
-
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
-
-                                        break;
-
-                                    // COOLING PRIORITY
-                                    case BuildPriority.cooling:
-
-                                        // See if building produces power
-                                        foreach (Cost resource in ghostTiles[a].buildable.resources)
-                                        {
-                                            if (resource.resource == Resource.CurrencyType.Heat && !resource.add)
-                                            {
-                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                                return;
-                                            }
-                                        }
-
-                                        // If no building found, set ghost tile for closest
-                                        if (ghostTile != null) ghostTile = ghostTiles[a];
-
-                                        break;
-                                }
+                                    break;
                             }
                         }
                     }
@@ -329,11 +319,14 @@ public class DroneManager : MonoBehaviour
                 // After loop, check if index was assigned
                 if (ghostTile != null)
                 {
-                    drone = FindClosestDrone(ghostTile.transform.position);
-                    if (drone != null) SetBuilderTarget(drone, ghostTile);
-
-                    if (buildPriority != BuildPriority.cheapest ||
-                        buildPriority != BuildPriority.expensive) ignorePriority = true;
+                    // Assign closest drone found
+                    if (CheckResources(ghostTile))
+                    {
+                        drone = FindClosestDrone(ghostTile.transform.position);
+                        if (drone != null) SetBuilderTarget(drone, ghostTile);
+                        if (buildPriority != BuildPriority.cheapest ||
+                            buildPriority != BuildPriority.expensive) ignorePriority = true;
+                    }
                 }
             }
         }

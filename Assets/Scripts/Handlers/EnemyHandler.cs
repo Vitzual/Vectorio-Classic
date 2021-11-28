@@ -38,7 +38,7 @@ public class EnemyHandler : MonoBehaviour
     // Handles enemy movement every frame
     public void Update()
     {
-        if (Settings.paused) return;
+        if (Settings.paused || InstantiationHandler.amountPlaced == 0) return;
 
         // Move enemies each frame
         if (isMenu) MoveMenuEnemies();

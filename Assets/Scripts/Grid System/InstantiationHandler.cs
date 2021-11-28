@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class InstantiationHandler : MonoBehaviour
 {
     // Amount placed
-    public int amountPlaced = 0;
+    public static int amountPlaced = 0;
 
     // Grid variable
     [HideInInspector] public Grid tileGrid;

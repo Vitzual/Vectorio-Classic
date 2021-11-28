@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2534653136833766012}
-  - component: {fileID: -1636311487633401878}
+  - component: {fileID: 1380295064782681083}
   - component: {fileID: 7327074964644683162}
   - component: {fileID: 5963809528084759060}
   - component: {fileID: 1727467600580718258}
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1636311487633401878
+--- !u!114 &1380295064782681083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4535947825145661497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edfee4d1e381a674cb11f4da01daaa1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 366659875c7871849aeb339fcc7dc4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   turret: {fileID: 0}
@@ -52,9 +52,12 @@ MonoBehaviour:
   speed: 0
   pierces: 0
   time: 0
+  target: {fileID: 0}
   tracking: 0
   recycling: 0
+  model: {fileID: 0}
   trail: {fileID: 0}
+  ignoreList: []
   particle: {fileID: 1963556271289186875}
 --- !u!50 &7327074964644683162
 Rigidbody2D:

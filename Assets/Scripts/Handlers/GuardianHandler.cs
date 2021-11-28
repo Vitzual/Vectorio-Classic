@@ -6,6 +6,7 @@ public class GuardianHandler : MonoBehaviour
 {
     // Active instance
     public static GuardianHandler active;
+    public static bool animInProgress;
 
     // Hub instance
     public Hub hub;
@@ -41,7 +42,17 @@ public class GuardianHandler : MonoBehaviour
     public void Update()
     {
         // Check if animation playnig
-        if (laserFiring) GuardianAnimation();
+        try
+        {
+            if (laserFiring) GuardianAnimation();
+        }
+        catch
+        {
+            animInProgress = false;
+            UI.alpha = 1f;
+            UI.interactable = true;
+            UI.blocksRaycasts = true;
+        }
 
         // Check if paused
         if (Settings.paused) return;
@@ -81,6 +92,7 @@ public class GuardianHandler : MonoBehaviour
         UI.alpha = 0f;
         UI.interactable = false;
         UI.blocksRaycasts = false;
+        animInProgress = true;
 
         // Initiate laser sequence 
         laserPart = 0;
@@ -150,6 +162,7 @@ public class GuardianHandler : MonoBehaviour
                 {
                     Border.SetBorderPositions();
                     laserFiring = false;
+                    animInProgress = false;
                     UI.alpha = 1f;
                     UI.interactable = true;
                     UI.blocksRaycasts = true;

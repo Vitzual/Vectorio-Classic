@@ -65,6 +65,9 @@ public class NewInterface : MonoBehaviour
     // Toggle the building menu
     public void ToggleBuildingMenu()
     {
+        // Check animation in progress
+        if (GuardianHandler.animInProgress) return;
+
         // Check if other panels open
         if (!CheckPanels()) return;
         else Inventory.Open();

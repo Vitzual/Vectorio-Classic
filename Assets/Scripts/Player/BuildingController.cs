@@ -227,6 +227,8 @@ public class BuildingController : MonoBehaviour
 
     public void TryDeselectEntity() 
     {
+        if (GuardianHandler.animInProgress) return;
+
         if (entity != null) 
         {
             if (NewInterface.active.CheckPanels())

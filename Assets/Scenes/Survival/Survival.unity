@@ -19568,46 +19568,10 @@ MonoBehaviour:
     your defenses!
   onConfirm:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 778748047}
-        m_TargetAssemblyTypeName: GuardianButton, Assembly-CSharp
-        m_MethodName: StartBattle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 598772620}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onCancel:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 778748047}
-        m_TargetAssemblyTypeName: GuardianButton, Assembly-CSharp
-        m_MethodName: CloseConfirmScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   sharpAnimations: 0
   useCustomValues: 0
   destroyOnClose: 0
@@ -25205,18 +25169,6 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 598772620}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 778748047}
         m_TargetAssemblyTypeName: GuardianButton, Assembly-CSharp
         m_MethodName: OpenConfirmScreen
@@ -28488,19 +28440,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 903621438}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 598772622}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: CloseWindow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &903621438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28566,7 +28506,19 @@ MonoBehaviour:
   buttonText: CANCEL
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 778748047}
+        m_TargetAssemblyTypeName: GuardianButton, Assembly-CSharp
+        m_MethodName: CloseConfirmScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -45418,19 +45370,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1510983809}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 598772622}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: CloseWindow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1510983812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45447,7 +45387,19 @@ MonoBehaviour:
   buttonText: GOT IT
   clickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 778748047}
+        m_TargetAssemblyTypeName: GuardianButton, Assembly-CSharp
+        m_MethodName: StartBattle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hoverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -71844,7 +71796,7 @@ MonoBehaviour:
   useEngineering: 0
   spawnBlueprints: 0
   generateWorld: 1
-  unlockEverything: 0
+  unlockEverything: 1
   initBuildings: 1
   initEnemies: 0
   initGuardians: 0
@@ -79464,7 +79416,7 @@ MonoBehaviour:
   guardianSpawned: 0
   warningSound: {fileID: 543131122}
   music: {fileID: 434884807}
-  UI: {fileID: 4319752878029938308}
+  UI: {fileID: 6168857121947658524}
   laserFiring: 0
   laserPart: 0
   cooldown: 5

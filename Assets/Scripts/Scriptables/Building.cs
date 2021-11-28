@@ -42,6 +42,8 @@ public class Building : Entity
         Buildable buildable = Buildables.RequestBuildable(this);
         if (buildable != null)
         {
+            panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
+
             foreach (Cost type in buildable.resources)
             {
                 string name = Resource.active.GetName(type.resource);

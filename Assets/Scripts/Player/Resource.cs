@@ -74,7 +74,7 @@ public class Resource : MonoBehaviour
         {
             currencies.Add(currency.type, currency);
             Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
-
+            currency.background.color = new Color(1, 1, 1, 0.1f);
             if (currency.calcPerSecond)
                 lastCalculation.Add(currency, 0);
         }

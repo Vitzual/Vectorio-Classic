@@ -60,6 +60,7 @@ public class Drone : MonoBehaviour
     public virtual void SetTarget(BaseTile tile)
     {
         target = tile;
+        RotateToTarget();
     }
 
     // Tells a port to find a new target

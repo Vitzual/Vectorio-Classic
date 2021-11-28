@@ -20,6 +20,8 @@ public class ResearchLab : BaseTile
 
     public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
+        CancelResearch();
+
         if (!overrideCost)
             foreach (Cost cost in type.cost)
                 if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);

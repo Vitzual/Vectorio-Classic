@@ -54,6 +54,11 @@ MonoBehaviour:
   spawnChance: 0.001
   largeEnemy: 1
   spawnPercentage: 0.7
-  spawnsOnDeath: []
-  drops:
-  - {fileID: 11400000, guid: 799fbd716c7193d49a8411dd7a608312, type: 2}
+  spawnsOnDeath:
+  - enemy: {fileID: 11400000, guid: c384091c5e0c74d4b93d0cf7de6876d2, type: 2}
+    amount: 2
+    radius: 20
+  - enemy: {fileID: 11400000, guid: be9c773da27af7b4483b283f1250f795, type: 2}
+    amount: 3
+    radius: 10
+  drops: []

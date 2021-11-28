@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
     {
         // Clear registry
         Buildables.ClearRegistry();
-         
+
         // Reset gamemode static variables
         Gamemode.saveData = null;
         Gamemode.difficulty = null;
@@ -73,6 +73,10 @@ public class Menu : MonoBehaviour
 
         // Reset time scale
         Time.timeScale = 1f;
+        SettingsUI.isOpen = false;
+        Inventory.isOpen = false;
+        ResearchUI.isOpen = false;
+        StatsPanel.isOpen = false;
 
         // Set camera target
         camTarget = mainLocation;
@@ -178,7 +182,7 @@ public class Menu : MonoBehaviour
                 button.mode = saveData.worldMode;
 
                 // Check for outdated thing
-                if (saveData.worldVersion == "v0.3") button.outdated = true;
+                if (saveData.worldVersion == "v0.3" || saveData.worldVersion == "v0.3.3") button.outdated = true;
 
                 // Apply playtime
                 TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);

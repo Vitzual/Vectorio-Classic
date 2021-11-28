@@ -71,6 +71,9 @@ public class DefaultStorage : ResourceTile
         {
             Resource.active.Remove(type, amount, false);
             Resource.active.RemoveStorage(type, Research.resource[type].storageAmount);
+
+            if (Resource.storages.Contains(this))
+                Resource.storages.Remove(this);
         }
 
         base.DestroyEntity();

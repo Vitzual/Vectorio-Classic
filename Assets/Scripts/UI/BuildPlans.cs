@@ -41,6 +41,8 @@ public class BuildPlans : MonoBehaviour
                 tracked[cost.resource].Add(cost.amount);
 
         canvasGroup.alpha = 1f;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
         totalQueued.text = "<b>QUEUED:</b> " + DroneManager.active.ghostTiles.Count;
         dronesAvailable.text = "<b>DRONES:</b> " + DroneManager.active.builderDrones.Count;
     }
@@ -53,7 +55,11 @@ public class BuildPlans : MonoBehaviour
                 tracked[cost.resource].Remove(cost.amount);
 
         if (DroneManager.active.ghostTiles.Count == 0)
+        {
             canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
         totalQueued.text = "<b>QUEUED:</b> " + DroneManager.active.ghostTiles.Count;
         dronesAvailable.text = "<b>DRONES:</b> " + DroneManager.active.builderDrones.Count;
     }

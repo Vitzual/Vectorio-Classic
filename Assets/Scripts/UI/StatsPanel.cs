@@ -14,9 +14,9 @@ public class StatsPanel : MonoBehaviour
     [System.Serializable]
     public class AdditionalSetting
     {
-        public GameObject settingObj;
         public Entity entity;
         public bool useButton;
+        public bool useSelector;
         public HorizontalSelector[] selectors;
     }
 
@@ -30,6 +30,7 @@ public class StatsPanel : MonoBehaviour
     public TextMeshProUGUI buildingDesc;
     public ProgressBar buildingHealth;
     public GameObject button;
+    public GameObject selector;
     public GameObject noSettings;
     public AdditionalSetting[] additionalSettings;
     public static CanvasGroup canvasGroup;
@@ -88,15 +89,15 @@ public class StatsPanel : MonoBehaviour
                     selector.index = baseEntity.metadata;
                     selector.UpdateUI();
                 }
-                settings[entity].settingObj.SetActive(true);
+                selector.SetActive(settings[entity].useSelector);
                 button.SetActive(settings[entity].useButton);
                 noSettings.SetActive(false);
             }
             else
             {
                 Debug.Log("No settings were found for " + entity.name);
-                foreach (KeyValuePair<Entity, AdditionalSetting> setting in settings)
-                    setting.Value.settingObj.SetActive(false);
+                selector.SetActive(false);
+                button.SetActive(false);
                 noSettings.SetActive(true);
             }
 

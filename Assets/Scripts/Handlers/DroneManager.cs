@@ -1,5 +1,4 @@
 ﻿// This script handles all active drones each frame
-using Michsky.UI.ModernUIPack;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,16 +15,16 @@ public class DroneManager : MonoBehaviour
     // Builder mode
     public enum BuildPriority
     {
-        closest,
-        furthest,
-        cheapest,
-        expensive,
-        droneport,
-        energizer,
-        defense,
-        resource,
-        power,
-        cooling
+        closest = 0,
+        furthest = 1,
+        cheapest = 2,
+        expensive = 3,
+        droneport = 4,
+        energizer = 5,
+        defense = 6,
+        resource = 7,
+        power = 8,
+        cooling = 9
     }
     public BuildPriority buildPriority;
     public bool ignorePriority = false;
@@ -72,6 +71,12 @@ public class DroneManager : MonoBehaviour
             fixerDrones.Add(drone);
         else if (drone.type == Drone.DroneType.Gunship)
             activeDrones.Add(drone);
+    }
+
+    // Switch priority
+    public void SwitchPriority(int type)
+    {
+        buildPriority = (BuildPriority)type;
     }
 
     // Move drones

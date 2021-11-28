@@ -61,6 +61,8 @@ public class Research : MonoBehaviour
     // THIS IS GONNA BE REDONE
     public static void ApplyResearch(ResearchTech tech, bool revoke = true)
     {
+        Debug.Log("Applying research " + tech.name + " with revoke set to " + revoke);
+
         float amount = tech.amount;
         if (revoke) amount = -amount;
 

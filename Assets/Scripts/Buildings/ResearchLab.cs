@@ -27,7 +27,7 @@ public class ResearchLab : BaseTile
         researchTech = type;
         boostIcon.gameObject.SetActive(true);
         boostIcon.sprite = type.icon;
-        Research.ApplyResearch(type);
+        Research.ApplyResearch(type, false);
 
         metadata = type.metadataID;
     }

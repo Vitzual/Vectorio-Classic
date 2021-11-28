@@ -20,7 +20,7 @@ public class GuardianHandler : MonoBehaviour
     // Guardian animation components
     public AudioSource warningSound;
     public AudioSource music;
-    public GameObject UI;
+    public CanvasGroup UI;
 
     // Laser variables
     [HideInInspector] public bool laserFiring;
@@ -78,7 +78,9 @@ public class GuardianHandler : MonoBehaviour
         if (guardians.Count > 0) return;
 
         // Disable UI
-        UI.SetActive(false);
+        UI.alpha = 0f;
+        UI.interactable = false;
+        UI.blocksRaycasts = false;
 
         // Initiate laser sequence 
         laserPart = 0;
@@ -148,7 +150,9 @@ public class GuardianHandler : MonoBehaviour
                 {
                     Border.SetBorderPositions();
                     laserFiring = false;
-                    UI.SetActive(true);
+                    UI.alpha = 1f;
+                    UI.interactable = true;
+                    UI.blocksRaycasts = true;
                     music.Play();
                     laserPart = 0;
                     SpawnGuardian();

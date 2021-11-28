@@ -31,6 +31,12 @@ public class BaseTile : BaseEntity
         if (hit.collider == null) DestroyEntity();
     }
 
+    public override void OnBoxCollision(DefaultEnemy enemy)
+    {
+        DamageEntity(enemy.damage);
+        enemy.DestroyEntity();
+    }
+
     public override void DestroyEntity()
     {
         // Update unlockables

@@ -64,7 +64,7 @@ public class DefaultTurret : BaseTile, IAudible
             for (int i = 0; i < turret.bulletAmount + Research.bulletBoost; i += 1)
                 CreateBullet(firePoint.position);
     }
-
+    
     // Create a bullet object
     public virtual void CreateBullet(Vector2 position)
     {
@@ -96,6 +96,11 @@ public class DefaultTurret : BaseTile, IAudible
     public void PlaySound()
     {
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.sound);
+    }
+
+    public override void OnCircleCollision(DefaultEnemy enemy)
+    {
+        AddTarget(enemy);
     }
 
     public virtual void AddTarget(BaseEntity enemy)

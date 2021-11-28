@@ -7,6 +7,7 @@ public class DefaultEnemy : BaseEntity
     // Class variables
     public Enemy enemy;
     public float moveSpeed;
+    public float damage;
     [HideInInspector] public bool isMenu;
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
@@ -36,14 +37,10 @@ public class DefaultEnemy : BaseEntity
         foreach (TrailRenderer a in trail)
             a.material = variant.trail;
 
+        damage = enemy.damage * variant.damageModifier;
         moveSpeed = enemy.moveSpeed * variant.speedModifier;
         health = enemy.health * variant.healthModifier;
         maxHealth = health;
-    }
-
-    public virtual void GiveDamage(BaseTile building)
-    {
-        building.DamageEntity(enemy.damage);
     }
 
     // Damages the entity (IDamageable interface method)
@@ -88,24 +85,9 @@ public class DefaultEnemy : BaseEntity
         }
         else
         {
-            if (other is BoxCollider2D)
-            {
-                BaseTile building = other.GetComponent<BaseTile>();
-
-                if (building != null)
-                {
-                    GiveDamage(building);
-                    if (building != null)
-                        Destroy(gameObject);
-                }
-            }
-            else
-            {
-                DefaultTurret turret = other.GetComponent<DefaultTurret>();
-
-                if (turret != null)
-                    turret.AddTarget(this);
-            }
+            BaseEntity building = other.GetComponent<BaseEntity>();
+            if (other is BoxCollider2D) building.OnBoxCollision(this);
+            else building.OnCircleCollision(this);
         }
     }
 

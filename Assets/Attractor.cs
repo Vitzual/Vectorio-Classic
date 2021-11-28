@@ -4,5 +4,18 @@ using UnityEngine;
 
 public class Attractor : BaseTile
 {
-    
+    public CircleCollider2D circle;
+    public float attractionRadius;
+
+    public override void Setup()
+    {
+        circle = GetComponent<CircleCollider2D>();
+        circle.radius = attractionRadius;
+        base.Setup();
+    }
+
+    public override void OnCircleCollision(DefaultEnemy enemy)
+    {
+        enemy.target = this;
+    }
 }

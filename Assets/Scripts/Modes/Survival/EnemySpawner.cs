@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         // Check if enemy handler is active
-        if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed) return;
+        if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
 
         // Setup variables
         Vector2 spawnPos;
@@ -102,7 +102,8 @@ public class EnemySpawner : MonoBehaviour
     // Check if group spawning still active
     public void CheckGroupSpawning()
     {
-        if (!Gamemode.active.useGroupSpawning) return;
+        if (!Gamemode.active.useGroupSpawning || Settings.paused) return;
+
         timeUntilNextGroup -= 1;
 
         if (timeUntilNextGroup <= 0)

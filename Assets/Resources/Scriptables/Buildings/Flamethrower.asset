@@ -44,6 +44,8 @@ MonoBehaviour:
   hologramSize: 1
   useSquareRange: 0
   squareRange: 0
+  useCircleRange: 0
+  circleRange: 0
   cells:
   - x: 0
     y: 0
@@ -70,10 +72,12 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 0
-  damage: 50
+  deathParticle: {fileID: 0}
+  damage: 35
   range: 40
   rotationSpeed: 120
   cooldown: 0.1
+  randomizeCooldown: 0
   sound: {fileID: 0}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 5
@@ -82,5 +86,7 @@ MonoBehaviour:
   bulletSpread: 40
   bulletTime: 0.5
   bulletLock: 0
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}

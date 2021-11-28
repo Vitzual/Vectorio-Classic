@@ -69,7 +69,7 @@ public class Resource : MonoBehaviour
         // Setup currencies
         currencies = new Dictionary<CurrencyType, Currency>();
         lastCalculation = new Dictionary<Currency, int>();
-        Research.resource = new Dictionary<CurrencyType, Research.ResourceBoost>();
+        Research.ResetResearch();
         foreach (Currency currency in currencyElements)
         {
             currencies.Add(currency.type, currency);

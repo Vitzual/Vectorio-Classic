@@ -47,6 +47,26 @@ public class Research : MonoBehaviour
     public static float drone_deployment_speed = 3f;
     public static float droneMoveSpeed = 25f;
 
+    // Reset research values
+    public static void ResetResearch()
+    {
+        // Reset dictionaries
+        resource = new Dictionary<Resource.CurrencyType, ResourceBoost>();
+        techs = new Dictionary<ResearchTech, Tech>();
+        activeLabs = new List<ResearchLab>();
+
+        // Reset research values
+        damageBoost = 1;
+        healthBoost = 1;
+        wallBoost = 1;
+        pierceBoost = 0;
+        bulletBoost = 0;
+        firerateBoost = 1;
+        drone_tile_coverage = 5;
+        drone_deployment_speed = 3f;
+        droneMoveSpeed = 25f;
+    }
+
     // Currency get variables (I hate this, and will redo it)
     public static void GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
     {

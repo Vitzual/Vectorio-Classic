@@ -16,9 +16,11 @@ public class CollectorHandler : MonoBehaviour
     {
         Events.active.onCollectorPlaced += AddCollector;
     }
-
+    
     public void Update()
     {
+        if (Settings.paused) return;
+
         for(int i = 0; i < collectors.Count; i++)
         {
             if (collectors[i] != null)

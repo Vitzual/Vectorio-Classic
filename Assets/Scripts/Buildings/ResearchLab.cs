@@ -59,7 +59,7 @@ public class ResearchLab : BaseTile
                 {
                     if (Resource.active.currencies[cost.resource].amount >= cost.amount)
                     {
-                        Resource.active.Remove(cost.resource, cost.amount, false);
+                        Resource.active.Remove(cost.resource, cost.amount, true);
                     }
                     else if (strikes == 0)
                     {

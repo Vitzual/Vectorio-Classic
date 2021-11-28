@@ -93,12 +93,14 @@ public class InstantiationHandler : MonoBehaviour
         SetCells(buildable.building, position, lastBuilding);
 
         // Update resource values promptly
-        if (!Gamemode.active.useDroneConstruction || Gamemode.loadGame)
-            Resource.active.ApplyResources(buildable, free);
+        Resource.active.ApplyResources(buildable, free);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
         lastBuilding.Setup();
+
+        // Check health
+        if (health != -1) lastBuilding.health = health;
         
         // Set sellable values
         lastBuilding.saveBuilding = buildable.building.isSaveable;

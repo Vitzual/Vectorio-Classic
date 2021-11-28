@@ -54,7 +54,7 @@ public class Resource : MonoBehaviour
     public Currency[] currencyElements;
 
     // List of all collectors and storages
-    public List<DefaultStorage> storages = new List<DefaultStorage>();
+    public static List<DefaultStorage> storages = new List<DefaultStorage>();
 
     // Get active instance
     public void Awake()
@@ -80,7 +80,6 @@ public class Resource : MonoBehaviour
         }
 
         // Setup events
-        Events.active.onStoragePlaced += AddStorageObj;
         InvokeRepeating("UpdatePerSecond", 1, 1);
     }
 
@@ -98,12 +97,6 @@ public class Resource : MonoBehaviour
                 lastCalculation[currency] = currency.amount;
             }
         }
-    }
-
-    // Add collector or storage
-    public void AddStorageObj(DefaultStorage storage) 
-    {
-        storages.Add(storage);
     }
 
     // Update storages 
@@ -193,8 +186,11 @@ public class Resource : MonoBehaviour
     }
 
     // Add storage
-    public void AddStorage(CurrencyType type, int amount)
+    public void AddStorage(CurrencyType type, int amount, DefaultStorage defaultStorage = null)
     {
+        // Update active storages
+        if (defaultStorage != null)
+            storages.Add(defaultStorage);
         currencies[type].storage += amount;
 
         // Display to UI
@@ -204,6 +200,7 @@ public class Resource : MonoBehaviour
     // Set storage
     public void SetStorage(CurrencyType type, int amount)
     {
+        // Sets the storage
         currencies[type].storage = amount;
 
         // Display to UI
@@ -211,8 +208,12 @@ public class Resource : MonoBehaviour
     }
 
     // Remove storage
-    public void RemoveStorage(CurrencyType type, int amount)
+    public void RemoveStorage(CurrencyType type, int amount, DefaultStorage defaultStorage = null)
     {
+        // Update active storages
+        if (defaultStorage != null && storages.Contains(defaultStorage))
+            storages.Remove(defaultStorage);
+
         // Revert the storage
         currencies[type].storage -= amount;
         if (currencies[type].storage <= 0)
@@ -301,6 +302,9 @@ public class Resource : MonoBehaviour
             }
             else if (isFree)
             {
+                // Applying for free
+                Debug.Log(buildable.building.name + " is free!");
+
                 // Validity check
                 bool valid = false;
 

@@ -12,7 +12,7 @@ public class DefaultStorage : ResourceTile
         Events.active.StoragePlaced(this);
 
         if (Resource.active != null)
-            Resource.active.AddStorage(type, Research.resource[type].storageAmount);
+            Resource.active.AddStorage(type, Research.resource[type].storageAmount, this);
         else Debug.Log("Storage could not successfully add to list");
     }
 

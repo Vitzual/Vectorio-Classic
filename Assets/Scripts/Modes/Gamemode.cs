@@ -81,6 +81,7 @@ public class Gamemode : MonoBehaviour
         // Load game 
         if (loadGame && saveData != null)
         {
+            Resource.storages = new List<DefaultStorage>();
             NewSaveSystem.LoadGame(saveData);
             Border.UpdateStage();
             Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
@@ -144,11 +145,8 @@ public class Gamemode : MonoBehaviour
     // Setup starting resources
     public void SetupStartingResources()
     {
-        // Set heat
-        Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
-
         // Adjust power storage
-        Resource.active.SetStorage(Resource.CurrencyType.Power, 5000);
+        Resource.active.AddStorage(Resource.CurrencyType.Power, 5000);
 
         // Setup heat storage
         Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);

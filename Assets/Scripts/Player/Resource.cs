@@ -109,28 +109,33 @@ public class Resource : MonoBehaviour
         // Updates all storages
         for(int i = 0; i < storages.Count; i++)
         {
-            if (storages[i] != null && storages[i].type == type)
+            // Check if storage is null
+            if (storages[i] != null)
             {
-                // If add, add resources
-                if (add)
+                // Check if storage is same type
+                if (storages[i].type == type)
                 {
-                    if (!storages[i].isFull)
+                    // If add, add resources
+                    if (add)
                     {
-                        amountToAdd = storages[i].AddResources(amountToAdd);
-                        if (amountToAdd <= 0) return;
+                        if (!storages[i].isFull)
+                        {
+                            amountToAdd = storages[i].AddResources(amountToAdd);
+                            if (amountToAdd <= 0) return;
+                        }
                     }
-                }
-                else
-                {
-                    // Update resources
-                    int resourcesTaken = storages[i].TakeResource();
-                    amountToAdd += resourcesTaken;
-                    currencies[type].amount -= resourcesTaken;
-
-                    if (amountToAdd > 0)
+                    else
                     {
-                        storages[i].AddResources(amountToAdd);
-                        return;
+                        // Update resources
+                        int resourcesTaken = storages[i].TakeResource();
+                        amountToAdd += resourcesTaken;
+                        currencies[type].amount -= resourcesTaken;
+
+                        if (amountToAdd > 0)
+                        {
+                            storages[i].AddResources(amountToAdd);
+                            return;
+                        }
                     }
                 }
             }

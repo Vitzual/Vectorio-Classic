@@ -44,11 +44,7 @@ public class DefaultCollector : ResourceTile
     {
         if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
         {
-            int amount = TakeResource();
-            Resource.active.Add(type, amount, true);
-            PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
-            isFull = false;
-            SetLight();
+            CollectResources();
         }
     }
 
@@ -59,14 +55,20 @@ public class DefaultCollector : ResourceTile
         {
             if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
             {
-                int amount = TakeResource();
-                Resource.active.Add(type, amount, true);
-                PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
-                isFull = false;
-                SetLight();
+                CollectResources();
             }
         }
         else base.OnClick();
+    }
+
+    // Collect resource
+    public void CollectResources() 
+    {
+        int amount = TakeResource();
+        Resource.active.Add(type, amount, true);
+        PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+        isFull = false;
+        SetLight();
     }
 
     // Set light

@@ -22,10 +22,10 @@ public class DroneManager : MonoBehaviour
         defense = 4,
         resource = 5,
         power = 6,
-        cooling = 7
+        cooling = 7,
+        latest = 8
     }
     public BuildPriority buildPriority;
-    public bool ignorePriority = true;
 
     // Priority buildings
     public Building droneport;
@@ -55,7 +55,6 @@ public class DroneManager : MonoBehaviour
     public void AddGhost(GhostTile ghost)
     {
         ghostTiles.Add(ghost);
-        ignorePriority = false;
     }
 
     // Add a drone
@@ -163,17 +162,6 @@ public class DroneManager : MonoBehaviour
                         }
                         else
                         {
-                            // Check priority
-                            if (ignorePriority)
-                            {
-                                if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))
-                                {
-                                    drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                    if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                    return;
-                                }
-                            }
-
                             // Switch build priority
                             switch (buildPriority)
                             {
@@ -218,13 +206,14 @@ public class DroneManager : MonoBehaviour
                                     // See if building is a droneport (yay magic strings)
                                     if (ghostTiles[a].buildable.building == droneport)
                                     {
-                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                        return;
+                                        // Assign closest drone found
+                                        if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
                                     }
-
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
                                     break;
 
@@ -234,13 +223,14 @@ public class DroneManager : MonoBehaviour
                                     // See if building is a energizer
                                     if (ghostTiles[a].buildable.building == energizer)
                                     {
-                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                        return;
+                                        // Assign closest drone found
+                                        if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
                                     }
-
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
                                     break;
 
@@ -250,13 +240,14 @@ public class DroneManager : MonoBehaviour
                                     // See if building is a defense
                                     if (ghostTiles[a].buildable.building.inventoryHeader == Entity.InvHeader.Defense)
                                     {
-                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                        return;
+                                        // Assign closest drone found
+                                        if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
                                     }
-
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
                                     break;
 
@@ -266,13 +257,14 @@ public class DroneManager : MonoBehaviour
                                     // See if building is a defense
                                     if (!ghostTiles[a].buildable.building.obj.GetComponent<ResourceTile>())
                                     {
-                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                        return;
+                                        // Assign closest drone found
+                                        if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                        {
+                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                            return;
+                                        }
                                     }
-
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
                                     break;
 
@@ -284,14 +276,15 @@ public class DroneManager : MonoBehaviour
                                     {
                                         if (resource.resource == Resource.CurrencyType.Power && !resource.add)
                                         {
-                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                            return;
+                                            // Assign closest drone found
+                                            if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                            {
+                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                                return;
+                                            }
                                         }
                                     }
-
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
 
                                     break;
 
@@ -303,14 +296,28 @@ public class DroneManager : MonoBehaviour
                                     {
                                         if (resource.resource == Resource.CurrencyType.Heat && !resource.add)
                                         {
-                                            drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                            return;
+                                            // Assign closest drone found
+                                            if (Resource.active.CheckResources(ghostTile.buildable.resources))
+                                            {
+                                                drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                                return;
+                                            }
                                         }
                                     }
 
-                                    // If no building found, set ghost tile for closest
-                                    if (ghostTile != null) ghostTile = ghostTiles[a];
+                                    break;
+
+                                // IN-ORDER PRIORITY
+                                case BuildPriority.latest:
+
+                                    // Check resource of latest placed
+                                    if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))
+                                    {
+                                        drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                        if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                        return;
+                                    }
 
                                     break;
                             }
@@ -330,9 +337,11 @@ public class DroneManager : MonoBehaviour
                     if (Resource.active.CheckResources(ghostTile.buildable.resources))
                     {
                         drone = FindClosestDrone(ghostTile.transform.position);
-                        if (drone != null) SetBuilderTarget(drone, ghostTile);
-                        if (buildPriority != BuildPriority.cheapest ||
-                            buildPriority != BuildPriority.expensive) ignorePriority = true;
+                        if (drone != null)
+                        {
+                            SetBuilderTarget(drone, ghostTile);
+                            return;
+                        }
                     }
                 }
             }

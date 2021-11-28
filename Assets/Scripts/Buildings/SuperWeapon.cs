@@ -43,7 +43,14 @@ public class SuperWeapon : DefaultTurret
 
             if (turret.randomizeCooldown)
                 cooldown = Random.Range(turret.cooldown, turret.cooldown + turret.cooldown);
-            else cooldown = turret.cooldown / Research.firerateBoost;
         }
+    }
+
+    // Attempts to fire a bullet and returns true if fired
+    public override void Shoot()
+    {
+        foreach (Transform firePoint in firePoints)
+            for (int i = 0; i < turret.bulletAmount; i += 1)
+                CreateBullet(firePoint.position);
     }
 }

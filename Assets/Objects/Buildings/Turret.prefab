@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -143,6 +142,8 @@ MonoBehaviour:
   cannon: {fileID: 8908416096621829035}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &-4375696697496427751
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -400,7 +401,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
+  - {fileID: 2100000, guid: 063589c48f497d5479a8e4173c2a0812, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

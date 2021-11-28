@@ -40,12 +40,17 @@ public class Entity : IdentifiableScriptableObject
     [FoldoutGroup("Grid Variables")]
     public float hologramSize = 1f;
 
-
-    // TEMP
+    // Show range
     [FoldoutGroup("Grid Variables")]
     public bool useSquareRange;
     [FoldoutGroup("Grid Variables")]
     public float squareRange;
+    [FoldoutGroup("Grid Variables")]
+    [Tooltip("On by default for turrets")]
+    public bool useCircleRange;
+    [FoldoutGroup("Grid Variables")]
+    [Tooltip("On by default for turrets")]
+    public float circleRange;
 
     // Creates stats
     public virtual void CreateStats(Panel panel)

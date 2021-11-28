@@ -16,6 +16,6 @@ public class Attractor : BaseTile
 
     public override void OnCircleCollision(DefaultEnemy enemy)
     {
-        enemy.target = this;
+        enemy.SetTarget(this, true);
     }
 }

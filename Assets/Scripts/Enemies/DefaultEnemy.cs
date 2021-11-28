@@ -12,6 +12,7 @@ public class DefaultEnemy : BaseEntity
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
     public Transform rotator;
+    bool gradualRotation = false;
 
     // Sprite info
     public SpriteRenderer[] border;
@@ -69,10 +70,40 @@ public class DefaultEnemy : BaseEntity
         Destroy(gameObject);
     }
 
+    // Move towards target
     public virtual void MoveTowards(Transform obj, Transform target)
     {
         float step = moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
+
+        if (gradualRotation) GradualRotation();
+    }
+
+    // Rotates towards a target
+    public void RotateToTarget()
+    {
+        Vector3 dir = transform.position - target.transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
+    }
+
+    // Gradual rotation
+    public void GradualRotation()
+    {
+        Vector3 targetDir = target.transform.position - transform.position;
+        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90f;
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * enemy.rotationSpeed);
+    }
+
+    // Set target
+    public void SetTarget(BaseTile tile, bool gradual)
+    {
+        target = tile;
+        gradualRotation = gradual;
+
+        if (!gradualRotation)
+            RotateToTarget();
     }
 
     // If a collision is detected, destroy the other entity and apply damage to self

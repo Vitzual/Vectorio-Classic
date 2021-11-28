@@ -21,10 +21,7 @@ public class DefaultGuardian : DefaultEnemy
         float step = guardian.moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
 
-        Vector3 targetDir = target.position - transform.position;
-        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90f;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * guardian.rotationSpeed);
+        GradualRotation();
     }
 
     // Destroy entity

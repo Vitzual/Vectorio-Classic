@@ -61,10 +61,7 @@ public class EnemyHandler : MonoBehaviour
                         BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
 
                         if (building != null)
-                        {
-                            enemies[a].target = building;
-                            RotateTowards(enemies[a].rotator, building.transform);
-                        }
+                            enemies[a].SetTarget(building, false);
                         else scan = false;
                     }
                 }
@@ -119,14 +116,6 @@ public class EnemyHandler : MonoBehaviour
                 a--;
             }
         }
-    }
-
-    // Rotates towards a target
-    public void RotateTowards(Transform pos, Transform target)
-    {
-        Vector3 dir = pos.position - target.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        pos.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
     }
 
     // Create a new active enemy instance

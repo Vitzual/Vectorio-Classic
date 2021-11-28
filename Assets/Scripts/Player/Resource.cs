@@ -307,9 +307,6 @@ public class Resource : MonoBehaviour
             }
             else if (isFree)
             {
-                // Applying for free
-                Debug.Log(buildable.building.name + " is free!");
-
                 // Validity check
                 bool valid = false;
 

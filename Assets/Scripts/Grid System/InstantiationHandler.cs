@@ -30,6 +30,7 @@ public class InstantiationHandler : MonoBehaviour
     {
         // Get reference to active instance
         active = this;
+        amountPlaced = 0;
 
         // Sets static variables on start
         tileGrid = new Grid();

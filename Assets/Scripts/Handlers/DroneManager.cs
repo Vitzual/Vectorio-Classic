@@ -25,7 +25,7 @@ public class DroneManager : MonoBehaviour
         cooling = 7
     }
     public BuildPriority buildPriority;
-    public bool ignorePriority = false;
+    public bool ignorePriority = true;
 
     // Priority buildings
     public Building droneport;
@@ -155,18 +155,25 @@ public class DroneManager : MonoBehaviour
                     if (ghostTiles[a] != null)
                     {
                         // Check if priority should be ignored
-                        if (ignorePriority)
+                        if (Resource.active.CheckFreebie(ghostTiles[a].buildable) && activeDrones.Count == 0)
                         {
-                            // Assign closest drone found
-                            if (CheckResources(ghostTiles[a]))
-                            {
-                                drone = FindClosestDrone(ghostTiles[a].transform.position);
-                                if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                return;
-                            }
+                            drone = FindClosestDrone(ghostTiles[a].transform.position);
+                            if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                            return;
                         }
                         else
                         {
+                            // Check priority
+                            if (ignorePriority)
+                            {
+                                if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))
+                                {
+                                    drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                    if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                    return;
+                                }
+                            }
+
                             // Switch build priority
                             switch (buildPriority)
                             {
@@ -320,7 +327,7 @@ public class DroneManager : MonoBehaviour
                 if (ghostTile != null)
                 {
                     // Assign closest drone found
-                    if (CheckResources(ghostTile))
+                    if (Resource.active.CheckResources(ghostTile.buildable.resources))
                     {
                         drone = FindClosestDrone(ghostTile.transform.position);
                         if (drone != null) SetBuilderTarget(drone, ghostTile);
@@ -356,19 +363,6 @@ public class DroneManager : MonoBehaviour
             }
         }
     }
-
-    // Resource check
-    public bool CheckResources(GhostTile ghost)
-    {
-        if (Resource.active.CheckResources(ghost.buildable.resources)) return true;
-        else if (Resource.active.CheckFreebie(ghost.buildable))
-        {
-            if (activeDrones.Count > 0) return false;
-            return true;
-        }
-        else return false;
-    }
-
 
     // Find closest drone port
     public Drone FindClosestDrone(Vector2 position)

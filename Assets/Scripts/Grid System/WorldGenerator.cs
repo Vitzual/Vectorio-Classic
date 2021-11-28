@@ -43,8 +43,13 @@ public class WorldGenerator : MonoBehaviour
         spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
 
         // Set new random variables
-        Random.seed = Random.Range(0, 999999999);
-        Gamemode.seed = Random.seed.ToString();
+        int previousSeed = Random.seed;
+        int randomNumber = Random.Range(0, 999999999);
+        Random.seed = randomNumber.ToString().GetHashCode();
+        Gamemode.seed = randomNumber.ToString();
+
+        // Debug
+        Debug.Log("Reseeded from " + previousSeed + " to " + Gamemode.seed);
 
         // Create offset for spawnables
         int startingRange = 0;

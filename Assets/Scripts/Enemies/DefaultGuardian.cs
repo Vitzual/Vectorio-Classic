@@ -48,32 +48,39 @@ public class DefaultGuardian : DefaultEnemy
         Destroy(gameObject);
     }
 
+    // Damages the entity (IDamageable interface method)
+    public override void DamageEntity(float dmg)
+    {
+        health -= dmg;
+        if (health <= 0) DestroyEntity();
+    }
+
     // If a collision is detected, destroy the other entity and apply damage to self
     public override void OnTriggerEnter2D(Collider2D other)
     {
         if (other is BoxCollider2D)
         {
-            BaseTile building = other.GetComponent<BaseTile>();
-
+            BaseEntity building = other.GetComponent<BaseEntity>();
             if (building != null)
                 building.DestroyEntity();
         }
         else
         {
-            DefaultTurret turret = other.GetComponent<DefaultTurret>();
+            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            if (bullet != null) bullet.OnCollision(this);
 
-            if (turret != null)
-                turret.AddTarget(this);
+            BaseEntity building = other.GetComponent<BaseEntity>();
+            if (building != null)
+                building.OnCircleCollision(this);
         }
     }
 
     // If entity leaves defense range, remove self from target list
     public override void OnTriggerExit2D(Collider2D other)
     {
-        DefaultTurret turret = other.GetComponent<DefaultTurret>();
-
-        if (turret != null)
-            turret.RemoveTarget(this);
+        BaseEntity building = other.GetComponent<BaseEntity>();
+        if (building != null && other is CircleCollider2D)
+            building.OnCircleLeave(this);
     }
 
     // Get material

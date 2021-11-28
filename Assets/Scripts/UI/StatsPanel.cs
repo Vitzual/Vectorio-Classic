@@ -144,9 +144,9 @@ public class StatsPanel : MonoBehaviour
     public static void OpenMenu()
     {
         isOpen = true;
-        canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
     }
 
     // Close menu

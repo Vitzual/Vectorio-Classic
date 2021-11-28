@@ -83,6 +83,7 @@ public class Settings : MonoBehaviour
     // Update sounds
     public static void UpdateSounds()
     {
-        Events.active.RefreshSound();
+        if (Events.active != null)
+            Events.active.RefreshSound();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioReceiver : MonoBehaviour
+public class AudioPlayer : MonoBehaviour
 {
     // Sound
     private AudioSource audioSource;
@@ -11,13 +11,12 @@ public class AudioReceiver : MonoBehaviour
     public void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        Events.active.onRefreshSound += UpdateSound;
-        UpdateSound();
     }
 
     // Update is called once per frame
-    void UpdateSound()
+    public void PlayAudio()
     {
-        audioSource.volume = Settings.music;
+        audioSource.volume = Settings.sound;
+        audioSource.Play();
     }
 }

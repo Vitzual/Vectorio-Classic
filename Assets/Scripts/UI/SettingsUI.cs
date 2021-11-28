@@ -26,15 +26,10 @@ public class SettingsUI : MonoBehaviour
     public void Awake()
     {
         active = this;
-    }
-
-    // On start
-    public void Start()
-    {
         canvasGroup = GetComponent<CanvasGroup>();
         Settings.LoadSettings();
     }
-
+    
     // Set auto spinning
     public void AutoSaving(bool enabled)
     {

@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
-public class SettingsData : MonoBehaviour
+public class SettingsData
 {
     // Boolean options
     public bool autoSave;

@@ -103,6 +103,11 @@ public class DefaultTurret : BaseTile, IAudible
         AddTarget(enemy);
     }
 
+    public override void OnCircleLeave(DefaultEnemy enemy)
+    {
+        RemoveTarget(enemy);
+    }
+
     public virtual void AddTarget(BaseEntity enemy)
     {
         if (!targets.Contains(enemy))

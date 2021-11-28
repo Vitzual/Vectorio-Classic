@@ -12,7 +12,8 @@ public class DefaultEnemy : BaseEntity
     [HideInInspector] public Variant variant;
     [HideInInspector] public BaseTile target;
     public Transform rotator;
-    bool gradualRotation = false;
+    public bool gradualRotation = false;
+    public bool purified = false;
 
     // Sprite info
     public SpriteRenderer[] border;
@@ -65,6 +66,39 @@ public class DefaultEnemy : BaseEntity
 
         // Update unlockables
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyEnemyAmount, enemy, 1);
+
+        // Check if purified
+        if (purified)
+        {
+            // Choose random currency
+            int random = Random.Range(0, 3);
+
+            // Determine which resource to add
+            switch(random)
+            {
+                case 0:
+                    if (Resource.active.GetStorage(Resource.CurrencyType.Gold) > 0)
+                    {
+                        Resource.active.Add(Resource.CurrencyType.Gold, 100, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Gold, "+" + 100);
+                    }
+                    break;
+                case 1:
+                    if (Resource.active.GetStorage(Resource.CurrencyType.Essence) > 0)
+                    {
+                        Resource.active.Add(Resource.CurrencyType.Essence, 25, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Essence, "+" + 100);
+                    }
+                    break;
+                case 2:
+                    if (Resource.active.GetStorage(Resource.CurrencyType.Iridium) > 0)
+                    {
+                        Resource.active.Add(Resource.CurrencyType.Iridium, 5, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Iridium, "+" + 100);
+                    }
+                    break;
+            }
+        }
 
         // Destroy game object
         Destroy(gameObject);
@@ -131,10 +165,9 @@ public class DefaultEnemy : BaseEntity
     // If entity leaves defense range, remove self from target list
     public virtual void OnTriggerExit2D(Collider2D other)
     {
-        DefaultTurret turret = other.GetComponent<DefaultTurret>();
-
-        if (turret != null)
-            turret.RemoveTarget(this);
+        BaseEntity building = other.GetComponent<BaseEntity>();
+        if (building != null && other is CircleCollider2D)
+            building.OnCircleLeave(this);
     }
 
     // Get material

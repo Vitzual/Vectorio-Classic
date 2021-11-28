@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6ab08a5e6a77c42b6910c46d3f4760, type: 3}
-  m_Name: Iridium Collector
+  m_Name: Purifier
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,55 +21,55 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  internalId: 3505e7a8-581b-4db4-bcc9-ecce264cc25b
-  createdAtTicks: 637722267059063150
-  obj: {fileID: 892923713960991008, guid: 938c8be2868513445af6028f86adb7bf, type: 3}
-  name: Iridium Collector
-  description: Collects iridium from iridium nodes. Can only be placed on iridium
-    nodes.
+  internalId: 93932ae2-9e3e-42d1-8b11-17d37aaebc57
+  createdAtTicks: 637736447767050749
+  obj: {fileID: 8186868752073983356, guid: d40731addeb79244eb9ef04e50dc03e1, type: 3}
+  name: Purifier
+  description: 'Causes enemies within it''s range to drop random resources when destroyed. '
   health: 25
-  material: {fileID: 2100000, guid: 2a32fb1dc58856b4792eee589c0052d7, type: 2}
+  material: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   inventoryHeader: 1
-  inventoryIndex: 11
+  inventoryIndex: 10
   unlockable:
-    type: 3
-    description: Defeat the Kraken (second guardian)
-    requirement: {fileID: 11400000, guid: ef20e742d3824b041b92050a0fbe2b11, type: 2}
+    type: 1
+    description: Place 5x Radiator's
+    requirement: {fileID: 11400000, guid: de4936ba73c5c0b49884d37776cb8622, type: 2}
     unlocked: 0
     resource: 0
-    entity: {fileID: 11400000, guid: e105d5aab5ae9e746a596432cddc1af5, type: 2}
-    amount: 1
+    entity: {fileID: 11400000, guid: de4936ba73c5c0b49884d37776cb8622, type: 2}
+    amount: 5
   gridSnap: 1
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
   useSquareRange: 0
   squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
+  useCircleRange: 1
+  circleRange: 20
   cells:
   - x: 0
     y: 0
   resources:
   - resource: 0
-    amount: 150000
+    amount: 80000
     add: 0
     storage: 0
   - resource: 1
-    amount: 25000
+    amount: 5000
     add: 0
     storage: 0
   - resource: 3
-    amount: 800
+    amount: 180
     add: 1
     storage: 0
   - resource: 4
-    amount: 150
+    amount: 90
     add: 1
     storage: 0
   radialCheck: 0
-  restrictPlacement: 1
+  restrictPlacement: 0
   isSellable: 1
   isSaveable: 1
-  placedOn: 2
+  placedOn: 0
   engineeringSlots: 0
-  deathParticle: {fileID: 0}
+  deathParticle: {fileID: 7050970385817730975, guid: 0b71f93078ff0aa429e02f510353ac8c,
+    type: 3}

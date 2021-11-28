@@ -85,9 +85,15 @@ public class DefaultEnemy : BaseEntity
         }
         else
         {
+            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            if (bullet != null) bullet.OnCollision(this);
+
             BaseEntity building = other.GetComponent<BaseEntity>();
-            if (other is BoxCollider2D) building.OnBoxCollision(this);
-            else building.OnCircleCollision(this);
+            if (building != null)
+            {
+                if (other is BoxCollider2D) building.OnBoxCollision(this);
+                else building.OnCircleCollision(this);
+            }
         }
     }
 

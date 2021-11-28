@@ -144,7 +144,7 @@ public static class Buildables
         {
             unlockable = unlockables[unlockType][i].unlockable;
 
-            if (unlockable.entity == entity)
+            if (RequestBuildable(unlockable.requirement).isUnlocked && unlockable.entity == entity)
             {
                 unlockables[unlockType][i].tracked += amount;
                 if (unlockables[unlockType][i].tracked >= unlockable.amount)

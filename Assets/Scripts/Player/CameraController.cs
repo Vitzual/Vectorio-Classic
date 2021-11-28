@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
 
         // Calculate scorll data
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 5f, 350f);
+        targetZoom = Mathf.Clamp(targetZoom, 15f, 350f);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
         // Determine if grid should be active

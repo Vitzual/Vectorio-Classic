@@ -12,7 +12,8 @@ public class SettingsData : MonoBehaviour
     public bool disableResourcePopups;
 
     // Other options
-    public Tuple<int, int> resolution;
+    public int resolutionX;
+    public int resolutionY;
     public bool screenmode;
     public float music;
     public float sound;

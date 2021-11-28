@@ -55,9 +55,6 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public void Start()
     {
-        // Set target frame rate
-        Application.targetFrameRate = 999;
-
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
 

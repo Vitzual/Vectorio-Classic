@@ -9,12 +9,13 @@ public class Settings : MonoBehaviour
     // Toggleable options
     public static bool paused = false;
     public static bool autoSave = true;
-    public static bool disableRotatingObjects = false;
-    public static bool disableResourcePopups = false;
+    public static bool rotatingObjects = true;
+    public static bool resourcePopups = true;
 
     // Other options
-    public static Tuple<int, int> resolution;
-    public static bool screenmode;
+    public static int resolutionX = 1920;
+    public static int resolutionY = 1080;
+    public static bool screenmode = true;
     public static float music = 0.5f;
     public static float sound = 0.5f;
     public static int framerate = 999;
@@ -27,9 +28,10 @@ public class Settings : MonoBehaviour
 
         // Set settings data
         settingsData.autoSave = autoSave;
-        settingsData.disableRotatingObjects = disableRotatingObjects;
-        settingsData.disableResourcePopups = disableResourcePopups;
-        settingsData.resolution = resolution;
+        settingsData.disableRotatingObjects = rotatingObjects;
+        settingsData.disableResourcePopups = resourcePopups;
+        settingsData.resolutionX = resolutionX;
+        settingsData.resolutionY = resolutionY;
         settingsData.screenmode = screenmode;
         settingsData.framerate = framerate;
         settingsData.music = music;
@@ -55,11 +57,12 @@ public class Settings : MonoBehaviour
 
             // Apply settings
             autoSave = settingsData.autoSave;
-            disableRotatingObjects = settingsData.disableRotatingObjects;
-            disableResourcePopups = settingsData.disableResourcePopups;
+            rotatingObjects = settingsData.disableRotatingObjects;
+            resourcePopups = settingsData.disableResourcePopups;
 
             // Other options
-            resolution = settingsData.resolution;
+            resolutionX = settingsData.resolutionX;
+            resolutionY = settingsData.resolutionY;
             screenmode = settingsData.screenmode;
             framerate = settingsData.framerate;
             music = settingsData.music;
@@ -67,13 +70,19 @@ public class Settings : MonoBehaviour
 
             // Apply settings
             ApplySettings();
+            UpdateSounds();
         }
     }    
 
     // Apply settings
     public static void ApplySettings()
     {
-        Screen.SetResolution(resolution.Item1, resolution.Item2, screenmode, framerate);
+        Screen.SetResolution(resolutionX, resolutionY, screenmode, framerate);
+    }
+
+    // Update sounds
+    public static void UpdateSounds()
+    {
         Events.active.RefreshSound();
     }
 }

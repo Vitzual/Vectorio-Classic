@@ -11,6 +11,7 @@ public class DefaultGuardian : DefaultEnemy
     {
         health = guardian.health;
         maxHealth = guardian.health;
+        enemy = guardian;
 
         Events.active.GuardianSpawned(this);
     }

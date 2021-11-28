@@ -16,7 +16,7 @@ public class PopupHandler : MonoBehaviour
 
     public void CreatePopup(Vector2 position, Resource.CurrencyType type, string amount)
     {
-        if (Settings.disableResourcePopups) return;
+        if (Settings.resourcePopups) return;
 
         Popup newPopup = Instantiate(popup, position, Quaternion.identity);
         newPopup.SetPopup(amount, type);

@@ -60,6 +60,11 @@ public class NewInterface : MonoBehaviour
     // Check all UI panels
     public bool CheckPanels()
     {
+        if (SettingsUI.isOpen)
+        {
+            SettingsUI.active.Back();
+            return false;
+        }
         if (Inventory.isOpen)
         {
             Inventory.CloseMenu();

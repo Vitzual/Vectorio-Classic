@@ -91,8 +91,8 @@ public class MenuButton : MonoBehaviour
     {
         if (buildable.isUnlocked)
         {
-            if (entity != null) UIEvents.active.EntityPressed(entity);
-            else if (buildable != null) UIEvents.active.BuildablePressed(buildable);
+            if (entity != null) UIEvents.active.EntityPressed(entity, -1);
+            else if (buildable != null) UIEvents.active.BuildablePressed(buildable, -1);
         }
     }
 }

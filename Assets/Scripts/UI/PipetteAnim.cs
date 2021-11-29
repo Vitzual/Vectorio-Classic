@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PipetteAnim : MonoBehaviour
 {
+    private AudioPlayer audioPlayer;
     public SpriteRenderer transparency;
     private float increaseAmount = 0.05f;
     public bool isAnimating = false;
@@ -11,17 +12,20 @@ public class PipetteAnim : MonoBehaviour
     // Start anim
     public void Start()
     {
+        audioPlayer = GetComponent<AudioPlayer>();
         Events.active.onPipette += PlayPipette;
     }
 
     // Play pipette 
     public void PlayPipette(BaseTile tile)
     {
-        transform.localScale = new Vector2(tile.buildable.building.hologramSize, tile.buildable.building.hologramSize);
+        float size = tile.buildable.building.hologramSize * 2.5f;
+        transform.localScale = new Vector2(size, size);
         transform.position = tile.transform.position;
         transparency.color = new Color(1f, 1f, 1f, 1f);
         increaseAmount = 0.05f;
         isAnimating = true;
+        audioPlayer.PlayAudio();
     }
 
     // Update is called once per frame

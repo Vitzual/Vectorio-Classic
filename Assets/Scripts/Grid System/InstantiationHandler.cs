@@ -19,7 +19,6 @@ public class InstantiationHandler : MonoBehaviour
     public AudioClip placementSound;
     public LayerMask enemyLayer;
     public LayerMask aocbLayer;
-    public int metadata = -1;
 
     // Debug variables
     public bool debug = false;
@@ -48,7 +47,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost = false)
+    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
     {
         // Determine if the building is free
         bool isFree = Resource.active.CheckFreebie(buildable);
@@ -61,14 +60,14 @@ public class InstantiationHandler : MonoBehaviour
         }
 
         // Check if resource should be used
-        if (!isFree && !isGhost && !Resource.active.CheckResources(buildable.resources)) return;
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.resources)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return;
 
         // Instantiate the object like usual
-        if (Gamemode.active.useDroneConstruction && isGhost) RpcInstatiateGhost(buildable, position, rotation);
-        else RpcInstantiateBuilding(buildable, position, rotation, isFree);
+        if (Gamemode.active.useDroneConstruction) RpcInstatiateGhost(buildable, position, rotation, metadata);
+        else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata);
     }
 
     //[ClientRpc]
@@ -82,7 +81,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, float health = -1)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata = -1, float health = -1)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -97,7 +96,11 @@ public class InstantiationHandler : MonoBehaviour
         Resource.active.ApplyResources(buildable, free);
 
         // Call buildings setup method and metadata method if metadata is applied
-        if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
+        if (metadata != -1) 
+        {
+            Debug.Log("Applying metadata " + metadata + " to " + lastBuilding.name);
+            lastBuilding.ApplyMetadata(metadata); 
+        }
         lastBuilding.Setup();
 
         // Check health
@@ -113,7 +116,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // temp cause im tired af
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -138,7 +141,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     //[ClientRpc]
-    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation)
+    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();

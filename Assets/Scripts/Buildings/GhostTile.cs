@@ -17,9 +17,10 @@ public class GhostTile : BaseTile
     }
 
     // Sets the ghost tile building
-    public void SetBuilding(Buildable buildable)
+    public void SetBuilding(Buildable buildable, int metadata = -1)
     {
         this.buildable = buildable;
+        this.metadata = metadata;
         icon.sprite = Sprites.GetSprite(buildable.building.name);
         transform.localScale = new Vector2(buildable.building.hologramSize, buildable.building.hologramSize);
 
@@ -45,7 +46,7 @@ public class GhostTile : BaseTile
 
             // Create building and destroy this game object
             if (InstantiationHandler.active != null)
-                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation);
+                InstantiationHandler.active.RpcInstantiateBuilding(buildable, transform.position, transform.rotation, metadata);
         }
 
         Events.active.GhostDestroyed(this);

@@ -43,7 +43,7 @@ public class Hotbar : MonoBehaviour
         else if (slots[index].entity != null)
         {
             if (index < slots.Length && index >= 0)
-                UIEvents.active.EntityPressed(slots[index].entity);
+                UIEvents.active.EntityPressed(slots[index].entity, -1);
             else Debug.LogError("Slot number was outside the bounds of the hotbar!");
         }
     }

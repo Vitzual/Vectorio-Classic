@@ -30,27 +30,27 @@ public class UIEvents : MonoBehaviour
     }
 
     // Invoked when a building is clicked
-    public event Action<Entity> onEntityPressed;
-    public void EntityPressed(Entity entity)
+    public event Action<Entity, int> onEntityPressed;
+    public void EntityPressed(Entity entity, int metadata)
     {
         if (onEntityPressed != null)
-            onEntityPressed(entity);
+            onEntityPressed(entity, metadata);
     }
 
     // Invoked when a building is clicked
-    public event Action<Building> onBuildingPressed;
-    public void BuildablePressed(Building building)
+    public event Action<Building, int> onBuildingPressed;
+    public void BuildablePressed(Building building, int metadata)
     {
         if (onBuildingPressed != null)
-            onBuildingPressed(building);
+            onBuildingPressed(building, metadata);
     }
 
     // Invoked when a building is clicked
-    public event Action<Buildable> onBuildablePressed;
-    public void BuildablePressed(Buildable buildable)
+    public event Action<Buildable, int> onBuildablePressed;
+    public void BuildablePressed(Buildable buildable, int metadata)
     {
         if (onBuildablePressed != null)
-            onBuildablePressed(buildable);
+            onBuildablePressed(buildable, metadata);
     }
 
     public event Action<int> onHotbarPressed;

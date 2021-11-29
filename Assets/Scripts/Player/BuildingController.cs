@@ -17,6 +17,7 @@ public class BuildingController : MonoBehaviour
     private Entity entity;
     public Variant variant;
     private Buildable buildable;
+    public int metadata = -1;
 
     // Sprite values
     private SpriteRenderer spriteRenderer;
@@ -76,7 +77,8 @@ public class BuildingController : MonoBehaviour
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
         if (holder != null && holder.isSellable)
         {
-            SetBuilding(holder.buildable);
+            Debug.Log("Pipetted " + holder.name + " with metadata " + holder.metadata);
+            SetBuilding(holder.buildable, holder.metadata);
             Events.active.Pipette(holder);
         }
     }
@@ -95,7 +97,7 @@ public class BuildingController : MonoBehaviour
     {
         if (InstantiationHandler.active != null)
         {
-            if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation, Gamemode.active.useDroneConstruction);
+            if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation, metadata);
             else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, variant, hologram.position, hologram.rotation);
         }
         else Debug.LogError("Scene does not have active building handler!");
@@ -111,8 +113,9 @@ public class BuildingController : MonoBehaviour
     }
 
     // Sets the selected entity (null to deselect)
-    public void SetEntity(Entity entity)
+    public void SetEntity(Entity entity, int metadata = -1)
     {
+        this.metadata = metadata;
         entitySelected = entity != null;
 
         if (entitySelected)
@@ -134,8 +137,9 @@ public class BuildingController : MonoBehaviour
     }
 
     // Sets the selected building (null to deselect)
-    public void SetBuilding(Buildable buildable)
+    public void SetBuilding(Buildable buildable, int metadata = -1)
     {
+        this.metadata = metadata;
         entitySelected = buildable != null;
 
         if (entitySelected)

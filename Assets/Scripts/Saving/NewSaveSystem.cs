@@ -148,24 +148,18 @@ public class NewSaveSystem : MonoBehaviour
                 // Get buildable
                 Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[buildingData.id]);
 
-                // Set metadata and create building / ghost tile
-                InstantiationHandler.active.metadata = buildingData.metadata[0];
-
                 // Create ghost building if data exists
                 #pragma warning disable CS0472 
                 if (buildingData.ghostBuilding != null && buildingData.ghostBuilding) InstantiationHandler.active.RpcInstatiateGhost(buildable, 
-                    new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity);
+                    new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity, buildingData.metadata[0]);
                 #pragma warning restore CS0472
 
                 // If data doesn't exist or is not a ghost building, create it
                 else
                 {
                     InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord), 
-                        Quaternion.identity, true, buildingData.health);
+                        Quaternion.identity, true, buildingData.metadata[0], buildingData.health);
                 }
-
-                // Reset metadat
-                InstantiationHandler.active.metadata = -1;
             }
             else Debug.Log("Building with ID " + buildingData.id + " could not be found!");
         }

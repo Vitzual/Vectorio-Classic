@@ -24,10 +24,10 @@ public class DamageHandler : MonoBehaviour
         if (damagedEntities.ContainsKey(enemy))
             damagedEntities[enemy].UpdateDamage();
         else 
-        { 
-            DamageBar newBar = Instantiate(damageBar, enemy.transform.position, Quaternion.identity).GetComponent<DamageBar>();
+        {
+            Vector2 pos = new Vector2(enemy.transform.position.x, enemy.transform.position.y - 3.5f);
+            DamageBar newBar = Instantiate(damageBar, pos, Quaternion.identity).GetComponent<DamageBar>();
             newBar.rect.SetParent(enemy.transform);
-            newBar.rect.localPosition = new Vector2(0, -3.5f);
             newBar.entity = enemy;
             newBar.UpdateDamage();
             newBar.SetBarColor(enemy.variant);

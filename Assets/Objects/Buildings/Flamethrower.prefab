@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -60,6 +59,8 @@ MonoBehaviour:
   cannon: {fileID: 4228772720140216805}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &-8945762538657005672
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2301014327902695536}
   - component: {fileID: 3379584720279592027}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FlamethrowerSidesBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8699052008551455414}
   - component: {fileID: 6795178300889635639}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FlamethrowerSides
   m_TagString: Untagged
   m_Icon: {fileID: 0}

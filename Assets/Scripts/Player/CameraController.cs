@@ -68,7 +68,7 @@ public class CameraController : MonoBehaviour
         // Determine if grid should be active
         if (targetZoom >= 100f && gridActive == true)
         {
-            if (Settings.experimentalRendering)
+            if (Settings.experimentalLOD)
             {
                 Debug.Log("Disabling layers");
                 cam.cullingMask = ~(1 | lowResLayers);
@@ -79,11 +79,8 @@ public class CameraController : MonoBehaviour
         }
         else if (targetZoom < 100f && gridActive == false)
         {
-            if (Settings.experimentalRendering)
-            {
-                Debug.Log("Enabling layers");
-                cam.cullingMask = 1 | lowResLayers | highResLayers;
-            }
+            Debug.Log("Enabling layers");
+            cam.cullingMask = 1 | lowResLayers | highResLayers;
 
             grid.SetActive(true);
             gridActive = true;

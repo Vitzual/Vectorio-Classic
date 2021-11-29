@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -143,6 +142,8 @@ MonoBehaviour:
   cannon: {fileID: 2055557111240337833}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &6867253957611795612
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -195,12 +196,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5387845900712800066}
   - component: {fileID: 8677455741959594188}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ShotgunSide (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5387845900712800066
 Transform:
@@ -277,12 +278,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8910681275667324714}
   - component: {fileID: 7436505900659134749}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ShotgunSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8910681275667324714
 Transform:

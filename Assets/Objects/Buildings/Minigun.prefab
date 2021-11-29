@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -60,6 +59,8 @@ MonoBehaviour:
   cannon: {fileID: 2715795551086235574}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &-6708128088304651737
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4649580042156447931}
   - component: {fileID: 7961034724342493315}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Minigun Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5899246551326963330}
   - component: {fileID: 5750048667334412865}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Minigun Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}

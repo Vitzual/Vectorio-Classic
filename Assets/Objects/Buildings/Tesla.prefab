@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -60,6 +59,8 @@ MonoBehaviour:
   cannon: {fileID: 4558331692551859083}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &-4701179397496839742
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112,12 +113,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3893102523221125421}
   - component: {fileID: 7269461295929594852}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: TeslaBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3893102523221125421
 Transform:
@@ -194,12 +195,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5232484634720819911}
   - component: {fileID: 569326726552499530}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: TeslaInner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5232484634720819911
 Transform:
@@ -276,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4558331692551859083}
   - component: {fileID: 8579540604625912380}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: TeslaCoil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3069989843565101140}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

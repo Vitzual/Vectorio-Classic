@@ -26,7 +26,7 @@ public class ResearchUI : MonoBehaviour
 
     // Buttons
     public ResearchButton researchButton;
-    public List<ResearchButton> researchButtons = new List<ResearchButton>();
+    public Dictionary<ResearchTech, ResearchButton> researchButtons;
 
     // UI lists
     public List<Transform> listTypes;
@@ -45,6 +45,7 @@ public class ResearchUI : MonoBehaviour
     {
         active = this;
         canvasGroup = GetComponent<CanvasGroup>();
+        researchButtons = new Dictionary<ResearchTech, ResearchButton>();
     }
 
     public void Setup(List<string> unlocked = null)
@@ -58,7 +59,7 @@ public class ResearchUI : MonoBehaviour
             button.transform.SetParent(listTypes[(int)tech.Value.indexList]);
             button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             button.Setup(tech.Value);
-            researchButtons.Add(button);
+            researchButtons.Add(tech.Value, button);
             Research.techs.Add(tech.Value, new Research.Tech());
 
             if (unlocked != null && unlocked.Contains(button.researchTech.InternalID))
@@ -66,8 +67,8 @@ public class ResearchUI : MonoBehaviour
         }
 
         // Set sibling index
-        foreach(ResearchButton newButton in researchButtons)
-            newButton.transform.SetSiblingIndex(newButton.researchTech.indexNumber);
+        foreach(KeyValuePair<ResearchTech, ResearchButton> newButton in researchButtons)
+            newButton.Value.transform.SetSiblingIndex(newButton.Key.indexNumber);
 
         // Parse on lab clicked event
         Events.active.onLabClicked += OnLabClicked;
@@ -96,7 +97,7 @@ public class ResearchUI : MonoBehaviour
         if (preview)
         {
             stats.text += "<b>ACTIVE LABS:</b> " + tech.totalLabs + " researching <color=green>(+1))</color>\n";
-            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "% effect <color=green>(+" + type.amount + ")</color>\n";
+            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "x effect <color=green>(+" + type.amount + ")</color>\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
 
             // Get gold amount
@@ -125,7 +126,7 @@ public class ResearchUI : MonoBehaviour
         else
         {
             stats.text += "<b>ACTIVE LABS:</b> " + tech.totalLabs + " researching\n";
-            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "% effect\n";
+            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "x effect\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
             if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))
                 consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.CurrencyType.Gold] + " / second\n";
@@ -167,6 +168,7 @@ public class ResearchUI : MonoBehaviour
             Debug.Log("Cost check passed, applying research");
 
             selectedLab.ApplyResearch(selectedTech);
+            researchButtons[selectedTech].UpdateButton();
             SetPanel(selectedTech);
         }
     }
@@ -177,9 +179,9 @@ public class ResearchUI : MonoBehaviour
         // Update all research
         int heat = Resource.active.GetAmount(Resource.CurrencyType.Heat);
         Debug.Log("Lab opened with " + heat + " heat");
-        foreach (ResearchButton button in researchButtons)
-            if (!button.isUnlocked && button.researchTech.heatUnlockCost <= heat)
-                button.UnlockResearch();
+        foreach (KeyValuePair<ResearchTech, ResearchButton> button in researchButtons)
+            if (!button.Value.isUnlocked && button.Value.researchTech.heatUnlockCost <= heat)
+                button.Value.UnlockResearch();
 
         // Set research panel true
         selectedLab = lab;

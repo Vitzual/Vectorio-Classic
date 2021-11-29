@@ -38184,6 +38184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1240690016}
   - component: {fileID: 1240690015}
+  - component: {fileID: 1240690017}
   m_Layer: 6
   m_Name: Lowres Grid
   m_TagString: Untagged
@@ -38218,6 +38219,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240690017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240690014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7247f8b2509c402419e90bd399c73a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lowresMap: {fileID: 1848223387}
+  _lowresTile: {fileID: 11400000, guid: 2eff3220d1af0e04aa90bfd4ea91af84, type: 2}
 --- !u!1 &1242600512
 GameObject:
   m_ObjectHideFlags: 0
@@ -57883,7 +57898,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1895549300
@@ -72118,6 +72133,11 @@ PrefabInstance:
       objectReference: {fileID: 1377678690}
     - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
+      propertyPath: maxZoom
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
       propertyPath: lowResLayers.m_Bits
       value: 1048704
       objectReference: {fileID: 0}
@@ -72130,6 +72150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: highResLayers.m_Bits
       value: 11517751
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: ultraLowResLayers.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5913638006090849305, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
@@ -72159,7 +72184,7 @@ PrefabInstance:
     - target: {fileID: 5913638006090849307, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
+      value: 16777143
       objectReference: {fileID: 0}
     - target: {fileID: 5913638006090849308, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}

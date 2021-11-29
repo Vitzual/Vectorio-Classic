@@ -46,10 +46,16 @@ public class ResearchButton : MonoBehaviour
             heatTitle.gameObject.SetActive(false);
             heatIcon.gameObject.SetActive(false);
 
-            level.text = Research.GetAmount(researchTech);
+            level.text = Research.GetAmount(researchTech) + "x";
 
             Events.active.ResearchUnlocked(researchTech);
         }
+    }
+
+    // Update button
+    public void UpdateButton()
+    {
+        level.text = Research.GetAmount(researchTech) + "x";
     }
 
     // Set on click

@@ -23,16 +23,18 @@ MonoBehaviour:
     SerializationNodes: []
   internalId: ff354882-1fde-43ed-9279-3fcc36fde165
   createdAtTicks: 637722267069242414
+  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
   name: Turret
   description: Weak early game turret that targets and fires at nearby enemies.
+  health: 10
+  material: {fileID: 2100000, guid: b9b0562c110345f47b9878735bb519d1, type: 2}
+  lowresColor: {r: 0, g: 0.5638194, b: 1, a: 1}
   inventoryHeader: 0
   inventoryIndex: 1
-  obj: {fileID: 420473218063467210, guid: 965d88ca79ad6ac4f938aea8d6a43058, type: 3}
-  material: {fileID: 2100000, guid: b9b0562c110345f47b9878735bb519d1, type: 2}
-  health: 10
   unlockable:
     type: 0
     description: 
+    requirement: {fileID: 0}
     unlocked: 1
     resource: 0
     entity: {fileID: 0}
@@ -40,6 +42,10 @@ MonoBehaviour:
   gridSnap: 0
   gridOffset: {x: 0, y: 0}
   hologramSize: 1
+  useSquareRange: 0
+  squareRange: 0
+  useCircleRange: 0
+  circleRange: 0
   cells:
   - x: 0
     y: 0
@@ -56,19 +62,28 @@ MonoBehaviour:
     amount: 5
     add: 1
     storage: 0
+  radialCheck: 0
   restrictPlacement: 0
+  isSellable: 1
+  isSaveable: 1
   placedOn: 0
+  engineeringSlots: 0
+  deathParticle: {fileID: 0}
   damage: 1
   range: 50
   rotationSpeed: 150
   cooldown: 0.8
+  randomizeCooldown: 0
+  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}
   bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
   bulletPierces: 1
   bulletAmount: 1
   bulletSpeed: 40
   bulletSpread: 0
   bulletTime: 2
+  randomizeSpeed: 0
   bulletLock: 1
+  useBulletSprite: 0
+  bulletSpriteName: 
   bulletParticle: {fileID: 6380823706550623963, guid: d21087e4387a8a444b78dcf7227d999a,
     type: 3}
-  sound: {fileID: 8300000, guid: aeff979cceb2c4e8598eeb0500112a13, type: 3}

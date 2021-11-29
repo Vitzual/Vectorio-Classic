@@ -9,11 +9,15 @@ public class CameraController : MonoBehaviour
     protected Camera cam;
     public bool isMenu;
 
+    // Resolution layers
+    protected bool ultraLowResEnabled = false;
+    public LayerMask ultraLowResLayers;
     public LayerMask lowResLayers;
     public LayerMask highResLayers;
 
     // Movement variables
     public float maxRange = 750f;
+    public float maxZoom = 350f;
     protected float moveSpeed = 150f;
     protected Rigidbody2D cameraRB;
     protected Vector2 movement;
@@ -62,28 +66,43 @@ public class CameraController : MonoBehaviour
 
         // Calculate scorll data
         targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 15f, 350f);
+        targetZoom = Mathf.Clamp(targetZoom, 15f, maxZoom);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
         // Determine if grid should be active
         if (targetZoom >= 100f && gridActive == true)
         {
-            if (Settings.experimentalLOD)
-            {
-                Debug.Log("Disabling layers");
-                cam.cullingMask = ~(1 | lowResLayers);
-            }
+            // DISABLE ALL RES LAYERS
+            if (Settings.experimentalRendering)
+                cam.cullingMask = ~(1 | lowResLayers | ultraLowResLayers);
 
             grid.SetActive(false);
             gridActive = false;
         }
         else if (targetZoom < 100f && gridActive == false)
         {
-            Debug.Log("Enabling layers");
+            // ENABLE ALL LAYERS
             cam.cullingMask = 1 | lowResLayers | highResLayers;
 
             grid.SetActive(true);
             gridActive = true;
+        }
+
+        // Check ultra low res
+        if (Settings.experimentalRendering && targetZoom >= maxZoom - 1 && !ultraLowResEnabled)
+        {
+            ultraLowResEnabled = true;
+
+            // DISABLE ALL LAYERS EXCEPT ULTRA LOW RES
+            cam.cullingMask = ~(1 | lowResLayers | highResLayers);
+        }
+        else if (targetZoom < maxZoom - 1 && ultraLowResEnabled)
+        {
+            ultraLowResEnabled = false;
+
+            // ENABLE ALL LAYERS OR DISABLE ALL RES LAYERS
+            if (Settings.experimentalRendering) cam.cullingMask = ~(1 | lowResLayers | ultraLowResLayers);
+            else cam.cullingMask = 1 | lowResLayers | highResLayers;
         }
     }
 

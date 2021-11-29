@@ -11,7 +11,7 @@ public class LowresMap : MonoBehaviour
     public static TileBase lowresTile;
     public Tilemap _lowresMap;
     public TileBase _lowresTile;
-    public bool useLowresMap;
+    public static bool useLowresMap;
 
     // Get active instance
     public void Awake() { active = this; }
@@ -20,7 +20,7 @@ public class LowresMap : MonoBehaviour
     public void Start()
     {
         // Check if lowres being used
-        useLowresMap = lowresMap != null && lowresTile != null;
+        useLowresMap = _lowresMap != null && _lowresTile != null;
 
         // Set lowres
         lowresMap = _lowresMap;
@@ -28,18 +28,24 @@ public class LowresMap : MonoBehaviour
     }
 
     // Check if a resource node exists
-    public static void AddLowres(Vector2 coords, Color color)
+    public static void AddLowres(Vector2Int coords, Color color)
     {
-        Vector3Int adjustedCoords = new Vector3Int((int)(coords.x / 5), (int)(coords.y / 5), 0);
+        if (!useLowresMap) return;
+
+        Vector3Int adjustedCoords = new Vector3Int(coords.x / 5, coords.y / 5, 0);
         Debug.Log("Setting lowres map coords at " + adjustedCoords);
         lowresMap.SetTile(adjustedCoords, lowresTile);
+        lowresMap.SetTileFlags(adjustedCoords, TileFlags.None);
         lowresMap.SetColor(adjustedCoords, color);
     }
 
     // Check if a resource node exists
-    public static void RemoveLowres(Vector2 coords)
+    public static void RemoveLowres(Vector2Int coords)
     {
-        Vector3Int adjustedCoords = new Vector3Int((int)(coords.x / 5), (int)(coords.y / 5), 0);
+        if (!useLowresMap) return;
+
+        Vector3Int adjustedCoords = new Vector3Int(coords.x / 5, coords.y / 5, 0);
+        Debug.Log("Removing lowres map coords at " + adjustedCoords);
         lowresMap.SetTile(adjustedCoords, null);
     }
 }

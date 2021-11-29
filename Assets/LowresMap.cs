@@ -27,25 +27,23 @@ public class LowresMap : MonoBehaviour
         lowresTile = _lowresTile;
     }
 
-    // Check if a resource node exists
+    // Adds a lowres tile to the map
     public static void AddLowres(Vector2Int coords, Color color)
     {
         if (!useLowresMap) return;
 
         Vector3Int adjustedCoords = new Vector3Int(coords.x / 5, coords.y / 5, 0);
-        Debug.Log("Setting lowres map coords at " + adjustedCoords);
         lowresMap.SetTile(adjustedCoords, lowresTile);
         lowresMap.SetTileFlags(adjustedCoords, TileFlags.None);
         lowresMap.SetColor(adjustedCoords, color);
     }
 
-    // Check if a resource node exists
+    // Removes a lowres tile from the map
     public static void RemoveLowres(Vector2Int coords)
     {
         if (!useLowresMap) return;
 
         Vector3Int adjustedCoords = new Vector3Int(coords.x / 5, coords.y / 5, 0);
-        Debug.Log("Removing lowres map coords at " + adjustedCoords);
         lowresMap.SetTile(adjustedCoords, null);
     }
 }

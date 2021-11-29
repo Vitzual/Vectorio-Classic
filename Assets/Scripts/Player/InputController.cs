@@ -20,11 +20,7 @@ public class InputController : MonoBehaviour
 
     public void Update()
     {
-        if (Inventory.isOpen || ResearchUI.isOpen || StatsPanel.isOpen)
-        {
-
-        }
-        else
+        if (Input.anyKey && !Inventory.isOpen && !ResearchUI.isOpen && !StatsPanel.isOpen)
         {
             if (Input.GetKeyDown(Keybinds.construct) && !InterfaceCheck())
                 InputEvents.active.LeftMouseTapped();
@@ -42,6 +38,8 @@ public class InputController : MonoBehaviour
                 InputEvents.active.InventoryPressed();
             if (Input.GetKeyDown(Keybinds.pause))
                 Settings.paused = !Settings.paused;
+            if (Input.GetKeyDown(Keybinds.map))
+                InputEvents.active.MapPressed();
         }
 
         if (Input.GetKeyDown(Keybinds.sprint))

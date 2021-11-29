@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour
     public bool isMenu;
 
     // Resolution layers
-    protected bool ultraLowResEnabled = false;
-    public LayerMask ultraLowResLayers;
+    protected bool mapEnabled = false;
+    public LayerMask lowresMap;
     public LayerMask lowResLayers;
     public LayerMask highResLayers;
 
@@ -51,6 +51,7 @@ public class CameraController : MonoBehaviour
             InputEvents.active.onShifReleased += SetNormalSpeed;
             InputEvents.active.onLeftControlPressed += SetSlowSpeed;
             InputEvents.active.onLeftControlReleased += SetNormalSpeed;
+            InputEvents.active.onMapPressed += EnableLowresMap;
         }
     }
 
@@ -67,42 +68,36 @@ public class CameraController : MonoBehaviour
         // Calculate scorll data
         targetZoom -= scrollData * zoomFactor;
         targetZoom = Mathf.Clamp(targetZoom, 15f, maxZoom);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
-        // Determine if grid should be active
-        if (targetZoom >= 100f && gridActive == true)
+        // Calculate orthographic map size
+        if (mapEnabled) cam.orthographicSize = targetZoom;
+        else cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
+
+        // If target zoom less than 100, activate grid
+        if (targetZoom < 100f && gridActive == false)
         {
-            // DISABLE ALL RES LAYERS
-            if (Settings.experimentalRendering)
-                cam.cullingMask = ~(1 | lowResLayers | ultraLowResLayers);
-
-            grid.SetActive(false);
-            gridActive = false;
-        }
-        else if (targetZoom < 100f && gridActive == false)
-        {
-            // ENABLE ALL LAYERS
-            cam.cullingMask = 1 | lowResLayers | highResLayers;
-
+            EnableAllLayers();
             grid.SetActive(true);
             gridActive = true;
         }
 
-        // Check ultra low res
-        if (Settings.experimentalRendering && targetZoom >= maxZoom - 1 && !ultraLowResEnabled)
+        // If target zoom exceeds 100, deactive grid
+        else if (targetZoom >= 100f && gridActive == true)
         {
-            ultraLowResEnabled = true;
+            if (Settings.experimentalRendering) EnableLowresView();
 
-            // DISABLE ALL LAYERS EXCEPT ULTRA LOW RES
-            cam.cullingMask = ~(1 | lowResLayers | highResLayers);
+            grid.SetActive(false);
+            gridActive = false;
         }
-        else if (targetZoom < maxZoom - 1 && ultraLowResEnabled)
-        {
-            ultraLowResEnabled = false;
 
-            // ENABLE ALL LAYERS OR DISABLE ALL RES LAYERS
-            if (Settings.experimentalRendering) cam.cullingMask = ~(1 | lowResLayers | ultraLowResLayers);
-            else cam.cullingMask = 1 | lowResLayers | highResLayers;
+        // If target zoom lower than 350 and map active, disabel mapview
+        else if (targetZoom < 350f && mapEnabled)
+        {
+            mapEnabled = false;
+            maxZoom = 350f;
+
+            if (Settings.experimentalRendering) EnableLowresView();
+            else EnableAllLayers();
         }
     }
 
@@ -125,6 +120,24 @@ public class CameraController : MonoBehaviour
 
         // Reset movement variable
         allowMovement = true;
+    }
+
+    public void EnableAllLayers()
+    {
+        cam.cullingMask = 1 | lowResLayers | highResLayers;
+    }
+
+    public void EnableLowresView()
+    {
+        cam.cullingMask = ~(1 | lowResLayers | lowresMap);
+    }
+
+    public void EnableLowresMap()
+    {
+        mapEnabled = true;
+        cam.cullingMask = 1 | lowresMap;
+        maxZoom = 1000f;
+        cam.orthographicSize = 400f;
     }
 
     public void SetFastSpeed() { moveSpeed = 600f;}

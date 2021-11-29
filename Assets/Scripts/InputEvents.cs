@@ -13,6 +13,13 @@ public class InputEvents : MonoBehaviour
         active = this;
     }
 
+    public event Action onMapPressed;
+    public void MapPressed()
+    {
+        if (onMapPressed != null)
+            onMapPressed();
+    }
+
     public event Action onPipettePressed;
     public void PipettePressed()
     {

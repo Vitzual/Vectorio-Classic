@@ -16,6 +16,7 @@ public class Keybinds
     public static KeyCode inventory = KeyCode.E;
     public static KeyCode rotate = KeyCode.R;
     public static KeyCode pause = KeyCode.P;
+    public static KeyCode map = KeyCode.M;
 
     public static KeyCode hotbar_1 = KeyCode.Alpha1;
     public static KeyCode hotbar_2 = KeyCode.Alpha2;

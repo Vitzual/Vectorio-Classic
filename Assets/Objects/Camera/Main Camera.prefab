@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5913638006090849308}
-  - component: {fileID: 5913638006090849307}
   - component: {fileID: 5913638006090849296}
+  - component: {fileID: 5913638006090849307}
+  - component: {fileID: 5913638006090849311}
   - component: {fileID: 5913638006090849310}
   - component: {fileID: 5913638006090849306}
   - component: {fileID: 5913638006090849309}
-  - component: {fileID: 5913638006090849311}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -36,6 +36,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5913638006090849296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5913638006090849305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82032dc1083f2414a80240f6ef1e7e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMenu: 0
+  ultraLowResLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  lowResLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  highResLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  maxRange: 750
+  maxZoom: 350
+  zoomFactor: 150
+  zoomSpeed: 40
+  grid: {fileID: 0}
 --- !u!20 &5913638006090849307
 Camera:
   m_ObjectHideFlags: 0
@@ -79,23 +106,27 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &5913638006090849296
-MonoBehaviour:
+--- !u!50 &5913638006090849311
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5913638006090849305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82032dc1083f2414a80240f6ef1e7e0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fps: {fileID: 0}
-  maxRange: 750
-  zoomFactor: 150
-  zoomSpeed: 40
-  grid: {fileID: 0}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &5913638006090849310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +174,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -153,24 +185,3 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!50 &5913638006090849311
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5913638006090849305}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4

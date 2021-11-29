@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
     // Camera Variable
     protected Camera cam;
     public bool isMenu;
-    public TextMeshProUGUI fps;
+
+    public LayerMask lowResLayers;
+    public LayerMask highResLayers;
 
     // Movement variables
     public float maxRange = 750f;
@@ -66,11 +68,23 @@ public class CameraController : MonoBehaviour
         // Determine if grid should be active
         if (targetZoom >= 100f && gridActive == true)
         {
+            if (Settings.experimentalRendering)
+            {
+                Debug.Log("Disabling layers");
+                cam.cullingMask = ~(1 | lowResLayers);
+            }
+
             grid.SetActive(false);
             gridActive = false;
         }
         else if (targetZoom < 100f && gridActive == false)
         {
+            if (Settings.experimentalRendering)
+            {
+                Debug.Log("Enabling layers");
+                cam.cullingMask = 1 | lowResLayers | highResLayers;
+            }
+
             grid.SetActive(true);
             gridActive = true;
         }

@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -142,6 +141,8 @@ MonoBehaviour:
   cannon: {fileID: 868748940344737781}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &1127411178701097423
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -277,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4243985991178496333}
   - component: {fileID: 6864181796344698255}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ChillerOuter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

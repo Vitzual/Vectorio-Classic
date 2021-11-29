@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2009550350632877460}
   - component: {fileID: -6699259841076379462}
   - component: {fileID: 8672284101732978617}
+  - component: {fileID: -3890918945358190701}
   m_Layer: 8
   m_Name: Gold Collector
   m_TagString: Production
@@ -143,7 +144,7 @@ MonoBehaviour:
   cooldown: 0
   enhanced: 0
   collectorStorage: 100
-  animator: {fileID: 0}
+  animator: {fileID: -3890918945358190701}
   light: {fileID: 1989883520858842631}
   normalLight: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   fullLight: {fileID: 2100000, guid: 063589c48f497d5479a8e4173c2a0812, type: 2}
@@ -174,6 +175,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &-3890918945358190701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892923713960991008}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animSize: 1.5
+  animOriginal: 1
 --- !u!1 &5832522663043295338
 GameObject:
   m_ObjectHideFlags: 0

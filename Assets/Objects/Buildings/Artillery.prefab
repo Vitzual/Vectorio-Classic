@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -62,6 +61,8 @@ MonoBehaviour:
   cannon: {fileID: 4730353520863384113}
   target: {fileID: 0}
   cooldown: 0
+  useBulletModel: 0
+  bulletModel: {fileID: 0}
 --- !u!61 &-3565159775669386803
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &4730353520863384113
 Transform:
@@ -197,12 +198,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1432513978733608706}
   - component: {fileID: 9135403565058121526}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Artillery Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1432513978733608706
 Transform:
@@ -279,12 +280,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5959850745023613253}
   - component: {fileID: 7781211891557606937}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Artillery Base Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5959850745023613253
 Transform:
@@ -365,7 +366,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &4396292635411681285
 Transform:
@@ -391,12 +392,12 @@ GameObject:
   m_Component:
   - component: {fileID: 862708937721678698}
   - component: {fileID: 3654907727580682091}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 'Artillery Base '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &862708937721678698
 Transform:
@@ -473,12 +474,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4760446162430286624}
   - component: {fileID: 5021741686225517772}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Artillery Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4760446162430286624
 Transform:
@@ -560,7 +561,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &179331352969026631
 Transform:

@@ -3887,7 +3887,6 @@ MonoBehaviour:
   aocbLayer:
     serializedVersion: 2
     m_Bits: 262144
-  metadata: -1
   debug: 0
   debugCircle: {fileID: 3361577801290102192, guid: c74c18f38efd66a41b50958687ee5664,
     type: 3}
@@ -12926,8 +12925,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378215873
 MonoBehaviour:
@@ -25529,7 +25528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786171021}
   - component: {fileID: 786171020}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Resource Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28126,7 +28125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 256.67065, y: 0}
   m_SizeDelta: {x: 0, y: 91.4468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &898772411
@@ -33761,7 +33760,7 @@ GameObject:
   - component: {fileID: 1096099180}
   - component: {fileID: 1096099182}
   - component: {fileID: 1096099181}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56769,8 +56768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 187.85272, y: 0}
+  m_SizeDelta: {x: 339.70544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873019623
 MonoBehaviour:
@@ -57690,7 +57689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1895549300
@@ -69825,6 +69824,7 @@ MonoBehaviour:
   squareRadius: {fileID: 8913346513168113339}
   circleRadius: {fileID: 3435139606460585851}
   variant: {fileID: 0}
+  metadata: -1
 --- !u!114 &3860533639654978907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71922,6 +71922,21 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 1377678690}
+    - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: lowResLayers.m_Bits
+      value: 9570560
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: buildingLayer.m_Bits
+      value: 9570560
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849296, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: highResLayers.m_Bits
+      value: 12566327
+      objectReference: {fileID: 0}
     - target: {fileID: 5913638006090849305, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
       propertyPath: m_Name
@@ -71941,6 +71956,16 @@ PrefabInstance:
         type: 3}
       propertyPath: orthographic size
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849307, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913638006090849307, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5913638006090849308, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}

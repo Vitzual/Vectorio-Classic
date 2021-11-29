@@ -11,6 +11,7 @@ public class Settings : MonoBehaviour
     public static bool autoSave = true;
     public static bool rotatingObjects = true;
     public static bool resourcePopups = true;
+    public static bool experimentalRendering = true;
 
     // Other options
     public static int resolutionX = 1920;

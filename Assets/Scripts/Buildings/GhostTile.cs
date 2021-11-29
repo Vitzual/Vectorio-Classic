@@ -74,7 +74,7 @@ public class GhostTile : BaseTile
         }
 
         // Refund cost
-        if (droneAssigned) Resource.active.RevertResources(buildable);
+        if (droneAssigned) Resource.active.RevertResources(buildable, true);
         Events.active.GhostDestroyed(this);
 
         // Create particle and destroy

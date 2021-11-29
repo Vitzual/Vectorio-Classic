@@ -96,11 +96,7 @@ public class InstantiationHandler : MonoBehaviour
         Resource.active.ApplyResources(buildable, free);
 
         // Call buildings setup method and metadata method if metadata is applied
-        if (metadata != -1) 
-        {
-            Debug.Log("Applying metadata " + metadata + " to " + lastBuilding.name);
-            lastBuilding.ApplyMetadata(metadata); 
-        }
+        if (metadata != -1) lastBuilding.ApplyMetadata(metadata); 
         lastBuilding.Setup();
 
         // Check health
@@ -148,7 +144,7 @@ public class InstantiationHandler : MonoBehaviour
         holder.name = buildable.building.name;
 
         // Setup the ghost tile
-        holder.SetBuilding(buildable);
+        holder.SetBuilding(buildable, metadata);
         DroneManager.active.AddGhost(holder);
 
         // Set the tiles on the grid class

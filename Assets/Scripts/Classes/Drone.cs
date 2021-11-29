@@ -105,7 +105,7 @@ public class Drone : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, target.transform.position) < 0.1f) TargetReached();
         }
-        else if (home != null) SetTarget(home);
+        else if (home != null) ReturnHome();
         else Destroy();
     }
 

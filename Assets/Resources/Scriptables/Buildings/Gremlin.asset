@@ -33,7 +33,7 @@ MonoBehaviour:
   inventoryIndex: 12
   unlockable:
     type: 0
-    description: Accumulate 10,000 iridium
+    description: Accumulate 1,000 iridium
     requirement: {fileID: 11400000, guid: 6a95c4cf36966d74c894a7b749cc305c, type: 2}
     unlocked: 0
     resource: 2
@@ -44,6 +44,8 @@ MonoBehaviour:
   hologramSize: 1
   useSquareRange: 0
   squareRange: 0
+  useCircleRange: 0
+  circleRange: 0
   cells:
   - x: 0
     y: 0
@@ -57,7 +59,7 @@ MonoBehaviour:
     add: 0
     storage: 0
   - resource: 2
-    amount: 10000
+    amount: 1000
     add: 0
     storage: 0
   - resource: 3
@@ -74,6 +76,7 @@ MonoBehaviour:
   isSaveable: 1
   placedOn: 0
   engineeringSlots: 3
+  deathParticle: {fileID: 0}
   damage: 200
   range: 60
   rotationSpeed: 50

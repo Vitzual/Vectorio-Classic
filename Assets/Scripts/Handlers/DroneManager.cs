@@ -207,7 +207,7 @@ public class DroneManager : MonoBehaviour
                                         valueOne = valueTwo;
                                         ghostTile = ghostTiles[a];
                                     }
-
+                                    
                                     break;
 
                                 // DRONEPORT PRIORITY
@@ -265,7 +265,7 @@ public class DroneManager : MonoBehaviour
                                 case BuildPriority.resource:
 
                                     // See if building is a defense
-                                    if (!ghostTiles[a].buildable.building.obj.GetComponent<ResourceTile>())
+                                    if (ghostTiles[a].buildable.building.obj.GetComponent<ResourceTile>() != null)
                                     {
                                         // Assign closest drone found
                                         if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))

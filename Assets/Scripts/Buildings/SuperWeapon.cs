@@ -41,8 +41,7 @@ public class SuperWeapon : DefaultTurret
 
             Shoot();
 
-            if (turret.randomizeCooldown)
-                cooldown = Random.Range(turret.cooldown, turret.cooldown + turret.cooldown);
+            cooldown = turret.cooldown;
         }
     }
 

@@ -69,7 +69,8 @@ public class EnemySpawner : MonoBehaviour
 
         // Calculate heat percentage
         float percentage;
-        if (Gamemode.stage.heat > 0) percentage = (float)Resource.active.GetHeat() / Gamemode.stage.heat;
+        if (Gamemode.stage.infinite) percentage = 1;
+        else if (Gamemode.stage.heat > 0) percentage = (float)Resource.active.GetHeat() / Gamemode.stage.heat;
         else percentage = 1;
 
         // Loop through all enemies

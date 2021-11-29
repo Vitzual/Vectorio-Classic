@@ -43,7 +43,8 @@ public class DefaultBullet : MonoBehaviour
         trail.material = turret.material;
 
         damage = turret.damage + Research.damageBoost;
-        speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
+        if (turret.randomizeSpeed) speed = Random.Range(turret.bulletSpeed - 5, turret.bulletSpeed + 5);
+        else speed = turret.bulletSpeed;
         pierces = turret.bulletPierces + Research.pierceBoost;
 
         time = turret.bulletTime;

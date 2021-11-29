@@ -17,6 +17,7 @@ public class Stage : IdentifiableScriptableObject
 
     // Heat variables
     public int heat; // Exclusive
+    public bool infinite;
 
     // Next stage
     public Stage previousStage;

@@ -138,7 +138,7 @@ public class BuildingController : MonoBehaviour
             {
                 if (buildable.building.useSquareRange)
                 {
-                    squareRadius.localScale = new Vector3(buildable.building.squareRange, 0, buildable.building.squareRange);
+                    squareRadius.localScale = new Vector2(buildable.building.squareRange, buildable.building.squareRange);
                     circleRadius.gameObject.SetActive(false);
                     squareRadius.gameObject.SetActive(true);
                 }

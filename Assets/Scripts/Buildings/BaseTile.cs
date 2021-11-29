@@ -33,8 +33,9 @@ public class BaseTile : BaseEntity
 
     public override void OnBoxCollision(DefaultEnemy enemy)
     {
+        float dmg = health;
         DamageEntity(enemy.damage);
-        enemy.DestroyEntity();
+        enemy.DamageEntity(dmg);
     }
 
     public override void DestroyEntity()

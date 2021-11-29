@@ -10,8 +10,14 @@ public class AnimateThenStop : MonoBehaviour
     protected float animTracker = 0.001f;
     public float animOriginal = 1f;
 
+    // Check if loading
+    public void Start()
+    {
+        enabled = !Gamemode.loadGame;
+    }
+
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (animEnabled)
             DropInAnim();

@@ -306,7 +306,6 @@ public class DroneManager : MonoBehaviour
                                             {
                                                 drone = FindClosestDrone(ghostTiles[a].transform.position);
                                                 if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
-                                                if ()
                                                 return;
                                             }
                                         }

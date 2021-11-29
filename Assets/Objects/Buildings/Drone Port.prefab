@@ -585,7 +585,6 @@ GameObject:
   - component: {fileID: 3619349403254047493}
   - component: {fileID: 5029818037316173575}
   - component: {fileID: 3437550930469308349}
-  - component: {fileID: 4825834539823410990}
   m_Layer: 8
   m_Name: Drone Port
   m_TagString: Defense
@@ -630,13 +629,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metadata: -1
-  material: {fileID: 0}
   cells: []
   saveBuilding: 1
   isSellable: 1
   droneCreated: 0
   hubDrone: 0
   building: {fileID: 11400000, guid: 866d7607c70fe26429470ba44cf7ebde, type: 2}
+  defaultDrone: 0
   drone: {fileID: 0}
   leftPanel: {fileID: 400359186113548949}
   rightPanel: {fileID: 8437684921361694069}
@@ -669,21 +668,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
---- !u!114 &4825834539823410990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4585283126437034732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animEnabled: 1
-  animSize: 1.5
-  animOriginal: 1
 --- !u!1 &6021480793170455890
 GameObject:
   m_ObjectHideFlags: 0

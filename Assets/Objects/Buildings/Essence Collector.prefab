@@ -92,7 +92,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2009550350632877460}
   - component: {fileID: 1314570351261834676}
-  - component: {fileID: 8214696180225710201}
   - component: {fileID: 8672284101732978617}
   m_Layer: 8
   m_Name: Essence Collector
@@ -144,26 +143,11 @@ MonoBehaviour:
   cooldown: 0
   enhanced: 0
   collectorStorage: 50
-  animator: {fileID: 8214696180225710201}
+  animator: {fileID: 0}
   light: {fileID: 8176808318984192089}
   normalLight: {fileID: 2100000, guid: c6d15eed805554642a5a91cba975c0d2, type: 2}
   fullLight: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
   enhancedLight: {fileID: 2100000, guid: bd26618c98dc9b347bc950c7d183aff6, type: 2}
---- !u!114 &8214696180225710201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892923713960991008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c361f71daa625c4db0806894bb4e2f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animEnabled: 1
-  animSize: 1.5
-  animOriginal: 1
 --- !u!61 &8672284101732978617
 BoxCollider2D:
   m_ObjectHideFlags: 0

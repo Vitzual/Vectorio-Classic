@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
     public static bool resourcePopups = true;
 
     // Experimental values
-    public static bool experimentalRendering = true;
+    public static bool experimentalRendering = false;
 
     // Other options
     public static int resolutionX = 1920;
@@ -33,6 +33,7 @@ public class Settings : MonoBehaviour
         settingsData.autoSave = autoSave;
         settingsData.disableRotatingObjects = rotatingObjects;
         settingsData.disableResourcePopups = resourcePopups;
+        settingsData.experimentalRendering = experimentalRendering;
         settingsData.resolutionX = resolutionX;
         settingsData.resolutionY = resolutionY;
         settingsData.screenmode = screenmode;
@@ -62,6 +63,12 @@ public class Settings : MonoBehaviour
             autoSave = settingsData.autoSave;
             rotatingObjects = settingsData.disableRotatingObjects;
             resourcePopups = settingsData.disableResourcePopups;
+
+            // Apply experimental rendering if it exists
+            #pragma warning disable CS0472
+            if (settingsData.experimentalRendering != null)
+                experimentalRendering = settingsData.experimentalRendering;
+            #pragma warning restore CS0472
 
             // Other options
             resolutionX = settingsData.resolutionX;

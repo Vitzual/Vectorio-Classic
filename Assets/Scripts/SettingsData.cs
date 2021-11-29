@@ -7,6 +7,7 @@ public class SettingsData
     public bool autoSave;
     public bool disableRotatingObjects;
     public bool disableResourcePopups;
+    public bool experimentalRendering;
 
     // Other options
     public int resolutionX;

@@ -51,7 +51,7 @@ public class CameraController : MonoBehaviour
             InputEvents.active.onShifReleased += SetNormalSpeed;
             InputEvents.active.onLeftControlPressed += SetSlowSpeed;
             InputEvents.active.onLeftControlReleased += SetNormalSpeed;
-            InputEvents.active.onMapPressed += EnableLowresMap;
+            //InputEvents.active.onMapPressed += ToggleLowresMap;
         }
     }
 
@@ -70,8 +70,7 @@ public class CameraController : MonoBehaviour
         targetZoom = Mathf.Clamp(targetZoom, 15f, maxZoom);
 
         // Calculate orthographic map size
-        if (mapEnabled) cam.orthographicSize = targetZoom;
-        else cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
 
         // If target zoom less than 100, activate grid
         if (targetZoom < 100f && gridActive == false)
@@ -90,15 +89,11 @@ public class CameraController : MonoBehaviour
             gridActive = false;
         }
 
-        // If target zoom lower than 350 and map active, disabel mapview
-        else if (targetZoom < 350f && mapEnabled)
-        {
-            mapEnabled = false;
-            maxZoom = 350f;
+        // Check if above threshold for map view
+        else if (Settings.experimentalRendering && targetZoom >= 350f && !mapEnabled) ToggleLowresMap();
 
-            if (Settings.experimentalRendering) EnableLowresView();
-            else EnableAllLayers();
-        }
+        // If target zoom lower than 350 and map active, disabel mapview
+        else if (targetZoom < 350f && mapEnabled) ToggleLowresMap();
     }
 
     // Physics update
@@ -129,15 +124,26 @@ public class CameraController : MonoBehaviour
 
     public void EnableLowresView()
     {
-        cam.cullingMask = ~(1 | lowResLayers | lowresMap);
+        cam.cullingMask = 1 | highResLayers;
     }
 
-    public void EnableLowresMap()
+    public void ToggleLowresMap()
     {
-        mapEnabled = true;
-        cam.cullingMask = 1 | lowresMap;
-        maxZoom = 1000f;
-        cam.orthographicSize = 400f;
+        if (!mapEnabled)
+        {
+            mapEnabled = true;
+            cam.cullingMask = 1 | lowresMap;
+            maxZoom = 1000f;
+            cam.orthographicSize = 400f;
+        }
+        else
+        {
+            mapEnabled = false;
+            if (Settings.experimentalRendering) EnableLowresView();
+            else EnableAllLayers();
+            maxZoom = 350f;
+            cam.orthographicSize = 350f;
+        }
     }
 
     public void SetFastSpeed() { moveSpeed = 600f;}

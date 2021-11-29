@@ -101,6 +101,10 @@ public class Droneport : BaseTile
                     drone.AddTarget(InstantiationHandler.active.TryGetBuilding(new Vector2(x, y)));
         }
 
+        // Set health
+        health = buildable.building.health;
+        maxHealth = health;
+
         // Update nearby targets
         UpdateNearbyTargets();
     }

@@ -29,24 +29,30 @@ public class DefaultBullet : MonoBehaviour
     // Setup bullet
     public virtual void Setup(Turret turret, Sprite model = null)
     {
+        // Set turret SO
         this.turret = turret;
         
-        this.model = GetComponent<SpriteRenderer>();
+        // Get trail renderer component
         trail = GetComponent<TrailRenderer>();
+        trail.material = turret.material;
 
+        // If model is not null, set it
         if (model != null)
         {
+            this.model = GetComponent<SpriteRenderer>();
             this.model.sprite = model;
             this.model.material = turret.material;
         }
 
-        trail.material = turret.material;
-
-        damage = turret.damage + Research.damageBoost;
-        if (turret.randomizeSpeed) speed = Random.Range(turret.bulletSpeed - 5, turret.bulletSpeed + 5);
-        else speed = turret.bulletSpeed;
+        // Apply research to variables
+        damage = turret.damage * Research.damageBoost;
         pierces = turret.bulletPierces + Research.pierceBoost;
 
+        // Set speed (and randomize if applicable)
+        if (turret.randomizeSpeed) speed = Random.Range(turret.bulletSpeed - 5, turret.bulletSpeed + 5);
+        else speed = turret.bulletSpeed;
+
+        // Set bullet lifetime
         time = turret.bulletTime;
     }
 
@@ -58,10 +64,7 @@ public class DefaultBullet : MonoBehaviour
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, step);
         }
-        else
-        {
-            transform.position += transform.up * speed * Time.deltaTime;
-        }
+        else transform.position += transform.up * speed * Time.deltaTime;
     }
 
     // Hold info

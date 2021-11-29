@@ -11,6 +11,7 @@ public class Keybinds
     public static KeyCode construct = KeyCode.Mouse0;
     public static KeyCode delete = KeyCode.Mouse1;
     public static KeyCode deselect = KeyCode.Mouse1;
+    public static KeyCode pipette = KeyCode.Mouse2;
     public static KeyCode escape = KeyCode.Escape;
     public static KeyCode inventory = KeyCode.E;
     public static KeyCode rotate = KeyCode.R;

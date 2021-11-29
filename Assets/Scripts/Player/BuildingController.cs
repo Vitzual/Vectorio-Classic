@@ -40,6 +40,7 @@ public class BuildingController : MonoBehaviour
             InputEvents.active.onRightMousePressed += TryDestroyBuilding;
             InputEvents.active.onRightMouseReleased += DisableJustDeselected;
             InputEvents.active.onEscapePressed += TryDeselectEntity;
+            InputEvents.active.onPipettePressed += TryPipetteBuilding;
         }
 
         // Set UI events
@@ -66,6 +67,18 @@ public class BuildingController : MonoBehaviour
 
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
         if (holder != null) holder.OnClick();
+    }
+
+    public void TryPipetteBuilding()
+    {
+        if (StatsPanel.isOpen) return;
+
+        BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
+        if (holder != null && holder.isSellable)
+        {
+            SetBuilding(holder.buildable);
+            Events.active.Pipette(holder);
+        }
     }
 
     public void TryCreateEntity()

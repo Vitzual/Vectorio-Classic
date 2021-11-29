@@ -36,6 +36,8 @@ public class InputController : MonoBehaviour
                 InputEvents.active.RightMousePressed();
             if (Input.GetKeyUp(Keybinds.delete))
                 InputEvents.active.RightMouseReleased();
+            if (Input.GetKeyDown(Keybinds.pipette))
+                InputEvents.active.PipettePressed();
             if (Input.GetKeyDown(Keybinds.inventory))
                 InputEvents.active.InventoryPressed();
             if (Input.GetKeyDown(Keybinds.pause))

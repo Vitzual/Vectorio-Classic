@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // Pipette
+    public event Action<BaseTile> onPipette;
+    public void Pipette(BaseTile baseTile)
+    {
+        if (onPipette != null)
+            onPipette(baseTile);
+    }
+
     // Auto save
     public event Action onAutoSave;
     public void AutoSave()

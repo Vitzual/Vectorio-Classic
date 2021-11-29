@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     public LayerMask lowresMap;
     public LayerMask lowResLayers;
     public LayerMask highResLayers;
+    public CanvasGroup UI;
 
     // Movement variables
     public float maxRange = 750f;
@@ -135,6 +136,10 @@ public class CameraController : MonoBehaviour
             cam.cullingMask = 1 | lowresMap;
             maxZoom = 1000f;
             cam.orthographicSize = 400f;
+
+            UI.alpha = 0f;
+            UI.interactable = false;
+            UI.blocksRaycasts = false;
         }
         else
         {
@@ -143,6 +148,10 @@ public class CameraController : MonoBehaviour
             else EnableAllLayers();
             maxZoom = 350f;
             cam.orthographicSize = 350f;
+
+            UI.alpha = 1f;
+            UI.interactable = true;
+            UI.blocksRaycasts = true;
         }
     }
 

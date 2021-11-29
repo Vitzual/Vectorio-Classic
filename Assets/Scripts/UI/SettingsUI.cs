@@ -13,6 +13,7 @@ public class SettingsUI : MonoBehaviour
     public SliderManager music;
     public SliderManager sound;
     public SwitchManager autoSave;
+    public SwitchManager experimentalRendering;
     public SwitchManager rotatingObjects;
     public SwitchManager resourcePopups;
 
@@ -46,6 +47,12 @@ public class SettingsUI : MonoBehaviour
     public void RotatingObjects(bool enabled)
     {
         Settings.rotatingObjects = enabled;
+    }
+
+    // Set auto spinning
+    public void ExperimentalRendering(bool enabled)
+    {
+        Settings.experimentalRendering = enabled;
     }
 
     // Set music
@@ -125,6 +132,8 @@ public class SettingsUI : MonoBehaviour
         music.mainSlider.value = Settings.music;
         sound.mainSlider.value = Settings.sound;
         autoSave.isOn = Settings.autoSave;
+        experimentalRendering.isOn = Settings.experimentalRendering;
+        experimentalRendering.UpdateUI();
         rotatingObjects.isOn = Settings.rotatingObjects;
         resourcePopups.isOn = Settings.resourcePopups;
 

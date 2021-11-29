@@ -55,6 +55,7 @@ public class Gamemode : MonoBehaviour
     {
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
+        LowresMap.active.Setup();
 
         // Check difficulty variable
         if (difficulty == null)

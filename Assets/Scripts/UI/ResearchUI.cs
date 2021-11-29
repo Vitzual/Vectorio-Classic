@@ -115,11 +115,11 @@ public class ResearchUI : MonoBehaviour
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Power))
                 usage.text += "<b>POWER:</b> " + tech.costs[Resource.CurrencyType.Power] + " input <color=red>(+" + type.GetCost(Resource.CurrencyType.Power) + ")</color>\n";
-            else usage.text += "<b>POWER:</b> 0 / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Power) + ")</color>\n";
+            else usage.text += "<b>POWER:</b> 0 input <color=red>(+" + type.GetCost(Resource.CurrencyType.Power) + ")</color>\n";
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Heat))
                 usage.text += "<b>HEAT:</b> " + tech.costs[Resource.CurrencyType.Heat] + " output <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
-            else usage.text += "<b>HEAT:</b> 0 / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
+            else usage.text += "<b>HEAT:</b> 0 output <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
 
             applyButton.buttonText = "INITIATE RESEARCH";
         }
@@ -128,16 +128,26 @@ public class ResearchUI : MonoBehaviour
             stats.text += "<b>ACTIVE LABS:</b> " + tech.totalLabs + " researching\n";
             stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "x effect\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
+
             if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))
                 consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.CurrencyType.Gold] + " / second\n";
+            else usage.text += "<b>GOLD:</b> 0 / second\n";
+
             if (tech.costs.ContainsKey(Resource.CurrencyType.Essence))
                 consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.CurrencyType.Essence] + " / second\n";
+            else usage.text += "<b>ESSENCE:</b> 0 / second\n";
+
             if (tech.costs.ContainsKey(Resource.CurrencyType.Iridium))
                 consumption.text += "<b>IRIDIUM:</b> " + tech.costs[Resource.CurrencyType.Iridium] + " / second\n";
+            else usage.text += "<b>IRIDIUM:</b> 0 / second\n";
+
             if (tech.costs.ContainsKey(Resource.CurrencyType.Power))
                 usage.text += "<b>POWER:</b> " + tech.costs[Resource.CurrencyType.Power] + " input\n";
+            else usage.text += "<b>POWER:</b> 0 input\n";
+
             if (tech.costs.ContainsKey(Resource.CurrencyType.Heat))
                 usage.text += "<b>HEAT:</b> " + tech.costs[Resource.CurrencyType.Heat] + " output\n";
+            else usage.text += "<b>HEAT:</b> 0 output\n";
 
             applyButton.buttonText = "CANCEL RESEARCH";
         }
@@ -166,6 +176,13 @@ public class ResearchUI : MonoBehaviour
             if (!Resource.active.CheckResources(selectedTech.cost.ToArray())) return;
 
             Debug.Log("Cost check passed, applying research");
+
+            if (selectedLab.researchTech != null)
+            {
+                ResearchTech tech = selectedLab.researchTech;
+                selectedLab.CancelResearch();
+                researchButtons[tech].UpdateButton();
+            }
 
             selectedLab.ApplyResearch(selectedTech);
             researchButtons[selectedTech].UpdateButton();

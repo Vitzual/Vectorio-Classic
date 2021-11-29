@@ -17,7 +17,7 @@ public class LowresMap : MonoBehaviour
     public void Awake() { active = this; }
 
     // Start is called before the first frame update
-    public void Start()
+    public void Setup()
     {
         // Check if lowres being used
         useLowresMap = _lowresMap != null && _lowresTile != null;

@@ -129,14 +129,18 @@ public class Research : MonoBehaviour
                 foreach (Cost cost in tech.cost)
                     if (techs[tech].costs.ContainsKey(cost.resource))
                         techs[tech].costs[cost.resource] -= cost.amount;
+
                 techs[tech].totalEffect -= tech.amount;
                 techs[tech].totalLabs -= 1;
             }
             else
             {
                 foreach (Cost cost in tech.cost)
+                {
                     if (techs[tech].costs.ContainsKey(cost.resource))
                         techs[tech].costs[cost.resource] += cost.amount;
+                    else techs[tech].costs.Add(cost.resource, cost.amount);
+                }
                 techs[tech].totalEffect += tech.amount;
                 techs[tech].totalLabs += 1;
             }
@@ -148,40 +152,40 @@ public class Research : MonoBehaviour
                 techs.Add(tech, new Tech());
 
                 foreach (Cost cost in tech.cost)
-                    if (techs[tech].costs.ContainsKey(cost.resource))
-                        techs[tech].costs.Add(cost.resource, cost.amount);
+                    techs[tech].costs.Add(cost.resource, cost.amount);
+
                 techs[tech].totalEffect = tech.amount;
                 techs[tech].totalLabs = 1;
             }
         }
     }
 
-    public static string GetAmount(ResearchTech tech)
+    public static float GetAmount(ResearchTech tech)
     {
         switch (tech.type)
         {
             case ResearchTypeEnum.DamageBoost:
-                return "+%" + damageBoost;
+                return damageBoost;
             case ResearchTypeEnum.HealthBoost:
-                return "+%" + healthBoost;
+                return healthBoost;
             case ResearchTypeEnum.WallBoost:
-                return "+%" + wallBoost;
+                return wallBoost;
             case ResearchTypeEnum.PierceBoost:
-                return "+" + pierceBoost;
+                return pierceBoost;
             case ResearchTypeEnum.BulletBoost:
-                return "+" + bulletBoost;
+                return bulletBoost;
             case ResearchTypeEnum.FirerateBoost:
-                return "+%" + firerateBoost;
+                return firerateBoost;
             case ResearchTypeEnum.DroneSpeed:
-                return "+%" + droneMoveSpeed;
+                return droneMoveSpeed;
             case ResearchTypeEnum.ExtractionRate:
-                return "+%" + resource[tech.currency].extractionRate;
+                return resource[tech.currency].extractionRate;
             case ResearchTypeEnum.ExtractionYield:
-                return "+%" + resource[tech.currency].extractionRate;
+                return resource[tech.currency].extractionRate;
             case ResearchTypeEnum.StorageAmount:
-                return "+%" + resource[tech.currency].extractionRate;
+                return resource[tech.currency].extractionRate;
             default:
-                return "";
+                return -1;
         }
     }
 }

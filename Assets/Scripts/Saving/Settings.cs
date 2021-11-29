@@ -88,6 +88,8 @@ public class Settings : MonoBehaviour
     public static void ApplySettings()
     {
         Screen.SetResolution(resolutionX, resolutionY, screenmode, framerate);
+        Application.targetFrameRate = framerate;
+
     }
 
     // Update sounds

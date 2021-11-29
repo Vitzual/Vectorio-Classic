@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimateThenStop : MonoBehaviour
 {
     // Enable / disable animation
-    public bool animEnabled = true;
+    private bool animEnabled = false;
     public float animSize = 1.5f;
     protected float animTracker = 0.001f;
     public float animOriginal = 1f;
@@ -13,7 +13,7 @@ public class AnimateThenStop : MonoBehaviour
     // Check if loading
     public void Start()
     {
-        enabled = !Gamemode.loadGame;
+        animEnabled = !Gamemode.loadGame;
     }
 
     // Update is called once per frame
@@ -21,15 +21,15 @@ public class AnimateThenStop : MonoBehaviour
     {
         if (animEnabled)
             DropInAnim();
-        else
-            enabled = false; // Disable script when finished
+        else enabled = false; // Disable script when finished
     }
 
-    public void resetAnim()
+    public void ResetAnim()
     {
         animSize = 1.2f;
         animTracker = 0.001f;
         animOriginal = 1f;
+        animEnabled = true;
     }
 
     public void DropInAnim()

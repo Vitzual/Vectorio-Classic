@@ -82,9 +82,8 @@ public class DefaultCollector : ResourceTile
     public override int TakeResource()
     {
         // Set animation
-        animator.resetAnim();
-        animator.animEnabled = true;
         animator.enabled = true;
+        animator.ResetAnim();
 
         // Set values
         int holder = amount;

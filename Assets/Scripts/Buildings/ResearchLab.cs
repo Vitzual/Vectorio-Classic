@@ -6,7 +6,7 @@ public class ResearchLab : BaseTile
     public SpriteRenderer boostIcon;
     public ResearchTech researchTech;
     public AudioClip boomSound;
-    public int strikes = 3;
+    public int strikes = 5;
 
     public void Start()
     {
@@ -81,7 +81,7 @@ public class ResearchLab : BaseTile
             }
         }
 
-        strikes = 3;
+        strikes = 5;
     }
 
     public override void ApplyMetadata(int data)

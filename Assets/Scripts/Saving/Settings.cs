@@ -89,7 +89,6 @@ public class Settings : MonoBehaviour
     {
         Screen.SetResolution(resolutionX, resolutionY, screenmode, framerate);
         Application.targetFrameRate = framerate;
-
     }
 
     // Update sounds

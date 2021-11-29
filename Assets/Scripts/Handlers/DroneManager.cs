@@ -145,8 +145,12 @@ public class DroneManager : MonoBehaviour
         // Check to make sure enough build drones and ghost tiles exist
         if (ghostTiles.Count > 0)
         {
+            // Loop through all available builder drones
             if (builderDrones.Count > 0)
             {
+                // Check if out of power
+                bool ignorePrio = Resource.active.GetPower() >= Resource.active.GetAvailablePower();
+
                 // Loop through all ghost tiles
                 for (int a = 0; a < ghostTiles.Count; a++)
                 {
@@ -162,10 +166,21 @@ public class DroneManager : MonoBehaviour
                         }
                         else
                         {
+                            // If prio ignored, find whatever can be afforded
+                            if (ignorePrio)
+                            {
+                                // Check resource of latest placed
+                                if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))
+                                {
+                                    drone = FindClosestDrone(ghostTiles[a].transform.position);
+                                    if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                    return;
+                                }
+                            }
+
                             // Switch build priority
                             switch (buildPriority)
                             {
-
                                 // CHEAPEST PRIORITY
                                 case BuildPriority.cheapest:
 
@@ -291,6 +306,7 @@ public class DroneManager : MonoBehaviour
                                             {
                                                 drone = FindClosestDrone(ghostTiles[a].transform.position);
                                                 if (drone != null) SetBuilderTarget(drone, ghostTiles[a]);
+                                                if ()
                                                 return;
                                             }
                                         }

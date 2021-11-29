@@ -426,6 +426,7 @@ public class Resource : MonoBehaviour
     // Get heat or power
     public int GetHeat() { return currencies[CurrencyType.Heat].amount; }
     public int GetPower() { return currencies[CurrencyType.Power].amount; }
+    public int GetAvailablePower() { return currencies[CurrencyType.Power].storage; }
 
     // Number formatter
     public static string FormatNumber(int number)

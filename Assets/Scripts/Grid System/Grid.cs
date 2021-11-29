@@ -39,11 +39,19 @@ public class Grid
         }
         else cells.Add(coords, new Cell(entity, obj, occupy, isGhost));
         if (obj != null) obj.cells.Add(coords);
+
+        // Set lowres texture
+        if(LowresMap.active != null)
+            LowresMap.AddLowres(coords, entity.lowresColor);
     }
 
     public void RemoveCell(Vector2Int coords)
     {
         if (cells.ContainsKey(coords)) cells.Remove(coords);
+
+        // Set lowres texture
+        if (LowresMap.active != null)
+            LowresMap.RemoveLowres(coords);
     }
 
     public void DestroyCell(Vector2Int coords)
@@ -54,5 +62,9 @@ public class Grid
             if (building != null)
                 building.DestroyEntity();
         }
+
+        // Set lowres texture
+        if (LowresMap.active != null)
+            LowresMap.RemoveLowres(coords);
     }
 }

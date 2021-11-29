@@ -23,6 +23,8 @@ public class Entity : IdentifiableScriptableObject
     public int health;
     [FoldoutGroup("Entity Info")]
     public Material material;
+    [FoldoutGroup("Entity Info")]
+    public Color lowresColor;
 
     // Inventory variables
     [FoldoutGroup("Inventory Variables")]

@@ -162,14 +162,14 @@ public class ResearchUI : MonoBehaviour
             return;
         }
 
-        if (selectedTech == selectedLab.researchTech)
+        else if (selectedTech == selectedLab.researchTech)
         {
             Debug.Log("Cancelling research");
             selectedLab.CancelResearch();
             SetPanel(selectedTech);
         }
 
-        if (selectedLab != null)
+        else if (selectedLab != null)
         {
             Debug.Log("Checking lab costs");
 

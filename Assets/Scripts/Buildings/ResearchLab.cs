@@ -7,7 +7,7 @@ public class ResearchLab : BaseTile
     public ResearchTech researchTech;
     public AudioClip boomSound;
     public int strikes = 5;
-
+    
     public void Start()
     {
         InvokeRepeating("UpdateResources", 0, 1);
@@ -20,16 +20,19 @@ public class ResearchLab : BaseTile
 
     public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
-        if (!overrideCost)
-            foreach (Cost cost in type.cost)
-                if (cost.amount >= 0) Resource.active.Apply(cost.type, cost.amount, false);
+        if (researchTech == null)
+        {
+            if (!overrideCost)
+                foreach (Cost cost in type.cost)
+                    if (cost.amount >= 0) Resource.active.Apply(cost.type, cost.amount, false);
 
-        researchTech = type;
-        boostIcon.gameObject.SetActive(true);
-        boostIcon.sprite = type.icon;
-        Research.ApplyResearch(type, false);
+            researchTech = type;
+            boostIcon.gameObject.SetActive(true);
+            boostIcon.sprite = type.icon;
+            Research.ApplyResearch(type, false);
 
-        metadata = type.metadataID;
+            metadata = type.metadataID;
+        }
     }
 
     public void CancelResearch()

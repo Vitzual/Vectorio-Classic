@@ -51,6 +51,8 @@ public class MenuButton : MonoBehaviour
         {
             foreach (Cost resource in buildable.resources)
             {
+                if (resource.storage) continue;
+
                 if (resource.type == Resource.CurrencyType.Power)
                     powerIcon.SetActive(true);
                 else if (resource.type == Resource.CurrencyType.Heat)

@@ -18,7 +18,7 @@ public class ResourceTile : BaseTile
         return 0;
     }
 
-    public virtual int AddResources(int amount)
+    public virtual int AddResources(int amount, bool showPopup)
     {
         Debug.Log("Script needs to override AddResources() virtual method");
         return amount;

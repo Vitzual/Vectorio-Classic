@@ -181,7 +181,7 @@ public class Resource : MonoBehaviour
                     {
                         if (!storages[i].isFull)
                         {
-                            amountToAdd = storages[i].AddResources(amountToAdd);
+                            amountToAdd = storages[i].AddResources(amountToAdd, false);
                             if (amountToAdd <= 0) return;
                         }
                     }
@@ -194,7 +194,7 @@ public class Resource : MonoBehaviour
 
                         if (amountToAdd > 0)
                         {
-                            storages[i].AddResources(amountToAdd);
+                            storages[i].AddResources(amountToAdd, false);
                             return;
                         }
                     }

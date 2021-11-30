@@ -23,8 +23,7 @@ public class ResearchLab : BaseTile
         if (researchTech == null)
         {
             if (!overrideCost)
-                foreach (Cost cost in type.cost)
-                    if (cost.amount >= 0) Resource.active.Apply(cost.type, cost.amount, false);
+                Resource.active.ApplyOutputsOnly(type.cost.ToArray());
 
             researchTech = type;
             boostIcon.gameObject.SetActive(true);
@@ -40,9 +39,7 @@ public class ResearchLab : BaseTile
         if (researchTech != null)
         {
             Research.ApplyResearch(researchTech, true);
-
-            foreach (Cost cost in researchTech.cost)
-                if (cost.amount >= 0) Resource.active.Apply(cost.type, -cost.amount, false);
+            Resource.active.RefundOutputsOnly(researchTech.cost.ToArray());
 
             boostIcon.gameObject.SetActive(false);
             researchTech = null;
@@ -56,7 +53,7 @@ public class ResearchLab : BaseTile
         {
             foreach (Cost cost in researchTech.cost)
             {
-                if (cost.amount <= 0)
+                if (!Resource.active.currencies[cost.type].output)
                 {
                     if (Resource.active.currencies[cost.type].amount >= cost.amount)
                     {

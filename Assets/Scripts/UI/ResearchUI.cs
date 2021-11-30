@@ -122,6 +122,7 @@ public class ResearchUI : MonoBehaviour
             else usage.text += "<b>HEAT:</b> 0 output <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
 
             applyButton.buttonText = "INITIATE RESEARCH";
+            applyButton.UpdateUI();
         }
         else
         {
@@ -150,6 +151,7 @@ public class ResearchUI : MonoBehaviour
             else usage.text += "<b>HEAT:</b> 0 output\n";
 
             applyButton.buttonText = "CANCEL RESEARCH";
+            applyButton.UpdateUI();
         }
     }
 
@@ -159,13 +161,14 @@ public class ResearchUI : MonoBehaviour
         if (selectedTech == null)
         {
             Debug.Log("No tech selected");
-            return;
         }
 
         else if (selectedTech == selectedLab.researchTech)
         {
             Debug.Log("Cancelling research");
+            ResearchTech tech = selectedLab.researchTech;
             selectedLab.CancelResearch();
+            researchButtons[tech].UpdateButton();
             SetPanel(selectedTech);
         }
 
@@ -173,7 +176,7 @@ public class ResearchUI : MonoBehaviour
         {
             Debug.Log("Checking lab costs");
 
-            if (!Resource.active.CheckResources(selectedTech.cost.ToArray())) return;
+            if (!Resource.active.CheckOutputsOnly(selectedTech.cost.ToArray())) return;
 
             Debug.Log("Cost check passed, applying research");
 

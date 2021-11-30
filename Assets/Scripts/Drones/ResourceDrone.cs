@@ -177,7 +177,7 @@ public class ResourceDrone : Drone
         {
             if (collected.ContainsKey(tile.type))
             {
-                collected[tile.type] = tile.AddResources(collected[tile.type]);
+                collected[tile.type] = tile.AddResources(collected[tile.type], true);
                 if (collected[tile.type] <= 0)
                 {
                     collected.Remove(tile.type);

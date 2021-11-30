@@ -40,7 +40,7 @@ public class NewInterface : MonoBehaviour
     public void ToggleQuitMenu()
     {
         // Check if other panels open
-        if (!CheckPanels()) return;
+        if (!CheckPanels() || CameraController.mapEnabled) return;
 
         // Check if menu open. If so, reset and open
         if (quitMenu.activeSelf)

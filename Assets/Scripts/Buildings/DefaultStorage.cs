@@ -16,7 +16,7 @@ public class DefaultStorage : ResourceTile
     }
 
     // Add resource to storage
-    public override int AddResources(int amount)
+    public override int AddResources(int amount, bool showPopup)
     {
         // Add amount and grab storage amount
         this.amount += amount;
@@ -34,14 +34,14 @@ public class DefaultStorage : ResourceTile
             if (icon != null) icon.SetActive(true);
 
             // Add proper amount and return overflow
-            PopupHandler.active.CreatePopup(transform.position, type, "+" + (amount - amountToReturn));
+            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + (amount - amountToReturn));
             Resource.active.Apply(type, amount - amountToReturn, false);
             return amountToReturn;
         }
         else
         {
             // If does not exceed, add resources and return
-            PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
             Resource.active.Apply(type, amount, false);
             return 0;
         }

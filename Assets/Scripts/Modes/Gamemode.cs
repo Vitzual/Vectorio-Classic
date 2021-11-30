@@ -46,8 +46,14 @@ public class Gamemode : MonoBehaviour
         active = this;
     }
 
+    // Start method
+    public void Start()
+    {
+        Setup();
+    }
+
     // Setup game
-    public virtual void Start()
+    public virtual void Setup()
     {
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();

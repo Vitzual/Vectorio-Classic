@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     // Camera Variable
     protected Camera cam;
     public bool isMenu;
+    public bool enableFreecam;
+    public Transform target;
 
     // Resolution layers
     public static bool mapEnabled = false;
@@ -103,16 +105,24 @@ public class CameraController : MonoBehaviour
         // Check if research open
         if (isMenu) return;
 
-        // Get directional movement
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        // See if freecam enabled
+        if (enableFreecam)
+        {
+            // Get directional movement
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
 
-        // Determine if movement should be allowed
-        if (movement.x > 0 && cameraRB.position.x + movement.x > Border.east) { allowMovement = false; movement.x = 0; }
-        if (movement.x < 0 && cameraRB.position.x + movement.x < Border.west) { allowMovement = false; movement.x = 0; }
-        if (movement.y > 0 && cameraRB.position.y + movement.y > Border.north) { allowMovement = false; movement.y = 0; }
-        if (movement.y < 0 && cameraRB.position.y + movement.y < Border.south) { allowMovement = false; movement.y = 0; }
-        if (allowMovement) cameraRB.MovePosition(cameraRB.position + movement * moveSpeed * Time.fixedDeltaTime);
+            // Determine if movement should be allowed
+            if (movement.x > 0 && cameraRB.position.x + movement.x > Border.east) { allowMovement = false; movement.x = 0; }
+            if (movement.x < 0 && cameraRB.position.x + movement.x < Border.west) { allowMovement = false; movement.x = 0; }
+            if (movement.y > 0 && cameraRB.position.y + movement.y > Border.north) { allowMovement = false; movement.y = 0; }
+            if (movement.y < 0 && cameraRB.position.y + movement.y < Border.south) { allowMovement = false; movement.y = 0; }
+            if (allowMovement) cameraRB.MovePosition(cameraRB.position + movement * moveSpeed * Time.fixedDeltaTime);
+        }
+        else if (target != null)
+        {
+            cameraRB.position = target.position;
+        }
 
         // Reset movement variable
         allowMovement = true;

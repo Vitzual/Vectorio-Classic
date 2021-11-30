@@ -97,7 +97,8 @@ public class Resource : MonoBehaviour
         }
 
         // Setup events
-        InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
+        if (perSeconds.Count > 0)
+            InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
     }
 
     // Add a resource

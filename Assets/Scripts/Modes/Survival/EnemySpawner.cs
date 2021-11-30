@@ -64,8 +64,7 @@ public class EnemySpawner : MonoBehaviour
         float chance;
 
         // Calculate chance (or ignore)
-        if (Debugger.active.ignoreSpawnValues) chance = 0f;
-        else chance = Random.value;
+        chance = Random.value;
 
         // Calculate heat percentage
         float percentage;

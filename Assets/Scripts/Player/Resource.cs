@@ -51,11 +51,14 @@ public class Resource : MonoBehaviour
     public class PerSecond
     {
         public CurrencyType type;
+        public int lastCalculation = 0;
         public int[] amount = new int[5];
+        public int index = 0;
         public TextMeshProUGUI perSecondUI;
     }
     public List<PerSecond> perSeconds;
-    
+    public int currentPerSec = 0;
+
     // Dictionary of all currencies
     public Dictionary<CurrencyType, Currency> currencies = new Dictionary<CurrencyType, Currency>();
     public Currency[] currencyElements;
@@ -94,7 +97,7 @@ public class Resource : MonoBehaviour
         }
 
         // Setup events
-        InvokeRepeating("UpdatePerSecond", 1, 1);
+        InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
     }
 
     // Add a resource
@@ -318,21 +321,34 @@ public class Resource : MonoBehaviour
     // Update resources
     public void UpdatePerSecond()
     {
-        foreach (PerSecond resource in perSeconds)
-        {
-            // Shift all elements down one, and add most recent amount
-            int[] newArray = new int[resource.amount.Length];
-            Array.Copy(resource.amount, 1, newArray, 0, resource.amount.Length - 1);
-            newArray[4] = GetAmount(resource.type) - newArray[3];
-            resource.amount = newArray;
-            Debug.Log(resource.amount);
+        // Get current perSec and increment index
+        PerSecond resource = perSeconds[currentPerSec];
+        currentPerSec += 1;
+        if (currentPerSec == perSeconds.Count)
+            currentPerSec = 0;
 
-            // Calculate per second average over last x seconds
-            int average = 0;
-            for(int i = 0; i < newArray.Length; i++)
-                average += newArray[i];
-            Debug.Log("Average: " + average);
-        }
+        // Make new average
+        int average = 0;
+
+        // Shift all elements down one (yes this isn't in a for-loop, get over it lol
+        resource.amount[resource.index] = currencies[resource.type].amount - resource.lastCalculation;
+
+        // Iterate through and tally total average
+        for (int i = 0; i < resource.amount.Length; i++)
+            average += resource.amount[i];
+
+        // Increment index
+        resource.index += 1;
+        if (resource.index == resource.amount.Length)
+            resource.index = 0;
+
+        // Divide average
+        average = average / resource.amount.Length;
+        resource.lastCalculation = currencies[resource.type].amount;
+
+        if (average == 0) resource.perSecondUI.text = "<color=white>" + average + " / second";
+        else if (average > 0) resource.perSecondUI.text = "<color=green>+" + average + " / second";
+        else resource.perSecondUI.text = "<color=red>" + average + " / second";
     }
 
     // Check freebie

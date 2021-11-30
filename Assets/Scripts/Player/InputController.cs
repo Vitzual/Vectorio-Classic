@@ -20,7 +20,7 @@ public class InputController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.anyKey && !Inventory.isOpen && !ResearchUI.isOpen && !StatsPanel.isOpen)
+        if (!Inventory.isOpen && !ResearchUI.isOpen && !StatsPanel.isOpen)
         {
             if (Input.GetKeyDown(Keybinds.construct) && !InterfaceCheck())
                 InputEvents.active.LeftMouseTapped();

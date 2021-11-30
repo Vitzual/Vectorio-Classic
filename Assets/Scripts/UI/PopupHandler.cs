@@ -12,6 +12,7 @@ public class PopupHandler : MonoBehaviour
     public void Awake()
     {
         active = this;
+        activePopups = new List<Popup>();
     }
 
     public void CreatePopup(Vector2 position, Resource.CurrencyType type, string amount)

@@ -48,7 +48,7 @@ public class Building : Entity
             {
                 string name = Resource.active.GetName(type.type);
                 Sprite sprite = Resource.active.GetSprite(type.type);
-                panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
+                if (!type.storage) panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
             }
         }
         else

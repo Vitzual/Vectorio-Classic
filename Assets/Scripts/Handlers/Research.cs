@@ -45,7 +45,7 @@ public class Research : MonoBehaviour
     // Drone research variables
     public static int drone_tile_coverage = 5;
     public static float drone_deployment_speed = 3f;
-    public static float droneMoveSpeed = 25f;
+    public static float drone_move_speed = 1f;
 
     // Reset research values
     public static void ResetResearch()
@@ -64,7 +64,7 @@ public class Research : MonoBehaviour
         firerateBoost = 1;
         drone_tile_coverage = 5;
         drone_deployment_speed = 3f;
-        droneMoveSpeed = 25f;
+        drone_move_speed = 1f;
     }
 
     // Currency get variables (I hate this, and will redo it)
@@ -109,7 +109,7 @@ public class Research : MonoBehaviour
                 firerateBoost += amount;
                 break;
             case ResearchTypeEnum.DroneSpeed:
-                droneMoveSpeed += amount;
+                drone_move_speed += amount;
                 break;
             case ResearchTypeEnum.ExtractionRate:
                 resource[tech.currency].extractionRate += amount;
@@ -177,7 +177,7 @@ public class Research : MonoBehaviour
             case ResearchTypeEnum.FirerateBoost:
                 return firerateBoost;
             case ResearchTypeEnum.DroneSpeed:
-                return droneMoveSpeed;
+                return drone_move_speed;
             case ResearchTypeEnum.ExtractionRate:
                 return resource[tech.currency].extractionRate;
             case ResearchTypeEnum.ExtractionYield:

@@ -75,17 +75,22 @@ public class Gamemode : MonoBehaviour
         InitGamemode();
 
         // Load game 
-        if (loadGame && saveData != null)
+        try
         {
-            Resource.storages = new List<DefaultStorage>();
-            NewSaveSystem.LoadGame(saveData);
-            Border.UpdateStage();
-            Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
-        }
-        else ResearchUI.active.Setup();
+            if (loadGame && saveData != null)
+            {
+                Resource.storages = new List<DefaultStorage>();
+                NewSaveSystem.LoadGame(saveData);
+                Border.UpdateStage();
+                Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
+            }
+            else ResearchUI.active.Setup();
 
-        // Setup starting resources
-        SetupStartingResources();
+            // Setup starting resources
+            SetupStartingResources();
+        }
+        catch { Debug.Log("Game ran into problem while loading!"); }
+
         loadGame = false;
 
         // Invoke auto saving

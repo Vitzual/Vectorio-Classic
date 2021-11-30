@@ -45,7 +45,7 @@ public class MenuButton : MonoBehaviour
 
         // Determine if building is unlocked
         SetVariables(buildable.building);
-
+        
         // Set resources (if unlocked)
         if (buildable.isUnlocked)
         {

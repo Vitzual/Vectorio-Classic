@@ -79,21 +79,21 @@ public class DefaultEnemy : BaseEntity
                 case 0:
                     if (Resource.active.GetStorage(Resource.CurrencyType.Gold) > 0)
                     {
-                        Resource.active.Add(Resource.CurrencyType.Gold, 100, true);
+                        Resource.active.Apply(Resource.CurrencyType.Gold, 100, true);
                         PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Gold, "+" + 100);
                     }
                     break;
                 case 1:
                     if (Resource.active.GetStorage(Resource.CurrencyType.Essence) > 0)
                     {
-                        Resource.active.Add(Resource.CurrencyType.Essence, 25, true);
+                        Resource.active.Apply(Resource.CurrencyType.Essence, 25, true);
                         PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Essence, "+" + 100);
                     }
                     break;
                 case 2:
                     if (Resource.active.GetStorage(Resource.CurrencyType.Iridium) > 0)
                     {
-                        Resource.active.Add(Resource.CurrencyType.Iridium, 5, true);
+                        Resource.active.Apply(Resource.CurrencyType.Iridium, 5, true);
                         PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Iridium, "+" + 100);
                     }
                     break;

@@ -21,7 +21,7 @@ public class ResearchTech : IdentifiableScriptableObject
     public int GetCost(Resource.CurrencyType cost)
     {
         foreach (Cost theCost in this.cost)
-            if (theCost.resource == cost)
+            if (theCost.type == cost)
                 return theCost.amount;
         return 0;
     }

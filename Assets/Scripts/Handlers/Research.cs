@@ -127,8 +127,8 @@ public class Research : MonoBehaviour
             if (revoke)
             {
                 foreach (Cost cost in tech.cost)
-                    if (techs[tech].costs.ContainsKey(cost.resource))
-                        techs[tech].costs[cost.resource] -= cost.amount;
+                    if (techs[tech].costs.ContainsKey(cost.type))
+                        techs[tech].costs[cost.type] -= cost.amount;
 
                 techs[tech].totalEffect -= tech.amount;
                 techs[tech].totalLabs -= 1;
@@ -137,9 +137,9 @@ public class Research : MonoBehaviour
             {
                 foreach (Cost cost in tech.cost)
                 {
-                    if (techs[tech].costs.ContainsKey(cost.resource))
-                        techs[tech].costs[cost.resource] += cost.amount;
-                    else techs[tech].costs.Add(cost.resource, cost.amount);
+                    if (techs[tech].costs.ContainsKey(cost.type))
+                        techs[tech].costs[cost.type] += cost.amount;
+                    else techs[tech].costs.Add(cost.type, cost.amount);
                 }
                 techs[tech].totalEffect += tech.amount;
                 techs[tech].totalLabs += 1;
@@ -152,7 +152,7 @@ public class Research : MonoBehaviour
                 techs.Add(tech, new Tech());
 
                 foreach (Cost cost in tech.cost)
-                    techs[tech].costs.Add(cost.resource, cost.amount);
+                    techs[tech].costs.Add(cost.type, cost.amount);
 
                 techs[tech].totalEffect = tech.amount;
                 techs[tech].totalLabs = 1;

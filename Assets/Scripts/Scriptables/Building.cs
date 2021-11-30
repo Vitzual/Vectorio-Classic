@@ -46,8 +46,8 @@ public class Building : Entity
 
             foreach (Cost type in buildable.resources)
             {
-                string name = Resource.active.GetName(type.resource);
-                Sprite sprite = Resource.active.GetSprite(type.resource);
+                string name = Resource.active.GetName(type.type);
+                Sprite sprite = Resource.active.GetSprite(type.type);
                 panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
             }
         }
@@ -55,8 +55,8 @@ public class Building : Entity
         {
             foreach (Cost type in resources)
             {
-                string name = Resource.active.GetName(type.resource);
-                Sprite sprite = Resource.active.GetSprite(type.resource);
+                string name = Resource.active.GetName(type.type);
+                Sprite sprite = Resource.active.GetSprite(type.type);
                 panel.CreateStat(new Stat(name, type.amount, 0, sprite, true));
             }
         }

@@ -21,22 +21,21 @@ public class Resource : MonoBehaviour
     }
 
     // Resource currency class
-    [System.Serializable]
+    [Serializable]
     public class Currency
     {
         // Currency variables
         public CurrencyType type;
         public int amount;
         public int storage;
-        public bool calcPerSecond;
         public string format;
         public bool allowOverflow;
+        public bool output;
 
         // UI elements
         public Image background;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
-        public TextMeshProUGUI perSecond;
 
         // Resource bar
         public bool useResourceBar;
@@ -48,13 +47,21 @@ public class Resource : MonoBehaviour
         public int storageAmount;
     }
 
+    [Serializable]
+    public class PerSecond
+    {
+        public CurrencyType type;
+        public int[] amount = new int[5];
+        public TextMeshProUGUI perSecondUI;
+    }
+    public List<PerSecond> perSeconds;
+    
     // Dictionary of all currencies
-    public Dictionary<CurrencyType, Currency> currencies;
-    private Dictionary<Currency, int> lastCalculation;
+    public Dictionary<CurrencyType, Currency> currencies = new Dictionary<CurrencyType, Currency>();
     public Currency[] currencyElements;
 
     // List of all collectors and storages
-    public static List<DefaultStorage> storages = new List<DefaultStorage>();
+    public static List<DefaultStorage> storages;
 
     // Get active instance
     public void Awake()
@@ -68,46 +75,97 @@ public class Resource : MonoBehaviour
     {
         // Setup currencies
         currencies = new Dictionary<CurrencyType, Currency>();
-        lastCalculation = new Dictionary<Currency, int>();
-        Research.ResetResearch();
+        storages = new List<DefaultStorage>();
+        Research.resource = new Dictionary<CurrencyType, Research.ResourceBoost>();
+
+        // Setup currency elements
         foreach (Currency currency in currencyElements)
         {
             currencies.Add(currency.type, currency);
             Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
             currency.background.color = new Color(1, 1, 1, 0.1f);
-            if (currency.calcPerSecond)
-                lastCalculation.Add(currency, 0);
+        }
+
+        // Setup PerSecond array
+        foreach(PerSecond resource in perSeconds)
+        {
+            for (int i = 0; i < resource.amount.Length; i++)
+                resource.amount[i] = 0;
         }
 
         // Setup events
         InvokeRepeating("UpdatePerSecond", 1, 1);
     }
 
-    // Update resources
-    public void UpdatePerSecond()
+    // Add a resource
+    public void Apply(CurrencyType type, int amount, bool useStorages)
     {
-        foreach(Currency currency in currencyElements)
+        // Heat and power update
+        if (currencies[type].allowOverflow) currencies[type].amount += amount;
+        else if (useStorages) UpdateStorages(type, amount);
+        else currencies[type].amount += amount;
+
+        // Display to UI
+        UpdateUI(type);
+
+        // Update unlockables
+        Buildables.UpdateResourceUnlockables(type);
+
+        // Update variant if heat passed
+        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
+    }
+
+    // Refund resources method
+    public void ApplyResources(Cost[] costs)
+    {
+        foreach (Cost cost in costs) 
         {
-            if (currency.calcPerSecond)
-            {
-                int amount = currency.amount - lastCalculation[currency];
-                if (amount == 0) currency.perSecond.text = "<color=white>" + amount + " / second";
-                else if (amount > 0) currency.perSecond.text = "<color=green>+" + amount + " / second";
-                else currency.perSecond.text = "<color=red>" + amount + " / second";
-                lastCalculation[currency] = currency.amount;
+            if (!cost.storage) 
+            { 
+                if (currencies[cost.type].output) Apply(cost.type, cost.amount, true);
+                else Apply(cost.type, -cost.amount, true);
             }
         }
     }
 
+    // Apply outputs only
+    public void ApplyOutputsOnly(Cost[] costs)
+    {
+        foreach (Cost cost in costs)
+            if (!cost.storage && currencies[cost.type].output)
+                Apply(cost.type, cost.amount, true);
+    }
+
+    // Refund resources method
+    public void RefundResources(Cost[] costs)
+    {
+        foreach (Cost cost in costs)
+        {
+            if (!cost.storage)
+            {
+                if (currencies[cost.type].output) Apply(cost.type, -cost.amount, true);
+                else Apply(cost.type, cost.amount, true);
+            }
+        }
+    }
+
+    // Apply outputs only
+    public void RefundOutputsOnly(Cost[] costs)
+    {
+        foreach (Cost cost in costs)
+            if (!cost.storage && currencies[cost.type].output)
+                Apply(cost.type, -cost.amount, true);
+    }
+
     // Update storages 
-    public void UpdateStorages(CurrencyType type, int amount, bool add)
+    public void UpdateStorages(CurrencyType type, int amount)
     {
         // Setup local loop variables
         int amountToAdd = amount;
-        if (!add) amountToAdd = -amountToAdd;
+        bool add = amount >= 0;
 
         // Updates all storages
-        for(int i = 0; i < storages.Count; i++)
+        for (int i = 0; i < storages.Count; i++)
         {
             // Check if storage is null
             if (storages[i] != null)
@@ -147,58 +205,11 @@ public class Resource : MonoBehaviour
         }
     }
 
-    // Get currency class
-    public Currency GetCurrency(CurrencyType type)
-    {
-        if (currencies.ContainsKey(type))
-            return currencies[type];
-        else return null;
-    }
-
-    // Add a resource
-    public void Add(CurrencyType type, int amount, bool useStorages)
-    {
-        // Heat and power update
-        if (currencies[type].allowOverflow) currencies[type].amount += amount;
-        else if (useStorages) UpdateStorages(type, amount, true);
-        else currencies[type].amount += amount;
-
-        // Display to UI
-        UpdateUI(type);
-
-        // Update unlockables
-        Buildables.UpdateResourceUnlockables(type);
-
-        // Update variant if heat passed
-        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
-    }
-
-    // Remove a resource
-    public void Remove(CurrencyType type, int amount, bool useStorages)
-    {
-        // Update storages
-        if (currencies[type].allowOverflow) currencies[type].amount -= amount;
-        else if (useStorages) UpdateStorages(type, amount, false);
-        else currencies[type].amount -= amount;
-
-        // Display to UI
-        UpdateUI(type);
-
-        // Update unlockables
-        Buildables.UpdateResourceUnlockables(type);
-
-        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
-    }
-
     // Add storage
-    public void AddStorage(CurrencyType type, int amount, DefaultStorage defaultStorage = null)
+    public void ApplyStorage(CurrencyType type, int amount)
     {
         // Update active storages
-        if (defaultStorage != null)
-            storages.Add(defaultStorage);
         currencies[type].storage += amount;
-
-        // Display to UI
         UpdateUI(type, true);
     }
 
@@ -207,25 +218,77 @@ public class Resource : MonoBehaviour
     {
         // Sets the storage
         currencies[type].storage = amount;
-
-        // Display to UI
         UpdateUI(type, true);
     }
 
-    // Remove storage
-    public void RemoveStorage(CurrencyType type, int amount, DefaultStorage defaultStorage = null)
+    // Add storage object
+    public void AddStorageObj(DefaultStorage storage)
     {
-        // Update active storages
-        if (defaultStorage != null && storages.Contains(defaultStorage))
-            storages.Remove(defaultStorage);
+        if (!storages.Contains(storage))
+            storages.Add(storage);
+    }
 
-        // Revert the storage
-        currencies[type].storage -= amount;
-        if (currencies[type].storage <= 0)
-            currencies[type].storage = 0;
+    // Check resources
+    public bool CheckResources(Cost[] costs)
+    {
+        // Check if adequate resources 
+        foreach(Cost cost in costs)
+        {
+            // If storage, ignore
+            if (cost.storage) continue;
 
-        // Display to UI
-        UpdateUI(type, true);
+            // Get amount of resource type
+            int amount = GetAmount(cost.type);
+
+            // Check if overflow is allowed
+            if (currencies[cost.type].allowOverflow)
+            {
+                if (amount >= GetStorage(cost.type))
+                    return false;
+            }
+            else if (currencies[cost.type].output)
+            {
+                if (amount + cost.amount > GetStorage(cost.type))
+                    return false;
+            }
+            else
+            {
+                if (amount - cost.amount < 0)
+                    return false;
+            }
+        }
+
+        // If all checks passed, return true
+        return true;
+    }
+
+    // Check resources
+    public bool CheckOutputsOnly(Cost[] costs)
+    {
+        // Check if adequate resources 
+        foreach (Cost cost in costs)
+        {
+            // If storage, ignore
+            if (cost.storage || !currencies[cost.type].output) continue;
+
+            // Get amount of resource type
+            int amount = GetAmount(cost.type);
+
+            // Check if overflow is allowed
+            if (currencies[cost.type].allowOverflow)
+            {
+                if (amount >= GetStorage(cost.type))
+                    return false;
+            }
+            else
+            {
+                if (amount + cost.amount > GetStorage(cost.type))
+                    return false;
+            }
+        }
+
+        // If all checks passed, return true
+        return true;
     }
 
     // Update UI
@@ -252,119 +315,33 @@ public class Resource : MonoBehaviour
         }
     }
 
-    // Check resources
-    public bool CheckResources(Cost[] costs)
+    // Update resources
+    public void UpdatePerSecond()
     {
-        // Check if resource should be used
-        foreach (Cost resource in costs)
+        foreach (PerSecond resource in perSeconds)
         {
-            // Use gamemode resource check
-            if (!Gamemode.active.useResources && resource.resource != CurrencyType.Heat) continue;
+            // Shift all elements down one, and add most recent amount
+            int[] newArray = new int[resource.amount.Length];
+            Array.Copy(resource.amount, 1, newArray, 0, resource.amount.Length - 1);
+            newArray[4] = GetAmount(resource.type) - newArray[3];
+            resource.amount = newArray;
+            Debug.Log(resource.amount);
 
-            if (!resource.storage)
-            {
-                int amount = GetAmount(resource.resource);
-                if (resource.add)
-                {
-                    Currency currency = GetCurrency(resource.resource);
-                    if (currency.allowOverflow && amount > GetStorage(resource.resource)) return false;
-                    else if (!currency.allowOverflow && amount + resource.amount > GetStorage(resource.resource)) return false;
-                }
-                else if (amount < resource.amount) return false;
-            }
+            // Calculate per second average over last x seconds
+            int average = 0;
+            for(int i = 0; i < newArray.Length; i++)
+                average += newArray[i];
+            Debug.Log("Average: " + average);
         }
-        return true;
     }
 
-    // Check freebie [NEEDS IMPROVEMENTS]
+    // Check freebie
     public bool CheckFreebie(Buildable buildable)
     {
         // Check active instances
         if (buildable.isCollector) return CollectorHandler.active.collectors.Count < 1;
         else if (buildable.isStorage) return storages.Count < 1;
         else return false;
-    }
-
-    // Remove a resource based on building
-    public void ApplyResources(Buildable buildable, bool isFree = false)
-    {
-        // Update resource values promptly
-        foreach (Cost resource in buildable.resources)
-        {
-            // Check if gamemode is using resources
-            if (!Gamemode.active.useResources)
-            {
-                // Validity check
-                bool valid = false;
-
-                // Check if resource adds storage
-                if (resource.add && resource.storage) valid = true;
-                else if (resource.resource == CurrencyType.Heat) valid = true;
-                else if (resource.resource == CurrencyType.Power) valid = true;
-
-                // Check if valid
-                if (!valid) continue;
-            }
-            else if (isFree)
-            {
-                // Validity check
-                bool valid = false;
-
-                // Check if resources add storage
-                if (resource.add) valid = true;
-                else if (resource.resource == CurrencyType.Heat) valid = true;
-                else if (resource.resource == CurrencyType.Power) valid = true;
-
-                // Check if valid
-                if (!valid) continue;
-            }
-
-            // Apply resources like usual
-            if (resource.storage)
-            {
-                if (resource.add) active.AddStorage(resource.resource, resource.amount);
-                else active.RemoveStorage(resource.resource, resource.amount);
-            }
-            else
-            {
-                if (resource.add) active.Add(resource.resource, resource.amount, true);
-                else active.Remove(resource.resource, resource.amount, true);
-            }
-        }
-    }
-
-    // Remove a resource based on building
-    public void RevertResources(Buildable buildable, bool refund = false)
-    {
-        // Update resource values promptly
-        foreach (Cost resource in buildable.resources)
-        {
-            // Check if gamemode is using resources
-            if (!Gamemode.active.useResources)
-            {
-                // Validity check
-                bool valid = false;
-
-                // Check if resource adds storage
-                if (resource.add && resource.storage) valid = true;
-                else if (resource.resource == CurrencyType.Heat) valid = true;
-                else if (resource.resource == CurrencyType.Power) valid = true;
-
-                // Check if valid
-                if (!valid) continue;
-            }
-
-            if (resource.storage)
-            {
-                if (resource.add) active.RemoveStorage(resource.resource, resource.amount);
-                else active.AddStorage(resource.resource, resource.amount);
-            }
-            else if (refund || currencies[resource.resource].allowOverflow)
-            {
-                if (resource.add) active.Remove(resource.resource, resource.amount, true);
-                else active.Add(resource.resource, resource.amount, true);
-            }
-        }
     }
 
     // Check a resource amount
@@ -381,6 +358,14 @@ public class Resource : MonoBehaviour
         if (currencies.ContainsKey(type))
             return currencies[type].storage;
         else return 0;
+    }
+
+    // Get currency class
+    public Currency GetCurrency(CurrencyType type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type];
+        else return null;
     }
 
     // Get a resource name

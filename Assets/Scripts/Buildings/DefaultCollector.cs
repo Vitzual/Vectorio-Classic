@@ -65,7 +65,7 @@ public class DefaultCollector : ResourceTile
     public void CollectResources() 
     {
         int amount = TakeResource();
-        Resource.active.Add(type, amount, true);
+        Resource.active.Apply(type, amount, true);
         PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
         isFull = false;
         SetLight();

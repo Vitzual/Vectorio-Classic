@@ -60,8 +60,9 @@ public class InstantiationHandler : MonoBehaviour
             return;
         }
 
-        // Check if resource should be used
-        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.resources)) return;
+        // Check resources if applicable
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.building.resources)) return;
+        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.building.resources)) return;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return;
@@ -94,7 +95,8 @@ public class InstantiationHandler : MonoBehaviour
         SetCells(buildable.building, position, lastBuilding);
 
         // Update resource values promptly
-        Resource.active.ApplyResources(buildable, free);
+        if (!free) Resource.active.ApplyResources(buildable.building.resources);
+        else Resource.active.ApplyOutputsOnly(buildable.building.resources);
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata); 

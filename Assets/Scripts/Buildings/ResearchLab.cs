@@ -22,7 +22,7 @@ public class ResearchLab : BaseTile
     {
         if (!overrideCost)
             foreach (Cost cost in type.cost)
-                if (cost.add) Resource.active.Add(cost.resource, cost.amount, false);
+                if (cost.amount >= 0) Resource.active.Apply(cost.type, cost.amount, false);
 
         researchTech = type;
         boostIcon.gameObject.SetActive(true);
@@ -39,7 +39,7 @@ public class ResearchLab : BaseTile
             Research.ApplyResearch(researchTech, true);
 
             foreach (Cost cost in researchTech.cost)
-                if (cost.add) Resource.active.Remove(cost.resource, cost.amount, false);
+                if (cost.amount >= 0) Resource.active.Apply(cost.type, -cost.amount, false);
 
             boostIcon.gameObject.SetActive(false);
             researchTech = null;
@@ -53,16 +53,16 @@ public class ResearchLab : BaseTile
         {
             foreach (Cost cost in researchTech.cost)
             {
-                if (!cost.add)
+                if (cost.amount <= 0)
                 {
-                    if (Resource.active.currencies[cost.resource].amount >= cost.amount)
+                    if (Resource.active.currencies[cost.type].amount >= cost.amount)
                     {
-                        Resource.active.Remove(cost.resource, cost.amount, true);
+                        Resource.active.Apply(cost.type, -cost.amount, true);
                     }
                     else if (strikes == 0)
                     {
                         Debug.Log("Lab no longer has resources to continue operating, stopping");
-                        Debug.Log("Failed on " + cost.resource);
+                        Debug.Log("Failed on " + cost.type);
                         Events.active.LabDestroyed(this);
 
                         AudioSource.PlayClipAtPoint(boomSound, transform.position, 0.5f);

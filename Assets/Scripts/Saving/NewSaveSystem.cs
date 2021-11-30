@@ -197,9 +197,9 @@ public class NewSaveSystem : MonoBehaviour
         }
 
         // Check resources
-        Resource.active.Add(Resource.CurrencyType.Gold, saveData.gold, true);
-        Resource.active.Add(Resource.CurrencyType.Essence, saveData.essence, true);
-        Resource.active.Add(Resource.CurrencyType.Iridium, saveData.iridium, true);
+        Resource.active.Apply(Resource.CurrencyType.Gold, saveData.gold, true);
+        Resource.active.Apply(Resource.CurrencyType.Essence, saveData.essence, true);
+        Resource.active.Apply(Resource.CurrencyType.Iridium, saveData.iridium, true);
     }
 
     // Delete save file

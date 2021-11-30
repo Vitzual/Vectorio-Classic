@@ -51,15 +51,15 @@ public class MenuButton : MonoBehaviour
         {
             foreach (Cost resource in buildable.resources)
             {
-                if (resource.resource == Resource.CurrencyType.Power)
+                if (resource.type == Resource.CurrencyType.Power)
                     powerIcon.SetActive(true);
-                else if (resource.resource == Resource.CurrencyType.Heat)
+                else if (resource.type == Resource.CurrencyType.Heat)
                     heatIcon.SetActive(true);
-                else if (resource.resource == Resource.CurrencyType.Gold)
+                else if (resource.type == Resource.CurrencyType.Gold)
                     goldIcon.SetActive(true);
-                else if (resource.resource == Resource.CurrencyType.Essence)
+                else if (resource.type == Resource.CurrencyType.Essence)
                     essenceIcon.SetActive(true);
-                else if (resource.resource == Resource.CurrencyType.Iridium)
+                else if (resource.type == Resource.CurrencyType.Iridium)
                     iridiumIcon.SetActive(true);
             }
         }

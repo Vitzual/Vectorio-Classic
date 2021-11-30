@@ -17,12 +17,17 @@ public class BaseTile : BaseEntity
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
         Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
-        // Set health
+        // Set death particle
         if (buildable.building.deathParticle != null)
             particle = buildable.building.deathParticle;
 
+        // Set health
         health = buildable.building.health * Research.healthBoost;
         maxHealth = health;
+
+        // Update storages
+        foreach (Cost cost in buildable.building.resources)
+            if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
     }
 
     public void CheckNearbyEnergizers()
@@ -51,8 +56,7 @@ public class BaseTile : BaseEntity
         }
 
         // Refund cost
-        if (buildable != null)
-            Resource.active.RevertResources(buildable);
+        if (buildable != null) Resource.active.RefundResources(buildable.building.resources);
 
         // Update damage handler
         Events.active.BuildingDestroyed(this);
@@ -65,6 +69,10 @@ public class BaseTile : BaseEntity
             newParticle.trailMaterial = buildable.building.material;
         }
         Destroy(gameObject);
+
+        // Update storages
+        foreach (Cost cost in buildable.building.resources)
+            if (cost.storage) Resource.active.ApplyStorage(cost.type, -cost.amount);
     }
 
     // Get material

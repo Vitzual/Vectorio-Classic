@@ -37,8 +37,8 @@ public class BuildPlans : MonoBehaviour
     public void AddCosts(GhostTile ghost)
     {
         foreach(Cost cost in ghost.buildable.building.resources)
-            if (!cost.storage && tracked.ContainsKey(cost.resource))
-                tracked[cost.resource].Add(cost.amount);
+            if (!cost.storage && tracked.ContainsKey(cost.type))
+                tracked[cost.type].Add(cost.amount);
 
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
@@ -51,8 +51,8 @@ public class BuildPlans : MonoBehaviour
     public void RemoveCosts(GhostTile ghost)
     {
         foreach (Cost cost in ghost.buildable.building.resources)
-            if (!cost.storage && tracked.ContainsKey(cost.resource))
-                tracked[cost.resource].Remove(cost.amount);
+            if (!cost.storage && tracked.ContainsKey(cost.type))
+                tracked[cost.type].Remove(cost.amount);
 
         if (DroneManager.active.ghostTiles.Count == 0)
         {

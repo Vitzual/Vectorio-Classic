@@ -131,15 +131,15 @@ public class ResearchUI : MonoBehaviour
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))
                 consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.CurrencyType.Gold] + " / second\n";
-            else usage.text += "<b>GOLD:</b> 0 / second\n";
+            else consumption.text += "<b>GOLD:</b> 0 / second\n";
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Essence))
                 consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.CurrencyType.Essence] + " / second\n";
-            else usage.text += "<b>ESSENCE:</b> 0 / second\n";
+            else consumption.text += "<b>ESSENCE:</b> 0 / second\n";
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Iridium))
                 consumption.text += "<b>IRIDIUM:</b> " + tech.costs[Resource.CurrencyType.Iridium] + " / second\n";
-            else usage.text += "<b>IRIDIUM:</b> 0 / second\n";
+            else consumption.text += "<b>IRIDIUM:</b> 0 / second\n";
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Power))
                 usage.text += "<b>POWER:</b> " + tech.costs[Resource.CurrencyType.Power] + " input\n";

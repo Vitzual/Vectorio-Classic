@@ -11,8 +11,7 @@ public class DefaultStorage : ResourceTile
     {
         Events.active.StoragePlaced(this);
 
-        if (Resource.active != null)
-            Resource.active.AddStorage(type, Research.resource[type].storageAmount, this);
+        if (Resource.active != null) Resource.active.AddStorageObj(this);
         else Debug.Log("Storage could not successfully add to list");
     }
 
@@ -36,14 +35,14 @@ public class DefaultStorage : ResourceTile
 
             // Add proper amount and return overflow
             PopupHandler.active.CreatePopup(transform.position, type, "+" + (amount - amountToReturn));
-            Resource.active.Add(type, amount - amountToReturn, false);
+            Resource.active.Apply(type, amount - amountToReturn, false);
             return amountToReturn;
         }
         else
         {
             // If does not exceed, add resources and return
             PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
-            Resource.active.Add(type, amount, false);
+            Resource.active.Apply(type, amount, false);
             return 0;
         }
     }
@@ -69,9 +68,7 @@ public class DefaultStorage : ResourceTile
     {
         if (Resource.active != null)
         {
-            Resource.active.Remove(type, amount, false);
-            Resource.active.RemoveStorage(type, Research.resource[type].storageAmount);
-
+            Resource.active.Apply(type, -amount, false);
             if (Resource.storages.Contains(this))
                 Resource.storages.Remove(this);
         }

@@ -64,12 +64,12 @@ public class Menu : MonoBehaviour
         Buildables.ClearRegistry();
 
         // Reset gamemode static variables
-        Gamemode.saveData = null;
+        NewSaveSystem.saveData = null;
         Gamemode.difficulty = null;
-        Gamemode.saveName = "Unnamed Save";
-        Gamemode.savePath = "/world_0.vectorio";
+        NewSaveSystem.saveName = "Unnamed Save";
+        NewSaveSystem.savePath = "/world_0.vectorio";
         Gamemode.seed = "Vectorio";
-        Gamemode.loadGame = false;
+        NewSaveSystem.loadGame = false;
 
         // Reset time scale
         Time.timeScale = 1f;
@@ -218,12 +218,12 @@ public class Menu : MonoBehaviour
             return;
         }
 
-        Gamemode.saveData = button.saveData;
+        NewSaveSystem.saveData = button.saveData;
         Gamemode.difficulty = button.saveData.difficultyData;
-        Gamemode.saveName = button.name.text;
-        Gamemode.savePath = "/world_" + button.pathNumber + ".vectorio";
+        NewSaveSystem.saveName = button.name.text;
+        NewSaveSystem.savePath = "/world_" + button.pathNumber + ".vectorio";
         Gamemode.seed = button.seed;
-        Gamemode.loadGame = true;
+        NewSaveSystem.loadGame = true;
 
         StartGame(button.mode, number);
     }
@@ -239,8 +239,8 @@ public class Menu : MonoBehaviour
     {
         if (number == -1)
         {
-            if (availableSave != -1) Gamemode.savePath = "/world_" + availableSave + ".vectorio";
-            else Gamemode.savePath = "/world_1.vectorio";
+            if (availableSave != -1) NewSaveSystem.savePath = "/world_" + availableSave + ".vectorio";
+            else NewSaveSystem.savePath = "/world_1.vectorio";
         }
 
         loadingScreen.SetActive(true);

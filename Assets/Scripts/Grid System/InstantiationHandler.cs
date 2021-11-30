@@ -110,7 +110,7 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.isSellable = buildable.building.isSellable;
 
         // Create sound effect
-        if (!Gamemode.loadGame && placementSound != null)
+        if (!NewSaveSystem.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 
@@ -135,7 +135,7 @@ public class InstantiationHandler : MonoBehaviour
         lastBuilding.isSellable = buildable.building.isSellable;
 
         // Create sound effect
-        if (!Gamemode.loadGame && placementSound != null)
+        if (!NewSaveSystem.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 

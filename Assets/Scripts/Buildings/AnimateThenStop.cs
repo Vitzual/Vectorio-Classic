@@ -13,7 +13,7 @@ public class AnimateThenStop : MonoBehaviour
     // Check if loading
     public void Start()
     {
-        animEnabled = !Gamemode.loadGame;
+        animEnabled = !NewSaveSystem.loadGame;
     }
 
     // Update is called once per frame

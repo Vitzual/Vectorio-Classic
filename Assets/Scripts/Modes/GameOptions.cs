@@ -57,7 +57,7 @@ public class GameOptions : MonoBehaviour
     // Set difficulty data
     public void CreateGame()
     {
-        Gamemode.saveName = name.text;
+        NewSaveSystem.saveName = name.text;
 
         if (mode != "Creative")
         {

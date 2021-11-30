@@ -6,8 +6,14 @@ using UnityEngine;
 
 public class NewSaveSystem : MonoBehaviour
 {
+    // Save data
+    public static SaveData saveData;
+    public static bool loadGame = false;
+    public static string saveName = "Unnamed Save";
+    public static string savePath = "/world_1.vectorio";
+
     // Save a game
-    public static SaveData SaveGame(string name)
+    public static SaveData SaveGame()
     {
         // Create new save data instance
         SaveData saveData = new SaveData();
@@ -92,7 +98,7 @@ public class NewSaveSystem : MonoBehaviour
         saveData.iridium = Resource.active.GetAmount(Resource.CurrencyType.Iridium);
 
         // Set string variables
-        saveData.worldName = Gamemode.saveName;
+        saveData.worldName = saveName;
         saveData.worldMode = Gamemode.active.name;
         saveData.worldSeed = Gamemode.seed;
         saveData.worldVersion = Gamemode.active.version;
@@ -101,17 +107,16 @@ public class NewSaveSystem : MonoBehaviour
 
         // Convert to json and save
         string data = JsonUtility.ToJson(saveData);
-        File.WriteAllText(Application.persistentDataPath + name, data);
+        File.WriteAllText(Application.persistentDataPath + saveName, data);
 
         // Return newly create save data
         return saveData;
     }
 
     // Load a game 
-    public static void LoadGame(SaveData saveData)
+    public static void LoadGame()
     {
         // Set string variables
-        Gamemode.saveName = saveData.worldName;
         Gamemode.seed = saveData.worldSeed;
         Gamemode.time = saveData.worldPlaytime;
 

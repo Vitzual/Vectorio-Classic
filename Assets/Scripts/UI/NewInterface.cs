@@ -122,8 +122,8 @@ public class NewInterface : MonoBehaviour
             Time.timeScale = 1f;
 
             // Load last save
-            if (Gamemode.saveData != null)
-                Gamemode.loadGame = true;
+            if (NewSaveSystem.saveData != null)
+                NewSaveSystem.loadGame = true;
             loadingScreen.SetActive(true);
             SceneManager.LoadScene("Survival");
         }

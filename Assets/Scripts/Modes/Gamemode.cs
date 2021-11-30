@@ -11,12 +11,8 @@ public class Gamemode : MonoBehaviour
     // Active instance
     public static Gamemode active;
     public static Stage stage;
-    public static SaveData saveData;
-    public static bool loadGame = false;
 
     // Static save variables
-    public static string saveName = "Unnamed Save";
-    public static string savePath = "/world_1.vectorio";
     public static DifficultyData difficulty;
     public static string seed = "Vectorio";
     public static float time = 0;
@@ -51,7 +47,7 @@ public class Gamemode : MonoBehaviour
     }
 
     // Setup game
-    public void Start()
+    public virtual void Start()
     {
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
@@ -77,10 +73,10 @@ public class Gamemode : MonoBehaviour
         // Load game 
         try
         {
-            if (loadGame && saveData != null)
+            if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
             {
                 Resource.storages = new List<DefaultStorage>();
-                NewSaveSystem.LoadGame(saveData);
+                NewSaveSystem.LoadGame();
                 Border.UpdateStage();
                 Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
             }
@@ -91,14 +87,14 @@ public class Gamemode : MonoBehaviour
         }
         catch { Debug.Log("Game ran into problem while loading!"); }
 
-        loadGame = false;
+        NewSaveSystem.loadGame = false;
 
         // Invoke auto saving
         InvokeRepeating("AutoSave", 360f, 360f);
     }
     
     // Update playtime
-    public void Update()
+    public virtual void Update()
     {
         // Increment time
         time += Time.deltaTime;
@@ -117,13 +113,13 @@ public class Gamemode : MonoBehaviour
     }
 
     // Save game
-    public void SaveGame()
+    public virtual void SaveGame()
     {
-        saveData = NewSaveSystem.SaveGame(savePath);
+        NewSaveSystem.saveData = NewSaveSystem.SaveGame();
     }
 
     // Auto save
-    public void AutoSave()
+    public virtual void AutoSave()
     {
         if (Settings.autoSave && GuardianHandler.active.guardians.Count == 0)
         {
@@ -139,12 +135,12 @@ public class Gamemode : MonoBehaviour
         naturalHeatGrowth = difficulty.naturalHeatGrowth;
 
         #pragma warning disable CS0612
-        if (!loadGame && generateWorld) WorldGenerator.active.GenerateWorldData(seed);
+        if (!NewSaveSystem.loadGame && generateWorld) WorldGenerator.active.GenerateWorldData(seed);
         #pragma warning restore CS0612
     }
 
     // Setup starting resources
-    public void SetupStartingResources()
+    public virtual void SetupStartingResources()
     {
         // Adjust power storage
         Resource.active.ApplyStorage(Resource.CurrencyType.Power, 5000);

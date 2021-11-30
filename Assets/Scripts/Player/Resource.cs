@@ -200,7 +200,7 @@ public class Resource : MonoBehaviour
                     }
                 }
             }
-            else if (!Gamemode.loadGame)
+            else if (!NewSaveSystem.loadGame)
             {
                 storages.RemoveAt(i);
                 i--;

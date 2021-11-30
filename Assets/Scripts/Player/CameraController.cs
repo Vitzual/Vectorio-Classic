@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     public bool isMenu;
 
     // Resolution layers
-    protected bool mapEnabled = false;
+    public static bool mapEnabled = false;
     public LayerMask lowresMap;
     public LayerMask lowResLayers;
     public LayerMask highResLayers;

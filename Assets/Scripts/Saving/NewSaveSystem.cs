@@ -107,7 +107,7 @@ public class NewSaveSystem : MonoBehaviour
 
         // Convert to json and save
         string data = JsonUtility.ToJson(saveData);
-        File.WriteAllText(Application.persistentDataPath + saveName, data);
+        File.WriteAllText(Application.persistentDataPath + savePath, data);
 
         // Return newly create save data
         return saveData;

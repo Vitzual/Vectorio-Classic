@@ -5,9 +5,12 @@ using UnityEngine;
 public class GunshipTurret : DefaultTurret
 {
     // Parent
-    public GunshipDrone parent;
+    [HideInInspector]
+    public DroneController parent;
+    public SpriteRenderer model;
     public bool manualFire = false;
     public bool canFire = false;
+    public bool lockTurret = false;
 
     // Get input events
     public void Start()
@@ -25,13 +28,16 @@ public class GunshipTurret : DefaultTurret
     }
 
     // Setup the drone
-    public override void Setup() { /* Don't do anything */ }
+    public override void Setup() 
+    {
+        lockTurret = parent.gunship.lockTurret;
+    }
 
     // Manual target
     public void ManualFire()
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalcRotation(position);
+        if (!lockTurret) CalcRotation(position);
 
         if (canFire)
         {

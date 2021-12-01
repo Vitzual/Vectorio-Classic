@@ -11,6 +11,7 @@ public class GunshipTurret : DefaultTurret
     public bool manualFire = false;
     public bool canFire = false;
     public bool lockTurret = false;
+    public bool useSound = false;
 
     // Get input events
     public void Start()
@@ -50,6 +51,10 @@ public class GunshipTurret : DefaultTurret
     // Override bullet creation
     public override void CreateBullet(Vector2 position)
     {
+        // Create sound
+        if (turret.sound != null && useSound)
+            AudioSource.PlayClipAtPoint(turret.sound, transform.position, Settings.sound);
+
         // Create bullet
         GameObject holder = Instantiate(turret.bullet.gameObject, position, cannon.rotation);
         holder.transform.rotation = cannon.rotation;
@@ -57,6 +62,13 @@ public class GunshipTurret : DefaultTurret
 
         // Set bullet variables
         DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
+
+        // Dependent on the bullet, register under the correct master script
+        if (turret.bulletLock)
+        {
+            bullet.target = target;
+            bullet.tracking = true;
+        }
 
         // Setup bullet
         if (turret.useBulletSprite) bullet.Setup(turret, bulletModel);

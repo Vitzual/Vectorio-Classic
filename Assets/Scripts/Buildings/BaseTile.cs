@@ -44,6 +44,7 @@ public class BaseTile : BaseEntity
         {
             DamageEntity(enemy.damage);
             if (health > 0) enemy.DestroyEntity();
+            else enemy.DamageEntity(buildable.building.health);
         }
     }
 

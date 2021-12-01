@@ -10,7 +10,7 @@ public class DefaultEnemy : BaseEntity
     public float damage;
     [HideInInspector] public bool isMenu;
     [HideInInspector] public Variant variant;
-    [HideInInspector] public BaseTile target;
+    [HideInInspector] public BaseEntity target;
     public Transform rotator;
     public bool gradualRotation = false;
     public bool purified = false;
@@ -133,7 +133,7 @@ public class DefaultEnemy : BaseEntity
     }
 
     // Set target
-    public void SetTarget(BaseTile tile, bool gradual)
+    public void SetTarget(BaseEntity tile, bool gradual)
     {
         target = tile;
         gradualRotation = gradual;

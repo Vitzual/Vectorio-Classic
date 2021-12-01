@@ -33,6 +33,7 @@ public class EnemyHandler : MonoBehaviour
         // Get active guardian
         if (GuardianHandler.active == null)
             Debug.Log("Guardian Handler is missing from scene! Boss battles will not fully work!");
+        if (active == null) active = this;
     }
 
     // Handles enemy movement every frame
@@ -42,36 +43,7 @@ public class EnemyHandler : MonoBehaviour
 
         // Move enemies each frame
         if (isMenu) MoveMenuEnemies();
-        else
-        {
-            // Reset scan
-            scan = true;
-
-            // Move enemies each frame towards their target
-            for (int a = 0; a < enemies.Count; a++)
-            {
-                if (enemies[a] != null)
-                {
-                    if (enemies[a].target != null)
-                    {
-                        enemies[a].MoveTowards(enemies[a].transform, enemies[a].target.transform);
-                    }
-                    else if (scan)
-                    {
-                        BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
-
-                        if (building != null)
-                            enemies[a].SetTarget(building, false);
-                        else scan = false;
-                    }
-                }
-                else
-                {
-                    enemies.RemoveAt(a);
-                    a--;
-                }
-            }
-        }
+        else MoveEnemies();
     }
 
     public DefaultEnemy GetStrongestEnemy()
@@ -99,6 +71,38 @@ public class EnemyHandler : MonoBehaviour
         return strongest;
     }
 
+    // Move normal enemies
+    public virtual void MoveEnemies()
+    {
+        // Reset scan
+        scan = true;
+
+        // Move enemies each frame towards their target
+        for (int a = 0; a < enemies.Count; a++)
+        {
+            if (enemies[a] != null)
+            {
+                if (enemies[a].target != null)
+                {
+                    enemies[a].MoveTowards(enemies[a].transform, enemies[a].target.transform);
+                }
+                else if (scan)
+                {
+                    BaseTile building = InstantiationHandler.active.GetClosestBuilding(Vector2Int.RoundToInt(enemies[a].transform.position));
+
+                    if (building != null)
+                        enemies[a].SetTarget(building, false);
+                    else scan = false;
+                }
+            }
+            else
+            {
+                enemies.RemoveAt(a);
+                a--;
+            }
+        }
+    }
+
     // Move menu enemies
     public void MoveMenuEnemies()
     {
@@ -119,7 +123,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Create a new active enemy instance
-    public void CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
+    public virtual void CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
     {
         // Create the tile
         GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
@@ -140,7 +144,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Destroys all active enemies
-    public void DestroyAllEnemies()
+    public virtual void DestroyAllEnemies()
     {
         for (int i = 0; i < enemies.Count; i++)
             Destroy(enemies[i].gameObject);
@@ -148,7 +152,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Updates the active variant (Survival only)
-    public void UpdateVariant()
+    public virtual void UpdateVariant()
     {
         // Get heat currency
         Resource.Currency currency = Resource.active.currencies[Resource.CurrencyType.Heat];

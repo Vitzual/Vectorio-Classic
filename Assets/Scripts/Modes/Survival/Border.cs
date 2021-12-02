@@ -29,8 +29,8 @@ public class Border : MonoBehaviour
     public List<SpriteRenderer> borderColors;
     public List<SpriteRenderer> fillColors;
 
-    // Grab event
-    public void Start()
+    // Awake
+    public void Awake()
     {
         borders = _borders;
 
@@ -40,7 +40,11 @@ public class Border : MonoBehaviour
         west = -borderStartSize;
 
         SetBorderPositions();
+    }
 
+    // Grab event
+    public void Start()
+    {
         Events.active.onChangeBorderColor += UpdateBorderColor;
     }
 

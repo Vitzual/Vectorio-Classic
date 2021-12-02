@@ -11,6 +11,7 @@ public class GunshipDrone : Drone
     public List<GunshipTurret> turrets = new List<GunshipTurret>();
     public List<DefaultEnemy> targets = new List<DefaultEnemy>();
     public Gunship gunship;
+    public float rotation;
 
     // Doors closed
     private bool doorsClosed = false;
@@ -58,7 +59,7 @@ public class GunshipDrone : Drone
     {
         float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, gunship.rotationRate * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotation * Time.deltaTime);
     }
 
     // Get new target

@@ -47,7 +47,7 @@ public class Drone : MonoBehaviour
     // Adjust size
     public void Start()
     {
-        transform.localScale = new Vector3(0.4f, 0.4f, 0f);
+        if (!ApplySettings()) transform.localScale = new Vector3(0.4f, 0.4f, 0f);
     }
 
     // Specifies if the drone should add a certain target
@@ -157,6 +157,12 @@ public class Drone : MonoBehaviour
     public virtual bool CheckTarget()
     {
         return true;
+    }
+
+    // Free virtual method
+    public virtual bool ApplySettings()
+    {
+        return false;
     }
 
     // Destroy drone method

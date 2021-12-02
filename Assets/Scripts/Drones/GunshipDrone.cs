@@ -13,6 +13,7 @@ public class GunshipDrone : Drone
 
     // Doors closed
     private bool doorsClosed = false;
+    public bool isMenuDrone = false;
 
     // Setup the drone
     public override void ExitPort()
@@ -88,5 +89,19 @@ public class GunshipDrone : Drone
             foreach (GunshipTurret turret in turrets)
                 turret.RemoveTarget(enemy);
         }
+    }
+
+    // Override target
+    public override bool ApplySettings()
+    {
+        // Check if menu drone
+        if (isMenuDrone)
+        {
+            // Add drone to active drone list
+            stage = Stage.MovingToTarget;
+            DroneManager.active.AddDrone(this);
+        }
+        doorsClosed = true;
+        return true;
     }
 }

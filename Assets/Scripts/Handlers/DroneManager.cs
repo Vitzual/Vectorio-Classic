@@ -50,6 +50,9 @@ public class DroneManager : MonoBehaviour
 
     // Drones actively moving
     public List<Drone> activeDrones;
+
+    // Use fixed updating
+    public bool useFixedUpdate = false;
     
     // Add a ghost
     public void AddGhost(GhostTile ghost)
@@ -79,7 +82,20 @@ public class DroneManager : MonoBehaviour
     // Move drones
     public void Update()
     {
-        if (Settings.paused) return;
+        if (Settings.paused || useFixedUpdate) return;
+
+        UpdateConstructionDrones();
+        UpdateResourceDrones();
+        UpdateActiveDrones();
+
+        if (overrideResourceCheck)
+            overrideResourceCheck = false;
+    }
+
+    // Move drones
+    public void FixedUpdate()
+    {
+        if (Settings.paused || !useFixedUpdate) return;
 
         UpdateConstructionDrones();
         UpdateResourceDrones();

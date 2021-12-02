@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     public bool isMenu;
     public bool enableFreecam;
     public Transform target;
+    public Vector2 offset;
 
     // Resolution layers
     public static bool mapEnabled = false;
@@ -121,7 +122,7 @@ public class CameraController : MonoBehaviour
         }
         else if (target != null)
         {
-            cameraRB.position = target.position;
+            cameraRB.position = new Vector2(target.position.x + offset.x, target.position.y + offset.y);
         }
 
         // Reset movement variable

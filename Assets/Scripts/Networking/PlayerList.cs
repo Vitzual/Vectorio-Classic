@@ -3,6 +3,8 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using HeathenEngineering.SteamworksIntegration;
 
 public class PlayerList : MonoBehaviour
 {
@@ -18,21 +20,21 @@ public class PlayerList : MonoBehaviour
 
     public void UpdateMaxPlayers()
     {
-        maxPlayersSlider.GetComponentInChildren<TextMeshProUGUI>().text = $"Max Friends ({(int)maxPlayersSlider.value})";
+        maxPlayersSlider.GetComponentInChildren<TextMeshProUGUI>().text = $"Max Friends ({(int)maxPlayersSlider.mainSlider.value})";
     }
 
     public void UpdateFriendsList()
     {
-        List<UserData> friends = SortFriendsList(SteamSettings.Client.ListFriends());
+        //List<UserData> friends = SortFriendsList(Steamworks.SteamFriends);
 
-        foreach (UserData friend in friends)
-        {
+        //foreach (UserData friend in friends)
+        //{
             JoinButton button = Instantiate(joinButton.gameObject, Vector3.zero, Quaternion.identity).GetComponent<JoinButton>();
-            button.SetUserData(friend);
+        //    button.SetUserData(friend);
             button.UpdateUserData();
             button.GetComponent<RectTransform>().localScale = new Vector3(.8f, .8f, .8f);
             button.transform.SetParent(joinList);
-        }
+        //}
     }
 
     private List<UserData> SortFriendsList(List<UserData> friends)
@@ -41,7 +43,7 @@ public class PlayerList : MonoBehaviour
         List<UserData> sorted = new List<UserData>();
 
         // Put list in alphabetical order
-        unsorted = unsorted.OrderBy(friend => friend.DisplayName).ToList();
+        //unsorted = unsorted.OrderBy(friend => friend.DisplayName).ToList();
 
         // Get friends currently in-game
         for (int i = 0; i < unsorted.Count; i++)

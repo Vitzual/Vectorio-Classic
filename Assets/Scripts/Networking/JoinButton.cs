@@ -23,7 +23,6 @@ public class JoinButton : MonoBehaviour
     {
         button.buttonText = userData.Name;
         //image.sprite = Sprite.Create(userData.avatar, image.sprite.rect, Vector2.zero);
-        clientOf = userData.GetRichPresenceValue("clientOf");
 
         // Set colors based on State
         if (clientOf != "")
@@ -59,7 +58,7 @@ public class JoinButton : MonoBehaviour
         }
         else
         {
-            Debug.Log($"{userData.DisplayName} is not in a game!");
+            Debug.Log($"{userData.Name} is not in a game!");
         }
     }
 }

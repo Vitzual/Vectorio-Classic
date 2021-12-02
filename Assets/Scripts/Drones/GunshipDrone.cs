@@ -10,6 +10,7 @@ public class GunshipDrone : Drone
     // Start is called before the first frame update
     public List<GunshipTurret> turrets = new List<GunshipTurret>();
     public List<DefaultEnemy> targets = new List<DefaultEnemy>();
+    public Gunship gunship;
 
     // Doors closed
     private bool doorsClosed = false;
@@ -44,7 +45,7 @@ public class GunshipDrone : Drone
         if (target != null)
         {
             RotateToTarget();
-            transform.Translate(Vector3.right * 10f * Time.deltaTime);
+            transform.Translate(Vector3.right * gunship.moveSpeed * Time.deltaTime);
         }
         else FindNewTarget();
 
@@ -57,7 +58,7 @@ public class GunshipDrone : Drone
     {
         float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 7f * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, gunship.rotationRate * Time.deltaTime);
     }
 
     // Get new target

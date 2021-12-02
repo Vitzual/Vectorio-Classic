@@ -44,6 +44,13 @@ public class Border : MonoBehaviour
         Events.active.onChangeBorderColor += UpdateBorderColor;
     }
 
+    // Toggle border objects
+    public static void ToggleBorder(bool mode)
+    {
+        foreach (Transform border in borders)
+            border.gameObject.SetActive(mode);
+    }
+
     // Set stage
     public static void UpdateStage()
     {

@@ -5,14 +5,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System;
 using Michsky.UI.ModernUIPack;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.Rendering;
 
 public class Menu : MonoBehaviour
 {
     // Active instance
     public static Menu active;
-    public PostProcessLayer volume;
 
     // Button actions enumerator
     public enum ButtonActions
@@ -63,9 +60,6 @@ public class Menu : MonoBehaviour
     // Start method
     public void Start()
     {
-        // Enable DOF
-        ToggleDepthOfField(true);
-
         // Clear registry
         Buildables.ClearRegistry();
 
@@ -111,27 +105,6 @@ public class Menu : MonoBehaviour
             {
                 cameraMoving = false;
                 EnableMainMenu();
-            }
-        }
-    }
-
-    // Disable depth of field
-    public void ToggleDepthOfField(bool on)
-    {
-        // Iterate through all active stuff
-        List<PostProcessVolume> volList = new List<PostProcessVolume>();
-        PostProcessManager.instance.GetActiveVolumes(volume, volList, true, true);
-        
-        foreach (PostProcessVolume vol in volList)
-        {
-            PostProcessProfile ppp = vol.profile;
-            if (ppp)
-            {
-                DepthOfField dph;
-                if (ppp.TryGetSettings<DepthOfField>(out dph))
-                {
-                    dph.enabled.value = on;
-                }
             }
         }
     }
@@ -292,7 +265,6 @@ public class Menu : MonoBehaviour
             switch(button.action)
             {
                 case ButtonActions.LoadScene:
-                    ToggleDepthOfField(false);
                     SceneManager.LoadScene(button.argument);
                     break;
                 case ButtonActions.OpenLink:

@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class OpenMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject steamworksBehavior;
+
     public CanvasGroup thing;
     public int delay = 500;
     public float adjuster = 1f;
 
     public void Start()
     {
+        DontDestroyOnLoad(steamworksBehavior);
         InvokeRepeating("Lower", 0f, 0.01f);
     }
 

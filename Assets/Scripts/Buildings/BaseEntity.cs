@@ -1,9 +1,9 @@
 using UnityEngine;
 //using Mirror;
 using System.Collections.Generic;
+using Mirror;
 
-
-public class BaseEntity : MonoBehaviour, IDamageable
+public class BaseEntity : NetworkBehaviour, IDamageable
 {
     // IDamageable interface variables
     public float health { get; set; }

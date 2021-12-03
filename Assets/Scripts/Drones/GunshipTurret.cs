@@ -37,6 +37,12 @@ public class GunshipTurret : DefaultTurret
     // Manual target
     public void ManualFire()
     {
+        if (cannon == null)
+        {
+            InputEvents.active.onLeftMousePressed -= ManualFire;
+            return;
+        }
+
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (!lockTurret) CalcRotation(position);
 

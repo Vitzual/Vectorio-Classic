@@ -32,6 +32,7 @@ public class CameraController : MonoBehaviour
     private static float targetZoom;
     public float zoomFactor = 150f;
     public float zoomSpeed = 40;
+    public float lerpSpeed = 4f;
 
     // Grid variables
     private bool gridActive = true;
@@ -122,12 +123,17 @@ public class CameraController : MonoBehaviour
         }
         else if (target != null)
         {
-            cameraRB.position = new Vector2(target.position.x + offset.x, target.position.y + offset.y);
+            Vector2 position = new Vector2(target.position.x + offset.x, target.position.y + offset.y);
+            cameraRB.position = Vector3.Lerp(cam.transform.position, position, lerpSpeed * Time.deltaTime);
         }
 
         // Reset movement variable
         allowMovement = true;
     }
+
+    // Change camera lerp offsets
+    public void ChangeOffsetX(float amount) { offset = new Vector2(amount, offset.y); }
+    public void ChangeOffsetY(float amount) { offset = new Vector2(offset.x, amount); }
 
     public void EnableAllLayers()
     {

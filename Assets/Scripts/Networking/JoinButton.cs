@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class JoinButton : MonoBehaviour
 {
-    public ButtonManagerBasic button;
+    public ButtonManager button;
     public Image image;
     [SerializeField] public TextMeshProUGUI session;
     private UserData userData;

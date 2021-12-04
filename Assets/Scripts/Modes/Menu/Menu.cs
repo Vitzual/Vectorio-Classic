@@ -19,8 +19,12 @@ public class Menu : MonoBehaviour
         Exit
     }
 
+    // Steam friends list
+    public SteamList steamList;
+
     // Camera target
     public Camera cam;
+    public GameObject background;
     [HideInInspector]
     public Transform camTarget;
     public Transform newSaveLocation, mainLocation;
@@ -87,6 +91,7 @@ public class Menu : MonoBehaviour
             buttons.Add(button.buttonName, button);
         _buttons = new List<MenuButton>();
 
+        background.SetActive(true);
         CheckSaves();
     }
 
@@ -107,6 +112,12 @@ public class Menu : MonoBehaviour
                 EnableMainMenu();
             }
         }
+    }
+
+    // Load online friends
+    public void GenerateFriendsList()
+    {
+        steamList.UpdateFriendsList();
     }
 
     // Start new game

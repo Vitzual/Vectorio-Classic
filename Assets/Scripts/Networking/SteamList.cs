@@ -7,11 +7,18 @@ using UnityEngine;
 
 public class SteamList : MonoBehaviour
 {
+    public List<Transform> activeButtons = new List<Transform>();
     public JoinButton joinButton;
     public Transform joinList;
 
     public void UpdateFriendsList()
     {
+        // Reset old list
+        if (activeButtons != null)
+            foreach (Transform obj in activeButtons)
+                Recycler.AddRecyclable(obj);
+        activeButtons = new List<Transform>();
+
         List<UserData> friends = SortFriendsList(Friends.Client.GetFriends(Steamworks.EFriendFlags.k_EFriendFlagAll).ToList());
 
         foreach (UserData friend in friends)
@@ -19,8 +26,9 @@ public class SteamList : MonoBehaviour
             JoinButton button = Instantiate(joinButton.gameObject, Vector3.zero, Quaternion.identity).GetComponent<JoinButton>();
             button.SetUserData(friend);
             button.UpdateUserData();
-            button.GetComponent<RectTransform>().localScale = new Vector3(.8f, .8f, .8f);
             button.transform.SetParent(joinList);
+            button.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            activeButtons.Add(button.transform);
         }
     }
 

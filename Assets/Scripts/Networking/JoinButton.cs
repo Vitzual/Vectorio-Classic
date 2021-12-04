@@ -1,5 +1,6 @@
 using HeathenEngineering.SteamworksIntegration;
 using Michsky.UI.ModernUIPack;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,8 +10,8 @@ using UnityEngine.UI;
 public class JoinButton : MonoBehaviour
 {
     public ButtonManager button;
-    public Image image;
-    [SerializeField] public TextMeshProUGUI session;
+    public List<Image> images;
+    [SerializeField] public List<TextMeshProUGUI> sessions;
     private UserData userData;
     public string clientOf;
 
@@ -22,29 +23,29 @@ public class JoinButton : MonoBehaviour
     public void UpdateUserData()
     {
         button.buttonText = userData.Name;
-        //image.sprite = Sprite.Create(userData.avatar, image.sprite.rect, Vector2.zero);
+        foreach(Image img in images)
+            img.sprite = Sprite.Create(userData.Avatar, img.sprite.rect, Vector2.zero);
 
         // Set colors based on State
         if (clientOf != "")
-        {
-            session.text = "In Game";
-        }
+            foreach (TextMeshProUGUI text in sessions)
+                text.text = "In Game";
+
         else if (userData.GameInfo.m_gameID.AppID().Equals(SteamSettings.ApplicationId))
-        {
-            session.text = "In Menus";
-        }
+            foreach (TextMeshProUGUI text in sessions)
+                text.text = "In Menus";
+
         else if (userData.State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateOnline))
-        {
-            session.text = "Online";
-        }
+            foreach (TextMeshProUGUI text in sessions)
+                text.text = "Online";
+
         else if (userData.State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateAway))
-        {
-            session.text = "Away";
-        }
+            foreach (TextMeshProUGUI text in sessions)
+                text.text = "Away";
+
         else
-        {
-            session.text = "Offline";
-        }
+            foreach (TextMeshProUGUI text in sessions)
+                text.text = "Offline";
 
         button.UpdateUI();
     }

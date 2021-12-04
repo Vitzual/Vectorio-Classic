@@ -17,15 +17,22 @@ public class JoinButton : MonoBehaviour
 
     public void SetUserData(UserData userData)
     {
+        // Set userData
         this.userData = userData;
+
+        // Set avatar
+        userData.LoadAvatar((image) =>
+        {
+            foreach (Image img in images)
+                img.sprite = Sprite.Create(image, new Rect(0, 0, 184, 184), new Vector2(0.5f, 0.5f), 100);
+        });
+
+        // Set name
+        button.buttonText = userData.Name;
     }
 
     public void UpdateUserData()
     {
-        button.buttonText = userData.Name;
-        foreach(Image img in images)
-            img.sprite = Sprite.Create(userData.Avatar, img.sprite.rect, Vector2.zero);
-
         // Set colors based on State
         if (clientOf != "")
             foreach (TextMeshProUGUI text in sessions)

@@ -7,28 +7,41 @@ using UnityEngine;
 
 public class SteamList : MonoBehaviour
 {
-    public List<Transform> activeButtons = new List<Transform>();
+    private Dictionary<UserData, JoinButton> activeButtons = new Dictionary<UserData, JoinButton>();
+    private List<UserData> friendList = new List<UserData>();
     public JoinButton joinButton;
     public Transform joinList;
+    public bool generated = false;
 
     public void UpdateFriendsList()
     {
-        // Reset old list
-        if (activeButtons != null)
-            foreach (Transform obj in activeButtons)
-                Recycler.AddRecyclable(obj);
-        activeButtons = new List<Transform>();
-
-        List<UserData> friends = SortFriendsList(Friends.Client.GetFriends(Steamworks.EFriendFlags.k_EFriendFlagAll).ToList());
-
-        foreach (UserData friend in friends)
+        if (!generated)
         {
-            JoinButton button = Instantiate(joinButton.gameObject, Vector3.zero, Quaternion.identity).GetComponent<JoinButton>();
-            button.SetUserData(friend);
-            button.UpdateUserData();
-            button.transform.SetParent(joinList);
-            button.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
-            activeButtons.Add(button.transform);
+            friendList = SortFriendsList(Friends.Client.GetFriends(Steamworks.EFriendFlags.k_EFriendFlagAll).ToList());
+
+            foreach (UserData friend in friendList)
+            {
+                JoinButton button = Instantiate(joinButton.gameObject, Vector3.zero, Quaternion.identity).GetComponent<JoinButton>();
+                button.SetUserData(friend);
+                button.UpdateUserData();
+                button.transform.SetParent(joinList);
+                button.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+                activeButtons.Add(friend, button);
+            }
+            generated = true;
+        }
+        else
+        {
+            // Re-sort friends list and organize
+            friendList = SortFriendsList(friendList);
+            for (int i = 0; i < friendList.Count; i++)
+            {
+                if (activeButtons.ContainsKey(friendList[i]))
+                {
+                    activeButtons[friendList[i]].UpdateUserData();
+                    activeButtons[friendList[i]].button.transform.SetSiblingIndex(i);
+                }
+            }
         }
     }
 

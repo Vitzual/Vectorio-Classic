@@ -91,7 +91,7 @@ public class Menu : MonoBehaviour
             buttons.Add(button.buttonName, button);
         _buttons = new List<MenuButton>();
 
-        background.SetActive(true);
+        Instantiate(background, Vector2.zero, Quaternion.identity);
         CheckSaves();
     }
 

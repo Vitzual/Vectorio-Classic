@@ -55,6 +55,8 @@ public class Gamemode : MonoBehaviour
     // Setup game
     public virtual void Setup()
     {
+        Debug.Log("Override to setup game functionality!");
+
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
         LowresMap.active.Setup();
@@ -73,30 +75,7 @@ public class Gamemode : MonoBehaviour
             stage = _stage;
         }
 
-        // Initialize gamemode
-        InitGamemode();
-
-        // Load game 
-        try
-        {
-            if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
-            {
-                Resource.storages = new List<DefaultStorage>();
-                NewSaveSystem.LoadGame();
-                Border.UpdateStage();
-                Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
-            }
-            else ResearchUI.active.Setup();
-
-            // Setup starting resources
-            SetupStartingResources();
-        }
-        catch { Debug.Log("Game ran into problem while loading!"); }
-
         NewSaveSystem.loadGame = false;
-
-        // Invoke auto saving
-        InvokeRepeating("AutoSave", 360f, 360f);
     }
     
     // Update playtime

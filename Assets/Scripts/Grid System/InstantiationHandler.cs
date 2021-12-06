@@ -62,32 +62,39 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public void CreateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
+    public BaseEntity CreateBuilding(string buildable_ID, Vector2 position, Quaternion rotation, int metadata = -1)
     {
+        // Get building SO via ID request
+        Building building = ScriptableLoader.buildings[buildable_ID];
+        if (building == null) return null;
+
+        // Get buildable via building SO
+        Buildable buildable = Buildables.RequestBuildable(building);
+        if (buildable == null) return null;
+
         // Determine if the building is free
         bool isFree = Resource.active.CheckFreebie(buildable);
 
-        // Get buildable
-        if (buildable == null)
-        {
-            Debug.Log("Could not retrieve buildable " + buildable.building.name);
-            return;
-        }
-
         // Check resources if applicable
-        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.building.resources)) return;
-        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.building.resources)) return;
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.building.resources)) return null;
+        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.building.resources)) return null;
 
         // Check to make sure the tiles are not being used
-        if (!CheckTiles(buildable.building, position)) return;
+        if (!CheckTiles(buildable.building, position)) return null;
 
         // Instantiate the object like usual
-        if (Gamemode.active.useDroneConstruction) RpcInstatiateGhost(buildable, position, rotation, metadata);
-        else RpcInstantiateBuilding(buildable, position, rotation, false, isFree, metadata, -1);
+        if (Gamemode.active.useDroneConstruction) return RpcInstatiateGhost(buildable, position, rotation, metadata);
+        else
+        {
+            // Update resource values promptly
+            if (!isFree) Resource.active.ApplyResources(buildable.building.resources);
+            else Resource.active.ApplyOutputsOnly(buildable.building.resources);
+            return RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
+        }
     }
 
     // CALLED BY SYNCER CLASS
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost, bool outputsOnly, int metadata, float health)
+    public BaseEntity RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -97,13 +104,6 @@ public class InstantiationHandler : MonoBehaviour
 
         // Set the tiles on the grid class
         SetCells(buildable.building, position, lastBuilding);
-
-        // Update resource values promptly
-        if (!isGhost)
-        {
-            if (!outputsOnly) Resource.active.ApplyResources(buildable.building.resources);
-            else Resource.active.ApplyOutputsOnly(buildable.building.resources);
-        }
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata); 
@@ -119,10 +119,13 @@ public class InstantiationHandler : MonoBehaviour
         // Create sound effect
         if (!NewSaveSystem.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
+
+        // Return building
+        return lastBuilding;
     }
 
     // CALLED BY SYNCER CLASS
-    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
+    public BaseEntity RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
@@ -134,6 +137,9 @@ public class InstantiationHandler : MonoBehaviour
 
         // Set the tiles on the grid class
         SetCells(buildable.building, position, holder, true);
+
+        // Return ghost
+        return holder;
     }
 
     // Sets cells

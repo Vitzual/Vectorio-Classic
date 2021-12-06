@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
         // Generate buildables
         for(int i = 0; i < entities.Length; i++)
         {
+            if (!entities[i].display) return;
             int index = (int)entities[i].inventoryHeader;
 
             if (index >= 0 && index < lists.Count)

@@ -33,6 +33,8 @@ public class Entity : IdentifiableScriptableObject
     public int inventoryIndex;
     [FoldoutGroup("Inventory Variables")]
     public Unlockable unlockable;
+    [FoldoutGroup("Inventory Variables")]
+    public bool display = true;
 
     // Grid variables
     [FoldoutGroup("Grid Variables")]

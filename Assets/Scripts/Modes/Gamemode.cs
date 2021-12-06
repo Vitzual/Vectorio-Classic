@@ -12,13 +12,13 @@ public class Gamemode : MonoBehaviour
     public static Gamemode active;
     public static Stage stage;
 
+    // Network handlers
+    public Syncer networkSync;
+
     // Static save variables
     public static DifficultyData difficulty;
     public static string seed = "Vectorio";
     public static float time = 0;
-
-    // Create instantion handler
-    public GameObject[] handlers;
 
     // Gamemode information
     [Header("Gamemode Info")]
@@ -47,17 +47,15 @@ public class Gamemode : MonoBehaviour
     {
         // Get active instance
         active = this;
-
-        // Create handlers
-        //Instantiate(instantiationHandler, Vector3.zero, Quaternion.identity);
     }
 
     // Start method
     public void Start()
     {
-        // Create handlers
-        foreach (GameObject obj in handlers)
-            Instantiate(obj, Vector3.zero, Quaternion.identity);
+        // Create network sync
+        if (networkSync != null)
+            Instantiate(networkSync, Vector2.zero, Quaternion.identity);
+        else Debug.LogError("No network sync available. Game will not run.");
 
         Setup();
     }

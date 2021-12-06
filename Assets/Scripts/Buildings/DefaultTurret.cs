@@ -27,7 +27,7 @@ public class DefaultTurret : BaseTile, IAudible
 
         if (collider != null)
             collider.radius = turret.range;
-        else Debug.LogError("Turret does not have a circle collider!");
+        else Debug.Log("Turret does not have a circle collider!");
 
         if (turret.bulletSpriteName != "")
         {

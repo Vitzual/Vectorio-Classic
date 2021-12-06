@@ -2,9 +2,8 @@
 using Michsky.UI.ModernUIPack;
 using TMPro;
 using System.Collections.Generic;
-using Mirror;
 
-public class EnemySpawner : NetworkBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     // Active instance
     public List<Enemy> enemies;
@@ -26,9 +25,6 @@ public class EnemySpawner : NetworkBehaviour
 
         enemies.AddRange(ScriptableLoader.enemies.Values);
 
-        // Check authority
-        if (!hasAuthority) return;
-
         InvokeRepeating("SpawnEnemies", 1, 1);
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
     }
@@ -36,9 +32,6 @@ public class EnemySpawner : NetworkBehaviour
     // Spawn group enemy each frame to offset calculation cost
     public void Update()
     {
-        // Check authority
-        if (!hasAuthority) return;
-
         // If enemies still need to spawn, spawn them (duh)
         if (groupEnemies > 0)
         {
@@ -61,7 +54,7 @@ public class EnemySpawner : NetworkBehaviour
     public void SpawnEnemies()
     {
         // Check if enemy handler is active
-        if (!hasAuthority || EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
+        if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
 
         // Setup variables
         Vector2 spawnPos;
@@ -106,7 +99,7 @@ public class EnemySpawner : NetworkBehaviour
     // Check if group spawning still active
     public void CheckGroupSpawning()
     {
-        if (!hasAuthority || !Gamemode.active.useGroupSpawning || Settings.paused) return;
+        if (!Gamemode.active.useGroupSpawning || Settings.paused) return;
 
         timeUntilNextGroup -= 1;
 

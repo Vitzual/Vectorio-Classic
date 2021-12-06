@@ -8,9 +8,6 @@ public class EnemyHandler : MonoBehaviour
     // Active instance
     public static EnemyHandler active;
 
-    // Holds a reference to turret handler
-    public TurretHandler turretHandler;
-
     // If the enemy destroys a building, play this sound
     public AudioSource BuildingGoDeadSound;
 

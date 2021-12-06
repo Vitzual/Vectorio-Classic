@@ -16,9 +16,12 @@ public class Syncer : NetworkBehaviour
         entities = new Dictionary<int, BaseEntity>();
     }
 
-    [Command]
+    [ServerCallback]
     public void CmdSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
+        // Check authority
+        if (!hasAuthority) return;
+
         // Create new entity
         BaseEntity newEntity = InstantiationHandler.active.CreateEnemy(enemy_id, variant_id, position, rotation, health, speed);
 

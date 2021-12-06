@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6019495612794283690}
   - component: {fileID: 900730751210236225}
   - component: {fileID: 900730751210236226}
-  - component: {fileID: 2516455773606944761}
   m_Layer: 0
   m_Name: Enemy Handler
   m_TagString: Untagged
@@ -47,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facacdb237bbc694cb28789cbeac84f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretHandler: {fileID: 0}
   BuildingGoDeadSound: {fileID: 0}
   enemies: []
   buildingLayer:
@@ -67,14 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b5b4143c796fe4695cf465c8e8334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   enemies: []
   maxEnemiesAllowed: 250
-  enemiesAmount: {fileID: 0}
-  groupNotif: {fileID: 0}
-  groupSound: {fileID: 0}
-  groupTimer: {fileID: 0}
   groupSpeed: 5
   groupCooldown: 180
 --- !u!114 &900730751210236226
@@ -89,8 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82ae8c6cb553d6468de06b04f7e8b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   guardians: []
   guardianSpawned: 0
   warningSound: {fileID: 1918520602720396134}
@@ -98,23 +88,6 @@ MonoBehaviour:
   laserFiring: 0
   laserPart: 0
   cooldown: 5
---- !u!114 &2516455773606944761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900730751210236224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 4a3823236428b2948aa970123b4e720a
-  hasSpawned: 0
 --- !u!1 &8242866337427654743
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class GuardianHandler : NetworkBehaviour
+public class GuardianHandler : MonoBehaviour
 {
     // Active instance
     public static GuardianHandler active;

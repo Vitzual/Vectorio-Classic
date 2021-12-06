@@ -15,19 +15,24 @@ public class BaseTile : BaseEntity
     {
         // Update nearby ports and unlockables
         DroneManager.active.UpdateNearbyPorts(this, transform.position);
-        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
-        // Set death particle
-        if (buildable.building.deathParticle != null)
-            particle = buildable.building.deathParticle;
+        // Check if buildable null
+        if (buildable != null)
+        {
+            Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
-        // Set health
-        health = buildable.building.health * Research.healthBoost;
-        maxHealth = health;
+            // Set death particle
+            if (buildable.building.deathParticle != null)
+                particle = buildable.building.deathParticle;
 
-        // Update storages
-        foreach (Cost cost in buildable.building.resources)
-            if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
+            // Set health
+            health = buildable.building.health * Research.healthBoost;
+            maxHealth = health;
+
+            // Update storages
+            foreach (Cost cost in buildable.building.resources)
+                if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
+        }
     }
 
     public void CheckNearbyEnergizers()

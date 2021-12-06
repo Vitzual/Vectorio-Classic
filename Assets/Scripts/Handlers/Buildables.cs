@@ -143,19 +143,15 @@ public static class Buildables
         for (int i = 0; i < unlockables[unlockType].Count; i++)
         {
             unlockable = unlockables[unlockType][i].unlockable;
-
-            if (RequestBuildable(unlockable.requirement).isUnlocked && unlockable.entity == entity)
+            unlockables[unlockType][i].tracked += amount;
+            if (unlockables[unlockType][i].tracked >= unlockable.amount)
             {
-                unlockables[unlockType][i].tracked += amount;
-                if (unlockables[unlockType][i].tracked >= unlockable.amount)
-                {
-                    UnlockBuildable(unlockables[unlockType][i]);
-                }
-                else
-                {
-                    unlockables[unlockType][i].button.progress.currentPercent = (float)unlockables[unlockType][i].tracked / (float)unlockable.amount;
-                    unlockables[unlockType][i].button.progress.UpdateUI();
-                }
+                UnlockBuildable(unlockables[unlockType][i]);
+            }
+            else
+            {
+                unlockables[unlockType][i].button.progress.currentPercent = (float)unlockables[unlockType][i].tracked / (float)unlockable.amount;
+                unlockables[unlockType][i].button.progress.UpdateUI();
             }
         }
     }

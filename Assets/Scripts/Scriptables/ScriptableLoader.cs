@@ -31,7 +31,11 @@ public static class ScriptableLoader
         Buildables.active = new Dictionary<Entity, Buildable>();
 
         Building hub = Resources.Load<Building>("Scriptables/Hub");
-        if (hub != null) allLoadedEntities.Add(hub.name, hub);
+        if (hub != null)
+        {
+            Buildables.Register(hub);
+            allLoadedEntities.Add(hub.name, hub);
+        }
         else Debug.Log("The hub scriptable could not be parsed");
 
         GenerateBuildings();

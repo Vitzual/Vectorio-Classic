@@ -10,7 +10,6 @@ public class Hub : BaseTile
 {
     // Building scriptable
     public Building hub;
-    public ModalWindowManager endScreen;
 
     // Hub particles
     public AudioSource laserSound;
@@ -69,7 +68,7 @@ public class Hub : BaseTile
 
     public override void DestroyEntity()
     {
-        endScreen.OpenWindow();
+        Events.active.HubDestroyed();
         base.DestroyEntity();
     }
 }

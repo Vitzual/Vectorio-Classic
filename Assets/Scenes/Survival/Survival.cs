@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Survival : Gamemode
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // Hub object
+    public Building hub;
 
-    // Update is called once per frame
-    void Update()
+    // Instantiate hub
+    public override void Setup()
     {
-        
+        Buildable hubBuildable = Buildables.RequestBuildable(hub);
+        InstantiationHandler.active.RpcInstantiateBuilding(hubBuildable, Vector2.zero, Quaternion.identity);
+        base.Setup();
     }
 }

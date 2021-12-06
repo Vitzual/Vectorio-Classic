@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // On hub destroyed
+    public event Action onHubDestroyed;
+    public void HubDestroyed()
+    {
+        if (onHubDestroyed != null)
+            onHubDestroyed();
+    }
+
     // Pipette
     public event Action<BaseTile> onPipette;
     public void Pipette(BaseTile baseTile)

@@ -21080,7 +21080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 337.062, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 91.4468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &652407728
@@ -28118,7 +28118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 256.67065, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 91.4468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &898772411
@@ -58277,7 +58277,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 250, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1895549300
@@ -67330,9 +67330,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1385682163154323319}
-  - component: {fileID: 5879613802669319989}
-  - component: {fileID: 1385682163154323314}
+  - component: {fileID: 1385682163154323317}
   - component: {fileID: 280458596}
+  - component: {fileID: 1385682163154323314}
   - component: {fileID: 1385682163154323316}
   - component: {fileID: 1385682163154323315}
   m_Layer: 0
@@ -67381,6 +67381,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a59020cc0289c44aa6c465fb5e14154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1385682163154323317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385682163154323313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e2e6097cbc2c345afae7fcc4cb5265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Survival
+  version: v0.3.0
+  _stage: {fileID: 11400000, guid: ffaacb3a2bb39314db6572ed7f6e24b6, type: 2}
+  _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
+  naturalHeatTimer: 5
+  naturalHeatGrowth: 0
+  useGroupSpawning: 1
+  useEnergizers: 1
+  useResources: 1
+  useDroneConstruction: 1
+  useEngineering: 0
+  spawnBlueprints: 0
+  generateWorld: 0
+  unlockEverything: 1
+  initBuildings: 0
+  initEnemies: 1
+  initGuardians: 0
 --- !u!4 &1385682163154323319
 Transform:
   m_ObjectHideFlags: 0
@@ -72397,35 +72426,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5879613802669319989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385682163154323313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a34767f50f871524ba7409d98500f8e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Survival
-  version: v0.3.9
-  _stage: {fileID: 11400000, guid: ffaacb3a2bb39314db6572ed7f6e24b6, type: 2}
-  _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
-  naturalHeatTimer: 5
-  naturalHeatGrowth: 0
-  useGroupSpawning: 1
-  useEnergizers: 1
-  useResources: 1
-  useDroneConstruction: 1
-  useEngineering: 0
-  spawnBlueprints: 0
-  generateWorld: 1
-  unlockEverything: 0
-  initBuildings: 1
-  initEnemies: 0
-  initGuardians: 0
 --- !u!1 &5900094201324575890
 GameObject:
   m_ObjectHideFlags: 0
@@ -73550,7 +73550,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648614288212214}
   m_HandleRect: {fileID: 5933648614288212215}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

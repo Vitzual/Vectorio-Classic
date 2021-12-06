@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Survival : MonoBehaviour
+public class Survival : Gamemode
 {
     // Start is called before the first frame update
     void Start()

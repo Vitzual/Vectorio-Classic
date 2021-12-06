@@ -524,7 +524,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 60fee402a941ff94e9328b3cb1f4c3a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -744,7 +744,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 893d7e0cb8ae6654999789ef786c43e9, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -826,7 +826,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: aba51892a04e5464a9e817381489c818, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -908,7 +908,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 0099aa7162a3f1047aa3a208a2bbc936, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 3218542028071005407}
   - component: {fileID: 9144212623158691512}
   - component: {fileID: -2979318804956833362}
+  - component: {fileID: 6630989264148194071}
   m_Layer: 9
   m_Name: The Revenant
   m_TagString: Enemy
@@ -968,14 +969,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afba1666265dd06498aee1ebd5101e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   metadata: -1
-  material: {fileID: 0}
   enemy: {fileID: 0}
   moveSpeed: 0
+  damage: 0
   isMenu: 0
   variant: {fileID: 0}
   target: {fileID: 0}
   rotator: {fileID: 8581719149766837517}
+  gradualRotation: 0
+  purified: 0
   border: []
   fill: []
   trail: []
@@ -1128,6 +1133,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6630989264148194071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6129582996609047689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1231,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1e3e37b578bf79c4ab6342dad867a478, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1279,7 +1313,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 0f6bf9d8673541444bed1ca5a6ddc393, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1361,7 +1395,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 278281397
-  m_SortingLayer: 11
+  m_SortingLayer: 12
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: e72f4625a25168a48823c50034f982b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

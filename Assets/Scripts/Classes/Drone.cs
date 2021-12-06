@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Drone : MonoBehaviour
+public class Drone : NetworkBehaviour
 {
     // Drone type
     public enum DroneType

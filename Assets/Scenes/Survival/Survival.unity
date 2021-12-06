@@ -3841,6 +3841,7 @@ GameObject:
   - component: {fileID: 114909783}
   - component: {fileID: 114909785}
   - component: {fileID: 114909787}
+  - component: {fileID: 114909786}
   m_Layer: 0
   m_Name: Building Handler
   m_TagString: Untagged
@@ -3900,6 +3901,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectors: []
+--- !u!114 &114909786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114909782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3399771609
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!114 &114909787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35160,7 +35178,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1201542762}
   m_HandleRect: {fileID: 1201542761}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -46043,12 +46061,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523722322}
   m_CullTransparentMesh: 0
---- !u!20 &1527259171 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5913638006090849307, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
-    type: 3}
-  m_PrefabInstance: {fileID: 5913638005100477496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1529337221
 GameObject:
   m_ObjectHideFlags: 0
@@ -53751,7 +53763,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2014892032}
   m_HandleRect: {fileID: 2014892031}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -59682,7 +59694,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 15403282}
   m_HandleRect: {fileID: 15403281}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -66824,6 +66836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2e6097cbc2c345afae7fcc4cb5265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handlers: []
   name: Survival
   version: v0.3.0
   _stage: {fileID: 11400000, guid: ffaacb3a2bb39314db6572ed7f6e24b6, type: 2}
@@ -70142,6 +70155,7 @@ GameObject:
   - component: {fileID: 3860533639654978905}
   - component: {fileID: 3860533639654978907}
   - component: {fileID: 8767774393841846071}
+  - component: {fileID: 3860533639654978906}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Untagged
@@ -70161,11 +70175,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e1060734b8da24a99c63a2af961942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   hologram: {fileID: 5875101752121853899}
   squareRadius: {fileID: 8913346513168113339}
   circleRadius: {fileID: 3435139606460585851}
   variant: {fileID: 0}
   metadata: -1
+--- !u!114 &3860533639654978906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860533639654978904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2067539274
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!114 &3860533639654978907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70178,10 +70211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502bc40eae7e6404aa16660a6156952e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1527259171}
-  grid: {fileID: 1377678690}
-  music: {fileID: 434884807}
-  inv: {fileID: 5933648615969267414}
+  cam: {fileID: 0}
+  grid: {fileID: 0}
+  music: {fileID: 0}
+  inv: {fileID: 0}
 --- !u!114 &3875323732881680479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72982,7 +73015,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648614288212214}
   m_HandleRect: {fileID: 5933648614288212215}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -75378,7 +75411,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615395611188}
   m_HandleRect: {fileID: 5933648615395611189}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -75491,7 +75524,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615616703358}
   m_HandleRect: {fileID: 5933648615616703359}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

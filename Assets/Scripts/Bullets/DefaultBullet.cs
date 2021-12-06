@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class DefaultBullet : MonoBehaviour
+public class DefaultBullet : NetworkBehaviour
 {
     // Turret variable
     [HideInInspector] public Turret turret;

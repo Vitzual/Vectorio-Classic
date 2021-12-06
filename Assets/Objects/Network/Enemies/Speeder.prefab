@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1336258943511152950}
   - component: {fileID: 7712961956477012175}
   - component: {fileID: -8918919344895654701}
+  - component: {fileID: -5207826951815564170}
   m_Layer: 9
   m_Name: Speeder
   m_TagString: Enemy
@@ -184,14 +185,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e284bd9b7a8c9541a098a0be0dbe973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   metadata: -1
-  material: {fileID: 0}
   enemy: {fileID: 11400000, guid: 677983c6a4b3b5348800b8381ec609d0, type: 2}
   moveSpeed: 0
+  damage: 0
   isMenu: 0
   variant: {fileID: 0}
   target: {fileID: 0}
   rotator: {fileID: 9158153135774200929}
+  gradualRotation: 0
+  purified: 0
   border:
   - {fileID: 5832737299910026401}
   - {fileID: 7333417571930418008}
@@ -236,6 +241,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5207826951815564170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6155902334490107135
 GameObject:
   m_ObjectHideFlags: 0

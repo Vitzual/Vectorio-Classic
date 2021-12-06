@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 5152901707447366581}
   - component: {fileID: 5039664635893281569}
   - component: {fileID: -3597200741508220239}
+  - component: {fileID: -5815540785707770763}
   m_Layer: 9
   m_Name: Saw
   m_TagString: Enemy
@@ -256,13 +257,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e284bd9b7a8c9541a098a0be0dbe973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   metadata: -1
   enemy: {fileID: 11400000, guid: be9c773da27af7b4483b283f1250f795, type: 2}
   moveSpeed: 0
+  damage: 0
   isMenu: 0
   variant: {fileID: 0}
   target: {fileID: 0}
   rotator: {fileID: 7395843543742683555}
+  gradualRotation: 0
+  purified: 0
   border:
   - {fileID: 2218135504435895610}
   fill:
@@ -305,6 +311,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5815540785707770763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065519297016329530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6871381556377962576
 GameObject:
   m_ObjectHideFlags: 0

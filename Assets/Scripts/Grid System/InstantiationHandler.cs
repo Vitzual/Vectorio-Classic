@@ -83,11 +83,11 @@ public class InstantiationHandler : MonoBehaviour
 
         // Instantiate the object like usual
         if (Gamemode.active.useDroneConstruction) RpcInstatiateGhost(buildable, position, rotation, metadata);
-        else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata, -1);
+        else RpcInstantiateBuilding(buildable, position, rotation, false, isFree, metadata, -1);
     }
 
     // CALLED BY SYNCER CLASS
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata, float health)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool isGhost, bool outputsOnly, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -99,8 +99,11 @@ public class InstantiationHandler : MonoBehaviour
         SetCells(buildable.building, position, lastBuilding);
 
         // Update resource values promptly
-        if (!free) Resource.active.ApplyResources(buildable.building.resources);
-        else Resource.active.ApplyOutputsOnly(buildable.building.resources);
+        if (!isGhost)
+        {
+            if (!outputsOnly) Resource.active.ApplyResources(buildable.building.resources);
+            else Resource.active.ApplyOutputsOnly(buildable.building.resources);
+        }
 
         // Call buildings setup method and metadata method if metadata is applied
         if (metadata != -1) lastBuilding.ApplyMetadata(metadata); 
@@ -109,31 +112,6 @@ public class InstantiationHandler : MonoBehaviour
         // Check health
         if (health != -1) lastBuilding.health = health;
         
-        // Set sellable values
-        lastBuilding.saveBuilding = buildable.building.isSaveable;
-        lastBuilding.isSellable = buildable.building.isSellable;
-
-        // Create sound effect
-        if (!NewSaveSystem.loadGame && placementSound != null)
-            AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
-    }
-
-    // CALLED BY SYNCER CLASS
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
-    {
-        // Create the tile
-        BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
-        lastBuilding.name = buildable.building.name;
-        lastBuilding.buildable = buildable;
-        amountPlaced += 1;
-
-        // Set the tiles on the grid class
-        SetCells(buildable.building, position, lastBuilding);
-
-        // Call buildings setup method and metadata method if metadata is applied
-        if (metadata != -1) lastBuilding.ApplyMetadata(metadata);
-        lastBuilding.Setup();
-
         // Set sellable values
         lastBuilding.saveBuilding = buildable.building.isSaveable;
         lastBuilding.isSellable = buildable.building.isSellable;

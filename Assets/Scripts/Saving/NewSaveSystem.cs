@@ -163,7 +163,7 @@ public class NewSaveSystem : MonoBehaviour
                 else
                 {
                     InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord), 
-                        Quaternion.identity, true, buildingData.metadata[0], buildingData.health);
+                        Quaternion.identity, false, true, buildingData.metadata[0], buildingData.health);
                 }
             }
             else Debug.Log("Building with ID " + buildingData.id + " could not be found!");

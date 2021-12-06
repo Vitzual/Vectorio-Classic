@@ -158,6 +158,14 @@ public class Events : MonoBehaviour
     }
 
     // On blueprint collected
+    public event Action<string> onEnemyGroupSpawned;
+    public void EnemyGroupSpawned(string msg)
+    {
+        if (onEnemyGroupSpawned != null)
+            onEnemyGroupSpawned(msg);
+    }
+
+    // On blueprint collected
     public event Action<CollectedBlueprint> onBlueprintCollected;
     public void BlueprintCollected(CollectedBlueprint blueprint)
     {

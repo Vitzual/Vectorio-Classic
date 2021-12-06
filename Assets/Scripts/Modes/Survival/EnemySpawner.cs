@@ -10,12 +10,8 @@ public class EnemySpawner : NetworkBehaviour
     public List<Enemy> enemies;
     public static EnemySpawner active;
     public int maxEnemiesAllowed = 250;
-    public TextMeshProUGUI enemiesAmount;
 
     // Group spawning
-    public NotificationManager groupNotif;
-    public AudioSource groupSound;
-    public TextMeshProUGUI groupTimer;
     public float groupSpeed = 5f;
     public int groupCooldown = 360;
     private int timeUntilNextGroup;
@@ -104,7 +100,7 @@ public class EnemySpawner : NetworkBehaviour
         }
 
         // Update attacking enemies
-        enemiesAmount.text = "<b>ENEMIES ATTACKING:</b> " + EnemyHandler.active.enemies.Count;
+        // enemiesAmount.text = "<b>ENEMIES ATTACKING:</b> " + EnemyHandler.active.enemies.Count;
     }
 
     // Check if group spawning still active
@@ -116,18 +112,21 @@ public class EnemySpawner : NetworkBehaviour
 
         if (timeUntilNextGroup <= 0)
         {
+            // Create new group notif string
+            string groupNotif;
+
             // Get location around border
             if (Random.value > 0.5f)
             {
                 if (Random.value > 0.5f)
                 {
                     groupSpawnPos = new Vector2(Border.west, Random.Range(Border.south, Border.north));
-                    groupNotif.description = "Attack coming from <b>West</b>";
+                    groupNotif = "Attack coming from <b>West</b>";
                 }
                 else
                 {
                     groupSpawnPos = new Vector2(Border.east, Random.Range(Border.south, Border.north));
-                    groupNotif.description = "Attack coming from <b>East</b>";
+                    groupNotif = "Attack coming from <b>East</b>";
                 }
             }
             else
@@ -135,12 +134,12 @@ public class EnemySpawner : NetworkBehaviour
                 if (Random.value > 0.5f)
                 {
                     groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.north);
-                    groupNotif.description = "Attack coming from <b>North</b>";
+                    groupNotif = "Attack coming from <b>North</b>";
                 }
                 else
                 {
                     groupSpawnPos = new Vector2(Random.Range(Border.west, Border.east), Border.south);
-                    groupNotif.description = "Attack coming from <b>South</b>";
+                    groupNotif = "Attack coming from <b>South</b>";
                 }
             }
 
@@ -152,19 +151,7 @@ public class EnemySpawner : NetworkBehaviour
             groupSpeed = 5f * Gamemode.stage.variant.speedModifier;
 
             // Display group notification
-            if (groupNotif != null)
-            {
-                groupNotif.UpdateUI();
-                groupNotif.OpenNotification();
-            }
-            if (groupSound != null)
-            {
-                groupSound.volume = Settings.sound;
-                groupSound.Play();
-            }
+            Events.active.EnemyGroupSpawned(groupNotif);
         }
-
-        // Update attacking enemies
-        groupTimer.text = "<b>NEXT GROUP ATTACK:</b> " + timeUntilNextGroup + "s";
     }
 }

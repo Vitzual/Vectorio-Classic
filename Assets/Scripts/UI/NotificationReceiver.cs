@@ -10,7 +10,8 @@ public class NotificationReceiver : MonoBehaviour
         NewBuilding,
         NewEnemy,
         LabGoBoom,
-        AutoSave
+        AutoSave,
+        EnemyGroup
     }
     public NotificationType notificationType;
     public NotificationManager notification;
@@ -18,10 +19,24 @@ public class NotificationReceiver : MonoBehaviour
 
     public void Start()
     {
+        Events.active.onEnemyGroupSpawned += ShowEnemyGroupNotification;
         Events.active.onEnemyDiscovered += ShowEnemyNotification;
         Events.active.onBuildingUnlocked += ShowBuildingNotification;
         Events.active.onLabDestroyed += ShowLabBoomBoom;
         Events.active.onAutoSave += AutoSave;
+    }
+
+    public void ShowEnemyGroupNotification(string msg)
+    {
+        if (notificationType == NotificationType.EnemyGroup)
+        {
+            notification.description = msg;
+            notification.UpdateUI();
+            notification.OpenNotification();
+
+            notficiationSound.volume = Settings.sound;
+            notficiationSound.Play();
+        }
     }
 
     public void ShowBuildingNotification(Buildable buildable)

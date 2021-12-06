@@ -69,7 +69,7 @@ public class InstantiationHandler : NetworkBehaviour
 
         // Instantiate the object like usual
         if (Gamemode.active.useDroneConstruction) RpcInstatiateGhost(buildable, position, rotation, metadata);
-        else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata);
+        else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata, -1);
     }
 
     private void RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
@@ -81,7 +81,7 @@ public class InstantiationHandler : NetworkBehaviour
         EnemyHandler.active.CreateEntity(entity, variant, position, rotation);
     }
 
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata = -1, float health = -1)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -113,7 +113,7 @@ public class InstantiationHandler : NetworkBehaviour
     }
 
     // temp cause im tired af
-    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
+    public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -137,8 +137,7 @@ public class InstantiationHandler : NetworkBehaviour
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 
-    //[ClientRpc]
-    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata = -1)
+    public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
@@ -152,6 +151,7 @@ public class InstantiationHandler : NetworkBehaviour
         SetCells(buildable.building, position, holder, true);
     }
 
+    // Sets cells
     public void SetCells(Building building, Vector2 position, BaseTile obj, bool isGhost = false)
     {
         // Set the tiles on the grid class
@@ -166,7 +166,6 @@ public class InstantiationHandler : NetworkBehaviour
     }
 
     // Destroys a buildingg
-    //[ClientRpc]
     public void RpcDestroyBuilding(Vector3 position)
     {
         Vector2Int coords = GetCellCoords(position);
@@ -175,7 +174,6 @@ public class InstantiationHandler : NetworkBehaviour
     }
 
     // Checks to make sure tile(s) isn't occupied
-    //[Server]
     public bool CheckTiles(Building building, Vector3 position)
     {
         bool aocbCheck = false;

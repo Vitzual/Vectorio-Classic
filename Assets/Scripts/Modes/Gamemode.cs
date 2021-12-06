@@ -18,9 +18,7 @@ public class Gamemode : MonoBehaviour
     public static float time = 0;
 
     // Create instantion handler
-    public GameObject instantiationHandler;
-    public GameObject droneHandler;
-    public GameObject enemyHandler;
+    public GameObject[] handlers;
 
     // Gamemode information
     [Header("Gamemode Info")]
@@ -57,9 +55,9 @@ public class Gamemode : MonoBehaviour
     // Start method
     public void Start()
     {
-        instantiationHandler.SetActive(true);
-        droneHandler.SetActive(true);
-        enemyHandler.SetActive(true);
+        // Create handlers
+        foreach (GameObject obj in handlers)
+            Instantiate(obj, Vector3.zero, Quaternion.identity);
 
         Setup();
     }

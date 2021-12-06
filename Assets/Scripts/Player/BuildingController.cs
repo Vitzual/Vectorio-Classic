@@ -1,10 +1,10 @@
-//using Mirror;
+using Mirror;
 using UnityEngine;
 
 // This script is ported from Automa.
 // https://github.com/Vitzual/Automa
 
-public class BuildingController : MonoBehaviour
+public class BuildingController : NetworkBehaviour
 {
     // Entity selected
     public static bool entitySelected = false;
@@ -25,9 +25,6 @@ public class BuildingController : MonoBehaviour
 
     public void Start()
     {
-        // Confirm user has authority
-        //if (!hasAuthority) return;
-
         // Grab sprite renderer component
         spriteRenderer = hologram.GetComponent<SpriteRenderer>();
 
@@ -51,9 +48,6 @@ public class BuildingController : MonoBehaviour
 
     public void Update()
     {
-        // Confirm user has authority
-        //if (!hasAuthority || Tablet.active) return;
-
         // Update position and sprite transparency
         UpdatePosition();
         AdjustTransparency();
@@ -89,7 +83,7 @@ public class BuildingController : MonoBehaviour
     }
 
     // Create building (command)
-    //[Command]
+    [Command]
     public void CmdCreateBuildable()
     {
         if (InstantiationHandler.active != null)
@@ -101,7 +95,7 @@ public class BuildingController : MonoBehaviour
     }
 
     // Delete building (command)
-    //[Command]
+    [Command]
     public void CmdDestroyBuilding()
     {
         if (InstantiationHandler.active != null)

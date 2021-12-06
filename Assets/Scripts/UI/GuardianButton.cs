@@ -8,6 +8,13 @@ public class GuardianButton : MonoBehaviour
     // Confirm screen
     public ModalWindowManager confirmScreen;
 
+    // Setup events
+    public void Start()
+    {
+        Events.active.onOpenGuardianInfo += SetConfirmScreen;
+        Events.active.onCloseGuardianInfo += CloseConfirmScreen;
+    }
+
     // Set confirm screen thing
     public void SetConfirmScreen(Guardian guardian)
     {
@@ -17,6 +24,8 @@ public class GuardianButton : MonoBehaviour
             "guardian. The guardian will come from the <b>" + guardian.directionName + "</b>, so prepare your defenses!";
         confirmScreen.icon = Sprites.GetSprite(guardian.name);
         confirmScreen.UpdateUI();
+
+        OpenConfirmScreen();
     }
 
     // Open confirm screen

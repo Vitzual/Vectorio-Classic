@@ -1,27 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class GuardianHandler : MonoBehaviour
+public class GuardianHandler : NetworkBehaviour
 {
     // Active instance
     public static GuardianHandler active;
     public static bool animInProgress;
 
-    // Hub instance
-    public Hub hub;
-
     // Contains all active guardians in the scene
     [HideInInspector] public List<DefaultGuardian> guardians = new List<DefaultGuardian>();
-
-    // Holds a reference to guardian button
-    public GuardianButton guardianButton;
     [HideInInspector] public bool guardianSpawned;
 
     // Guardian animation components
     public AudioSource warningSound;
-    public AudioSource music;
-    public CanvasGroup UI;
+    public float musicVolume = 0.5f;
 
     // Laser variables
     [HideInInspector] public bool laserFiring;
@@ -49,9 +43,7 @@ public class GuardianHandler : MonoBehaviour
         catch
         {
             animInProgress = false;
-            UI.alpha = 1f;
-            UI.interactable = true;
-            UI.blocksRaycasts = true;
+            NewInterface.active.ToggleUI(true);
         }
 
         // Check if paused
@@ -89,19 +81,18 @@ public class GuardianHandler : MonoBehaviour
         if (guardians.Count > 0) return;
 
         // Disable UI
-        UI.alpha = 0f;
-        UI.interactable = false;
-        UI.blocksRaycasts = false;
+        NewInterface.active.ToggleUI(false);
         animInProgress = true;
 
         // Initiate laser sequence 
         laserPart = 0;
         cooldown = 0.5f;
         laserFiring = true;
-        music.Pause();
 
-        // Reset all lasers
-        hub.ResetLasers();
+        // Update music
+        musicVolume = Settings.music;
+        Settings.music = 0f;
+        Settings.UpdateSounds();
     }
 
     // Guardian animation sequence
@@ -133,7 +124,7 @@ public class GuardianHandler : MonoBehaviour
                 if (cooldown <= 0) laserPart = 3;
                 break;
             case 3:
-                hub.PlayChargeParticle();
+                Events.active.ChargeHubLasers();
                 cooldown = 2.3f;
                 laserPart = 4;
                 break;
@@ -141,7 +132,7 @@ public class GuardianHandler : MonoBehaviour
                 cooldown -= Time.deltaTime;
                 if (cooldown <= 0)
                 {
-                    hub.FireLaser(Gamemode.stage.guardianDirection);
+                    Events.active.FireHubLaser(Gamemode.stage.guardianDirection);
                     cooldown = 2.5f;
                     laserPart = 5;
                 }
@@ -163,10 +154,9 @@ public class GuardianHandler : MonoBehaviour
                     Border.SetBorderPositions();
                     laserFiring = false;
                     animInProgress = false;
-                    UI.alpha = 1f;
-                    UI.interactable = true;
-                    UI.blocksRaycasts = true;
-                    music.Play();
+                    NewInterface.active.ToggleUI(true);
+                    Settings.music = musicVolume;
+                    Settings.UpdateSounds();
                     laserPart = 0;
                     SpawnGuardian();
                 }
@@ -177,15 +167,13 @@ public class GuardianHandler : MonoBehaviour
     // Open guardian warning
     public void OpenGuardianWarning()
     {
-        guardianButton.SetConfirmScreen(Gamemode.stage.guardian);
-        guardianButton.gameObject.SetActive(true);
+        Events.active.OpenGuardianInfo(Gamemode.stage.guardian);
     }
 
     // Close guardian warning
     public void CloseGuardianWarning()
     {
-        if(guardianButton != null)
-            guardianButton.gameObject.SetActive(false);
+        Events.active.CloseGuardianInfo();
     }
 
     // Start is called before the first frame update

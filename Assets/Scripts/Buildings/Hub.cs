@@ -26,6 +26,9 @@ public class Hub : BaseTile
 
         InstantiationHandler.active.SetCells(hub, transform.position, this);
 
+        Events.active.onChargeHubLaser += PlayChargeParticle;
+        Events.active.onHubFireLaser += FireLaser;
+
         health = hub.health;
         maxHealth = health;
 

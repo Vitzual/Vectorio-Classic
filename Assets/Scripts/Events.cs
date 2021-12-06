@@ -21,6 +21,22 @@ public class Events : MonoBehaviour
             onHubDestroyed();
     }
 
+    // On hub destroyed
+    public event Action onChargeHubLaser;
+    public void ChargeHubLasers()
+    {
+        if (onChargeHubLaser != null)
+            onChargeHubLaser();
+    }
+
+    // On hub destroyed
+    public event Action<Border.Direction> onHubFireLaser;
+    public void FireHubLaser(Border.Direction direction)
+    {
+        if (onHubFireLaser != null)
+            onHubFireLaser(direction);
+    }
+
     // Pipette
     public event Action<BaseTile> onPipette;
     public void Pipette(BaseTile baseTile)
@@ -51,6 +67,22 @@ public class Events : MonoBehaviour
     {
         if (onStartGuardianBattle != null)
             onStartGuardianBattle();
+    }
+
+    // Open guardian info
+    public event Action<Guardian> onOpenGuardianInfo;
+    public void OpenGuardianInfo(Guardian guardian)
+    {
+        if (onOpenGuardianInfo != null)
+            onOpenGuardianInfo(guardian);
+    }
+
+    // Open guardian info
+    public event Action onCloseGuardianInfo;
+    public void CloseGuardianInfo()
+    {
+        if (onCloseGuardianInfo != null)
+            onCloseGuardianInfo();
     }
 
     // On building clicked
@@ -195,14 +227,6 @@ public class Events : MonoBehaviour
     {
         if (onGuardianDestroyed != null)
             onGuardianDestroyed(guardian);
-    }
-
-    // Fires the hub laser
-    public event Action fireHubLaser;
-    public void FireHubLaser()
-    {
-        if (fireHubLaser != null)
-            fireHubLaser();
     }
 
     // Invoked when a bullet is fired

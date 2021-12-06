@@ -9,10 +9,12 @@ using UnityEngine.UI;
 public class NewInterface : MonoBehaviour
 {
     public static NewInterface active;
+
     public GameObject quitMenu;
     public GameObject loadingScreen;
     public ButtonManager saveButton;
     public ButtonManager reloadButton;
+    public CanvasGroup canvasGroup;
 
     public int fps;
     public TextMeshProUGUI fpsText;
@@ -28,6 +30,22 @@ public class NewInterface : MonoBehaviour
     public void Start()
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
+    }
+
+    public void ToggleUI(bool status)
+    {
+        if (status)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     public void UpdateFPS()

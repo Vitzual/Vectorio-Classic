@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5334326178254640261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2677456121491814392}
+  - component: {fileID: 8608361195883997078}
+  m_Layer: 0
+  m_Name: Drone Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2677456121491814392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334326178254640261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8608361195883997078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334326178254640261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35bee098fa8c4fb4b89766974883ec26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildPriority: 0
+  droneport: {fileID: 11400000, guid: 866d7607c70fe26429470ba44cf7ebde, type: 2}
+  energizer: {fileID: 11400000, guid: deddec3d3ffcd574385129f087556fff, type: 2}
+  droneTypes:
+  - {fileID: 7332812339593529369, guid: 1a6e616a6ed11394d929af0e1f36128e, type: 3}
+  - {fileID: 3058485147585300152, guid: 9cd5b90d9b052974fa852412b776dc32, type: 3}
+  - {fileID: 3059082339734481019, guid: 305000a195c291440ae7b8f93678e022, type: 3}
+  - {fileID: 3895683157982825778, guid: 96d0266b67e319044b2be79a5726ddda, type: 3}
+  ghostTiles: []
+  resourceTiles: []
+  damagedTiles: []
+  builderDrones: []
+  resourceDrones: []
+  fixerDrones: []
+  activeDrones: []
+  useFixedUpdate: 0

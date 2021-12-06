@@ -1,12 +1,12 @@
 using UnityEngine;
-//using Mirror;
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 // This script is ported from Automa.
 // https://github.com/Vitzual/Automa
 
-public class InstantiationHandler : MonoBehaviour
+public class InstantiationHandler : NetworkBehaviour
 {
     // Amount placed
     public static int amountPlaced = 0;
@@ -72,7 +72,6 @@ public class InstantiationHandler : MonoBehaviour
         else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata);
     }
 
-    //[ClientRpc]
     private void RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
     {
         // Use enemy handler thing
@@ -82,7 +81,6 @@ public class InstantiationHandler : MonoBehaviour
         EnemyHandler.active.CreateEntity(entity, variant, position, rotation);
     }
 
-    //[ClientRpc]
     public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata = -1, float health = -1)
     {
         // Create the tile

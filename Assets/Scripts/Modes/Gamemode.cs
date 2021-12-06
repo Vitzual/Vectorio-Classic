@@ -17,6 +17,11 @@ public class Gamemode : MonoBehaviour
     public static string seed = "Vectorio";
     public static float time = 0;
 
+    // Create instantion handler
+    public GameObject instantiationHandler;
+    public GameObject droneHandler;
+    public GameObject enemyHandler;
+
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
@@ -44,11 +49,18 @@ public class Gamemode : MonoBehaviour
     {
         // Get active instance
         active = this;
+
+        // Create handlers
+        //Instantiate(instantiationHandler, Vector3.zero, Quaternion.identity);
     }
 
     // Start method
     public void Start()
     {
+        instantiationHandler.SetActive(true);
+        droneHandler.SetActive(true);
+        enemyHandler.SetActive(true);
+
         Setup();
     }
 

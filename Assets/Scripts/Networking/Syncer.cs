@@ -10,6 +10,13 @@ public class Syncer : NetworkBehaviour
     public static Syncer active;
     public Dictionary<int, BaseEntity> entities = new Dictionary<int, BaseEntity>();
 
+    // Awake
+    public void Awake()
+    {
+        active = this;
+        Setup();
+    }
+
     // Setup new list
     public void Setup()
     {
@@ -17,10 +24,10 @@ public class Syncer : NetworkBehaviour
     }
 
     [ServerCallback]
-    public void CmdSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
+    public void SrvSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
-        // Check authority
-        if (!hasAuthority) return;
+        // Debug for thing thing
+        Debug.Log("Attempting to create enemy");
 
         // Create new entity
         BaseEntity newEntity = InstantiationHandler.active.CreateEnemy(enemy_id, variant_id, position, rotation, health, speed);
@@ -33,8 +40,8 @@ public class Syncer : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CmdSyncBuildable(string id, Vector2 position, Quaternion rotation, int metadata)
+    [Server]
+    public void SrvSyncBuildable(string id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create new buildable
         BaseEntity newEntity = InstantiationHandler.active.CreateBuilding(id, position, rotation, metadata);
@@ -47,9 +54,12 @@ public class Syncer : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CmdSyncGhost(string id, Vector2 position, Quaternion rotation, int metadata)
+    [Server]
+    public void SrvSyncGhost(string id, Vector2 position, Quaternion rotation, int metadata)
     {
+        // Check authority
+        if (!hasAuthority) return;
+
         // Get building SO via ID request
         Building building = ScriptableLoader.buildings[id];
         if (building == null) return;

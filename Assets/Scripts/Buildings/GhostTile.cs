@@ -45,8 +45,7 @@ public class GhostTile : BaseTile
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
 
             // Create building and destroy this game object
-            if (InstantiationHandler.active != null)
-                Syncer.active.CmdSyncGhost(buildable.building.InternalID, transform.position, transform.rotation, metadata);
+            // if (buildable != null) Syncer.active.SrvSyncGhost(buildable.building.InternalID, transform.position, transform.rotation, metadata);
         }
 
         Events.active.GhostDestroyed(this);

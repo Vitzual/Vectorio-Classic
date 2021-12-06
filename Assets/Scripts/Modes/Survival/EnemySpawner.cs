@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 // Get position
                 Vector2 calcPos = new Vector2(groupSpawnPos.x + Random.Range(-20, 20), groupSpawnPos.y + Random.Range(-20, 20));
-                Syncer.active.CmdSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, calcPos, Quaternion.identity, -1, groupSpeed);
+                Syncer.active.SrvSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, calcPos, Quaternion.identity, -1, groupSpeed);
 
                 // Lower group spawn value
                 groupEnemies -= 1;
@@ -88,7 +88,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                Syncer.active.CmdSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
+                Syncer.active.SrvSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
             }
         }
 

@@ -25,6 +25,9 @@ public class BuildingController : NetworkBehaviour
 
     public void Start()
     {
+        // Confirm user has authority
+        if (!hasAuthority) return;
+
         // Grab sprite renderer component
         spriteRenderer = hologram.GetComponent<SpriteRenderer>();
 
@@ -48,6 +51,9 @@ public class BuildingController : NetworkBehaviour
 
     public void Update()
     {
+        // Confirm user has authority
+        if (!hasAuthority) return;
+
         // Update position and sprite transparency
         UpdatePosition();
         AdjustTransparency();
@@ -88,15 +94,14 @@ public class BuildingController : NetworkBehaviour
     {
         if (InstantiationHandler.active != null)
         {
-            if (buildable != null) Syncer.active.CmdSyncBuildable(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
-            else if (entity != null) Syncer.active.CmdSyncEnemy(entity.InternalID, variant.InternalID, hologram.position, hologram.rotation, -1, -1);
+            if (buildable != null) Syncer.active.SrvSyncBuildable(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+            else if (entity != null) Syncer.active.SrvSyncEnemy(entity.InternalID, variant.InternalID, hologram.position, hologram.rotation, -1, -1);
         }
         else Debug.LogError("Scene does not have active building handler!");
     }
 
     // Delete building (command)
-    [Command]
-    public void CmdDestroyBuilding()
+    public void DestroyBuilding()
     {
         if (InstantiationHandler.active != null)
             InstantiationHandler.active.RpcDestroyBuilding(hologram.position);
@@ -230,7 +235,7 @@ public class BuildingController : NetworkBehaviour
             justDeselected = true;
             TryDeselectEntity();
         }
-        else if (!justDeselected) CmdDestroyBuilding();
+        else if (!justDeselected) DestroyBuilding();
     }
 
     public void TryDeselectEntity() 

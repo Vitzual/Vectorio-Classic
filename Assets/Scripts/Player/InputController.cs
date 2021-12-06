@@ -10,14 +10,6 @@ public class InputController : MonoBehaviour
     // Shift held
     public static bool shiftHeld;
 
-    // Get the camera
-    public Camera cam;
-    public GameObject grid;
-
-    // TEMP
-    public AudioSource music;
-    public GameObject inv;
-
     public void Update()
     {
         if (!Inventory.isOpen && !ResearchUI.isOpen && !StatsPanel.isOpen && !CameraController.mapEnabled)

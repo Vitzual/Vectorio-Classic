@@ -24,6 +24,8 @@ public class Hub : BaseTile
     {
         ResetLasers();
 
+        InstantiationHandler.active.SetCells(hub, transform.position, this);
+
         health = hub.health;
         maxHealth = health;
 

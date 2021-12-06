@@ -1,12 +1,11 @@
 using UnityEngine;
-using Mirror;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 // This script is ported from Automa.
 // https://github.com/Vitzual/Automa
 
-public class InstantiationHandler : NetworkBehaviour
+public class InstantiationHandler : MonoBehaviour
 {
     // Amount placed
     public static int amountPlaced = 0;

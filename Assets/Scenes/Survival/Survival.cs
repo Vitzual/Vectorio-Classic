@@ -1,4 +1,3 @@
-using Michsky.UI.ModernUIPack;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +6,10 @@ public class Survival : Gamemode
 {
     // Hub object
     public Building hub;
-    public ModalWindowManager hubDestroyed;
 
     // Instantiate hub
     public override void Setup()
     {
-        // Get event
-        Events.active.onHubDestroyed += HubDestroyed;
-
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
         LowresMap.active.Setup();
@@ -61,12 +56,5 @@ public class Survival : Gamemode
 
         // Invoke auto saving
         InvokeRepeating("AutoSave", 360f, 360f);
-    }
-
-    // On hub destroyed
-    public void HubDestroyed()
-    {
-        hubDestroyed.OpenWindow();
-        Settings.paused = true;
     }
 }

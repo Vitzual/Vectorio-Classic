@@ -13,28 +13,21 @@ public class BaseTile : BaseEntity
 
     public void SetupBase() 
     {
-        // Check if buildable available
-        if (buildable != null)
-        {
-            // Update nearby ports and unlockables
-            DroneManager.active.UpdateNearbyPorts(this, transform.position);
+        // Update nearby ports and unlockables
+        DroneManager.active.UpdateNearbyPorts(this, transform.position);
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
 
-            // Update unlockables
-            Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, 1);
+        // Set death particle
+        if (buildable.building.deathParticle != null)
+            particle = buildable.building.deathParticle;
 
-            // Set death particle
-            if (buildable.building.deathParticle != null)
-                particle = buildable.building.deathParticle;
+        // Set health
+        health = buildable.building.health * Research.healthBoost;
+        maxHealth = health;
 
-            // Set health
-            health = buildable.building.health * Research.healthBoost;
-            maxHealth = health;
-
-            // Update storages
-            foreach (Cost cost in buildable.building.resources)
-                if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
-        }
-        else Debug.Log(transform.name + " does not have a valid buildable assigned.");
+        // Update storages
+        foreach (Cost cost in buildable.building.resources)
+            if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
     }
 
     public void CheckNearbyEnergizers()

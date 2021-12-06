@@ -33,7 +33,6 @@ public class MenuButton : MonoBehaviour
         buildable = null;
 
         // Determine if building is unlocked
-        Debug.Log(entity);
         SetVariables(entity);
     }
 
@@ -71,7 +70,7 @@ public class MenuButton : MonoBehaviour
     // Set vairable stats
     public void SetVariables(Entity entity)
     {
-        if (buildable != null && buildable.isUnlocked)
+        if (buildable.isUnlocked)
         {
             ButtonManagerBasic button = GetComponent<ButtonManagerBasic>();
             button.buttonText = entity.name.ToUpper();

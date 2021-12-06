@@ -89,7 +89,7 @@ public class BuildingController : NetworkBehaviour
         if (InstantiationHandler.active != null)
         {
             if (buildable != null) InstantiationHandler.active.CreateBuilding(buildable, hologram.position, hologram.rotation, metadata);
-            else if (entity != null) InstantiationHandler.active.CreateEnemy(entity, variant, hologram.position, hologram.rotation);
+            else if (entity != null) Syncer.active.CmdSyncEnemy(entity.InternalID, variant.InternalID, hologram.position, hologram.rotation, -1, -1);
         }
         else Debug.LogError("Scene does not have active building handler!");
     }

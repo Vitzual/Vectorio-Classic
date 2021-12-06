@@ -37,13 +37,28 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates an entity
-    public void CreateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
+    public BaseEntity CreateEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
-        // Check if entity is null
-        if (entity == null) return;
+        // Get scriptable data
+        Entity entity = ScriptableLoader.enemies[enemy_id];
+        Variant variant = ScriptableLoader.variants[variant_id];
 
-        // Check if the entity is an enemy
-        RpcInstantiateEnemy(entity, variant, position, rotation);
+        // Check if entity is null
+        if (entity == null || variant == null) return null;
+
+        // Check if spot is empty
+        RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
+        foreach (RaycastHit2D hit in hits)
+            if (hit.collider != null) return null;
+
+        // Create the enemy
+        return RpcInstantiateEnemy(entity, variant, position, rotation, health, speed);
+    }
+
+    // CALLED BY SYNCER CLASS
+    public BaseEntity RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health, float speed)
+    {
+        return EnemyHandler.active.CreateEntity(entity, variant, position, rotation, health, speed);
     }
 
     // Creates a building
@@ -71,15 +86,7 @@ public class InstantiationHandler : MonoBehaviour
         else RpcInstantiateBuilding(buildable, position, rotation, isFree, metadata, -1);
     }
 
-    private void RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation)
-    {
-        // Use enemy handler thing
-        RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
-        foreach (RaycastHit2D hit in hits)
-            if (hit.collider != null) return;
-        EnemyHandler.active.CreateEntity(entity, variant, position, rotation);
-    }
-
+    // CALLED BY SYNCER CLASS
     public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, bool free, int metadata, float health)
     {
         // Create the tile
@@ -111,7 +118,7 @@ public class InstantiationHandler : MonoBehaviour
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 
-    // temp cause im tired af
+    // CALLED BY SYNCER CLASS
     public void RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
@@ -136,6 +143,7 @@ public class InstantiationHandler : MonoBehaviour
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
     }
 
+    // CALLED BY SYNCER CLASS
     public void RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile

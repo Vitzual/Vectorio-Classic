@@ -2,8 +2,9 @@
 using Michsky.UI.ModernUIPack;
 using TMPro;
 using System.Collections.Generic;
+using Mirror;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : NetworkBehaviour
 {
     // Active instance
     public List<Enemy> enemies;
@@ -23,18 +24,25 @@ public class EnemySpawner : MonoBehaviour
 
     public void Start()
     {
+        // Setup spawner
         active = this;
         timeUntilNextGroup = groupCooldown;
 
+        enemies.AddRange(ScriptableLoader.enemies.Values);
+
+        // Check authority
+        if (!hasAuthority) return;
+
         InvokeRepeating("SpawnEnemies", 1, 1);
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
-
-        enemies.AddRange(ScriptableLoader.enemies.Values);
     }
 
     // Spawn group enemy each frame to offset calculation cost
     public void Update()
     {
+        // Check authority
+        if (!hasAuthority) return;
+
         // If enemies still need to spawn, spawn them (duh)
         if (groupEnemies > 0)
         {
@@ -46,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 // Get position
                 Vector2 calcPos = new Vector2(groupSpawnPos.x + Random.Range(-20, 20), groupSpawnPos.y + Random.Range(-20, 20));
-                EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, calcPos, Quaternion.identity, -1, groupSpeed);
+                Syncer.active.CmdSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, calcPos, Quaternion.identity, -1, groupSpeed);
 
                 // Lower group spawn value
                 groupEnemies -= 1;
@@ -57,7 +65,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         // Check if enemy handler is active
-        if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
+        if (!hasAuthority || EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
 
         // Setup variables
         Vector2 spawnPos;
@@ -91,7 +99,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                EnemyHandler.active.CreateEntity(enemy, Gamemode.stage.variant, spawnPos, Quaternion.identity);
+                Syncer.active.CmdSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
             }
         }
 
@@ -102,7 +110,7 @@ public class EnemySpawner : MonoBehaviour
     // Check if group spawning still active
     public void CheckGroupSpawning()
     {
-        if (!Gamemode.active.useGroupSpawning || Settings.paused) return;
+        if (!hasAuthority || !Gamemode.active.useGroupSpawning || Settings.paused) return;
 
         timeUntilNextGroup -= 1;
 

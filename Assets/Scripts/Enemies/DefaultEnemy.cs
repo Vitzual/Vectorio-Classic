@@ -147,8 +147,19 @@ public class DefaultEnemy : BaseEntity
     {
         if (isMenu)
         {
-            Destroy(gameObject);
-            return;
+            if (other is BoxCollider2D)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+                if (bullet != null) Destroy(gameObject);
+
+                BaseEntity building = other.GetComponent<BaseEntity>();
+                if (building != null) building.OnCircleCollision(this);
+            }
         }
         else
         {

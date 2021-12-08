@@ -33,7 +33,7 @@ public class EnemySpawner : NetworkBehaviour
     [Command]
     public void CreateEnemy(string enemy_id, string variant_id, Vector2 pos, Quaternion rotation, float health, float speed)
     {
-        Syncer.active.SrvSyncEnemy(enemy_id, variant_id, pos, rotation, health, speed);
+        if (hasAuthority) Syncer.active.SrvSyncEnemy(enemy_id, variant_id, pos, rotation, health, speed);
     }
 
     // Spawn group enemy each frame to offset calculation cost

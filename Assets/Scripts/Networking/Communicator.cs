@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-// Acts as a bin for all resources. Still a WIP since
-// a lot of logic still falls within the Resource.cs
-// class, but you can imagine this as literally a bin
-// for resources. Can have one bin that all players
-// use, or split them up (teams, individual, etc.)
-
-public class ResourceBin : NetworkBehaviour
+public class Communicator : NetworkBehaviour
 {
     // Active local instance
-    public ResourceBin activePointer;
-    public static ResourceBin active;
+    public Communicator activePointer;
+    public static Communicator active;
     public string permission = "FALSE";
 
     // Connect to syncer
@@ -26,7 +20,32 @@ public class ResourceBin : NetworkBehaviour
             activePointer = active;
         }
     }
-    
+
+    // Internal call
+    public void SyncMetadata(int id, int data)
+    {
+        if (hasAuthority)
+            CmdSyncMetadata(id, data);
+    }
+
+    // Update collector grab for all players
+    [Command]
+    public void CmdSyncMetadata(int id, int data)
+    {
+        RpcSyncMetadata(id, data);
+    }
+
+    // Rpc metadata on all clients
+    [ClientRpc]
+    public void RpcSyncMetadata(int entity_id, int metadata)
+    {
+        // Attempt to destroy an active entity. If no entity found, attempt override on position
+        if (Server.entities.ContainsKey(entity_id))
+            Server.entities[entity_id].ApplyMetadata(metadata);
+        else Debug.Log("[SERVER] Desync detected. An entity with ID " + entity_id + " received a " +
+            "metadata change of " + metadata + " from the server, but the entities runtime ID does not exist on this client!");
+    }
+
     // Internal call
     public void SyncCollector(int id, int amount)
     {

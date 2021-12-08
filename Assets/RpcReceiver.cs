@@ -83,16 +83,6 @@ public class RpcReceiver : NetworkBehaviour
             "on the server, but that entities runtime ID does not exist on this client!");
     }
 
-    [ClientRpc]
-    public void RpcSyncMetadata(int entity_id, int metadata)
-    {
-        // Attempt to destroy an active entity. If no entity found, attempt override on position
-        if (Server.entities.ContainsKey(entity_id))
-            Server.entities[entity_id].ApplyMetadata(metadata);
-        else Debug.Log("[SERVER] Desync detected. An entity with ID " + entity_id + " received a " +
-            "metadata change of " + metadata + " from the server, but the entities runtime ID does not exist on this client!");
-    }
-
     // Create a networked building
     public void CreateNetworkedBuilding(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata, bool useDrone)
     {

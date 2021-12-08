@@ -45,6 +45,7 @@ public class NewSaveSystem : MonoBehaviour
                 // Building data struct
                 SaveData.BuildingData buildingData = new SaveData.BuildingData();
 
+                Debug.Log(tile.name);
                 buildingData.id = tile.buildable.building.InternalID;
                 buildingData.xCoord = tile.transform.position.x;
                 buildingData.yCoord = tile.transform.position.y;
@@ -134,9 +135,12 @@ public class NewSaveSystem : MonoBehaviour
         {
             foreach (string unlock in saveData.unlocked)
             {
-                // Get buildable
-                Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[unlock]);
-                Buildables.UnlockBuildable(buildable);
+                if (ScriptableLoader.buildings.ContainsKey(unlock))
+                {
+                    // Get buildable
+                    Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[unlock]);
+                    if (buildable != null) Buildables.UnlockBuildable(buildable);
+                }
             }
         }
 

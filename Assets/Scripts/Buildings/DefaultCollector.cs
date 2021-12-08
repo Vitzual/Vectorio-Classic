@@ -65,7 +65,7 @@ public class DefaultCollector : ResourceTile
     public void CollectResources() 
     {
         if (amount > 0)
-            ResourceBin.active.SyncCollector(runtimeID, TakeResource());
+            Communicator.active.SyncCollector(runtimeID, TakeResource());
     }
 
     // Sync resource

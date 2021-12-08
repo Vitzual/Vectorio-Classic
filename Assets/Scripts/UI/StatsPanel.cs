@@ -83,7 +83,7 @@ public class StatsPanel : MonoBehaviour
 
             if (settings.ContainsKey(entity))
             {
-                Debug.Log("Settings found on  "+ entity.name + ", applying");
+                Debug.Log("Settings found on "+ entity.name + ", applying");
                 foreach (HorizontalSelector selector in settings[entity].selectors)
                 {
                     selector.index = baseEntity.metadata;
@@ -122,7 +122,7 @@ public class StatsPanel : MonoBehaviour
         {
             AdditionalSetting setting = settings[entity];
             if (index < setting.selectors.Length)
-                selectedEntity.SyncMetadata(setting.selectors[index].index);
+                Communicator.active.SyncMetadata(selectedEntity.runtimeID, setting.selectors[index].index);
             else Debug.Log("Index passed was outside of available selectors");
         }
         else Debug.Log("No settings available for " + entity.name);

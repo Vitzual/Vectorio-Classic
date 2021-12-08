@@ -35,22 +35,17 @@ public class Survival : Gamemode
         // Initialize gamemode
         InitGamemode();
 
-        // Load game 
-        try
+        if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
         {
-            if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
-            {
-                Resource.storages = new List<DefaultStorage>();
-                NewSaveSystem.LoadGame();
-                Border.UpdateStage();
-                Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
-            }
-            else ResearchUI.active.Setup();
-
-            // Setup starting resources
-            SetupStartingResources();
+            Resource.storages = new List<DefaultStorage>();
+            NewSaveSystem.LoadGame();
+            Border.UpdateStage();
+            Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
         }
-        catch { Debug.Log("Game ran into problem while loading!"); }
+        else ResearchUI.active.Setup();
+
+        // Setup starting resources
+        SetupStartingResources();
 
         NewSaveSystem.loadGame = false;
 

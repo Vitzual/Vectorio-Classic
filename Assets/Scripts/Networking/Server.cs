@@ -49,7 +49,7 @@ public class Server : NetworkBehaviour
         if (entities.ContainsKey(collector_id))
         {
             entities[collector_id].SyncEntity(amount);
-            if (ResourceBin.active != null) ResourceBin.active.RpcCollect(collector_id, amount);
+            if (Communicator.active != null) Communicator.active.RpcCollect(collector_id, amount);
             else Debug.Log("[SERVER] No active resource bin found to broadcast to!");
         }
         else Debug.Log("[SERVER] Server received a runtime ID that doesn't exist. This could cause major " +
@@ -122,13 +122,6 @@ public class Server : NetworkBehaviour
             entities.Remove(id);
             primaryReceiver.RpcSyncDestroy(id);
         }
-    }
-
-    [Server]
-    public void SrvSyncMetadata(int id, int metadata)
-    {
-        // Attempt to sync metadata on all clients
-        primaryReceiver.RpcSyncMetadata(id, metadata);
     }
 
     // Assigns a unique runtime ID to an entity    

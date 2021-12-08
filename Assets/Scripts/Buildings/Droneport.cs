@@ -33,9 +33,18 @@ public class Droneport : BaseTile
     // Apply metadata
     public override void ApplyMetadata(int data)
     {
-        if (data == 0) CreateDrone(Drone.DroneType.Builder);
-        else if (data == 1) CreateDrone(Drone.DroneType.Resource);
-        else if (data == 2) CreateDrone(Drone.DroneType.Fixer);
+        if (droneCreated)
+        {
+            if (data == 0) ChangeDrone(Drone.DroneType.Builder);
+            else if (data == 1) ChangeDrone(Drone.DroneType.Resource);
+            else if (data == 2) ChangeDrone(Drone.DroneType.Fixer);
+        }
+        else
+        {
+            if (data == 0) CreateDrone(Drone.DroneType.Builder);
+            else if (data == 1) CreateDrone(Drone.DroneType.Resource);
+            else if (data == 2) CreateDrone(Drone.DroneType.Fixer);
+        }
 
         base.ApplyMetadata(data);
     }
@@ -95,15 +104,14 @@ public class Droneport : BaseTile
     // Create drone method
     public void CreateDrone(Drone.DroneType type)
     {
-        // See if drone already created
-        if (droneCreated) return;
-        else droneCreated = true;
-
         // Set metadata based on drone type
         metadata = (int)type;
 
         // Loop through drones, and create new one
         drone = Instantiate(DroneManager.active.GetDrone(type), transform.position, Quaternion.identity).GetComponent<Drone>();
+
+        // See if drone already created
+        droneCreated = true;
 
         // If a drone still hasn't been created, just set to default
         if (drone == null)

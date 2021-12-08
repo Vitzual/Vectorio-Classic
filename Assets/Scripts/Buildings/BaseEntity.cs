@@ -20,11 +20,6 @@ public class BaseEntity : MonoBehaviour, IDamageable
         Events.active.EntityClicked(this);
     }
 
-    public virtual void SyncMetadata(int data)
-    {
-        Server.active.SrvSyncMetadata(runtimeID, data);
-    }
-
     public virtual void ApplyMetadata(int data)
     {
         metadata = data;

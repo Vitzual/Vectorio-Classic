@@ -64,7 +64,14 @@ public class DefaultCollector : ResourceTile
     // Collect resource
     public void CollectResources() 
     {
-        int amount = TakeResource();
+        if (amount > 0)
+            ResourceBin.active.CmdCollector(runtimeID, TakeResource());
+    }
+
+    // Sync resource
+    public override void SyncEntity(int amount)
+    {
+        this.amount = 0;
         Resource.active.Apply(type, amount, true);
         PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
         isFull = false;
@@ -90,7 +97,7 @@ public class DefaultCollector : ResourceTile
         amount = 0;
 
         // See how much is taken
-        if (holder > 0) isFull = false;
+        isFull = false;
         SetLight();
 
         return holder;

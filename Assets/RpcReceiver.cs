@@ -14,15 +14,14 @@ public class RpcReceiver : NetworkBehaviour
     // Connect to syncer
     public void Start()
     {
-        if (Syncer.ConnectReceiver(this))
-            Instantiate(spawner, Vector2.zero, Quaternion.identity);
+        spawner.enabled = Server.ConnectReceiver(this);
     }
 
     [ClientRpc]
     public void RpcSyncEnemy(int entity_id, string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
         // Check if client
-        if (isClientOnly && !Syncer.active.entities.ContainsKey(entity_id))
+        if (isClientOnly && !Server.entities.ContainsKey(entity_id))
         {
             // Get scriptable data
             Entity entity = ScriptableLoader.enemies[enemy_id];
@@ -32,7 +31,7 @@ public class RpcReceiver : NetworkBehaviour
             BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateEnemy(entity, variant, position, rotation, health, speed);
 
             // Check if key already exists
-            Syncer.active.entities.Add(entity_id, newEntity);
+            Server.entities.Add(entity_id, newEntity);
         }
     }
 
@@ -40,7 +39,7 @@ public class RpcReceiver : NetworkBehaviour
     public void RpcSyncBuildable(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata, bool useDrones)
     {
         // Check if client
-        if (isClientOnly && !Syncer.active.entities.ContainsKey(entity_id))
+        if (isClientOnly && !Server.entities.ContainsKey(entity_id))
         {
             // Create networked building
             CreateNetworkedBuilding(entity_id, id, position, rotation, metadata, useDrones);
@@ -51,26 +50,58 @@ public class RpcReceiver : NetworkBehaviour
     public void RpcSyncGhost(int old_id, int entity_id, string id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Check if client
-        if (isClientOnly && !Syncer.active.entities.ContainsKey(entity_id))
+        if (isClientOnly && !Server.entities.ContainsKey(entity_id))
         {
             // Remove ghost tile
-            if (Syncer.active.entities.ContainsKey(old_id))
+            if (Server.entities.ContainsKey(old_id))
             {
-                Syncer.active.entities[old_id].ResetTile();
-                Syncer.active.entities.Remove(old_id);
+                Server.entities[old_id].ResetTile();
+                Server.entities.Remove(old_id);
             }
-            else InstantiationHandler.active.RpcDestroyBuilding(position);
+            else
+            {
+                Debug.Log("[SERVER] Desync detected. An entity with runtime ID " + old_id + " was destroyed on" +
+                    " the server, but that runtime ID does not exist on this client!");
+                InstantiationHandler.active.RpcDestroyBuilding(position);
+            }
 
             // Sync buildable for all clients
             CreateNetworkedBuilding(entity_id, id, position, rotation, metadata, false);
         }
     }
 
+    [ClientRpc]
+    public void RpcSyncDestroy(int entity_id)
+    {
+        // Attempt to destroy an active entity. If no entity found, attempt override on position
+        if (Server.entities.ContainsKey(entity_id))
+        {
+            Server.entities[entity_id].DestroyEntity();
+            Server.entities.Remove(entity_id);
+        }
+        else Debug.Log("[SERVER] Desync detected. An entity with ID " + entity_id + " was removed " +
+            "on the server, but that entities runtime ID does not exist on this client!");
+    }
+
+    [ClientRpc]
+    public void RpcSyncMetadata(int entity_id, int metadata)
+    {
+        // Attempt to destroy an active entity. If no entity found, attempt override on position
+        if (Server.entities.ContainsKey(entity_id))
+            Server.entities[entity_id].ApplyMetadata(metadata);
+        else Debug.Log("[SERVER] Desync detected. An entity with ID " + entity_id + " received a " +
+            "metadata change of " + metadata + " from the server, but the entities runtime ID does not exist on this client!");
+    }
+
     // Create a networked building
     public void CreateNetworkedBuilding(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata, bool useDrone)
     {
-        // Create network buildable
-        Debug.Log("[SERVER] Receiving request to create networked buildable " + entity_id);
+        // Check entity ID
+        if (entity_id == -1)
+        {
+            Debug.Log("[SERVER] Receiver desync detected. An entity was created on the server, but" +
+                " the ID passed to this client is uninitialized. This will cause issues with syncing!");
+        }
 
         // Get building SO via ID request
         Building building = ScriptableLoader.buildings[id];
@@ -86,8 +117,8 @@ public class RpcReceiver : NetworkBehaviour
         else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
 
         // Check if key already exists
-        if (!Syncer.active.entities.ContainsKey(entity_id))
-            Syncer.active.entities.Add(entity_id, newEntity);
-        else Syncer.active.entities[entity_id] = newEntity;
+        if (!Server.entities.ContainsKey(entity_id))
+            Server.entities.Add(entity_id, newEntity);
+        else Server.entities[entity_id] = newEntity;
     }
 }

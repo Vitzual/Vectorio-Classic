@@ -96,15 +96,18 @@ public class BuildingController : NetworkBehaviour
     [Command]
     public void CreateEntity(string entity_id, Vector2 position, Quaternion rotation, int metadata)
     {
-        Syncer.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
+        if (hasAuthority) Server.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
     }
 
-    // Delete building (command)
+    [Command]
     public void DestroyBuilding()
     {
-        if (InstantiationHandler.active != null)
-            InstantiationHandler.active.RpcDestroyBuilding(hologram.position);
-        else Debug.LogError("Scene does not have active building handler!");
+        if (hasAuthority)
+        {
+            Vector2Int position = new Vector2Int((int)hologram.position.x, (int)hologram.position.y);
+            BaseTile tile = InstantiationHandler.active.tileGrid.RetrieveTile(position);
+            if (tile != null && tile.isSellable) Server.active.SrvSyncDestroy(tile.runtimeID);
+        }
     }
 
     // Sets the selected entity (null to deselect)

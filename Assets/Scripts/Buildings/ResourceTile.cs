@@ -14,13 +14,13 @@ public class ResourceTile : BaseTile
 
     public virtual int TakeResource()
     {
-        Debug.Log("Script needs to override TakeResource() virtual method");
+        Debug.Log("Entity cannot distribute resources");
         return 0;
     }
 
     public virtual int AddResources(int amount, bool showPopup)
     {
-        Debug.Log("Script needs to override AddResources() virtual method");
+        Debug.Log("Entity does not accept resources");
         return amount;
     }
 }

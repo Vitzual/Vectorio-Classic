@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1947023934260599809}
-  - component: {fileID: 6019495612794283690}
   - component: {fileID: 900730751210236225}
-  - component: {fileID: 900730751210236226}
   m_Layer: 0
   m_Name: Enemy Handler
   m_TagString: Untagged
@@ -34,25 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6019495612794283690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900730751210236224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: facacdb237bbc694cb28789cbeac84f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildingGoDeadSound: {fileID: 0}
-  enemies: []
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  isMenu: 0
-  menuTarget: {fileID: 0}
 --- !u!114 &900730751210236225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,29 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b5b4143c796fe4695cf465c8e8334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   enemies: []
   maxEnemiesAllowed: 250
   groupSpeed: 5
   groupCooldown: 180
---- !u!114 &900730751210236226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900730751210236224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c82ae8c6cb553d6468de06b04f7e8b41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guardians: []
-  guardianSpawned: 0
-  warningSound: {fileID: 1918520602720396134}
-  musicVolume: 0.5
-  laserFiring: 0
-  laserPart: 0
-  cooldown: 5
 --- !u!1 &8242866337427654743
 GameObject:
   m_ObjectHideFlags: 0

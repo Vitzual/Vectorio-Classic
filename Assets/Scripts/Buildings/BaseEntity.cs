@@ -89,6 +89,11 @@ public class BaseEntity : MonoBehaviour, IDamageable
         Debug.Log("This tile cannot be reset!");
     }
 
+    public virtual void SyncEntity(int freeVar)
+    {
+        Debug.Log("Entity has no sync method!");
+    }
+
     // Get material
     public virtual Material GetMaterial()
     {

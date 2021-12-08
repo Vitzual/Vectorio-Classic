@@ -46,7 +46,7 @@ public class GhostTile : BaseTile
     public void CreateBuilding()
     {
         // Create building and destroy this game object
-        if (buildable != null) Syncer.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, transform.position, transform.rotation, metadata);
+        if (buildable != null) Server.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, transform.position, transform.rotation, metadata);
     }
 
     // Override onClick

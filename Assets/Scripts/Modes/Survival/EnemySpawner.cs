@@ -8,7 +8,6 @@ public class EnemySpawner : NetworkBehaviour
 {
     // Active instance
     public List<Enemy> enemies;
-    public static EnemySpawner active;
     public int maxEnemiesAllowed = 250;
 
     // Group spawning
@@ -20,10 +19,12 @@ public class EnemySpawner : NetworkBehaviour
 
     public void Start()
     {
-        // Setup spawner
-        active = this;
-        timeUntilNextGroup = groupCooldown;
+        // Run authority check
+        if (!hasAuthority) return;
+        Debug.Log("[SERVER] Authority granted to " + transform.name + " for enemy spawning");
 
+        // Setup spawner
+        timeUntilNextGroup = groupCooldown;
         enemies.AddRange(ScriptableLoader.enemies.Values);
 
         InvokeRepeating("SpawnEnemies", 1, 1);
@@ -33,7 +34,8 @@ public class EnemySpawner : NetworkBehaviour
     [Command]
     public void CreateEnemy(string enemy_id, string variant_id, Vector2 pos, Quaternion rotation, float health, float speed)
     {
-        if (hasAuthority) Syncer.active.SrvSyncEnemy(enemy_id, variant_id, pos, rotation, health, speed);
+        if (!hasAuthority) return;
+        Server.active.SrvSyncEnemy(enemy_id, variant_id, pos, rotation, health, speed);
     }
 
     // Spawn group enemy each frame to offset calculation cost
@@ -60,6 +62,9 @@ public class EnemySpawner : NetworkBehaviour
 
     public void SpawnEnemies()
     {
+        // Check authority
+        if (!hasAuthority) return;
+
         // Check if enemy handler is active
         if (EnemyHandler.active.enemies.Count > maxEnemiesAllowed || Settings.paused) return;
 

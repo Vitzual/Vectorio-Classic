@@ -13,7 +13,10 @@ public class Gamemode : MonoBehaviour
     public static Stage stage;
 
     // Network handlers
-    public Syncer networkSync;
+    public Server networkSync;
+
+    // Resource handler
+    public Resource resource;
 
     // Static save variables
     public static DifficultyData difficulty;
@@ -41,12 +44,20 @@ public class Gamemode : MonoBehaviour
     public bool initBuildings;
     public bool initEnemies;
     public bool initGuardians;
+    
+    [Header("Resource Settings")]
+    public Resource.Currency[] currencyElements;
+    public List<Resource.PerSecond> perSeconds;
 
     // Set active instance
     public void Awake()
     {
         // Get active instance
         active = this;
+
+        // Setup resources
+        resource.Setup(perSeconds, currencyElements);
+        resource.gameObject.SetActive(true);
     }
 
     // Start method
@@ -84,6 +95,7 @@ public class Gamemode : MonoBehaviour
         }
 
         NewSaveSystem.loadGame = false;
+        resource.gameObject.SetActive(true);
     }
     
     // Update playtime

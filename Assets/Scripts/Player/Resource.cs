@@ -4,8 +4,9 @@ using TMPro;
 using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using UnityEngine.UI;
+using Mirror;
 
-public class Resource : MonoBehaviour
+public class Resource : NetworkBehaviour
 {
     // Active instance
     public static Resource active;
@@ -56,6 +57,7 @@ public class Resource : MonoBehaviour
         public int index = 0;
         public TextMeshProUGUI perSecondUI;
     }
+
     public List<PerSecond> perSeconds;
     public int currentPerSec = 0;
 
@@ -70,16 +72,19 @@ public class Resource : MonoBehaviour
     public void Awake()
     {
         active = this;
-        Setup();
     }
 
     // Generate resources
-    public void Setup() 
+    public void Setup(List<PerSecond> perSecondElements, Currency[] currencyElements) 
     {
-        // Setup currencies
+        // Reset currencies
         currencies = new Dictionary<CurrencyType, Currency>();
         storages = new List<DefaultStorage>();
         Research.ResetResearch();
+
+        // Setup new currencies
+        this.currencyElements = currencyElements;
+        perSeconds = perSecondElements;
 
         // Setup currency elements
         foreach (Currency currency in currencyElements)
@@ -99,9 +104,11 @@ public class Resource : MonoBehaviour
         // Setup events
         if (perSeconds.Count > 0)
             InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
+
+        gameObject.SetActive(true);
     }
 
-    // Add a resource
+    // Apply a resource
     public void Apply(CurrencyType type, int amount, bool useStorages)
     {
         // Heat and power update
@@ -119,7 +126,7 @@ public class Resource : MonoBehaviour
         if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
 
-    // Refund resources method
+    // Applies resources method
     public void ApplyResources(Cost[] costs)
     {
         foreach (Cost cost in costs) 

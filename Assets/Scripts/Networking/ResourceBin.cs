@@ -13,11 +13,16 @@ public class ResourceBin : NetworkBehaviour
 {
     // Active local instance
     public static ResourceBin active;
+    public string permission = "FALSE";
 
     // Connect to syncer
     public void Start()
     {
-        if (hasAuthority) active = this;
+        if (hasAuthority)
+        {
+            permission = "TRUE";
+            active = this;
+        }
     }
 
     // Update collector grab for all players

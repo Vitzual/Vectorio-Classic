@@ -122,7 +122,7 @@ public class StatsPanel : MonoBehaviour
         {
             AdditionalSetting setting = settings[entity];
             if (index < setting.selectors.Length)
-                selectedEntity.ApplySettings(index, setting.selectors[index].index);
+                selectedEntity.SyncMetadata(setting.selectors[index].index);
             else Debug.Log("Index passed was outside of available selectors");
         }
         else Debug.Log("No settings available for " + entity.name);

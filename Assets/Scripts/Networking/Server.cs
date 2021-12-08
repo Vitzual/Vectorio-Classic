@@ -65,7 +65,7 @@ public class Server : NetworkBehaviour
         // Check if entity created successfully 
         if (newEntity != null)
         {
-            primaryReceiver.RpcSyncEnemy(AssignRuntimeID(newEntity), enemy_id, variant_id, position, rotation, health, speed);
+            primaryReceiver.RpcSyncEnemy(newEntity.runtimeID, enemy_id, variant_id, position, rotation, health, speed);
         }
     }
 
@@ -78,7 +78,7 @@ public class Server : NetworkBehaviour
         // Check if entity created successfully 
         if (newEntity != null)
         {
-            primaryReceiver.RpcSyncBuildable(AssignRuntimeID(newEntity), id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
+            primaryReceiver.RpcSyncBuildable(newEntity.runtimeID, id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
         }
     }
 
@@ -91,6 +91,8 @@ public class Server : NetworkBehaviour
             entities[old_id].ResetTile();
             entities.Remove(old_id);
         }
+        else Debug.Log("[SERVER] Received runtime ID that does not exist on the server. This will" +
+            " cause issues with desyncing! Recommend restarting the game to avoid further problems");
 
         // Get building SO via ID request
         Building building = ScriptableLoader.buildings[id];
@@ -106,7 +108,7 @@ public class Server : NetworkBehaviour
         // Check if entity created successfully 
         if (newEntity != null)
         {
-            primaryReceiver.RpcSyncGhost(old_id, AssignRuntimeID(newEntity), id, position, rotation, metadata);
+            primaryReceiver.RpcSyncGhost(old_id, newEntity.runtimeID, id, position, rotation, metadata);
         }
     }
     
@@ -130,7 +132,7 @@ public class Server : NetworkBehaviour
     }
 
     // Assigns a unique runtime ID to an entity    
-    public int AssignRuntimeID(BaseEntity entity)
+    public static int AssignRuntimeID(BaseEntity entity)
     {
         int maxLoop = 100;
         while (maxLoop != 0)

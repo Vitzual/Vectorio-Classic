@@ -20,14 +20,14 @@ public class BaseEntity : MonoBehaviour, IDamageable
         Events.active.EntityClicked(this);
     }
 
+    public virtual void SyncMetadata(int data)
+    {
+        Server.active.SrvSyncMetadata(runtimeID, data);
+    }
+
     public virtual void ApplyMetadata(int data)
     {
         metadata = data;
-    }
-
-    public virtual void ApplySettings(int settingType, int newSetting)
-    {
-        Debug.Log("This building has no settings to apply");
     }
 
     // If entity has button click available, override here

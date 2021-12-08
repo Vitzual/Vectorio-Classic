@@ -40,23 +40,6 @@ public class Droneport : BaseTile
         base.ApplyMetadata(data);
     }
 
-    // Settings
-    public override void ApplySettings(int settingType, int newSetting)
-    {
-        if (settingType == 0)
-        {
-            switch (newSetting)
-            {
-                case 0:
-                    ChangeDrone(Drone.DroneType.Builder);
-                    break;
-                case 1:
-                    ChangeDrone(Drone.DroneType.Resource);
-                    break;
-            }
-        }
-    }
-
     // Change drone 
     public void ChangeDrone(Drone.DroneType type)
     {

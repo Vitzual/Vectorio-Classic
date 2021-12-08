@@ -88,6 +88,7 @@ public class ResearchLab : BaseTile
     {
         foreach (KeyValuePair<string, ResearchTech> tech in ScriptableLoader.researchTechs)
             if (tech.Value.metadataID == data) ApplyResearch(tech.Value, true);
+        base.ApplyMetadata(data);
     }
 
     public override void DestroyEntity()

@@ -116,9 +116,10 @@ public class RpcReceiver : NetworkBehaviour
         if (useDrone) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, position, rotation, metadata);
         else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
 
-        // Check if key already exists
-        if (!Server.entities.ContainsKey(entity_id))
-            Server.entities.Add(entity_id, newEntity);
-        else Server.entities[entity_id] = newEntity;
+        // Set entity runtime ID
+        newEntity.runtimeID = entity_id;
+
+        // Parse entity runtime ID to active dictionary
+        Server.entities.Add(entity_id, newEntity);
     }
 }

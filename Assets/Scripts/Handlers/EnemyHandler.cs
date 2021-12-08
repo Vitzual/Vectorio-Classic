@@ -141,6 +141,11 @@ public class EnemyHandler : MonoBehaviour
             // Setup entity
             enemy.isMenu = isMenu;
             enemies.Add(enemy);
+
+            // Assign runtime ID
+            Server.AssignRuntimeID(enemy);
+
+            // Return enemy
             return enemy;
         }
         else return null;

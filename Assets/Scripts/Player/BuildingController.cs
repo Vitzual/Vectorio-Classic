@@ -96,18 +96,14 @@ public class BuildingController : NetworkBehaviour
     [Command]
     public void CreateEntity(string entity_id, Vector2 position, Quaternion rotation, int metadata)
     {
-        if (hasAuthority) Server.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
+        Server.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
     }
 
     [Command]
     public void DestroyBuilding()
     {
-        if (hasAuthority)
-        {
-            Vector2Int position = new Vector2Int((int)hologram.position.x, (int)hologram.position.y);
-            BaseTile tile = InstantiationHandler.active.tileGrid.RetrieveTile(position);
-            if (tile != null && tile.isSellable) Server.active.SrvSyncDestroy(tile.runtimeID);
-        }
+        BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
+        if (holder != null && holder.isSellable) Server.active.SrvSyncDestroy(holder.runtimeID);
     }
 
     // Sets the selected entity (null to deselect)

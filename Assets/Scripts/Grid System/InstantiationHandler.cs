@@ -120,6 +120,9 @@ public class InstantiationHandler : MonoBehaviour
         if (!NewSaveSystem.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
 
+        // Assign runtime ID to building
+        Server.AssignRuntimeID(lastBuilding);
+
         // Return building
         return lastBuilding;
     }
@@ -137,6 +140,9 @@ public class InstantiationHandler : MonoBehaviour
 
         // Set the tiles on the grid class
         SetCells(buildable.building, position, holder, true);
+
+        // Assign runtime ID to building
+        Server.AssignRuntimeID(holder);
 
         // Return ghost
         return holder;

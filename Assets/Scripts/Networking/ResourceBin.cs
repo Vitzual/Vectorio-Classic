@@ -12,6 +12,7 @@ using Mirror;
 public class ResourceBin : NetworkBehaviour
 {
     // Active local instance
+    public ResourceBin activePointer;
     public static ResourceBin active;
     public string permission = "FALSE";
 
@@ -22,14 +23,22 @@ public class ResourceBin : NetworkBehaviour
         {
             permission = "TRUE";
             active = this;
+            activePointer = active;
         }
+    }
+    
+    // Internal call
+    public void SyncCollector(int id, int amount)
+    {
+        if (hasAuthority)
+            CmdCollector(id, amount);
     }
 
     // Update collector grab for all players
     [Command]
     public void CmdCollector(int id, int amount)
     {
-        if (hasAuthority) Server.active.SrvSyncCollector(id, amount);
+        RpcCollect(id, amount);
     }
 
     // Rpc collector on all clients
@@ -37,12 +46,9 @@ public class ResourceBin : NetworkBehaviour
     public void RpcCollect(int id, int amount)
     {
         // Reset the tile 
-        if (isClientOnly)
-        {
-            if (Server.entities.ContainsKey(id))
-                Server.entities[id].SyncEntity(amount);
-            else Debug.Log("[SERVER] Client received a collector with a runtime ID that doesn't exist. " +
-                "This will cause major issues with desyncing!");
-        }
+        if (Server.entities.ContainsKey(id))
+            Server.entities[id].SyncEntity(amount);
+        else Debug.Log("[SERVER] Client received a collector with a runtime ID that doesn't exist. " +
+            "This will cause major issues with desyncing!");
     }
 }

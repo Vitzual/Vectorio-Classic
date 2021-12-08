@@ -11,9 +11,9 @@ public class BuildingController : NetworkBehaviour
 
     // Selected tile
     public Transform hologram, squareRadius, circleRadius;
-    private Entity entity;
+    public Entity entity;
     public Variant variant;
-    private Buildable buildable;
+    public Buildable buildable;
     public int metadata = -1;
 
     // Sprite values
@@ -27,6 +27,7 @@ public class BuildingController : NetworkBehaviour
     {
         // Confirm user has authority
         if (!hasAuthority) return;
+        else Debug.Log("[SERVER] Authority granted to instance " + transform.name);
 
         // Grab sprite renderer component
         spriteRenderer = hologram.GetComponent<SpriteRenderer>();
@@ -34,6 +35,7 @@ public class BuildingController : NetworkBehaviour
         // Set input events
         if (InputEvents.active != null)
         {
+            Debug.Log("Assigning input events");
             InputEvents.active.onLeftMousePressed += TryCreateEntity;
             InputEvents.active.onRightMousePressed += TryDestroyBuilding;
             InputEvents.active.onRightMouseReleased += DisableJustDeselected;
@@ -43,10 +45,13 @@ public class BuildingController : NetworkBehaviour
 
         // Set UI events
         if (UIEvents.active != null) 
-        { 
+        {
+            Debug.Log("Assigning interface events");
             UIEvents.active.onEntityPressed += SetEntity;
             UIEvents.active.onBuildablePressed += SetBuilding;
         }
+
+        Debug.Log("Finished setting up controller instance");
     }
 
     public void Update()
@@ -84,20 +89,14 @@ public class BuildingController : NetworkBehaviour
     {
         if (StatsPanel.isOpen) return;
 
-        if (entity != null || buildable != null) CmdCreateBuildable();
+        if (buildable != null) CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
         else TryClickBuilding();
     }
 
-    // Create building (command)
     [Command]
-    public void CmdCreateBuildable()
+    public void CreateEntity(string entity_id, Vector2 position, Quaternion rotation, int metadata)
     {
-        if (InstantiationHandler.active != null)
-        {
-            if (buildable != null) Syncer.active.SrvSyncBuildable(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
-            else if (entity != null) Syncer.active.SrvSyncEnemy(entity.InternalID, variant.InternalID, hologram.position, hologram.rotation, -1, -1);
-        }
-        else Debug.LogError("Scene does not have active building handler!");
+        Syncer.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
     }
 
     // Delete building (command)

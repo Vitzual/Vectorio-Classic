@@ -19,6 +19,7 @@ public class JoinButton : MonoBehaviour
     {
         // Set userData
         this.userData = userData;
+        clientOf = userData.cSteamId.ToString();
 
         // Set avatar
         userData.LoadAvatar((image) =>
@@ -33,6 +34,9 @@ public class JoinButton : MonoBehaviour
 
     public void UpdateUserData()
     {
+        // Check clientOf
+        clientOf = userData.SteamId.ToString();
+
         // Set colors based on State
         if (clientOf != "")
             foreach (TextMeshProUGUI text in sessions)

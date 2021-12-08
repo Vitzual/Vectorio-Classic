@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System;
 using Michsky.UI.ModernUIPack;
+using Mirror;
 
 public class Menu : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class Menu : MonoBehaviour
     public ModalWindowManager confirmDelete;
     public int outdatedIndex = -1;
     public ModalWindowManager outdated;
+
+    // Network Manager
+    [SerializeField] private NetworkManager networkManager;
 
     [System.Serializable]
     public class MenuButton
@@ -254,8 +258,13 @@ public class Menu : MonoBehaviour
             else NewSaveSystem.savePath = "/world_1.vectorio";
         }
 
+        // Multiplayer settings
+        networkManager.maxConnections = 4;
+
+        // Start the game
+        networkManager.onlineScene = "Survival";
         loadingScreen.SetActive(true);
-        SceneManager.LoadScene(mode);
+        networkManager.StartHost();
     }
 
     public void ExitGame()

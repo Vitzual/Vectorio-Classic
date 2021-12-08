@@ -7,14 +7,33 @@ using Mirror;
 
 public class Syncer : NetworkBehaviour
 {
+    // Active instance
     public static Syncer active;
+
+    // Add self to syncer list
+    public static RpcReceiver receiver;
+
+    // All active entities in scene
     public Dictionary<int, BaseEntity> entities = new Dictionary<int, BaseEntity>();
 
     // Awake
     public void Awake()
     {
+        entities = new Dictionary<int, BaseEntity>();
+
         active = this;
         Setup();
+    }
+
+    // Add receiver
+    public static bool ConnectReceiver(RpcReceiver rpcReceiver)
+    {
+        if (receiver == null)
+        {
+            receiver = rpcReceiver;
+            return true;
+        }
+        return false;
     }
 
     // Setup new list
@@ -23,12 +42,9 @@ public class Syncer : NetworkBehaviour
         entities = new Dictionary<int, BaseEntity>();
     }
 
-    [ServerCallback]
+    [Server]
     public void SrvSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
-        // Debug for thing thing
-        Debug.Log("Attempting to create enemy");
-
         // Create new entity
         BaseEntity newEntity = InstantiationHandler.active.CreateEnemy(enemy_id, variant_id, position, rotation, health, speed);
 
@@ -36,7 +52,8 @@ public class Syncer : NetworkBehaviour
         if (newEntity != null)
         {
             int genID = AssignRuntimeID(newEntity);
-            RpcSyncEnemy(genID, enemy_id, variant_id, position, rotation, health, speed);
+            newEntity.runtimeID = genID;
+            receiver.RpcSyncEnemy(genID, enemy_id, variant_id, position, rotation, health, speed);
         }
     }
 
@@ -50,15 +67,20 @@ public class Syncer : NetworkBehaviour
         if (newEntity != null)
         {
             int genID = AssignRuntimeID(newEntity);
-            RpcSyncBuildable(genID, id, position, rotation, metadata);
+            newEntity.runtimeID = genID;
+            receiver.RpcSyncBuildable(genID, id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
         }
     }
 
     [Server]
-    public void SrvSyncGhost(string id, Vector2 position, Quaternion rotation, int metadata)
+    public void SrvSyncGhost(int old_id, string id, Vector2 position, Quaternion rotation, int metadata)
     {
-        // Check authority
-        if (!hasAuthority) return;
+        // Reset the tile 
+        if (entities.ContainsKey(old_id))
+        {
+            entities[old_id].ResetTile();
+            entities.Remove(old_id);
+        }
 
         // Get building SO via ID request
         Building building = ScriptableLoader.buildings[id];
@@ -75,20 +97,9 @@ public class Syncer : NetworkBehaviour
         if (newEntity != null)
         {
             int genID = AssignRuntimeID(newEntity);
-            RpcSyncGhost(genID, id, position, rotation, metadata);
+            newEntity.runtimeID = genID;
+            receiver.RpcSyncGhost(old_id, genID, id, position, rotation, metadata);
         }
-    }
-
-    [Command]
-    public void CmdSyncBullet(int id)
-    {
-
-    }
-
-    [Command]
-    public void CmdSyncHealth(int id)
-    {
-
     }
 
     [Command]
@@ -103,22 +114,7 @@ public class Syncer : NetworkBehaviour
 
     }
 
-    [ClientRpc]
-    protected void RpcSyncEnemy(int entity_id, string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
-    {
-        // Check if client
-        if (isClientOnly)
-        {
-            // Get scriptable data
-            Entity entity = ScriptableLoader.enemies[enemy_id];
-            Variant variant = ScriptableLoader.variants[variant_id];
-
-            // Create entity
-            BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateEnemy(entity, variant, position, rotation, health, speed);
-            entities.Add(entity_id, newEntity);
-        }
-    }
-
+    /*
     [ClientRpc]
     protected void RpcSyncBuildable(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata)
     {
@@ -140,30 +136,24 @@ public class Syncer : NetworkBehaviour
     }
 
     [ClientRpc]
-    protected void RpcSyncGhost(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata)
+    protected void RpcSyncGhost(int old_id, int entity_id, string id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Check if client
         if (isClientOnly)
         {
             // Remove ghost tile
-            InstantiationHandler.active.RpcDestroyBuilding(position);
+            if (entities.ContainsKey(old_id))
+            {
+                entities[old_id].ResetTile();
+                entities.Remove(old_id);
+            }
+            else InstantiationHandler.active.RpcDestroyBuilding(position);
 
             // Sync buildable for all clients
             RpcSyncBuildable(entity_id, id, position, rotation, metadata);
         }
     }
-
-    [ClientRpc]
-    protected void RpcSyncBullet(int id)
-    {
-
-    }
-
-    [ClientRpc]
-    protected void RpcSyncHealth(int id)
-    {
-
-    }
+    */
 
     [ClientRpc]
     protected void RpcSyncDestroy(int id)

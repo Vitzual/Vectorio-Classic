@@ -4,14 +4,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Mirror;
 
-public class InputController : MonoBehaviour
+public class InputController : NetworkBehaviour
 {
     // Shift held
     public static bool shiftHeld;
 
+    //[Client]
     public void Update()
     {
+        if (!hasAuthority) return;
+
         if (!Inventory.isOpen && !ResearchUI.isOpen && !StatsPanel.isOpen && !CameraController.mapEnabled)
         {
             if (Input.GetKeyDown(Keybinds.construct) && !InterfaceCheck())
@@ -51,6 +55,7 @@ public class InputController : MonoBehaviour
     }
 
     // Check UI elements 
+    [Client]
     private bool InterfaceCheck()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -62,6 +67,7 @@ public class InputController : MonoBehaviour
     }
 
     // Checks if for numeric input
+    [Client]
     public void CheckNumberInput()
     {
         if (Input.GetKeyDown(Keybinds.hotbar_1))

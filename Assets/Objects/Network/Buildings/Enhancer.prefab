@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2910927284574648286}
+  - component: {fileID: 2042474099896663359}
   m_Layer: 8
   m_Name: Rotator
   m_TagString: Untagged
@@ -33,6 +34,19 @@ Transform:
   m_Father: {fileID: 165687244735643869}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2042474099896663359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707030548510679330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61373242e53f7e4898416feeb1091e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 80
 --- !u!1 &1711705259399207453
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,8 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf370ba633235a3408c2e3504a6bffe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   metadata: -1
   cells: []
   saveBuilding: 1

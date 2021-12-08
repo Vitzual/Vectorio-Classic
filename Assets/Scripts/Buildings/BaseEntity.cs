@@ -7,6 +7,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
     public int metadata = -1;
+    public int runtimeID = -1;
     protected ParticleSystem particle;
 
     public virtual void Setup() 
@@ -80,6 +81,12 @@ public class BaseEntity : MonoBehaviour, IDamageable
     {
         health += amount;
         if (health > maxHealth) health = maxHealth;
+    }
+
+    // Resets a tile (free method)
+    public virtual void ResetTile()
+    {
+        Debug.Log("This tile cannot be reset!");
     }
 
     // Get material

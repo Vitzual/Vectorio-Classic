@@ -20,13 +20,9 @@ public class NetworkManagerSF : NetworkManager
 
     public void Join(string id)
     {
-        isServer = false;
-
         // Set address to steamid64
+        isServer = false;
         networkAddress = id;
-
-        // Switch scenes
-        SceneManager.LoadSceneAsync(2);
 
         // Connect
         StartClient();

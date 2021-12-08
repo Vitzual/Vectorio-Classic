@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Mirror;
 using Michsky.UI.ModernUIPack;
 using TMPro;
 using System.Collections.Generic;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : NetworkBehaviour
 {
     // Active instance
     public List<Enemy> enemies;
@@ -29,6 +30,12 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
     }
 
+    [Command]
+    public void CreateEnemy(string enemy_id, string variant_id, Vector2 pos, Quaternion rotation, float health, float speed)
+    {
+        Syncer.active.SrvSyncEnemy(enemy_id, variant_id, pos, rotation, health, speed);
+    }
+
     // Spawn group enemy each frame to offset calculation cost
     public void Update()
     {
@@ -43,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 // Get position
                 Vector2 calcPos = new Vector2(groupSpawnPos.x + Random.Range(-20, 20), groupSpawnPos.y + Random.Range(-20, 20));
-                Syncer.active.SrvSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, calcPos, Quaternion.identity, -1, groupSpeed);
+                CreateEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, calcPos, Quaternion.identity, -1, groupSpeed);
 
                 // Lower group spawn value
                 groupEnemies -= 1;
@@ -88,7 +95,7 @@ public class EnemySpawner : MonoBehaviour
                 }
 
                 // Create enemy
-                Syncer.active.SrvSyncEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
+                CreateEnemy(enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
             }
         }
 

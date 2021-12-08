@@ -79,6 +79,7 @@ public class DefaultTurret : BaseTile, IAudible
     // Create a bullet object
     public virtual void CreateBullet(Vector2 position)
     {
+        // Play sound if available
         if (turret.sound != null)
             AudioSource.PlayClipAtPoint(turret.sound, transform.position, Settings.sound);
 

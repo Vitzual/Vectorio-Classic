@@ -28,28 +28,25 @@ public class GhostTile : BaseTile
     }
 
     // Called when drone reaches target
-    public void CreateBuilding()
+    public override void ResetTile()
     {
-        // Check buildable
-        if (buildable == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         // Remove cells from Tile grid
         if (InstantiationHandler.active != null)
         {
             // Remove ghost cells
             foreach (Vector2Int cell in cells)
                 InstantiationHandler.active.tileGrid.RemoveCell(cell);
-
-            // Create building and destroy this game object
-            // if (buildable != null) Syncer.active.SrvSyncGhost(buildable.building.InternalID, transform.position, transform.rotation, metadata);
         }
 
         Events.active.GhostDestroyed(this);
         Destroy(gameObject);
+    }
+
+    // Reset ghost tile
+    public void CreateBuilding()
+    {
+        // Create building and destroy this game object
+        if (buildable != null) Syncer.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, transform.position, transform.rotation, metadata);
     }
 
     // Override onClick

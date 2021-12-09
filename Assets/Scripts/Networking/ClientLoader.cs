@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System;
+using System.Linq;
 
 public class ClientLoader : NetworkBehaviour
 {
     // Load data
-    public class LoadData
+    public class DataChunk
     {
-        public string matchInfo;
         public string[] internalID;
         public int[] runtimeID;
         public int[] metadataID;
@@ -18,12 +18,15 @@ public class ClientLoader : NetworkBehaviour
         public float[] yCoord;
         public string[] entityType;
         public int[] entityVar;
-
-        public int totalIterations = 0;
+        public bool isAtEnd = false;
         public int currentIteration = 0;
     }
-    public LoadData loadData;
+    public DataChunk loadData;
+    public int arraySize = 250;
     public bool isLoading;
+
+    public int totalProcessedAmount = 0;
+    public int totalAmountToProcess = 0;
 
     // Start method
     public void Start()
@@ -34,6 +37,17 @@ public class ClientLoader : NetworkBehaviour
         }
     }
 
+    // Setup a new client
+    public void SetupClient()
+    {
+        if (hasAuthority)
+        {
+            Debug.Log("[SERVER] Beginning match request from server...");
+            RequestInitialSetup();
+            CmdRequestMatchInfo(0);
+        }
+    }
+
     // Update method
     public void Update()
     {
@@ -41,18 +55,64 @@ public class ClientLoader : NetworkBehaviour
         {
             if (isLoading && loadData != null)
             {
-                LoadServerData(loadData.currentIteration);
-                loadData.currentIteration += 1;
-
-                if (loadData.currentIteration >= loadData.totalIterations)
+                for (int i = 0; i < 5; i++)
                 {
-                    TogglePlayerJoining(false);
-                    loadData = null;
+                    LoadServerData(loadData.currentIteration);
+                    loadData.currentIteration += 1;
+                    totalProcessedAmount += 1;
+
+                    if (loadData.currentIteration >= arraySize)
+                    {
+                        if (loadData.isAtEnd)
+                        {
+                            Debug.Log("[SERVER] All data chunks processed, resuming game.");
+                            TogglePlayerJoining(false);
+                            loadData = null;
+                        }
+                        else
+                        {
+                            loadData = null;
+                            CmdUpdateJoinProgress((float)totalProcessedAmount / (float)totalAmountToProcess);
+                            Debug.Log("[SERVER] Data chunk " + (totalProcessedAmount / arraySize) + " processed, requesting next chunk...");
+                            CmdRequestMatchInfo(totalProcessedAmount);
+                        }
+                        break;
+                    }
                 }
-                else CmdUpdateJoinProgress((float)loadData.currentIteration / (float)loadData.totalIterations);
             }
-            //else if (isLoading) TogglePlayerJoining(false);
         }
+    }
+    
+    // Request initial match information from server
+    public void RequestInitialSetup()
+    {
+        if (hasAuthority)
+            CmdRequestInitialSetup();
+    }
+
+    // Request initial match information from server
+    [Command]
+    public void CmdRequestInitialSetup()
+    {
+        RpcRequestInitialSetup(0, Server.entities.Count, Gamemode.stage.InternalID);
+    }
+
+    // Request initial match information from server
+    [TargetRpc]
+    public void RpcRequestInitialSetup(int start, int end, string stage_id)
+    {
+        totalProcessedAmount = start;
+        totalAmountToProcess = end;
+
+        if (ScriptableLoader.stages.ContainsKey(stage_id))
+        {
+            Stage stage = ScriptableLoader.stages[stage_id];
+            Gamemode.stage = stage;
+            Border.UpdateStage();
+            Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
+        }
+        else Debug.Log("[SERVER] Stage ID returned from server does not exist on this client. Are you" +
+            " sure you're up to date? (verify game files)");
     }
 
     // Enable load screen for all players
@@ -94,24 +154,17 @@ public class ClientLoader : NetworkBehaviour
         UIEvents.active.PlayerJoin(enabled);
     }
 
-    // Setup a new client
-    public void SetupClient()
-    {
-        if (hasAuthority)
-        {
-            Debug.Log("[SERVER] Beginning match request from server...");
-            CmdRequestMatchInfo();
-        }
-    }
-
     // Loads in loadData from specific index
     public void LoadServerData(int i)
     {
         // Try catch to avoid errors
         try
         {
+            // Check if index is available
+            if (loadData.entityType[i] == null) return;
+
             // Check what type the entity is
-            if (loadData.entityType[i] == "Building")
+            else if (loadData.entityType[i] == "Building")
             {
                 // Check building internal ID
                 if (!ScriptableLoader.buildings.ContainsKey(loadData.internalID[i]))
@@ -181,13 +234,12 @@ public class ClientLoader : NetworkBehaviour
 
     // Grabs returned info from server
     [TargetRpc]
-    public void RpcSetupClient(string matchInfo, string[] internalID, int[] runtimeID, int[] metadataID, float[] entityHealth,
-        float[] xCoord, float[] yCoord, string[] entityType, int[] entityVar)
+    public void RpcSetupClient(string[] internalID, int[] runtimeID, int[] metadataID, float[] entityHealth,
+        float[] xCoord, float[] yCoord, string[] entityType, int[] entityVar, bool isAtEnd)
     {
-        Debug.Log("[SERVER] Server returned match info request, creating new load data for client.");
+        Debug.Log("[SERVER] Server returned match info request, creating new data chunk...");
 
-        loadData = new LoadData();
-        loadData.matchInfo = matchInfo;
+        loadData = new DataChunk();
         loadData.internalID = internalID;
         loadData.runtimeID = runtimeID;
         loadData.metadataID = metadataID;
@@ -196,41 +248,50 @@ public class ClientLoader : NetworkBehaviour
         loadData.yCoord = yCoord;
         loadData.entityType = entityType;
         loadData.entityVar = entityVar;
+        loadData.isAtEnd = isAtEnd;
 
-        Debug.Log("[SERVER] Load data set. Pausing game to load client into match.");
-
+        /*
         if (matchInfo != null && ScriptableLoader.stages.ContainsKey(matchInfo))
         {
             Gamemode.stage = ScriptableLoader.stages[matchInfo];
             Debug.Log("[SERVER] Stage info was processed successfully!");
         }
         else Debug.Log("[SERVER] Stage info could not be processed!");
+        */
 
-        loadData.currentIteration = 0;
-        loadData.totalIterations = loadData.internalID.Length;
         TogglePlayerJoining(true);
     }
 
     // Request match info
     [Command]
-    public void CmdRequestMatchInfo()
+    public void CmdRequestMatchInfo(int startingIndex)
     {
-        Debug.Log("[SERVER] Match info request received, processing...");
+        Debug.Log("[SERVER] Preparing match packet for client request...");
 
-        string stage_id = Gamemode.stage.InternalID;
-        string[] internalID = new string[Server.entities.Count];
-        int[] runtimeID = new int[Server.entities.Count];
-        int[] metadataID = new int[Server.entities.Count];
-        float[] entityHealth = new float[Server.entities.Count];
-        float[] xCoord = new float[Server.entities.Count];
-        float[] yCoord = new float[Server.entities.Count];
-        string[] entityType = new string[Server.entities.Count];
-        int[] entityVar = new int[Server.entities.Count];
-        bool[] isGhost = new bool[Server.entities.Count];
+        int endIndex = arraySize + startingIndex;
+        bool isAtEnd = false;
+
+        string[] internalID = new string[arraySize];
+        int[] runtimeID = new int[arraySize];
+        int[] metadataID = new int[arraySize];
+        float[] entityHealth = new float[arraySize];
+        float[] xCoord = new float[arraySize];
+        float[] yCoord = new float[arraySize];
+        string[] entityType = new string[arraySize];
+        int[] entityVar = new int[arraySize];
+        bool[] isGhost = new bool[arraySize];
 
         int index = 0;
-        foreach (KeyValuePair<int, BaseEntity> entity in Server.entities)
+        for(int i = startingIndex; i < endIndex; i++)
         {
+            // Check if still within range
+            if (i >= Server.entities.Count)
+            {
+                isAtEnd = true;
+                break;
+            }
+
+            KeyValuePair<int, BaseEntity> entity = Server.entities.ElementAt(i);
             if (entity.Value == null) continue;
 
             internalID[index] = entity.Value.internalID;
@@ -261,7 +322,8 @@ public class ClientLoader : NetworkBehaviour
 
             index += 1;
         }
-        Debug.Log("[SERVER] All match info formatted, sending back to client");
-        RpcSetupClient(stage_id, internalID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar);
+
+        Debug.Log("[SERVER] Match segment formatted, sending back to client.");
+        RpcSetupClient(internalID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar, isAtEnd);
     }
 }

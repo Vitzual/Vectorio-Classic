@@ -1,6 +1,7 @@
 ﻿// This script handles all active drones each frame
 using System.Collections.Generic;
 using UnityEngine;
+using Michsky.UI.ModernUIPack;
 
 // IMPORTANT: DroneManager.cs is one of the largest scripts in
 // the entire game. For optimization purposes, it handles deployment
@@ -26,6 +27,7 @@ public class DroneManager : MonoBehaviour
         latest = 8
     }
     public BuildPriority buildPriority;
+    public HorizontalSelector prioritySelector;
 
     // Priority buildings
     public Building droneport;
@@ -76,7 +78,15 @@ public class DroneManager : MonoBehaviour
     // Switch priority
     public void SwitchPriority(int type)
     {
+        Communicator.active.SyncBuildPriority(type);
+    }
+
+    // Sync build priority
+    public void SyncPriority(int type)
+    {
         buildPriority = (BuildPriority)type;
+        prioritySelector.index = type;
+        prioritySelector.UpdateUI();
     }
 
     // Move drones

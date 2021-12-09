@@ -23,6 +23,30 @@ public class Communicator : NetworkBehaviour
     }
 
     // Internal call
+    public void SyncBuildPriority(int prio)
+    {
+        // Send build priority request to server
+        if (hasAuthority)
+            CmdSyncBuildPriority(prio);
+    }
+
+    // Update collector grab for all players
+    [Command]
+    public void CmdSyncBuildPriority(int prio)
+    {
+        // Sync build priority with clients
+        RpcSyncBuildPriority(prio);
+    }
+
+    // Rpc metadata on all clients
+    [ClientRpc]
+    public void RpcSyncBuildPriority(int prio)
+    {
+        // Attempt to switch drone priority
+        DroneManager.active.SyncPriority(prio);
+    }
+
+    // Internal call
     public void SyncGuardianBattle()
     {
         if (hasAuthority)
@@ -51,7 +75,7 @@ public class Communicator : NetworkBehaviour
         if (hasAuthority)
             CmdSyncMetadata(id, data);
     }
-
+    
     // Update collector grab for all players
     [Command]
     public void CmdSyncMetadata(int id, int data)

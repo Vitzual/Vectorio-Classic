@@ -44,7 +44,7 @@ public class BuildingController : NetworkBehaviour
         }
 
         // Set UI events
-        if (UIEvents.active != null) 
+        if (UIEvents.active != null)
         {
             Debug.Log("Assigning interface events");
             UIEvents.active.onEntityPressed += SetEntity;
@@ -99,11 +99,16 @@ public class BuildingController : NetworkBehaviour
         Server.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
     }
 
-    [Command]
     public void DestroyBuilding()
     {
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
-        if (holder != null && holder.isSellable) Server.active.SrvSyncDestroy(holder.runtimeID);
+        if (holder != null && holder.isSellable) CmdDestroyBuilding(holder.runtimeID);
+    }
+
+    [Command]
+    public void CmdDestroyBuilding(int runtimeID)
+    {
+        Server.active.SrvSyncDestroy(runtimeID);
     }
 
     // Sets the selected entity (null to deselect)

@@ -13,6 +13,22 @@ public class UIEvents : MonoBehaviour
         active = this;
     }
 
+    // Display player joining
+    public event Action<bool> onPlayerJoin;
+    public void PlayerJoin(bool enabled)
+    {
+        if (onPlayerJoin != null)
+            onPlayerJoin(enabled);
+    }
+
+    // Display player joining
+    public event Action<float> onUpdateJoinProgress;
+    public void UpdateJoinProgress(float percentage)
+    {
+        if (onUpdateJoinProgress != null)
+            onUpdateJoinProgress(percentage);
+    }
+
     // On add resource
     public event Action<CollectedBlueprint> onApplyBlueprint;
     public void ApplyBlueprint(CollectedBlueprint blueprint)

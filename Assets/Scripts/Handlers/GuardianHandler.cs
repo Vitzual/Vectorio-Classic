@@ -27,7 +27,7 @@ public class GuardianHandler : MonoBehaviour
     // Start method
     public void Start()
     {
-        Events.active.onStartGuardianBattle += StartGuardianBattle;
+        Events.active.onStartGuardianBattle += SyncGuardianBattle;
         Events.active.onGuardianDestroyed += GuardianDestroyed;
     }
 
@@ -71,6 +71,12 @@ public class GuardianHandler : MonoBehaviour
                 i--;
             }
         }
+    }
+
+    // Start guardian battle for everyone
+    public void SyncGuardianBattle()
+    {
+        Communicator.active.SyncGuardianBattle();
     }
 
     // Start animation
@@ -168,7 +174,7 @@ public class GuardianHandler : MonoBehaviour
     {
         Events.active.OpenGuardianInfo(Gamemode.stage.guardian);
     }
-
+    
     // Close guardian warning
     public void CloseGuardianWarning()
     {

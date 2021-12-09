@@ -122,6 +122,7 @@ public class InstantiationHandler : MonoBehaviour
 
         // Assign runtime ID to building
         Server.AssignRuntimeID(lastBuilding);
+        lastBuilding.internalID = buildable.building.InternalID;
 
         // Return building
         return lastBuilding;
@@ -143,6 +144,7 @@ public class InstantiationHandler : MonoBehaviour
 
         // Assign runtime ID to building
         Server.AssignRuntimeID(holder);
+        holder.internalID = buildable.building.InternalID;
 
         // Return ghost
         return holder;

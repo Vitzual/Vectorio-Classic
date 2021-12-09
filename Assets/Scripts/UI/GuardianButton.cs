@@ -7,25 +7,22 @@ public class GuardianButton : MonoBehaviour
 {
     // Confirm screen
     public ModalWindowManager confirmScreen;
+    public CanvasGroup canvasGroup;
 
     // Setup events
     public void Start()
     {
-        Events.active.onOpenGuardianInfo += SetConfirmScreen;
-        Events.active.onCloseGuardianInfo += CloseConfirmScreen;
+        Events.active.onOpenGuardianInfo += ShowButton;
+        Events.active.onCloseGuardianInfo += HideButton;
     }
 
     // Set confirm screen thing
     public void SetConfirmScreen(Guardian guardian)
     {
-        confirmScreen.gameObject.SetActive(true);
-        confirmScreen.CloseWindow();
         confirmScreen.descriptionText = "In order to progress to the next stage, you must defeat <b>" + guardian.name + "</b> " +
             "guardian. The guardian will come from the <b>" + guardian.directionName + "</b>, so prepare your defenses!";
         confirmScreen.icon = Sprites.GetSprite(guardian.name);
         confirmScreen.UpdateUI();
-
-        OpenConfirmScreen();
     }
 
     // Open confirm screen
@@ -38,6 +35,23 @@ public class GuardianButton : MonoBehaviour
     public void CloseConfirmScreen()
     {
         confirmScreen.CloseWindow();
+    }
+
+    // Show button confirmation
+    public void ShowButton(Guardian guardian)
+    {
+        SetConfirmScreen(guardian);
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
+    }
+
+    // Hide button confirmation
+    public void HideButton()
+    {
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
     }
 
     // Begin battle

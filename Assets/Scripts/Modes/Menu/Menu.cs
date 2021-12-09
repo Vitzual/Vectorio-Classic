@@ -75,7 +75,6 @@ public class Menu : MonoBehaviour
         NewSaveSystem.saveData = null;
         Gamemode.difficulty = null;
         NewSaveSystem.saveName = "Unnamed Save";
-        NewSaveSystem.savePath = "/world_0.vectorio";
         Gamemode.seed = "Vectorio";
         NewSaveSystem.loadGame = false;
 
@@ -211,7 +210,12 @@ public class Menu : MonoBehaviour
                 button.obj.SetActive(true);
                 saveButtons.Add(i, button);
             }
-            else if (availableSave == -1) availableSave = i;
+            else if (availableSave == -1)
+            {
+                availableSave = i;
+                NewSaveSystem.savePath = "/world_"+ availableSave + ".vectorio";
+                Debug.Log("Set new save path to " + NewSaveSystem.savePath);
+            }
         }
     }
 
@@ -252,14 +256,12 @@ public class Menu : MonoBehaviour
     // Starts a game
     public void StartGame(string mode, int number = -1)
     {
-        if (number == -1)
-        {
-            if (availableSave != -1) NewSaveSystem.savePath = "/world_" + availableSave + ".vectorio";
-            else NewSaveSystem.savePath = "/world_1.vectorio";
-        }
+        // Get save path
+        if (number == -1 && availableSave != -1)
+            NewSaveSystem.savePath = "/world_" + availableSave + ".vectorio";
 
         // Multiplayer settings
-        networkManager.maxConnections = 4;
+        networkManager.maxConnections = 100;
 
         // Start the game
         networkManager.onlineScene = "Survival";

@@ -8,6 +8,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public float maxHealth { get; set; }
     public int metadata = -1;
     public int runtimeID = -1;
+    public string internalID = "";
     protected ParticleSystem particle;
 
     public virtual void Setup() 

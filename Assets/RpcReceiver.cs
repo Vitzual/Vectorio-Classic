@@ -9,12 +9,19 @@ public class RpcReceiver : NetworkBehaviour
     //
     // Only instantiates if a client is actively connected
     // If just server, will not be instantiated 
+    public Communicator communicator;
     public EnemySpawner spawner;
+    public bool primaryReceiver = false;
 
     // Connect to syncer
     public void Start()
     {
-        spawner.enabled = Server.ConnectReceiver(this);
+        if (hasAuthority)
+        {
+            primaryReceiver = Server.ConnectReceiver(this);
+            spawner.enabled = primaryReceiver;
+            if (!primaryReceiver) communicator.SetupClient();
+        }
     }
 
     [ClientRpc]
@@ -73,6 +80,9 @@ public class RpcReceiver : NetworkBehaviour
     [ClientRpc]
     public void RpcSyncDestroy(int entity_id)
     {
+        // Check client
+        if (!isClientOnly) return;
+
         // Attempt to destroy an active entity. If no entity found, attempt override on position
         if (Server.entities.ContainsKey(entity_id))
         {

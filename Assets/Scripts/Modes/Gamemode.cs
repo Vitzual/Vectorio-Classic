@@ -52,6 +52,9 @@ public class Gamemode : MonoBehaviour
     // Set active instance
     public void Awake()
     {
+        // Display pointer
+        Debug.Log("[SAVE] Save system point at " + NewSaveSystem.savePath);
+
         // Get active instance
         active = this;
 

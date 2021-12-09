@@ -45,7 +45,6 @@ public class NewSaveSystem : MonoBehaviour
                 // Building data struct
                 SaveData.BuildingData buildingData = new SaveData.BuildingData();
 
-                Debug.Log(tile.name);
                 buildingData.id = tile.buildable.building.InternalID;
                 buildingData.xCoord = tile.transform.position.x;
                 buildingData.yCoord = tile.transform.position.y;

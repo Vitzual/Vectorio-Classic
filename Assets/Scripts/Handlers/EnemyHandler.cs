@@ -139,6 +139,7 @@ public class EnemyHandler : MonoBehaviour
             if (speed != -1) enemy.moveSpeed = speed;
 
             // Setup entity
+            enemy.internalID = entity.InternalID;
             enemy.isMenu = isMenu;
             enemies.Add(enemy);
 
@@ -166,7 +167,7 @@ public class EnemyHandler : MonoBehaviour
         Resource.Currency currency = Resource.active.currencies[Resource.CurrencyType.Heat];
 
         // Check currency
-        if (currency.amount > currency.storage) GuardianHandler.active.OpenGuardianWarning();
+        if (currency.amount >= currency.storage) GuardianHandler.active.OpenGuardianWarning();
         else GuardianHandler.active.CloseGuardianWarning();
     }
 }

@@ -38,6 +38,13 @@ public class DefaultCollector : ResourceTile
             SetLight();
         }
     }
+    
+    // Override resource thing
+    public override int AddResources(int amountToAdd, bool show)
+    {
+        amount = amountToAdd;
+        return 0;
+    }
 
     // Override button click
     public override void ButtonClicked()

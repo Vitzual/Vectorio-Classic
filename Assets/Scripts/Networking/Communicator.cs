@@ -68,7 +68,6 @@ public class Communicator : NetworkBehaviour
         GuardianHandler.active.StartGuardianBattle();
     }
 
-
     // Internal call
     public void SyncMetadata(int id, int data)
     {

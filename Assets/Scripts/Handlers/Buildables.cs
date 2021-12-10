@@ -85,6 +85,7 @@ public static class Buildables
     // Unlock buildable
     public static void UnlockBuildable(Buildable buildable)
     {
+        // Set buildable to unlocked
         buildable.isUnlocked = true;
         buildable.button.SetBuilding(buildable);
 
@@ -95,6 +96,9 @@ public static class Buildables
         // Show requirements
         foreach (MenuButton button in buildable.showButtons)
             button.gameObject.SetActive(true);
+
+        // Check if buildable already unlcokeds
+        if (buildable.isUnlocked) return;
 
         // Display notification
         Events.active.BuildingUnlocked(buildable);

@@ -71,18 +71,14 @@ public class Gamemode : MonoBehaviour
             Instantiate(networkSync, Vector2.zero, Quaternion.identity);
         else Debug.LogError("No network sync available. Game will not run.");
 
-        Setup();
+        // Generate all scriptables
+        ScriptableLoader.GenerateAllScriptables();
+        LowresMap.active.Setup();
     }
 
     // Setup game
     public virtual void Setup()
     {
-        Debug.Log("Override to setup game functionality!");
-
-        // Generate all scriptables
-        ScriptableLoader.GenerateAllScriptables();
-        LowresMap.active.Setup();
-
         // Check difficulty variable
         if (difficulty == null)
         {
@@ -99,6 +95,12 @@ public class Gamemode : MonoBehaviour
 
         NewSaveSystem.loadGame = false;
         resource.gameObject.SetActive(true);
+    }
+
+    // Join game
+    public virtual void SyncSetup()
+    {
+        Debug.Log("This gamemode has no way of syncing new players!");
     }
     
     // Update playtime

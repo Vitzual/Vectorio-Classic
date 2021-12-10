@@ -20,6 +20,7 @@ public class RpcReceiver : NetworkBehaviour
         {
             primaryReceiver = Server.ConnectReceiver(this);
             spawner.enabled = primaryReceiver;
+            if (primaryReceiver) Gamemode.active.Setup();
         }
     }
 

@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Michsky.UI.ModernUIPack;
 
-public class PlayerJoining : MonoBehaviour
+public class LoadingBar : MonoBehaviour
 {
+    // Bar type
+    public enum BarType
+    {
+        Player,
+        Host
+    }
+    public BarType barType;
+
     // UI elements
     [SerializeField] public CanvasGroup canvasGroup;
     [SerializeField] public ProgressBar progress;
@@ -12,8 +20,16 @@ public class PlayerJoining : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        UIEvents.active.onPlayerJoin += ToggleScreen;
-        UIEvents.active.onUpdateJoinProgress += UpdateJoinPercentage;
+        if (barType == BarType.Player)
+        {
+            UIEvents.active.onPlayerJoin += ToggleScreen;
+            UIEvents.active.onUpdateJoinProgress += UpdateJoinPercentage;
+        }
+        else
+        {
+            UIEvents.active.onHostLoading += ToggleScreen;
+            UIEvents.active.onUpdateLoadProgress += UpdateJoinPercentage;
+        }
     }
 
     // Update is called once per frame

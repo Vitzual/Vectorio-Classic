@@ -109,6 +109,9 @@ public class NewSaveSystem : MonoBehaviour
         string data = JsonUtility.ToJson(saveData);
         File.WriteAllText(Application.persistentDataPath + savePath, data);
 
+        // Game saved 
+        Debug.Log("[SAVE] Game was saved successfully!");
+
         // Return newly create save data
         return saveData;
     }
@@ -169,7 +172,7 @@ public class NewSaveSystem : MonoBehaviour
                         Quaternion.identity, buildingData.metadata[0], buildingData.health);
                 }
             }
-            else Debug.Log("Building with ID " + buildingData.id + " could not be found!");
+            else Debug.Log("[SAVE] Building with ID " + buildingData.id + " could not be found!");
         }
 
         // Apply enemies
@@ -181,7 +184,7 @@ public class NewSaveSystem : MonoBehaviour
                 Variant variant = ScriptableLoader.variants[enemyData.variantID];
                 EnemyHandler.active.CreateEntity(enemy, variant, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
             }
-            else Debug.Log("Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
+            else Debug.Log("[SAVE] Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
         }
 
         // Set hotbar
@@ -191,7 +194,7 @@ public class NewSaveSystem : MonoBehaviour
             {
                 if (saveData.hotbar.Length == i)
                 {
-                    Debug.Log("Saved hotbar exceeded length of in-game hotbar. Breaking loop");
+                    Debug.Log("[SAVE] Saved hotbar exceeded length of in-game hotbar. Breaking loop");
                     break;
                 }
                 else if (saveData.hotbar[i] == null || saveData.hotbar[i] == "") continue;
@@ -215,6 +218,6 @@ public class NewSaveSystem : MonoBehaviour
     {
         if (File.Exists(path)) 
             File.Delete(path);
-        else Debug.Log("The file " + path + " does not exist!");
+        else Debug.Log("[SAVE] The file " + path + " does not exist!");
     }
 }

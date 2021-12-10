@@ -13,6 +13,22 @@ public class UIEvents : MonoBehaviour
         active = this;
     }
 
+    // Display host loading
+    public event Action<bool> onHostLoading;
+    public void LoadHost(bool enabled)
+    {
+        if (onHostLoading != null)
+            onHostLoading(enabled);
+    }
+
+    // Display player joining
+    public event Action<float> onUpdateLoadProgress;
+    public void UpdateLoadPractice(float percentage)
+    {
+        if (onUpdateLoadProgress != null)
+            onUpdateLoadProgress(percentage);
+    }
+
     // Display player joining
     public event Action<bool> onPlayerJoin;
     public void PlayerJoin(bool enabled)

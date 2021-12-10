@@ -82,7 +82,76 @@ public class ClientLoader : NetworkBehaviour
             }
         }
     }
-    
+
+    // Request initial match information from server
+    public void RequestFinalSetup()
+    {
+        if (hasAuthority)
+            CmdRequestFinalSetup();
+    }
+
+    // Request initial match information from server
+    [Command]
+    public void CmdRequestFinalSetup()
+    {
+        // Get final data for client
+        List<string> unlockedIDs = new List<string>();
+        foreach (KeyValuePair<Entity, Buildable> entity in Buildables.active)
+            if (entity.Value.isUnlocked) unlockedIDs.Add(entity.Key.InternalID);
+
+        // Get resources for client
+        List<int> resourceID = new List<int>();
+        List<int> resourceAmount = new List<int>();
+        List<int> resourceStorages = new List<int>();
+
+        // Iterate through resources
+        foreach(KeyValuePair<Resource.CurrencyType, Resource.Currency> currency in Resource.active.currencies)
+        {
+            resourceID.Add((int)currency.Key);
+            resourceAmount.Add(Resource.active.GetAmount(currency.Key));
+        }
+
+        // Rpc info back to requesting client
+        RpcRequestFinalSetup(unlockedIDs.ToArray(), resourceID.ToArray(), resourceAmount.ToArray(), resourceStorages.ToArray());
+    }
+
+    // Request initial match information from server
+    [TargetRpc]
+    public void RpcRequestFinalSetup(string[] unlocked, int[] resources, int[] resourceAmounts, int[] resourceStorages)
+    {
+        // Iterate through unlockable ID's and unlock for client
+        foreach (string unlock in unlocked) 
+        {
+            if (!ScriptableLoader.buildings.ContainsKey(unlock))
+            {
+                Debug.Log("[SERVER] Returned ID to unlock that this client does not have reference" +
+                    " to, check version and verify game files!");
+                continue;
+            }
+            Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[unlock]);
+            if (buildable != null) Buildables.UnlockBuildable(buildable);
+            else Debug.Log("[SERVER] Could not apply unlock for ID " + unlock + "!");
+        }
+
+        /* Iterate through resources and sync with host
+        for (int i = 0; i < resources.Length; i++)
+        {
+            try
+            {
+                Resource.CurrencyType type = (Resource.CurrencyType)resources[i];
+                Resource.active.SetStorage(type, resourceStorages[i]);
+                Resource.active.Apply(type, resourceAmounts[i], false);
+            }
+            catch
+            {
+                Debug.Log("[SERVER] Resource type returned from host does not exist on this cliet, " +
+                    "check version and verify game files!");
+                continue;
+            }
+        }
+        */
+    }
+
     // Request initial match information from server
     public void RequestInitialSetup()
     {

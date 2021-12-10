@@ -78,7 +78,9 @@ public class SteamList : MonoBehaviour
         // Get away friends
         for (int i = 0; i < unsorted.Count; i++)
         {
-            if (unsorted[i].State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateAway))
+            if (unsorted[i].State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateAway) ||
+                unsorted[i].State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateSnooze) ||
+                unsorted[i].State.HasFlag(Steamworks.EPersonaState.k_EPersonaStateBusy))
             {
                 sorted.Add(unsorted[i]);
                 unsorted.Remove(unsorted[i]);

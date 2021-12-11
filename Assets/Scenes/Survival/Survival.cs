@@ -78,20 +78,8 @@ public class Survival : Gamemode
 
         // Initialize gamemode
         InitGamemode();
-
-        if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
-        {
-            Resource.storages = new List<DefaultStorage>();
-            NewSaveSystem.LoadGame();
-            Border.UpdateStage();
-            Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
-        }
-        else ResearchUI.active.Setup();
-
-        // Setup starting resources
-        SetupStartingResources();
-
-        NewSaveSystem.loadGame = false;
+        Resource.storages = new List<DefaultStorage>();
+        ResearchUI.active.Setup();
 
         // Invoke auto saving
         InvokeRepeating("AutoSave", 360f, 360f);

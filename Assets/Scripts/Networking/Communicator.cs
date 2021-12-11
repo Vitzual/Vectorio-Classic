@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using System;
 
 public class Communicator : NetworkBehaviour
 {
     // Active local instance
-    public Communicator activePointer;
     public static Communicator active;
     public string permission = "FALSE";
+
+    // Gamobjterct\
+    public GameObject nameplate;
+    public bool nameboolplatebool;
 
     // Connect to syncer
     public void Start()
@@ -18,7 +18,7 @@ public class Communicator : NetworkBehaviour
         {
             permission = "TRUE";
             active = this;
-            activePointer = active;
+            nameplate.SetActive(nameboolplatebool);
         }
     }
 

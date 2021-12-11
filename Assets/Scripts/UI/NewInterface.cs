@@ -30,6 +30,12 @@ public class NewInterface : MonoBehaviour
     public void Start()
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
+        InputEvents.active.onMapPressed += DebugToggle;
+    }
+
+    public void DebugToggle()
+    {
+        ToggleUI(!canvasGroup.interactable);
     }
 
     public void ToggleUI(bool status)

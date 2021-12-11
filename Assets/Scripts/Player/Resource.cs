@@ -224,6 +224,14 @@ public class Resource : NetworkBehaviour
         UpdateUI(type, true);
     }
 
+    // Set amount
+    public void SetAmount(CurrencyType type, int amount)
+    {
+        // Sets the storage
+        currencies[type].amount = amount;
+        UpdateUI(type, true);
+    }
+
     // Set storage
     public void SetStorage(CurrencyType type, int amount)
     {

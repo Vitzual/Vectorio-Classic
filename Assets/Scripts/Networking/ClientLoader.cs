@@ -68,6 +68,7 @@ public class ClientLoader : NetworkBehaviour
                             Debug.Log("[SERVER] All data chunks processed, resuming game.");
                             TogglePlayerJoining(false);
                             loadData = null;
+                            RequestFinalSetup();
                         }
                         else
                         {
@@ -109,6 +110,7 @@ public class ClientLoader : NetworkBehaviour
         {
             resourceID.Add((int)currency.Key);
             resourceAmount.Add(Resource.active.GetAmount(currency.Key));
+            resourceStorages.Add(Resource.active.GetStorage(currency.Key));
         }
 
         // Rpc info back to requesting client
@@ -124,7 +126,7 @@ public class ClientLoader : NetworkBehaviour
         {
             if (!ScriptableLoader.buildings.ContainsKey(unlock))
             {
-                Debug.Log("[SERVER] Returned ID to unlock that this client does not have reference" +
+                Debug.Log("[SERVER] Returned ID " + unlock + " to unlock that this client does not have reference" +
                     " to, check version and verify game files!");
                 continue;
             }
@@ -133,23 +135,22 @@ public class ClientLoader : NetworkBehaviour
             else Debug.Log("[SERVER] Could not apply unlock for ID " + unlock + "!");
         }
 
-        /* Iterate through resources and sync with host
+        //Iterate through resources and sync with host
         for (int i = 0; i < resources.Length; i++)
         {
             try
             {
                 Resource.CurrencyType type = (Resource.CurrencyType)resources[i];
                 Resource.active.SetStorage(type, resourceStorages[i]);
-                Resource.active.Apply(type, resourceAmounts[i], false);
+                Resource.active.SetAmount(type, resourceAmounts[i]);
             }
             catch
             {
-                Debug.Log("[SERVER] Resource type returned from host does not exist on this cliet, " +
+                Debug.Log("[SERVER] Resource type returned from host does not exist on this client, " +
                     "check version and verify game files!");
                 continue;
             }
         }
-        */
     }
 
     // Request initial match information from server

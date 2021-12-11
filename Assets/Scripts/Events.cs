@@ -13,6 +13,15 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // On nameplate setup
+    public event Action<Transform, string, Color> onSetupNameplate;
+    public void SetupNameplate(Transform obj, string name, Color color)
+    {
+        if (onSetupNameplate != null)
+            onSetupNameplate(obj, name, color);
+    }
+
+
     // On hub destroyed
     public event Action onHubDestroyed;
     public void HubDestroyed()

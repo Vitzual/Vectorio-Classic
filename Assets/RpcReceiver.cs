@@ -17,11 +17,33 @@ public class RpcReceiver : NetworkBehaviour
     public void Start()
     {
         if (hasAuthority)
+            CmdSetupReceiver(transform);
+    }
+
+    [Command]
+    public void CmdSetupReceiver(Transform transform)
+    {
+        if (Server.primaryReceiver == null)
         {
-            primaryReceiver = Server.ConnectReceiver(this);
-            spawner.enabled = primaryReceiver;
-            if (primaryReceiver) Gamemode.active.Setup();
+            Server.primaryReceiver = transform.GetComponent<RpcReceiver>();
+            RpcSetupPrimaryReceiver();
         }
+        else RpcSetupClientReceiver(Gamemode.seed);
+    }
+
+    [TargetRpc]
+    public void RpcSetupPrimaryReceiver()
+    {
+        spawner.enabled = true;
+        Gamemode.active.Setup();
+    }
+
+    [TargetRpc]
+    public void RpcSetupClientReceiver(string seed)
+    {
+        spawner.enabled = false;
+        Gamemode.seed = seed;
+        Gamemode.active.SyncSetup();
     }
 
     [ClientRpc]

@@ -25,17 +25,6 @@ public class Server : NetworkBehaviour
         Setup();
     }
 
-    // Add receiver
-    public static bool ConnectReceiver(RpcReceiver rpcReceiver)
-    {
-        if (primaryReceiver == null)
-        {
-            primaryReceiver = rpcReceiver;
-            return true;
-        }
-        return false;
-    }
-
     // Setup new list
     public void Setup()
     {

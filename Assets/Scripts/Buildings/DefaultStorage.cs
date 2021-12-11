@@ -38,6 +38,17 @@ public class DefaultStorage : ResourceTile
             Resource.active.Apply(type, amount - amountToReturn, false);
             return amountToReturn;
         }
+        else if (this.amount == storage)
+        {
+            // Set full variables to true
+            isFull = true;
+            if (icon != null) icon.SetActive(true);
+
+            // Add proper amount and return overflow
+            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+            Resource.active.Apply(type, amount, false);
+            return 0;
+        }
         else
         {
             // If does not exceed, add resources and return

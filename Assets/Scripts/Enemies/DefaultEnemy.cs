@@ -48,10 +48,8 @@ public class DefaultEnemy : BaseEntity
     // Damages the entity (IDamageable interface method)
     public override void DamageEntity(float dmg)
     {
-        if (dmg <= 0) Debug.Log(transform.name + " has " + health + " and is taking " + dmg);
-
         health -= dmg;
-        if (health <= 0) DestroyEntity();
+        if (health <= 0) SyncDestroy();
         else Events.active.EnemyHurt(this);
     }
 

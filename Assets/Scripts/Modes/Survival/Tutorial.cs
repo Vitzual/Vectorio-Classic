@@ -80,12 +80,16 @@ public class Tutorial : MonoBehaviour
     // On space pressed, check tutorial and move to next slide if passed
     public void SpacePressed()
     {
+        Debug.Log("[TUTORIAL] Received space pressed event");
+
         if (tutorialSlides[tutorialSlide].task == Slide.Task.Space) NextSlide();
     }
 
     // On building placed, check tutorial and move to next slide if passed
     public void BuildingPlaced(BaseTile building)
     {
+        Debug.Log("[TUTORIAL] Received building pressed event");
+
         if (tutorialSlides[tutorialSlide].task == Slide.Task.Place &&
             tutorialSlides[tutorialSlide].optionalEntity == building.buildable.building) NextSlide();
     }
@@ -93,6 +97,8 @@ public class Tutorial : MonoBehaviour
     // On gold collected, check tutorial and move to next slide if passed
     public void GoldCollected(Resource.CurrencyType type, int amount)
     {
+        Debug.Log("[TUTORIAL] Received gold collected event");
+
         if (tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
     }
 }

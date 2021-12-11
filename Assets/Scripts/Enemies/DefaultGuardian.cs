@@ -62,7 +62,7 @@ public class DefaultGuardian : DefaultEnemy
         {
             BaseEntity building = other.GetComponent<BaseEntity>();
             if (building != null)
-                building.DestroyEntity();
+                building.SyncDestroy();
         }
         else
         {

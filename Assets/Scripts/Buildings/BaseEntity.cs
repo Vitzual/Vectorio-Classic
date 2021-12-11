@@ -65,6 +65,14 @@ public class BaseEntity : MonoBehaviour, IDamageable
     }
 
     // Destroys the entity (IDamageable interface method)
+    public virtual void SyncDestroy()
+    {
+        if (Communicator.active != null)
+            Communicator.active.SyncBuildingDestroyed(runtimeID);
+        else DestroyEntity();
+    }
+
+    // Destroys the entity (IDamageable interface method)
     public virtual void DestroyEntity()
     {
         if (particle != null)

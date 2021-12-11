@@ -51,6 +51,7 @@ public class DefaultCollector : ResourceTile
     {
         if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
         {
+            Events.active.CollectorHarvested(type, amount);
             CollectResources();
         }
     }
@@ -62,6 +63,7 @@ public class DefaultCollector : ResourceTile
         {
             if (amount > 0 && Resource.active.GetAmount(type) + amount < Resource.active.GetStorage(type))
             {
+                Events.active.CollectorHarvested(type, amount);
                 CollectResources();
             }
         }

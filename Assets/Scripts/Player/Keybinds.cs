@@ -7,6 +7,7 @@ public class Keybinds
     public static KeyCode move_left = KeyCode.A;
     public static KeyCode move_right = KeyCode.D;
     public static KeyCode sprint = KeyCode.LeftShift;
+    public static KeyCode space = KeyCode.Space;
     public static KeyCode slow = KeyCode.LeftControl;
     public static KeyCode construct = KeyCode.Mouse0;
     public static KeyCode delete = KeyCode.Mouse1;

@@ -4,93 +4,95 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
-    public GameObject holdera;
-    public GameObject[] tutorialSlides;
+    // Tutorial thing
+    [System.Serializable]
+    public class Slide
+    {
+        public enum Task
+        {
+            Space,
+            Place,
+            Collect
+        }
+
+        public GameObject obj;
+        public Task task;
+        public Building optionalEntity;
+
+        public void Enable()
+        {
+            obj.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    // Tutorial variables
+    public GameObject tutorialObject;
+    public Slide[] tutorialSlides;
     public bool tutorialStarted = false;
     public int tutorialSlide = 1;
-    public bool disableBuilding = false;
-    public bool disableMoving = false;
-    public bool disableMenus = false;
-    public bool spaceToContinue = false;
 
-    public void enableTutorial()
+    // Enables the tutorial
+    public void EnableTutorial()
     {
-        holdera.SetActive(true);
-        tutorialSlides[0].SetActive(true);
+        // Enable tutorial variables
+        tutorialObject.SetActive(true);
         tutorialStarted = true;
-        disableBuilding = true;
-        disableMoving = true;
-        disableMenus = true;
-        spaceToContinue = true;
+        tutorialSlide = 1;
+        tutorialSlides[tutorialSlide].Enable();
+
+        // Setup events
+        InputEvents.active.onSpacePressed += SpacePressed;
+        Events.active.onBuildingPlaced += BuildingPlaced;
+        Events.active.onCollectorHarvested += GoldCollected;
     }
 
-    private void Start()
+    // Disables the active tutorial
+    public void DisableTutorial()
     {
-        holdera.SetActive(false);
+        // Remove events
+        InputEvents.active.onSpacePressed -= SpacePressed;
+        Events.active.onBuildingPlaced -= BuildingPlaced;
+        Events.active.onCollectorHarvested -= GoldCollected;
+
+        // Disable tutorial
+        tutorialObject.SetActive(false);
+        tutorialStarted = false;
+        enabled = false;
+    }
+    
+    // Disable previous slide and enable next
+    // If no next slide, end tutorial sequence 
+    public void NextSlide()
+    {
+        tutorialSlides[tutorialSlide].Disable();
+        tutorialSlide += 1;
+
+        if (tutorialSlide < tutorialSlides.Length)
+            tutorialSlides[tutorialSlide].Enable();
+        else DisableTutorial();
     }
 
-    // Update is called once per frame
-    void Update()
+    // On space pressed, check tutorial and move to next slide if passed
+    public void SpacePressed()
     {
-        if (tutorialStarted && Input.GetKeyDown(KeyCode.Space) && spaceToContinue) nextSlide();
+        if (tutorialSlides[tutorialSlide].task == Slide.Task.Space) NextSlide();
     }
 
-    public void addSlides(GameObject[] slides)
+    // On building placed, check tutorial and move to next slide if passed
+    public void BuildingPlaced(BaseTile building)
     {
-        tutorialSlides = slides;
+        if (tutorialSlides[tutorialSlide].task == Slide.Task.Place &&
+            tutorialSlides[tutorialSlide].optionalEntity == building.buildable.building) NextSlide();
     }
 
-    public void nextSlide()
+    // On gold collected, check tutorial and move to next slide if passed
+    public void GoldCollected(Resource.CurrencyType type, int amount)
     {
-        tutorialSlides[tutorialSlide-1].SetActive(false);
-        tutorialSlide++;
-
-        if (tutorialSlide == 16)
-        {
-            tutorialStarted = false;
-            disableBuilding = false;
-            disableMoving = false;
-            disableMenus = false;
-            spaceToContinue = false;
-            enabled = false;
-            return;
-        }
-
-        tutorialSlides[tutorialSlide-1].SetActive(true);
-
-        switch(tutorialSlide)
-        {
-            case 3:
-                disableBuilding = false;
-                disableMoving = false;
-                spaceToContinue = false;
-                break;
-            case 4:
-                disableBuilding = true;
-                disableMoving = false;
-                disableMenus = false;
-                break;
-            case 7:
-                disableBuilding = false;
-                break;
-            case 8:
-                disableBuilding = true;
-                break;
-            case 10:
-                disableBuilding = false;
-                break;
-            case 11:
-                disableBuilding = true;
-                spaceToContinue = true;
-                break;
-            case 13:
-                disableBuilding = false;
-                spaceToContinue = false;
-                break;
-            case 14:
-                disableBuilding = true;
-                spaceToContinue = true;
-                break;
-        }
+        if (tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
     }
 }

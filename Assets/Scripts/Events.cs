@@ -263,6 +263,22 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a collector script is placed
+    public event Action<BaseTile> onBuildingPlaced;
+    public void BuildingPlaced(BaseTile building)
+    {
+        if (onBuildingPlaced != null)
+            onBuildingPlaced(building);
+    }
+
+    // Invoked when a building with a collector script is placed
+    public event Action<Resource.CurrencyType, int> onCollectorHarvested;
+    public void CollectorHarvested(Resource.CurrencyType type, int amount)
+    {
+        if (onCollectorHarvested != null)
+            onCollectorHarvested(type, amount);
+    }
+
+    // Invoked when a building with a collector script is placed
     public event Action<DefaultCollector> onCollectorPlaced;
     public void CollectorPlaced(DefaultCollector collector)
     {

@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class SuperWeapon : DefaultTurret
 {
+    public enum Type
+    {
+        Trident
+    }
+    public Type type;
+
+    public static SuperWeapon trident;
+
     public void Update()
     {
-        if (target == null)
-        {
-            if (GuardianHandler.active.guardians.Count > 0)
-                target = GuardianHandler.active.guardians[0];
-            else if (EnemyHandler.active.enemies.Count > 0)
-                target = EnemyHandler.active.GetStrongestEnemy();
-        }
-        else RotateTurret();
+        if (target != null)
+            RotateTurret();
     }
 
     public override void Setup()
     {
+        trident = this;
+
         if (turret.bulletSpriteName != "")
         {
             bulletModel = Sprites.GetSprite(turret.bulletSpriteName);

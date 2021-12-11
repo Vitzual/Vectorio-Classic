@@ -75,6 +75,10 @@ public class InstantiationHandler : MonoBehaviour
         // Determine if the building is free
         bool isFree = Resource.active.CheckFreebie(buildable);
 
+        // Check if building is super weapon (temp check)
+        SuperWeapon superWeapon = buildable.obj.GetComponent<SuperWeapon>();
+        if (superWeapon != null && SuperWeapon.trident != null) return null;
+
         // Check resources if applicable
         if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.building.resources)) return null;
         else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.building.resources)) return null;

@@ -36,6 +36,8 @@ public class InputController : NetworkBehaviour
                 Settings.paused = !Settings.paused;
             if (Input.GetKeyDown(Keybinds.map))
                 InputEvents.active.MapPressed();
+            if (Input.GetKeyDown(Keybinds.map))
+                InputEvents.active.MapPressed();
         }
 
         if (Input.GetKeyDown(Keybinds.sprint))

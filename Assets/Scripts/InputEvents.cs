@@ -76,6 +76,13 @@ public class InputEvents : MonoBehaviour
             onEscapePressed();
     }
 
+    public event Action onSpacePressed;
+    public void SpacePressed()
+    {
+        if (onSpacePressed != null)
+            onSpacePressed();
+    }
+
     public event Action onShiftPressed;
     public void ShiftPressed()
     {

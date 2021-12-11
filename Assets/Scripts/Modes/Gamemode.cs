@@ -116,7 +116,7 @@ public class Gamemode : MonoBehaviour
             if (naturalHeatTimer <= 0)
             {
                 Resource.active.Apply(Resource.CurrencyType.Heat, 1, false);
-                difficulty.startingHeat += 1;
+                difficulty.heatTracked += 1;
                 naturalHeatTimer = 5f;
             }
         }
@@ -157,6 +157,6 @@ public class Gamemode : MonoBehaviour
 
         // Setup heat storage
         Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
-        Resource.active.Apply(Resource.CurrencyType.Heat, difficulty.startingHeat, false);
+        Resource.active.Apply(Resource.CurrencyType.Heat, difficulty.heatTracked, false);
     }
 }

@@ -6,6 +6,7 @@ public class Survival : Gamemode
 {
     // Hub object
     public Building hub;
+    public GameObject welcome;
 
     // Instantiate hub
     public override void Setup()
@@ -41,7 +42,11 @@ public class Survival : Gamemode
             Border.UpdateStage();
             Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
         }
-        else ResearchUI.active.Setup();
+        else
+        {
+            welcome.SetActive(true);
+            ResearchUI.active.Setup();
+        }
 
         // Setup starting resources
         SetupStartingResources();

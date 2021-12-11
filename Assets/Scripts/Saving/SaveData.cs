@@ -38,7 +38,10 @@ public class SaveData
     public string stage;
 
     // Difficulty data
-    public DifficultyData difficultyData; 
+    public DifficultyData difficultyData;
+
+    // Online data
+    public OnlineData onlineData;
 
     // Resource data
     public int gold;

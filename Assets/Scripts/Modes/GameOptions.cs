@@ -22,71 +22,75 @@ public class GameOptions : MonoBehaviour
     public Toggle enableInstaPlace;
     public Toggle naturalHeatGrowth;
 
+    // Online modifiers
+    public Toggle enableOnlineGame;
+
+    // Enemy modifiers
+    public SliderManager enemySpawnrateModifier;
+    public SliderManager enemyHealthModifier;
+    public SliderManager enemySpeedModifier;
+    public SliderManager enemyGroupSpawnrate;
+    public SliderManager enemyGroupSpawnsize;
+
     // Resource modifiers
     public SliderManager goldSpawnModifier;
     public SliderManager essenceSpawnModifier;
     public SliderManager iridiumSpawnModifier;
-
-    // Start resources
-    public SliderManager startingGold;
-    public SliderManager startingPower;
-
-    // Cost modifiers
-    public SliderManager buildingCostModifier;
-    public SliderManager buildingHealthModifier;
-    public SliderManager buildingDamageModifier;
-
-    // Enemy modifiers
-    public SliderManager enemyHealthModifier;
-    public SliderManager enemyDamageModifier;
-    public SliderManager enemySpeedModifier;
-    public SliderManager enemySpawnrateModifier;
+    public SliderManager vectoriumSpawnModifier;
 
     // Start thing
     public void GetDifficulties()
     {
-        List<Difficulty> difficulties = Resources.LoadAll("Scriptables/Difficulties", typeof(Difficulty)).Cast<Difficulty>().ToList();
-
-        foreach(Difficulty difficulty in difficulties)
-        {
-            presets.CreateNewItem(difficulty.name);
-            presets.UpdateUI();
-        }
+        //List<Difficulty> difficulties = Resources.LoadAll("Scriptables/Difficulties", typeof(Difficulty)).Cast<Difficulty>().ToList();
+        //
+        //foreach(Difficulty difficulty in difficulties)
+        //{
+        //    presets.CreateNewItem(difficulty.name);
+        //    presets.UpdateUI();
+        //}
     }
 
     // Set difficulty data
     public void CreateGame()
     {
+        // Set save name
+        if (name.text == "") name.text = "Unnamed Save";
         NewSaveSystem.saveName = name.text;
 
-        if (mode != "Creative")
-        {
-            Gamemode.seed = seed.text;
+        // Set save seed
+        if (seed.text == "") seed.text = "Unnamed Save";
+        Gamemode.seed = seed.text;
 
-            DifficultyData data = new DifficultyData();
+        // Create data
+        DifficultyData difficultyData = new DifficultyData();
+        OnlineData onlineData = new OnlineData();
 
-            data.enableInstaPlace = enableInstaPlace.isOn;
-            data.naturalHeatGrowth = naturalHeatGrowth.isOn;
+        // Gameplay modifiers
+        difficultyData.enableInstaPlace = enableInstaPlace.isOn;
+        difficultyData.naturalHeatGrowth = naturalHeatGrowth.isOn;
 
-            data.goldSpawnModifier = goldSpawnModifier.mainSlider.value;
-            data.essenceSpawnModifier = essenceSpawnModifier.mainSlider.value;
-            data.iridiumSpawnModifier = iridiumSpawnModifier.mainSlider.value;
+        // Online settings
+        int maxPlayers = 1;
+        if (enableOnlineGame.isOn) maxPlayers = 10;
+        onlineData.maxConnections = maxPlayers;
+        onlineData.listAsLobby = false;
+        onlineData.privateSession = false;
 
-            data.startingGold = (int)startingGold.mainSlider.value;
-            data.startingPower = (int)startingPower.mainSlider.value;
+        // Gameplay settings
+        difficultyData.enemySpawnrateModifier = enemySpawnrateModifier.mainSlider.value;
+        difficultyData.enemyHealthModifier = enemyHealthModifier.mainSlider.value;
+        difficultyData.enemySpeedModifier = enemySpeedModifier.mainSlider.value;
+        difficultyData.enemyGroupSpawnrate = enemyGroupSpawnrate.mainSlider.value;
+        difficultyData.enemyGroupSpawnsize = enemyGroupSpawnsize.mainSlider.value;
 
-            data.buildingCostModifier = buildingCostModifier.mainSlider.value;
-            data.buildingHealthModifier = buildingHealthModifier.mainSlider.value;
-            data.buildingDamageModifier = buildingDamageModifier.mainSlider.value;
+        // Difficulty modifiers
+        difficultyData.goldSpawnModifier = goldSpawnModifier.mainSlider.value;
+        difficultyData.essenceSpawnModifier = essenceSpawnModifier.mainSlider.value;
+        difficultyData.iridiumSpawnModifier = iridiumSpawnModifier.mainSlider.value;
+        difficultyData.vectoriumSpawnModifier = vectoriumSpawnModifier.mainSlider.value;
 
-            data.enemyHealthModifier = enemyHealthModifier.mainSlider.value;
-            data.enemyDamageModifier = enemyDamageModifier.mainSlider.value;
-            data.enemySpeedModifier = enemySpeedModifier.mainSlider.value;
-            data.enemySpawnrateModifier = enemySpawnrateModifier.mainSlider.value;
-
-            Gamemode.difficulty = data;
-        }
-
-        Menu.active.StartGame(mode);
+        // Set gamemode and start
+        Gamemode.difficulty = difficultyData;
+        Menu.active.StartSurvivalGame(maxPlayers);
     }
 }

@@ -31,6 +31,7 @@ public class Tutorial : MonoBehaviour
     }
 
     // Tutorial variables
+    public AudioPlayer audioPlayer;
     public GameObject tutorialObject;
     public Slide[] tutorialSlides;
     public bool tutorialStarted = false;
@@ -73,7 +74,10 @@ public class Tutorial : MonoBehaviour
         tutorialSlide += 1;
 
         if (tutorialSlide < tutorialSlides.Length)
+        {
             tutorialSlides[tutorialSlide].Enable();
+            audioPlayer.PlayAudio();
+        }
         else DisableTutorial();
     }
 

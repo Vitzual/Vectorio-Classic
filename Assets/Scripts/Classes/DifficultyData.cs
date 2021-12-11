@@ -7,32 +7,25 @@ public class DifficultyData
 {
     // Difficulty values
     public string name;
-    public string description;
 
-    // Gameplay modifiers
+    // Heat tracking
+    public int heatTracked;
+
+    // Gameplay settings
     public bool enableInstaPlace;
     public bool naturalHeatGrowth;
+    public bool autoSpawnGuardians;
+
+    // Difficulty modifiers
+    public float enemySpawnrateModifier;
+    public float enemyHealthModifier;
+    public float enemySpeedModifier;
+    public float enemyGroupSpawnrate;
+    public float enemyGroupSpawnsize;
 
     // Resource modifiers
     public float goldSpawnModifier;
     public float essenceSpawnModifier;
     public float iridiumSpawnModifier;
-
-    // Start resources
-    public int startingGold;
-    public int startingEssence = 0;
-    public int startingIridium = 0;
-    public int startingPower = 5000;
-    public int startingHeat;
-
-    // Cost modifiers
-    public float buildingCostModifier;
-    public float buildingHealthModifier;
-    public float buildingDamageModifier;
-
-    // Enemy modifiers
-    public float enemyHealthModifier;
-    public float enemyDamageModifier;
-    public float enemySpeedModifier;
-    public float enemySpawnrateModifier;
+    public float vectoriumSpawnModifier;
 }

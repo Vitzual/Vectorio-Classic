@@ -26,11 +26,6 @@ public class Menu : MonoBehaviour
     // Camera target
     public Camera cam;
     public GameObject background;
-    [HideInInspector]
-    public Transform camTarget;
-    public Transform newSaveLocation, mainLocation;
-    public List<GameObject> newSaveVariables, mainVariables;
-    public bool cameraMoving;
 
     // Save variabels
     public Dictionary<int, SaveButton> saveButtons = new Dictionary<int, SaveButton>();
@@ -43,8 +38,8 @@ public class Menu : MonoBehaviour
     public int deleteIndex = -1;
     public string deletePath = "";
     public ModalWindowManager confirmDelete;
-    public int outdatedIndex = -1;
     public ModalWindowManager outdated;
+    public int outdatedIndex = -1;
 
     // Network Manager
     [SerializeField] private NetworkManager networkManager;
@@ -68,6 +63,9 @@ public class Menu : MonoBehaviour
     // Start method
     public void Start()
     {
+        // Reset host
+        networkManager.StopHost();
+
         // Clear registry
         Buildables.ClearRegistry();
 
@@ -85,9 +83,6 @@ public class Menu : MonoBehaviour
         ResearchUI.isOpen = false;
         StatsPanel.isOpen = false;
 
-        // Set camera target
-        camTarget = mainLocation;
-
         // Setup dictionary
         buttons = new Dictionary<string, MenuButton>();
         foreach(MenuButton button in _buttons)
@@ -98,43 +93,10 @@ public class Menu : MonoBehaviour
         CheckSaves();
     }
 
-    // Update method
-    public void FixedUpdate()
-    {
-        if (cameraMoving)
-        {
-            cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, 4f * Time.deltaTime);
-            if (camTarget == newSaveLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 3f)
-            {
-                cameraMoving = false;
-                EnableNewGameMenu();
-            } 
-            else if (camTarget == mainLocation && Vector2.Distance(cam.transform.position, camTarget.transform.position) <= 3f)
-            {
-                cameraMoving = false;
-                EnableMainMenu();
-            }
-        }
-    }
-
     // Load online friends
     public void GenerateFriendsList()
     {
         steamList.UpdateFriendsList();
-    }
-
-    // Moves camera to new game UI
-    public void MoveToNewgame()
-    {
-        camTarget = newSaveLocation;
-        cameraMoving = true;
-    }
-
-    // Moves camera to main game UI
-    public void BackToMenu()
-    {
-        camTarget = mainLocation;
-        cameraMoving = true;
     }
 
     // Delete agame
@@ -146,20 +108,6 @@ public class Menu : MonoBehaviour
             Destroy(saveButtons[deleteIndex].gameObject);
             confirmDelete.CloseWindow();
         }
-    }
-
-    // Enable new game menu
-    public void EnableNewGameMenu()
-    {
-        foreach(GameObject obj in newSaveVariables)
-            obj.SetActive(true);
-    }
-
-    // Enable new game menu
-    public void EnableMainMenu()
-    {
-        foreach (GameObject obj in mainVariables)
-            obj.SetActive(true);
     }
 
     // Check saves
@@ -190,7 +138,7 @@ public class Menu : MonoBehaviour
                 button.mode = saveData.worldMode;
 
                 // Check for outdated thing
-                if (saveData.worldVersion == "v0.3" || saveData.worldVersion == "v0.3.3" || saveData.worldVersion == "v0.3.7") button.outdated = true;
+                if (saveData.worldVersion == "v0.3.7" || saveData.worldVersion == "v0.3.8") button.outdated = true;
 
                 // Apply playtime
                 TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);
@@ -238,7 +186,7 @@ public class Menu : MonoBehaviour
         Gamemode.seed = button.seed;
         NewSaveSystem.loadGame = true;
 
-        StartGame(button.mode, number);
+        StartSurvivalGame(1);
     }
 
     // Confirm load
@@ -248,14 +196,14 @@ public class Menu : MonoBehaviour
     }
 
     // Starts a game
-    public void StartGame(string mode, int number = -1)
+    public void StartSurvivalGame(int connections, int number = -1)
     {
         // Get save path
         if (number == -1 && availableSave != -1)
             NewSaveSystem.savePath = "/world_" + availableSave + ".vectorio";
 
         // Multiplayer settings
-        networkManager.maxConnections = 100;
+        networkManager.maxConnections = connections;
 
         // Start the game
         networkManager.onlineScene = "Survival";

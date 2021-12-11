@@ -7,9 +7,9 @@ public class Communicator : NetworkBehaviour
     public static Communicator active;
     public string permission = "FALSE";
 
-    // Gamobjterct\
+    // Nameplate object
     public GameObject nameplate;
-    public bool nameboolplatebool;
+    public bool enableLocalNameplate;
 
     // Connect to syncer
     public void Start()
@@ -18,7 +18,7 @@ public class Communicator : NetworkBehaviour
         {
             permission = "TRUE";
             active = this;
-            nameplate.SetActive(nameboolplatebool);
+            nameplate.SetActive(enableLocalNameplate);
         }
     }
 

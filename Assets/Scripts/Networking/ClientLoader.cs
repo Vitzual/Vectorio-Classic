@@ -18,6 +18,7 @@ public class ClientLoader : NetworkBehaviour
         public float[] yCoord;
         public string[] entityType;
         public int[] entityVar;
+        public bool[] isGhost;
         public bool isAtEnd = false;
         public int currentIteration = 0;
     }
@@ -251,9 +252,14 @@ public class ClientLoader : NetworkBehaviour
                 Buildable buildable = Buildables.RequestBuildable(building);
                 if (buildable == null) return;
 
-                // Create the new entity
+                // Get building position
                 Vector2 position = new Vector2(loadData.xCoord[i], loadData.yCoord[i]);
-                BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position,
+
+                // Create either ghost or building
+                BaseEntity newEntity;
+                if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, position,
+                    Quaternion.identity, loadData.metadataID[i]);
+                else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position,
                     Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
 
                 // Set entity runtime ID
@@ -305,7 +311,7 @@ public class ClientLoader : NetworkBehaviour
     // Grabs returned info from server
     [TargetRpc]
     public void RpcSetupClient(string[] internalID, int[] runtimeID, int[] metadataID, float[] entityHealth,
-        float[] xCoord, float[] yCoord, string[] entityType, int[] entityVar, bool isAtEnd)
+        float[] xCoord, float[] yCoord, string[] entityType, int[] entityVar, bool[] isGhost, bool isAtEnd)
     {
         Debug.Log("[SERVER] Server returned match info request, creating new data chunk...");
 
@@ -318,16 +324,8 @@ public class ClientLoader : NetworkBehaviour
         loadData.yCoord = yCoord;
         loadData.entityType = entityType;
         loadData.entityVar = entityVar;
+        loadData.isGhost = isGhost;
         loadData.isAtEnd = isAtEnd;
-
-        /*
-        if (matchInfo != null && ScriptableLoader.stages.ContainsKey(matchInfo))
-        {
-            Gamemode.stage = ScriptableLoader.stages[matchInfo];
-            Debug.Log("[SERVER] Stage info was processed successfully!");
-        }
-        else Debug.Log("[SERVER] Stage info could not be processed!");
-        */
 
         TogglePlayerJoining(true);
     }
@@ -394,6 +392,6 @@ public class ClientLoader : NetworkBehaviour
         }
 
         Debug.Log("[SERVER] Match segment formatted, sending back to client.");
-        RpcSetupClient(internalID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar, isAtEnd);
+        RpcSetupClient(internalID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar, isGhost, isAtEnd);
     }
 }

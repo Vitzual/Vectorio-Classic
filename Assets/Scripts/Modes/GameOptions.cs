@@ -58,7 +58,7 @@ public class GameOptions : MonoBehaviour
         NewSaveSystem.saveName = name.text;
 
         // Set save seed
-        if (seed.text == "") seed.text = "Unnamed Save";
+        if (seed.text == "") seed.text = Random.Range(100000000, 999999999).ToString();
         Gamemode.seed = seed.text;
 
         // Create data
@@ -91,6 +91,7 @@ public class GameOptions : MonoBehaviour
 
         // Set gamemode and start
         Gamemode.difficulty = difficultyData;
+        Gamemode.online = onlineData;
         Menu.active.StartSurvivalGame(maxPlayers);
     }
 }

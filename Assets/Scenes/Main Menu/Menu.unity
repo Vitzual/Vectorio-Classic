@@ -3157,18 +3157,16 @@ MonoBehaviour:
   seed: {fileID: 1141651626}
   enableInstaPlace: {fileID: 1277746917}
   naturalHeatGrowth: {fileID: 897766506}
+  enableOnlineGame: {fileID: 0}
+  enemySpawnrateModifier: {fileID: 36380272}
+  enemyHealthModifier: {fileID: 917656600}
+  enemySpeedModifier: {fileID: 1779973864}
+  enemyGroupSpawnrate: {fileID: 0}
+  enemyGroupSpawnsize: {fileID: 0}
   goldSpawnModifier: {fileID: 574804739}
   essenceSpawnModifier: {fileID: 402472711}
   iridiumSpawnModifier: {fileID: 58144896}
-  startingGold: {fileID: 854146604}
-  startingPower: {fileID: 1465243866}
-  buildingCostModifier: {fileID: 1553399135}
-  buildingHealthModifier: {fileID: 1421952063}
-  buildingDamageModifier: {fileID: 2140920662}
-  enemyHealthModifier: {fileID: 917656600}
-  enemyDamageModifier: {fileID: 864994710}
-  enemySpeedModifier: {fileID: 1779973864}
-  enemySpawnrateModifier: {fileID: 36380272}
+  vectoriumSpawnModifier: {fileID: 0}
 --- !u!1 &75050301
 GameObject:
   m_ObjectHideFlags: 0
@@ -10941,7 +10939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 250, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &285537304
@@ -11946,7 +11944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 250, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &302730267
@@ -49592,7 +49590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 359.3207, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1224834868
@@ -60710,6 +60708,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1532320540}
+  - component: {fileID: 1532320541}
   - component: {fileID: 1532320539}
   - component: {fileID: 1532320538}
   - component: {fileID: 1532320537}
@@ -60820,6 +60819,34 @@ RectTransform:
   m_AnchoredPosition: {x: -9.000061, y: 9.000015}
   m_SizeDelta: {x: 1951.3486, y: 1062.6497}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1532320541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532320535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9943e019f824f4c9d19c67df7d5f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 
+  presets: {fileID: 0}
+  name: {fileID: 0}
+  seed: {fileID: 0}
+  enableInstaPlace: {fileID: 0}
+  naturalHeatGrowth: {fileID: 0}
+  enableOnlineGame: {fileID: 0}
+  enemySpawnrateModifier: {fileID: 0}
+  enemyHealthModifier: {fileID: 0}
+  enemySpeedModifier: {fileID: 0}
+  enemyGroupSpawnrate: {fileID: 0}
+  enemyGroupSpawnsize: {fileID: 0}
+  goldSpawnModifier: {fileID: 0}
+  essenceSpawnModifier: {fileID: 0}
+  iridiumSpawnModifier: {fileID: 0}
+  vectoriumSpawnModifier: {fileID: 0}
 --- !u!1 &1537418833
 GameObject:
   m_ObjectHideFlags: 0
@@ -79720,18 +79747,16 @@ MonoBehaviour:
   seed: {fileID: 0}
   enableInstaPlace: {fileID: 0}
   naturalHeatGrowth: {fileID: 0}
+  enableOnlineGame: {fileID: 0}
+  enemySpawnrateModifier: {fileID: 0}
+  enemyHealthModifier: {fileID: 0}
+  enemySpeedModifier: {fileID: 0}
+  enemyGroupSpawnrate: {fileID: 0}
+  enemyGroupSpawnsize: {fileID: 0}
   goldSpawnModifier: {fileID: 0}
   essenceSpawnModifier: {fileID: 0}
   iridiumSpawnModifier: {fileID: 0}
-  startingGold: {fileID: 0}
-  startingPower: {fileID: 0}
-  buildingCostModifier: {fileID: 0}
-  buildingHealthModifier: {fileID: 0}
-  buildingDamageModifier: {fileID: 0}
-  enemyHealthModifier: {fileID: 0}
-  enemyDamageModifier: {fileID: 0}
-  enemySpeedModifier: {fileID: 0}
-  enemySpawnrateModifier: {fileID: 0}
+  vectoriumSpawnModifier: {fileID: 0}
 --- !u!4 &1991544116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2009550350632877460, guid: 5f5d88a9394ba5446b895a5be9d7b379,
@@ -87755,19 +87780,6 @@ MonoBehaviour:
   cam: {fileID: 5913638006169366787}
   background: {fileID: 3813160405311103612, guid: 67c3dc7e85f94f64e9c2a664952af58d,
     type: 3}
-  camTarget: {fileID: 0}
-  newSaveLocation: {fileID: 56331904}
-  mainLocation: {fileID: 0}
-  newSaveVariables:
-  - {fileID: 2061917390}
-  - {fileID: 56331903}
-  mainVariables:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 36089578}
-  - {fileID: 1820001365}
-  - {fileID: 964613530}
-  cameraMoving: 0
   saveButton: {fileID: 5814663109470627148, guid: d0bae60bdf84eb640a36f455c36d9d2b,
     type: 3}
   saveList: {fileID: 172786583}
@@ -87776,8 +87788,8 @@ MonoBehaviour:
   deleteIndex: -1
   deletePath: 
   confirmDelete: {fileID: 1950468150}
-  outdatedIndex: -1
   outdated: {fileID: 754842357}
+  outdatedIndex: -1
   networkManager: {fileID: 1966934372}
   _buttons:
   - buttonName: Labs

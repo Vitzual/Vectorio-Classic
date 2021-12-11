@@ -20,6 +20,7 @@ public class Gamemode : MonoBehaviour
 
     // Static save variables
     public static DifficultyData difficulty;
+    public static OnlineData online;
     public static string seed = "Vectorio";
     public static float time = 0;
 
@@ -84,6 +85,16 @@ public class Gamemode : MonoBehaviour
         {
             Debug.Log("Difficulty data missing. Creating new one");
             difficulty = _difficulty.SetData(new DifficultyData());
+        }
+
+        // Check difficulty variable
+        if (online == null)
+        {
+            Debug.Log("Difficulty data missing. Creating new one");
+            online = new OnlineData();
+            online.maxConnections = 10;
+            online.listAsLobby = false;
+            online.privateSession = false;
         }
 
         // Check stage variable

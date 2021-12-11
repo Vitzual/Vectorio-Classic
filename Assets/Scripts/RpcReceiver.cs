@@ -28,7 +28,7 @@ public class RpcReceiver : NetworkBehaviour
             Server.primaryReceiver = transform.GetComponent<RpcReceiver>();
             RpcSetupPrimaryReceiver();
         }
-        else RpcSetupClientReceiver(Gamemode.seed);
+        else RpcSetupClientReceiver(Gamemode.difficulty, Gamemode.seed);
     }
 
     [TargetRpc]
@@ -39,10 +39,11 @@ public class RpcReceiver : NetworkBehaviour
     }
 
     [TargetRpc]
-    public void RpcSetupClientReceiver(string seed)
+    public void RpcSetupClientReceiver(DifficultyData data, string seed)
     {
         spawner.enabled = false;
         Gamemode.seed = seed;
+        Gamemode.difficulty = data;
         Gamemode.active.SyncSetup();
     }
 

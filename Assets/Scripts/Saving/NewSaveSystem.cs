@@ -86,6 +86,7 @@ public class NewSaveSystem : MonoBehaviour
 
         // Set difficulty
         saveData.difficultyData = Gamemode.difficulty;
+        saveData.onlineData = Gamemode.online;
 
         // Set lists
         saveData.buildings = buildings.ToArray();

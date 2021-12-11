@@ -21,12 +21,25 @@ public class Survival : Gamemode
             difficulty = _difficulty.SetData(new DifficultyData());
         }
 
+        // Check difficulty variable
+        if (online == null)
+        {
+            Debug.Log("Difficulty data missing. Creating new one");
+            online = new OnlineData();
+            online.maxConnections = 10;
+            online.listAsLobby = false;
+            online.privateSession = false;
+        }
+
         // Check stage variable
         if (stage == null)
         {
             Debug.Log("Stage data missing. Setting to default");
             stage = _stage;
         }
+
+        // Set max connections
+        NetworkManagerSF.active.maxConnections = online.maxConnections;
 
         // Setup hub
         Buildable hubBuildable = Buildables.RequestBuildable(hub);
@@ -87,6 +100,6 @@ public class Survival : Gamemode
         ResearchUI.active.Setup();
 
         // Invoke auto saving
-        InvokeRepeating("AutoSave", 360f, 360f);
+        // InvokeRepeating("AutoSave", 360f, 360f);
     }
 }

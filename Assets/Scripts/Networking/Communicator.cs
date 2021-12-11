@@ -23,6 +23,42 @@ public class Communicator : NetworkBehaviour
     }
 
     // Internal call
+    public void SyncBuildingDestroyed(int runtimeID)
+    {
+        // Sync building destroyed with all clients
+        if (hasAuthority)
+            CmdSyncBuildPriority(runtimeID);
+    }
+
+    // Update collector grab for all players
+    [Command]
+    public void CmdSyncBuildingDestroyed(int runtimeID)
+    {
+        // Sync building destroyed with all clients
+        if (!Server.entities.ContainsKey(runtimeID))
+            Debug.Log("[SERVER] Received a destroy request for runtime ID " + runtimeID + ", but that ID does " +
+                "not exist on the server. Will still attempt to remove ID on all clients...");
+
+        // Attempt to sync destroy with other clients that contain the ID
+        RpcSyncBuildingDestroyed(runtimeID);
+    }
+
+    // Rpc metadata on all clients
+    [ClientRpc]
+    public void RpcSyncBuildingDestroyed(int runtimeID)
+    {
+        // Sync building destroyed with all clients
+        if (Server.entities.ContainsKey(runtimeID))
+        {
+            if (Server.entities[runtimeID] != null)
+                Server.entities[runtimeID].DestroyEntity();
+            else Server.entities.Remove(runtimeID);
+        }
+        else Debug.Log("[SERVER] Desync detected. Client received a destroy request for ID " + runtimeID + ", " +
+            "but this client does not have a reference to that ID. Recommend reconnecting to avoid further issues!");
+    }
+
+    // Internal call
     public void SyncBuildPriority(int prio)
     {
         // Send build priority request to server

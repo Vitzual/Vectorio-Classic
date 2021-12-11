@@ -109,8 +109,8 @@ public class Server : NetworkBehaviour
         {
             entities[id].DestroyEntity();
             entities.Remove(id);
-            primaryReceiver.RpcSyncDestroy(id);
         }
+        primaryReceiver.RpcSyncDestroy(id);
     }
 
     // Assigns a unique runtime ID to an entity    

@@ -100,19 +100,20 @@ public class RpcReceiver : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcSyncDestroy(int entity_id)
+    public void RpcSyncDestroy(int runtimeID)
     {
         // Check client
         if (!isClientOnly) return;
 
         // Attempt to destroy an active entity. If no entity found, attempt override on position
-        if (Server.entities.ContainsKey(entity_id))
+        if (Server.entities.ContainsKey(runtimeID))
         {
-            Server.entities[entity_id].DestroyEntity();
-            Server.entities.Remove(entity_id);
+            if (Server.entities[runtimeID] != null)
+                Server.entities[runtimeID].DestroyEntity();
+            else Server.entities.Remove(runtimeID);
         }
-        else Debug.Log("[SERVER] Desync detected. An entity with ID " + entity_id + " was removed " +
-            "on the server, but that entities runtime ID does not exist on this client!");
+        else Debug.Log("[SERVER] Desync detected. Client received a destroy request for ID " + runtimeID + ", " +
+            "but this client does not have a reference to that ID. Recommend reconnecting to avoid further issues!");
     }
 
     // Create a networked building

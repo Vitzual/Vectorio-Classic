@@ -123,13 +123,17 @@ public class Menu : MonoBehaviour
         steamList.UpdateFriendsList();
     }
 
-    // Start new game
-    public void StartNewGame()
+    // Moves camera to new game UI
+    public void MoveToNewgame()
     {
-        foreach (GameObject obj in mainVariables)
-            obj.SetActive(false);
-
         camTarget = newSaveLocation;
+        cameraMoving = true;
+    }
+
+    // Moves camera to main game UI
+    public void BackToMenu()
+    {
+        camTarget = mainLocation;
         cameraMoving = true;
     }
 
@@ -149,16 +153,6 @@ public class Menu : MonoBehaviour
     {
         foreach(GameObject obj in newSaveVariables)
             obj.SetActive(true);
-    }
-
-    // Go back to menu
-    public void BackToMenu()
-    {
-        foreach (GameObject obj in newSaveVariables)
-            obj.SetActive(false);
-
-        camTarget = mainLocation;
-        cameraMoving = true;
     }
 
     // Enable new game menu

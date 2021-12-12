@@ -112,7 +112,9 @@ public class Research : MonoBehaviour
                 drone_move_speed += amount;
                 break;
             case ResearchTypeEnum.ExtractionRate:
-                resource[tech.currency].extractionRate += amount;
+                resource[tech.currency].extractionRate -= amount;
+                if (resource[tech.currency].extractionRate <= 0.2f)
+                    resource[tech.currency].extractionRate = 0.2f;
                 break;
             case ResearchTypeEnum.ExtractionYield:
                 resource[tech.currency].extractionYield += (int)amount;

@@ -51,6 +51,8 @@ public class EnemySpawner : NetworkBehaviour
         {
             foreach (Enemy.EnemySpawn spawn in enemy.spawnsOnDeath)
             {
+                if (spawn.enemy == enemy) continue;
+
                 for (int i = 0; i < spawn.amount; i++)
                 {
                     Vector2 spawnPos = new Vector2(position.x + Random.Range(0, spawn.radius), position.y + Random.Range(0, spawn.radius));

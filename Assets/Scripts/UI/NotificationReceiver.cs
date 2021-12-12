@@ -2,6 +2,7 @@ using Michsky.UI.ModernUIPack;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class NotificationReceiver : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class NotificationReceiver : MonoBehaviour
         NewEnemy,
         LabGoBoom,
         AutoSave,
-        EnemyGroup
+        EnemyGroup,
+        Disconnected
     }
     public NotificationType notificationType;
     public NotificationManager notification;
@@ -19,11 +21,22 @@ public class NotificationReceiver : MonoBehaviour
 
     public void Start()
     {
-        Events.active.onEnemyGroupSpawned += ShowEnemyGroupNotification;
-        Events.active.onEnemyDiscovered += ShowEnemyNotification;
-        Events.active.onBuildingUnlocked += ShowBuildingNotification;
-        Events.active.onLabDestroyed += ShowLabBoomBoom;
-        Events.active.onAutoSave += AutoSave;
+        if (notificationType == NotificationType.EnemyGroup) Events.active.onEnemyGroupSpawned += ShowEnemyGroupNotification;
+        else if (notificationType == NotificationType.NewEnemy) Events.active.onEnemyDiscovered += ShowEnemyNotification;
+        else if (notificationType == NotificationType.NewBuilding) Events.active.onBuildingUnlocked += ShowBuildingNotification;
+        else if (notificationType == NotificationType.LabGoBoom) Events.active.onLabDestroyed += ShowLabBoomBoom;
+        else if (notificationType == NotificationType.AutoSave) Events.active.onAutoSave += AutoSave;
+        else if (notificationType == NotificationType.Disconnected) Events.active.onClientDisconnect += ShowDisconnectNotif;
+    }
+    
+    public void ShowDisconnectNotif()
+    {
+        if (notificationType == NotificationType.Disconnected)
+        {
+            notification.OpenNotification();
+            notficiationSound.volume = Settings.sound;
+            notficiationSound.Play();
+        }
     }
 
     public void ShowEnemyGroupNotification(string msg)

@@ -31,6 +31,9 @@ public class GunshipPort : BaseTile
         // Set home
         drone.homePort = this;
 
+        // Set size 
+        drone.GetComponent<Transform>().localScale = new Vector3(0.8f, 0.8f, 0f);
+
         // Add drone to active drone list
         DroneManager.active.activeDrones.Add(drone);
     }

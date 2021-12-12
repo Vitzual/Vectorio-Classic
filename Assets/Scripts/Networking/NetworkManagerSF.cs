@@ -54,4 +54,10 @@ public class NetworkManagerSF : NetworkManager
     {
         //SteamSettings.Client.ClearRichPresence();
     }
+
+    public override void OnClientDisconnect(NetworkConnection networkConnection)
+    {
+        if (Communicator.active != null)
+            Communicator.active.SyncClientDisconnect();
+    }
 }

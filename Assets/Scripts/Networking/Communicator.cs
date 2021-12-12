@@ -22,6 +22,13 @@ public class Communicator : NetworkBehaviour
         }
     }
 
+    // Disconnect method
+    public void SyncClientDisconnect()
+    {
+        if (hasAuthority)
+            Events.active.ClientDisconnect();
+    }
+
     // Internal call
     public void SyncBuildingDestroyed(int runtimeID)
     {

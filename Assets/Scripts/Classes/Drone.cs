@@ -85,7 +85,7 @@ public class Drone : MonoBehaviour
     // Specifies what the drone should do as it exits the port
     public virtual void ExitingPort()
     {
-        if (transform.localScale.x <= 0.7f)
+        if (transform.localScale.x <= 1f)
             transform.localScale += new Vector3(0.002f, 0.002f, 0f);
         if (home.OpenDoors()) StartRoute();
     }

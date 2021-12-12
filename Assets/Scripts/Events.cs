@@ -29,6 +29,14 @@ public class Events : MonoBehaviour
             onSetEnemyDifficulty(rate, size);
     }
 
+    // On client disconnect
+    public event Action onClientDisconnect;
+    public void ClientDisconnect()
+    {
+        if (onClientDisconnect != null)
+            onClientDisconnect();
+    }
+
     // On hub destroyed
     public event Action onHubDestroyed;
     public void HubDestroyed()

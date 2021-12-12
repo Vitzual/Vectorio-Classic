@@ -19,7 +19,8 @@ public class NewInterface : MonoBehaviour
     public ButtonManager reloadButton;
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI friendcode;
-    
+    public Toggle onlineEnabled;
+
     public void Awake()
     {
         active = this;
@@ -30,8 +31,25 @@ public class NewInterface : MonoBehaviour
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
         InputEvents.active.onMapPressed += DebugToggle;
 
+        onlineEnabled.isOn = !Gamemode.online.privateSession;
         UserData userData = User.Client.Id;
         friendcode.text = "<b>FRIEND CODE: </b>" + userData.cSteamId.ToString();
+    }
+
+    public void OnOnlineChanged(bool enabled)
+    {
+        if (enabled)
+        {
+            Gamemode.online.privateSession = false;
+            Gamemode.online.maxConnections = 10;
+            NetworkManagerSF.active.maxConnections = 10;
+        }
+        else
+        {
+            Gamemode.online.privateSession = true;
+            Gamemode.online.maxConnections = 1;
+            NetworkManagerSF.active.maxConnections = 1;
+        }
     }
 
     public void DebugToggle()

@@ -21,6 +21,13 @@ public class Events : MonoBehaviour
             onSetupNameplate(obj, name, color);
     }
 
+    // On enemy set difficulty
+    public event Action<float, float> onSetEnemyDifficulty;
+    public void SetEnemyDifficulty(float rate, float size)
+    {
+        if (onSetEnemyDifficulty != null)
+            onSetEnemyDifficulty(rate, size);
+    }
 
     // On hub destroyed
     public event Action onHubDestroyed;

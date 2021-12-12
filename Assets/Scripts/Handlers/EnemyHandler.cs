@@ -138,6 +138,10 @@ public class EnemyHandler : MonoBehaviour
             if (health != -1) enemy.health = health;
             if (speed != -1) enemy.moveSpeed = speed;
 
+            // Set difficulty values
+            enemy.health *= Gamemode.difficulty.enemyHealthModifier;
+            enemy.moveSpeed *= Gamemode.difficulty.enemySpeedModifier;
+
             // Setup entity
             enemy.internalID = entity.InternalID;
             enemy.isMenu = isMenu;

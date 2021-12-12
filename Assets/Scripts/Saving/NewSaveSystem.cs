@@ -123,6 +123,15 @@ public class NewSaveSystem : MonoBehaviour
         // Set string variables
         Gamemode.seed = saveData.worldSeed;
         Gamemode.time = saveData.worldPlaytime;
+        Gamemode.difficulty = saveData.difficultyData;
+
+        // Check if online data exists
+        if (saveData.onlineData != null)
+        {
+            Gamemode.online = saveData.onlineData;
+            NetworkManagerSF.active.maxConnections = Gamemode.online.maxConnections;
+        }
+        else Debug.Log("[SERVER] This save does not contain online data!");
 
         // Get active border stage
         if (ScriptableLoader.stages.ContainsKey(saveData.stage))

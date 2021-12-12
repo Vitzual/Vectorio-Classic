@@ -11,7 +11,7 @@ public class RpcReceiver : NetworkBehaviour
     // If just server, will not be instantiated 
     public Communicator communicator;
     public EnemySpawner spawner;
-    public bool primaryReceiver = false;
+    public static bool primaryReceiver = false;
 
     // Connect to syncer
     public void Start()

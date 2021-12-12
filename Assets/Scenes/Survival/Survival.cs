@@ -29,6 +29,7 @@ public class Survival : Gamemode
             online.maxConnections = 10;
             online.listAsLobby = false;
             online.privateSession = false;
+            NetworkManagerSF.active.maxConnections = Gamemode.online.maxConnections;
         }
 
         // Check stage variable
@@ -61,9 +62,13 @@ public class Survival : Gamemode
             ResearchUI.active.Setup();
         }
 
+        // Set difficulty stuff
+        Events.active.SetEnemyDifficulty(difficulty.enemyGroupSpawnrate, difficulty.enemyGroupSpawnsize);
+
         // Setup starting resources
         SetupStartingResources();
 
+        // Stop loading game
         NewSaveSystem.loadGame = false;
 
         // Invoke auto saving

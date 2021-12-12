@@ -41,9 +41,6 @@ public class Menu : MonoBehaviour
     public ModalWindowManager outdated;
     public int outdatedIndex = -1;
 
-    // Network Manager
-    [SerializeField] private NetworkManager networkManager;
-
     [System.Serializable]
     public class MenuButton
     {
@@ -63,15 +60,14 @@ public class Menu : MonoBehaviour
     // Start method
     public void Start()
     {
-        // Reset host
-        networkManager.StopHost();
-
         // Clear registry
         Buildables.ClearRegistry();
 
         // Reset gamemode static variables
         NewSaveSystem.saveData = null;
         Gamemode.difficulty = null;
+        Gamemode.stage = null;
+        Gamemode.online = null;
         NewSaveSystem.saveName = "Unnamed Save";
         Gamemode.seed = "Vectorio";
         NewSaveSystem.loadGame = false;
@@ -186,7 +182,11 @@ public class Menu : MonoBehaviour
         Gamemode.seed = button.seed;
         NewSaveSystem.loadGame = true;
 
-        StartSurvivalGame(1);
+        if (button.saveData.onlineData != null)
+            Gamemode.online = button.saveData.onlineData;
+        else Gamemode.online = new OnlineData();
+
+        StartSurvivalGame(Gamemode.online.maxConnections, number);
     }
 
     // Confirm load
@@ -201,14 +201,21 @@ public class Menu : MonoBehaviour
         // Get save path
         if (number == -1 && availableSave != -1)
             NewSaveSystem.savePath = "/world_" + availableSave + ".vectorio";
+        else NewSaveSystem.savePath = "/world_" + number + ".vectorio";
 
         // Multiplayer settings
-        networkManager.maxConnections = connections;
+        NetworkManagerSF.active.maxConnections = connections;
+
+        // Check network
+        Debug.Log("[SERVER] Server / Host = " + NetworkServer.active + " / " + NetworkClient.active);
+        if (NetworkServer.active) NetworkServer.Shutdown();
+        if (NetworkClient.active) NetworkClient.Shutdown();
+        Debug.Log("[SERVER] Server / Host = " + NetworkServer.active + " / " + NetworkClient.active);
 
         // Start the game
-        networkManager.onlineScene = "Survival";
+        NetworkManagerSF.active.onlineScene = "Survival";
         loadingScreen.SetActive(true);
-        networkManager.StartHost();
+        NetworkManagerSF.active.StartHost();
     }
 
     public void ExitGame()

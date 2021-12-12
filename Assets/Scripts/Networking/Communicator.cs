@@ -27,7 +27,7 @@ public class Communicator : NetworkBehaviour
     {
         // Sync building destroyed with all clients
         if (hasAuthority)
-            CmdSyncBuildPriority(runtimeID);
+            CmdSyncBuildingDestroyed(runtimeID);
     }
 
     // Update collector grab for all players

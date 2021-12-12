@@ -326,7 +326,7 @@ public class ClientLoader : NetworkBehaviour
         loadData.entityVar = entityVar;
         loadData.isGhost = isGhost;
         loadData.isAtEnd = isAtEnd;
-
+        
         TogglePlayerJoining(true);
     }
 

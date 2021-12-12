@@ -11,7 +11,9 @@ public class EnemySpawner : NetworkBehaviour
     public int maxEnemiesAllowed = 250;
 
     // Group spawning
+    public float groupAmount = 1f;
     public float groupSpeed = 5f;
+    private bool difficultySet = false;
     public int groupCooldown = 360;
     private int timeUntilNextGroup;
     private Vector2 groupSpawnPos;
@@ -24,11 +26,21 @@ public class EnemySpawner : NetworkBehaviour
         Debug.Log("[SERVER] Authority granted to " + transform.name + " for enemy spawning");
 
         // Setup spawner
-        timeUntilNextGroup = groupCooldown;
+        if (!difficultySet) timeUntilNextGroup = groupCooldown;
         enemies.AddRange(ScriptableLoader.enemies.Values);
 
         InvokeRepeating("SpawnEnemies", 1, 1);
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
+
+        Events.active.onSetEnemyDifficulty += SetDifficulty;
+    }
+
+    public void SetDifficulty(float rate, float size)
+    {
+        groupCooldown = (int)((float)groupCooldown / rate);
+        timeUntilNextGroup = groupCooldown;
+        groupAmount = size;
+        difficultySet = true;
     }
 
     [Command]
@@ -149,9 +161,9 @@ public class EnemySpawner : NetworkBehaviour
             }
 
             // Get amount to spawn
-            groupEnemies = Resource.active.GetHeat() / 1000;
+            groupEnemies = (int)((Resource.active.GetHeat() / 1000) * groupAmount);
             if (groupEnemies < 20) groupEnemies = 20;
-            else if (groupEnemies > 100) groupEnemies = 100;
+            else if (groupEnemies > 150) groupEnemies = 100;
             timeUntilNextGroup = groupCooldown;
             groupSpeed = 5f * Gamemode.stage.variant.speedModifier;
 

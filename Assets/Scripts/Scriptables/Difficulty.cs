@@ -13,7 +13,7 @@ public class Difficulty : ScriptableObject
     public int heatTracked;
 
     // Gameplay settings
-    public bool enableInstaPlace;
+    public bool useDroneConstruction;
     public bool naturalHeatGrowth;
     public bool autoSpawnGuardians;
 
@@ -33,7 +33,7 @@ public class Difficulty : ScriptableObject
     public DifficultyData SetData(DifficultyData difficulty)
     {
         // Gameplay modifiers
-        difficulty.enableInstaPlace = enableInstaPlace;
+        difficulty.useDroneConstruction = useDroneConstruction;
         difficulty.naturalHeatGrowth = naturalHeatGrowth;
 
         // Gameplay settings

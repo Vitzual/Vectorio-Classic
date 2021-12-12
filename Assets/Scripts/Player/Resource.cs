@@ -34,6 +34,8 @@ public class Resource : NetworkBehaviour
         public bool output;
 
         // UI elements
+        public bool enabled;
+        public GameObject element;
         public Image background;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
@@ -313,6 +315,13 @@ public class Resource : NetworkBehaviour
     // Update UI
     public void UpdateUI(CurrencyType type, bool updateStorage = false)
     {
+        // Check if UI is enabled
+        if (!currencies[type].enabled)
+        {
+            currencies[type].enabled = true;
+            currencies[type].element.SetActive(true);
+        }
+
         // Display to UI
         if (currencies[type].resourceUI != null)
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);

@@ -10,7 +10,7 @@ public class DifficultyData
     {
         name = "Unnamed Save";
         heatTracked = 0;
-        enableInstaPlace = false;
+        useDroneConstruction = true;
         naturalHeatGrowth = false;
         autoSpawnGuardians = false;
         enemySpawnrateModifier = 1f;
@@ -31,7 +31,7 @@ public class DifficultyData
     public int heatTracked;
 
     // Gameplay settings
-    public bool enableInstaPlace;
+    public bool useDroneConstruction;
     public bool naturalHeatGrowth;
     public bool autoSpawnGuardians;
 

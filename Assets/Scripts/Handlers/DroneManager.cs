@@ -84,9 +84,12 @@ public class DroneManager : MonoBehaviour
     // Sync build priority
     public void SyncPriority(int type)
     {
-        buildPriority = (BuildPriority)type;
-        prioritySelector.index = type;
-        prioritySelector.UpdateUI();
+        if (type >= 0 && type <= 8)
+        {
+            buildPriority = (BuildPriority)type;
+            prioritySelector.index = type;
+            prioritySelector.UpdateUI();
+        }
     }
 
     // Move drones

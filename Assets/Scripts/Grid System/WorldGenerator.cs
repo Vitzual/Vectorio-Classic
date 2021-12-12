@@ -78,8 +78,11 @@ public class WorldGenerator : MonoBehaviour
                     float yCoord = ((float)y / spawnable.spawnScale) + spawnable.spawnOffset;
                     float value = Mathf.PerlinNoise(xCoord, yCoord);
 
+                    // Get adjustment based on difficulty
+                    float adjustment = GetResourceModification(spawnable.type);
+
                     // If value exceeds threshold, try and generate
-                    if (value >= spawnable.spawnThreshold)
+                    if (value >= spawnable.spawnThreshold - adjustment)
                     {
                         TrySpawnResource(spawnable, x, y);
                         break;
@@ -120,5 +123,24 @@ public class WorldGenerator : MonoBehaviour
         if (spawnedResources.ContainsKey(adjustedCoords) &&
             spawnedResources[adjustedCoords] == type) return true;
         else return false;
+    }
+
+    // Get resource :)
+    public float GetResourceModification(Resource.CurrencyType type)
+    {
+        switch (type)
+        {
+            case Resource.CurrencyType.Gold:
+                if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
+                return Gamemode.difficulty.goldSpawnModifier;
+            case Resource.CurrencyType.Essence:
+                if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
+                return Gamemode.difficulty.goldSpawnModifier;
+            case Resource.CurrencyType.Iridium:
+                if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
+                return Gamemode.difficulty.goldSpawnModifier;
+            default:
+                return 0.1f;
+        }
     }
 }

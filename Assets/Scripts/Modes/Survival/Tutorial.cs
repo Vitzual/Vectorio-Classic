@@ -35,7 +35,7 @@ public class Tutorial : MonoBehaviour
     public GameObject tutorialObject;
     public Slide[] tutorialSlides;
     public bool tutorialStarted = false;
-    public int tutorialSlide = 1;
+    public int tutorialSlide = 0;
 
     // Enables the tutorial
     public void EnableTutorial()
@@ -43,7 +43,7 @@ public class Tutorial : MonoBehaviour
         // Enable tutorial variables
         tutorialObject.SetActive(true);
         tutorialStarted = true;
-        tutorialSlide = 1;
+        tutorialSlide = 0;
         tutorialSlides[tutorialSlide].Enable();
 
         // Setup events
@@ -62,6 +62,7 @@ public class Tutorial : MonoBehaviour
 
         // Disable tutorial
         tutorialObject.SetActive(false);
+        tutorialSlide = 0;
         tutorialStarted = false;
         enabled = false;
     }
@@ -84,9 +85,7 @@ public class Tutorial : MonoBehaviour
     // On space pressed, check tutorial and move to next slide if passed
     public void SpacePressed()
     {
-        Debug.Log("[TUTORIAL] Received space pressed event");
-
-        if (tutorialSlides[tutorialSlide].task == Slide.Task.Space) NextSlide();
+        if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Space) NextSlide();
     }
 
     // On building placed, check tutorial and move to next slide if passed
@@ -94,7 +93,7 @@ public class Tutorial : MonoBehaviour
     {
         Debug.Log("[TUTORIAL] Received building pressed event");
 
-        if (tutorialSlides[tutorialSlide].task == Slide.Task.Place &&
+        if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Place &&
             tutorialSlides[tutorialSlide].optionalEntity == building.buildable.building) NextSlide();
     }
 
@@ -103,6 +102,6 @@ public class Tutorial : MonoBehaviour
     {
         Debug.Log("[TUTORIAL] Received gold collected event");
 
-        if (tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
+        if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
     }
 }

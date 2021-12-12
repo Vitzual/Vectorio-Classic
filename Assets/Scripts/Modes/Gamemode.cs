@@ -152,7 +152,7 @@ public class Gamemode : MonoBehaviour
     // Tells the gamemode how to generate inventory
     public virtual void InitGamemode()
     {
-        useDroneConstruction = !difficulty.enableInstaPlace;
+        useDroneConstruction = difficulty.useDroneConstruction;
         naturalHeatGrowth = difficulty.naturalHeatGrowth;
 
         #pragma warning disable CS0612

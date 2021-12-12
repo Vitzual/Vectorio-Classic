@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Mirror;
 
 public class NewInterface : MonoBehaviour
 {
@@ -16,15 +17,9 @@ public class NewInterface : MonoBehaviour
     public ButtonManager reloadButton;
     public CanvasGroup canvasGroup;
 
-    public int fps;
-    public TextMeshProUGUI fpsText;
-
     public void Awake()
     {
         active = this;
-
-        if (fpsText != null)
-            InvokeRepeating("UpdateFPS", 0.2f, 1f);
     }
 
     public void Start()
@@ -54,17 +49,14 @@ public class NewInterface : MonoBehaviour
         }
     }
 
-    public void UpdateFPS()
-    {
-        fps = (int)(1f / Time.unscaledDeltaTime);
-        fpsText.text = fps + "fps";
-    }
-
     // Toggle the quit menu
     public void ToggleQuitMenu()
     {
         // Check if other panels open
         if (!CheckPanels() || CameraController.mapEnabled) return;
+
+        // Check if UI isenabled
+        if (canvasGroup.alpha == 0f) ToggleUI(true);
 
         // Check if menu open. If so, reset and open
         if (quitMenu.activeSelf)
@@ -74,8 +66,9 @@ public class NewInterface : MonoBehaviour
         }
         else
         {
-            if (InstantiationHandler.amountPlaced > 0) reloadButton.buttonText = "RELOAD";
-            else reloadButton.buttonText = "RESEED";
+            if (InstantiationHandler.amountPlaced > 1 || 
+                NetworkManagerSF.active.maxConnections > 1) 
+                reloadButton.GetComponent<Button>().interactable = false;
             reloadButton.UpdateUI();
 
             saveButton.buttonText = "SAVE";
@@ -137,29 +130,21 @@ public class NewInterface : MonoBehaviour
     // Reload game
     public void Reload()
     {
-        if (InstantiationHandler.amountPlaced > 0)
+        if (InstantiationHandler.amountPlaced <= 1)
         {
-            // Clear registry
-            Buildables.ClearRegistry();
-
-            // Reset interface variables
-            Time.timeScale = 1f;
-
-            // Load last save
-            if (NewSaveSystem.saveData != null)
-                NewSaveSystem.loadGame = true;
-            loadingScreen.SetActive(true);
-            SceneManager.LoadScene("Survival");
+            #pragma warning disable CS0612
+            WorldGenerator.active.Reseed();
+            #pragma warning restore CS0612
         }
-
-        #pragma warning disable CS0612
-        else WorldGenerator.active.Reseed();
-        #pragma warning restore CS0612
     }
 
     // Quit the game
     public void QuitGame()
     {
+        // Check if client active
+        // if (NetworkServer.active) NetworkManagerSF.active.StopHost();
+        // if (NetworkClient.active) NetworkManagerSF.active.StopClient();
+
         Application.Quit();
     }
 }

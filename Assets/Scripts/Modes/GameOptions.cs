@@ -12,14 +12,17 @@ public class GameOptions : MonoBehaviour
     public string mode;
 
     // Presets
-    public HorizontalSelector presets;
+    //public HorizontalSelector presets;
+
+    // Default threshold division
+    public float resourceDivider = 2500f;
 
     // Difficulty values
     public new TextMeshProUGUI name;
     public TextMeshProUGUI seed;
 
     // Gameplay modifiers
-    public Toggle enableInstaPlace;
+    public Toggle useDroneConstruction;
     public Toggle naturalHeatGrowth;
 
     // Online modifiers
@@ -39,15 +42,35 @@ public class GameOptions : MonoBehaviour
     public SliderManager vectoriumSpawnModifier;
 
     // Start thing
-    public void GetDifficulties()
+    public void SetDifficulty(Difficulty difficulty)
     {
-        //List<Difficulty> difficulties = Resources.LoadAll("Scriptables/Difficulties", typeof(Difficulty)).Cast<Difficulty>().ToList();
-        //
-        //foreach(Difficulty difficulty in difficulties)
-        //{
-        //    presets.CreateNewItem(difficulty.name);
-        //    presets.UpdateUI();
-        //}
+        // Gameplay modifiers
+        useDroneConstruction.isOn = difficulty.useDroneConstruction;
+        naturalHeatGrowth.isOn = difficulty.naturalHeatGrowth;
+
+        // Gameplay settings
+        enemySpawnrateModifier.mainSlider.value = difficulty.enemySpawnrateModifier * 100;
+        enemyHealthModifier.mainSlider.value = difficulty.enemyHealthModifier * 100;
+        enemySpeedModifier.mainSlider.value = difficulty.enemySpeedModifier * 100;
+        enemyGroupSpawnrate.mainSlider.value = difficulty.enemyGroupSpawnrate * 100;
+        enemyGroupSpawnsize.mainSlider.value = difficulty.enemyGroupSpawnsize * 100;
+
+        // Difficulty modifiers
+        goldSpawnModifier.mainSlider.value = difficulty.goldSpawnModifier * 100;
+        essenceSpawnModifier.mainSlider.value = difficulty.essenceSpawnModifier * 100;
+        iridiumSpawnModifier.mainSlider.value = difficulty.iridiumSpawnModifier * 100;
+        vectoriumSpawnModifier.mainSlider.value = difficulty.vectoriumSpawnModifier * 100;
+
+        // Update all UI elements
+        enemySpawnrateModifier.UpdateUI();
+        enemyHealthModifier.UpdateUI();
+        enemySpeedModifier.UpdateUI();
+        enemyGroupSpawnrate.UpdateUI();
+        enemyGroupSpawnsize.UpdateUI();
+        goldSpawnModifier.UpdateUI();
+        essenceSpawnModifier.UpdateUI();
+        iridiumSpawnModifier.UpdateUI();
+        vectoriumSpawnModifier.UpdateUI();
     }
 
     // Set difficulty data
@@ -66,7 +89,7 @@ public class GameOptions : MonoBehaviour
         OnlineData onlineData = new OnlineData();
 
         // Gameplay modifiers
-        difficultyData.enableInstaPlace = enableInstaPlace.isOn;
+        difficultyData.useDroneConstruction = useDroneConstruction.isOn;
         difficultyData.naturalHeatGrowth = naturalHeatGrowth.isOn;
 
         // Online settings
@@ -77,17 +100,17 @@ public class GameOptions : MonoBehaviour
         onlineData.privateSession = false;
 
         // Gameplay settings
-        difficultyData.enemySpawnrateModifier = enemySpawnrateModifier.mainSlider.value;
-        difficultyData.enemyHealthModifier = enemyHealthModifier.mainSlider.value;
-        difficultyData.enemySpeedModifier = enemySpeedModifier.mainSlider.value;
-        difficultyData.enemyGroupSpawnrate = enemyGroupSpawnrate.mainSlider.value;
-        difficultyData.enemyGroupSpawnsize = enemyGroupSpawnsize.mainSlider.value;
+        difficultyData.enemySpawnrateModifier = enemySpawnrateModifier.mainSlider.value / 100;
+        difficultyData.enemyHealthModifier = enemyHealthModifier.mainSlider.value / 100;
+        difficultyData.enemySpeedModifier = enemySpeedModifier.mainSlider.value / 100;
+        difficultyData.enemyGroupSpawnrate = enemyGroupSpawnrate.mainSlider.value / 100;
+        difficultyData.enemyGroupSpawnsize = enemyGroupSpawnsize.mainSlider.value / 100;
 
         // Difficulty modifiers
-        difficultyData.goldSpawnModifier = goldSpawnModifier.mainSlider.value;
-        difficultyData.essenceSpawnModifier = essenceSpawnModifier.mainSlider.value;
-        difficultyData.iridiumSpawnModifier = iridiumSpawnModifier.mainSlider.value;
-        difficultyData.vectoriumSpawnModifier = vectoriumSpawnModifier.mainSlider.value;
+        difficultyData.goldSpawnModifier = goldSpawnModifier.mainSlider.value / resourceDivider;
+        difficultyData.essenceSpawnModifier = essenceSpawnModifier.mainSlider.value / resourceDivider;
+        difficultyData.iridiumSpawnModifier = iridiumSpawnModifier.mainSlider.value / resourceDivider;
+        difficultyData.vectoriumSpawnModifier = vectoriumSpawnModifier.mainSlider.value / resourceDivider;
 
         // Set gamemode and start
         Gamemode.difficulty = difficultyData;

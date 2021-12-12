@@ -140,6 +140,7 @@ public class EnemyHandler : MonoBehaviour
 
             // Set difficulty values
             enemy.health *= Gamemode.difficulty.enemyHealthModifier;
+            enemy.maxHealth = enemy.health;
             enemy.moveSpeed *= Gamemode.difficulty.enemySpeedModifier;
 
             // Setup entity

@@ -97,7 +97,10 @@ public class EnemySpawner : NetworkBehaviour
         foreach(Enemy enemy in enemies)
         {
             // If spawn percentage is above the chance value, spawn
-            if (enemy.spawnPercentage <= percentage && (enemy.spawnChance * Gamemode.difficulty.enemySpawnrateModifier) >= chance)
+            float chanceCalculation = enemy.spawnChance * Gamemode.difficulty.enemySpawnrateModifier;
+            if (chanceCalculation < 0.15f) chanceCalculation = 0.15f;
+
+            if (enemy.spawnPercentage <= percentage && chanceCalculation >= chance)
             {
                 // Get location around border
                 if (Random.value > 0.5f)

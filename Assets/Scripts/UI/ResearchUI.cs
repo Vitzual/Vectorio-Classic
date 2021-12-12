@@ -187,9 +187,7 @@ public class ResearchUI : MonoBehaviour
                 researchButtons[tech].UpdateButton();
             }
 
-            selectedLab.ApplyResearch(selectedTech);
-            researchButtons[selectedTech].UpdateButton();
-            SetPanel(selectedTech);
+            Communicator.active.SyncMetadata(selectedLab.runtimeID, selectedTech.metadataID);
         }
     }
 

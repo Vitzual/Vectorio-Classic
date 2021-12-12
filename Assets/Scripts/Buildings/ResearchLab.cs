@@ -20,18 +20,21 @@ public class ResearchLab : BaseTile
 
     public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
-        if (researchTech == null)
-        {
-            if (!overrideCost)
-                Resource.active.ApplyOutputsOnly(type.cost.ToArray());
+        if (researchTech != null)
+            CancelResearch();
 
-            researchTech = type;
-            boostIcon.gameObject.SetActive(true);
-            boostIcon.sprite = type.icon;
-            Research.ApplyResearch(type, false);
+        if (!overrideCost)
+            Resource.active.ApplyOutputsOnly(type.cost.ToArray());
 
-            metadata = type.metadataID;
-        }
+        researchTech = type;
+        boostIcon.gameObject.SetActive(true);
+        boostIcon.sprite = type.icon;
+        Research.ApplyResearch(type, false);
+
+        ResearchUI.active.researchButtons[type].UpdateButton();
+        ResearchUI.active.SetPanel(type);
+
+        metadata = type.metadataID;
     }
 
     public void CancelResearch()

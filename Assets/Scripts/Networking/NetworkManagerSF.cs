@@ -58,8 +58,6 @@ public class NetworkManagerSF : NetworkManager
     public override void OnClientDisconnect(NetworkConnection networkConnection)
     {
         if (Communicator.active != null)
-        {
             Communicator.active.SyncClientDisconnect();
-        }
     }
 }

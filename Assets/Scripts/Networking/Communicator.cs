@@ -21,7 +21,7 @@ public class Communicator : NetworkBehaviour
             nameplate.SetActive(enableLocalNameplate);
         }
     }
-
+    
     // Disconnect method
     public void SyncClientDisconnect()
     {

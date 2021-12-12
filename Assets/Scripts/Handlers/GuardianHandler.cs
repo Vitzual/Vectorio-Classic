@@ -13,6 +13,8 @@ public class GuardianHandler : MonoBehaviour
     [HideInInspector] public bool guardianSpawned;
 
     // Guardian animation components
+    public Guardian lastGuardian;
+    public GameObject endScreen;
     public AudioSource warningSound;
     public float musicVolume = 0.5f;
 
@@ -208,6 +210,10 @@ public class GuardianHandler : MonoBehaviour
     {
         // Guardian destroyed
         Debug.Log("Guardian destroyed. Setting stage " + Gamemode.stage.variant.name + " to " + Gamemode.stage.nextStage.variant.name);
+
+        // Check if last guardian
+        if (guardian.guardian == lastGuardian)
+            endScreen.SetActive(true);
 
         // Begin transition to next stage
         Gamemode.stage = Gamemode.stage.nextStage;

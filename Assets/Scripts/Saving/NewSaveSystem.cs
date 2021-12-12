@@ -104,7 +104,11 @@ public class NewSaveSystem : MonoBehaviour
         saveData.worldSeed = Gamemode.seed;
         saveData.worldVersion = Gamemode.active.version;
         saveData.worldPlaytime = Gamemode.time;
-        saveData.worldCompletion = Resource.active.GetAmount(Resource.CurrencyType.Heat) / 1000000;
+
+        // World completion 
+        float completion = (Resource.active.GetAmount(Resource.CurrencyType.Heat) / 250000) * 100;
+        if (completion >= 100f) completion = 100f;
+        saveData.worldCompletion = completion;
 
         // Convert to json and save
         string data = JsonUtility.ToJson(saveData);

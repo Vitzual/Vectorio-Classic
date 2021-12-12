@@ -33,6 +33,7 @@ public class EnemySpawner : NetworkBehaviour
         InvokeRepeating("CheckGroupSpawning", 0.5f, 1);
 
         Events.active.onSetEnemyDifficulty += SetDifficulty;
+        Events.active.onEnemySpawnOnDeath += SyncDeathCreateEnemy;
     }
 
     public void SetDifficulty(float rate, float size)
@@ -41,6 +42,22 @@ public class EnemySpawner : NetworkBehaviour
         timeUntilNextGroup = groupCooldown;
         groupAmount = size;
         difficultySet = true;
+    }
+
+    // Internal enemy spawn call
+    public void SyncDeathCreateEnemy(Enemy enemy, Vector2 position)
+    {
+        if (hasAuthority)
+        {
+            foreach (Enemy.EnemySpawn spawn in enemy.spawnsOnDeath)
+            {
+                for (int i = 0; i < spawn.amount; i++)
+                {
+                    Vector2 spawnPos = new Vector2(position.x + Random.Range(0, spawn.radius), position.y + Random.Range(0, spawn.radius));
+                    CreateEnemy(spawn.enemy.InternalID, Gamemode.stage.variant.InternalID, spawnPos, Quaternion.identity, -1, -1);
+                }
+            }
+        }
     }
 
     [Command]

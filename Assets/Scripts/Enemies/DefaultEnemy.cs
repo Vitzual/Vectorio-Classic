@@ -61,6 +61,10 @@ public class DefaultEnemy : BaseEntity
         holder.material = variant.border;
         holder.trailMaterial = variant.border;
 
+        // Spawn any enemies it's supposed to
+        if (enemy.spawnsOnDeath.Length > 0)
+            Events.active.EnemySpawnOnDeath(enemy, transform.position);
+
         // Invoke enemy death event
         Events.active.EnemyDestroyed(this);
 

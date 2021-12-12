@@ -206,14 +206,6 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
-    public event Action<DefaultEnemy> onEnemyHurt;
-    public void EnemyHurt(DefaultEnemy enemy)
-    {
-        if (onEnemyHurt != null)
-            onEnemyHurt(enemy);
-    }
-
-    // On enemy destroyed
     public event Action<GhostTile> onGhostPlaced;
     public void GhostPlaced(GhostTile building)
     {
@@ -238,11 +230,27 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
+    public event Action<DefaultEnemy> onEnemyHurt;
+    public void EnemyHurt(DefaultEnemy enemy)
+    {
+        if (onEnemyHurt != null)
+            onEnemyHurt(enemy);
+    }
+
+    // On enemy destroyed
     public event Action<DefaultEnemy> onEnemyDestroyed;
     public void EnemyDestroyed(DefaultEnemy enemy)
     {
         if (onEnemyDestroyed != null)
             onEnemyDestroyed(enemy);
+    }
+
+    // On enemy destroyed
+    public event Action<Enemy, Vector2> onEnemySpawnOnDeath;
+    public void EnemySpawnOnDeath(Enemy spawn, Vector2 position)
+    {
+        if (onEnemySpawnOnDeath != null)
+            onEnemySpawnOnDeath(spawn, position);
     }
 
     // On guardian destroyed

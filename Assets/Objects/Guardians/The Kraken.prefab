@@ -1157,7 +1157,6 @@ GameObject:
   - component: {fileID: 3218542028071005407}
   - component: {fileID: 5700968648607597238}
   - component: {fileID: 215481718024960420}
-  - component: {fileID: -3556943482431749854}
   m_Layer: 9
   m_Name: The Kraken
   m_TagString: Enemy
@@ -1192,9 +1191,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afba1666265dd06498aee1ebd5101e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   metadata: -1
+  runtimeID: -1
+  internalID: 
   enemy: {fileID: 0}
   moveSpeed: 0
   damage: 0
@@ -1360,35 +1359,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-3556943482431749854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065519297016329530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6247106429464324814
 GameObject:
   m_ObjectHideFlags: 0

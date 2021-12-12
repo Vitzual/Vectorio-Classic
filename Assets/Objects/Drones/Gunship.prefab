@@ -608,7 +608,6 @@ GameObject:
   - component: {fileID: 3895683157982825778}
   - component: {fileID: 8423241348489882451}
   - component: {fileID: -6062873034861472858}
-  - component: {fileID: 7130236277897131401}
   m_Layer: 21
   m_Name: Gunship
   m_TagString: Drone
@@ -671,7 +670,7 @@ MonoBehaviour:
   - {fileID: 1429467496039461937}
   targets: []
   gunship: {fileID: 11400000, guid: 2d69fa2d966c0004789b815c79a0a9df, type: 2}
-  rotation: 0
+  rotation: 15
   isMenuDrone: 1
 --- !u!58 &8423241348489882451
 CircleCollider2D:
@@ -706,35 +705,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 96d0266b67e319044b2be79a5726ddda
   hasSpawned: 0
---- !u!114 &7130236277897131401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3802463960737202177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &4144446116273875268
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,8 @@ public class NetworkManagerSF : NetworkManager
         isServer = false;
         networkAddress = id;
 
+        Debug.Log("[SERVER] Attempting connection to " + id);
+
         // Connect
         StartClient();
     }

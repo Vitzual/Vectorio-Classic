@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 using System;
 using Michsky.UI.ModernUIPack;
 using Mirror;
+using TMPro;
 
 public class Menu : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Menu : MonoBehaviour
     // Outdated info
     public int deleteIndex = -1;
     public string deletePath = "";
+    public TextMeshProUGUI friendCode;
     public ModalWindowManager confirmDelete;
     public ModalWindowManager outdated;
     public int outdatedIndex = -1;
@@ -87,6 +89,13 @@ public class Menu : MonoBehaviour
 
         Instantiate(background, Vector2.zero, Quaternion.identity);
         CheckSaves();
+    }
+
+    // Join friend
+    public void JoinFriend()
+    {
+        print("[SERVER] Attempting connection to client with ID " + friendCode.text);
+        NetworkManagerSF.active.Join(friendCode.text);
     }
 
     // Load online friends

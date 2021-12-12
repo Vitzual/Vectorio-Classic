@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Mirror;
+using HeathenEngineering.SteamworksIntegration;
+using HeathenEngineering.SteamworksIntegration.API;
 
 public class NewInterface : MonoBehaviour
 {
@@ -16,7 +18,8 @@ public class NewInterface : MonoBehaviour
     public ButtonManager saveButton;
     public ButtonManager reloadButton;
     public CanvasGroup canvasGroup;
-
+    public TextMeshProUGUI friendcode;
+    
     public void Awake()
     {
         active = this;
@@ -26,6 +29,9 @@ public class NewInterface : MonoBehaviour
     {
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
         InputEvents.active.onMapPressed += DebugToggle;
+
+        UserData userData = User.Client.Id;
+        friendcode.text = "<b>FRIEND CODE: </b>" + userData.cSteamId.ToString();
     }
 
     public void DebugToggle()

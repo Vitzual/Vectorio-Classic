@@ -8,7 +8,7 @@ public class EnemySpawner : NetworkBehaviour
 {
     // Active instance
     public List<Enemy> enemies;
-    public int maxEnemiesAllowed = 250;
+    public int maxEnemiesAllowed = 350;
 
     // Group spawning
     public float groupAmount = 1f;
@@ -97,7 +97,7 @@ public class EnemySpawner : NetworkBehaviour
         foreach(Enemy enemy in enemies)
         {
             // If spawn percentage is above the chance value, spawn
-            if (enemy.spawnPercentage <= percentage && (enemy.spawnChance * (percentage + 1)) >= chance)
+            if (enemy.spawnPercentage <= percentage && (enemy.spawnChance * Gamemode.difficulty.enemySpawnrateModifier) >= chance)
             {
                 // Get location around border
                 if (Random.value > 0.5f)
@@ -163,7 +163,7 @@ public class EnemySpawner : NetworkBehaviour
             // Get amount to spawn
             groupEnemies = (int)((Resource.active.GetHeat() / 1000) * groupAmount);
             if (groupEnemies < 20) groupEnemies = 20;
-            else if (groupEnemies > 150) groupEnemies = 100;
+            else if (groupEnemies > 250) groupEnemies = 250;
             timeUntilNextGroup = groupCooldown;
             groupSpeed = 5f * Gamemode.stage.variant.speedModifier;
 

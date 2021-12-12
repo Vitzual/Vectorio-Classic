@@ -33,7 +33,10 @@ public class InputController : NetworkBehaviour
             if (Input.GetKeyDown(Keybinds.inventory))
                 InputEvents.active.InventoryPressed();
             if (Input.GetKeyDown(Keybinds.pause))
-                Settings.paused = !Settings.paused;
+            {
+                if (NetworkManagerSF.active.maxConnections <= 1)
+                    Settings.paused = !Settings.paused;
+            }
             if (Input.GetKeyDown(Keybinds.map))
                 InputEvents.active.MapPressed();
             if (Input.GetKeyDown(Keybinds.space))

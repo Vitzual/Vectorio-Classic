@@ -99,7 +99,7 @@ public class NewInterface : MonoBehaviour
             saveButton.UpdateUI();
 
             quitMenu.SetActive(true);
-            Time.timeScale = 0f;
+            if (NetworkManagerSF.active.maxConnections <= 1) Time.timeScale = 0f;
         }
     }
 

@@ -10559,6 +10559,7 @@ GameObject:
   - component: {fileID: 684719198}
   - component: {fileID: 684719196}
   - component: {fileID: 684719202}
+  - component: {fileID: 684719203}
   m_Layer: 0
   m_Name: Creative Manager
   m_TagString: Untagged
@@ -10578,16 +10579,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34767f50f871524ba7409d98500f8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMenu: 0
-  isCreative: 1
+  networkSync: {fileID: 0}
+  resource: {fileID: 0}
   name: Creative
   version: v0.1
+  _stage: {fileID: 0}
   _difficulty: {fileID: 0}
+  naturalHeatTimer: 5
   naturalHeatGrowth: 0
+  useGroupSpawning: 0
   useEnergizers: 0
   useResources: 0
-  useHeat: 0
-  usePower: 0
   useDroneConstruction: 0
   useEngineering: 0
   spawnBlueprints: 0
@@ -10596,6 +10598,8 @@ MonoBehaviour:
   initBuildings: 1
   initEnemies: 1
   initGuardians: 1
+  currencyElements: []
+  perSeconds: []
 --- !u!114 &684719196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10658,8 +10662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bfe44b5c037f848bb0bcb6a3979a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  perSeconds: []
+  currentPerSec: 0
   currencyElements: []
-  storages: []
 --- !u!114 &684719201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10685,6 +10692,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8d52c74605dbe4ca318a9c1a441831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &684719203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684719194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 660683966
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &692478939
 GameObject:
   m_ObjectHideFlags: 0
@@ -11305,7 +11329,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 741988625}
   m_HandleRect: {fileID: 741988624}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12078,7 +12102,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085082675}
   m_HandleRect: {fileID: 2085082674}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12479,7 +12503,7 @@ PrefabInstance:
     - target: {fileID: 5913638006090849308, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5913638006090849308, guid: 3608d8db9a3b52b4ea3970ac5677cce1,
         type: 3}
@@ -13711,13 +13735,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostTile: {fileID: 0}
+  placementSound: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   aocbLayer:
     serializedVersion: 2
     m_Bits: 262144
-  metadata: -1
   debug: 0
   debugCircle: {fileID: 0}
   activeCircles: []
@@ -17935,14 +17959,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56892958d6df7c84d976b17f4a801fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderStage: 0
-  hub: {fileID: 0}
+  _borders: []
   borderStartSize: 750
-  borders: []
-  activatedBorder: 0
-  newPosition: {x: 0, y: 0}
-  pushSpeed: 50
-  borderIncrement: 0
+  borderColors: []
+  fillColors: []
 --- !u!1 &1054503454
 GameObject:
   m_ObjectHideFlags: 0
@@ -22445,9 +22465,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8936106db629c7b4aadb44e728e5344b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingMenu: {fileID: 1078757169}
   quitMenu: {fileID: 1185353437}
-  saveButton: {fileID: 371463086}
+  loadingScreen: {fileID: 0}
+  saveButton: {fileID: 0}
+  reloadButton: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  friendcode: {fileID: 0}
 --- !u!1 &1353375417
 GameObject:
   m_ObjectHideFlags: 0
@@ -24900,25 +24923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 457357187}
-  slots:
-  - entity: {fileID: 0}
-    button: {fileID: 1783496611}
-  - entity: {fileID: 0}
-    button: {fileID: 1955841784}
-  - entity: {fileID: 0}
-    button: {fileID: 1607621720}
-  - entity: {fileID: 0}
-    button: {fileID: 1008668236}
-  - entity: {fileID: 0}
-    button: {fileID: 321421045}
-  - entity: {fileID: 0}
-    button: {fileID: 2002355740}
-  - entity: {fileID: 0}
-    button: {fileID: 555117384}
-  - entity: {fileID: 0}
-    button: {fileID: 909805666}
-  - entity: {fileID: 0}
-    button: {fileID: 1870662600}
+  _slots: []
 --- !u!1 &1495545583
 GameObject:
   m_ObjectHideFlags: 0
@@ -27698,13 +27703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facacdb237bbc694cb28789cbeac84f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  variant: {fileID: 11400000, guid: 17dcfab81f30cc045a2fd9ae1a0f44b3, type: 2}
-  turretHandler: {fileID: 850041614}
-  guardianButton: {fileID: 0}
-  guardianSpawned: 0
   BuildingGoDeadSound: {fileID: 655988622}
   enemies: []
-  guardians: []
   buildingLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -27973,7 +27973,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1478515052}
   m_HandleRect: {fileID: 1478515051}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

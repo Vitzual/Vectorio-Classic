@@ -166,13 +166,10 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Updates the active variant (Survival only)
-    public virtual void UpdateVariant()
+    public virtual void UpdateVariant(int heatAmount, int heatStorage)
     {
-        // Get heat currency
-        Resource.Currency currency = Resource.active.currencies[Resource.CurrencyType.Heat];
-
         // Check currency
-        if (currency.amount >= currency.storage) GuardianHandler.active.OpenGuardianWarning();
+        if (heatAmount >= heatStorage) GuardianHandler.active.OpenGuardianWarning();
         else GuardianHandler.active.CloseGuardianWarning();
     }
 }

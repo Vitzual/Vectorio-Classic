@@ -123,9 +123,6 @@ public class Resource : NetworkBehaviour
 
         // Update unlockables
         Buildables.UpdateResourceUnlockables(type);
-
-        // Update variant if heat passed
-        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant();
     }
 
     // Applies resources method
@@ -326,9 +323,9 @@ public class Resource : NetworkBehaviour
         if (currencies[type].resourceUI != null)
             currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
 
+        // Change color based on storage value
         if (updateStorage && currencies[type].storageUI != null)
         {
-            // Change color based on storage value
             if (currencies[type].amount > currencies[type].storage)
                 currencies[type].background.color = new Color(1, 0, 0, 0.3f);
             else currencies[type].background.color = new Color(1, 1, 1, 0.1f);
@@ -336,11 +333,15 @@ public class Resource : NetworkBehaviour
             currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
         }
 
+        // Check resource bar
         if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
         {
             currencies[type].resourceBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;
             currencies[type].resourceBar.UpdateUI();
         }
+
+        // Update variant if heat passed
+        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant(currencies[CurrencyType.Heat].amount, currencies[CurrencyType.Heat].storage);
     }
 
     // Update resources

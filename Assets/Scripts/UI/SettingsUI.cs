@@ -121,6 +121,10 @@ public class SettingsUI : MonoBehaviour
                 Settings.resolutionX = 3440;
                 Settings.resolutionY = 1440;
                 break;
+            case 8:
+                Settings.resolutionX = 3840;
+                Settings.resolutionY = 2160;
+                break;
         }
         Settings.ApplySettings();
     }

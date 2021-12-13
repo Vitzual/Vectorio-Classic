@@ -236,8 +236,15 @@ public class InstantiationHandler : MonoBehaviour
     // Check client side building
     public bool CheckClientSide(Vector2 coords, Building building)
     {
+        // Get buildable via building SO
+        Buildable buildable = Buildables.RequestBuildable(building);
+        if (buildable == null) return false;
+
+        // Determine if the building is free
+        bool isFree = Resource.active.CheckFreebie(buildable);
+
         // Check resources if applicable
-        if (!Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(building.resources)) return false;
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(building.resources)) return false;
         else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(building.resources)) return false;
 
         // Check to make sure the tiles are not being used

@@ -55,6 +55,8 @@ public class Communicator : NetworkBehaviour
 
                 index += 1;
             }
+
+            CmdSyncResources(resources, amounts, storages);
         }
     }
 

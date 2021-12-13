@@ -89,7 +89,8 @@ public class BuildingController : NetworkBehaviour
     {
         if (StatsPanel.isOpen) return;
 
-        if (buildable != null) CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+        if (buildable != null && InstantiationHandler.active.CheckClientSide(hologram.position, buildable.building))
+            CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
         else TryClickBuilding();
     }
 

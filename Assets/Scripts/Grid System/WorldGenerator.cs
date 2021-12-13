@@ -12,7 +12,7 @@ public class WorldGenerator : MonoBehaviour
     public int borderSize = 750;
     public float perlinScale = 500;
     public Spawnable[] spawnables;
-    [HideInInspector] public Dictionary<Vector2Int, Resource.CurrencyType> spawnedResources;
+    [HideInInspector] public Dictionary<Vector2, Resource.CurrencyType> spawnedResources;
 
     public void Awake() { active = this; }
 
@@ -20,7 +20,7 @@ public class WorldGenerator : MonoBehaviour
     public void GenerateWorldData(string seed)
     {
         // Create a new resource grid
-        spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
 
         // Set random seed
         Random.seed = seed.GetHashCode();
@@ -40,7 +40,7 @@ public class WorldGenerator : MonoBehaviour
     {
         // Clear previous data
         resourceGrid.ClearAllTiles();
-        spawnedResources = new Dictionary<Vector2Int, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
 
         // Set new random variables
         int previousSeed = Random.seed;
@@ -116,9 +116,9 @@ public class WorldGenerator : MonoBehaviour
     }
 
     // Check if a resource node exists
-    public bool CheckNode(Vector2Int coords, Resource.CurrencyType type)
+    public bool CheckNode(Vector2 coords, Resource.CurrencyType type)
     {
-        Vector2Int adjustedCoords = new Vector2Int(coords.x / 5, coords.y / 5);
+        Vector2 adjustedCoords = new Vector2(coords.x / 5, coords.y / 5);
 
         if (spawnedResources.ContainsKey(adjustedCoords) &&
             spawnedResources[adjustedCoords] == type) return true;

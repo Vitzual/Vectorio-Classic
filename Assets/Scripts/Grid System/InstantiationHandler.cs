@@ -233,6 +233,20 @@ public class InstantiationHandler : MonoBehaviour
         return true;
     }
 
+    // Check client side building
+    public bool CheckClientSide(Vector2 coords, Building building)
+    {
+        // Check resources if applicable
+        if (!Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(building.resources)) return false;
+        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(building.resources)) return false;
+
+        // Check to make sure the tiles are not being used
+        if (!CheckTiles(building, new Vector3(coords.x, coords.y, 0))) return false;
+
+        // If checks passed, return
+        return true;
+    }
+
     // Returns closest building to position given
     public BaseTile GetClosestBuilding(Vector2Int position)
     {

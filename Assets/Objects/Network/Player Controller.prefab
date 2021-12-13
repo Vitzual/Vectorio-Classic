@@ -448,7 +448,6 @@ MonoBehaviour:
   syncInterval: 0.1
   communicator: {fileID: -8908686142154367545}
   spawner: {fileID: 5759296554750290597}
-  primaryReceiver: 0
 --- !u!114 &-8908686142154367545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +464,7 @@ MonoBehaviour:
   syncInterval: 0.1
   permission: FALSE
   nameplate: {fileID: 1493252710838689910}
-  nameboolplatebool: 0
+  enableLocalNameplate: 0
 --- !u!114 &-3217422845286740449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +499,7 @@ MonoBehaviour:
   syncInterval: 0.1
   enemies: []
   maxEnemiesAllowed: 250
+  groupAmount: 1
   groupSpeed: 5
   groupCooldown: 360
 --- !u!114 &8461882038408348553
@@ -565,8 +565,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 516434057
+  m_SortingLayer: 8
   m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

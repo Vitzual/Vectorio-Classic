@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class GuardianButton : MonoBehaviour
 {
+    // Active instance
+    public static GuardianButton active;
+
     // Confirm screen
     public ModalWindowManager confirmScreen;
     public CanvasGroup canvasGroup;
@@ -12,8 +15,7 @@ public class GuardianButton : MonoBehaviour
     // Setup events
     public void Start()
     {
-        Events.active.onOpenGuardianInfo += ShowButton;
-        Events.active.onCloseGuardianInfo += HideButton;
+        active = this;
     }
 
     // Set confirm screen thing
@@ -28,6 +30,7 @@ public class GuardianButton : MonoBehaviour
     // Open confirm screen
     public void OpenConfirmScreen()
     {
+        confirmScreen.gameObject.SetActive(true);
         confirmScreen.OpenWindow();
     }
 

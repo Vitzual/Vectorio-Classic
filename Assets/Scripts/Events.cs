@@ -93,22 +93,6 @@ public class Events : MonoBehaviour
             onStartGuardianBattle();
     }
 
-    // Open guardian info
-    public event Action<Guardian> onOpenGuardianInfo;
-    public void OpenGuardianInfo(Guardian guardian)
-    {
-        if (onOpenGuardianInfo != null)
-            onOpenGuardianInfo(guardian);
-    }
-
-    // Open guardian info
-    public event Action onCloseGuardianInfo;
-    public void CloseGuardianInfo()
-    {
-        if (onCloseGuardianInfo != null)
-            onCloseGuardianInfo();
-    }
-
     // On building clicked
     public event Action<Material, Color> onChangeBorderColor;
     public void ChangeBorderColor(Material border, Color fill)

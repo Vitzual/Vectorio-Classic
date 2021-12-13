@@ -312,6 +312,9 @@ public class Resource : NetworkBehaviour
     // Update UI
     public void UpdateUI(CurrencyType type, bool updateStorage = false)
     {
+        // Update variant if heat passed
+        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant(currencies[CurrencyType.Heat].amount, currencies[CurrencyType.Heat].storage);
+
         // Check if UI is enabled
         if (!currencies[type].enabled)
         {
@@ -339,9 +342,6 @@ public class Resource : NetworkBehaviour
             currencies[type].resourceBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;
             currencies[type].resourceBar.UpdateUI();
         }
-
-        // Update variant if heat passed
-        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant(currencies[CurrencyType.Heat].amount, currencies[CurrencyType.Heat].storage);
     }
 
     // Update resources

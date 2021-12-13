@@ -171,18 +171,6 @@ public class GuardianHandler : MonoBehaviour
         }
     }
 
-    // Open guardian warning
-    public void OpenGuardianWarning()
-    {
-        Events.active.OpenGuardianInfo(Gamemode.stage.guardian);
-    }
-    
-    // Close guardian warning
-    public void CloseGuardianWarning()
-    {
-        Events.active.CloseGuardianInfo();
-    }
-
     // Start is called before the first frame update
     public void SpawnGuardian()
     {

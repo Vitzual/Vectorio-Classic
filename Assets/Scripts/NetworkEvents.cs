@@ -13,5 +13,11 @@ public class NetworkEvents : MonoBehaviour
         active = this;
     }
 
-    
+    // On client connect
+    public event Action onConnectingToClient;
+    public void ConnectToClient()
+    {
+        if (onConnectingToClient != null)
+            onConnectingToClient();
+    }
 }

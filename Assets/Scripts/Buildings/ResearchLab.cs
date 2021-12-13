@@ -20,6 +20,8 @@ public class ResearchLab : BaseTile
 
     public void ApplyResearch(ResearchTech type, bool overrideCost = false)
     {
+        if (type == null) return;
+
         if (researchTech != null)
             CancelResearch();
 

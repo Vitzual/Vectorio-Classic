@@ -104,6 +104,7 @@ public class JoinButton : MonoBehaviour
         if (userData.GameInfo.m_gameID.AppID().Equals(SteamSettings.ApplicationId))
         {
             print("[SERVER] Attempting connection to client with ID " + clientOf);
+            Menu.active.loadingScreen.SetActive(true);
             NetworkManagerSF.active.Join(clientOf);
         }
         else

@@ -81,6 +81,8 @@ public class ResearchUI : MonoBehaviour
     // a ResearchPanelStat class.
     public void SetPanel(ResearchTech type)
     {
+        if (type == null || selectedLab == null) return;
+
         bool preview = type != selectedLab.researchTech;
 
         Research.Tech tech = Research.techs[type];

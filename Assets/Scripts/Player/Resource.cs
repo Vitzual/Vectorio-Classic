@@ -454,6 +454,7 @@ public class Resource : NetworkBehaviour
 
     // Get heat or power
     public int GetHeat() { return currencies[CurrencyType.Heat].amount; }
+    public int GetHeatStorage() { return currencies[CurrencyType.Heat].storage; }
     public int GetPower() { return currencies[CurrencyType.Power].amount; }
     public int GetAvailablePower() { return currencies[CurrencyType.Power].storage; }
 

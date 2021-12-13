@@ -60,12 +60,21 @@ public class GuardianButton : MonoBehaviour
     // Begin battle
     public void StartBattle()
     {
-        // Save game
-        Gamemode.active.SaveGame();
+        // Check to make sure heat is accurate
+        if (Resource.active.GetHeat() >= Resource.active.GetHeatStorage())
+        {
+            // Save game
+            Gamemode.active.SaveGame();
 
-        // Spawn guardian
-        CloseConfirmScreen();
-        Events.active.StartGuardianBattle();
-        gameObject.SetActive(false);
+            // Spawn guardian
+            CloseConfirmScreen();
+            Events.active.StartGuardianBattle();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            HideButton();
+            CloseConfirmScreen();
+        }
     }
 }

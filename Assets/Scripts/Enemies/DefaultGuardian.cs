@@ -43,7 +43,7 @@ public class DefaultGuardian : DefaultEnemy
 
         // Invoke enemy death event
         Events.active.GuardianDestroyed(this);
-
+        
         // Destroy object
         Destroy(gameObject);
     }

@@ -14,11 +14,11 @@ public class Resource : NetworkBehaviour
     // Currency types
     public enum CurrencyType
     {
-        Gold,
-        Essence,
-        Iridium,
-        Power,
-        Heat
+        Gold = 0,
+        Essence = 1,
+        Iridium = 2,
+        Power = 3,
+        Heat = 4
     }
 
     // Resource currency class

@@ -26,7 +26,7 @@ public class RpcReceiver : NetworkBehaviour
         if (Server.primaryReceiver == null)
         {
             Server.primaryReceiver = transform.GetComponent<RpcReceiver>();
-            communicator.primary = true;
+            communicator.SetPrimaryCommunicator();
             RpcSetupPrimaryReceiver();
         }
         else RpcSetupClientReceiver(Gamemode.difficulty, Gamemode.seed);

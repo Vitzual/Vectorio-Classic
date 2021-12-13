@@ -189,6 +189,9 @@ public class GuardianHandler : MonoBehaviour
         guardian.guardian = stage.guardian;
         guardian.Setup();
 
+        // Assign runtime ID
+        // Server.AssignRuntimeID(guardian);
+
         // Add to active guardians
         guardians.Add(guardian);
     }

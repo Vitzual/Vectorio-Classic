@@ -1,5 +1,6 @@
 using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
 public class Communicator : NetworkBehaviour
 {
@@ -11,7 +12,7 @@ public class Communicator : NetworkBehaviour
     // Nameplate object
     public GameObject nameplate;
     public bool enableLocalNameplate;
-
+    
     // Connect to syncer
     public void Start()
     {
@@ -23,6 +24,72 @@ public class Communicator : NetworkBehaviour
         }
     }
 
+    // Setup sync resources
+    public void SetPrimaryCommunicator()
+    {
+        if (hasAuthority)
+        {
+            primary = true;
+            InvokeRepeating("SyncResources", 1, 1);
+        }
+    }
+    
+    // Internal call
+    public void SyncResources()
+    {
+        // Send build priority request to server
+        if (hasAuthority && primary)
+        {
+            int arraySize = Resource.active.currencies.Count;
+
+            int[] resources = new int[arraySize];
+            int[] amounts = new int[arraySize];
+            int[] storages = new int[arraySize];
+
+            int index = 0;
+            foreach(KeyValuePair<Resource.CurrencyType, Resource.Currency> resource in Resource.active.currencies)
+            {
+                resources[index] = (int)resource.Key;
+                amounts[index] = resource.Value.amount;
+                storages[index] = resource.Value.storage;
+
+                index += 1;
+            }
+        }
+    }
+
+    // Update collector grab for all players
+    [Command]
+    public void CmdSyncResources(int[] resources, int[] amounts, int[] storages)
+    {
+        // Sync build priority with clients
+        RpcSyncResources(resources, amounts, storages);
+    }
+
+    // Rpc metadata on all clients
+    [ClientRpc]
+    public void RpcSyncResources(int[] resources, int[] amounts, int[] storages)
+    {
+        // Attempt to switch drone priority
+        if (!primary)
+        {
+            for(int i = 0; i < resources.Length; i++)
+            {
+                try
+                {
+                    Resource.CurrencyType currency = (Resource.CurrencyType)resources[i];
+                    Resource.active.SetAmount(currency, amounts[i]);
+                    Resource.active.SetStorage(currency, storages[i]);
+                }
+                catch
+                {
+                    Debug.Log("[SERVER] Client has received an invalid resource. Strongly recommend " +
+                        "restarting game as this can lead to serious desync problems!");
+                }
+            }
+        }
+    }
+
     // Disconnect method
     public void SyncClientDisconnect()
     {
@@ -31,16 +98,16 @@ public class Communicator : NetworkBehaviour
     }
 
     // Internal call
-    public void SyncBuildingDestroyed(int runtimeID)
+    public void SyncEntityDestroyed(int runtimeID)
     {
         // Sync building destroyed with all clients
         if (hasAuthority)
-            CmdSyncBuildingDestroyed(runtimeID);
+            CmdSyncEntityDestroyed(runtimeID);
     }
 
     // Update collector grab for all players
     [Command]
-    public void CmdSyncBuildingDestroyed(int runtimeID)
+    public void CmdSyncEntityDestroyed(int runtimeID)
     {
         // Sync building destroyed with all clients
         if (!Server.entities.ContainsKey(runtimeID))
@@ -48,12 +115,12 @@ public class Communicator : NetworkBehaviour
                 "not exist on the server. Will still attempt to remove ID on all clients...");
 
         // Attempt to sync destroy with other clients that contain the ID
-        RpcSyncBuildingDestroyed(runtimeID);
+        RpcSyncEntityDestroyed(runtimeID);
     }
 
     // Rpc metadata on all clients
     [ClientRpc]
-    public void RpcSyncBuildingDestroyed(int runtimeID)
+    public void RpcSyncEntityDestroyed(int runtimeID)
     {
         // Sync building destroyed with all clients
         if (Server.entities.ContainsKey(runtimeID))

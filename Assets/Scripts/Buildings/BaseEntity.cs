@@ -69,7 +69,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public virtual void SyncDestroy()
     {
         if (Communicator.active != null)
-            Communicator.active.SyncBuildingDestroyed(runtimeID);
+            Communicator.active.SyncEntityDestroyed(runtimeID);
         else DestroyEntity();
     }
 

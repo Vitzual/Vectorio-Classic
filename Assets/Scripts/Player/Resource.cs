@@ -383,6 +383,8 @@ public class Resource : NetworkBehaviour
         // Check active instances
         if (buildable.isCollector) return CollectorHandler.active.collectors.Count < 1;
         else if (buildable.isStorage) return storages.Count < 1;
+        else if (buildable.isDefense && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
+        else if (buildable.isDroneport && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
         else return false;
     }
 

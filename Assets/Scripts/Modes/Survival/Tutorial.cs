@@ -13,7 +13,7 @@ public class Tutorial : MonoBehaviour
             Space,
             Place,
             Collect,
-            Unlock
+            Metadata
         }
 
         public GameObject obj;
@@ -36,8 +36,8 @@ public class Tutorial : MonoBehaviour
     public AudioPlayer audioPlayer;
     public GameObject tutorialObject;
     public Slide[] tutorialSlides;
-    public bool tutorialStarted = false;
-    public bool tutorialHidden = false;
+    public static bool tutorialStarted = false;
+    public static Building tutorialBuilding;
     public int tutorialSlide = 0;
 
     // Enables the tutorial
@@ -53,7 +53,7 @@ public class Tutorial : MonoBehaviour
         InputEvents.active.onSpacePressed += SpacePressed;
         Events.active.onBuildingPlaced += BuildingPlaced;
         Events.active.onCollectorHarvested += GoldCollected;
-        Events.active.onBuildingUnlocked += BuildingUnlocked;
+        Events.active.onMetadataChanged += MetadataChanged;
     }
 
     // Disables the active tutorial
@@ -63,6 +63,7 @@ public class Tutorial : MonoBehaviour
         tutorialObject.SetActive(false);
         tutorialSlide = 0;
         tutorialStarted = false;
+        tutorialBuilding = null;
         enabled = false;
     }
     
@@ -70,36 +71,22 @@ public class Tutorial : MonoBehaviour
     // If no next slide, end tutorial sequence 
     public void NextSlide()
     {
-        if (!tutorialHidden)
-        {
-            tutorialSlides[tutorialSlide].Disable();
-            tutorialSlide += 1;
-        }
-        if (tutorialHidden || !tutorialSlides[tutorialSlide].hideTutorial)
-        {
-            tutorialHidden = false;
+        tutorialSlides[tutorialSlide].Disable();
+        tutorialSlide += 1;
 
-            if (tutorialSlide < tutorialSlides.Length)
-            {
-                tutorialSlides[tutorialSlide].Enable();
-                audioPlayer.PlayAudio();
-            }
-            else DisableTutorial();
+        if (tutorialSlide < tutorialSlides.Length)
+        {
+            tutorialSlides[tutorialSlide].Enable();
+            tutorialBuilding = tutorialSlides[tutorialSlide].optionalEntity;
+            audioPlayer.PlayAudio();
         }
-        else tutorialHidden = true;
+        else DisableTutorial();
     }
 
     // On building unlocked
-    public void BuildingUnlocked(Buildable buildable)
+    public void MetadataChanged(int runtimeID, int metadata)
     {
-        if (tutorialStarted)
-        {
-            if (tutorialSlides[tutorialSlide].task == Slide.Task.Unlock &&
-                buildable.building == tutorialSlides[tutorialSlide].optionalEntity)
-            {
-                NextSlide();
-            }
-        }
+        if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Metadata) NextSlide();
     }
 
     // On space pressed, check tutorial and move to next slide if passed

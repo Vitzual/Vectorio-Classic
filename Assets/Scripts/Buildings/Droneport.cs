@@ -99,6 +99,9 @@ public class Droneport : BaseTile
 
         // Update nearby targets
         UpdateNearbyTargets();
+
+        // Fire building placed event
+        Events.active.BuildingPlaced(this);
     }
 
     // Create drone method

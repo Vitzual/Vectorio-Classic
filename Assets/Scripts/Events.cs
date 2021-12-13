@@ -21,6 +21,14 @@ public class Events : MonoBehaviour
             onSetupNameplate(obj, name, color);
     }
 
+    // On metadata changed
+    public event Action<int, int> onMetadataChanged;
+    public void ChangeMetadata(int runtimeID, int metadata)
+    {
+        if (onMetadataChanged != null)
+            onMetadataChanged(runtimeID, metadata);
+    }
+
     // On enemy set difficulty
     public event Action<float, float> onSetEnemyDifficulty;
     public void SetEnemyDifficulty(float rate, float size)

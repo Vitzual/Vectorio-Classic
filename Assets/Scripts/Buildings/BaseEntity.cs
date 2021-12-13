@@ -23,6 +23,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
 
     public virtual void ApplyMetadata(int data)
     {
+        Events.active.ChangeMetadata(runtimeID, data);
         metadata = data;
     }
 

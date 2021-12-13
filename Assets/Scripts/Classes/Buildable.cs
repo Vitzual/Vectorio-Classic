@@ -19,7 +19,9 @@ public class Buildable
 
         isCollector = obj.GetComponent<DefaultCollector>() != null;
         isStorage = obj.GetComponent<DefaultStorage>() != null;
-
+        isDefense = obj.GetComponent<DefaultTurret>() != null;
+        isDroneport = obj.GetComponent<Droneport>() != null;
+        
         Debug.Log("Registered " + building.name + " buildable and linked to " + building.InternalID);
     }
 
@@ -35,6 +37,8 @@ public class Buildable
     // Resource variables (THIS NEEDS TO BE CHANGED)
     public bool isCollector;
     public bool isStorage;
+    public bool isDefense;
+    public bool isDroneport;
 
     // Building variables
     public float discount;

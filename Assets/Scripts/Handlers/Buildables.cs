@@ -97,9 +97,6 @@ public static class Buildables
         foreach (MenuButton button in buildable.showButtons)
             button.gameObject.SetActive(true);
 
-        // Check if buildable already unlcokeds
-        if (buildable.isUnlocked) return;
-
         // Display notification
         Events.active.BuildingUnlocked(buildable);
     }

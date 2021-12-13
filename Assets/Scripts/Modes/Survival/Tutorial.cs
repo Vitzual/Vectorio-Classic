@@ -12,12 +12,14 @@ public class Tutorial : MonoBehaviour
         {
             Space,
             Place,
-            Collect
+            Collect,
+            Unlock
         }
 
         public GameObject obj;
         public Task task;
         public Building optionalEntity;
+        public bool hideTutorial;
 
         public void Enable()
         {
@@ -35,6 +37,7 @@ public class Tutorial : MonoBehaviour
     public GameObject tutorialObject;
     public Slide[] tutorialSlides;
     public bool tutorialStarted = false;
+    public bool tutorialHidden = false;
     public int tutorialSlide = 0;
 
     // Enables the tutorial
@@ -50,16 +53,12 @@ public class Tutorial : MonoBehaviour
         InputEvents.active.onSpacePressed += SpacePressed;
         Events.active.onBuildingPlaced += BuildingPlaced;
         Events.active.onCollectorHarvested += GoldCollected;
+        Events.active.onBuildingUnlocked += BuildingUnlocked;
     }
 
     // Disables the active tutorial
     public void DisableTutorial()
     {
-        // Remove events
-        InputEvents.active.onSpacePressed -= SpacePressed;
-        Events.active.onBuildingPlaced -= BuildingPlaced;
-        Events.active.onCollectorHarvested -= GoldCollected;
-
         // Disable tutorial
         tutorialObject.SetActive(false);
         tutorialSlide = 0;
@@ -71,15 +70,36 @@ public class Tutorial : MonoBehaviour
     // If no next slide, end tutorial sequence 
     public void NextSlide()
     {
-        tutorialSlides[tutorialSlide].Disable();
-        tutorialSlide += 1;
-
-        if (tutorialSlide < tutorialSlides.Length)
+        if (!tutorialHidden)
         {
-            tutorialSlides[tutorialSlide].Enable();
-            audioPlayer.PlayAudio();
+            tutorialSlides[tutorialSlide].Disable();
+            tutorialSlide += 1;
         }
-        else DisableTutorial();
+        if (tutorialHidden || !tutorialSlides[tutorialSlide].hideTutorial)
+        {
+            tutorialHidden = false;
+
+            if (tutorialSlide < tutorialSlides.Length)
+            {
+                tutorialSlides[tutorialSlide].Enable();
+                audioPlayer.PlayAudio();
+            }
+            else DisableTutorial();
+        }
+        else tutorialHidden = true;
+    }
+
+    // On building unlocked
+    public void BuildingUnlocked(Buildable buildable)
+    {
+        if (tutorialStarted)
+        {
+            if (tutorialSlides[tutorialSlide].task == Slide.Task.Unlock &&
+                buildable.building == tutorialSlides[tutorialSlide].optionalEntity)
+            {
+                NextSlide();
+            }
+        }
     }
 
     // On space pressed, check tutorial and move to next slide if passed
@@ -91,8 +111,6 @@ public class Tutorial : MonoBehaviour
     // On building placed, check tutorial and move to next slide if passed
     public void BuildingPlaced(BaseTile building)
     {
-        Debug.Log("[TUTORIAL] Received building pressed event");
-
         if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Place &&
             tutorialSlides[tutorialSlide].optionalEntity == building.buildable.building) NextSlide();
     }
@@ -100,8 +118,6 @@ public class Tutorial : MonoBehaviour
     // On gold collected, check tutorial and move to next slide if passed
     public void GoldCollected(Resource.CurrencyType type, int amount)
     {
-        Debug.Log("[TUTORIAL] Received gold collected event");
-
         if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
     }
 }

@@ -12,7 +12,7 @@ public class RpcReceiver : NetworkBehaviour
     public Communicator communicator;
     public EnemySpawner spawner;
     public static bool primaryReceiver = false;
-
+    
     // Connect to syncer
     public void Start()
     {
@@ -26,6 +26,7 @@ public class RpcReceiver : NetworkBehaviour
         if (Server.primaryReceiver == null)
         {
             Server.primaryReceiver = transform.GetComponent<RpcReceiver>();
+            communicator.primary = true;
             RpcSetupPrimaryReceiver();
         }
         else RpcSetupClientReceiver(Gamemode.difficulty, Gamemode.seed);

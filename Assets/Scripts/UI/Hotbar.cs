@@ -9,6 +9,9 @@ public class Hotbar : MonoBehaviour
     public HotbarSlot[] _slots;
     public static HotbarSlot[] slots;
 
+    // Default entities
+    public Entity[] defaultEntities;
+
     public void Awake()
     {
         slots = new HotbarSlot[_slots.Length];
@@ -20,6 +23,17 @@ public class Hotbar : MonoBehaviour
     {
         InputEvents.active.onNumberInput += UseSlot;
         UIEvents.active.onHotbarPressed += UseSlot;
+    }
+
+    public void SetDefaultSlots()
+    {
+        for(int i = 0; i < defaultEntities.Length; i++)
+        {
+            if (i < slots.Length)
+            {
+                SetSlot(defaultEntities[i], i);
+            }
+        }
     }
 
     // Sets a hotbar slot and broadcasts it 

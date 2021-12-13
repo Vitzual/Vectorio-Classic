@@ -6,6 +6,7 @@ public class Communicator : NetworkBehaviour
     // Active local instance
     public static Communicator active;
     public string permission = "FALSE";
+    public bool primary = false;
 
     // Nameplate object
     public GameObject nameplate;
@@ -21,7 +22,7 @@ public class Communicator : NetworkBehaviour
             nameplate.SetActive(enableLocalNameplate);
         }
     }
-    
+
     // Disconnect method
     public void SyncClientDisconnect()
     {

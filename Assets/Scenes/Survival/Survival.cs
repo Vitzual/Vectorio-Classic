@@ -7,6 +7,7 @@ public class Survival : Gamemode
     // Hub object
     public Building hub;
     public GameObject welcome;
+    public Hotbar hotbarWindow;
 
     // Instantiate hub
     public override void Setup()
@@ -60,6 +61,9 @@ public class Survival : Gamemode
         {
             welcome.SetActive(true);
             ResearchUI.active.Setup();
+
+            if (hotbarWindow != null)
+                hotbarWindow.SetDefaultSlots();
         }
 
         // Set difficulty stuff

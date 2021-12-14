@@ -263,13 +263,13 @@ public class ClientLoader : NetworkBehaviour
                     Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
 
                 // Set entity runtime ID
-                int entity_id = loadData.runtimeID[i];
-                newEntity.runtimeID = entity_id;
+                int runtime_id = loadData.runtimeID[i];
+                newEntity.runtimeID = runtime_id;
 
                 // Parse entity runtime ID to active dictionary
-                if (Server.entities.ContainsKey(entity_id))
-                    Server.entities[entity_id] = newEntity;
-                else Server.entities.Add(entity_id, newEntity);
+                if (Server.entities.ContainsKey(runtime_id))
+                    Server.entities[runtime_id] = newEntity;
+                else Server.entities.Add(runtime_id, newEntity);
 
                 // Check free variable for resources
                 if (loadData.entityVar[i] != -1)

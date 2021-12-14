@@ -105,7 +105,7 @@ public class BuildingController : NetworkBehaviour
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
         if (holder != null && holder.isSellable) CmdDestroyBuilding(holder.runtimeID);
     }
-
+    
     [Command]
     public void CmdDestroyBuilding(int runtimeID)
     {

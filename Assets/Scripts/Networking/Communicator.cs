@@ -131,8 +131,7 @@ public class Communicator : NetworkBehaviour
                 Server.entities[runtimeID].DestroyEntity();
             else Server.entities.Remove(runtimeID);
         }
-        else Debug.Log("[SERVER] Desync detected. Client received a destroy request for ID " + runtimeID + ", " +
-            "but this client does not have a reference to that ID. Recommend reconnecting to avoid further issues!");
+        //else Debug.Log("[SERVER] Desync detected. Client received a destroy request for ID " + runtimeID + ", but this client does not have a reference to that ID. Recommend reconnecting to avoid further issues!");
     }
 
     // Internal call

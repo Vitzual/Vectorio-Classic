@@ -54,7 +54,7 @@ public class ResearchLab : BaseTile
 
     public void UpdateResources()
     {
-        if (researchTech != null)
+        if (researchTech != null || Settings.paused)
         {
             foreach (Cost cost in researchTech.cost)
             {

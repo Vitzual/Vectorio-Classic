@@ -103,7 +103,7 @@ public class Communicator : NetworkBehaviour
     public void SyncEntityDestroyed(int runtimeID)
     {
         // Sync building destroyed with all clients
-        if (hasAuthority)
+        if (hasAuthority && primary)
             CmdSyncEntityDestroyed(runtimeID);
     }
 

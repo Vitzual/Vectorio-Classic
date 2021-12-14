@@ -52,7 +52,7 @@ public class DefaultGuardian : DefaultEnemy
     public override void DamageEntity(float dmg)
     {
         health -= dmg;
-        if (health <= 0) DestroyEntity();
+        if (health <= 0) SyncDestroy();
     }
 
     // If a collision is detected, destroy the other entity and apply damage to self

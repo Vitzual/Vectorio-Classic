@@ -18,6 +18,7 @@ public class GameOptions : MonoBehaviour
     public float resourceDivider = 2500f;
 
     // Difficulty values
+    public TMP_InputField seedInput;
     public new TextMeshProUGUI name;
     public TextMeshProUGUI seed;
 
@@ -83,7 +84,7 @@ public class GameOptions : MonoBehaviour
     public void SetRandomSeed()
     {
         string random = Random.Range(100000000, 999999999).ToString();
-        seed.text = random;
+        seedInput.text = random;
     }
 
     // Set difficulty data

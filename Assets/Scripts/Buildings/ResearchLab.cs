@@ -92,7 +92,7 @@ public class ResearchLab : BaseTile
     public override void ApplyMetadata(int data)
     {
         foreach (KeyValuePair<string, ResearchTech> tech in ScriptableLoader.researchTechs)
-            if (tech.Value.metadataID == data) ApplyResearch(tech.Value, true);
+            if (tech.Value.metadataID == data) ApplyResearch(tech.Value, NewSaveSystem.loadGame);
         base.ApplyMetadata(data);
     }
 

@@ -190,7 +190,7 @@ public class GuardianHandler : MonoBehaviour
         guardian.Setup();
 
         // Assign runtime ID
-        // Server.AssignRuntimeID(guardian);
+        Server.AssignRuntimeID(guardian);
 
         // Add to active guardians
         guardians.Add(guardian);

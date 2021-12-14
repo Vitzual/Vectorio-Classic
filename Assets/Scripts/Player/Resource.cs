@@ -108,7 +108,12 @@ public class Resource : NetworkBehaviour
             InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
 
         gameObject.SetActive(true);
+
+        InvokeRepeating("UpdateResources", 0.5f, 1f);
     }
+
+    // Update resources
+    public void UpdateResources() { foreach (KeyValuePair<CurrencyType, Currency> currency in currencies) UpdateUI(currency.Key); }
 
     // Apply a resource
     public void Apply(CurrencyType type, int amount, bool useStorages)

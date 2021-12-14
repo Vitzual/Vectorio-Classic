@@ -169,7 +169,7 @@ public class EnemyHandler : MonoBehaviour
     public virtual void UpdateVariant(int heatAmount, int heatStorage)
     {
         // Check currency
-        if (heatAmount >= heatStorage) GuardianButton.active.OpenConfirmScreen();
-        else GuardianButton.active.CloseConfirmScreen();
+        if (heatAmount >= heatStorage) GuardianButton.active.ShowButton(Gamemode.stage.guardian);
+        else GuardianButton.active.HideButton();
     }
 }

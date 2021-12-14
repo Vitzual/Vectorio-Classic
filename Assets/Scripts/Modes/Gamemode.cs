@@ -60,6 +60,12 @@ public class Gamemode : MonoBehaviour
         active = this;
 
         // Setup resources
+        Initiate();
+    }
+
+    public virtual void Initiate()
+    {
+        // Setup resources
         resource.Setup(perSeconds, currencyElements);
         resource.gameObject.SetActive(true);
     }

@@ -31,9 +31,12 @@ public class NewInterface : MonoBehaviour
         InputEvents.active.onInventoryPressed += ToggleBuildingMenu;
         InputEvents.active.onMapPressed += DebugToggle;
 
-        onlineEnabled.isOn = !Gamemode.online.privateSession;
-        UserData userData = User.Client.Id;
-        friendcode.text = "<b>FRIEND CODE: </b>" + userData.cSteamId.ToString();
+        if (Gamemode.online != null)
+        {
+            onlineEnabled.isOn = !Gamemode.online.privateSession;
+            UserData userData = User.Client.Id;
+            friendcode.text = "<b>FRIEND CODE: </b>" + userData.cSteamId.ToString();
+        }
     }
 
     public void OnOnlineChanged(bool enabled)

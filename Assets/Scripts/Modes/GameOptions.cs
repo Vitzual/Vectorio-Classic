@@ -41,6 +41,12 @@ public class GameOptions : MonoBehaviour
     public SliderManager iridiumSpawnModifier;
     public SliderManager vectoriumSpawnModifier;
 
+    // Set random seed on start
+    public void Start()
+    {
+        SetRandomSeed();
+    }
+
     // Start thing
     public void SetDifficulty(Difficulty difficulty)
     {
@@ -73,6 +79,13 @@ public class GameOptions : MonoBehaviour
         vectoriumSpawnModifier.UpdateUI();
     }
 
+    // Set random seed
+    public void SetRandomSeed()
+    {
+        string random = Random.Range(100000000, 999999999).ToString();
+        seed.text = random;
+    }
+
     // Set difficulty data
     public void CreateGame()
     {
@@ -81,7 +94,6 @@ public class GameOptions : MonoBehaviour
         NewSaveSystem.saveName = name.text;
 
         // Set save seed
-        if (seed.text == "") seed.text = Random.Range(100000000, 999999999).ToString();
         Gamemode.seed = seed.text;
 
         // Create data

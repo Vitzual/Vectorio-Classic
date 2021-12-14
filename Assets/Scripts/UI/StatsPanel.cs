@@ -90,14 +90,14 @@ public class StatsPanel : MonoBehaviour
             if (settings.ContainsKey(entity))
             {
                 Debug.Log("Settings found on "+ entity.name + ", applying");
+                selector.SetActive(settings[entity].useSelector);
+                button.SetActive(settings[entity].useButton);
+                noSettings.SetActive(false);
                 foreach (HorizontalSelector selector in settings[entity].selectors)
                 {
                     selector.index = baseEntity.metadata;
                     selector.UpdateUI();
                 }
-                selector.SetActive(settings[entity].useSelector);
-                button.SetActive(settings[entity].useButton);
-                noSettings.SetActive(false);
             }
             else
             {

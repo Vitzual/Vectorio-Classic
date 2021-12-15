@@ -13,7 +13,7 @@ public class Buildable
 
         showButtons = new List<MenuButton>();
         unlockable = building.unlockable;
-        resources = building.resources;
+        resources = new List<Cost>(building.resources).ToArray();
         isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
 

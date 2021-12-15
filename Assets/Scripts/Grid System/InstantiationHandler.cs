@@ -80,8 +80,8 @@ public class InstantiationHandler : MonoBehaviour
         if (superWeapon != null && SuperWeapon.trident != null) return null;
 
         // Check resources if applicable
-        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.building.resources)) return null;
-        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.building.resources)) return null;
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.resources)) return null;
+        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.resources)) return null;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(buildable.building, position)) return null;
@@ -91,8 +91,8 @@ public class InstantiationHandler : MonoBehaviour
         else
         {
             // Update resource values promptly
-            if (!isFree) Resource.active.ApplyResources(buildable.building.resources);
-            else Resource.active.ApplyOutputsOnly(buildable.building.resources);
+            if (!isFree) Resource.active.ApplyResources(buildable.resources);
+            else Resource.active.ApplyOutputsOnly(buildable.resources);
             return RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
         }
     }
@@ -244,8 +244,8 @@ public class InstantiationHandler : MonoBehaviour
         bool isFree = Resource.active.CheckFreebie(buildable);
 
         // Check resources if applicable
-        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(building.resources)) return false;
-        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(building.resources)) return false;
+        if (!isFree && !Gamemode.active.useDroneConstruction && !Resource.active.CheckResources(buildable.resources)) return false;
+        else if (!Gamemode.active.useResources && !Gamemode.active.useDroneConstruction && !Resource.active.CheckOutputsOnly(buildable.resources)) return false;
 
         // Check to make sure the tiles are not being used
         if (!CheckTiles(building, new Vector3(coords.x, coords.y, 0))) return false;

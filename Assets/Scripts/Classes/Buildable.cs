@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,11 @@ public class Buildable
 
         showButtons = new List<MenuButton>();
         unlockable = building.unlockable;
-        resources = new List<Cost>(building.resources).ToArray();
+
+        resources = new Cost[building.resources.Length];
+        for (int i = 0; i < resources.Length; i++)
+            resources[i] = building.resources[i];
+
         isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
 

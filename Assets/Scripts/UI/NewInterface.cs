@@ -174,9 +174,9 @@ public class NewInterface : MonoBehaviour
     public void QuitGame()
     {
         // Check if client active
-        // if (NetworkServer.active) NetworkManagerSF.active.StopHost();
-        // if (NetworkClient.active) NetworkManagerSF.active.StopClient();
+        if (NetworkServer.active) NetworkManagerSF.active.StopHost();
+        if (NetworkClient.active) NetworkManagerSF.active.StopClient();
 
-        Application.Quit();
+        NetworkClient.Shutdown();
     }
 }

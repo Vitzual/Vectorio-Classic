@@ -13,6 +13,8 @@ public class DefaultGuardian : DefaultEnemy
         maxHealth = guardian.health;
         enemy = guardian;
 
+        rotationHolder = gradualRotation;
+
         Events.active.GuardianSpawned(this);
     }
 

@@ -36,19 +36,19 @@ public class BaseEntity : MonoBehaviour, IDamageable
     // Collision methods
     public virtual void OnBoxCollision(DefaultEnemy enemy)
     {
-        Debug.Log("This building has no box collision override");
+        //Debug.Log("This building has no box collision override");
     }
 
     // Collision methods
     public virtual void OnCircleCollision(DefaultEnemy enemy)
     {
-        Debug.Log("This building has no circle collision override");
+        //Debug.Log("This building has no circle collision override");
     }
 
     // Collision methods
     public virtual void OnCircleLeave(DefaultEnemy enemy)
     {
-        Debug.Log("This building has no circle collision override");
+        //Debug.Log("This building has no circle collision override");
     }
 
     // Damages the entity (IDamageable interface method)

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Challenge : Gamemode
 {
     public Hotbar hotbar;
-    public List<DefaultEnemy> enemies;
     public static bool started = false;
 
     // TEMP
@@ -15,9 +14,11 @@ public class Challenge : Gamemode
     public int[] resources;
     public DefaultEnemy speeder;
     public Vector2 spawnArea;
+    public Vector2 guardianSpawn;
     public float speederCooldown = 0.01f;
     public bool complete = false;
-    public DefaultGuardian guardian;
+    public Guardian guardian;
+    public DefaultGuardian activeGuardian;
 
     // Initiate the gamemode
     public override void Initiate()
@@ -63,6 +64,7 @@ public class Challenge : Gamemode
 
         // Set default slots
         hotbar.SetDefaultSlots();
+        started = false;
 
         // Disable online connection
         NetworkManagerSF.active.maxConnections = 1;
@@ -79,10 +81,10 @@ public class Challenge : Gamemode
 
         // Check cooldown
         speederCooldown -= Time.deltaTime;
-        if (speederCooldown <= 0 && guardian.target != null)
+        if (speederCooldown <= 0 && activeGuardian.target != null)
         {
             // Set time
-            speederCooldown = 0.02f;
+            speederCooldown = 0.015f;
 
             // Create new enemy
             Vector2 position = new Vector2(spawnArea.x + Random.Range(-150f, 150f), spawnArea.y);
@@ -95,7 +97,7 @@ public class Challenge : Gamemode
             // Set difficulty values
             newEnemy.health *= difficulty.enemyHealthModifier;
             newEnemy.maxHealth = newEnemy.health;
-            newEnemy.moveSpeed = 80f;
+            newEnemy.moveSpeed = 90f;
 
             // Setup entity
             EnemyHandler.active.enemies.Add(newEnemy);
@@ -111,28 +113,49 @@ public class Challenge : Gamemode
         // Check if started
         if (started) return;
 
-        // Set the gameobject to active
-        guardian.gameObject.SetActive(true);
+        // Create a new guardian
+        activeGuardian = Instantiate(guardian.obj, guardianSpawn, Quaternion.identity).GetComponent<DefaultGuardian>();
+        activeGuardian.name = guardian.name;
 
         // Create holder entity
-        guardian.variant = stage.variant;
-        guardian.Setup();
+        activeGuardian.guardian = guardian;
+        activeGuardian.variant = stage.variant;
+        activeGuardian.Setup();
 
         // Set difficulty values
-        guardian.health *= difficulty.enemyHealthModifier;
-        guardian.maxHealth = guardian.health;
-        guardian.moveSpeed = groupMoveSpeed;
+        activeGuardian.health *= difficulty.enemyHealthModifier;
+        activeGuardian.maxHealth = activeGuardian.health;
+        activeGuardian.moveSpeed = groupMoveSpeed;
 
         // Setup entity
-        EnemyHandler.active.enemies.Add(guardian);
+        EnemyHandler.active.enemies.Add(activeGuardian);
 
         // Assign runtime ID
-        Server.AssignRuntimeID(guardian);
+        Server.AssignRuntimeID(activeGuardian);
 
         // Start bool
         started = true;
         refundResources = false;
         startButton.SetActive(false);
+    }
+
+    // Restart the challenge
+    public void RestartChallenge()
+    {
+        // Reset booleans
+        started = false;
+        complete = false;
+        refundResources = true;
+        startButton.SetActive(true);
+
+        // Reset all entities
+        EnemyHandler.active.DestroyAllEnemies();
+        BaseTile[] baseTiles = FindObjectsOfType<BaseTile>();
+        foreach(BaseTile tile in baseTiles)
+            InstantiationHandler.active.RpcDestroyBuilding(tile.transform.position);
+
+        // Reset resources
+        Resource.active.SetAmount(Resource.CurrencyType.Gold, 10000);
     }
 
     // On guardian destroyed, you win!

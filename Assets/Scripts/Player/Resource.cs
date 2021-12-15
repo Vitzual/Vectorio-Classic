@@ -345,9 +345,12 @@ public class Resource : NetworkBehaviour
         // Change color based on storage value
         if (updateStorage && currencies[type].storageUI != null)
         {
-            if (currencies[type].amount > currencies[type].storage)
-                currencies[type].background.color = new Color(1, 0, 0, 0.3f);
-            else currencies[type].background.color = new Color(1, 1, 1, 0.1f);
+            if (currencies[type].background != null)
+            {
+                if (currencies[type].amount > currencies[type].storage)
+                    currencies[type].background.color = new Color(1, 0, 0, 0.3f);
+                else currencies[type].background.color = new Color(1, 1, 1, 0.1f);
+            }
 
             currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
         }

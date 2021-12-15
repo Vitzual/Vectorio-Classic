@@ -54241,7 +54241,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1789450234}
   - component: {fileID: 1789450239}
-  - component: {fileID: 1789450238}
   - component: {fileID: 1789450237}
   - component: {fileID: 1789450236}
   - component: {fileID: 1789450235}
@@ -54434,18 +54433,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1789450238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789450233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e851c6b305b4b7a4abd50f304a0cefac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1789450239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54462,10 +54449,10 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1789450238}
-        m_TargetAssemblyTypeName: SceneButton, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 4319752878029938309}
+        m_TargetAssemblyTypeName: NewInterface, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -73004,7 +72991,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648614288212214}
   m_HandleRect: {fileID: 5933648614288212215}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -13,6 +13,7 @@ public class DefaultEnemy : BaseEntity
     [HideInInspector] public BaseEntity target;
     public Transform rotator;
     public bool gradualRotation = false;
+    [HideInInspector] public bool rotationHolder = false;
     public bool purified = false;
 
     // Sprite info
@@ -43,6 +44,8 @@ public class DefaultEnemy : BaseEntity
         moveSpeed = enemy.moveSpeed * variant.speedModifier;
         health = enemy.health * variant.healthModifier;
         maxHealth = health;
+
+        rotationHolder = gradualRotation;
     }
 
     // Damages the entity (IDamageable interface method)
@@ -138,7 +141,7 @@ public class DefaultEnemy : BaseEntity
     public void SetTarget(BaseEntity tile, bool gradual)
     {
         target = tile;
-        gradualRotation = gradual;
+        gradualRotation = gradual || rotationHolder;
 
         if (!gradualRotation)
             RotateToTarget();

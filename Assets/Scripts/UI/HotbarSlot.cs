@@ -1,4 +1,5 @@
 using Michsky.UI.ModernUIPack;
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -7,6 +8,7 @@ public class HotbarSlot
     [HideInInspector]
     public Entity entity;
     public ButtonManagerBasicIcon button;
+    public TextMeshProUGUI resourceUI;
 
     public void SetSlot(Entity entity, Sprite sprite)
     {
@@ -19,5 +21,8 @@ public class HotbarSlot
         }
         else
             Debug.LogError("Sprite with name " + sprite.name + " could not be found!");
+
+        if (resourceUI != null)
+            resourceUI.text = Resource.FormatNumber(entity.GetResource(Resource.CurrencyType.Gold));
     }
 }

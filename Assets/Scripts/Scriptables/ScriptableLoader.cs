@@ -64,7 +64,8 @@ public static class ScriptableLoader
             if (Gamemode.active.initBuildings)
                 Buildables.Register(building);
         }
-        if (Gamemode.active.initBuildings)
+
+        if (Gamemode.active.initBuildings && Inventory.active != null)
             Inventory.active.GenerateBuildings(loaded.ToArray());
         
         // Set requirements

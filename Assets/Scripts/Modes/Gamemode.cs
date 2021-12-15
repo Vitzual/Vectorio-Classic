@@ -8,6 +8,10 @@ using System.Collections.Generic;
 
 public class Gamemode : MonoBehaviour
 {
+    // Network booleans
+    public static bool networkHostSyncsClients;
+    public bool _networkHostSyncsClients = true;
+
     // Active instance
     public static Gamemode active;
     public static Stage stage;
@@ -55,7 +59,8 @@ public class Gamemode : MonoBehaviour
     {
         // Display pointer
         Debug.Log("[SAVE] Save system point at " + NewSaveSystem.savePath);
-
+        networkHostSyncsClients = _networkHostSyncsClients;
+        
         // Get active instance
         active = this;
 
@@ -124,19 +129,14 @@ public class Gamemode : MonoBehaviour
     public virtual void Update()
     {
         // Increment time
-        time += Time.deltaTime;
+        UpdateMethod();
+    }
 
-        // Check heat growth
-        if (naturalHeatGrowth)
-        {
-            naturalHeatTimer -= Time.deltaTime;
-            if (naturalHeatTimer <= 0)
-            {
-                Resource.active.Apply(Resource.CurrencyType.Heat, 1, false);
-                difficulty.heatTracked += 1;
-                naturalHeatTimer = 5f;
-            }
-        }
+    // Calls upper class update methods
+    public virtual void UpdateMethod()
+    {
+        // Increment time
+        time += Time.deltaTime;
     }
 
     // Save game

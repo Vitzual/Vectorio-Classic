@@ -61,4 +61,10 @@ public class Entity : IdentifiableScriptableObject
     {
         panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
     }
+
+    // Get resource
+    public virtual int GetResource(Resource.CurrencyType type)
+    {
+        return 0;
+    }
 }

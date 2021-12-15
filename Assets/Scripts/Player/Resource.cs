@@ -69,6 +69,7 @@ public class Resource : NetworkBehaviour
 
     // List of all collectors and storages
     public static List<DefaultStorage> storages;
+    public bool networkResources;
 
     // Get active instance
     public void Awake()
@@ -86,30 +87,40 @@ public class Resource : NetworkBehaviour
 
         // Setup new currencies
         this.currencyElements = currencyElements;
-        perSeconds = perSecondElements;
 
         // Setup currency elements
         foreach (Currency currency in currencyElements)
         {
             currencies.Add(currency.type, currency);
-            Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
-            currency.background.color = new Color(1, 1, 1, 0.1f);
+
+            if (currency.background != null)
+                currency.background.color = new Color(1, 1, 1, 0.1f);
+
+            if (ResearchUI.active != null)
+                Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
         }
 
-        // Setup PerSecond array
-        foreach(PerSecond resource in perSeconds)
-        {
-            for (int i = 0; i < resource.amount.Length; i++)
-                resource.amount[i] = 0;
-        }
+        // Setup per seconds
+        perSeconds = perSecondElements;
 
-        // Setup events
         if (perSeconds.Count > 0)
-            InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
+        {
+            // Setup PerSecond array
+            foreach (PerSecond resource in perSeconds)
+            {
+                for (int i = 0; i < resource.amount.Length; i++)
+                    resource.amount[i] = 0;
+            }
+
+            // Setup events
+            if (perSeconds.Count > 0)
+                InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
+        }
 
         gameObject.SetActive(true);
 
-        InvokeRepeating("UpdateResources", 0.5f, 1f);
+        if (networkResources)
+            InvokeRepeating("UpdateResources", 0.5f, 1f);
     }
 
     // Update resources
@@ -135,7 +146,7 @@ public class Resource : NetworkBehaviour
     {
         foreach (Cost cost in costs) 
         {
-            if (!cost.storage) 
+            if (!cost.storage && currencies.ContainsKey(cost.type)) 
             { 
                 if (currencies[cost.type].output) Apply(cost.type, cost.amount, true);
                 else Apply(cost.type, -cost.amount, true);
@@ -156,7 +167,7 @@ public class Resource : NetworkBehaviour
     {
         foreach (Cost cost in costs)
         {
-            if (!cost.storage)
+            if (!cost.storage && currencies.ContainsKey(cost.type))
             {
                 if (currencies[cost.type].output) Apply(cost.type, -cost.amount, true);
                 else Apply(cost.type, cost.amount, true);
@@ -258,7 +269,7 @@ public class Resource : NetworkBehaviour
         foreach(Cost cost in costs)
         {
             // If storage, ignore
-            if (cost.storage) continue;
+            if (cost.storage || !currencies.ContainsKey(cost.type)) continue;
 
             // Get amount of resource type
             int amount = GetAmount(cost.type);

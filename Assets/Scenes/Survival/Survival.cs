@@ -111,4 +111,23 @@ public class Survival : Gamemode
         // Invoke auto saving
         // InvokeRepeating("AutoSave", 360f, 360f);
     }
+
+    // Calls upper class update methods
+    public override void UpdateMethod()
+    {
+        // Increment time
+        time += Time.deltaTime;
+
+        // Check heat growth
+        if (naturalHeatGrowth)
+        {
+            naturalHeatTimer -= Time.deltaTime;
+            if (naturalHeatTimer <= 0)
+            {
+                Resource.active.Apply(Resource.CurrencyType.Heat, 1, false);
+                difficulty.heatTracked += 1;
+                naturalHeatTimer = 5f;
+            }
+        }
+    }
 }

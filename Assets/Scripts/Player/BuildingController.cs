@@ -90,7 +90,11 @@ public class BuildingController : NetworkBehaviour
         if (StatsPanel.isOpen) return;
 
         if (buildable != null && InstantiationHandler.active.CheckClientSide(hologram.position, buildable.building))
-            CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+        {
+            if (Gamemode.networkHostSyncsClients)
+                CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+            else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+        }
         else TryClickBuilding();
     }
 
@@ -103,7 +107,12 @@ public class BuildingController : NetworkBehaviour
     public void DestroyBuilding()
     {
         BaseTile holder = InstantiationHandler.active.TryGetBuilding(hologram.position);
-        if (holder != null && holder.isSellable) CmdDestroyBuilding(holder.runtimeID);
+        if (holder != null && holder.isSellable)
+        {
+            if (Gamemode.networkHostSyncsClients)
+                CmdDestroyBuilding(holder.runtimeID);
+            else holder.DestroyEntity();
+        }
     }
     
     [Command]

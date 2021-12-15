@@ -35,7 +35,8 @@ public class RpcReceiver : NetworkBehaviour
     [TargetRpc]
     public void RpcSetupPrimaryReceiver()
     {
-        spawner.enabled = true;
+        if (Gamemode.networkHostSyncsClients)
+            spawner.enabled = true;
         Gamemode.active.Setup();
     }
 

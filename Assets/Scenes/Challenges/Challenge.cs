@@ -123,7 +123,7 @@ public class Challenge : Gamemode
         activeGuardian.Setup();
 
         // Set difficulty values
-        activeGuardian.health *= difficulty.enemyHealthModifier;
+        activeGuardian.health = 18000;
         activeGuardian.maxHealth = activeGuardian.health;
         activeGuardian.moveSpeed = groupMoveSpeed;
 

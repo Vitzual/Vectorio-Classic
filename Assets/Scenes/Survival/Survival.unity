@@ -19253,6 +19253,7 @@ MonoBehaviour:
   perSeconds: []
   currentPerSec: 0
   currencyElements: []
+  networkResources: 0
 --- !u!114 &556928810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28559,7 +28560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 256.67065, y: 0}
   m_SizeDelta: {x: 0, y: 91.4468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &898772411
@@ -58256,7 +58257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1895549300
@@ -67024,6 +67025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2e6097cbc2c345afae7fcc4cb5265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkHostSyncsClients: 1
   networkSync: {fileID: 8908889466884500592, guid: 4a80280297acd4847b9a70984e572645,
     type: 3}
   resource: {fileID: 556928809}
@@ -67036,6 +67038,7 @@ MonoBehaviour:
   useGroupSpawning: 1
   useEnergizers: 1
   useResources: 1
+  refundResources: 1
   useDroneConstruction: 1
   useEngineering: 0
   spawnBlueprints: 0
@@ -73001,7 +73004,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648614288212214}
   m_HandleRect: {fileID: 5933648614288212215}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -79335,22 +79338,31 @@ MonoBehaviour:
   _slots:
   - entity: {fileID: 0}
     button: {fileID: 4319752878220515250}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 4319752878214349673}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 2043369657673741371}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 7459689049063966135}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 4893432462654455687}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 1680752569181808652}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 2820071975441672205}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 7633662693907622264}
+    resourceUI: {fileID: 0}
   - entity: {fileID: 0}
     button: {fileID: 7764317676928186911}
+    resourceUI: {fileID: 0}
   defaultEntities:
   - {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
   - {fileID: 11400000, guid: 990586e5429dfff4d887dc52be73feba, type: 2}

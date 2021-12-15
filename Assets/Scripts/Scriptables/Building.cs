@@ -61,13 +61,4 @@ public class Building : Entity
             }
         }
     }
-
-    // Get resource
-    public override int GetResource(Resource.CurrencyType type)
-    {
-        foreach (Cost cost in resources)
-            if (cost.type == type)
-                return cost.amount;
-        return 0;
-    }
 }

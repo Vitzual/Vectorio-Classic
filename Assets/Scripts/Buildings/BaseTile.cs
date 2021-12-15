@@ -69,7 +69,8 @@ public class BaseTile : BaseEntity
         }
 
         // Refund cost
-        if (buildable != null) Resource.active.RefundResources(buildable.building.resources);
+        if (buildable != null && Gamemode.active.refundResources) 
+            Resource.active.RefundResources(buildable.building.resources);
 
         // Update damage handler
         Events.active.BuildingDestroyed(this);

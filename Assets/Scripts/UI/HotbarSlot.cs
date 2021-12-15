@@ -22,7 +22,7 @@ public class HotbarSlot
         else
             Debug.LogError("Sprite with name " + sprite.name + " could not be found!");
 
-        if (resourceUI != null)
-            resourceUI.text = Resource.FormatNumber(entity.GetResource(Resource.CurrencyType.Gold));
+        if (resourceUI != null && Buildables.active.ContainsKey(entity))
+            resourceUI.text = Resource.FormatNumber(Buildables.active[entity].GetResource(Resource.CurrencyType.Gold));
     }
 }

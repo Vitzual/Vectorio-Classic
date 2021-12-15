@@ -147,7 +147,7 @@ public class Resource : NetworkBehaviour
         foreach (Cost cost in costs) 
         {
             if (!cost.storage && currencies.ContainsKey(cost.type)) 
-            { 
+            {
                 if (currencies[cost.type].output) Apply(cost.type, cost.amount, true);
                 else Apply(cost.type, -cost.amount, true);
             }
@@ -277,7 +277,7 @@ public class Resource : NetworkBehaviour
             // Check if overflow is allowed
             if (currencies[cost.type].allowOverflow)
             {
-                if (amount >= GetStorage(cost.type))
+                if (amount >= GetStorage(cost.type) || amount - cost.amount < 0)
                     return false;
             }
             else if (currencies[cost.type].output)
@@ -303,7 +303,7 @@ public class Resource : NetworkBehaviour
         foreach (Cost cost in costs)
         {
             // If storage, ignore
-            if (cost.storage || !currencies[cost.type].output) continue;
+            if (cost.storage || !currencies.ContainsKey(cost.type) || !currencies[cost.type].output) continue;
 
             // Get amount of resource type
             int amount = GetAmount(cost.type);

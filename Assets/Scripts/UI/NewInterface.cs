@@ -93,13 +93,18 @@ public class NewInterface : MonoBehaviour
         }
         else
         {
-            if (InstantiationHandler.amountPlaced > 1 || 
-                NetworkManagerSF.active.maxConnections > 1) 
-                reloadButton.GetComponent<Button>().interactable = false;
-            reloadButton.UpdateUI();
+            if (reloadButton != null)
+            {
+                if (InstantiationHandler.amountPlaced > 1 || NetworkManagerSF.active.maxConnections > 1)
+                    reloadButton.GetComponent<Button>().interactable = false;
+                reloadButton.UpdateUI();
+            }
 
-            saveButton.buttonText = "SAVE";
-            saveButton.UpdateUI();
+            if (saveButton != null)
+            {
+                saveButton.buttonText = "SAVE";
+                saveButton.UpdateUI();
+            }
 
             quitMenu.SetActive(true);
             if (NetworkManagerSF.active.maxConnections <= 1) Time.timeScale = 0f;

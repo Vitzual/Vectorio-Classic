@@ -41,6 +41,7 @@ public class Gamemode : MonoBehaviour
     public bool useGroupSpawning;
     public bool useEnergizers;
     public bool useResources;
+    public bool refundResources;
     public bool useDroneConstruction;
     public bool useEngineering;
     public bool spawnBlueprints;

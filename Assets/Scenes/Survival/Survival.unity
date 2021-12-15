@@ -869,7 +869,7 @@ RectTransform:
   - {fileID: 689011041}
   - {fileID: 218789117}
   m_Father: {fileID: 2103693524}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -40389,7 +40389,7 @@ RectTransform:
   - {fileID: 1170997985}
   - {fileID: 1730953974}
   m_Father: {fileID: 2103693524}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -64261,8 +64261,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
-  - {fileID: 27328785}
   - {fileID: 1278035002}
+  - {fileID: 27328785}
   m_Father: {fileID: 1313808792}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65011,7 +65011,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2127398801}
   - component: {fileID: 2127398802}
-  - component: {fileID: 2127398803}
   - component: {fileID: 2127398805}
   - component: {fileID: 2127398804}
   - component: {fileID: 2127398806}
@@ -65069,16 +65068,16 @@ MonoBehaviour:
   onConfirm:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2127398803}
-        m_TargetAssemblyTypeName: SceneButton, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 4319752878029938309}
+        m_TargetAssemblyTypeName: NewInterface, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Menu
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   onCancel:
@@ -65088,18 +65087,6 @@ MonoBehaviour:
   useCustomValues: 0
   destroyOnClose: 0
   isOn: 0
---- !u!114 &2127398803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127398800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e851c6b305b4b7a4abd50f304a0cefac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &2127398804
 Animator:
   serializedVersion: 3
@@ -65127,7 +65114,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127398800}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

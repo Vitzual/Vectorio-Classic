@@ -17,7 +17,12 @@ public class Buildable
 
         resources = new Cost[building.resources.Length];
         for (int i = 0; i < resources.Length; i++)
-            resources[i] = building.resources[i];
+        {
+            resources[i] = new Cost();
+            resources[i].type = building.resources[i].type;
+            resources[i].storage = building.resources[i].storage;
+            resources[i].amount = building.resources[i].amount;
+        }
 
         isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
         blueprintSlots = new CollectedBlueprint[building.engineeringSlots];

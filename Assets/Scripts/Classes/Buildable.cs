@@ -58,10 +58,18 @@ public class Buildable
     // Blueprints applied to this buildable
     public CollectedBlueprint[] blueprintSlots;
     
-    // Update stats
-    public void GetModifier(string name)
+    // Change cosmetic
+    public void ChangeCosmetic(Cosmetic cosmetic)
     {
-        
+        if (cosmetic.validateLocalApplication()) this.cosmetic = cosmetic;
+    }
+
+    // Apply cosmetic
+    public void ApplyCosmetic(Cosmetic cosmetic)
+    {
+        if (cosmetic.building == building)
+            this.cosmetic = cosmetic;
+        else Debug.Log("Cannot apply " + cosmetic.name + " to " + building.name);
     }
 
     // Applies a blueprint

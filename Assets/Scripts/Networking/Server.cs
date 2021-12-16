@@ -45,20 +45,22 @@ public class Server : NetworkBehaviour
     }
 
     [Server]
-    public void SrvSyncBuildable(string id, Vector2 position, Quaternion rotation, int metadata)
+    public void SrvSyncBuildable(string building_id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
     {
+        // VALIDATE USER PASSING BUILDABLE HAS COSMETIC UNLOCKED
+
         // Create new buildable
-        BaseEntity newEntity = InstantiationHandler.active.CreateBuilding(id, position, rotation, metadata);
+        BaseEntity newEntity = InstantiationHandler.active.CreateBuilding(building_id, cosmetic_id, position, rotation, metadata);
 
         // Check if entity created successfully 
         if (newEntity != null)
         {
-            primaryReceiver.RpcSyncBuildable(newEntity.runtimeID, id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
+            primaryReceiver.RpcSyncBuildable(newEntity.runtimeID, building_id, cosmetic_id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
         }
     }
 
     [Server]
-    public void SrvSyncGhost(int old_id, string id, Vector2 position, Quaternion rotation, int metadata)
+    public void SrvSyncGhost(int old_id, string id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Reset the tile 
         if (entities.ContainsKey(old_id))
@@ -78,12 +80,12 @@ public class Server : NetworkBehaviour
         if (buildable == null) return;
 
         // Create buildable
-        BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
+        BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, cosmetic_id, position, rotation, metadata, -1);
 
         // Check if entity created successfully 
         if (newEntity != null)
         {
-            primaryReceiver.RpcSyncGhost(old_id, newEntity.runtimeID, id, position, rotation, metadata);
+            primaryReceiver.RpcSyncGhost(old_id, newEntity.runtimeID, id, cosmetic_id, position, rotation, metadata);
         }
     }
     

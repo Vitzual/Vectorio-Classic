@@ -92,16 +92,25 @@ public class BuildingController : NetworkBehaviour
         if (buildable != null && InstantiationHandler.active.CheckClientSide(hologram.position, buildable.building))
         {
             if (Gamemode.networkHostSyncsClients)
-                CreateEntity(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
-            else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, hologram.position, hologram.rotation, metadata);
+            {
+                if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
+                    CreateEntity(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
+                else CreateEntity(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
+            }
+            else
+            {
+                if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
+                    InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
+                else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
+            }
         }
         else TryClickBuilding();
     }
 
     [Command]
-    public void CreateEntity(string entity_id, Vector2 position, Quaternion rotation, int metadata)
+    public void CreateEntity(string entity_id, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata)
     {
-        Server.active.SrvSyncBuildable(entity_id, position, rotation, metadata);
+        Server.active.SrvSyncBuildable(entity_id, cosmetic_ID, position, rotation, metadata);
     }
 
     public void DestroyBuilding()
@@ -199,7 +208,9 @@ public class BuildingController : NetworkBehaviour
     {
         if (entity != null)
         {
-            spriteRenderer.sprite = Sprites.GetSprite(entity.name);
+            if (buildable != null && buildable.cosmetic != null)
+                spriteRenderer.sprite = buildable.cosmetic.hologram;
+            else spriteRenderer.sprite = Sprites.GetSprite(entity.name);
             hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
         }
         else spriteRenderer.sprite = Sprites.GetSprite("Transparent");

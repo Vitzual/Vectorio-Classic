@@ -68,18 +68,18 @@ public class RpcReceiver : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcSyncBuildable(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata, bool useDrones)
+    public void RpcSyncBuildable(int entity_id, string id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata, bool useDrones)
     {
         // Check if client
         if (isClientOnly && !Server.entities.ContainsKey(entity_id))
         {
             // Create networked building
-            CreateNetworkedBuilding(entity_id, id, position, rotation, metadata, useDrones);
+            CreateNetworkedBuilding(entity_id, id, cosmetic_id, position, rotation, metadata, useDrones);
         }
     }
 
     [ClientRpc]
-    public void RpcSyncGhost(int old_id, int entity_id, string id, Vector2 position, Quaternion rotation, int metadata)
+    public void RpcSyncGhost(int old_id, int entity_id, string id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Check if client
         if (isClientOnly && !Server.entities.ContainsKey(entity_id))
@@ -98,7 +98,7 @@ public class RpcReceiver : NetworkBehaviour
             }
 
             // Sync buildable for all clients
-            CreateNetworkedBuilding(entity_id, id, position, rotation, metadata, false);
+            CreateNetworkedBuilding(entity_id, id, cosmetic_id, position, rotation, metadata, false);
         }
     }
 
@@ -120,7 +120,7 @@ public class RpcReceiver : NetworkBehaviour
     }
 
     // Create a networked building
-    public void CreateNetworkedBuilding(int entity_id, string id, Vector2 position, Quaternion rotation, int metadata, bool useDrone)
+    public void CreateNetworkedBuilding(int entity_id, string id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata, bool useDrone)
     {
         // Check entity ID
         if (entity_id == -1)
@@ -139,8 +139,8 @@ public class RpcReceiver : NetworkBehaviour
 
         // Create the new entity
         BaseEntity newEntity;
-        if (useDrone) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, position, rotation, metadata);
-        else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
+        if (useDrone) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, cosmetic_id, position, rotation, metadata);
+        else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, cosmetic_id, position, rotation, metadata, -1);
 
         // Set entity runtime ID
         newEntity.runtimeID = entity_id;

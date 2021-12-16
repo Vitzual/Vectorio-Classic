@@ -9,6 +9,7 @@ public class GhostTile : BaseTile
     public List<Droneport> nearbyPorts;
     public bool isFree = false;
     public bool droneAssigned = false;
+    private string cosmetic_id = "";
 
     // Get the sprite renderer
     public void Awake()
@@ -17,9 +18,10 @@ public class GhostTile : BaseTile
     }
 
     // Sets the ghost tile building
-    public void SetBuilding(Buildable buildable, int metadata = -1)
+    public void SetBuilding(Buildable buildable, string cosmetic_id, int metadata = -1)
     {
         this.buildable = buildable;
+        this.cosmetic_id = cosmetic_id;
         this.metadata = metadata;
         icon.sprite = Sprites.GetSprite(buildable.building.name);
         transform.localScale = new Vector2(buildable.building.hologramSize, buildable.building.hologramSize);
@@ -46,7 +48,7 @@ public class GhostTile : BaseTile
     public void CreateBuilding()
     {
         // Create building and destroy this game object
-        if (buildable != null) Server.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, transform.position, transform.rotation, metadata);
+        if (buildable != null) Server.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, cosmetic_id, transform.position, transform.rotation, metadata);
     }
 
     // Override onClick

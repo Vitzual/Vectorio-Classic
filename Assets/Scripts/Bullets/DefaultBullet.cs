@@ -28,23 +28,11 @@ public class DefaultBullet : MonoBehaviour
     public List<BaseEntity> ignoreList = new List<BaseEntity>();
 
     // Setup bullet
-    public virtual void Setup(Turret turret, Sprite model = null)
+    public virtual void Setup(Turret turret)
     {
         // Set turret SO
         this.turret = turret;
         
-        // Get trail renderer component
-        trail = GetComponent<TrailRenderer>();
-        trail.material = turret.material;
-
-        // If model is not null, set it
-        if (model != null)
-        {
-            this.model = GetComponent<SpriteRenderer>();
-            this.model.sprite = model;
-            this.model.material = turret.material;
-        }
-
         // Apply research to variables
         damage = turret.damage * Research.damageBoost;
         pierces = turret.bulletPierces + Research.pierceBoost;
@@ -55,6 +43,38 @@ public class DefaultBullet : MonoBehaviour
 
         // Set bullet lifetime
         time = turret.bulletTime;
+
+        // Get trail renderer component
+        trail = GetComponent<TrailRenderer>();
+        if (trail != null) trail.material = turret.material;
+    }
+
+    // Setup model
+    public virtual void SetupModel(Sprite model = null)
+    {
+        // If model is not null, set it
+        if (model != null)
+        {
+            this.model = GetComponent<SpriteRenderer>();
+            this.model.sprite = model;
+            this.model.material = turret.material;
+        }
+    }
+
+    // Setup model
+    public virtual void SetupModel(Cosmetic.Bullet cosmeticBullet)
+    {
+        // Get trail renderer component
+        if (trail != null) trail.material = cosmeticBullet.material;
+
+        // If model is not null, set it
+        if (model != null && cosmeticBullet.applyModelToBullet)
+        {
+            model = GetComponent<SpriteRenderer>();
+            model.sprite = cosmeticBullet.model;
+            if (cosmeticBullet.applyMaterialToModel)
+                model.material = turret.material;
+        }
     }
 
     // Move bullet

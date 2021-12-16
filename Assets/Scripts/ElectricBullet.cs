@@ -8,7 +8,7 @@ public class ElectricBullet : DefaultBullet
     public ParticleSystemRenderer particle;
 
     // Setup bullet
-    public override void Setup(Turret turret, Sprite model = null)
+    public override void Setup(Turret turret)
     {
         this.turret = turret;
 

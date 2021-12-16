@@ -9,16 +9,10 @@ public class CrystalBullet : DefaultBullet
     [SerializeField] public int bulletSplits;
 
     // Setup bullet
-    public override void Setup(Turret turret, Sprite model = null)
+    public override void Setup(Turret turret)
     {
         this.turret = turret;
         this.model = GetComponent<SpriteRenderer>();
-
-        if (model != null)
-        {
-            this.model.sprite = model;
-            this.model.material = turret.material;
-        }
 
         damage = turret.damage * Research.damageBoost;
         speed = Random.Range(turret.bulletSpeed - 2, turret.bulletSpeed + 2);
@@ -34,7 +28,7 @@ public class CrystalBullet : DefaultBullet
         {
             DefaultBullet holder = Instantiate(bullet, transform.position, transform.rotation).GetComponent<DefaultBullet>();
             holder.transform.Rotate(0f, 0f, Random.Range(0, 360));
-            holder.Setup(turret, model.sprite);
+            holder.Setup(turret);
             if (entity != null) holder.ignoreList.Add(entity);
             Events.active.BulletFired(holder);
         }

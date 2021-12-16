@@ -11,6 +11,7 @@ public class SaveData
     public class BuildingData
     {
         public string id;
+        public string cosmetic_id;
         public float xCoord, yCoord;
         public float health;
         public int[] metadata;

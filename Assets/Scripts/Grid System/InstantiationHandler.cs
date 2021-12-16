@@ -62,7 +62,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // Creates a building
-    public BaseEntity CreateBuilding(string buildable_ID, Vector2 position, Quaternion rotation, int metadata = -1)
+    public BaseEntity CreateBuilding(string buildable_ID, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata = -1)
     {
         // Get building SO via ID request
         Building building = ScriptableLoader.buildings[buildable_ID];
@@ -87,18 +87,18 @@ public class InstantiationHandler : MonoBehaviour
         if (!CheckTiles(buildable.building, position)) return null;
 
         // Instantiate the object like usual
-        if (Gamemode.active.useDroneConstruction) return RpcInstatiateGhost(buildable, position, rotation, metadata);
+        if (Gamemode.active.useDroneConstruction) return RpcInstatiateGhost(buildable, cosmetic_ID, position, rotation, metadata);
         else
         {
             // Update resource values promptly
             if (!isFree) Resource.active.ApplyResources(buildable.resources);
             else Resource.active.ApplyOutputsOnly(buildable.resources);
-            return RpcInstantiateBuilding(buildable, position, rotation, metadata, -1);
+            return RpcInstantiateBuilding(buildable, cosmetic_ID, position, rotation, metadata, -1);
         }
     }
 
     // CALLED BY SYNCER CLASS
-    public BaseEntity RpcInstantiateBuilding(Buildable buildable, Vector2 position, Quaternion rotation, int metadata, float health)
+    public BaseEntity RpcInstantiateBuilding(Buildable buildable, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -128,19 +128,26 @@ public class InstantiationHandler : MonoBehaviour
         Server.AssignRuntimeID(lastBuilding);
         lastBuilding.internalID = buildable.building.InternalID;
 
+        // Apply cosmetic if one was passed
+        if (cosmetic_ID != "" && ScriptableLoader.cosmetics.ContainsKey(cosmetic_ID))
+        {
+            Cosmetic newCosmetic = ScriptableLoader.cosmetics[cosmetic_ID];
+            if (newCosmetic != null) lastBuilding.ApplyCosmetic(newCosmetic);
+        }
+
         // Return building
         return lastBuilding;
     }
 
     // CALLED BY SYNCER CLASS
-    public BaseEntity RpcInstatiateGhost(Buildable buildable, Vector2 position, Quaternion rotation, int metadata)
+    public BaseEntity RpcInstatiateGhost(Buildable buildable, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();
         holder.name = buildable.building.name;
 
         // Setup the ghost tile
-        holder.SetBuilding(buildable, metadata);
+        holder.SetBuilding(buildable, cosmetic_id, metadata);
         DroneManager.active.AddGhost(holder);
 
         // Set the tiles on the grid class

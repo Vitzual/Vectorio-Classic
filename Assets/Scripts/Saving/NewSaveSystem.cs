@@ -173,16 +173,23 @@ public class NewSaveSystem : MonoBehaviour
                 // Get buildable
                 Buildable buildable = Buildables.RequestBuildable(ScriptableLoader.buildings[buildingData.id]);
 
+                // Get cosmetic and verify user owns it
+                string cosmetic = "";
+                if (buildingData.cosmetic_id != null && buildingData.cosmetic_id != "" &&
+                    ScriptableLoader.cosmetics.ContainsKey(buildingData.cosmetic_id) &&
+                    ScriptableLoader.cosmetics[buildingData.cosmetic_id].validateLocalApplication()) 
+                    cosmetic = buildingData.cosmetic_id;
+
                 // Create ghost building if data exists
                 #pragma warning disable CS0472 
                 if (buildingData.ghostBuilding != null && buildingData.ghostBuilding) InstantiationHandler.active.RpcInstatiateGhost(buildable, 
-                    new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity, buildingData.metadata[0]);
+                    cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity, buildingData.metadata[0]);
                 #pragma warning restore CS0472
 
                 // If data doesn't exist or is not a ghost building, create it
                 else
                 {
-                    InstantiationHandler.active.RpcInstantiateBuilding(buildable, new Vector2(buildingData.xCoord, buildingData.yCoord), 
+                    InstantiationHandler.active.RpcInstantiateBuilding(buildable, cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), 
                         Quaternion.identity, buildingData.metadata[0], buildingData.health);
                     Resource.active.ApplyOutputsOnly(buildable.resources);
                 }

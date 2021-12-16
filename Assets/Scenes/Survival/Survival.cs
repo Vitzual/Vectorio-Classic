@@ -45,7 +45,7 @@ public class Survival : Gamemode
 
         // Setup hub
         Buildable hubBuildable = Buildables.RequestBuildable(hub);
-        InstantiationHandler.active.RpcInstantiateBuilding(hubBuildable, Vector2.zero, Quaternion.identity, -1, -1);
+        InstantiationHandler.active.RpcInstantiateBuilding(hubBuildable, "", Vector2.zero, Quaternion.identity, -1, -1);
 
         // Initialize gamemode
         InitGamemode();
@@ -101,7 +101,7 @@ public class Survival : Gamemode
 
         // Setup hub
         Buildable hubBuildable = Buildables.RequestBuildable(hub);
-        InstantiationHandler.active.RpcInstantiateBuilding(hubBuildable, Vector2.zero, Quaternion.identity, -1, -1);
+        InstantiationHandler.active.RpcInstantiateBuilding(hubBuildable, "", Vector2.zero, Quaternion.identity, -1, -1);
 
         // Initialize gamemode
         InitGamemode();

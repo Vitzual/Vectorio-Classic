@@ -11,6 +11,7 @@ public class ClientLoader : NetworkBehaviour
     public class DataChunk
     {
         public string[] internalID;
+        public string[] cosmeticID;
         public int[] runtimeID;
         public int[] metadataID;
         public float[] entityHealth;
@@ -257,10 +258,10 @@ public class ClientLoader : NetworkBehaviour
 
                 // Create either ghost or building
                 BaseEntity newEntity;
-                if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, position,
-                    Quaternion.identity, loadData.metadataID[i]);
-                else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, position,
-                    Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
+                if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, loadData.cosmeticID[i],
+                    position, Quaternion.identity, loadData.metadataID[i]);
+                else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, loadData.cosmeticID[i],
+                    position, Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
 
                 // Set entity runtime ID
                 int runtime_id = loadData.runtimeID[i];
@@ -310,13 +311,14 @@ public class ClientLoader : NetworkBehaviour
 
     // Grabs returned info from server
     [TargetRpc]
-    public void RpcSetupClient(string[] internalID, int[] runtimeID, int[] metadataID, float[] entityHealth,
+    public void RpcSetupClient(string[] internalID, string[] cosmeticID, int[] runtimeID, int[] metadataID, float[] entityHealth,
         float[] xCoord, float[] yCoord, string[] entityType, int[] entityVar, bool[] isGhost, bool isAtEnd)
     {
         Debug.Log("[SERVER] Server returned match info request, creating new data chunk...");
 
         loadData = new DataChunk();
         loadData.internalID = internalID;
+        loadData.cosmeticID = cosmeticID;
         loadData.runtimeID = runtimeID;
         loadData.metadataID = metadataID;
         loadData.entityHealth = entityHealth;
@@ -340,6 +342,7 @@ public class ClientLoader : NetworkBehaviour
         bool isAtEnd = false;
 
         string[] internalID = new string[arraySize];
+        string[] cosmeticID = new string[arraySize];
         int[] runtimeID = new int[arraySize];
         int[] metadataID = new int[arraySize];
         float[] entityHealth = new float[arraySize];
@@ -363,6 +366,7 @@ public class ClientLoader : NetworkBehaviour
             if (entity.Value == null) continue;
 
             internalID[index] = entity.Value.internalID;
+            cosmeticID[index] = entity.Value.cosmetic.InternalID;
             runtimeID[index] = entity.Key;
             entityHealth[index] = entity.Value.health;
             xCoord[index] = entity.Value.transform.position.x;
@@ -392,6 +396,6 @@ public class ClientLoader : NetworkBehaviour
         }
 
         Debug.Log("[SERVER] Match segment formatted, sending back to client.");
-        RpcSetupClient(internalID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar, isGhost, isAtEnd);
+        RpcSetupClient(internalID, cosmeticID, runtimeID, metadataID, entityHealth, xCoord, yCoord, entityType, entityVar, isGhost, isAtEnd);
     }
 }

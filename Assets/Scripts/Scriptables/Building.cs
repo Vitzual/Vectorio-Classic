@@ -16,7 +16,7 @@ public class Building : Entity
     }
 
     [FoldoutGroup("Default Cosmetic")]
-    public Cosmetic cosmetic;
+    public Cosmetic defaultCosmetic;
     [FoldoutGroup("Building Variables")]
     public Cell[] cells;
     [FoldoutGroup("Building Variables")]

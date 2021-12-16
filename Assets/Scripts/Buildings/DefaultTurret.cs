@@ -89,10 +89,18 @@ public class DefaultTurret : BaseTile, IAudible
 
         // Set bullet variables
         DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
-        
+
         // Setup bullet
-        if (turret.useBulletSprite) bullet.Setup(turret, bulletModel);
-        else bullet.Setup(turret);
+        bullet.Setup(turret);
+        if (cosmetic == null || !cosmetic.useBullet)
+        {
+            if (turret.useBulletSprite) 
+                bullet.SetupModel(bulletModel);
+        }
+        else
+        {
+            bullet.SetupModel(cosmetic.bullet);
+        }
 
         // Dependent on the bullet, register under the correct master script
         if (turret.bulletLock)

@@ -32,20 +32,6 @@ public class Server : NetworkBehaviour
     }
 
     [Server]
-    public void SrvSyncCollector(int collector_id, int amount)
-    {
-        // Reset the tile 
-        if (entities.ContainsKey(collector_id))
-        {
-            entities[collector_id].SyncEntity(amount);
-            if (Communicator.active != null) Communicator.active.RpcCollect(collector_id, amount);
-            else Debug.Log("[SERVER] No active resource bin found to broadcast to!");
-        }
-        else Debug.Log("[SERVER] Server received a runtime ID that doesn't exist. This could cause major " +
-            "issues with desyncing! Recommend restarting the game.");
-    }
-
-    [Server]
     public void SrvSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
     {
         // Create new entity

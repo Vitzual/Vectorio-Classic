@@ -86,7 +86,7 @@ public class Gamemode : MonoBehaviour
 
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
-        LowresMap.active.Setup();
+        if (LowresMap.active != null) LowresMap.active.Setup();
     }
 
     // Setup game

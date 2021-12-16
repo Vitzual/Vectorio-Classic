@@ -42,7 +42,11 @@ public class Achievements : MonoBehaviour
                 Debug.Log("[STEAM] Received achievement request with ID " + id);
 
                 UserData userData = User.Client.Id;
-                if (!achievements[id].IsAchieved) achievements[id].Unlock();
+                if (!achievements[id].IsAchieved)
+                {
+                    achievements[id].Unlock();
+                    achievements[id].Store();
+                }
                 else Debug.Log("[STEAM] User already has achievement " + id);
             }
             else Debug.Log("[STEAM] No achievement found with ID " + id);

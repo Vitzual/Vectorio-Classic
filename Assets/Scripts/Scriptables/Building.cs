@@ -15,6 +15,8 @@ public class Building : Entity
         public float y;
     }
 
+    [FoldoutGroup("Default Cosmetic")]
+    public Cosmetic cosmetic;
     [FoldoutGroup("Building Variables")]
     public Cell[] cells;
     [FoldoutGroup("Building Variables")]

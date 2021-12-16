@@ -13,6 +13,7 @@ public static class ScriptableLoader
     public static string VariantPath = "Scriptables/Variants";
     public static string StagePath = "Scriptables/Stages";
     public static string ResearchPath = "Scriptables/Research";
+    public static string CosmeticPath = "Scriptables/Cosmetics";
 
     public static Dictionary<string, Building> buildings;
     public static Dictionary<string, Enemy> enemies;
@@ -20,6 +21,7 @@ public static class ScriptableLoader
     public static Dictionary<string, Variant> variants;
     public static Dictionary<string, Stage> stages;
     public static Dictionary<string, ResearchTech> researchTechs;
+    public static Dictionary<string, Cosmetic> cosmetics;
 
     public static Dictionary<string, Entity> allLoadedEntities = 
               new Dictionary<string, Entity>();
@@ -44,6 +46,7 @@ public static class ScriptableLoader
         GenerateVariants();
         GenerateStages();
         GenerateResearch();
+        GenerateCosmetics();
     }
 
     // Generates buildings on run
@@ -150,6 +153,20 @@ public static class ScriptableLoader
         {
             researchTechs.Add(tech.InternalID, tech);
             Debug.Log("Loaded " + tech.name + " with UUID " + tech.InternalID);
+        }
+    }
+
+    // Generate cosmetics on run
+    public static void GenerateCosmetics()
+    {
+        cosmetics = new Dictionary<string, Cosmetic>();
+        List<Cosmetic> loaded = Resources.LoadAll(CosmeticPath, typeof(Cosmetic)).Cast<Cosmetic>().ToList();
+        Debug.Log("Loaded " + loaded.Count + " cosmetics from " + CosmeticPath);
+
+        foreach (Cosmetic cosmetic in loaded)
+        {
+            cosmetics.Add(cosmetic.InternalID, cosmetic);
+            Debug.Log("Loaded " + cosmetic.name + " with UUID " + cosmetic.InternalID);
         }
     }
 }

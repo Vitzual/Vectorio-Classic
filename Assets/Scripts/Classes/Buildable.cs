@@ -37,6 +37,7 @@ public class Buildable
 
     // Buildable variables
     public Building building;
+    public Cosmetic cosmetic;
     public MenuButton button;
     public GameObject obj;
     public List<MenuButton> showButtons;

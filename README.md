@@ -6,11 +6,10 @@ Welcome to the source code for Vectorio!
 - [Discord](https://discord.gg/auDgRJqtT9)
 - [Track Progress](https://github.com/Vitzual/Vectorio/projects)
 
-# Core Refactor 
-Though the current setup of the game works fine, it does not support extensive modding or multiplayer. It is both outdated and inefficient, so over the course of v0.2 multiple changes will be made to the base code to improve on these things as well as help streamline the development process. 
+# Note about this repository
+Since Vectorio contains paid cosmetics and a DLC mode, some of the assets used in those systems are not present in this repository. Because of that, I cannot provide a license to the repository as of right now. This also means that if you try to build the game, you will have to heavily modify the source to get it to work. I am still working on a workaround to this, but it's better to treat the repository as something you can reference for your own projects, rather than one you can make contributions to. 
 
-**What does the refactor include?**
-https://github.com/Vitzual/Vectorio/projects/2
+Again, this is only temporary until I figure out a solution for this!
 
 # Required Assets
 **HEAVY DEPENDENCIES** (Project relies heavily on these assets)

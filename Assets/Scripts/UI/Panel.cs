@@ -9,12 +9,14 @@ public class Panel : MonoBehaviour
 {
     // Active instance (temporary)
     public static Panel active;
+    public Armory armory;
 
     // List of stats
     private List<MenuStat> menuObjects;
     private List<MenuStat> unusedObjects;
 
     // Panel variables
+    public CanvasGroup canvasGroup;
     public MenuStat menuStat;
     public Transform resourceStats;
     public Transform buildingStats;
@@ -31,6 +33,7 @@ public class Panel : MonoBehaviour
     public GameObject configSelector;
 
     // Building
+    public Buildable buildable;
     public Entity entity;
 
     // Active instance (temporary solution to engineering problem)
@@ -40,10 +43,29 @@ public class Panel : MonoBehaviour
     {
         UIEvents.active.onEntityPressed += SetPanel;
         UIEvents.active.onBuildablePressed += SetPanel;
-        UIEvents.active.onDisableHotbar += DisableHotbar;
 
         menuObjects = new List<MenuStat>();
         unusedObjects = new List<MenuStat>();
+    }
+
+    // Open the armory
+    public void ToggleArmory(bool toggle)
+    {
+        armory.gameObject.SetActive(toggle);
+
+        if (toggle)
+        {
+            armory.SetupArmory(buildable);
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.interactable = true;
+        }
+        else
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.interactable = false;
+        }
     }
 
     // Applies a blueprint to the active entity
@@ -57,29 +79,6 @@ public class Panel : MonoBehaviour
         return false;
     }
 
-    // Toggles the hotbar
-    public void ToggleHotbar()
-    {
-        if (settingHotbar) DisableHotbar();
-        else EnableHotbar();
-    }
-
-    // Enables setting hotbar
-    public void EnableHotbar()
-    {
-        hotbar.buttonText = "PRESS NUMBER (1-9)";
-        hotbar.UpdateUI();
-        settingHotbar = true;
-    }
-
-    // Disables setting hotbar
-    public void DisableHotbar()
-    {
-        hotbar.buttonText = "ASSIGN TO HOTBAR";
-        hotbar.UpdateUI();
-        settingHotbar = false;
-    }
-
     // Sets the panel information based on entity data
     public void SetPanel(Entity entity, int metadata = -1)
     {
@@ -91,6 +90,9 @@ public class Panel : MonoBehaviour
         desc.text = entity.description;
         icon.sprite = Sprites.GetSprite(entity.name);
 
+        // Try get buildable
+        buildable = Buildables.RequestBuildable(entity);
+        
         // Create stats for the building
         SetUnused();
         entity.CreateStats(this);
@@ -175,14 +177,6 @@ public class Panel : MonoBehaviour
         holder.text.text = "<b>" + stat.name + ":</b> " + (stat.value + stat.modifier) + " " + modifier;
         holder.icon.sprite = stat.icon;
     }
-
-    /* Adds a variant to the variant list
-    public void AddVariant(Variant variant)
-    {
-        variantSelector.CreateNewItem(variant.name);
-        variantSelector.SetupSelector();
-    }
-    */
 
     // Resets all the menu stats
     public void ResetUnused()

@@ -128,6 +128,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
         if (particles != null && particles.Count > 0)
             for (int a = 0; a < particles.Count; a++)
                 Recycler.AddRecyclable(particles[a].transform);
+        particles = new List<ParticleSystem>();
 
         // Reset all models
         for (int b = 0; b < models.Length; b++)

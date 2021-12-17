@@ -46,12 +46,6 @@ public class StatsPanel : MonoBehaviour
 
         foreach(AdditionalSetting additionalSetting in additionalSettings)
             settings.Add(additionalSetting.entity, additionalSetting);
-
-        foreach (HorizontalSelector selector in settings[entity].selectors)
-        {
-            selector.index = 0;
-            selector.UpdateUI();
-        }
     }
 
     // Keep entity updated

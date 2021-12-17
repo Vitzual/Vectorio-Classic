@@ -33,7 +33,7 @@ public class BaseTile : BaseEntity
             foreach (Cost cost in buildable.building.resources)
                 if (cost.storage) Resource.active.ApplyStorage(cost.type, cost.amount);
         }
-        
+
         // Fire building placed event
         Events.active.BuildingPlaced(this);
     }

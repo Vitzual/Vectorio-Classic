@@ -49,11 +49,7 @@ public class Hotbar : MonoBehaviour
     // Broadcasts to building handler
     public void UseSlot(int index)
     {
-        if (panel != null && panel.settingHotbar)
-        {
-            SetSlot(panel.entity, index);
-            panel.DisableHotbar();
-        }
+        if (Inventory.isOpen) SetSlot(panel.entity, index);
         else if (slots[index].entity != null)
         {
             if (index < slots.Length && index >= 0)

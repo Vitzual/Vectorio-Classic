@@ -22,7 +22,12 @@ public class BuilderDrone : Drone
 
     public override void SetTarget(BaseTile tile)
     {
-        if (tile != null) buildingIcon.sprite = Sprites.GetSprite(tile.name);
+        if (tile != null)
+        {
+            if (tile.cosmetic != null)
+                buildingIcon.sprite = tile.cosmetic.hologram;
+            else buildingIcon.sprite = Sprites.GetSprite(tile.name);
+        }
         else buildingIcon.sprite = Sprites.emptySprite;
         base.SetTarget(tile);
     }

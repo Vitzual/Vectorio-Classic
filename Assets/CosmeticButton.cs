@@ -21,7 +21,7 @@ public class CosmeticButton : MonoBehaviour
         this.cosmetic = cosmetic;
         this.buildable = buildable;
 
-        button.name = cosmetic.name;
+        button.buttonText = cosmetic.name.ToUpper();
         button.UpdateUI();
         description.text = cosmetic.description;
         buttonIcon.sprite = cosmetic.hologram;
@@ -34,6 +34,8 @@ public class CosmeticButton : MonoBehaviour
             Debug.Log("Validated ownership of " + cosmetic.name + ", applying!");
             buildable.ApplyCosmetic(cosmetic);
             Panel.active.ToggleArmory(false);
+            Panel.active.SetPanel(buildable);
+            Events.active.CosmeticApplied(cosmetic);
         }
         else if (cosmetic.dlc != null) cosmetic.dlc.OpenStore();
     }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1185035289388cd4a8be96677134ba25, type: 3}
-  m_Name: Peppermint Turret
+  m_Name: Frosted Turret
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,54 +21,65 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  internalId: 0afcb1ea-2fb0-43e4-8dc2-719f630ef861
-  createdAtTicks: 637752660749504607
-  name: Peppermint Turret
-  description: A dangerously minty defense. Unlocked by completing the <b>Holiday
-    Bash</b> challenge!
+  internalId: 8c9ed646-d3ee-4ff7-979d-dc6a3538a6ea
+  createdAtTicks: 637752787458801136
+  name: Frosted Turret
+  description: Part of the <b>Frosted Defenses</b> DLC on Steam!
   building: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
-  hologram: {fileID: 21300000, guid: 26ac10e892127d943a410fe3bc407b7f, type: 3}
-  dlc: {fileID: 0}
-  achievement: {fileID: 6842238925632038503, guid: 2c23ad085229f4e4f96e14dc781cce11,
-    type: 2}
-  requirement: '<b>REQUIRES ACHIEVEMENT</b>
+  hologram: {fileID: 21300000, guid: 16adfa3451455f546ac9ecd90b196b5a, type: 3}
+  dlc: {fileID: 2978589472970837352, guid: 2c23ad085229f4e4f96e14dc781cce11, type: 2}
+  achievement: {fileID: 0}
+  requirement: '<b>REQUIRES DLC</b>
 
-    "MINTY FRESH"'
+    "FROSTED DEFENSE PACK"'
   layers:
-  - model: {fileID: 21300000, guid: 953dc94c41bbbfe49bf2e5d30e1ec7df, type: 3}
+  - model: {fileID: 21300000, guid: c611f214ca7c3ab429daa34d8206e726, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
     material: {fileID: 0}
     position: {x: 0, y: 0}
-    order: 5
+    order: 6
   - model: {fileID: 21300000, guid: 37233c8ade750a54abb5e091403277ce, type: 3}
-    color: {r: 1, g: 0, b: 0, a: 1}
+    color: {r: 0.6745283, g: 0.834972, b: 1, a: 1}
     material: {fileID: 0}
     position: {x: 0, y: 0}
     order: 1
   - model: {fileID: 21300000, guid: 3f626438603b7a94f9b74af06bf289dc, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
-    material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
+    material: {fileID: 2100000, guid: 77419f772c08b3d478d0bb55d0282e7c, type: 2}
     position: {x: 0, y: 0}
-    order: 2
+    order: 4
   - model: {fileID: 21300000, guid: a0669fb0cb4802941bd682c8b35925a5, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
     material: {fileID: 2100000, guid: e835e0626251fb549bb6af02c300bfe3, type: 2}
     position: {x: 0, y: 0}
-    order: 3
-  - model: {fileID: 21300000, guid: 137cb80c12d4a054088e4374cdb6847c, type: 3}
+    order: 5
+  - model: {fileID: 21300000, guid: 5a0c1371cca8fad4ca6d4c1ad6bc47e6, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
-    material: {fileID: 2100000, guid: c1c93b6e49e79d242bc061c7d24e6aaa, type: 2}
+    material: {fileID: 2100000, guid: d4e2e48f3c340c24f925c7a1ed7b1bc4, type: 2}
     position: {x: 0, y: 0}
     order: 2
-  - model: {fileID: 21300000, guid: 48e2b10ab5c049b45abacc953a9cda49, type: 3}
+  - model: {fileID: 21300000, guid: ca41cd9b0331c034d9c71414eb524da8, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
     material: {fileID: 2100000, guid: e835e0626251fb549bb6af02c300bfe3, type: 2}
     position: {x: 0, y: 0}
     order: 3
-  particles: []
+  particles:
+  - effect: {fileID: 5982481393402226449, guid: 455ef84d285a5c748842555eadf1f23f,
+      type: 3}
+    material: {fileID: 2100000, guid: e835e0626251fb549bb6af02c300bfe3, type: 2}
+    position: {x: 0, y: 0}
+    order: 5
+  deathEffect:
+    effect: {fileID: 5622258844943946750, guid: 28519a6db8ab7e24a9e0eb8bdbfb6b72,
+      type: 3}
+    material: {fileID: 2100000, guid: 77419f772c08b3d478d0bb55d0282e7c, type: 2}
+    position: {x: 0, y: 0}
+    order: 0
+  useDeathEffect: 1
   bullet:
+    obj: {fileID: 4535947825145661497, guid: 7a661b7f1bf14e14aa384518760cb571, type: 3}
     model: {fileID: 0}
-    material: {fileID: 2100000, guid: e2a5c3091de7e5b45ac3fe6e4c4b9173, type: 2}
+    material: {fileID: 2100000, guid: d1b8081dbf8a27a4d99cde8d68f75aab, type: 2}
     applyModelToBullet: 0
     applyMaterialToModel: 0
   useBullet: 1

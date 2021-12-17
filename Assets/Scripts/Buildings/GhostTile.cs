@@ -21,9 +21,17 @@ public class GhostTile : BaseTile
     public void SetBuilding(Buildable buildable, string cosmetic_id, int metadata = -1)
     {
         this.buildable = buildable;
-        this.cosmetic_id = cosmetic_id;
         this.metadata = metadata;
-        icon.sprite = Sprites.GetSprite(buildable.building.name);
+
+        if (cosmetic_id == "") icon.sprite = Sprites.GetSprite(buildable.building.name);
+        else if (ScriptableLoader.cosmetics.ContainsKey(cosmetic_id))
+        {
+            this.cosmetic_id = cosmetic_id;
+            Cosmetic cosmetic = ScriptableLoader.cosmetics[cosmetic_id];
+            icon.sprite = cosmetic.hologram;
+            this.cosmetic = cosmetic;
+        }
+
         transform.localScale = new Vector2(buildable.building.hologramSize, buildable.building.hologramSize);
 
         Events.active.GhostPlaced(this);

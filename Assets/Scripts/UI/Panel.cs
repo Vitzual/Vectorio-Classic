@@ -56,15 +56,15 @@ public class Panel : MonoBehaviour
         if (toggle)
         {
             armory.SetupArmory(buildable);
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
-            canvasGroup.interactable = true;
-        }
-        else
-        {
             canvasGroup.alpha = 0f;
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
+        }
+        else
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.interactable = true;
         }
     }
 
@@ -85,13 +85,14 @@ public class Panel : MonoBehaviour
         // Grab entity
         this.entity = entity;
 
+        // Try get buildable
+        if (entity != null)
+            buildable = Buildables.RequestBuildable(entity);
+
         // Set panel description
         name.text = entity.name.ToUpper();
         desc.text = entity.description;
         icon.sprite = Sprites.GetSprite(entity.name);
-
-        // Try get buildable
-        buildable = Buildables.RequestBuildable(entity);
         
         // Create stats for the building
         SetUnused();
@@ -105,10 +106,22 @@ public class Panel : MonoBehaviour
         // Grab entity
         entity = buildable.building;
 
+        // Try get buildable
+        this.buildable = buildable;
+
         // Set panel description
-        name.text = buildable.building.name.ToUpper();
-        desc.text = buildable.building.description;
-        icon.sprite = Sprites.GetSprite(entity.name);
+        if (buildable.cosmetic == null)
+        {
+            name.text = buildable.building.name.ToUpper();
+            desc.text = buildable.building.description;
+            icon.sprite = Sprites.GetSprite(entity.name);
+        }
+        else
+        {
+            name.text = buildable.cosmetic.name.ToUpper();
+            desc.text = buildable.cosmetic.description;
+            icon.sprite = buildable.cosmetic.hologram;
+        }
 
         // Create stats for the building
         SetUnused();

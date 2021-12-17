@@ -83,22 +83,35 @@ public class DefaultTurret : BaseTile, IAudible
         if (turret.sound != null)
             AudioSource.PlayClipAtPoint(turret.sound, transform.position, Settings.sound);
 
-        GameObject holder = Instantiate(turret.bullet.gameObject, position, cannon.rotation);
-        holder.transform.rotation = cannon.rotation;
-        holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
-
         // Set bullet variables
-        DefaultBullet bullet = holder.GetComponent<DefaultBullet>();
+        DefaultBullet bullet;
 
         // Setup bullet
-        bullet.Setup(turret);
         if (cosmetic == null || !cosmetic.useBullet)
         {
+            // Create the bullet
+            GameObject holder = Instantiate(turret.bullet.gameObject, position, cannon.rotation);
+            holder.transform.rotation = cannon.rotation;
+            holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
+
+            // Set bullet variables
+            bullet = holder.GetComponent<DefaultBullet>();
+            bullet.Setup(turret);
+
             if (turret.useBulletSprite) 
                 bullet.SetupModel(bulletModel);
         }
         else
         {
+            // Create the bullet
+            GameObject holder = Instantiate(cosmetic.bullet.obj, position, cannon.rotation).GetComponent<GameObject>();
+            holder.transform.rotation = cannon.rotation;
+            holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
+
+            // Set bullet variables
+            bullet = holder.GetComponent<DefaultBullet>();
+            bullet.Setup(turret);
+
             bullet.SetupModel(cosmetic.bullet);
         }
 

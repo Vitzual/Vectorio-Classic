@@ -58,8 +58,11 @@ public class BaseTile : BaseEntity
 
     public override void DestroyEntity()
     {
+        // Check buildable
+        bool isBuildableNull = buildable == null;
+
         // Update unlockables
-        if(buildable != null) Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, -1);
+        if(!isBuildableNull) Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.PlaceBuildingAmount, buildable.building, -1);
 
         // Remove cells
         if (InstantiationHandler.active != null)
@@ -69,13 +72,20 @@ public class BaseTile : BaseEntity
         }
 
         // Refund cost
-        if (buildable != null && Gamemode.active.refundResources) 
+        if (!isBuildableNull && Gamemode.active.refundResources) 
             Resource.active.RefundResources(buildable.resources);
 
         // Update damage handler
         Events.active.BuildingDestroyed(this);
 
         // Create particle and destroy
+        if (!isBuildableNull && buildable.cosmetic != null && buildable.cosmetic.useDeathEffect)
+        {
+            ParticleSystemRenderer newParticle = Instantiate(buildable.cosmetic.deathEffect.effect, transform.position, 
+                transform.rotation).GetComponent<ParticleSystemRenderer>();
+            newParticle.material = buildable.cosmetic.deathEffect.material;
+            newParticle.trailMaterial = buildable.cosmetic.deathEffect.material;
+        }
         if (particle != null)
         {
             ParticleSystemRenderer newParticle = Instantiate(particle, transform.position, transform.rotation).GetComponent<ParticleSystemRenderer>();
@@ -85,8 +95,9 @@ public class BaseTile : BaseEntity
         Destroy(gameObject);
 
         // Update storages
-        foreach (Cost cost in buildable.building.resources)
-            if (cost.storage) Resource.active.ApplyStorage(cost.type, -cost.amount);
+        if (!isBuildableNull)
+            foreach (Cost cost in buildable.building.resources)
+                if (cost.storage) Resource.active.ApplyStorage(cost.type, -cost.amount);
     }
 
     // Get material

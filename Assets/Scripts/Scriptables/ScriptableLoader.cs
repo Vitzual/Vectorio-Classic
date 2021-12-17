@@ -32,6 +32,8 @@ public static class ScriptableLoader
         allLoadedEntities = new Dictionary<string, Entity>();
         Buildables.active = new Dictionary<Entity, Buildable>();
 
+        GenerateCosmetics();
+
         Building hub = Resources.Load<Building>("Scriptables/Hub");
         if (hub != null)
         {
@@ -46,7 +48,6 @@ public static class ScriptableLoader
         GenerateVariants();
         GenerateStages();
         GenerateResearch();
-        GenerateCosmetics();
     }
 
     // Generates buildings on run

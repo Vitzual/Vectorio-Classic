@@ -51,6 +51,9 @@ public class BuildingController : NetworkBehaviour
             UIEvents.active.onBuildablePressed += SetBuilding;
         }
 
+        // Cosmetic applied
+        Events.active.onCosmeticApplied += CosmeticApplied;
+
         Debug.Log("Finished setting up controller instance");
     }
 
@@ -153,6 +156,9 @@ public class BuildingController : NetworkBehaviour
         this.entity = entity;
         UpdateSprite();
     }
+
+    // Update building if cosmetic applied
+    public void CosmeticApplied(Cosmetic cosmetic) { SetBuilding(buildable); }
 
     // Sets the selected building (null to deselect)
     public void SetBuilding(Buildable buildable, int metadata = -1)

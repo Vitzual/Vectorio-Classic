@@ -13,6 +13,14 @@ public class Events : MonoBehaviour
         active = this;
     }
 
+    // Cosmetic applied
+    public event Action<Cosmetic> onCosmeticApplied;
+    public void CosmeticApplied(Cosmetic cosmetic)
+    {
+        if (onCosmeticApplied != null)
+            onCosmeticApplied(cosmetic);
+    }
+
     // On nameplate setup
     public event Action<Transform, string, Color> onSetupNameplate;
     public void SetupNameplate(Transform obj, string name, Color color)

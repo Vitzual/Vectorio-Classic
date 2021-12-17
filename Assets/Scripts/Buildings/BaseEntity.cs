@@ -14,7 +14,7 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public int runtimeID = -1;
     public string internalID = "";
     protected ParticleSystem particle;
-
+    
     public virtual void Setup() 
     {
         // Override this method to use Setup() call from Instation Handler

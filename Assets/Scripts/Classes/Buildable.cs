@@ -12,6 +12,10 @@ public class Buildable
         obj = building.obj;
         discount = 1f;
 
+        availableCosmetics = new List<Cosmetic>();
+        foreach (KeyValuePair<string, Cosmetic> cosmetic in ScriptableLoader.cosmetics)
+            if (cosmetic.Value.building == building) availableCosmetics.Add(cosmetic.Value);
+
         showButtons = new List<MenuButton>();
         unlockable = building.unlockable;
 

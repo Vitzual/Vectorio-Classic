@@ -42,7 +42,12 @@ public class Hotbar : MonoBehaviour
         Debug.Log("Settings slot " + index + " " + entity.name);
 
         if (index < slots.Length && index >= 0)
-            slots[index].SetSlot(entity, Sprites.GetSprite(entity.name));
+        {
+            Buildable buildable = Buildables.RequestBuildable(entity);
+            if (buildable != null && buildable.cosmetic != null)
+                slots[index].SetSlot(entity, buildable);
+            else slots[index].SetSlot(entity, Sprites.GetSprite(entity.name));
+        }
         else Debug.LogError("Slot number was outside the bounds of the hotbar!");
     }
 
@@ -52,6 +57,8 @@ public class Hotbar : MonoBehaviour
         if (Inventory.isOpen) SetSlot(panel.entity, index);
         else if (slots[index].entity != null)
         {
+            if (slots[index].cosmetic != null && slots[index].cosmetic.validateLocalApplication())
+                slots[index].buildable.ApplyCosmetic(slots[index].cosmetic);
             if (index < slots.Length && index >= 0)
                 UIEvents.active.EntityPressed(slots[index].entity, -1);
             else Debug.LogError("Slot number was outside the bounds of the hotbar!");

@@ -7,6 +7,7 @@ public class DefaultBullet : MonoBehaviour
 {
     // Turret variable
     [HideInInspector] public Turret turret;
+    [HideInInspector] public Cosmetic.Bullet bullet;
 
     // Bullet variables
     [HideInInspector] public float damage;
@@ -28,11 +29,12 @@ public class DefaultBullet : MonoBehaviour
     public List<BaseEntity> ignoreList = new List<BaseEntity>();
 
     // Setup bullet
-    public virtual void Setup(Turret turret)
+    public virtual void Setup(Turret turret, Cosmetic.Bullet bullet = null)
     {
         // Set turret SO
         this.turret = turret;
-        
+        this.bullet = bullet;
+
         // Apply research to variables
         damage = turret.damage * Research.damageBoost;
         pierces = turret.bulletPierces + Research.pierceBoost;
@@ -118,7 +120,10 @@ public class DefaultBullet : MonoBehaviour
 
             pierces -= 1;
             if (pierces <= 0)
-                DestroyBullet(entity.GetMaterial(), entity);
+            {
+                if (bullet != null) DestroyBullet(bullet.material, entity);
+                else DestroyBullet(turret.material, entity);
+            }
             else ignoreList.Add(entity);
 
             tracking = false;

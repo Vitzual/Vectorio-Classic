@@ -24,8 +24,8 @@ MonoBehaviour:
   internalId: 0afcb1ea-2fb0-43e4-8dc2-719f630ef861
   createdAtTicks: 637752660749504607
   name: Peppermint Turret
-  description: A dangerously minty defense. Unlocked by completing the <b>Holiday
-    Bash</b> challenge!
+  description: A dangerously minty defense. Unlocked by completing the annual <b>Holiday
+    Bash</b> challenge and earning the <b>Minty Fresh</b> achievement!
   building: {fileID: 11400000, guid: c9b0407705a5df346a1de4b6a211dd1e, type: 2}
   hologram: {fileID: 21300000, guid: 26ac10e892127d943a410fe3bc407b7f, type: 3}
   dlc: {fileID: 0}
@@ -66,7 +66,14 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     order: 3
   particles: []
+  deathEffect:
+    effect: {fileID: 0}
+    material: {fileID: 0}
+    position: {x: 0, y: 0}
+    order: 0
+  useDeathEffect: 0
   bullet:
+    obj: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
     model: {fileID: 0}
     material: {fileID: 2100000, guid: e2a5c3091de7e5b45ac3fe6e4c4b9173, type: 2}
     applyModelToBullet: 0

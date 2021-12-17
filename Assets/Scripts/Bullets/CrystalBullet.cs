@@ -5,11 +5,11 @@ using UnityEngine;
 public class CrystalBullet : DefaultBullet
 {
     // Split bullet
-    [SerializeField] public DefaultBullet bullet;
+    [SerializeField] public DefaultBullet crystalBullet;
     [SerializeField] public int bulletSplits;
 
     // Setup bullet
-    public override void Setup(Turret turret)
+    public override void Setup(Turret turret, Cosmetic.Bullet bullet = null)
     {
         this.turret = turret;
         this.model = GetComponent<SpriteRenderer>();
@@ -26,7 +26,7 @@ public class CrystalBullet : DefaultBullet
         // Create bullets
         for (int i = 0; i < bulletSplits; i++)
         {
-            DefaultBullet holder = Instantiate(bullet, transform.position, transform.rotation).GetComponent<DefaultBullet>();
+            DefaultBullet holder = Instantiate(crystalBullet, transform.position, transform.rotation).GetComponent<DefaultBullet>();
             holder.transform.Rotate(0f, 0f, Random.Range(0, 360));
             holder.Setup(turret);
             if (entity != null) holder.ignoreList.Add(entity);

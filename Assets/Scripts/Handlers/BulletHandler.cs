@@ -26,7 +26,8 @@ public class BulletHandler : MonoBehaviour
                 bullets[a].time -= Time.deltaTime;
                 if (bullets[a].time <= 0)
                 {
-                    bullets[a].DestroyBullet(bullets[a].turret.material);
+                    if (bullets[a].bullet != null) bullets[a].DestroyBullet(bullets[a].bullet.material);
+                    else bullets[a].DestroyBullet(bullets[a].turret.material);
                     a--;
                 }
                 else bullets[a].Move();

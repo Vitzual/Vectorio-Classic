@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System;
+using HeathenEngineering.SteamworksIntegration;
 using Michsky.UI.ModernUIPack;
 using Mirror;
 using TMPro;
@@ -89,6 +90,12 @@ public class Menu : MonoBehaviour
 
         Instantiate(background, Vector2.zero, Quaternion.identity);
         CheckSaves();
+    }
+
+    // Open DLC
+    public void OpenDLC(DownloadableContentObject dlc)
+    {
+        dlc.OpenStore();
     }
 
     // Join friend

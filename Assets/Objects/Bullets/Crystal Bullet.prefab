@@ -48,6 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turret: {fileID: 0}
+  bullet:
+    obj: {fileID: 0}
+    model: {fileID: 0}
+    material: {fileID: 0}
+    applyModelToBullet: 0
+    applyMaterialToModel: 0
   damage: 0
   speed: 0
   pierces: 0
@@ -58,7 +64,8 @@ MonoBehaviour:
   model: {fileID: 0}
   trail: {fileID: 0}
   ignoreList: []
-  bullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79, type: 3}
+  crystalBullet: {fileID: -5208581031776011897, guid: 9d5986ccd0ecb9a488279fb8fb2d1d79,
+    type: 3}
   bulletSplits: 5
 --- !u!212 &1808088418035423128
 SpriteRenderer:

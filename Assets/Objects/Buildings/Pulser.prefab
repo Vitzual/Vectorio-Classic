@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2528225824149251387}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &426990468571277428
 SpriteRenderer:
@@ -306,8 +306,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4952088319316457541}
   - {fileID: 4415353801824821857}
+  - {fileID: 4952088319316457541}
   - {fileID: 3186191460735300649}
   - {fileID: 2822303893647232064}
   - {fileID: 8581079207397795917}
@@ -327,9 +327,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e468b05154f7147a52bf9742a2b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  models:
+  - {fileID: 3350662103475385107}
+  - {fileID: 426990468571277428}
+  - {fileID: 906671149822750720}
+  - {fileID: 1977902879303602284}
+  - {fileID: 3399945940333978831}
+  - {fileID: 6465017416331235042}
+  cosmetic: {fileID: 0}
+  particles: []
   metadata: -1
+  runtimeID: -1
+  internalID: 
   cells: []
   saveBuilding: 1
   isSellable: 1
@@ -341,6 +350,7 @@ MonoBehaviour:
   cooldown: 0
   useBulletModel: 0
   bulletModel: {fileID: 0}
+  selfEnable: 0
 --- !u!61 &-1767097138047463444
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -413,7 +423,7 @@ Transform:
   m_Children:
   - {fileID: 8893759301652938954}
   m_Father: {fileID: 2528225824149251387}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3350662103475385107
 SpriteRenderer:

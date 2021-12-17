@@ -82,6 +82,9 @@ public class Panel : MonoBehaviour
     // Sets the panel information based on entity data
     public void SetPanel(Entity entity, int metadata = -1)
     {
+        // Toggle armory off
+        ToggleArmory(false);
+
         // Grab entity
         this.entity = entity;
 
@@ -103,6 +106,9 @@ public class Panel : MonoBehaviour
     // Sets the panel information based on buildable data
     public void SetPanel(Buildable buildable, int metadata = -1)
     {
+        // Toggle armory off
+        ToggleArmory(false);
+
         // Grab entity
         entity = buildable.building;
 

@@ -46,6 +46,8 @@ public class NewSaveSystem : MonoBehaviour
                 SaveData.BuildingData buildingData = new SaveData.BuildingData();
 
                 buildingData.id = tile.buildable.building.InternalID;
+                if (tile.cosmetic != null) buildingData.cosmetic_id = tile.cosmetic.InternalID;
+                else buildingData.cosmetic_id = "";
                 buildingData.xCoord = tile.transform.position.x;
                 buildingData.yCoord = tile.transform.position.y;
                 buildingData.health = tile.health;

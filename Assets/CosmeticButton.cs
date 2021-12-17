@@ -33,7 +33,6 @@ public class CosmeticButton : MonoBehaviour
         {
             Debug.Log("Validated ownership of " + cosmetic.name + ", applying!");
             buildable.ApplyCosmetic(cosmetic);
-            Panel.active.ToggleArmory(false);
             Panel.active.SetPanel(buildable);
             Events.active.CosmeticApplied(cosmetic);
         }

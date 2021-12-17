@@ -104,13 +104,13 @@ public class DefaultTurret : BaseTile, IAudible
         else
         {
             // Create the bullet
-            GameObject holder = Instantiate(cosmetic.bullet.obj, position, cannon.rotation).GetComponent<GameObject>();
+            GameObject holder = Instantiate(cosmetic.bullet.obj.gameObject, position, cannon.rotation);
             holder.transform.rotation = cannon.rotation;
             holder.transform.Rotate(0f, 0f, Random.Range(-turret.bulletSpread, turret.bulletSpread));
 
             // Set bullet variables
             bullet = holder.GetComponent<DefaultBullet>();
-            bullet.Setup(turret);
+            bullet.Setup(turret, cosmetic.bullet);
 
             bullet.SetupModel(cosmetic.bullet);
         }

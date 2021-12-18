@@ -9,6 +9,10 @@ public class Survival : Gamemode
     public GameObject welcome;
     public Hotbar hotbarWindow;
 
+    // TEMP FOR BUG
+    public Stage _TEMP_BUGFIX_STAGE;
+    public Entity _TEMP_BUGFIX_TRIDENT;
+
     // Instantiate hub
     public override void Setup()
     {
@@ -52,10 +56,15 @@ public class Survival : Gamemode
 
         if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
         {
+            // Load game
             Resource.storages = new List<DefaultStorage>();
             NewSaveSystem.LoadGame();
             Border.UpdateStage();
             Events.active.ChangeBorderColor(stage.borderOutline, stage.borderFill);
+
+            // Check for guardian mission bug
+            if (stage.heat > _TEMP_BUGFIX_STAGE.heat)
+                Buildables.UnlockBuildable(Buildables.RequestBuildable(_TEMP_BUGFIX_TRIDENT));
         }
         else
         {

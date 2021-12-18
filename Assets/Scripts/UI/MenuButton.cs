@@ -79,7 +79,7 @@ public class MenuButton : MonoBehaviour
             ButtonManagerBasic button = GetComponent<ButtonManagerBasic>();
             button.buttonText = entity.name.ToUpper();
             button.UpdateUI();
-            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
+            desc.text = "<b>0 ACTIVE |</b> <size=16>Click for more details!";
             icon.sprite = Sprites.GetSprite(entity.name);
             progress.gameObject.SetActive(false);
         }

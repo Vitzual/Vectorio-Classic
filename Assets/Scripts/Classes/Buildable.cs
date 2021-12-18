@@ -11,6 +11,7 @@ public class Buildable
         this.building = building;
         obj = building.obj;
         discount = 1f;
+        tracked = 0;
 
         availableCosmetics = new List<Cosmetic>();
         foreach (KeyValuePair<string, Cosmetic> cosmetic in ScriptableLoader.cosmetics)

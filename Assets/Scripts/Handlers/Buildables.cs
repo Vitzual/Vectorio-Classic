@@ -88,6 +88,7 @@ public static class Buildables
         // Set buildable to unlocked
         buildable.isUnlocked = true;
         buildable.button.SetBuilding(buildable);
+        buildable.tracked = 0;
 
         // Remove from unlockable list
         if (unlockables.ContainsKey(buildable.unlockable.type))

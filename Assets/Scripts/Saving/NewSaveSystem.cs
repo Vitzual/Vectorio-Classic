@@ -108,7 +108,7 @@ public class NewSaveSystem : MonoBehaviour
         saveData.worldPlaytime = Gamemode.time;
 
         // World completion 
-        float completion = ((float)Resource.active.GetHeat() / 250000f) * 100;
+        float completion = Mathf.Round(((float)Resource.active.GetHeat() / 1000000f) * 100);
         if (completion >= 100f) completion = 100f;
         saveData.worldCompletion = completion;
 

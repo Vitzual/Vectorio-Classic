@@ -150,7 +150,8 @@ public class Menu : MonoBehaviour
                 button.mode = saveData.worldMode;
 
                 // Check for outdated thing
-                if (saveData.worldVersion == "v0.3.7" || saveData.worldVersion == "v0.3.8") button.outdated = true;
+                if (saveData.worldVersion == "v0.3" || saveData.worldVersion == "v0.3.0" ||
+                    saveData.worldVersion == "v0.3.1" || saveData.worldVersion == "v0.3.2") button.outdated = true;
 
                 // Apply playtime
                 TimeSpan time = TimeSpan.FromSeconds(saveData.worldPlaytime);

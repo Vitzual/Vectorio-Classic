@@ -69,7 +69,7 @@ public class GuardianButton : MonoBehaviour
             // Spawn guardian
             CloseConfirmScreen();
             Events.active.StartGuardianBattle();
-            gameObject.SetActive(false);
+            HideButton();
         }
         else
         {

@@ -43,7 +43,10 @@ public class DefaultGuardian : DefaultEnemy
             holder.trailMaterial = guardian.material;
         }
 
-        // Invoke enemy death event
+        // Update unlockables
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyEnemyAmount, guardian, 1);
+
+        // Invoke guardian death event
         Events.active.GuardianDestroyed(this);
         
         // Destroy object

@@ -129,7 +129,7 @@ public class ResearchUI : MonoBehaviour
         else
         {
             stats.text += "<b>ACTIVE LABS:</b> " + tech.totalLabs + " researching\n";
-            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "x effect\n";
+            stats.text += "<b>TOTAL EFFECT:</b> " + Mathf.Round(tech.totalEffect) + "x effect\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
 
             if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))

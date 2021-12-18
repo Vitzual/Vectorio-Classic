@@ -34,6 +34,10 @@ public class MenuButton : MonoBehaviour
 
         // Determine if building is unlocked
         SetVariables(entity);
+
+        // Get active events
+        Events.active.onBuildingPlaced += IncreaseBuildingPlaced;
+        Events.active.onBuildingDestroyed += DecreasedBuildingPlaced;
     }
 
     // Set building
@@ -75,7 +79,7 @@ public class MenuButton : MonoBehaviour
             ButtonManagerBasic button = GetComponent<ButtonManagerBasic>();
             button.buttonText = entity.name.ToUpper();
             button.UpdateUI();
-            desc.text = "<b>" + 0 + " ACTIVE |</b> <size=16>Click for more details!";
+            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
             icon.sprite = Sprites.GetSprite(entity.name);
             progress.gameObject.SetActive(false);
         }
@@ -87,6 +91,28 @@ public class MenuButton : MonoBehaviour
         }
     }
 
+    // Update button
+    public void IncreaseBuildingPlaced(BaseTile tile)
+    {
+        if (tile.buildable != null && buildable != null && tile.buildable == buildable)
+        {
+            buildable.tracked += 1;
+            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
+        }
+    }
+
+    // Update button
+    public void DecreasedBuildingPlaced(BaseTile tile)
+    {
+        if (tile.buildable != null && buildable != null && tile.buildable == buildable)
+        {
+            buildable.tracked -= 1;
+            if (buildable.tracked < 0) 
+                buildable.tracked = 0;
+
+            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
+        }
+    }
 
     // Show stats
     public void DisplayStats()

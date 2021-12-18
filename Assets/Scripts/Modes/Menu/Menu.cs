@@ -159,7 +159,7 @@ public class Menu : MonoBehaviour
                 button.timeAndVersion.text = "<b>" + output + "</b>\n" + saveData.worldVersion;
 
                 // Apply version
-                button.worldMode.text = saveData.worldMode + " (" + saveData.worldCompletion * 100 + "%)";
+                button.worldMode.text = saveData.worldMode + " (" + saveData.worldCompletion + "%)";
 
                 // Set active
                 button.obj.SetActive(true);

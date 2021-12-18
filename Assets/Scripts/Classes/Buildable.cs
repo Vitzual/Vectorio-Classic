@@ -50,6 +50,10 @@ public class Buildable
     public int tracked;
     public bool isUnlocked;
 
+    // Last positions
+    public Vector2 lastBuildPos;
+    public Vector2 lastDestroyPos;
+
     // Resource variables (THIS NEEDS TO BE CHANGED)
     public bool isCollector;
     public bool isStorage;
@@ -92,5 +96,28 @@ public class Buildable
             if (cost.type == type)
                 return cost.amount;
         return 0;
+    }
+
+    // Update active amount
+    public void UpdateActiveAmount(bool add, Vector2 pos)
+    {
+        if (add && pos != lastBuildPos)
+        {
+            lastBuildPos = pos;
+            tracked += 1;
+
+            if (lastBuildPos == lastDestroyPos)
+                lastDestroyPos = Vector2.zero;
+        }
+        else if (!add && pos != lastDestroyPos)
+        {
+            lastDestroyPos = pos;
+            tracked -= 1;
+
+            if (tracked < 0) tracked = 0;
+
+            if (lastDestroyPos == lastBuildPos)
+                lastBuildPos = Vector2.zero;
+        }
     }
 }

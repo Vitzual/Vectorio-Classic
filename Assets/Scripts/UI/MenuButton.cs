@@ -34,10 +34,6 @@ public class MenuButton : MonoBehaviour
 
         // Determine if building is unlocked
         SetVariables(entity);
-
-        // Get active events
-        Events.active.onBuildingPlaced += IncreaseBuildingPlaced;
-        Events.active.onBuildingDestroyed += DecreasedBuildingPlaced;
     }
 
     // Set building
@@ -69,6 +65,10 @@ public class MenuButton : MonoBehaviour
                     iridiumIcon.SetActive(true);
             }
         }
+
+        // Get active events
+        Events.active.onBuildingPlaced += IncreaseBuildingPlaced;
+        Events.active.onBuildingDestroyed += DecreasedBuildingPlaced;
     }
 
     // Set vairable stats
@@ -96,8 +96,8 @@ public class MenuButton : MonoBehaviour
     {
         if (tile.buildable != null && buildable != null && tile.buildable == buildable)
         {
-            buildable.tracked += 1;
-            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
+            tile.buildable.UpdateActiveAmount(true, tile.transform.position);
+            desc.text = "<b>" + tile.buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
         }
     }
 
@@ -106,11 +106,8 @@ public class MenuButton : MonoBehaviour
     {
         if (tile.buildable != null && buildable != null && tile.buildable == buildable)
         {
-            buildable.tracked -= 1;
-            if (buildable.tracked < 0) 
-                buildable.tracked = 0;
-
-            desc.text = "<b>" + buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
+            tile.buildable.UpdateActiveAmount(false, tile.transform.position);
+            desc.text = "<b>" + tile.buildable.tracked + " ACTIVE |</b> <size=16>Click for more details!";
         }
     }
 

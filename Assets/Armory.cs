@@ -53,7 +53,7 @@ public class Armory : MonoBehaviour
         {
             listObj.SetActive(false);
             empty.gameObject.SetActive(true);
-            empty.text = "NO SKINS UNLOCKED FOR\n<SIZE = 30><b>" + buildable.building.name;
+            empty.text = "NO SKINS UNLOCKED FOR\n<SIZE=30><b>" + buildable.building.name.ToUpper();
         }
     }
 }

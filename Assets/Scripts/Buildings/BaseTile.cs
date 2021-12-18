@@ -37,7 +37,7 @@ public class BaseTile : BaseEntity
         // Fire building placed event
         Events.active.BuildingPlaced(this);
     }
-
+    
     public void CheckNearbyEnergizers()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, InstantiationHandler.active.aocbLayer);

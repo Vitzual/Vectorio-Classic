@@ -99,7 +99,7 @@ public class ResearchUI : MonoBehaviour
         if (preview)
         {
             stats.text += "<b>ACTIVE LABS:</b> " + tech.totalLabs + " researching <color=green>(+1))</color>\n";
-            stats.text += "<b>TOTAL EFFECT:</b> " + tech.totalEffect + "x effect <color=green>(+" + type.amount + ")</color>\n";
+            stats.text += "<b>TOTAL EFFECT:</b> " + Mathf.Round(tech.totalEffect) + "x effect <color=green>(+" + type.amount + ")</color>\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
 
             // Get gold amount

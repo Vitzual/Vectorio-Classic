@@ -8,14 +8,6 @@ public class Reclaimer : BaseTile
 
     // Internal placement variables
     public Transform AOCB;
-    public Transform rotator;
-    public float speed;
-
-    // Update is called once per frame
-    void Start()
-    {
-        GameObject.Find("Rotation Handler").GetComponent<RotationHandler>().RegisterRotator(rotator, speed);
-    }
 
     // OUTDATED
     public override void DestroyEntity()

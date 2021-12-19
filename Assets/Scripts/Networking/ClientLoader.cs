@@ -44,8 +44,9 @@ public class ClientLoader : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            Debug.Log("[SERVER] Beginning match request from server...");
+            Debug.Log("[SERVER] Beginning match initial request from server...");
             RequestInitialSetup();
+            Debug.Log("[SERVER] Beginning match info request from server...");
             CmdRequestMatchInfo(0);
         }
     }
@@ -366,7 +367,9 @@ public class ClientLoader : NetworkBehaviour
             if (entity.Value == null) continue;
 
             internalID[index] = entity.Value.internalID;
-            cosmeticID[index] = entity.Value.cosmetic.InternalID;
+            if (entity.Value.cosmetic != null)
+                cosmeticID[index] = entity.Value.cosmetic.InternalID;
+            else cosmeticID[index] = "";
             runtimeID[index] = entity.Key;
             entityHealth[index] = entity.Value.health;
             xCoord[index] = entity.Value.transform.position.x;

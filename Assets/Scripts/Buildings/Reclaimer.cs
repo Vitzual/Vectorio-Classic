@@ -8,6 +8,7 @@ public class Reclaimer : BaseTile
 
     // Internal placement variables
     public Transform AOCB;
+    public int size;
 
     // OUTDATED
     public override void DestroyEntity()
@@ -20,9 +21,9 @@ public class Reclaimer : BaseTile
         int yTile = (int)transform.position.y;
 
         // Loop through all tiles and try to find drones
-        for (int x = xTile - 30; x <= xTile + 30; x += 5)
+        for (int x = xTile - size; x <= xTile + size; x += 5)
         {
-            for (int y = yTile - 30; y <= yTile + 30; y += 5)
+            for (int y = yTile - size; y <= yTile + size; y += 5)
             {
                 BaseTile holder = InstantiationHandler.active.TryGetBuilding(new Vector2(x, y));
                 if (holder != null && holder != this && holder.isSellable) holder.CheckNearbyEnergizers();

@@ -182,7 +182,7 @@ public class InstantiationHandler : MonoBehaviour
         BaseTile tile = tileGrid.RetrieveTile(coords);
         if (tile != null && tile.isSellable) tileGrid.DestroyCell(coords);
     }
-
+    
     // Checks to make sure tile(s) isn't occupied
     public bool CheckTiles(Building building, Vector3 position)
     {

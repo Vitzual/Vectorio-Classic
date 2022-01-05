@@ -21,14 +21,22 @@ public class DefaultTurret : BaseTile, IAudible
     [HideInInspector] public bool useBulletModel = false;
     [HideInInspector] public Sprite bulletModel;
     public bool selfEnable = false;
+    public bool overrideRange = false;
 
     public void Start()
     {
         if (selfEnable)
         {
-            CircleCollider2D collider = GetComponent<CircleCollider2D>();
-            if (collider != null) collider.radius = turret.range;
+            if (!overrideRange)
+            {
+                CircleCollider2D collider = GetComponent<CircleCollider2D>();
+                if (collider != null) collider.radius = turret.range;
+            }
+
             Events.active.RegisterTurret(this);
+
+            if (cosmetic != null)
+                ApplyCosmetic(cosmetic);
         }
     }
 

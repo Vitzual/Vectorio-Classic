@@ -8,6 +8,7 @@ public class BaseTile : BaseEntity
     [HideInInspector] public Buildable buildable;
     public bool saveBuilding = true;
     public bool isSellable = true;
+    public bool canAnimate = true;
 
     public override void Setup() { SetupBase(); }
 

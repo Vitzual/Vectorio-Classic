@@ -52,6 +52,9 @@ public class DefaultWall : BaseTile
         // Set health
         health = buildable.building.health * Research.wallBoost;
         maxHealth = health;
+
+        // Fire building placed event
+        Events.active.BuildingPlaced(this);
     }
 
     public void SetWallStatus(int thisWallID, int otherWallID, DefaultWall otherWallScript)

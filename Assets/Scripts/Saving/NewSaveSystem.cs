@@ -9,6 +9,7 @@ public class NewSaveSystem : MonoBehaviour
     // Save data
     public static SaveData saveData;
     public static bool loadGame = false;
+    public static bool isLoading = false;
     public static string saveName = "Unnamed Save";
     public static string savePath = "/world_1.vectorio";
 
@@ -126,6 +127,9 @@ public class NewSaveSystem : MonoBehaviour
     // Load a game 
     public static void LoadGame()
     {
+        // Set is loading to true
+        isLoading = true;
+
         // Set string variables
         Gamemode.seed = saveData.worldSeed;
         Gamemode.time = saveData.worldPlaytime;
@@ -235,6 +239,9 @@ public class NewSaveSystem : MonoBehaviour
         Resource.active.Apply(Resource.CurrencyType.Gold, saveData.gold, true);
         Resource.active.Apply(Resource.CurrencyType.Essence, saveData.essence, true);
         Resource.active.Apply(Resource.CurrencyType.Iridium, saveData.iridium, true);
+
+        // Set is loading to false
+        isLoading = false;
     }
 
     // Delete save file

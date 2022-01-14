@@ -107,6 +107,7 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    // Checks distance based on resource bounds
     public bool CheckDistance(Spawnable resource, Vector2Int coords)
     {
         return (coords.x > resource.minSpawnDistance || coords.x < -resource.minSpawnDistance ||

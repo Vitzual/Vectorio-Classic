@@ -7,7 +7,12 @@ public class WorldGenerator : MonoBehaviour
     // Active instance
     public static WorldGenerator active;
 
-    // List of resource tiles
+    // Starting resources
+    public List<Transform> startingResources;
+    public TileBase startingResourceTile;
+    public Resource.CurrencyType startingResourceType;
+
+    // List of resources
     public Tilemap resourceGrid;
     public int borderSize = 750;
     public float perlinScale = 500;
@@ -29,6 +34,9 @@ public class WorldGenerator : MonoBehaviour
         int startingRange = 0;
         foreach (Spawnable spawnable in spawnables)
             spawnable.spawnOffset = Random.Range(startingRange, startingRange += 10000);
+
+        // Set starting resources
+        SpawnStartingResources();
 
         // Begin generating
         GenerateWorld();
@@ -61,7 +69,7 @@ public class WorldGenerator : MonoBehaviour
 
         // Close menu
         NewInterface.active.ToggleQuitMenu();
-}
+    }
 
     // Loops through a new chunk and spawns resources based on perlin noise values
     private void GenerateWorld()
@@ -88,6 +96,21 @@ public class WorldGenerator : MonoBehaviour
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    // Creates the starting resources
+    public void SpawnStartingResources()
+    {
+        foreach (Transform resource in startingResources)
+        {
+            if (resource != null)
+            {
+                Vector2Int coords = new Vector2Int((int)resource.position.x / 5, (int)resource.position.y / 5);
+                resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), startingResourceTile);
+                spawnedResources.Add(coords, startingResourceType);
+                Recycler.AddRecyclable(resource.transform);
             }
         }
     }

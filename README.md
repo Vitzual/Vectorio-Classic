@@ -7,9 +7,9 @@ Welcome to the source code for Vectorio!
 - [Track Progress](https://github.com/Vitzual/Vectorio/projects)
 
 # Note about this repository
-Since Vectorio contains paid cosmetics and a DLC mode, some of the assets used in those systems are not present in this repository. Because of that, I cannot provide a license to the repository as of right now. This also means that if you try to build the game, you will have to heavily modify the source to get it to work. I am still working on a workaround to this, but it's better to treat the repository as something you can reference for your own projects, rather than one you can make contributions to. 
+Since Vectorio contains paid cosmetics and a DLC mode, some of the assets used in those systems are not present in this repository. Because of that, I cannot provide a license to the repository. This also means that if you try to build the game, you will have to heavily modify the source to get it to work. 
 
-Again, this is only temporary until I figure out a solution for this!
+Keeping these things in mind, it's better to treat the repository as something you can reference for your own projects, rather than one you can make contributions to.
 
 # Required Assets
 **HEAVY DEPENDENCIES** (Project relies heavily on these assets)

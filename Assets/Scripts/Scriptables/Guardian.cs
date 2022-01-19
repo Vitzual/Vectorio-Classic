@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Guardian", menuName = "Enemy/Guardian")]
+[CreateAssetMenu(fileName = "New Guardian", menuName = "Vectorio/Enemy/Guardian")]
 public class Guardian : Enemy
 {
     // Variable stuff

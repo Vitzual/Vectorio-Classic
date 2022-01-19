@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Difficulty", menuName = "Difficulty")]
+[CreateAssetMenu(fileName = "New Difficulty", menuName = "Vectorio/Difficulty")]
 public class Difficulty : ScriptableObject
 {
     [Header("Difficulty Settings")]

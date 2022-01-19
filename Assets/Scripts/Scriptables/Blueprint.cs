@@ -7,7 +7,7 @@ using UnityEngine;
 // it will take a few iterations to get it exactly
 // how I want, so please keep that in mind!
 
-[CreateAssetMenu(fileName = "New Blueprint", menuName = "Building/Blueprint")]
+[CreateAssetMenu(fileName = "New Blueprint", menuName = "Vectorio/Building/Blueprint")]
 public class Blueprint : IdentifiableScriptableObject
 {
     public enum RarityType

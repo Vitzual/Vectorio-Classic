@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Tech", menuName = "Building/Research")]
+[CreateAssetMenu(fileName = "New Tech", menuName = "Vectorio/Building/Research")]
 public class ResearchTech : IdentifiableScriptableObject
 {
     // Start is called before the first frame update

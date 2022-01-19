@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Turret", menuName = "Building/Turret")]
+[CreateAssetMenu(fileName = "New Turret", menuName = "Vectorio/Building/Turret")]
 public class Turret : Building
 {
     // Base turret stat variables

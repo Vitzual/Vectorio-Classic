@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Variant", menuName = "Enemy/Variant")]
+[CreateAssetMenu(fileName = "New Variant", menuName = "Vectorio/Enemy/Variant")]
 public class Variant : IdentifiableScriptableObject
 {
     // Variant info

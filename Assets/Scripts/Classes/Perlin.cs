@@ -2,13 +2,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public class Spawnable
+public class Perlin
 {
-    public Resource.CurrencyType type;
-    public TileBase tile;
     public float spawnScale;
     public float spawnThreshold;
     public float minSpawnDistance;
     public float maxSpawnDistance;
-    [HideInInspector] public float spawnOffset;
+    public float spawnOffset;
 }

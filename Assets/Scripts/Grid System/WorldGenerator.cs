@@ -4,20 +4,41 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
+    // Resource class
+    public class SpawnedResource
+    {
+        public SpawnedResource(Resource.CurrencyType type, bool unlimited, int amount)
+        {
+            this.type = type;
+            this.unlimited = unlimited;
+            this.amount = amount;
+        }
+
+        public Resource.CurrencyType type;
+        public bool unlimited;
+        public int amount;
+    }
+
+    // Starting resource class
+    [System.Serializable]
+    public class StartingResource
+    {
+        public Transform transform;
+        public Currency type;
+    }
+
     // Active instance
     public static WorldGenerator active;
 
     // Starting resources
+    public Currency startingCurrency; 
     public List<Transform> startingResources;
-    public TileBase startingResourceTile;
-    public Resource.CurrencyType startingResourceType;
 
     // List of resources
     public Tilemap resourceGrid;
     public int borderSize = 750;
     public float perlinScale = 500;
-    public Spawnable[] spawnables;
-    [HideInInspector] public Dictionary<Vector2, Resource.CurrencyType> spawnedResources;
+    [HideInInspector] public Dictionary<Vector2, SpawnedResource> spawnedResources;
 
     public void Awake() { active = this; }
 
@@ -25,15 +46,10 @@ public class WorldGenerator : MonoBehaviour
     public void GenerateWorldData(string seed)
     {
         // Create a new resource grid
-        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, SpawnedResource>();
 
         // Set random seed
         Random.seed = seed.GetHashCode();
-
-        // Iterate through offset values
-        int startingRange = 0;
-        foreach (Spawnable spawnable in spawnables)
-            spawnable.spawnOffset = Random.Range(startingRange, startingRange += 10000);
 
         // Set starting resources
         SpawnStartingResources();
@@ -48,7 +64,7 @@ public class WorldGenerator : MonoBehaviour
     {
         // Clear previous data
         resourceGrid.ClearAllTiles();
-        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, SpawnedResource>();
 
         // Set new random variables
         int previousSeed = Random.seed;
@@ -58,11 +74,6 @@ public class WorldGenerator : MonoBehaviour
 
         // Debug
         Debug.Log("Reseeded from " + previousSeed + " to " + Gamemode.seed);
-
-        // Create offset for spawnables
-        int startingRange = 0;
-        foreach (Spawnable spawnable in spawnables)
-            spawnable.spawnOffset = Random.Range(startingRange, startingRange += 10000);
 
         // Generate world
         GenerateWorld();
@@ -79,20 +90,20 @@ public class WorldGenerator : MonoBehaviour
         {
             for (int y = -borderSize; y < borderSize; y++)
             {
-                foreach (Spawnable spawnable in spawnables)
+                foreach (Currency currency in ScriptableLoader.currencies)
                 {
                     // Calculate perlin noise pixel
-                    float xCoord = ((float)x / spawnable.spawnScale) + spawnable.spawnOffset;
-                    float yCoord = ((float)y / spawnable.spawnScale) + spawnable.spawnOffset;
+                    float xCoord = ((float)x / currency.perlin.spawnScale) + currency.perlin.spawnOffset;
+                    float yCoord = ((float)y / currency.perlin.spawnScale) + currency.perlin.spawnOffset;
                     float value = Mathf.PerlinNoise(xCoord, yCoord);
 
                     // Get adjustment based on difficulty
-                    float adjustment = GetResourceModification(spawnable.type);
+                    float adjustment = 0;
 
                     // If value exceeds threshold, try and generate
-                    if (value >= spawnable.spawnThreshold - adjustment)
+                    if (value >= currency.perlin.spawnThreshold - adjustment)
                     {
-                        TrySpawnResource(spawnable, x, y);
+                        TrySpawnResource(currency, x, y);
                         break;
                     }
                 }
@@ -108,30 +119,32 @@ public class WorldGenerator : MonoBehaviour
             if (resource != null)
             {
                 Vector2Int coords = new Vector2Int((int)resource.position.x / 5, (int)resource.position.y / 5);
-                resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), startingResourceTile);
-                spawnedResources.Add(coords, startingResourceType);
+                resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), startingCurrency.tile);
+                spawnedResources.Add(coords, new SpawnedResource(startingCurrency.type, startingCurrency.unlimited,
+                    Random.Range(startingCurrency.minAmount, startingCurrency.maxAmount)));
                 Recycler.AddRecyclable(resource.transform);
             }
         }
     }
 
     // Try and spawn a resource
-    private void TrySpawnResource(Spawnable resource, int x, int y)
+    private void TrySpawnResource(Currency resource, int x, int y)
     {
         // Get x and y pos
         Vector2Int coords = new Vector2Int(x, y);
 
         // Check cell to make sure it's empty
-        if (!spawnedResources.ContainsKey(coords) && CheckDistance(resource, coords))
+        if (!spawnedResources.ContainsKey(coords) && CheckDistance(resource.perlin, coords))
         {
             // Create the resource
             resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), resource.tile);
-            spawnedResources.Add(coords, resource.type);
+            spawnedResources.Add(coords, new SpawnedResource(resource.type, resource.unlimited,
+                Random.Range(resource.minAmount, resource.maxAmount)));
         }
     }
 
     // Checks distance based on resource bounds
-    public bool CheckDistance(Spawnable resource, Vector2Int coords)
+    public bool CheckDistance(Perlin resource, Vector2Int coords)
     {
         return (coords.x > resource.minSpawnDistance || coords.x < -resource.minSpawnDistance ||
                coords.y > resource.minSpawnDistance || coords.y < -resource.minSpawnDistance) &&
@@ -145,7 +158,7 @@ public class WorldGenerator : MonoBehaviour
         Vector2 adjustedCoords = new Vector2(coords.x / 5, coords.y / 5);
 
         if (spawnedResources.ContainsKey(adjustedCoords) &&
-            spawnedResources[adjustedCoords] == type) return true;
+            spawnedResources[adjustedCoords].type == type) return true;
         else return false;
     }
 

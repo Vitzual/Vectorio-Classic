@@ -28,6 +28,9 @@ public class Gamemode : MonoBehaviour
     public static string seed = "Vectorio";
     public static float time = 0;
 
+    // For testing
+    public bool selfStart = false;
+
     // Gamemode information
     [Header("Gamemode Info")]
     public new string name;
@@ -87,6 +90,9 @@ public class Gamemode : MonoBehaviour
         // Generate all scriptables
         ScriptableLoader.GenerateAllScriptables();
         if (LowresMap.active != null) LowresMap.active.Setup();
+
+        // Check if self start
+        if (selfStart) Setup();
     }
 
     // Setup game

@@ -18,7 +18,8 @@ public class Resource : NetworkBehaviour
         Essence = 1,
         Iridium = 2,
         Power = 3,
-        Heat = 4
+        Heat = 4,
+        Crystalline = 5
     }
 
     // Resource currency class

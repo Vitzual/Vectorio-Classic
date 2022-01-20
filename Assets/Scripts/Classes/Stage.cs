@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Stage", menuName = "Stage")]
+[CreateAssetMenu(fileName = "New Stage", menuName = "Vectorio/Stage")]
 public class Stage : IdentifiableScriptableObject
 {
     // Stage variables

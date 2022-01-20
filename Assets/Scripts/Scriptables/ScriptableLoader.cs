@@ -14,6 +14,7 @@ public static class ScriptableLoader
     public static string StagePath = "Scriptables/Stages";
     public static string ResearchPath = "Scriptables/Research";
     public static string CosmeticPath = "Scriptables/Cosmetics";
+    public static string CurrenciesPath = "Scriptables/Currencies";
 
     public static Dictionary<string, Building> buildings;
     public static Dictionary<string, Enemy> enemies;
@@ -22,6 +23,8 @@ public static class ScriptableLoader
     public static Dictionary<string, Stage> stages;
     public static Dictionary<string, ResearchTech> researchTechs;
     public static Dictionary<string, Cosmetic> cosmetics;
+
+    public static List<Currency> currencies;
 
     public static Dictionary<string, Entity> allLoadedEntities = 
               new Dictionary<string, Entity>();
@@ -33,6 +36,7 @@ public static class ScriptableLoader
         Buildables.active = new Dictionary<Entity, Buildable>();
 
         GenerateCosmetics();
+        GenerateCurrencies();
 
         Building hub = Resources.Load<Building>("Scriptables/Hub");
         if (hub != null)
@@ -168,6 +172,20 @@ public static class ScriptableLoader
         {
             cosmetics.Add(cosmetic.InternalID, cosmetic);
             Debug.Log("Loaded " + cosmetic.name + " with UUID " + cosmetic.InternalID);
+        }
+    }
+
+    // Generate cosmetics on run
+    public static void GenerateCurrencies()
+    {
+        currencies = new List<Currency>();
+        List<Currency> loaded = Resources.LoadAll(CurrenciesPath, typeof(Currency)).Cast<Currency>().ToList();
+        Debug.Log("Loaded " + loaded.Count + " currencies from " + CurrenciesPath);
+
+        foreach (Currency currency in loaded)
+        {
+            currencies.Add(currency);
+            Debug.Log("Loaded " + currency.name + " with UUID " + currency.InternalID);
         }
     }
 }

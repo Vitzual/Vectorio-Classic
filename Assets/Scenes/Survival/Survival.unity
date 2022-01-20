@@ -3306,7 +3306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &95965929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11114,6 +11114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a1b3c8b8c6c8d4a9204b71185bca03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingCurrency: {fileID: 11400000, guid: dd7f3f95bfcc0f94cb8cf166a06ab574, type: 2}
   startingResources:
   - {fileID: 234295355}
   - {fileID: 524028150}
@@ -11142,34 +11143,9 @@ MonoBehaviour:
   - {fileID: 1172448474}
   - {fileID: 1253885357}
   - {fileID: 940100504}
-  startingResourceTile: {fileID: 11400000, guid: 571e31d74f7191f4da8254f8fdf32c82,
-    type: 2}
-  startingResourceType: 0
   resourceGrid: {fileID: 1096099182}
   borderSize: 750
   perlinScale: 200
-  spawnables:
-  - type: 0
-    tile: {fileID: 11400000, guid: 571e31d74f7191f4da8254f8fdf32c82, type: 2}
-    spawnScale: 15
-    spawnThreshold: 0.85
-    minSpawnDistance: 5
-    maxSpawnDistance: 200
-    spawnOffset: 0
-  - type: 1
-    tile: {fileID: 11400000, guid: 0fe6331eb1fa59c488298c94a27a53c1, type: 2}
-    spawnScale: 17
-    spawnThreshold: 0.875
-    minSpawnDistance: 50
-    maxSpawnDistance: 300
-    spawnOffset: 0
-  - type: 2
-    tile: {fileID: 11400000, guid: 9b83f65825ad2e0478fb38db269e766f, type: 2}
-    spawnScale: 20
-    spawnThreshold: 0.9
-    minSpawnDistance: 180
-    maxSpawnDistance: 300
-    spawnOffset: 0
 --- !u!4 &292738431
 Transform:
   m_ObjectHideFlags: 0
@@ -39825,7 +39801,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1201542762}
   m_HandleRect: {fileID: 1201542761}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -43051,7 +43027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1238382702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59863,7 +59839,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2014892032}
   m_HandleRect: {fileID: 2014892031}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -65378,7 +65354,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 15403282}
   m_HandleRect: {fileID: 15403281}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -73091,8 +73067,9 @@ MonoBehaviour:
   networkSync: {fileID: 8908889466884500592, guid: 4a80280297acd4847b9a70984e572645,
     type: 3}
   resource: {fileID: 556928809}
+  selfStart: 1
   name: Survival
-  version: v0.3.5
+  version: v0.4
   _stage: {fileID: 11400000, guid: ffaacb3a2bb39314db6572ed7f6e24b6, type: 2}
   _difficulty: {fileID: 11400000, guid: 2ddc3c9208188c745b5ba526e8a9a0ed, type: 2}
   naturalHeatTimer: 5
@@ -79068,7 +79045,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648614288212214}
   m_HandleRect: {fileID: 5933648614288212215}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -81480,7 +81457,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615395611188}
   m_HandleRect: {fileID: 5933648615395611189}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -81593,7 +81570,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5933648615616703358}
   m_HandleRect: {fileID: 5933648615616703359}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
-    // Resource class
-    public class SpawnedResource
-    {
-        public SpawnedResource(Resource.CurrencyType type, bool unlimited, int amount)
-        {
-            this.type = type;
-            this.unlimited = unlimited;
-            this.amount = amount;
-        }
-
-        public Resource.CurrencyType type;
-        public bool unlimited;
-        public int amount;
-    }
-
     // Starting resource class
     [System.Serializable]
     public class StartingResource
@@ -38,7 +23,7 @@ public class WorldGenerator : MonoBehaviour
     public Tilemap resourceGrid;
     public int borderSize = 750;
     public float perlinScale = 500;
-    [HideInInspector] public Dictionary<Vector2, SpawnedResource> spawnedResources;
+    [HideInInspector] public Dictionary<Vector2, Resource.CurrencyType> spawnedResources;
 
     public void Awake() { active = this; }
 
@@ -46,7 +31,7 @@ public class WorldGenerator : MonoBehaviour
     public void GenerateWorldData(string seed)
     {
         // Create a new resource grid
-        spawnedResources = new Dictionary<Vector2, SpawnedResource>();
+        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
 
         // Set random seed
         Random.seed = seed.GetHashCode();
@@ -64,7 +49,7 @@ public class WorldGenerator : MonoBehaviour
     {
         // Clear previous data
         resourceGrid.ClearAllTiles();
-        spawnedResources = new Dictionary<Vector2, SpawnedResource>();
+        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
 
         // Set new random variables
         int previousSeed = Random.seed;
@@ -120,8 +105,7 @@ public class WorldGenerator : MonoBehaviour
             {
                 Vector2Int coords = new Vector2Int((int)resource.position.x / 5, (int)resource.position.y / 5);
                 resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), startingCurrency.tile);
-                spawnedResources.Add(coords, new SpawnedResource(startingCurrency.type, startingCurrency.unlimited,
-                    Random.Range(startingCurrency.minAmount, startingCurrency.maxAmount)));
+                spawnedResources.Add(coords, startingCurrency.type);
                 Recycler.AddRecyclable(resource.transform);
             }
         }
@@ -138,8 +122,7 @@ public class WorldGenerator : MonoBehaviour
         {
             // Create the resource
             resourceGrid.SetTile(new Vector3Int(coords.x, coords.y, 0), resource.tile);
-            spawnedResources.Add(coords, new SpawnedResource(resource.type, resource.unlimited,
-                Random.Range(resource.minAmount, resource.maxAmount)));
+            spawnedResources.Add(coords, resource.type);
         }
     }
 
@@ -158,7 +141,7 @@ public class WorldGenerator : MonoBehaviour
         Vector2 adjustedCoords = new Vector2(coords.x / 5, coords.y / 5);
 
         if (spawnedResources.ContainsKey(adjustedCoords) &&
-            spawnedResources[adjustedCoords].type == type) return true;
+            spawnedResources[adjustedCoords] == type) return true;
         else return false;
     }
 

@@ -17,7 +17,7 @@ public class Research : MonoBehaviour
             new Dictionary<Resource.CurrencyType, float>();
     }
 
-    // Create new lsit of techs
+    // Create new list of techs
     public static Dictionary<ResearchTech, Tech> techs = 
               new Dictionary<ResearchTech, Tech>();
 

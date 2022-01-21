@@ -186,10 +186,13 @@ public class Panel : MonoBehaviour
         // Create modifier variable
         string modifier = "";
 
+        // Calculate modifier value
+        float value = stat.GetModifier();
+
         // Set modifier string if not 0
-        if (stat.modifier > 0)
+        if (value > 0)
             modifier = "<color=green>(+" + stat.modifier + ")";
-        else if (stat.modifier < 0)
+        else if (value < 0)
             modifier = "<color=red>(+" + stat.modifier + ")";
 
         // Set the values

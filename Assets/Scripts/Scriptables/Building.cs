@@ -36,7 +36,6 @@ public class Building : Entity
     [FoldoutGroup("Building Variables")]
     public ParticleSystem deathParticle;
 
-
     // Creates stats
     public override void CreateStats(Panel panel)
     {

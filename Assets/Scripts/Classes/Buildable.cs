@@ -8,18 +8,9 @@ using UnityEngine;
 
 public class Buildable
 {
-    // Turret parameterized constructor
-    public Buildable(Turret turret)
-    {
-        this.turret = turret;
-        building = turret;
-        GenerateNewInstance();
-    }
-
     // Parameterized constructor (create a new buildable instance)
     public Buildable(Building building)
     {
-        turret = null;
         this.building = building;
         GenerateNewInstance();
     }
@@ -27,6 +18,9 @@ public class Buildable
     // Generate new instance
     public void GenerateNewInstance()
     {
+        // Check to make sure building has been assigned
+        if (building == null) return;
+
         // Grab available cosmetics
         availableCosmetics = new List<Cosmetic>();
         foreach (KeyValuePair<string, Cosmetic> cosmetic in ScriptableLoader.cosmetics)
@@ -56,6 +50,7 @@ public class Buildable
         isDefense = obj.GetComponent<DefaultTurret>() != null;
         isDroneport = obj.GetComponent<Droneport>() != null;
 
+        // Log to console that a new buildable has been registered
         Debug.Log("Registered " + building.name + " buildable and linked to " + building.InternalID);
     }
 

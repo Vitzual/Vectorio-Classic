@@ -24,6 +24,8 @@ public class Panel : MonoBehaviour
 
     // Panel UI variables
     public new TextMeshProUGUI name;
+    public TextMeshProUGUI levelFront;
+    public TextMeshProUGUI levelBack;
     public TextMeshProUGUI desc;
     public ButtonManagerBasic hotbar;
     public Image icon;
@@ -128,6 +130,10 @@ public class Panel : MonoBehaviour
             desc.text = buildable.cosmetic.description;
             icon.sprite = buildable.cosmetic.hologram;
         }
+
+        // Set the level
+        levelFront.text = "LVL " + buildable.level;
+        levelBack.text = levelFront.text;
 
         // Create stats for the building
         SetUnused();

@@ -1,25 +1,43 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// List of all buildables
+// This is a class that holds runtime building data, such as
+// level, cost modifiers, cosmetics, and so on. You don't really
+// need to worry about this class; if you need a building to
+// hold something at runtime, just add it here. 
+
 public class Buildable
 {
-    // Constructor
+    // Turret parameterized constructor
+    public Buildable(Turret turret)
+    {
+        this.turret = turret;
+        building = turret;
+        GenerateNewInstance();
+    }
+
+    // Parameterized constructor (create a new buildable instance)
     public Buildable(Building building)
     {
+        turret = null;
         this.building = building;
-        obj = building.obj;
-        discount = 1f;
-        tracked = 0;
+        GenerateNewInstance();
+    }
 
+    // Generate new instance
+    public void GenerateNewInstance()
+    {
+        // Grab available cosmetics
         availableCosmetics = new List<Cosmetic>();
         foreach (KeyValuePair<string, Cosmetic> cosmetic in ScriptableLoader.cosmetics)
             if (cosmetic.Value.building == building) availableCosmetics.Add(cosmetic.Value);
 
-        showButtons = new List<MenuButton>();
+        // Set runtime variables to default
+        obj = building.obj;
         unlockable = building.unlockable;
+        isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
 
+        // Set default resource costs
         resources = new Cost[building.resources.Length];
         for (int i = 0; i < resources.Length; i++)
         {
@@ -29,27 +47,37 @@ public class Buildable
             resources[i].amount = building.resources[i].amount;
         }
 
-        isUnlocked = building.unlockable.unlocked || Gamemode.active.unlockEverything;
-        blueprintSlots = new CollectedBlueprint[building.engineeringSlots];
+        // Generate new button list
+        showButtons = new List<MenuButton>();
 
+        // Set internal flags
         isCollector = obj.GetComponent<DefaultCollector>() != null;
         isStorage = obj.GetComponent<DefaultStorage>() != null;
         isDefense = obj.GetComponent<DefaultTurret>() != null;
         isDroneport = obj.GetComponent<Droneport>() != null;
-        
+
         Debug.Log("Registered " + building.name + " buildable and linked to " + building.InternalID);
     }
 
-    // Buildable variables
+    // Scriptable references
     public Building building;
-    public List<Cosmetic> availableCosmetics;
+    public Turret turret;
     public Cosmetic cosmetic;
-    public MenuButton button;
+    public List<Cosmetic> availableCosmetics;
+
+    // Runtime variables
+    public int level = 1;
+    public int tracked = 0;
     public GameObject obj;
-    public List<MenuButton> showButtons;
     public Unlockable unlockable;
-    public int tracked;
     public bool isUnlocked;
+
+    // Building variables
+    public Cost[] resources;
+
+    // Interface variables
+    public MenuButton button;
+    public List<MenuButton> showButtons;
 
     // Last positions
     public Vector2 lastBuildPos;
@@ -60,10 +88,6 @@ public class Buildable
     public bool isStorage;
     public bool isDefense;
     public bool isDroneport;
-
-    // Building variables
-    public float discount;
-    public Cost[] resources;
 
     // Blueprints applied to this buildable
     public CollectedBlueprint[] blueprintSlots;

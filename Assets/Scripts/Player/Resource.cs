@@ -38,6 +38,7 @@ public class Resource : NetworkBehaviour
         public bool enabled;
         public GameObject element;
         public Image background;
+        public Color normalColor;
         public TextMeshProUGUI resourceUI;
         public TextMeshProUGUI storageUI;
 

@@ -51,12 +51,6 @@ public static class Buildables
     {
         foreach (KeyValuePair<Entity, Buildable> buildable in active)
         {
-            if (buildable.Value.button == null)
-            {
-                Debug.Log("[NULL] " + buildable.Key.name);
-                continue;
-            }
-
             Buildable requirement = RequestBuildable(buildable.Value.building.unlockable.requirement);
 
             if (requirement != null && !requirement.unlockable.unlocked)

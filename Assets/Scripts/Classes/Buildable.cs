@@ -60,8 +60,12 @@ public class Buildable
     public Cosmetic cosmetic;
     public List<Cosmetic> availableCosmetics;
 
-    // Runtime variables
+    // Leveling variables
     public int level = 1;
+    public int currentXP = 0;
+    public int requiredXP = 0;
+
+    // Runtime variables
     public int tracked = 0;
     public GameObject obj;
     public Unlockable unlockable;

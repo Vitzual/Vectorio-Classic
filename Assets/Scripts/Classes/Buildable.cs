@@ -62,6 +62,7 @@ public class Buildable
 
     // Leveling variables
     public int level = 1;
+    public int maxLevel = 30;
     public int currentXP = 0;
     public int requiredXP = 0;
 
@@ -91,6 +92,20 @@ public class Buildable
     // Blueprints applied to this buildable
     public CollectedBlueprint[] blueprintSlots;
     
+    // Level up
+    public void Upgrade()
+    {
+        // Return if already at max level
+        if (level >= maxLevel || currentXP < requiredXP) return;
+
+        // Increase level
+        level += 1;
+
+        // Calculate new XP costs
+        currentXP = 0;
+        requiredXP = (int)Mathf.Pow(level, 2) * building.xpMultiplier;
+    }
+
     // Apply cosmetic
     public void ApplyCosmetic(Cosmetic cosmetic)
     {

@@ -97,9 +97,9 @@ public class NewSaveSystem : MonoBehaviour
 
         // Set the rest of the data
         saveData.stage = Gamemode.stage.InternalID;
-        saveData.gold = Resource.active.GetAmount(Resource.CurrencyType.Gold);
-        saveData.essence = Resource.active.GetAmount(Resource.CurrencyType.Essence);
-        saveData.iridium = Resource.active.GetAmount(Resource.CurrencyType.Iridium);
+        saveData.gold = Resource.active.GetAmount(Resource.Type.Gold);
+        saveData.essence = Resource.active.GetAmount(Resource.Type.Essence);
+        saveData.iridium = Resource.active.GetAmount(Resource.Type.Iridium);
 
         // Set string variables
         saveData.worldName = saveName;
@@ -236,9 +236,9 @@ public class NewSaveSystem : MonoBehaviour
         }
 
         // Check resources
-        Resource.active.Apply(Resource.CurrencyType.Gold, saveData.gold, true);
-        Resource.active.Apply(Resource.CurrencyType.Essence, saveData.essence, true);
-        Resource.active.Apply(Resource.CurrencyType.Iridium, saveData.iridium, true);
+        Resource.active.Apply(Resource.Type.Gold, saveData.gold, true);
+        Resource.active.Apply(Resource.Type.Essence, saveData.essence, true);
+        Resource.active.Apply(Resource.Type.Iridium, saveData.iridium, true);
 
         // Set is loading to false
         isLoading = false;

@@ -18,7 +18,7 @@ public class Popup : MonoBehaviour
         return false;
     }
 
-    public void SetPopup(string amount, Resource.CurrencyType type)
+    public void SetPopup(string amount, Resource.Type type)
     {
         amountText.text = amount;
         icon.sprite = Resource.active.GetSprite(type);

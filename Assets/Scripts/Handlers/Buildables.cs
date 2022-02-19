@@ -103,7 +103,7 @@ public static class Buildables
     }
 
     // Update resource unlocks
-    public static void UpdateResourceUnlockables(Resource.CurrencyType resourceType)
+    public static void UpdateResourceUnlockables(Resource.Type resourceType)
     {
         // Get unlock type
         Unlockable.UnlockType unlockType = Unlockable.UnlockType.ReachResourceAmount;

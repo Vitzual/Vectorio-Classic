@@ -103,25 +103,25 @@ public class ResearchUI : MonoBehaviour
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
 
             // Get gold amount
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))
-                consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.CurrencyType.Gold] + " / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Gold) + ")</color>\n";
-            else consumption.text += "<b>GOLD:</b> 0 / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Gold) + ")</color>\n";
+            if (tech.costs.ContainsKey(Resource.Type.Gold))
+                consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.Type.Gold] + " / second <color=red>(+" + type.GetCost(Resource.Type.Gold) + ")</color>\n";
+            else consumption.text += "<b>GOLD:</b> 0 / second <color=red>(+" + type.GetCost(Resource.Type.Gold) + ")</color>\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Essence))
-                consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.CurrencyType.Essence] + " / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Essence) + ")</color>\n";
-            else consumption.text += "<b>ESSENCE:</b> 0 / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Essence) + ")</color>\n";
+            if (tech.costs.ContainsKey(Resource.Type.Essence))
+                consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.Type.Essence] + " / second <color=red>(+" + type.GetCost(Resource.Type.Essence) + ")</color>\n";
+            else consumption.text += "<b>ESSENCE:</b> 0 / second <color=red>(+" + type.GetCost(Resource.Type.Essence) + ")</color>\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Iridium))
-                consumption.text += "<b>IRIDUM:</b> " + tech.costs[Resource.CurrencyType.Iridium] + " / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Iridium) + ")</color>\n";
-            else consumption.text += "<b>IRIDUM:</b> 0 / second <color=red>(+" + type.GetCost(Resource.CurrencyType.Iridium) + ")</color>\n";
+            if (tech.costs.ContainsKey(Resource.Type.Iridium))
+                consumption.text += "<b>IRIDUM:</b> " + tech.costs[Resource.Type.Iridium] + " / second <color=red>(+" + type.GetCost(Resource.Type.Iridium) + ")</color>\n";
+            else consumption.text += "<b>IRIDUM:</b> 0 / second <color=red>(+" + type.GetCost(Resource.Type.Iridium) + ")</color>\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Power))
-                usage.text += "<b>POWER:</b> " + tech.costs[Resource.CurrencyType.Power] + " input <color=red>(+" + type.GetCost(Resource.CurrencyType.Power) + ")</color>\n";
-            else usage.text += "<b>POWER:</b> 0 input <color=red>(+" + type.GetCost(Resource.CurrencyType.Power) + ")</color>\n";
+            if (tech.costs.ContainsKey(Resource.Type.Power))
+                usage.text += "<b>POWER:</b> " + tech.costs[Resource.Type.Power] + " input <color=red>(+" + type.GetCost(Resource.Type.Power) + ")</color>\n";
+            else usage.text += "<b>POWER:</b> 0 input <color=red>(+" + type.GetCost(Resource.Type.Power) + ")</color>\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Heat))
-                usage.text += "<b>HEAT:</b> " + tech.costs[Resource.CurrencyType.Heat] + " output <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
-            else usage.text += "<b>HEAT:</b> 0 output <color=red>(+" + type.GetCost(Resource.CurrencyType.Heat) + ")</color>\n";
+            if (tech.costs.ContainsKey(Resource.Type.Heat))
+                usage.text += "<b>HEAT:</b> " + tech.costs[Resource.Type.Heat] + " output <color=red>(+" + type.GetCost(Resource.Type.Heat) + ")</color>\n";
+            else usage.text += "<b>HEAT:</b> 0 output <color=red>(+" + type.GetCost(Resource.Type.Heat) + ")</color>\n";
 
             applyButton.buttonText = "INITIATE RESEARCH";
             applyButton.UpdateUI();
@@ -132,24 +132,24 @@ public class ResearchUI : MonoBehaviour
             stats.text += "<b>TOTAL EFFECT:</b> " + Mathf.Round(tech.totalEffect) + "x effect\n";
             stats.text += "<b>BREAKDOWNS:</b> " + tech.totalBooms + " breakdowns\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Gold))
-                consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.CurrencyType.Gold] + " / second\n";
+            if (tech.costs.ContainsKey(Resource.Type.Gold))
+                consumption.text += "<b>GOLD:</b> " + tech.costs[Resource.Type.Gold] + " / second\n";
             else consumption.text += "<b>GOLD:</b> 0 / second\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Essence))
-                consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.CurrencyType.Essence] + " / second\n";
+            if (tech.costs.ContainsKey(Resource.Type.Essence))
+                consumption.text += "<b>ESSENCE:</b> " + tech.costs[Resource.Type.Essence] + " / second\n";
             else consumption.text += "<b>ESSENCE:</b> 0 / second\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Iridium))
-                consumption.text += "<b>IRIDIUM:</b> " + tech.costs[Resource.CurrencyType.Iridium] + " / second\n";
+            if (tech.costs.ContainsKey(Resource.Type.Iridium))
+                consumption.text += "<b>IRIDIUM:</b> " + tech.costs[Resource.Type.Iridium] + " / second\n";
             else consumption.text += "<b>IRIDIUM:</b> 0 / second\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Power))
-                usage.text += "<b>POWER:</b> " + tech.costs[Resource.CurrencyType.Power] + " input\n";
+            if (tech.costs.ContainsKey(Resource.Type.Power))
+                usage.text += "<b>POWER:</b> " + tech.costs[Resource.Type.Power] + " input\n";
             else usage.text += "<b>POWER:</b> 0 input\n";
 
-            if (tech.costs.ContainsKey(Resource.CurrencyType.Heat))
-                usage.text += "<b>HEAT:</b> " + tech.costs[Resource.CurrencyType.Heat] + " output\n";
+            if (tech.costs.ContainsKey(Resource.Type.Heat))
+                usage.text += "<b>HEAT:</b> " + tech.costs[Resource.Type.Heat] + " output\n";
             else usage.text += "<b>HEAT:</b> 0 output\n";
 
             applyButton.buttonText = "CANCEL RESEARCH";
@@ -197,7 +197,7 @@ public class ResearchUI : MonoBehaviour
     public void OnLabClicked(ResearchLab lab)
     {
         // Update all research
-        int heat = Resource.active.GetAmount(Resource.CurrencyType.Heat);
+        int heat = Resource.active.GetAmount(Resource.Type.Heat);
         Debug.Log("Lab opened with " + heat + " heat");
         foreach (KeyValuePair<ResearchTech, ResearchButton> button in researchButtons)
             if (!button.Value.isUnlocked && button.Value.researchTech.heatUnlockCost <= heat)

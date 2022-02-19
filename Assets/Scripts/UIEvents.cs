@@ -54,8 +54,8 @@ public class UIEvents : MonoBehaviour
     }
 
     // On add resource
-    public event Action<Resource.CurrencyType, int> onAddResource;
-    public void AddResource(Resource.CurrencyType currency, int amount)
+    public event Action<Resource.Type, int> onAddResource;
+    public void AddResource(Resource.Type currency, int amount)
     {
         if (onAddResource != null)
             onAddResource(currency, amount);

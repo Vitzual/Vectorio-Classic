@@ -129,7 +129,7 @@ public class Buildable
     }
 
     // Get resource
-    public virtual int GetResource(Resource.CurrencyType type)
+    public virtual int GetResource(Resource.Type type)
     {
         foreach (Cost cost in resources)
             if (cost.type == type)

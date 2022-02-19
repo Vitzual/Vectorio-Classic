@@ -12,7 +12,7 @@ public class BuildPlans : MonoBehaviour
     public CanvasGroup canvasGroup;
 
     // Amount tracked
-    public Dictionary<Resource.CurrencyType, BuildCost> tracked;
+    public Dictionary<Resource.Type, BuildCost> tracked;
     public TextMeshProUGUI totalQueued;
     public TextMeshProUGUI dronesAvailable;
     public List<BuildCost> buildCosts;
@@ -20,7 +20,7 @@ public class BuildPlans : MonoBehaviour
     // Create new dictionary
     public void Awake()
     {
-        tracked = new Dictionary<Resource.CurrencyType, BuildCost>();
+        tracked = new Dictionary<Resource.Type, BuildCost>();
 
         foreach (BuildCost cost in buildCosts)
             tracked.Add(cost.resource, cost);

@@ -294,8 +294,8 @@ public class Events : MonoBehaviour
     }
 
     // Invoked when a building with a collector script is placed
-    public event Action<Resource.CurrencyType, int> onCollectorHarvested;
-    public void CollectorHarvested(Resource.CurrencyType type, int amount)
+    public event Action<Resource.Type, int> onCollectorHarvested;
+    public void CollectorHarvested(Resource.Type type, int amount)
     {
         if (onCollectorHarvested != null)
             onCollectorHarvested(type, amount);

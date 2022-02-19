@@ -15,7 +15,7 @@ public class PopupHandler : MonoBehaviour
         activePopups = new List<Popup>();
     }
 
-    public void CreatePopup(Vector2 position, Resource.CurrencyType type, string amount)
+    public void CreatePopup(Vector2 position, Resource.Type type, string amount)
     {
         if (!Settings.resourcePopups || NewSaveSystem.loadGame) return;
 

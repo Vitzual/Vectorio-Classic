@@ -6,7 +6,7 @@ using UnityEngine;
 public class BuildCost : MonoBehaviour
 {
     // Variables
-    public Resource.CurrencyType resource;
+    public Resource.Type resource;
     public TextMeshProUGUI element;
     public new string name;
     private int amount;

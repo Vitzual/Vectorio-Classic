@@ -23,7 +23,7 @@ public class WorldGenerator : MonoBehaviour
     public Tilemap resourceGrid;
     public int borderSize = 750;
     public float perlinScale = 500;
-    [HideInInspector] public Dictionary<Vector2, Resource.CurrencyType> spawnedResources;
+    [HideInInspector] public Dictionary<Vector2, Resource.Type> spawnedResources;
 
     public void Awake() { active = this; }
 
@@ -31,7 +31,7 @@ public class WorldGenerator : MonoBehaviour
     public void GenerateWorldData(string seed)
     {
         // Create a new resource grid
-        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, Resource.Type>();
 
         // Set random seed
         Random.seed = seed.GetHashCode();
@@ -49,7 +49,7 @@ public class WorldGenerator : MonoBehaviour
     {
         // Clear previous data
         resourceGrid.ClearAllTiles();
-        spawnedResources = new Dictionary<Vector2, Resource.CurrencyType>();
+        spawnedResources = new Dictionary<Vector2, Resource.Type>();
 
         // Set new random variables
         int previousSeed = Random.seed;
@@ -136,7 +136,7 @@ public class WorldGenerator : MonoBehaviour
     }
 
     // Check if a resource node exists
-    public bool CheckNode(Vector2 coords, Resource.CurrencyType type)
+    public bool CheckNode(Vector2 coords, Resource.Type type)
     {
         Vector2 adjustedCoords = new Vector2(coords.x / 5, coords.y / 5);
 
@@ -146,17 +146,17 @@ public class WorldGenerator : MonoBehaviour
     }
 
     // Get resource :)
-    public float GetResourceModification(Resource.CurrencyType type)
+    public float GetResourceModification(Resource.Type type)
     {
         switch (type)
         {
-            case Resource.CurrencyType.Gold:
+            case Resource.Type.Gold:
                 if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
                 return Gamemode.difficulty.goldSpawnModifier;
-            case Resource.CurrencyType.Essence:
+            case Resource.Type.Essence:
                 if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
                 return Gamemode.difficulty.goldSpawnModifier;
-            case Resource.CurrencyType.Iridium:
+            case Resource.Type.Iridium:
                 if (Gamemode.difficulty.goldSpawnModifier > 0.5f) return 0.1f;
                 return Gamemode.difficulty.goldSpawnModifier;
             default:

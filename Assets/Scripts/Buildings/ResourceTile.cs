@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceTile : BaseTile
 {
     [SerializeField]
-    public Resource.CurrencyType type;
+    public Resource.Type type;
     [HideInInspector] public int amount = 0;
     [HideInInspector] public bool isFull = false;
     [SerializeField]

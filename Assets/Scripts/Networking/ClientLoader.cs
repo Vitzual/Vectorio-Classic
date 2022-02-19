@@ -109,7 +109,7 @@ public class ClientLoader : NetworkBehaviour
         List<int> resourceStorages = new List<int>();
 
         // Iterate through resources
-        foreach(KeyValuePair<Resource.CurrencyType, Resource.Currency> currency in Resource.active.currencies)
+        foreach(KeyValuePair<Resource.Type, Resource.Currency> currency in Resource.active.currencies)
         {
             resourceID.Add((int)currency.Key);
             resourceAmount.Add(Resource.active.GetAmount(currency.Key));
@@ -143,7 +143,7 @@ public class ClientLoader : NetworkBehaviour
         {
             try
             {
-                Resource.CurrencyType type = (Resource.CurrencyType)resources[i];
+                Resource.Type type = (Resource.Type)resources[i];
                 Resource.active.SetStorage(type, resourceStorages[i]);
                 Resource.active.SetAmount(type, resourceAmounts[i]);
             }

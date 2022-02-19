@@ -13,8 +13,8 @@ public class Research : MonoBehaviour
         public int totalBooms = 0;
         public float totalEffect = 0;
 
-        public Dictionary<Resource.CurrencyType, float> costs =
-            new Dictionary<Resource.CurrencyType, float>();
+        public Dictionary<Resource.Type, float> costs =
+            new Dictionary<Resource.Type, float>();
     }
 
     // Create new list of techs
@@ -39,8 +39,8 @@ public class Research : MonoBehaviour
         public int extractionYield;
         public int storageAmount;
     }
-    public static Dictionary<Resource.CurrencyType, ResourceBoost> resource = 
-              new Dictionary<Resource.CurrencyType, ResourceBoost>();
+    public static Dictionary<Resource.Type, ResourceBoost> resource = 
+              new Dictionary<Resource.Type, ResourceBoost>();
 
     // Drone research variables
     public static int drone_tile_coverage = 5;
@@ -51,7 +51,7 @@ public class Research : MonoBehaviour
     public static void ResetResearch()
     {
         // Reset dictionaries
-        resource = new Dictionary<Resource.CurrencyType, ResourceBoost>();
+        resource = new Dictionary<Resource.Type, ResourceBoost>();
         techs = new Dictionary<ResearchTech, Tech>();
         activeLabs = new List<ResearchLab>();
 
@@ -68,7 +68,7 @@ public class Research : MonoBehaviour
     }
 
     // Currency get variables (I hate this, and will redo it)
-    public static void GenerateBoost(Resource.CurrencyType type, float defaultRate, int defaultYield, int defaultStorage)
+    public static void GenerateBoost(Resource.Type type, float defaultRate, int defaultYield, int defaultStorage)
     {
         ResourceBoost newResource = new ResourceBoost();
         newResource.extractionRate = defaultRate;

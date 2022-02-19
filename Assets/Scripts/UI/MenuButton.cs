@@ -53,15 +53,15 @@ public class MenuButton : MonoBehaviour
             {
                 if (resource.storage) continue;
 
-                if (resource.type == Resource.CurrencyType.Power)
+                if (resource.type == Resource.Type.Power)
                     powerIcon.SetActive(true);
-                else if (resource.type == Resource.CurrencyType.Heat)
+                else if (resource.type == Resource.Type.Heat)
                     heatIcon.SetActive(true);
-                else if (resource.type == Resource.CurrencyType.Gold)
+                else if (resource.type == Resource.Type.Gold)
                     goldIcon.SetActive(true);
-                else if (resource.type == Resource.CurrencyType.Essence)
+                else if (resource.type == Resource.Type.Essence)
                     essenceIcon.SetActive(true);
-                else if (resource.type == Resource.CurrencyType.Iridium)
+                else if (resource.type == Resource.Type.Iridium)
                     iridiumIcon.SetActive(true);
             }
         }

@@ -24,7 +24,7 @@ public class Challenge : Gamemode
     public override void Initiate()
     {
         // Setup resources
-        resource.Setup(perSeconds, currencyElements);
+        resource.Setup(currencyElements);
         resource.gameObject.SetActive(true);
     }
 
@@ -56,7 +56,7 @@ public class Challenge : Gamemode
             {
                 for(int b = 0; b < Buildables.active[entity].resources.Length; b++)
                 {
-                    if (Buildables.active[entity].resources[b].type == Resource.CurrencyType.Gold)
+                    if (Buildables.active[entity].resources[b].type == Resource.Type.Gold)
                         Buildables.active[entity].resources[b].amount = resources[a];
                 }
             }
@@ -155,7 +155,7 @@ public class Challenge : Gamemode
             InstantiationHandler.active.RpcDestroyBuilding(tile.transform.position);
 
         // Reset resources
-        Resource.active.SetAmount(Resource.CurrencyType.Gold, 10000);
+        Resource.active.SetAmount(Resource.Type.Gold, 10000);
     }
 
     // On guardian destroyed, you win!

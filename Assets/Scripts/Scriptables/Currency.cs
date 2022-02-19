@@ -9,7 +9,7 @@ public class Currency : IdentifiableScriptableObject
     public new string name;
     [TextArea]
     public string description;
-    public Resource.CurrencyType type;
+    public Resource.Type type;
     public bool unlimited;
     public int minAmount;
     public int maxAmount;

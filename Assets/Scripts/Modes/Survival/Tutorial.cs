@@ -103,7 +103,7 @@ public class Tutorial : MonoBehaviour
     }
 
     // On gold collected, check tutorial and move to next slide if passed
-    public void GoldCollected(Resource.CurrencyType type, int amount)
+    public void GoldCollected(Resource.Type type, int amount)
     {
         if (tutorialStarted && tutorialSlides[tutorialSlide].task == Slide.Task.Collect) NextSlide();
     }

@@ -58,7 +58,7 @@ public class ResearchLab : BaseTile
         {
             foreach (Cost cost in researchTech.cost)
             {
-                if (!Resource.active.currencies[cost.type].output)
+                if (!Resource.active.currencies[cost.type].isOutput)
                 {
                     if (Resource.active.currencies[cost.type].amount >= cost.amount)
                     {

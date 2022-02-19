@@ -84,24 +84,24 @@ public class DefaultEnemy : BaseEntity
             switch(random)
             {
                 case 0:
-                    if (Resource.active.GetStorage(Resource.CurrencyType.Gold) > 0)
+                    if (Resource.active.GetStorage(Resource.Type.Gold) > 0)
                     {
-                        Resource.active.Apply(Resource.CurrencyType.Gold, 1000, true);
-                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Gold, "+" + 1000);
+                        Resource.active.Apply(Resource.Type.Gold, 1000, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.Type.Gold, "+" + 1000);
                     }
                     break;
                 case 1:
-                    if (Resource.active.GetStorage(Resource.CurrencyType.Essence) > 0)
+                    if (Resource.active.GetStorage(Resource.Type.Essence) > 0)
                     {
-                        Resource.active.Apply(Resource.CurrencyType.Essence, 250, true);
-                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Essence, "+" + 250);
+                        Resource.active.Apply(Resource.Type.Essence, 250, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.Type.Essence, "+" + 250);
                     }
                     break;
                 case 2:
-                    if (Resource.active.GetStorage(Resource.CurrencyType.Iridium) > 0)
+                    if (Resource.active.GetStorage(Resource.Type.Iridium) > 0)
                     {
-                        Resource.active.Apply(Resource.CurrencyType.Iridium, 100, true);
-                        PopupHandler.active.CreatePopup(transform.position, Resource.CurrencyType.Iridium, "+" + 100);
+                        Resource.active.Apply(Resource.Type.Iridium, 100, true);
+                        PopupHandler.active.CreatePopup(transform.position, Resource.Type.Iridium, "+" + 100);
                     }
                     break;
             }

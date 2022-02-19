@@ -133,7 +133,7 @@ public class Survival : Gamemode
             naturalHeatTimer -= Time.deltaTime;
             if (naturalHeatTimer <= 0)
             {
-                Resource.active.Apply(Resource.CurrencyType.Heat, 1, false);
+                Resource.active.Apply(Resource.Type.Heat, 1, false);
                 difficulty.heatTracked += 1;
                 naturalHeatTimer = 5f;
             }

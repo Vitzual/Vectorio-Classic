@@ -2,7 +2,7 @@
 [System.Serializable]
 public class Cost
 {
-    public Resource.CurrencyType type;
+    public Resource.Type type;
     public int amount;
     public bool storage;
 }

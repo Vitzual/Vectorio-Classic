@@ -16,9 +16,9 @@ public class ResearchTech : IdentifiableScriptableObject
     public List<Cost> cost = new List<Cost>();
     public ResearchTypeEnum type;
     public float amount;
-    public Resource.CurrencyType currency;
+    public Resource.Type currency;
 
-    public int GetCost(Resource.CurrencyType cost)
+    public int GetCost(Resource.Type cost)
     {
         foreach (Cost theCost in this.cost)
             if (theCost.type == cost)

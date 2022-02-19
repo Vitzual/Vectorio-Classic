@@ -216,7 +216,7 @@ public class DroneManager : MonoBehaviour
                                     // Calculate total cost
                                     foreach (Cost resource in ghostTiles[a].buildable.resources)
                                     {
-                                        if (!Resource.active.GetCurrency(resource.type).allowOverflow)
+                                        if (!Resource.active.GetCurrency(resource.type).canOverflow)
                                             valueOne += resource.amount;
                                     }
 
@@ -241,7 +241,7 @@ public class DroneManager : MonoBehaviour
                                     // Calculate total cost
                                     foreach (Cost resource in ghostTiles[a].buildable.resources)
                                     {
-                                        if (!Resource.active.GetCurrency(resource.type).allowOverflow)
+                                        if (!Resource.active.GetCurrency(resource.type).canOverflow)
                                             valueTwo += resource.amount;
                                     }
 
@@ -328,7 +328,7 @@ public class DroneManager : MonoBehaviour
                                     // See if building produces power
                                     foreach (Cost resource in ghostTiles[a].buildable.resources)
                                     {
-                                        if (resource.type == Resource.CurrencyType.Power && resource.storage)
+                                        if (resource.type == Resource.Type.Power && resource.storage)
                                         {
                                             // Assign closest drone found
                                             if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))
@@ -348,7 +348,7 @@ public class DroneManager : MonoBehaviour
                                     // See if building produces power
                                     foreach (Cost resource in ghostTiles[a].buildable.resources)
                                     {
-                                        if (resource.type == Resource.CurrencyType.Heat && resource.amount <= 0)
+                                        if (resource.type == Resource.Type.Heat && resource.amount <= 0)
                                         {
                                             // Assign closest drone found
                                             if (Resource.active.CheckResources(ghostTiles[a].buildable.resources))

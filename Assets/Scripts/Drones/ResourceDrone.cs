@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceDrone : Drone
 {
     // This will be switched out for Resource
-    public Dictionary<Resource.CurrencyType, int> collected = new Dictionary<Resource.CurrencyType, int>();
+    public Dictionary<Resource.Type, int> collected = new Dictionary<Resource.Type, int>();
 
     // Drone variables
     public bool storagesAvailable = false;
@@ -191,7 +191,7 @@ public class ResourceDrone : Drone
     // Reset variables
     public override void FinishRoute()
     {
-        collected = new Dictionary<Resource.CurrencyType, int>();
+        collected = new Dictionary<Resource.Type, int>();
         visitedTargets = new List<BaseEntity>();
         storagesAvailable = true;
         collecting = true;

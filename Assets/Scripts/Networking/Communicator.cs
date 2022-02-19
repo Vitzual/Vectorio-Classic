@@ -47,7 +47,7 @@ public class Communicator : NetworkBehaviour
             int[] storages = new int[arraySize];
 
             int index = 0;
-            foreach(KeyValuePair<Resource.CurrencyType, Resource.Currency> resource in Resource.active.currencies)
+            foreach(KeyValuePair<Resource.Type, Resource.Currency> resource in Resource.active.currencies)
             {
                 resources[index] = (int)resource.Key;
                 amounts[index] = resource.Value.amount;
@@ -79,7 +79,7 @@ public class Communicator : NetworkBehaviour
             {
                 try
                 {
-                    Resource.CurrencyType currency = (Resource.CurrencyType)resources[i];
+                    Resource.Type currency = (Resource.Type)resources[i];
                     Resource.active.SetAmount(currency, amounts[i]);
                     Resource.active.SetStorage(currency, storages[i]);
                 }

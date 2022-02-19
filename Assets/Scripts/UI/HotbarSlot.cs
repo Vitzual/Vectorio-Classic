@@ -24,7 +24,7 @@ public class HotbarSlot
             Debug.LogError("Sprite with name " + sprite.name + " could not be found!");
 
         if (resourceUI != null && Buildables.active.ContainsKey(entity))
-            resourceUI.text = Resource.FormatNumber(Buildables.active[entity].GetResource(Resource.CurrencyType.Gold));
+            resourceUI.text = Resource.FormatNumber(Buildables.active[entity].GetResource(Resource.Type.Gold));
     }
 
     public void SetSlot(Entity entity, Buildable buildable)
@@ -37,6 +37,6 @@ public class HotbarSlot
         button.UpdateUI();
 
         if (resourceUI != null && Buildables.active.ContainsKey(entity))
-            resourceUI.text = Resource.FormatNumber(Buildables.active[entity].GetResource(Resource.CurrencyType.Gold));
+            resourceUI.text = Resource.FormatNumber(Buildables.active[entity].GetResource(Resource.Type.Gold));
     }
 }

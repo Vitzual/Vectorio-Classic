@@ -182,7 +182,7 @@ public class GuardianHandler : MonoBehaviour
         lastObj.name = stage.guardian.name;
 
         // Move to next stage
-        Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.nextStage.heat);
+        Resource.active.SetStorage(Resource.Type.Heat, stage.nextStage.heat);
 
         // Get guardian stuff
         DefaultGuardian guardian = lastObj.GetComponent<DefaultGuardian>();

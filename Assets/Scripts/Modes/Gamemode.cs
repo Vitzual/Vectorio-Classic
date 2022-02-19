@@ -56,7 +56,6 @@ public class Gamemode : MonoBehaviour
     
     [Header("Resource Settings")]
     public Resource.Currency[] currencyElements;
-    public List<Resource.PerSecond> perSeconds;
 
     // Set active instance
     public void Awake()
@@ -75,7 +74,7 @@ public class Gamemode : MonoBehaviour
     public virtual void Initiate()
     {
         // Setup resources
-        resource.Setup(perSeconds, currencyElements);
+        resource.Setup(currencyElements);
         resource.gameObject.SetActive(true);
     }
 
@@ -177,10 +176,10 @@ public class Gamemode : MonoBehaviour
     public virtual void SetupStartingResources()
     {
         // Adjust power storage
-        Resource.active.ApplyStorage(Resource.CurrencyType.Power, 5000);
+        Resource.active.ApplyStorage(Resource.Type.Power, 5000);
 
         // Setup heat storage
-        Resource.active.SetStorage(Resource.CurrencyType.Heat, stage.heat);
-        Resource.active.Apply(Resource.CurrencyType.Heat, difficulty.heatTracked, false);
+        Resource.active.SetStorage(Resource.Type.Heat, stage.heat);
+        Resource.active.Apply(Resource.Type.Heat, difficulty.heatTracked, false);
     }
 }

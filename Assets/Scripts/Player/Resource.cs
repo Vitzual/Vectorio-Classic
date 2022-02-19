@@ -5,6 +5,7 @@ using UnityEngine;
 using Michsky.UI.ModernUIPack;
 using UnityEngine.UI;
 using Mirror;
+using Sirenix.OdinInspector;
 
 public class Resource : NetworkBehaviour
 {
@@ -12,7 +13,7 @@ public class Resource : NetworkBehaviour
     public static Resource active;
 
     // Currency types
-    public enum CurrencyType
+    public enum Type
     {
         Gold = 0,
         Essence = 1,
@@ -27,51 +28,32 @@ public class Resource : NetworkBehaviour
     public class Currency
     {
         // Currency variables
-        public CurrencyType type;
-        public int amount;
-        public int storage;
+        [BoxGroup("Currency Info")]
+        public Type type;
+        [BoxGroup("Currency Info")]
         public string format;
-        public bool allowOverflow;
-        public bool output;
+        [BoxGroup("Currency Info"), HideInInspector]
+        public int amount, storage;
+        [BoxGroup("Currency Info"), HideInInspector]
+        public bool useAmountText, useStorageText, useIncomeText, useStorageBar;
+        [BoxGroup("Currency Flags")]
+        public bool isOutput, canOverflow;
 
-        // UI elements
-        public bool enabled;
-        public GameObject element;
-        public Image background;
-        public Color normalColor;
-        public TextMeshProUGUI resourceUI;
-        public TextMeshProUGUI storageUI;
-
-        // Resource bar
-        public bool useResourceBar;
-        public ProgressBar resourceBar;
-
-        // Default variables
-        public float collectionRate;
-        public int collectionAmount;
-        public int storageAmount;
+        // Currency interface elements
+        [BoxGroup("Currency Info")]
+        public TextMeshProUGUI amountText, storageText, incomeText;
+        [BoxGroup("Currency Elements")]
+        public ProgressBar storageBar;
     }
-
-    [Serializable]
-    public class PerSecond
-    {
-        public CurrencyType type;
-        public int lastCalculation = 0;
-        public int[] amount = new int[5];
-        public int index = 0;
-        public TextMeshProUGUI perSecondUI;
-    }
-
-    public List<PerSecond> perSeconds;
-    public int currentPerSec = 0;
 
     // Dictionary of all currencies
-    public Dictionary<CurrencyType, Currency> currencies = new Dictionary<CurrencyType, Currency>();
-    public Currency[] currencyElements;
+    public Dictionary<Type, Currency> currencies = new Dictionary<Type, Currency>();
+    [HideInInspector] public Currency[] currencyElements;
 
     // List of all collectors and storages
     public static List<DefaultStorage> storages;
     public bool networkResources;
+    public int currentPerSec = 0;
 
     // Get active instance
     public void Awake()
@@ -80,10 +62,10 @@ public class Resource : NetworkBehaviour
     }
 
     // Generate resources
-    public void Setup(List<PerSecond> perSecondElements, Currency[] currencyElements) 
+    public void Setup(Currency[] currencyElements) 
     {
         // Reset currencies
-        currencies = new Dictionary<CurrencyType, Currency>();
+        currencies = new Dictionary<Type, Currency>();
         storages = new List<DefaultStorage>();
         Research.ResetResearch();
 
@@ -93,46 +75,29 @@ public class Resource : NetworkBehaviour
         // Setup currency elements
         foreach (Currency currency in currencyElements)
         {
+            // Generate runtime currency info
+            currency.useAmountText = currency.amountText != null;
+            currency.useIncomeText = currency.incomeText != null;
+            currency.useStorageText = currency.storageText != null;
+            currency.useStorageBar = currency.storageBar != null;
+
+            // Add the currency to the currencies dict
             currencies.Add(currency.type, currency);
-
-            if (currency.background != null)
-                currency.background.color = new Color(1, 1, 1, 0.1f);
-
-            if (ResearchUI.active != null)
-                Research.GenerateBoost(currency.type, currency.collectionRate, currency.collectionAmount, currency.storageAmount);
         }
 
-        // Setup per seconds
-        perSeconds = perSecondElements;
-
-        if (perSeconds.Count > 0)
-        {
-            // Setup PerSecond array
-            foreach (PerSecond resource in perSeconds)
-            {
-                for (int i = 0; i < resource.amount.Length; i++)
-                    resource.amount[i] = 0;
-            }
-
-            // Setup events
-            if (perSeconds.Count > 0)
-                InvokeRepeating("UpdatePerSecond", 0, 1f / (float)perSeconds.Count);
-        }
-
+        // Set game object to true for networking
         gameObject.SetActive(true);
 
+        // If network resource, create network sync invoke
         if (networkResources)
-            InvokeRepeating("UpdateResources", 0.5f, 1f);
+            InvokeRepeating("UpdateNetworkResources", 0.5f, 1f);
     }
 
-    // Update resources
-    public void UpdateResources() { foreach (KeyValuePair<CurrencyType, Currency> currency in currencies) UpdateUI(currency.Key); }
-
     // Apply a resource
-    public void Apply(CurrencyType type, int amount, bool useStorages)
+    public void Apply(Type type, int amount, bool useStorages)
     {
         // Heat and power update
-        if (currencies[type].allowOverflow) currencies[type].amount += amount;
+        if (currencies[type].canOverflow) currencies[type].amount += amount;
         else if (useStorages) UpdateStorages(type, amount);
         else currencies[type].amount += amount;
 
@@ -150,7 +115,7 @@ public class Resource : NetworkBehaviour
         {
             if (!cost.storage && currencies.ContainsKey(cost.type)) 
             {
-                if (currencies[cost.type].output) Apply(cost.type, cost.amount, true);
+                if (currencies[cost.type].isOutput) Apply(cost.type, cost.amount, true);
                 else Apply(cost.type, -cost.amount, true);
             }
         }
@@ -160,7 +125,7 @@ public class Resource : NetworkBehaviour
     public void ApplyOutputsOnly(Cost[] costs)
     {
         foreach (Cost cost in costs)
-            if (!cost.storage && currencies[cost.type].output)
+            if (!cost.storage && currencies[cost.type].isOutput)
                 Apply(cost.type, cost.amount, true);
     }
 
@@ -171,7 +136,7 @@ public class Resource : NetworkBehaviour
         {
             if (!cost.storage && currencies.ContainsKey(cost.type))
             {
-                if (currencies[cost.type].output) Apply(cost.type, -cost.amount, true);
+                if (currencies[cost.type].isOutput) Apply(cost.type, -cost.amount, true);
                 else Apply(cost.type, cost.amount, true);
             }
         }
@@ -181,12 +146,12 @@ public class Resource : NetworkBehaviour
     public void RefundOutputsOnly(Cost[] costs)
     {
         foreach (Cost cost in costs)
-            if (!cost.storage && currencies[cost.type].output)
+            if (!cost.storage && currencies[cost.type].isOutput)
                 Apply(cost.type, -cost.amount, true);
     }
 
     // Update storages 
-    public void UpdateStorages(CurrencyType type, int amount)
+    public void UpdateStorages(Type type, int amount)
     {
         // Setup local loop variables
         int amountToAdd = amount;
@@ -234,7 +199,7 @@ public class Resource : NetworkBehaviour
     }
 
     // Add storage
-    public void ApplyStorage(CurrencyType type, int amount)
+    public void ApplyStorage(Type type, int amount)
     {
         // Update active storages
         currencies[type].storage += amount;
@@ -242,7 +207,7 @@ public class Resource : NetworkBehaviour
     }
 
     // Set amount
-    public void SetAmount(CurrencyType type, int amount)
+    public void SetAmount(Type type, int amount)
     {
         // Sets the storage
         currencies[type].amount = amount;
@@ -250,7 +215,7 @@ public class Resource : NetworkBehaviour
     }
 
     // Set storage
-    public void SetStorage(CurrencyType type, int amount)
+    public void SetStorage(Type type, int amount)
     {
         // Sets the storage
         currencies[type].storage = amount;
@@ -277,12 +242,12 @@ public class Resource : NetworkBehaviour
             int amount = GetAmount(cost.type);
 
             // Check if overflow is allowed
-            if (currencies[cost.type].allowOverflow)
+            if (currencies[cost.type].canOverflow)
             {
                 if (amount >= GetStorage(cost.type) || amount - cost.amount < 0)
                     return false;
             }
-            else if (currencies[cost.type].output)
+            else if (currencies[cost.type].isOutput)
             {
                 if (amount + cost.amount > GetStorage(cost.type))
                     return false;
@@ -305,13 +270,13 @@ public class Resource : NetworkBehaviour
         foreach (Cost cost in costs)
         {
             // If storage, ignore
-            if (cost.storage || !currencies.ContainsKey(cost.type) || !currencies[cost.type].output) continue;
+            if (cost.storage || !currencies.ContainsKey(cost.type) || !currencies[cost.type].isOutput) continue;
 
             // Get amount of resource type
             int amount = GetAmount(cost.type);
 
             // Check if overflow is allowed
-            if (currencies[cost.type].allowOverflow)
+            if (currencies[cost.type].canOverflow)
             {
                 if (amount >= GetStorage(cost.type))
                     return false;
@@ -328,44 +293,133 @@ public class Resource : NetworkBehaviour
     }
 
     // Update UI
-    public void UpdateUI(CurrencyType type, bool updateStorage = false)
+    public void UpdateUI(Type type, bool updateStorage = false)
     {
         // Update variant if heat passed
-        if (type == CurrencyType.Heat) EnemyHandler.active.UpdateVariant(currencies[CurrencyType.Heat].amount, currencies[CurrencyType.Heat].storage);
-
-        // Check if UI is enabled
-        if (!currencies[type].enabled)
-        {
-            currencies[type].enabled = true;
-            currencies[type].element.SetActive(true);
-        }
+        if (type == Type.Heat) EnemyHandler.active.UpdateVariant(currencies[Type.Heat].amount, currencies[Type.Heat].storage);
 
         // Display to UI
-        if (currencies[type].resourceUI != null)
-            currencies[type].resourceUI.text = FormatNumber(currencies[type].amount);
+        if (currencies[type].amountText != null)
+            currencies[type].amountText.text = FormatNumber(currencies[type].amount);
 
         // Change color based on storage value
-        if (updateStorage && currencies[type].storageUI != null)
-        {
-            if (currencies[type].background != null)
-            {
-                if (currencies[type].amount > currencies[type].storage)
-                    currencies[type].background.color = new Color(1, 0, 0, 0.3f);
-                else currencies[type].background.color = new Color(1, 1, 1, 0.1f);
-            }
-
-            currencies[type].storageUI.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
-        }
+        if (updateStorage && currencies[type].storageText != null)
+            currencies[type].storageText.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
 
         // Check resource bar
-        if (currencies[type].useResourceBar && currencies[type].resourceBar != null)
+        if (currencies[type].useStorageBar)
         {
-            currencies[type].resourceBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;
-            currencies[type].resourceBar.UpdateUI();
+            currencies[type].storageBar.currentPercent = (float)currencies[type].amount / (float)currencies[type].storage * 100;
+            currencies[type].storageBar.UpdateUI();
         }
     }
 
+    // Check freebie
+    public bool CheckFreebie(Buildable buildable)
+    {
+        // Check active instances
+        if (buildable.isCollector) return CollectorHandler.active.collectors.Count < 1;
+        else if (buildable.isStorage) return storages.Count < 1;
+        else if (buildable.isDefense && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
+        else if (buildable.isDroneport && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
+        else return false;
+    }
+
+    // Check a resource amount
+    public int GetAmount(Type type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type].amount;
+        else return 0;
+    }
+
+    // Check a resource storage
+    public int GetStorage(Type type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type].storage;
+        else return 0;
+    }
+
+    // Get currency class
+    public Currency GetCurrency(Type type)
+    {
+        if (currencies.ContainsKey(type))
+            return currencies[type];
+        else return null;
+    }
+
+    // Get a resource name
+    public string GetName(Type type)
+    {
+        switch(type)
+        {
+            case Type.Gold:
+                return "Gold";
+            case Type.Essence:
+                return "Essence";
+            case Type.Iridium:
+                return "Iridium";
+            case Type.Power:
+                return "Power";
+            case Type.Heat:
+                return "Heat";
+            default:
+                return "Unknown";
+        }
+    }
+
+    // Get a resource sprite
+    public Sprite GetSprite(Type type)
+    {
+        switch (type)
+        {
+            case Type.Gold:
+                return Sprites.GetSprite("Gold");
+            case Type.Essence:
+                return Sprites.GetSprite("Essence");
+            case Type.Iridium:
+                return Sprites.GetSprite("Iridium");
+            case Type.Power:
+                return Sprites.GetSprite("Power");
+            case Type.Heat:
+                return Sprites.GetSprite("Heat");
+            default:
+                return Sprites.GetSprite("Transparent");
+        }
+    }
+
+    // Get heat or power
+    public int GetHeat() { return currencies[Type.Heat].amount; }
+    public int GetHeatStorage() { return currencies[Type.Heat].storage; }
+    public int GetPower() { return currencies[Type.Power].amount; }
+    public int GetAvailablePower() { return currencies[Type.Power].storage; }
+
+    // Number formatter
+    public static string FormatNumber(int number)
+    {
+        if (number < 100000)
+            return number.ToString();
+
+        if (number < 1000000)
+            return String.Format("{0:#,.}K", number - 500);
+
+        if (number < 10000000)
+            return String.Format("{0:#,,.##}M", number - 5000);
+
+        if (number < 100000000)
+            return String.Format("{0:#,,.#}M", number - 50000);
+
+        if (number < 1000000000)
+            return String.Format("{0:#,,.}M", number - 500000);
+
+        return String.Format("{0:#,,,.##}B", number - 5000000);
+    }
+
     // Update resources
+    public void UpdateNetworkResources() { foreach (KeyValuePair<Type, Currency> currency in currencies) UpdateUI(currency.Key); }
+
+    /* Update resources
     public void UpdatePerSecond()
     {
         // Get current perSec and increment index
@@ -397,106 +451,5 @@ public class Resource : NetworkBehaviour
         else if (average > 0) resource.perSecondUI.text = "<color=green>+" + average + " / second";
         else resource.perSecondUI.text = "<color=red>" + average + " / second";
     }
-
-    // Check freebie
-    public bool CheckFreebie(Buildable buildable)
-    {
-        // Check active instances
-        if (buildable.isCollector) return CollectorHandler.active.collectors.Count < 1;
-        else if (buildable.isStorage) return storages.Count < 1;
-        else if (buildable.isDefense && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
-        else if (buildable.isDroneport && Tutorial.tutorialBuilding != null) return Tutorial.tutorialBuilding == buildable.building;
-        else return false;
-    }
-
-    // Check a resource amount
-    public int GetAmount(CurrencyType type)
-    {
-        if (currencies.ContainsKey(type))
-            return currencies[type].amount;
-        else return 0;
-    }
-
-    // Check a resource storage
-    public int GetStorage(CurrencyType type)
-    {
-        if (currencies.ContainsKey(type))
-            return currencies[type].storage;
-        else return 0;
-    }
-
-    // Get currency class
-    public Currency GetCurrency(CurrencyType type)
-    {
-        if (currencies.ContainsKey(type))
-            return currencies[type];
-        else return null;
-    }
-
-    // Get a resource name
-    public string GetName(CurrencyType type)
-    {
-        switch(type)
-        {
-            case CurrencyType.Gold:
-                return "Gold";
-            case CurrencyType.Essence:
-                return "Essence";
-            case CurrencyType.Iridium:
-                return "Iridium";
-            case CurrencyType.Power:
-                return "Power";
-            case CurrencyType.Heat:
-                return "Heat";
-            default:
-                return "Unknown";
-        }
-    }
-
-    // Get a resource sprite
-    public Sprite GetSprite(CurrencyType type)
-    {
-        switch (type)
-        {
-            case CurrencyType.Gold:
-                return Sprites.GetSprite("Gold");
-            case CurrencyType.Essence:
-                return Sprites.GetSprite("Essence");
-            case CurrencyType.Iridium:
-                return Sprites.GetSprite("Iridium");
-            case CurrencyType.Power:
-                return Sprites.GetSprite("Power");
-            case CurrencyType.Heat:
-                return Sprites.GetSprite("Heat");
-            default:
-                return Sprites.GetSprite("Transparent");
-        }
-    }
-
-    // Get heat or power
-    public int GetHeat() { return currencies[CurrencyType.Heat].amount; }
-    public int GetHeatStorage() { return currencies[CurrencyType.Heat].storage; }
-    public int GetPower() { return currencies[CurrencyType.Power].amount; }
-    public int GetAvailablePower() { return currencies[CurrencyType.Power].storage; }
-
-    // Number formatter
-    public static string FormatNumber(int number)
-    {
-        if (number < 100000)
-            return number.ToString();
-
-        if (number < 1000000)
-            return String.Format("{0:#,.}K", number - 500);
-
-        if (number < 10000000)
-            return String.Format("{0:#,,.##}M", number - 5000);
-
-        if (number < 100000000)
-            return String.Format("{0:#,,.#}M", number - 50000);
-
-        if (number < 1000000000)
-            return String.Format("{0:#,,.}M", number - 500000);
-
-        return String.Format("{0:#,,,.##}B", number - 5000000);
-    }
+    */
 }

@@ -21,7 +21,7 @@ public class Unlockable
     public bool unlocked;
 
     [Header("Unlock Requirement")]
-    public Resource.CurrencyType resource;
+    public Resource.Type resource;
     public Entity entity;
     public int amount;
 }

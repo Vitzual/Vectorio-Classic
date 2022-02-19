@@ -30,7 +30,7 @@ public class Building : Entity
     [FoldoutGroup("Building Variables")]
     public bool isSaveable = true;
     [FoldoutGroup("Building Variables")]
-    public Resource.CurrencyType placedOn;
+    public Resource.Type placedOn;
     [FoldoutGroup("Building Variables")]
     public int xpMultiplier = 1;
     [FoldoutGroup("Building Variables")]

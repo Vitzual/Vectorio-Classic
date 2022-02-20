@@ -7,20 +7,8 @@ using UnityEngine;
 public class Enemy : Entity
 {
     // Enemy stats
-    [FoldoutGroup("Enemy Stats")]
-    public float damage;
-    [FoldoutGroup("Enemy Stats")]
-    public float moveSpeed;
-    [FoldoutGroup("Enemy Stats")]
-    public float explosiveRadius;
-    [FoldoutGroup("Enemy Stats")]
-    public float explosiveDamage;
-    [FoldoutGroup("Enemy Stats")]
-    public float rotationSpeed;
-    [FoldoutGroup("Enemy Stats")]
-    public float spawnChance;
-    [FoldoutGroup("Enemy Stats")]
-    public bool largeEnemy;
+    public List<Varian> _variants;
+    private Dictionary<string, Variant> variants;
 
     // Spawn percentage
     //
@@ -48,6 +36,12 @@ public class Enemy : Entity
     // Loot table
     [FoldoutGroup("Enemy Stats")]
     public List<Blueprint> drops;
+
+    // Generate variants on runtime
+    public void GenerateVariants()
+    {
+
+    }
 
     // Set panel stats
     // This gets used to set the stats on the building menu panel

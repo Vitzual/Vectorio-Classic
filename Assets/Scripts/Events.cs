@@ -174,8 +174,8 @@ public class Events : MonoBehaviour
     }
 
     // On blueprint collected
-    public event Action<Enemy> onEnemyDiscovered;
-    public void EnemyDiscovered(Enemy enemy)
+    public event Action<EnemyData> onEnemyDiscovered;
+    public void EnemyDiscovered(EnemyData enemy)
     {
         if (onEnemyDiscovered != null)
             onEnemyDiscovered(enemy);
@@ -187,14 +187,6 @@ public class Events : MonoBehaviour
     {
         if (onEnemyGroupSpawned != null)
             onEnemyGroupSpawned(msg);
-    }
-
-    // On blueprint collected
-    public event Action<CollectedBlueprint> onBlueprintCollected;
-    public void BlueprintCollected(CollectedBlueprint blueprint)
-    {
-        if (onBlueprintCollected != null)
-            onBlueprintCollected(blueprint);
     }
 
     // On enemy destroyed
@@ -230,24 +222,24 @@ public class Events : MonoBehaviour
     }
 
     // On enemy destroyed
-    public event Action<DefaultEnemy> onEnemyHurt;
-    public void EnemyHurt(DefaultEnemy enemy)
+    public event Action<Enemy> onEnemyHurt;
+    public void EnemyHurt(Enemy enemy)
     {
         if (onEnemyHurt != null)
             onEnemyHurt(enemy);
     }
 
     // On enemy destroyed
-    public event Action<DefaultEnemy> onEnemyDestroyed;
-    public void EnemyDestroyed(DefaultEnemy enemy)
+    public event Action<Enemy> onEnemyDestroyed;
+    public void EnemyDestroyed(Enemy enemy)
     {
         if (onEnemyDestroyed != null)
             onEnemyDestroyed(enemy);
     }
 
     // On enemy destroyed
-    public event Action<Enemy, Vector2> onEnemySpawnOnDeath;
-    public void EnemySpawnOnDeath(Enemy spawn, Vector2 position)
+    public event Action<EnemyData, Vector2> onEnemySpawnOnDeath;
+    public void EnemySpawnOnDeath(EnemyData spawn, Vector2 position)
     {
         if (onEnemySpawnOnDeath != null)
             onEnemySpawnOnDeath(spawn, position);

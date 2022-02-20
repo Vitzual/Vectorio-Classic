@@ -45,16 +45,12 @@ public class BaseTile : BaseEntity
         if (hit.collider == null) DestroyEntity();
     }
 
-    public override void OnBoxCollision(DefaultEnemy enemy)
+    public override void OnBoxCollision(Enemy enemy)
     {
         // If has health, damage entity
-        if (enemy.enemy.largeEnemy) DestroyEntity();
-        else
-        {
-            DamageEntity(enemy.damage);
-            if (health > 0) enemy.DestroyEntity();
-            else enemy.DamageEntity(buildable.building.health);
-        }
+        DamageEntity(enemy.damage);
+        if (health > 0) enemy.DestroyEntity();
+        else enemy.DamageEntity(buildable.building.health);
     }
 
     public override void DestroyEntity()

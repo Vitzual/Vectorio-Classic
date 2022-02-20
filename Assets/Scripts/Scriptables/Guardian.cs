@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Guardian", menuName = "Vectorio/Enemy/Guardian")]
-public class Guardian : Enemy
+public class Guardian : EnemyData
 {
     // Variable stuff
     public int minimumHeatValue;

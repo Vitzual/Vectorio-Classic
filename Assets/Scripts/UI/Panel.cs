@@ -70,17 +70,6 @@ public class Panel : MonoBehaviour
         }
     }
 
-    // Applies a blueprint to the active entity
-    public bool ApplyBlueprint(CollectedBlueprint blueprint)
-    {
-        if (entity != null)
-        {
-            Buildable buildable = Buildables.RequestBuildable(entity);
-            return buildable.ApplyBlueprint(blueprint);
-        }
-        return false;
-    }
-
     // Sets the panel information based on entity data
     public void SetPanel(Entity entity, int metadata = -1)
     {

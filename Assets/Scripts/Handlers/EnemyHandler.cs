@@ -12,17 +12,18 @@ public class EnemyHandler : MonoBehaviour
     public AudioSource BuildingGoDeadSound;
 
     // Contains all active enemies in the scene
-    public List<DefaultEnemy> enemies = new List<DefaultEnemy>();
+    public List<Enemy> enemies = new List<Enemy>();
 
     // Layering and scanning
     public LayerMask buildingLayer;
     private bool scan = false;
 
     // Is menu bool
-    public bool isMenu;
+    public bool _isMenu;
+    public static bool isMenu;
     public Transform menuTarget;
 
-    public void Awake() { active = this; }
+    public void Awake() { active = this; isMenu = _isMenu; }
 
     // Start method
     public void Start()
@@ -43,10 +44,10 @@ public class EnemyHandler : MonoBehaviour
         else MoveEnemies();
     }
 
-    public DefaultEnemy GetStrongestEnemy()
+    public Enemy GetStrongestEnemy()
     {
         // Strongest
-        DefaultEnemy strongest = null;
+        Enemy strongest = null;
         float health = 0;
 
         // Move enemies each frame towards their target
@@ -108,7 +109,7 @@ public class EnemyHandler : MonoBehaviour
         {
             if (enemies[a] != null)
             {
-                float step = enemies[a].enemy.moveSpeed * Time.deltaTime;
+                float step = enemies[a].moveSpeed * Time.deltaTime;
                 enemies[a].transform.position = Vector2.MoveTowards(enemies[a].transform.position, menuTarget.position, step);
             }
             else
@@ -120,19 +121,18 @@ public class EnemyHandler : MonoBehaviour
     }
 
     // Create a new active enemy instance
-    public virtual BaseEntity CreateEntity(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
+    public virtual BaseEntity CreateEnemy(EnemyData enemyData, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
     {
         // Create the tile
-        GameObject lastObj = Instantiate(entity.obj.gameObject, position, rotation);
-        lastObj.name = entity.name;
+        GameObject lastObj = Instantiate(enemyData.obj.gameObject, position, rotation);
+        lastObj.name = enemyData.name;
 
         // Attempt to set enemy variant
-        DefaultEnemy enemy = lastObj.GetComponent<DefaultEnemy>();
+        Enemy enemy = lastObj.GetComponent<Enemy>();
         if (enemy != null)
         {
             // Setup enemy
-            enemy.variant = variant;
-            enemy.Setup();
+            enemy.Setup(enemyData, variant);
 
             // Override health
             if (health != -1) enemy.health = health;
@@ -144,8 +144,6 @@ public class EnemyHandler : MonoBehaviour
             enemy.moveSpeed *= Gamemode.difficulty.enemySpeedModifier;
 
             // Setup entity
-            enemy.internalID = entity.InternalID;
-            enemy.isMenu = isMenu;
             enemies.Add(enemy);
 
             // Assign runtime ID
@@ -162,7 +160,7 @@ public class EnemyHandler : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
             Destroy(enemies[i].gameObject);
-        enemies = new List<DefaultEnemy>();
+        enemies = new List<Enemy>();
     }
 
     // Updates the active variant (Survival only)

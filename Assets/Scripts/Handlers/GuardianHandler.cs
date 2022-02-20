@@ -199,9 +199,6 @@ public class GuardianHandler : MonoBehaviour
     // Guardian destroyed method
     public void GuardianDestroyed(DefaultGuardian guardian)
     {
-        // Guardian destroyed
-        Debug.Log("Guardian destroyed. Setting stage " + Gamemode.stage.variant.name + " to " + Gamemode.stage.nextStage.variant.name);
-
         // Check if last guardian
         if (guardian.guardian == lastGuardian)
             endScreen.SetActive(true);

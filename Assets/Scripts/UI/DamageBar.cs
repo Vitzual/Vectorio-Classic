@@ -22,7 +22,7 @@ public class DamageBar : MonoBehaviour
     }
 
     // Set bar color
-    public void SetBarColor(Variant variant)
+    public void SetBarColor(VariantStats variant)
     {
         background.material = variant.fill;
         foreground.material = variant.trail;

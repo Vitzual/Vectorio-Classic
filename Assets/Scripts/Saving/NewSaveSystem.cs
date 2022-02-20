@@ -62,19 +62,19 @@ public class NewSaveSystem : MonoBehaviour
             else
             {
                 // Enemy data struct
-                DefaultEnemy enemy = activeEntities[i].GetComponent<DefaultEnemy>();
+                Enemy enemy = activeEntities[i].GetComponent<Enemy>();
                 if (enemy != null)
                 {
                     // Enemy data struct
                     SaveData.EnemyData enemyData = new SaveData.EnemyData();
 
-                    enemyData.id = enemy.enemy.InternalID;
+                    enemyData.id = enemy.enemyData.InternalID;
                     enemyData.xCoord = (int)enemy.transform.position.x;
                     enemyData.yCoord = (int)enemy.transform.position.y;
                     enemyData.health = enemy.health;
                     enemyData.metadata = new int[1];
                     enemyData.metadata[0] = enemy.metadata;
-                    enemyData.variantID = enemy.variant.InternalID;
+                    enemyData.variantID = (int)enemy.variantStats.type;
 
                     enemies.Add(enemyData);
                 }
@@ -188,14 +188,14 @@ public class NewSaveSystem : MonoBehaviour
 
                 // Create ghost building if data exists
                 #pragma warning disable CS0472 
-                if (buildingData.ghostBuilding != null && buildingData.ghostBuilding) InstantiationHandler.active.RpcInstatiateGhost(buildable, 
+                if (buildingData.ghostBuilding != null && buildingData.ghostBuilding) InstantiationHandler.active.InstantiateGhost(buildable, 
                     cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), Quaternion.identity, buildingData.metadata[0]);
                 #pragma warning restore CS0472
 
                 // If data doesn't exist or is not a ghost building, create it
                 else
                 {
-                    InstantiationHandler.active.RpcInstantiateBuilding(buildable, cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), 
+                    InstantiationHandler.active.InstantiateBuildings(buildable, cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), 
                         Quaternion.identity, buildingData.metadata[0], buildingData.health);
                     Resource.active.ApplyOutputsOnly(buildable.resources);
                 }
@@ -206,11 +206,10 @@ public class NewSaveSystem : MonoBehaviour
         // Apply enemies
         foreach (SaveData.EnemyData enemyData in saveData.enemies)
         {
-            if (ScriptableLoader.enemies.ContainsKey(enemyData.id) && ScriptableLoader.variants.ContainsKey(enemyData.variantID))
+            if (ScriptableLoader.enemies.ContainsKey(enemyData.id))
             {
-                Enemy enemy = ScriptableLoader.enemies[enemyData.id];
-                Variant variant = ScriptableLoader.variants[enemyData.variantID];
-                EnemyHandler.active.CreateEntity(enemy, variant, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
+                EnemyData enemy = ScriptableLoader.enemies[enemyData.id];
+                EnemyHandler.active.CreateEnemy(enemy, (Variant)enemyData.variantID, new Vector2(enemyData.xCoord, enemyData.yCoord), Quaternion.identity, enemyData.health);
             }
             else Debug.Log("[SAVE] Enemy with ID " + enemyData.id + " and variant ID " + enemyData.variantID + "could not be found!");
         }

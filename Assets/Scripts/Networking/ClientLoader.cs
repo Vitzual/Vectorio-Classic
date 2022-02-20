@@ -259,9 +259,9 @@ public class ClientLoader : NetworkBehaviour
 
                 // Create either ghost or building
                 BaseEntity newEntity;
-                if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.RpcInstatiateGhost(buildable, loadData.cosmeticID[i],
+                if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.InstantiateGhost(buildable, loadData.cosmeticID[i],
                     position, Quaternion.identity, loadData.metadataID[i]);
-                else newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, loadData.cosmeticID[i],
+                else newEntity = InstantiationHandler.active.InstantiateBuildings(buildable, loadData.cosmeticID[i],
                     position, Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
 
                 // Set entity runtime ID
@@ -285,12 +285,11 @@ public class ClientLoader : NetworkBehaviour
             else if (loadData.entityType[i] == "Enemy")
             {
                 // Get scriptable data
-                Entity entity = ScriptableLoader.enemies[loadData.internalID[i]];
-                Variant variant = ScriptableLoader.variants[Gamemode.stage.variant.InternalID];
+                EnemyData enemy = ScriptableLoader.enemies[loadData.internalID[i]];
 
                 // Create entity
                 Vector2 position = new Vector2(loadData.xCoord[i], loadData.yCoord[i]);
-                BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateEnemy(entity, variant, position,
+                BaseEntity newEntity = EnemyHandler.active.CreateEnemy(enemy, Gamemode.stage.variant, position,
                     Quaternion.identity, loadData.entityHealth[i], loadData.metadataID[i]);
 
                 // Set entity runtime ID
@@ -375,7 +374,7 @@ public class ClientLoader : NetworkBehaviour
             xCoord[index] = entity.Value.transform.position.x;
             yCoord[index] = entity.Value.transform.position.y;
 
-            DefaultEnemy enemy = entity.Value.GetComponent<DefaultEnemy>();
+            Enemy enemy = entity.Value.GetComponent<Enemy>();
             if (enemy == null)
             {
                 metadataID[index] = entity.Value.metadata;

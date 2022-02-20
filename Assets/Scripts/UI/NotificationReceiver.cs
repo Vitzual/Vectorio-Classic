@@ -67,7 +67,7 @@ public class NotificationReceiver : MonoBehaviour
         }
     }
 
-    public void ShowEnemyNotification(Enemy enemy)
+    public void ShowEnemyNotification(EnemyData enemy)
     {
         if (notificationType == NotificationType.NewEnemy)
         {

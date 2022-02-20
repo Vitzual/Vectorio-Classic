@@ -9,7 +9,7 @@ public class GunshipDrone : Drone
 
     // Start is called before the first frame update
     public List<GunshipTurret> turrets = new List<GunshipTurret>();
-    public List<DefaultEnemy> targets = new List<DefaultEnemy>();
+    public List<Enemy> targets = new List<Enemy>();
     public Gunship gunship;
     public float rotation;
 
@@ -72,7 +72,7 @@ public class GunshipDrone : Drone
     // If a collision is detected, add taget
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        DefaultEnemy enemy = other.GetComponent<DefaultEnemy>();
+        Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null && !targets.Contains(enemy))
         {
             targets.Add(enemy);
@@ -84,7 +84,7 @@ public class GunshipDrone : Drone
     // If entity leaves defense range, remove self from target list
     public virtual void OnTriggerExit2D(Collider2D other)
     {
-        DefaultEnemy enemy = other.GetComponent<DefaultEnemy>();
+        Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null && targets.Contains(enemy))
         {
             targets.Remove(enemy);

@@ -46,14 +46,6 @@ public class UIEvents : MonoBehaviour
     }
 
     // On add resource
-    public event Action<CollectedBlueprint> onApplyBlueprint;
-    public void ApplyBlueprint(CollectedBlueprint blueprint)
-    {
-        if (onApplyBlueprint != null)
-            onApplyBlueprint(blueprint);
-    }
-
-    // On add resource
     public event Action<Resource.Type, int> onAddResource;
     public void AddResource(Resource.Type currency, int amount)
     {

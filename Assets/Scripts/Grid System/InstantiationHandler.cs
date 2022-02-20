@@ -36,31 +36,6 @@ public class InstantiationHandler : MonoBehaviour
         tileGrid.cells = new Dictionary<Vector2Int, Cell>();
     }
 
-    // Creates an entity
-    public BaseEntity CreateEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
-    {
-        // Get scriptable data
-        Entity entity = ScriptableLoader.enemies[enemy_id];
-        Variant variant = ScriptableLoader.variants[variant_id];
-
-        // Check if entity is null
-        if (entity == null || variant == null) return null;
-
-        // Check if spot is empty
-        RaycastHit2D[] hits = Physics2D.RaycastAll(position, Vector2.zero, Mathf.Infinity, enemyLayer);
-        foreach (RaycastHit2D hit in hits)
-            if (hit.collider != null) return null;
-
-        // Create the enemy
-        return RpcInstantiateEnemy(entity, variant, position, rotation, health, speed);
-    }
-
-    // CALLED BY SYNCER CLASS
-    public BaseEntity RpcInstantiateEnemy(Entity entity, Variant variant, Vector2 position, Quaternion rotation, float health, float speed)
-    {
-        return EnemyHandler.active.CreateEntity(entity, variant, position, rotation, health, speed);
-    }
-
     // Creates a building
     public BaseEntity CreateBuilding(string buildable_ID, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata = -1)
     {
@@ -87,18 +62,18 @@ public class InstantiationHandler : MonoBehaviour
         if (!CheckTiles(buildable.building, position)) return null;
 
         // Instantiate the object like usual
-        if (Gamemode.active.useDroneConstruction) return RpcInstatiateGhost(buildable, cosmetic_ID, position, rotation, metadata);
+        if (Gamemode.active.useDroneConstruction) return InstantiateGhost(buildable, cosmetic_ID, position, rotation, metadata);
         else
         {
             // Update resource values promptly
             if (!isFree) Resource.active.ApplyResources(buildable.resources);
             else Resource.active.ApplyOutputsOnly(buildable.resources);
-            return RpcInstantiateBuilding(buildable, cosmetic_ID, position, rotation, metadata, -1);
+            return InstantiateBuildings(buildable, cosmetic_ID, position, rotation, metadata, -1);
         }
     }
 
     // CALLED BY SYNCER CLASS
-    public BaseEntity RpcInstantiateBuilding(Buildable buildable, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
+    public BaseEntity InstantiateBuildings(Buildable buildable, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -140,7 +115,7 @@ public class InstantiationHandler : MonoBehaviour
     }
 
     // CALLED BY SYNCER CLASS
-    public BaseEntity RpcInstatiateGhost(Buildable buildable, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
+    public BaseEntity InstantiateGhost(Buildable buildable, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
     {
         // Create the tile
         GhostTile holder = Instantiate(ghostTile, position, rotation).GetComponent<GhostTile>();

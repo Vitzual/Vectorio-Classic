@@ -13,13 +13,6 @@ public class GunshipTurret : DefaultTurret
     public bool lockTurret = false;
     public bool useSound = false;
 
-    // Get input events
-    public void Start()
-    {
-        if (manualFire)
-            InputEvents.active.onLeftMousePressed += ManualFire;
-    }
-
     // Update cooldown
     public void Update()
     {

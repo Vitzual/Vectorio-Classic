@@ -27,7 +27,7 @@ public class SaveData
         public int xCoord, yCoord;
         public float health;
         public int[] metadata;
-        public string variantID;
+        public int variantID;
     }
 
     // Location data

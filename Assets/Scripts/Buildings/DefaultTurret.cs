@@ -139,12 +139,12 @@ public class DefaultTurret : BaseTile, IAudible
         AudioSource.PlayClipAtPoint(sound, gameObject.transform.position, Settings.sound);
     }
 
-    public override void OnCircleCollision(DefaultEnemy enemy)
+    public override void OnCircleCollision(Enemy enemy)
     {
         AddTarget(enemy);
     }
 
-    public override void OnCircleLeave(DefaultEnemy enemy)
+    public override void OnCircleLeave(Enemy enemy)
     {
         RemoveTarget(enemy);
     }

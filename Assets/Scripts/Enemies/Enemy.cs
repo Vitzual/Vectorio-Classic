@@ -2,50 +2,52 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class DefaultEnemy : BaseEntity
+public class Enemy : BaseEntity
 {
+    // Runtime variables
+    public float damage { get; set; }
+    public float moveSpeed { get; set; }
+
     // Class variables
-    public Enemy enemy;
-    public float moveSpeed;
-    public float damage;
-    [HideInInspector] public bool isMenu;
-    [HideInInspector] public Variant variant;
-    [HideInInspector] public BaseEntity target;
+    public EnemyData enemyData { get; set; }
+    public VariantStats variantStats { get; set; }
+    public BaseEntity target { get; set; }
+
+    // Object variables
     public Transform rotator;
     public bool gradualRotation = false;
-    [HideInInspector] public bool rotationHolder = false;
-    public bool purified = false;
+
+    // Runtime flags
+    private bool rotationHolder = false;
+    public bool purified { get; set; }
 
     // Sprite info
     public SpriteRenderer[] border;
     public SpriteRenderer[] fill;
     public TrailRenderer[] trail;
 
-    public override void Setup()
+    public virtual void Setup(EnemyData enemyData, Variant variant)
     {
-        // Check applied variant
-        if (variant == null)
-        {
-            Debug.Log("Enemy was instantiated with a null variant!");
-            Destroy(gameObject);
-            return;
-        }
+        // Set the scriptable info
+        this.enemyData = enemyData;
+        variantStats = enemyData.variants[variant];
 
-        foreach (SpriteRenderer a in border)
-            a.material = variant.border;
-
-        foreach (SpriteRenderer a in fill)
-            a.material = variant.fill;
-
-        foreach (TrailRenderer a in trail)
-            a.material = variant.trail;
-
-        damage = enemy.damage * variant.damageModifier;
-        moveSpeed = enemy.moveSpeed * variant.speedModifier;
-        health = enemy.health * variant.healthModifier;
+        // Setup variables
+        damage = variantStats.damage;
+        moveSpeed = variantStats.moveSpeed;
+        health = variantStats.health;
         maxHealth = health;
 
+        // Set rotation holder
         rotationHolder = gradualRotation;
+
+        // Setup the materials
+        foreach (SpriteRenderer a in border)
+            a.material = variantStats.border;
+        foreach (SpriteRenderer a in fill)
+            a.material = variantStats.fill;
+        foreach (TrailRenderer a in trail)
+            a.material = variantStats.trail;
     }
 
     // Damages the entity (IDamageable interface method)
@@ -59,20 +61,20 @@ public class DefaultEnemy : BaseEntity
     public override void DestroyEntity()
     {
         // Create particle and set material / trail material
-        ParticleSystemRenderer holder = Instantiate(variant.particle, transform.position,
+        ParticleSystemRenderer holder = Instantiate(variantStats.particle, transform.position,
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-        holder.material = variant.border;
-        holder.trailMaterial = variant.border;
+        holder.material = variantStats.border;
+        holder.trailMaterial = variantStats.border;
 
         // Spawn any enemies it's supposed to
-        if (enemy.spawnsOnDeath.Length > 0)
-            Events.active.EnemySpawnOnDeath(enemy, transform.position);
+        if (enemyData.spawnsOnDeath.Length > 0)
+            Events.active.EnemySpawnOnDeath(enemyData, transform.position);
 
         // Invoke enemy death event
         Events.active.EnemyDestroyed(this);
 
         // Update unlockables
-        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyEnemyAmount, enemy, 1);
+        Buildables.UpdateEntityUnlockables(Unlockable.UnlockType.DestroyEnemyAmount, enemyData, 1);
 
         // Check if purified
         if (purified)
@@ -134,7 +136,7 @@ public class DefaultEnemy : BaseEntity
         Vector3 targetDir = target.transform.position - transform.position;
         float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90f;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * enemy.rotationSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * enemyData.rotationSpeed);
     }
 
     // Set target
@@ -150,7 +152,7 @@ public class DefaultEnemy : BaseEntity
     // If a collision is detected, destroy the other entity and apply damage to self
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (isMenu)
+        if (EnemyHandler.isMenu)
         {
             if (other is BoxCollider2D)
             {
@@ -191,6 +193,6 @@ public class DefaultEnemy : BaseEntity
     // Get material
     public override Material GetMaterial()
     {
-        return variant.border;
+        return variantStats.border;
     }
 }

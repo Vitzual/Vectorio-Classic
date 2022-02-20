@@ -7,11 +7,15 @@ public class BaseEntity : MonoBehaviour, IDamageable
     public float health { get; set; }
     public float maxHealth { get; set; }
     public SpriteRenderer[] models;
+    [HideInInspector]
     public Cosmetic cosmetic;
     [HideInInspector]
     public List<ParticleSystem> particles;
+    [HideInInspector]
     public int metadata = -1;
+    [HideInInspector]
     public int runtimeID = -1;
+    [HideInInspector]
     public string internalID = "";
     protected ParticleSystem particle;
     
@@ -38,19 +42,19 @@ public class BaseEntity : MonoBehaviour, IDamageable
     }
 
     // Collision methods
-    public virtual void OnBoxCollision(DefaultEnemy enemy)
+    public virtual void OnBoxCollision(Enemy enemy)
     {
         //Debug.Log("This building has no box collision override");
     }
 
     // Collision methods
-    public virtual void OnCircleCollision(DefaultEnemy enemy)
+    public virtual void OnCircleCollision(Enemy enemy)
     {
         //Debug.Log("This building has no circle collision override");
     }
 
     // Collision methods
-    public virtual void OnCircleLeave(DefaultEnemy enemy)
+    public virtual void OnCircleLeave(Enemy enemy)
     {
         //Debug.Log("This building has no circle collision override");
     }

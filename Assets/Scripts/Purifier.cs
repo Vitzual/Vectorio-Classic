@@ -14,12 +14,12 @@ public class Purifier : BaseTile
         base.Setup();
     }
 
-    public override void OnCircleCollision(DefaultEnemy enemy)
+    public override void OnCircleCollision(Enemy enemy)
     {
         enemy.purified = true;
     }
 
-    public override void OnCircleLeave(DefaultEnemy enemy)
+    public override void OnCircleLeave(Enemy enemy)
     {
         enemy.purified = false;
     }

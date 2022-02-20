@@ -94,26 +94,11 @@ public class BuildingController : NetworkBehaviour
 
         if (buildable != null && InstantiationHandler.active.CheckClientSide(hologram.position, buildable.building))
         {
-            if (Gamemode.networkHostSyncsClients)
-            {
-                if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
-                    CreateEntity(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
-                else CreateEntity(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
-            }
-            else
-            {
-                if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
-                    InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
-                else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
-            }
+            if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
+                InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
+            else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
         }
         else TryClickBuilding();
-    }
-
-    [Command]
-    public void CreateEntity(string entity_id, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata)
-    {
-        Server.active.SrvSyncBuildable(entity_id, cosmetic_ID, position, rotation, metadata);
     }
 
     public void DestroyBuilding()
@@ -130,7 +115,7 @@ public class BuildingController : NetworkBehaviour
     [Command]
     public void CmdDestroyBuilding(int runtimeID)
     {
-        Server.active.SrvSyncDestroy(runtimeID);
+        
     }
 
     // Sets the selected entity (null to deselect)

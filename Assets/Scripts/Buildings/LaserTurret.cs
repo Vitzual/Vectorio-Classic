@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserTurret : DefaultTurret
 {
-    public List<DefaultEnemy> enemiesHit;
+    public List<Enemy> enemiesHit;
     public LineRenderer laserLine;
 
     public override void Shoot()

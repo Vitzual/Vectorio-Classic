@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultGuardian : DefaultEnemy
+public class DefaultGuardian : Enemy
 {
     public Guardian guardian;
     bool entityDestroyed = false;
 
-    public override void Setup()
+    public override void Setup(EnemyData enemyData, Variant variant)
     {
-        health = guardian.health;
-        maxHealth = guardian.health;
-        enemy = guardian;
+        // Set the scriptable info
+        base.Setup(enemyData, variant);
 
-        rotationHolder = gradualRotation;
-
+        // Call guardian spawned event
         Events.active.GuardianSpawned(this);
     }
 
     // Move towards target
     public override void MoveTowards(Transform obj, Transform target)
     {
-        float step = guardian.moveSpeed * Time.deltaTime;
+        float step = variantStats.moveSpeed * Time.deltaTime;
         obj.position = Vector2.MoveTowards(obj.position, target.position, step);
 
         GradualRotation();

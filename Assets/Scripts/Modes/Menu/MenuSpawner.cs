@@ -11,7 +11,7 @@ public class MenuSpawner : MonoBehaviour
     [System.Serializable]
     public class Enemies
     {
-        public Enemy enemy;
+        public EnemyData enemy;
         public float chance;
     }
 
@@ -29,7 +29,7 @@ public class MenuSpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy(Enemy enemy)
+    void SpawnEnemy(EnemyData enemy)
     {
         Vector3 OGP = transform.position;
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(0f, 360f)));
@@ -39,10 +39,8 @@ public class MenuSpawner : MonoBehaviour
         transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         transform.position = OGP;
 
-        DefaultEnemy newEnemy = holder.GetComponent<DefaultEnemy>();
-        newEnemy.variant = variant;
-        newEnemy.isMenu = true;
-        newEnemy.Setup();
+        Enemy newEnemy = holder.GetComponent<Enemy>();
+        newEnemy.Setup(enemy, variant);
 
         EnemyHandler.active.enemies.Add(newEnemy);
     }

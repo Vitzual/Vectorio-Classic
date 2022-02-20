@@ -4,15 +4,8 @@ using UnityEngine;
 using Mirror;
 
 // Syncs all instantions 
-
 public class Server : NetworkBehaviour
 {
-    // Active instance
-    public static Server active;
-
-    // Add self to syncer list
-    public static RpcReceiver primaryReceiver;
-
     // All active entities in scene
     public static Dictionary<int, BaseEntity> entities = new Dictionary<int, BaseEntity>();
 
@@ -20,89 +13,10 @@ public class Server : NetworkBehaviour
     public void Awake()
     {
         entities = new Dictionary<int, BaseEntity>();
-
-        active = this;
-        Setup();
     }
 
-    // Setup new list
-    public void Setup()
-    {
-        entities = new Dictionary<int, BaseEntity>();
-    }
-
-    [Server]
-    public void SrvSyncEnemy(string enemy_id, string variant_id, Vector2 position, Quaternion rotation, float health, float speed)
-    {
-        // Create new entity
-        BaseEntity newEntity = InstantiationHandler.active.CreateEnemy(enemy_id, variant_id, position, rotation, health, speed);
-
-        // Check if entity created successfully 
-        if (newEntity != null)
-        {
-            primaryReceiver.RpcSyncEnemy(newEntity.runtimeID, enemy_id, variant_id, position, rotation, health, speed);
-        }
-    }
-
-    [Server]
-    public void SrvSyncBuildable(string building_id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
-    {
-        // VALIDATE USER PASSING BUILDABLE HAS COSMETIC UNLOCKED
-
-        // Create new buildable
-        BaseEntity newEntity = InstantiationHandler.active.CreateBuilding(building_id, cosmetic_id, position, rotation, metadata);
-
-        // Check if entity created successfully 
-        if (newEntity != null)
-        {
-            primaryReceiver.RpcSyncBuildable(newEntity.runtimeID, building_id, cosmetic_id, position, rotation, metadata, Gamemode.active.useDroneConstruction);
-        }
-    }
-
-    [Server]
-    public void SrvSyncGhost(int old_id, string id, string cosmetic_id, Vector2 position, Quaternion rotation, int metadata)
-    {
-        // Reset the tile 
-        if (entities.ContainsKey(old_id))
-        {
-            entities[old_id].ResetTile();
-            entities.Remove(old_id);
-        }
-        else Debug.Log("[SERVER] Received runtime ID that does not exist on the server. This will" +
-            " cause issues with desyncing! Recommend restarting the game to avoid further problems");
-
-        // Get building SO via ID request
-        Building building = ScriptableLoader.buildings[id];
-        if (building == null) return;
-
-        // Get buildable via building SO
-        Buildable buildable = Buildables.RequestBuildable(building);
-        if (buildable == null) return;
-
-        // Create buildable
-        BaseEntity newEntity = InstantiationHandler.active.RpcInstantiateBuilding(buildable, cosmetic_id, position, rotation, metadata, -1);
-
-        // Check if entity created successfully 
-        if (newEntity != null)
-        {
-            primaryReceiver.RpcSyncGhost(old_id, newEntity.runtimeID, id, cosmetic_id, position, rotation, metadata);
-        }
-    }
-    
-    [Server]
-    public void SrvSyncDestroy(int id)
-    {
-        // Attempt to destroy an active entity. If no entity found, attempt override on position
-        if (entities.ContainsKey(id))
-        {
-            entities[id].DestroyEntity();
-            entities.Remove(id);
-        }
-        primaryReceiver.RpcSyncDestroy(id);
-    }
-
-    // Assigns a unique runtime ID to an entity    
-    public static int AssignRuntimeID(BaseEntity entity)
+    // Generates a runtime ID 
+    public static int GenerateRuntimeID()
     {
         int maxLoop = 100;
         while (maxLoop != 0)
@@ -110,13 +24,16 @@ public class Server : NetworkBehaviour
             maxLoop -= 1;
             int genID = Random.Range(0, 99999999);
             if (!entities.ContainsKey(genID))
-            {
-                entities.Add(genID, entity);
-                entity.runtimeID = genID;
                 return genID;
-            }
         }
-        Debug.LogError("[SERVER] A runtime ID could not be created for " + entity + ", this will cause desync issues");
         return -1;
+    }
+
+    // Assigns a unique runtime ID to an entity    
+    public static void AssignRuntimeID(BaseEntity entity)
+    {
+        int genID = GenerateRuntimeID();
+        entities.Add(genID, entity);
+        entity.runtimeID = genID;
     }
 }

@@ -55,8 +55,7 @@ public class GhostTile : BaseTile
     // Reset ghost tile
     public void CreateBuilding()
     {
-        // Create building and destroy this game object
-        if (buildable != null) Server.active.SrvSyncGhost(runtimeID, buildable.building.InternalID, cosmetic_id, transform.position, transform.rotation, metadata);
+        // Make building
     }
 
     // Override onClick

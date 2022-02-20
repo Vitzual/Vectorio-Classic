@@ -88,9 +88,6 @@ public class Buildable
     public bool isStorage;
     public bool isDefense;
     public bool isDroneport;
-
-    // Blueprints applied to this buildable
-    public CollectedBlueprint[] blueprintSlots;
     
     // Level up
     public void Upgrade()
@@ -111,21 +108,6 @@ public class Buildable
     {
         if (cosmetic.building == building && cosmetic.validateLocalApplication()) this.cosmetic = cosmetic;
         else Debug.Log("Cannot apply " + cosmetic.name + " to " + building.name);
-    }
-
-    // Applies a blueprint
-    public bool ApplyBlueprint(CollectedBlueprint blueprint)
-    {
-        for (int i = 0; i < blueprintSlots.Length; i++)
-        {
-            if (blueprintSlots[i] == null)
-            {
-                blueprintSlots[i] = blueprint;
-                Panel.active.SetPanel(building);
-                return true;
-            }
-        }
-        return false;
     }
 
     // Get resource

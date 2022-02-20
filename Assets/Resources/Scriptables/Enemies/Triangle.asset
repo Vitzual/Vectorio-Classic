@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
+  m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
   m_Name: Triangle
   m_EditorClassIdentifier: 
   serializationData:
@@ -20,14 +20,16 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  internalId: e5ef4580-98a2-492d-baf7-431fb4b2dd3d
-  createdAtTicks: 637722244725765172
-  obj: {fileID: 6065519297016329530, guid: f4b27d00eb3b6b74696f64cc2cc038dd, type: 3}
+    SerializationNodes:
+    - Name: variants
+      Entry: 6
+      Data: 
+  internalId: 1030e998-ef2b-4e35-bf73-a28a1a0a8fda
+  createdAtTicks: 637809527385859370
+  obj: {fileID: 0}
   name: Triangle
-  description: A weak early-game enemy. Moves in a straight line and deals damage
-    to buildings it collides with. Destroys itself on impact.
-  health: 3
+  description: "A weak early-game enemy. Moves in a straight line and deals damage\r
+    to buildings it collides with. Destroys itself on impact."
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
   inventoryHeader: 2
@@ -40,24 +42,12 @@ MonoBehaviour:
     resource: 0
     entity: {fileID: 0}
     amount: 0
-  display: 1
-  gridSnap: 0
-  gridOffset: {x: 0, y: 0}
-  hologramSize: 1
-  useSquareRange: 0
-  squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
-  damage: 1
-  moveSpeed: 5
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rotationSpeed: 2
-  spawnChance: 0.2
-  largeEnemy: 0
-  spawnPercentage: 0
+  display: 0
+  _variants:
+  - type: 0
+    health: 3
+    damage: 1
+    moveSpeed: 5
   spawnsOnDeath: []
-  drops:
-  - {fileID: 11400000, guid: c0dae33c3d24356418a7e70919d49da0, type: 2}
-  - {fileID: 11400000, guid: 228d2e86695c054468de14ea08d3a718, type: 2}
-  - {fileID: 11400000, guid: 1a737722a40d9ad4c87b6209dd8bfa7e, type: 2}
+  spawnInWaves: 1
+  rotationSpeed: 5

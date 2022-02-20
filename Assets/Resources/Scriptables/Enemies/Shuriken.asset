@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
+  m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
   m_Name: Shuriken
   m_EditorClassIdentifier: 
   serializationData:
@@ -20,16 +20,18 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  internalId: 5ecc6593-b173-4173-9d44-a20d614ad997
-  createdAtTicks: 637722267007055811
-  obj: {fileID: 6065519297016329530, guid: fbeffe26a85265e4894267bcfcfd97b1, type: 3}
+    SerializationNodes:
+    - Name: variants
+      Entry: 6
+      Data: 
+  internalId: 37a4b8cf-d53d-4529-9e23-7bb001db58e9
+  createdAtTicks: 637809558218069715
+  obj: {fileID: 0}
   name: Shuriken
-  description: 'Faster moving enemies that have a chance to deflect bullets. '
-  health: 3
+  description: Faster moving enemies that have a chance to deflect bullets.
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
-  inventoryHeader: 2
+  inventoryHeader: 0
   inventoryIndex: 0
   unlockable:
     type: 0
@@ -40,23 +42,11 @@ MonoBehaviour:
     entity: {fileID: 0}
     amount: 0
   display: 1
-  gridSnap: 0
-  gridOffset: {x: 0, y: 0}
-  hologramSize: 1
-  useSquareRange: 0
-  squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
-  damage: 3
-  moveSpeed: 8
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rotationSpeed: 2
-  spawnChance: 0.05
-  largeEnemy: 0
-  spawnPercentage: 0.1
+  _variants:
+  - type: 0
+    health: 4
+    damage: 3
+    moveSpeed: 8
   spawnsOnDeath: []
-  drops:
-  - {fileID: 11400000, guid: c0dae33c3d24356418a7e70919d49da0, type: 2}
-  - {fileID: 11400000, guid: 228d2e86695c054468de14ea08d3a718, type: 2}
-  - {fileID: 11400000, guid: 1a737722a40d9ad4c87b6209dd8bfa7e, type: 2}
+  spawnInWaves: 1
+  rotationSpeed: 5

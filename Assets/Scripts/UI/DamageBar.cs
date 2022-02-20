@@ -24,7 +24,8 @@ public class DamageBar : MonoBehaviour
     // Set bar color
     public void SetBarColor(VariantStats variant)
     {
-        background.material = variant.fill;
-        foreground.material = variant.trail;
+        VariantColor color = VariantPalette.GetVariantColor(variant.type);
+        background.color = color.fillColor;
+        foreground.material = color.borderMaterial;
     }
 }

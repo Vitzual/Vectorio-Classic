@@ -7,12 +7,10 @@ using UnityEngine;
 public class EnemyData : Entity
 {
     // Enemy stats
-    [SerializeField] private List<VariantStats> _variants;
+    [FoldoutGroup("Enemy Stats"), SerializeField]
+    private List<VariantStats> _variants;
+    [FoldoutGroup("Enemy Stats"), HideInInspector]
     public Dictionary<Variant, VariantStats> variants;
-
-    // Enemy variables
-    public bool spawnInWaves;
-    public float rotationSpeed;
 
     // Spawn on death
     [System.Serializable]
@@ -24,6 +22,12 @@ public class EnemyData : Entity
     }
     [FoldoutGroup("Enemy Stats")]
     public EnemySpawn[] spawnsOnDeath;
+
+    // Enemy variables
+    [FoldoutGroup("Enemy Stats")]
+    public bool spawnInWaves;
+    [FoldoutGroup("Enemy Stats")]
+    public float rotationSpeed;
 
     // Generate variants on runtime
     public void GenerateVariants()

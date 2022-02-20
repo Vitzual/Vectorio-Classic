@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
+  m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
   m_Name: Speeder
   m_EditorClassIdentifier: 
   serializationData:
@@ -20,17 +20,18 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  internalId: 4fed0124-d597-4569-9e55-0e223eb50240
-  createdAtTicks: 637722267008917501
-  obj: {fileID: 6065519297016329530, guid: 64d117e3437f51b4f8b4c831f89f29ed, type: 3}
+    SerializationNodes:
+    - Name: variants
+      Entry: 6
+      Data: 
+  internalId: 565d2799-76aa-4034-9d5a-fa2b383d173e
+  createdAtTicks: 637809558728073733
+  obj: {fileID: 0}
   name: Speeder
-  description: Extremely fast enemies that go straight for storages. Best countered
-    by chillers.
-  health: 3
+  description: Extremely fast enemies that go straight for storages.
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
-  inventoryHeader: 2
+  inventoryHeader: 0
   inventoryIndex: 0
   unlockable:
     type: 0
@@ -41,23 +42,11 @@ MonoBehaviour:
     entity: {fileID: 0}
     amount: 0
   display: 1
-  gridSnap: 0
-  gridOffset: {x: 0, y: 0}
-  hologramSize: 1
-  useSquareRange: 0
-  squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
-  damage: 10
-  moveSpeed: 20
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rotationSpeed: 2
-  spawnChance: 0.075
-  largeEnemy: 0
-  spawnPercentage: 0.2
+  _variants:
+  - type: 0
+    health: 2
+    damage: 5
+    moveSpeed: 20
   spawnsOnDeath: []
-  drops:
-  - {fileID: 11400000, guid: 228d2e86695c054468de14ea08d3a718, type: 2}
-  - {fileID: 11400000, guid: 3265ba6f053aafc4da7f70115551a54f, type: 2}
-  - {fileID: 11400000, guid: 82a8e69200f36404280e3a49bdee50a4, type: 2}
+  spawnInWaves: 0
+  rotationSpeed: 0

@@ -4,7 +4,8 @@ using UnityEngine;
 public class VariantColor
 {
     public Variant type;
-    public Color color;
-    public Material material;
+    public Color fillColor;
+    public Material borderMaterial;
+    public Material trailMaterial;
     public ParticleSystem deathParticle;
 }

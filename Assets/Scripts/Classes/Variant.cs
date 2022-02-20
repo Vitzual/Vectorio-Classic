@@ -1,6 +1,7 @@
 public enum Variant
 {
     Normal,
-    Ghost,
-    Chaos
+    Dark,
+    Phantom,
+    Ghost
 }

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
+  m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
   m_Name: Bomber
   m_EditorClassIdentifier: 
   serializationData:
@@ -20,17 +20,19 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  internalId: 4411e966-52a3-4b09-91d9-6b50d4c4567f
-  createdAtTicks: 637722267009137704
-  obj: {fileID: 6065519297016329530, guid: c5062e25ae4afcf449ff427b3e4adaa2, type: 3}
+    SerializationNodes:
+    - Name: variants
+      Entry: 6
+      Data: 
+  internalId: b29df9c5-3dbb-4350-a031-c614af670279
+  createdAtTicks: 637809546422737848
+  obj: {fileID: 0}
   name: Bomber
-  description: Explodes when it gets close to a building or when hit by a bullet.
-    Still moves in a straight line and is relatively slow.
-  health: 2
+  description: "Explodes when it gets close to a building or when hit by a bullet.\r
+    Still moves in a straight line and is relatively slow."
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
-  inventoryHeader: 2
+  inventoryHeader: 0
   inventoryIndex: 0
   unlockable:
     type: 0
@@ -41,23 +43,11 @@ MonoBehaviour:
     entity: {fileID: 0}
     amount: 0
   display: 1
-  gridSnap: 0
-  gridOffset: {x: 0, y: 0}
-  hologramSize: 1
-  useSquareRange: 0
-  squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
-  damage: 5
-  moveSpeed: 4
-  explosiveRadius: 10
-  explosiveDamage: 5
-  rotationSpeed: 2
-  spawnChance: 0.1
-  largeEnemy: 0
-  spawnPercentage: 0.05
+  _variants:
+  - type: 0
+    health: 4
+    damage: 3
+    moveSpeed: 5
   spawnsOnDeath: []
-  drops:
-  - {fileID: 11400000, guid: c0dae33c3d24356418a7e70919d49da0, type: 2}
-  - {fileID: 11400000, guid: 228d2e86695c054468de14ea08d3a718, type: 2}
-  - {fileID: 11400000, guid: 1a737722a40d9ad4c87b6209dd8bfa7e, type: 2}
+  spawnInWaves: 1
+  rotationSpeed: 5

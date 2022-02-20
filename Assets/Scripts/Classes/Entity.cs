@@ -20,8 +20,6 @@ public class Entity : IdentifiableScriptableObject
     [FoldoutGroup("Entity Info")]
     [TextArea] public string description;
     [FoldoutGroup("Entity Info")]
-    public int health;
-    [FoldoutGroup("Entity Info")]
     public Material material;
     [FoldoutGroup("Entity Info")]
     public Color lowresColor;
@@ -36,29 +34,6 @@ public class Entity : IdentifiableScriptableObject
     [FoldoutGroup("Inventory Variables")]
     public bool display = true;
 
-    // Grid variables
-    [FoldoutGroup("Grid Variables")]
-    public bool gridSnap;
-    [FoldoutGroup("Grid Variables")]
-    public Vector2 gridOffset;
-    [FoldoutGroup("Grid Variables")]
-    public float hologramSize = 1f;
-
-    // Show range
-    [FoldoutGroup("Grid Variables")]
-    public bool useSquareRange;
-    [FoldoutGroup("Grid Variables")]
-    public float squareRange;
-    [FoldoutGroup("Grid Variables")]
-    [Tooltip("On by default for turrets")]
-    public bool useCircleRange;
-    [FoldoutGroup("Grid Variables")]
-    [Tooltip("On by default for turrets")]
-    public float circleRange;
-
     // Creates stats
-    public virtual void CreateStats(Panel panel)
-    {
-        panel.CreateStat(new Stat("Health", health, 0, Sprites.GetSprite("Health")));
-    }
+    public virtual void CreateStats(Panel panel) { }
 }

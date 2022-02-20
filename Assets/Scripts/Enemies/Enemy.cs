@@ -41,13 +41,16 @@ public class Enemy : BaseEntity
         // Set rotation holder
         rotationHolder = gradualRotation;
 
+        // Get the variant palette
+        VariantColor color = VariantPalette.GetVariantColor(variantStats.type);
+
         // Setup the materials
         foreach (SpriteRenderer a in border)
-            a.material = variantStats.border;
+            a.material = color.borderMaterial;
         foreach (SpriteRenderer a in fill)
-            a.material = variantStats.fill;
+            a.color = color.fillColor;
         foreach (TrailRenderer a in trail)
-            a.material = variantStats.trail;
+            a.material = color.trailMaterial;
     }
 
     // Damages the entity (IDamageable interface method)
@@ -60,11 +63,14 @@ public class Enemy : BaseEntity
 
     public override void DestroyEntity()
     {
+        // Get the variant color
+        VariantColor color = VariantPalette.GetVariantColor(variantStats.type);
+
         // Create particle and set material / trail material
-        ParticleSystemRenderer holder = Instantiate(variantStats.particle, transform.position,
+        ParticleSystemRenderer holder = Instantiate(color.deathParticle, transform.position,
             Quaternion.identity).GetComponent<ParticleSystemRenderer>();
-        holder.material = variantStats.border;
-        holder.trailMaterial = variantStats.border;
+        holder.material = color.borderMaterial;
+        holder.trailMaterial = color.trailMaterial;
 
         // Spawn any enemies it's supposed to
         if (enemyData.spawnsOnDeath.Length > 0)
@@ -193,6 +199,6 @@ public class Enemy : BaseEntity
     // Get material
     public override Material GetMaterial()
     {
-        return variantStats.border;
+        return VariantPalette.GetVariantColor(variantStats.type).borderMaterial;
     }
 }

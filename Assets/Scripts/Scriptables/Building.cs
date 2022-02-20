@@ -15,6 +15,9 @@ public class Building : Entity
         public float y;
     }
 
+    [FoldoutGroup("Entity Info")]
+    public int health;
+
     [FoldoutGroup("Default Cosmetic")]
     public Cosmetic defaultCosmetic;
     [FoldoutGroup("Building Variables")]
@@ -37,6 +40,26 @@ public class Building : Entity
     public int engineeringSlots;
     [FoldoutGroup("Building Variables")]
     public ParticleSystem deathParticle;
+
+    // Grid variables
+    [FoldoutGroup("Grid Variables")]
+    public bool gridSnap;
+    [FoldoutGroup("Grid Variables")]
+    public Vector2 gridOffset;
+    [FoldoutGroup("Grid Variables")]
+    public float hologramSize = 1f;
+
+    // Show range
+    [FoldoutGroup("Grid Variables")]
+    public bool useSquareRange;
+    [FoldoutGroup("Grid Variables")]
+    public float squareRange;
+    [FoldoutGroup("Grid Variables")]
+    [Tooltip("On by default for turrets")]
+    public bool useCircleRange;
+    [FoldoutGroup("Grid Variables")]
+    [Tooltip("On by default for turrets")]
+    public float circleRange;
 
     // Creates stats
     public override void CreateStats(Panel panel)

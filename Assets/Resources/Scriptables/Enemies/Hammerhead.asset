@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
-  m_Name: Dropship
+  m_Name: Hammerhead
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -24,12 +24,11 @@ MonoBehaviour:
     - Name: variants
       Entry: 6
       Data: 
-  internalId: af35960e-8b82-4c3d-b150-92b94f19160f
-  createdAtTicks: 637809557543275702
+  internalId: b1212b66-06af-4c84-b793-453efe64f0b5
+  createdAtTicks: 637809559483197514
   obj: {fileID: 0}
-  name: Dropship
-  description: "Strongest early-game enemy. Dropships are extremely tanky and will\r
-    drop multiple carriers when destroyed. Get ready!"
+  name: Hammerhead
+  description: Extremely tanky unit that moves fast and goes straight for walls.
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
   inventoryHeader: 0
@@ -45,12 +44,9 @@ MonoBehaviour:
   display: 1
   _variants:
   - type: 0
-    health: 500
-    damage: 10000
-    moveSpeed: 4
-  spawnsOnDeath:
-  - enemy: {fileID: 11400000, guid: f67504ba7e6087c4f907bc002b74c178, type: 2}
-    amount: 5
-    radius: 25
+    health: 60
+    damage: 60
+    moveSpeed: 16
+  spawnsOnDeath: []
   spawnInWaves: 0
-  rotationSpeed: 1
+  rotationSpeed: 4

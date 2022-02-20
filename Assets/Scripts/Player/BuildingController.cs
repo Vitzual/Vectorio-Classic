@@ -202,7 +202,12 @@ public class BuildingController : NetworkBehaviour
             if (buildable != null && buildable.cosmetic != null)
                 spriteRenderer.sprite = buildable.cosmetic.hologram;
             else spriteRenderer.sprite = Sprites.GetSprite(entity.name);
-            hologram.localScale = new Vector2(entity.hologramSize, entity.hologramSize);
+
+            if (entity is Building)
+            {
+                Building building = (Building)entity;
+                hologram.localScale = new Vector2(building.hologramSize, building.hologramSize);
+            }
         }
         else spriteRenderer.sprite = Sprites.GetSprite("Transparent");
     }
@@ -216,8 +221,8 @@ public class BuildingController : NetworkBehaviour
 
         if (buildable != null)
         {
-            if (entity != null) newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + entity.gridOffset.x, 5 * Mathf.Round(mousePos.y / 5) + entity.gridOffset.y);
-            else newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5), 5 * Mathf.Round(mousePos.y / 5));
+            newPosition = new Vector2(5 * Mathf.Round(mousePos.x / 5) + buildable.building.gridOffset.x,
+                5 * Mathf.Round(mousePos.y / 5) + buildable.building.gridOffset.y);
         }
         else newPosition = mousePos;
 

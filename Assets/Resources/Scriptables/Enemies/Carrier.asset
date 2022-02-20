@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7eaa4da34deb43a86b1e1fa7545de, type: 3}
+  m_Script: {fileID: 11500000, guid: 4faee0ef71ca00b4b9044c01c9bc4249, type: 3}
   m_Name: Carrier
   m_EditorClassIdentifier: 
   serializationData:
@@ -20,17 +20,19 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  internalId: f8ef1559-7352-4dc1-94c6-c6808cc56c70
-  createdAtTicks: 637722267009287841
-  obj: {fileID: 6065519297016329530, guid: 6c8ac2b64731ede429966803cf1d71e4, type: 3}
+    SerializationNodes:
+    - Name: variants
+      Entry: 6
+      Data: 
+  internalId: a5bb712e-b417-4387-ab4a-59bb2320152a
+  createdAtTicks: 637809556472257112
+  obj: {fileID: 0}
   name: Carrier
-  description: Slow moving enemy with a lot of health. Carries smaller enemies which
-    get dropped when destroyed.
-  health: 80
+  description: "Slow moving enemy with a lot of health. Carries smaller enemies which\r
+    get dropped when destroyed."
   material: {fileID: 0}
   lowresColor: {r: 0, g: 0, b: 0, a: 0}
-  inventoryHeader: 2
+  inventoryHeader: 0
   inventoryIndex: 0
   unlockable:
     type: 0
@@ -41,31 +43,17 @@ MonoBehaviour:
     entity: {fileID: 0}
     amount: 0
   display: 1
-  gridSnap: 0
-  gridOffset: {x: 0, y: 0}
-  hologramSize: 1
-  useSquareRange: 0
-  squareRange: 0
-  useCircleRange: 0
-  circleRange: 0
-  damage: 15
-  moveSpeed: 4
-  explosiveRadius: 0
-  explosiveDamage: 0
-  rotationSpeed: 2
-  spawnChance: 0.005
-  largeEnemy: 1
-  spawnPercentage: 0.4
+  _variants:
+  - type: 0
+    health: 80
+    damage: 500
+    moveSpeed: 4
   spawnsOnDeath:
-  - enemy: {fileID: 11400000, guid: 996dba43e8bacf941b20edb3ebaf5d43, type: 2}
-    amount: 2
+  - enemy: {fileID: 11400000, guid: fae665768ce47944bbc5eb16351dd1d6, type: 2}
+    amount: 3
     radius: 10
-  - enemy: {fileID: 11400000, guid: 7ba4911a3db3a67499d72f11c8610494, type: 2}
-    amount: 1
+  - enemy: {fileID: 11400000, guid: 0904100cddf51524a89a71a5e3152948, type: 2}
+    amount: 5
     radius: 10
-  - enemy: {fileID: 11400000, guid: 5b0a7a9a4e894ce4384da58ad3cc03ea, type: 2}
-    amount: 2
-    radius: 10
-  drops:
-  - {fileID: 11400000, guid: 60e9137f49208574c9025c94771372d5, type: 2}
-  - {fileID: 11400000, guid: 3e89185f7b8b18741bcf4273edc38e1b, type: 2}
+  spawnInWaves: 0
+  rotationSpeed: 2

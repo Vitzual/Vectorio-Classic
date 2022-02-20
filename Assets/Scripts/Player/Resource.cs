@@ -299,11 +299,12 @@ public class Resource : NetworkBehaviour
         if (type == Type.Heat) EnemyHandler.active.UpdateVariant(currencies[Type.Heat].amount, currencies[Type.Heat].storage);
 
         // Display to UI
-        if (currencies[type].amountText != null)
-            currencies[type].amountText.text = FormatNumber(currencies[type].amount);
+        if (currencies[type].useAmountText && !currencies[type].useStorageText)
+            currencies[type].amountText.text = FormatNumber(currencies[type].amount) + "<size=15>/" + FormatNumber(currencies[type].storage);
+        else currencies[type].amountText.text = FormatNumber(currencies[type].amount);
 
         // Change color based on storage value
-        if (updateStorage && currencies[type].storageText != null)
+        if (updateStorage && currencies[type].useStorageText)
             currencies[type].storageText.text = FormatNumber(currencies[type].storage) + " " + currencies[type].format;
 
         // Check resource bar

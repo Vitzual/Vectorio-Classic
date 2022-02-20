@@ -89,7 +89,7 @@ public class DefaultTurret : BaseTile, IAudible
     {
         // Play sound if available
         if (turret.sound != null && !selfEnable)
-            AudioSource.PlayClipAtPoint(turret.sound, transform.position, Settings.sound);
+            AudioHandler.PlayAtLocation(turret.sound, transform.position);
 
         // Set bullet variables
         DefaultBullet bullet;

@@ -195,7 +195,7 @@ public class NewSaveSystem : MonoBehaviour
                 // If data doesn't exist or is not a ghost building, create it
                 else
                 {
-                    InstantiationHandler.active.InstantiateBuildings(buildable, cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), 
+                    InstantiationHandler.active.InstantiateBuilding(buildable, cosmetic, new Vector2(buildingData.xCoord, buildingData.yCoord), 
                         Quaternion.identity, buildingData.metadata[0], buildingData.health);
                     Resource.active.ApplyOutputsOnly(buildable.resources);
                 }

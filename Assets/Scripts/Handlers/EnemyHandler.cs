@@ -44,29 +44,39 @@ public class EnemyHandler : MonoBehaviour
         else MoveEnemies();
     }
 
-    public Enemy GetStrongestEnemy()
+    // Create a new active enemy instance
+    public virtual BaseEntity CreateEnemy(EnemyData enemyData, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
     {
-        // Strongest
-        Enemy strongest = null;
-        float health = 0;
+        // Create the tile
+        GameObject lastObj = Instantiate(enemyData.obj.gameObject, position, rotation);
+        lastObj.name = enemyData.name;
 
-        // Move enemies each frame towards their target
-        int max = enemies.Count;
-        if (max > 50) max = 50;
-        for (int a = 0; a < max; a++)
+        // Attempt to set enemy variant
+        Enemy enemy = lastObj.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            if (enemies[a] != null && enemies[a].health > health)
-            {
-                strongest = enemies[a];
-            }
-            else
-            {
-                enemies.RemoveAt(a);
-                a--;
-            }
-        }
+            // Setup enemy
+            enemy.Setup(enemyData, variant);
 
-        return strongest;
+            // Override health
+            if (health != -1) enemy.health = health;
+            if (speed != -1) enemy.moveSpeed = speed;
+
+            // Set difficulty values
+            enemy.health *= Gamemode.difficulty.enemyHealthModifier;
+            enemy.maxHealth = enemy.health;
+            enemy.moveSpeed *= Gamemode.difficulty.enemySpeedModifier;
+
+            // Setup entity
+            enemies.Add(enemy);
+
+            // Assign runtime ID
+            Server.AssignRuntimeID(enemy);
+
+            // Return enemy
+            return enemy;
+        }
+        else return null;
     }
 
     // Move normal enemies
@@ -118,41 +128,6 @@ public class EnemyHandler : MonoBehaviour
                 a--;
             }
         }
-    }
-
-    // Create a new active enemy instance
-    public virtual BaseEntity CreateEnemy(EnemyData enemyData, Variant variant, Vector2 position, Quaternion rotation, float health = -1, float speed = -1)
-    {
-        // Create the tile
-        GameObject lastObj = Instantiate(enemyData.obj.gameObject, position, rotation);
-        lastObj.name = enemyData.name;
-
-        // Attempt to set enemy variant
-        Enemy enemy = lastObj.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            // Setup enemy
-            enemy.Setup(enemyData, variant);
-
-            // Override health
-            if (health != -1) enemy.health = health;
-            if (speed != -1) enemy.moveSpeed = speed;
-
-            // Set difficulty values
-            enemy.health *= Gamemode.difficulty.enemyHealthModifier;
-            enemy.maxHealth = enemy.health;
-            enemy.moveSpeed *= Gamemode.difficulty.enemySpeedModifier;
-
-            // Setup entity
-            enemies.Add(enemy);
-
-            // Assign runtime ID
-            Server.AssignRuntimeID(enemy);
-
-            // Return enemy
-            return enemy;
-        }
-        else return null;
     }
 
     // Destroys all active enemies

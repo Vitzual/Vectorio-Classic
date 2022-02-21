@@ -68,12 +68,23 @@ public class InstantiationHandler : MonoBehaviour
             // Update resource values promptly
             if (!isFree) Resource.active.ApplyResources(buildable.resources);
             else Resource.active.ApplyOutputsOnly(buildable.resources);
-            return InstantiateBuildings(buildable, cosmetic_ID, position, rotation, metadata, -1);
+            return InstantiateBuilding(buildable, cosmetic_ID, position, rotation, metadata, -1);
         }
     }
 
+    // Create a building without the buildable reference
+    public BaseEntity InstantiateBuilding(string buildable_id, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
+    {
+        // Get buildable via building SO
+        Buildable buildable = Buildables.RequestBuildable(buildable_id);
+        if (buildable == null) return null;
+
+        // Call full method with buildable instance
+        return InstantiateBuilding(buildable, cosmetic_ID, position, rotation, metadata, health);
+    }
+
     // CALLED BY SYNCER CLASS
-    public BaseEntity InstantiateBuildings(Buildable buildable, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
+    public BaseEntity InstantiateBuilding(Buildable buildable, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
     {
         // Create the tile
         BaseTile lastBuilding = Instantiate(buildable.obj, position, rotation).GetComponent<BaseTile>();
@@ -98,10 +109,6 @@ public class InstantiationHandler : MonoBehaviour
         // Create sound effect
         if (!NewSaveSystem.loadGame && placementSound != null)
             AudioSource.PlayClipAtPoint(placementSound, position, Settings.sound);
-
-        // Assign runtime ID to building
-        Server.AssignRuntimeID(lastBuilding);
-        lastBuilding.internalID = buildable.building.InternalID;
 
         // Apply cosmetic if one was passed
         if (cosmetic_ID != "" && ScriptableLoader.cosmetics.ContainsKey(cosmetic_ID))

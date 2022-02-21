@@ -88,7 +88,7 @@ public static class ScriptableLoader
         Debug.Log("Loaded " + loaded.Count + " enemies from " + EnemyPath);
         foreach (EnemyData enemy in loaded)
         {
-            BaseEntity baseEntity = enemy.obj.GetComponent<BaseEntity>();
+            Enemy baseEntity = enemy.obj.GetComponent<Enemy>();
             if (baseEntity == null) Debug.Log("Entity " + enemy.name + "'s object has no BaseEntity script!\nBecause of this, it will not load properly.");
             allLoadedEntities.Add(enemy.name, enemy);
             enemies.Add(enemy.InternalID, enemy);

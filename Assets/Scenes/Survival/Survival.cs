@@ -47,13 +47,14 @@ public class Survival : Gamemode
         // Set max connections
         NetworkManagerSF.active.maxConnections = online.maxConnections;
 
-        // Setup hub
-        Buildable hubBuildable = Buildables.RequestBuildable(hub);
-        InstantiationHandler.active.InstantiateBuildings(hubBuildable, "", Vector2.zero, Quaternion.identity, -1, -1);
-
         // Initialize gamemode
         InitGamemode();
 
+        // Setup hub
+        Debug.Log("[SURVIVAL] Creating hub...");
+        Client.active.CmdCreateBuildable(hub.InternalID, "", Vector2.zero, Quaternion.identity, false, -1);
+
+        // Load save data
         if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)
         {
             // Load game
@@ -86,39 +87,6 @@ public class Survival : Gamemode
 
         // Invoke auto saving
         InvokeRepeating("AutoSave", 360f, 360f);
-    }
-
-    // Instantiate hub
-    public override void SyncSetup()
-    {
-        // Debug
-        Debug.Log("[SURVIVAL] Syncing new client to game!");
-
-        // Check difficulty variable
-        if (difficulty == null)
-        {
-            Debug.Log("Difficulty data missing. Creating new one");
-            difficulty = _difficulty.SetData(new DifficultyData());
-        }
-
-        // Check stage variable
-        if (stage == null)
-        {
-            Debug.Log("Stage data missing. Setting to default");
-            stage = _stage;
-        }
-
-        // Setup hub
-        Buildable hubBuildable = Buildables.RequestBuildable(hub);
-        InstantiationHandler.active.InstantiateBuildings(hubBuildable, "", Vector2.zero, Quaternion.identity, -1, -1);
-
-        // Initialize gamemode
-        InitGamemode();
-        Resource.storages = new List<DefaultStorage>();
-        ResearchUI.active.Setup();
-
-        // Invoke auto saving
-        // InvokeRepeating("AutoSave", 360f, 360f);
     }
 
     // Calls upper class update methods

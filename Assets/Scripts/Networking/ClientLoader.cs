@@ -261,7 +261,7 @@ public class ClientLoader : NetworkBehaviour
                 BaseEntity newEntity;
                 if (loadData.isGhost[i]) newEntity = InstantiationHandler.active.InstantiateGhost(buildable, loadData.cosmeticID[i],
                     position, Quaternion.identity, loadData.metadataID[i]);
-                else newEntity = InstantiationHandler.active.InstantiateBuildings(buildable, loadData.cosmeticID[i],
+                else newEntity = InstantiationHandler.active.InstantiateBuilding(buildable, loadData.cosmeticID[i],
                     position, Quaternion.identity, loadData.metadataID[i], loadData.entityHealth[i]);
 
                 // Set entity runtime ID

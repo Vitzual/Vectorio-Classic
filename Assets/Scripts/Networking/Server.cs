@@ -8,11 +8,39 @@ public class Server : NetworkBehaviour
 {
     // All active entities in scene
     public static Dictionary<int, BaseEntity> entities = new Dictionary<int, BaseEntity>();
+    public void Awake() { entities = new Dictionary<int, BaseEntity>(); }
 
-    // Awake
-    public void Awake()
+    // Attempts to validate and create a building. 
+    // If successful, forces all clients to do the same.
+    [Server]
+    public static void SrvCreateBuildable(string buildable_ID, string cosmetic_ID,
+    Vector2 position, Quaternion rotation, bool runChecks, int metadata)
     {
-        entities = new Dictionary<int, BaseEntity>();
+        // Create a new building variable
+        BaseEntity newBuilding;
+
+        // Create building with or without checks
+        if (runChecks) newBuilding = InstantiationHandler.active.CreateBuilding(buildable_ID, cosmetic_ID, position, rotation, metadata);
+        else newBuilding = InstantiationHandler.active.InstantiateBuilding(buildable_ID, cosmetic_ID, position, rotation, metadata, -1);
+
+        // If successful, assign runtime ID to building and sync clients
+        if (newBuilding != null)
+        {
+            AssignRuntimeID(newBuilding);
+            Client.active.RpcCreateBuildable(buildable_ID, cosmetic_ID, position, rotation, newBuilding.runtimeID, -1);
+        }
+    }
+
+    // Assigns a unique runtime ID to an entity    
+    public static void AssignRuntimeID(BaseEntity entity, int overrideID = -1)
+    {
+        // Generate new runtime ID if not specified
+        if (overrideID == -1)
+            overrideID = GenerateRuntimeID();
+
+        // Add building and ID to server entity list
+        entities.Add(overrideID, entity);
+        entity.runtimeID = overrideID;
     }
 
     // Generates a runtime ID 
@@ -27,13 +55,5 @@ public class Server : NetworkBehaviour
                 return genID;
         }
         return -1;
-    }
-
-    // Assigns a unique runtime ID to an entity    
-    public static void AssignRuntimeID(BaseEntity entity)
-    {
-        int genID = GenerateRuntimeID();
-        entities.Add(genID, entity);
-        entity.runtimeID = genID;
     }
 }

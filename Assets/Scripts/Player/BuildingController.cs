@@ -92,11 +92,11 @@ public class BuildingController : NetworkBehaviour
     {
         if (StatsPanel.isOpen) return;
 
-        if (buildable != null && InstantiationHandler.active.CheckClientSide(hologram.position, buildable.building))
+        if (buildable != null)
         {
             if (buildable.cosmetic != null && buildable.cosmetic.validateLocalApplication())
-                InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, metadata);
-            else InstantiationHandler.active.CreateBuilding(buildable.building.InternalID, "", hologram.position, hologram.rotation, metadata);
+                Client.active.CmdCreateBuildable(buildable.building.InternalID, buildable.cosmetic.InternalID, hologram.position, hologram.rotation, true, metadata);
+            else Client.active.CmdCreateBuildable(buildable.building.InternalID, "", hologram.position, hologram.rotation, true, metadata);
         }
         else TryClickBuilding();
     }

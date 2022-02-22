@@ -71,7 +71,7 @@ public static class Buildables
         Debug.Log("Could not retrieve object " + entity.name + " via entity request");
         return null;
     }
-
+    
     // Retrieves a buildable by object
     public static Buildable RequestBuildable(string name)
     {

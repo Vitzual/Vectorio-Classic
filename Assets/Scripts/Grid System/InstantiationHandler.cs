@@ -76,7 +76,8 @@ public class InstantiationHandler : MonoBehaviour
     public BaseEntity InstantiateBuilding(string buildable_id, string cosmetic_ID, Vector2 position, Quaternion rotation, int metadata, float health)
     {
         // Get buildable via building SO
-        Buildable buildable = Buildables.RequestBuildable(buildable_id);
+        Building building = ScriptableLoader.buildings[buildable_id];
+        Buildable buildable = Buildables.RequestBuildable(building);
         if (buildable == null) return null;
 
         // Call full method with buildable instance

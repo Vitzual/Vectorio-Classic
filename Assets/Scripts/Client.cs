@@ -9,10 +9,14 @@ public class Client : NetworkBehaviour
     public static Client active;
 
     // On start, set active
-    public void Awake()
+    public void Start()
     {
         if (hasAuthority)
+        {
+            Debug.Log("Settings active instance");
             active = this;
+            Gamemode.active.Setup();
+        }
     }
 
     // Sends outgoing request to server to validate a buildable can be placed

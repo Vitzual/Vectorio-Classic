@@ -33,6 +33,9 @@ public class Client : NetworkBehaviour
     public void RpcCreateBuildable(string buildable_ID, string cosmetic_ID, 
         Vector2 position, Quaternion rotation, int runtimeID, int metadata)
     {
+        // Ensure is client only
+        if (isServer) return;
+
         // Create the new building instance
         BaseEntity newBuilding = InstantiationHandler.active.InstantiateBuilding(buildable_ID, cosmetic_ID, position, rotation, metadata, -1);
 

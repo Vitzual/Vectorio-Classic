@@ -53,7 +53,6 @@ public class BuildingController : NetworkBehaviour
 
         // Cosmetic applied
         Events.active.onCosmeticApplied += CosmeticApplied;
-
         Debug.Log("Finished setting up controller instance");
     }
 

@@ -36,15 +36,6 @@ public static class ScriptableLoader
 
         GenerateCosmetics();
         GenerateCurrencies();
-
-        Building hub = Resources.Load<Building>("Scriptables/Hub");
-        if (hub != null)
-        {
-            Buildables.Register(hub);
-            allLoadedEntities.Add(hub.name, hub);
-        }
-        else Debug.Log("The hub scriptable could not be parsed");
-
         GenerateBuildings();
         GenerateEnemies();
         GenerateGuardians();
@@ -55,9 +46,22 @@ public static class ScriptableLoader
     // Generates buildings on run
     public static void GenerateBuildings()
     {
+        // Create new buildings instance and hub
         buildings = new Dictionary<string, Building>();
-        List<Building> loaded = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
+        Building hub = Resources.Load<Building>("Scriptables/Hub");
 
+        // Load hub into building and entities
+        Debug.Log("Loaded " + hub.name + " from scriptable container");
+        if (hub != null)
+        {
+            Buildables.Register(hub);
+            allLoadedEntities.Add(hub.name, hub);
+            buildings.Add(hub.InternalID, hub);
+        }
+        else Debug.Log("The hub scriptable could not be parsed");
+
+        // Load the other buildings
+        List<Building> loaded = Resources.LoadAll(BuildingPath, typeof(Building)).Cast<Building>().ToList();
         Debug.Log("Loading " + loaded.Count + " buildings from " + BuildingPath + "...");
         foreach (Building building in loaded)
         {

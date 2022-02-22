@@ -53,6 +53,7 @@ public class Survival : Gamemode
         // Setup hub
         Debug.Log("[SURVIVAL] Creating hub...");
         Client.active.CmdCreateBuildable(hub.InternalID, "", Vector2.zero, Quaternion.identity, false, -1);
+        Debug.Log("[SURVIVAL] Successfully placed hub!");
 
         // Load save data
         if (NewSaveSystem.loadGame && NewSaveSystem.saveData != null)

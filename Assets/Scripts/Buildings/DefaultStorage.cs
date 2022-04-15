@@ -34,7 +34,7 @@ public class DefaultStorage : ResourceTile
             if (icon != null) icon.SetActive(true);
 
             // Add proper amount and return overflow
-            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + (amount - amountToReturn));
+            if (showPopup) Effects.CreateTempText("+" + (amount - amountToReturn), transform.position, Color.white);
             Resource.active.Apply(type, amount - amountToReturn, false);
             return amountToReturn;
         }
@@ -45,14 +45,14 @@ public class DefaultStorage : ResourceTile
             if (icon != null) icon.SetActive(true);
 
             // Add proper amount and return overflow
-            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+            if (showPopup) Effects.CreateTempText("+" + amount, transform.position, Color.white);
             Resource.active.Apply(type, amount, false);
             return 0;
         }
         else
         {
             // If does not exceed, add resources and return
-            if (showPopup) PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+            if (showPopup) Effects.CreateTempText("+" + amount, transform.position, Color.white);
             Resource.active.Apply(type, amount, false);
             return 0;
         }

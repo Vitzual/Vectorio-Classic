@@ -82,7 +82,7 @@ public class DefaultCollector : ResourceTile
     {
         this.amount = 0;
         Resource.active.Apply(type, amount, true);
-        PopupHandler.active.CreatePopup(transform.position, type, "+" + amount);
+        Effects.CreateTempText("+" + amount, transform.position, Color.white);
         isFull = false;
         SetLight();
     }
